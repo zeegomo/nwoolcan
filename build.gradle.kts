@@ -5,6 +5,7 @@ plugins {
 
 checkstyle {
     config = resources.text.fromFile("style.xml")
+    maxWarnings = 0
 }
 
 version = "0.1"
