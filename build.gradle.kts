@@ -1,5 +1,10 @@
 plugins {
     java
+    checkstyle
+}
+
+checkstyle {
+    config = resources.text.fromFile("style.xml")
 }
 
 version = "0.1"
