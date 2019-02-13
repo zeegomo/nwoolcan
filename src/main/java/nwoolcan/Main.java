@@ -1,3 +1,5 @@
+package nwoolcan;
+
 final class Main {
 
     private Main() { }
