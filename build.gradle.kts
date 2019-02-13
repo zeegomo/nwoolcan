@@ -1,11 +1,16 @@
 plugins {
     java
     checkstyle
+    application
 }
 
 checkstyle {
     config = resources.text.fromFile("style.xml")
     maxWarnings = 0
+}
+
+application{
+    mainClassName = "Main"
 }
 
 version = "0.1"
