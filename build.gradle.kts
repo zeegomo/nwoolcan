@@ -10,7 +10,7 @@ checkstyle {
 }
 
 application{
-    mainClassName = "nwoolcan.Main"
+    mainClassName = "nwoolcan.application.Main"
 }
 
 version = "0.1"

@@ -1,4 +1,4 @@
-package nwoolcan;
+package nwoolcan.application;
 
 final class Main {
 
