@@ -28,3 +28,5 @@ build/
 ## File-based project format:
 *.iws
 
+## For Mac users
+.DS_Store
