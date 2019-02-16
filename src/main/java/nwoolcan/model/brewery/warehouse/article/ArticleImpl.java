@@ -33,9 +33,13 @@ public class ArticleImpl implements Article {
     public final Integer getId() {
         return this.id;
     }
-
+    /**
+     * Returns the type of article.
+     * Override this method according on the type of article which is being represented.
+     * @return the type of article.
+     */
     @Override
-    public final ArticleType getArticleType() {
+    public ArticleType getArticleType() {
         return ArticleType.MISC;
     }
 
