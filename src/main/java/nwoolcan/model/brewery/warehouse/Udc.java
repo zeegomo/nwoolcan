@@ -65,9 +65,9 @@ public interface Udc {
      * The {@link UdcState} of the new Udc will be CONSUMED.
      * It is possible to change this function only for Article of type BeerArticle.
      * @param quantity the {@link Quantity} to be removed from the current udc.
-     * @return a {@link Result} of {@link Empty} which reports possible errors.
+     * @return a {@link Result} of a new Udc: the consumed one.
      */
-    Result<Empty> consume(Quantity quantity);
+    Result<Udc> consume(Quantity quantity);
     /**
      * Sets the current quantity to the quantity specified.
      * @param quantity the quantity that will be set to the current udc.
