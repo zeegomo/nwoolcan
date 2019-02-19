@@ -16,7 +16,6 @@ import static org.junit.Assert.assertSame;
  * Test Result class.
  */
 public class TestResult {
-
     /**
      * Test Result of Empty.
      */
@@ -44,7 +43,6 @@ public class TestResult {
         assertNotEquals(present, presentEmpty);
         assertNotEquals(present, exception);
     }
-
     /**
      * Tests getting an error from a Result holding a value.
      */
@@ -53,7 +51,6 @@ public class TestResult {
         Result<Empty> empty = Result.ofEmpty();
         Exception e = empty.getError();
     }
-
     /**
      * Tests orElse.
      */
@@ -63,7 +60,6 @@ public class TestResult {
         assertTrue(error.orElse(2).equals(2));
         Integer i = error.getValue();
     }
-
     /**
      * Test map.
      */
@@ -101,7 +97,6 @@ public class TestResult {
         Result<Integer> l = duke.map(String::length);
         assertTrue(l.getValue() == 4);
     }
-
     /**
      *  Test flatMap.
      */
