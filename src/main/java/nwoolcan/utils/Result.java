@@ -1,5 +1,6 @@
 package nwoolcan.utils;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -24,6 +25,14 @@ public final class Result<T> {
      */
     public static <T> Result<T> of(final T elem) {
         return new Result<>(Optional.of(elem), Optional.empty());
+    }
+    /**
+     * @param <T> the type of elem
+     * @param elem the result to be encapsulated.
+     * @return a new Result<T> holding elem
+     */
+    public static <T> Result<T> ofNullable(final T elem) {
+        return new Result<>(Optional.ofNullable(elem), Optional.empty());
     }
     /**
      * @param <T> the type of the value to be returned, if any
@@ -76,7 +85,8 @@ public final class Result<T> {
      */
     @SuppressWarnings("unchecked")
     public <U> Result<U> map(final Function<? super T, ? extends U> mapper) {
-        return this.isPresent() ? Result.of(mapper.apply(this.elem.get())) : (Result<U>) this;
+        Objects.requireNonNull(mapper);
+        return this.isPresent() ? Result.ofNullable(mapper.apply(this.elem.get())) : (Result<U>) this;
     }
     /**
      * If a value is present, apply the provided {@link Result}-bearing function to it returning that {@link Result}. Otherwise return a {@link Result} holding the original exception.
@@ -86,6 +96,7 @@ public final class Result<T> {
      */
     @SuppressWarnings("unchecked")
     public <U> Result<U> flatMap(final Function<? super T, Result<U>> mapper) {
+        Objects.requireNonNull(mapper);
         return this.isPresent() ? mapper.apply(this.elem.get()) : (Result<U>) this;
     }
     /**
@@ -114,8 +125,7 @@ public final class Result<T> {
     /**
      * Indicates wheter some other object is "equal to" this {@link Result}. The other object is considered equal if:
      *  - it is also a {@link Result} and:
-     *  - the present exceptions are "equal to" each other via equals().
-     *  - the present values are "equal to" each other vua equals().
+     *  - the present values are "equal to" each other via equals().
      * @param obj an object to be tested for equality
      */
     @Override
@@ -131,7 +141,7 @@ public final class Result<T> {
         if (this.isPresent()) {
             return this.elem.equals(other.elem);
         } else {
-            return this.exception.equals(other.exception);
+            return false;
         }
     }
     /**
@@ -143,12 +153,12 @@ public final class Result<T> {
         return this.isPresent() ? this.elem.get().toString() : this.exception.get().toString();
     }
     /**
-     * Returns the hash code value of the present value, if any, or the hash code of the exception if no value is present.
-     * @return hash code value of the present value or of the exception
+     * Returns the hash code value of the present value, if any, or 0 if no value is present.
+     * @return hash code value of the present value or 0
      */
     @Override
     public int hashCode() {
-        return this.isPresent() ? this.elem.get().hashCode() : this.exception.get().hashCode();
+        return this.isPresent() ? this.elem.get().hashCode() : 0;
     }
     /**
      * Return a {@link Optional}  desribing the value if present. Otherwise returns an empty {@link Optional}
