@@ -68,6 +68,9 @@ public class TestResult {
         assertTrue(Result.of(4).require(i -> i > 2).isPresent());
         assertTrue(Result.of(4).require(i -> i < 2).isError());
     }
+    /**
+     * Tests requireNonNull.
+     */
     @Test
     public void testRequireNonNull() {
         assertTrue(Results.requireNonNull(null).isError());
