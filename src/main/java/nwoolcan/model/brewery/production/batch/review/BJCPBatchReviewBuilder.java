@@ -16,6 +16,13 @@ public final class BJCPBatchReviewBuilder {
     private boolean built = false;
 
     /**
+     * Create a BJCPBatchReviewBuilder.
+     * @param reviewer the reviewer
+     */
+    public BJCPBatchReviewBuilder(final String reviewer) {
+        this.reviewer = reviewer;
+    }
+    /**
      * Add evaluation for a category.
      * @param category category.
      * @param score score.
@@ -27,17 +34,6 @@ public final class BJCPBatchReviewBuilder {
             .require(POSSIBLE_EVALUATION_CATEGORIES::contains)
             .map(cat -> {
                 this.evaluations.add(new CategoryEvaluationImpl(cat, score, notes));
-                return this;
-            });
-    }
-    /**
-     * Add reviewer for the review.
-     * @param reviewer reviewer
-     */
-    public Result<BJCPBatchReviewBuilder> addReviewer(final String reviewer) {
-        return Results.requireNonNull(reviewer)
-            .map(rev -> {
-                this.reviewer = rev;
                 return this;
             });
     }
