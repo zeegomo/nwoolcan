@@ -25,15 +25,7 @@ public final class Result<T> {
      * @return a new Result<T> holding elem
      */
     public static <T> Result<T> of(final T elem) {
-        return Results.requireNonNull(elem);
-    }
-    /**
-     * @param <T> the type of elem
-     * @param elem the result to be encapsulated.
-     * @return a new Result<T> holding elem
-     */
-    public static <T> Result<T> ofNullable(final T elem) {
-        return new Result<>(Optional.ofNullable(elem), Optional.empty());
+        return new Result<>(Optional.of(elem), Optional.empty());
     }
     /**
      * @param <T> the type of the value to be returned, if any
