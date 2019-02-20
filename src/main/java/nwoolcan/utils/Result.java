@@ -133,6 +133,7 @@ public final class Result<T> {
      * If the value is not present or the value is present and matches the given predicate, return this.
      *      * Otherwise return a {@link Result} holding the specified exception.
      * @param predicate a predicate to apply to the value, if present
+     * @param exception the exception to be hold in the resulting {@link Result} if the value does not match the predicate
      * @return a {@link Result} describing the value of this Optional if a value is present and the value matches the given predicate
      */
     public Result<T> require(final Predicate<? super T> predicate, final Exception exception) {

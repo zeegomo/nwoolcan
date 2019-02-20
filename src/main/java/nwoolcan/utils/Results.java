@@ -13,7 +13,7 @@ public final class Results {
      * @param <T> elem type
      * @return a {@link Result} holding elem if elem is not null, otherwise holds a NullPointerException
      */
-    public static <T> Result<T> requireNonNull(T elem) {
+    public static <T> Result<T> requireNonNull(final T elem) {
         if (elem == null) {
             return Result.error(new NullPointerException());
         } else {
