@@ -3,6 +3,7 @@ package nwoolcan.utils;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
@@ -115,13 +116,32 @@ public final class Result<T> {
     public T orElse(final Supplier<? extends T> other) {
         return this.isPresent() ? this.elem.get() : other.get();
     }
-    /*
     /**
-     * If a value is present, and the value matches the given predicate, return a {@link Result} describing the value, otherwise return a {@link Result} holding the original exception.
+     * If the value is not present or the value is present and matches the given predicate, return this.
+     * Otherwise return a {@link Result} holding an {@link IllegalArgumentException}.
      * @param predicate a predicate to apply to the value, if present
      * @return a {@link Result} describing the value of this Optional if a value is present and the value matches the given predicate
-     *//*
-    Result<T> filter(Predicate<? super T> predicate);*/
+     */
+    public Result<T> require(final Predicate<? super T> predicate) {
+        if (this.isPresent()) {
+            return predicate.test(this.elem.get()) ? this : Result.error(new IllegalArgumentException());
+        } else {
+            return this;
+        }
+    }
+    /**
+     * If the value is not present or the value is present and matches the given predicate, return this.
+     *      * Otherwise return a {@link Result} holding the specified exception.
+     * @param predicate a predicate to apply to the value, if present
+     * @return a {@link Result} describing the value of this Optional if a value is present and the value matches the given predicate
+     */
+    public Result<T> require(final Predicate<? super T> predicate, final Exception exception) {
+        if (this.isPresent()) {
+            return predicate.test(this.elem.get()) ? this : Result.error(exception);
+        } else {
+            return this;
+        }
+    }
     /**
      * Indicates wheter some other object is "equal to" this {@link Result}. The other object is considered equal if:
      *  - it is also a {@link Result} and:
