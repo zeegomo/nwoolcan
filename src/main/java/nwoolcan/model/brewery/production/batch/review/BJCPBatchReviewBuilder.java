@@ -9,7 +9,7 @@ import java.util.*;
  * BJCP builder.
  */
 public final class BJCPBatchReviewBuilder {
-    private static final Set<CategoryEvaluationType> POSSIBLE_EVALUATION_CATEGORIES = new HashSet<>(Arrays.asList(BJCPBatchReview.BJCPEvaluationCategories.values()));
+    private static final Set<CategoryEvaluationType> POSSIBLE_EVALUATION_CATEGORIES = new HashSet<>(Arrays.asList(BJCPBatchReview.BJCPCategoryEvaluationType.values()));
     private final Set<CategoryEvaluation> evaluations = new HashSet<>();
     private String reviewer;
     private Optional<String> notes;
@@ -59,7 +59,7 @@ public final class BJCPBatchReviewBuilder {
     public Result<BJCPBatchReview> build() {
         return Results.requireNonNull(reviewer)
             .map(r -> this)
-            .require(builder -> builder.evaluations.size() == BJCPBatchReview.BJCPEvaluationCategories.values().length)
+            .require(builder -> builder.evaluations.size() == BJCPBatchReview.BJCPCategoryEvaluationType.values().length)
             .require(builder -> !built)
             .map(builder -> new BJCPBatchReview(builder.evaluations, builder.reviewer, builder.notes));
     }
