@@ -79,7 +79,7 @@ public final class Result<T> {
     @SuppressWarnings("unchecked")
     public <U> Result<U> map(final Function<? super T, ? extends U> mapper) {
         Objects.requireNonNull(mapper);
-        return this.isPresent() ? Result.ofNullable(mapper.apply(this.elem.get())) : (Result<U>) this;
+        return this.isPresent() ? Result.of(mapper.apply(this.elem.get())) : (Result<U>) this;
     }
     /**
      * If a value is present, apply the provided {@link Result}-bearing function to it returning that {@link Result}. Otherwise return a {@link Result} holding the original exception.
