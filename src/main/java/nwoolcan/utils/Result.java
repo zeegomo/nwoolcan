@@ -25,7 +25,7 @@ public final class Result<T> {
      * @return a new Result<T> holding elem
      */
     public static <T> Result<T> of(final T elem) {
-        return new Result<>(Optional.of(elem), Optional.empty());
+        return Results.requireNonNull(elem);
     }
     /**
      * @param <T> the type of elem

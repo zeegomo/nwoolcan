@@ -17,7 +17,7 @@ public final class Results {
         if (elem == null) {
             return Result.error(new NullPointerException());
         } else {
-            return Result.of(elem);
+            return Result.ofNullable(elem);
         }
     }
 
