@@ -61,6 +61,19 @@ public class TestResult {
         Integer i = error.getValue();
     }
     /**
+     * Tests require.
+     */
+    @Test
+    public void testRequire() {
+        assertTrue(Result.of(4).require(i -> i > 2).isPresent());
+        assertTrue(Result.of(4).require(i -> i < 2).isError());
+    }
+    @Test
+    public void testRequireNonNull() {
+        assertTrue(Results.requireNonNull(null).isError());
+        assertTrue(Results.requireNonNull(new Empty() { }).isPresent());
+    }
+    /**
      * Test map.
      */
     @Test
@@ -136,5 +149,7 @@ public class TestResult {
         l = duke.flatMap(s -> fixture);
         assertSame(l, fixture);
     }
+
+
 }
 
