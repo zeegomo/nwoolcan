@@ -8,17 +8,20 @@ import java.util.Optional;
 public interface Evaluation {
     /**
      * Returns the score.
+     *
      * @return the score.
      */
     int getScore();
+
     /**
-     * Returns the maximum possible score.
+     * Returns the type of this evaluation.
+     *
      * @return the maximum possible score.
      */
-    int getMaxScore();
+    EvaluationType getEvaluationType();
+
     /**
-     * Returns evaluation notes, if any.
-     * @return evaluation notes, if any.
+     * @return the notes for this evaluation, if any.
      */
     Optional<String> getNotes();
 }

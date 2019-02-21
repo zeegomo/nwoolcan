@@ -3,7 +3,8 @@ package nwoolcan.model.brewery.production.batch.review;
 /**
  * Evaluation category.
  */
-public interface CategoryEvaluationType {
+
+public interface EvaluationType {
     /**
      * Return the name of the category.
      * @return the name of the category.

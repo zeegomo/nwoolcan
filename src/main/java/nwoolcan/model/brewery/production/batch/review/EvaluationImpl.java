@@ -6,19 +6,19 @@ import java.util.Optional;
 /**
  * CategoryEvaluation.
  */
-public final class CategoryEvaluationImpl implements CategoryEvaluation {
-    private final CategoryEvaluationType category;
+public final class EvaluationImpl implements Evaluation {
+    private final EvaluationType category;
     private final int score;
     private final Optional<String> notes;
 
-    CategoryEvaluationImpl(final CategoryEvaluationType evaluationCategory, final int score, final Optional<String> notes) {
-        this.category = evaluationCategory;
+    EvaluationImpl(final EvaluationType evaluationType, final int score, final Optional<String> notes) {
+        this.category = evaluationType;
         this.score = score;
         this.notes = notes;
     }
 
     @Override
-    public CategoryEvaluationType getCategory() {
+    public EvaluationType getEvaluationType() {
         return this.category;
     }
 
@@ -28,23 +28,22 @@ public final class CategoryEvaluationImpl implements CategoryEvaluation {
     }
 
     @Override
-    public int getMaxScore() {
-        return category.getMaxScore();
-    }
-
-    @Override
     public Optional<String> getNotes() {
         return notes;
     }
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        if (o instanceof CategoryEvaluation) {
-            CategoryEvaluation that = (CategoryEvaluation) o;
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        if (o instanceof Evaluation) {
+            Evaluation that = (Evaluation) o;
             return score == that.getScore()
-                && Objects.equals(category, that.getCategory());
+                && Objects.equals(category, that.getEvaluationType());
         } else {
             return false;
         }
