@@ -15,7 +15,7 @@ public class TestBeerArticle {
     private final String name = "DummyName";
 
     /**
-     * Method that tests the constructor with both null id and name.
+     * Method that tests the constructor with null batch.
      */
     @Test(expected = NullPointerException.class)
     public void testConstructorWithNullBatch() {
@@ -31,7 +31,9 @@ public class TestBeerArticle {
         Assert.assertEquals(ArticleType.FINISHED_BEER, beerArticle.getArticleType());
         Objects.requireNonNull(beerArticle.toBeerArticle());
         Assert.assertTrue(beerArticle.toBeerArticle().isPresent());
-        Assert.assertEquals(BeerArticleImpl.class, beerArticle.toBeerArticle().getValue().getClass());
+        Assert.assertEquals(BeerArticleImpl.class, beerArticle.toBeerArticle()
+                                                              .getValue()
+                                                              .getClass());
         Assert.assertEquals(batch, beerArticle.toBeerArticle().getValue().getBatch());
     }
 
