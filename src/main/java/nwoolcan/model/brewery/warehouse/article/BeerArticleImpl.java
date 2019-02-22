@@ -28,7 +28,7 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
      */
     @Override
     public Result<BeerArticle> toBeerArticle() {
-        return null;
+        return Result.of(this);
     }
 
     @Override

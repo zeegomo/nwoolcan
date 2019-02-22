@@ -54,8 +54,7 @@ public class ArticleImpl implements Article {
      */
     @Override
     public Result<IngredientArticle> toIngredientArticle() {
-        return Result.error(new IllegalAccessException("This is a general Article, not an"
-            + "Ingredient."));
+        return Result.error(new IllegalAccessException("This is not Ingredient Article."));
     }
     /**
      * To override this method return the linked BeerArticle in case it is an ingredient,
@@ -64,8 +63,7 @@ public class ArticleImpl implements Article {
      */
     @Override
     public Result<BeerArticle> toBeerArticle() {
-        return Result.error(new IllegalAccessException("This is a general Article, not a"
-            + "Beer."));
+        return Result.error(new IllegalAccessException("This is not a Beer Article"));
     }
 
 }
