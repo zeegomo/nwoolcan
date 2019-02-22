@@ -48,7 +48,7 @@ public class TestArticle {
         new ArticleImpl(negId, name);
     }
     /**
-     * Method that tests the getters.
+     * Method that tests the getters and relative errors.
      */
     @Test
     public void testGetters() {
@@ -56,9 +56,13 @@ public class TestArticle {
         Assert.assertEquals(id, article.getId());
         Assert.assertEquals(name, article.getName());
         Assert.assertEquals(ArticleType.MISC, article.getArticleType());
-        /*
-         * Missing test for toIngredientArticle and toBeerArticle because Result is not implemented yet.
-         */
+        Assert.assertTrue(article.toIngredientArticle().isError());
+        Assert.assertEquals(IllegalAccessException.class, article.toIngredientArticle()
+                                                                 .getError().getClass());
+        Assert.assertTrue(article.toBeerArticle().isError());
+        Assert.assertEquals(IllegalAccessException.class, article.toBeerArticle()
+                                                                 .getError().getClass());
+
     }
 
 }

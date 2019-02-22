@@ -54,10 +54,8 @@ public class ArticleImpl implements Article {
      */
     @Override
     public Result<IngredientArticle> toIngredientArticle() {
-        /*
-        Missing tests, not implemented yet.
-         */
-        return null;
+        return Result.error(new IllegalAccessException("This is a general Article, not an"
+            + "Ingredient."));
     }
     /**
      * To override this method return the linked BeerArticle in case it is an ingredient,
@@ -66,10 +64,8 @@ public class ArticleImpl implements Article {
      */
     @Override
     public Result<BeerArticle> toBeerArticle() {
-        /*
-        Missing tests, not implemented yet.
-         */
-        return null;
+        return Result.error(new IllegalAccessException("This is a general Article, not a"
+            + "Beer."));
     }
 
 }
