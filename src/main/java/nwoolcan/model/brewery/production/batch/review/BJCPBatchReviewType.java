@@ -75,16 +75,7 @@ public final class BJCPBatchReviewType implements BatchReviewType {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof BatchReviewType)) {
-            return false;
-        }
-        BatchReviewType that = (BatchReviewType) o;
-        return MAX_SCORE == that.getMaxScore()
-            && Objects.equals(NAME, that.getName())
-            && Objects.equals(this.getCategories(), that.getCategories());
+        return (o instanceof BJCPBatchReviewType);
     }
 
     @Override
