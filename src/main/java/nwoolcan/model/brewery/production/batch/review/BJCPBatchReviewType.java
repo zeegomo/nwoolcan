@@ -92,4 +92,9 @@ public final class BJCPBatchReviewType implements BatchReviewType {
         return Objects.hash(NAME, MAX_SCORE, this.getCategories());
     }
 
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
 }

@@ -3,7 +3,7 @@ package nwoolcan.model.brewery.production.batch.review;
 import java.util.Collection;
 
 /**
- * Bathc review type.
+ * Batch review type.
  */
 public interface BatchReviewType extends EvaluationType {
     /**

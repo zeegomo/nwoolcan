@@ -6,7 +6,7 @@ import java.util.Optional;
 /**
  * CategoryEvaluation.
  */
-public final class EvaluationImpl implements Evaluation {
+public class EvaluationImpl implements Evaluation {
     private final EvaluationType category;
     private final int score;
     private final Optional<String> notes;
@@ -17,21 +17,36 @@ public final class EvaluationImpl implements Evaluation {
         this.notes = notes;
     }
 
+    /**
+     * @return an EvaluationType.
+     */
     @Override
     public EvaluationType getEvaluationType() {
         return this.category;
     }
 
+    /**
+     * @return the score of this evaluation.
+     */
     @Override
     public int getScore() {
         return this.score;
     }
 
+    /**
+     * @return the notes, if any, for this evaluation.
+     */
     @Override
     public Optional<String> getNotes() {
         return notes;
     }
 
+    /**
+     * Test for equality.
+     *
+     * @param o the other object
+     * @return if o is equal to this.
+     */
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -50,8 +65,19 @@ public final class EvaluationImpl implements Evaluation {
 
     }
 
+    /**
+     * @return the hashcode for this class.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(category, score);
+    }
+
+    /**
+     * @return the string representation for this class.
+     */
+    @Override
+    public String toString() {
+        return "[Evaluation] score: " + this.score + "/" + this.category.getMaxScore() + " type: " + this.category.getName();
     }
 }
