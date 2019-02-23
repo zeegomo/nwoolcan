@@ -75,7 +75,7 @@ public class TestBatchReview {
             .reset()
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA,
                 BJCPBatchReviewType.BJCPCategories.AROMA.getMaxScore())
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, -3)
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, -1)
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR,
                 BJCPBatchReviewType.BJCPCategories.FLAVOR.getMaxScore())
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.MOUTHFEEL, 4)
