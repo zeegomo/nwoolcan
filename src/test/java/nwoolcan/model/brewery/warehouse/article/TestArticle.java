@@ -73,14 +73,13 @@ public class TestArticle {
             = new ArticleImpl(id, name);
         final Article art2
             = new ArticleImpl(id, name);
-        final Article art3 = art1;
         final Article art4
             = new ArticleImpl(id + 1, name);
         Assert.assertEquals(art1, art2);
         Assert.assertEquals(art1, art1);
-        Assert.assertEquals(art1, art3);
+        Assert.assertEquals(art1, art1);
         Assert.assertNotEquals(art1, art4);
-        Assert.assertNotEquals(art4, art3);
+        Assert.assertNotEquals(art4, art1);
     }
 
 }
