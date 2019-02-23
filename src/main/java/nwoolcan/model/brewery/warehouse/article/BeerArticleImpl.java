@@ -41,4 +41,31 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
         return this.batch;
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ batch.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof BeerArticleImpl)) {
+            return false;
+        }
+
+        BeerArticleImpl other = (BeerArticleImpl) obj;
+
+        return this.batch.equals(other.getBatch())
+            && this.getName().equals(other.getName())
+            && this.getId().equals(other.getId());
+    }
+
+    @Override
+    public String toString() {
+        return ""; //TODO
+    }
+
 }

@@ -66,4 +66,33 @@ public class ArticleImpl implements Article {
         return Result.error(new IllegalAccessException("This is not a Beer Article"));
     }
 
+    /**
+     * To override this method you can xor the result of this with the hash code of the other fields.
+     * @return the result of the xor operation between id and the hash of the name.
+     */
+    @Override
+    public int hashCode() {
+        return id ^ name.hashCode();
+    }
+
+    /**
+     * To override this method compare all the fields of the classes.
+     * @param obj the object to be compared with.
+     * @return true if all the fields contains respectively the same value.
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof ArticleImpl)) {
+            return false;
+        }
+
+        ArticleImpl other = (ArticleImpl) obj;
+        return this.id.equals(other.getId())
+            && this.name.equals(other.getName());
+    }
+
 }

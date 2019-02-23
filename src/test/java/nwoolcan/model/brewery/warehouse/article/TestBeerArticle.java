@@ -36,5 +36,23 @@ public class TestBeerArticle {
                                                               .getClass());
         Assert.assertEquals(batch, beerArticle.toBeerArticle().getValue().getBatch());
     }
-
+    /**
+     * Method that tests the equals method.
+     */
+    @Test
+    public void testEquals() {
+        Batch batch = new Batch() { };
+        final BeerArticle beerArt1
+            = new BeerArticleImpl(id, name, batch);
+        final BeerArticle beerArt2
+            = new BeerArticleImpl(id, name, batch);
+        final BeerArticle beerArt3 = beerArt1;
+        final BeerArticle beerArt4
+            = new BeerArticleImpl(id + 1, name, batch);
+        Assert.assertEquals(beerArt1, beerArt2);
+        Assert.assertEquals(beerArt1, beerArt1);
+        Assert.assertEquals(beerArt1, beerArt3);
+        Assert.assertNotEquals(beerArt1, beerArt4);
+        Assert.assertNotEquals(beerArt4, beerArt3);
+    }
 }

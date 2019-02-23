@@ -16,7 +16,8 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
      * @param name the name of the ingredient article.
      * @param ingredientType the type of ingredient article.
      */
-    public IngredientArticleImpl(final Integer id, final String name, final IngredientType ingredientType) {
+    public IngredientArticleImpl(final Integer id, final String name,
+                                 final IngredientType ingredientType) {
         super(id, name);
         this.ingredientType = Objects.requireNonNull(ingredientType);
     }
@@ -37,6 +38,30 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
     @Override
     public IngredientType getIngredientType() {
         return this.ingredientType;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ ingredientType.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof IngredientArticleImpl)) {
+            return false;
+        }
+        IngredientArticleImpl other = (IngredientArticleImpl) obj;
+        return (this.ingredientType == other.getIngredientType()
+               && (this.getId().equals(other.getId()))
+               && (this.getName().equals(other.getName())));
+    }
+
+    @Override
+    public String toString() {
+        return ""; //TODO
     }
 
 }

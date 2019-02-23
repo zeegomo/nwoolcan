@@ -36,5 +36,23 @@ public class TestIngredientArticle {
                                                              .getValue()
                                                              .getIngredientType());
     }
+    /**
+     * Method that tests the equals method.
+     */
+    @Test
+    public void testEquals() {
+        final IngredientArticle ingArt1
+            = new IngredientArticleImpl(id, name, IngredientType.FERMENTABLE);
+        final IngredientArticle ingArt2
+            = new IngredientArticleImpl(id, name, IngredientType.FERMENTABLE);
+        final IngredientArticle ingArt3 = ingArt1;
+        final IngredientArticle ingArt4
+            = new IngredientArticleImpl(id, name, IngredientType.HOPS);
+        Assert.assertEquals(ingArt1, ingArt2);
+        Assert.assertEquals(ingArt1, ingArt1);
+        Assert.assertEquals(ingArt1, ingArt3);
+        Assert.assertNotEquals(ingArt1, ingArt4);
+        Assert.assertNotEquals(ingArt4, ingArt3);
+    }
 
 }
