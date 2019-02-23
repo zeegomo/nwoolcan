@@ -48,8 +48,7 @@ public class TestBatchReview {
 
         Result<BatchReview> test1 = builder
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA, 10)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA, 10)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, 3)
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, 10)
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR,
                 BJCPBatchReviewType.BJCPCategories.FLAVOR.getMaxScore())
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.MOUTHFEEL, 4)
@@ -67,10 +66,23 @@ public class TestBatchReview {
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR,
                 BJCPBatchReviewType.BJCPCategories.FLAVOR.getMaxScore())
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.MOUTHFEEL, 4)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.OVERALL_IMPRESSION, 10)
             .addReviewer("Andrea")
             .build();
 
         assertTrue(test2.isError());
+
+        Result<BatchReview> test3 = builder
+            .reset()
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA,
+                BJCPBatchReviewType.BJCPCategories.AROMA.getMaxScore())
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, -3)
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR,
+                BJCPBatchReviewType.BJCPCategories.FLAVOR.getMaxScore())
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.MOUTHFEEL, 4)
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.OVERALL_IMPRESSION, 10)
+            .addReviewer("Andrea")
+            .build();
+
+        assertTrue(test3.isError());
     }
 }
