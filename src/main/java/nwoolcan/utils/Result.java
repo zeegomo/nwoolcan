@@ -78,7 +78,7 @@ public final class Result<T> {
      */
     @SuppressWarnings("unchecked")
     public <U> Result<U> map(final Function<? super T, ? extends U> mapper) {
-        Objects.requireNonNull(mapper);
+        Objects.requireNonNull(mapper); //could become Results.requireNonNull
         return this.isPresent() ? Result.of(mapper.apply(this.elem.get())) : (Result<U>) this;
     }
     /**
@@ -89,7 +89,7 @@ public final class Result<T> {
      */
     @SuppressWarnings("unchecked")
     public <U> Result<U> flatMap(final Function<? super T, Result<U>> mapper) {
-        Objects.requireNonNull(mapper);
+        Objects.requireNonNull(mapper); //could become Results.requireNonNull
         return this.isPresent() ? mapper.apply(this.elem.get()) : (Result<U>) this;
     }
     /**

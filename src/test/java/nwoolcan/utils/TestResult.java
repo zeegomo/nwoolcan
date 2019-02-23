@@ -43,6 +43,7 @@ public class TestResult {
         assertNotEquals(present, presentEmpty);
         assertNotEquals(present, exception);
     }
+
     /**
      * Tests getting an error from a Result holding a value.
      */
@@ -51,6 +52,7 @@ public class TestResult {
         Result<Empty> empty = Result.ofEmpty();
         Exception e = empty.getError();
     }
+
     /**
      * Tests orElse.
      */
@@ -60,6 +62,7 @@ public class TestResult {
         assertTrue(error.orElse(2).equals(2));
         Integer i = error.getValue();
     }
+
     /**
      * Tests require.
      */
@@ -68,14 +71,17 @@ public class TestResult {
         assertTrue(Result.of(4).require(i -> i > 2).isPresent());
         assertTrue(Result.of(4).require(i -> i < 2).isError());
     }
+
     /**
      * Tests requireNonNull.
      */
     @Test
     public void testRequireNonNull() {
         assertTrue(Results.requireNonNull(null).isError());
-        assertTrue(Results.requireNonNull(new Empty() { }).isPresent());
+        assertTrue(Results.requireNonNull(new Empty() {
+        }).isPresent());
     }
+
     /**
      * Test map.
      */
@@ -113,8 +119,9 @@ public class TestResult {
         Result<Integer> l = duke.map(String::length);
         assertTrue(l.getValue() == 4);
     }
+
     /**
-     *  Test flatMap.
+     * Test flatMap.
      */
     @Test
     public void testFlatMap() {
@@ -152,7 +159,5 @@ public class TestResult {
         l = duke.flatMap(s -> fixture);
         assertSame(l, fixture);
     }
-
-
 }
 
