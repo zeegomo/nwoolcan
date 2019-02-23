@@ -5,7 +5,8 @@ import org.junit.Test;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test BatchReview.
@@ -22,7 +23,8 @@ public class TestBatchReview {
         Result<BatchReview> bjcp = builder
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA, 10)
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, 3)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR, 20)
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR,
+                BJCPBatchReviewType.BJCPCategories.FLAVOR.getMaxScore())
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.MOUTHFEEL, 4)
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.OVERALL_IMPRESSION, 10)
             .addReviewer("Andrea")
@@ -48,7 +50,8 @@ public class TestBatchReview {
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA, 10)
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA, 10)
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, 3)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR, 20)
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR,
+                BJCPBatchReviewType.BJCPCategories.FLAVOR.getMaxScore())
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.MOUTHFEEL, 4)
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.OVERALL_IMPRESSION, 10)
             .addReviewer("Andrea")
@@ -58,9 +61,11 @@ public class TestBatchReview {
 
         Result<BatchReview> test2 = builder
             .reset()
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA, 15)
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA,
+                BJCPBatchReviewType.BJCPCategories.AROMA.getMaxScore())
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, 3)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR, 20)
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR,
+                BJCPBatchReviewType.BJCPCategories.FLAVOR.getMaxScore())
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.MOUTHFEEL, 4)
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.OVERALL_IMPRESSION, 10)
             .addReviewer("Andrea")
