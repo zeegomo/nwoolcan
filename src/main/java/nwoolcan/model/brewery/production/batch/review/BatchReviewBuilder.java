@@ -6,9 +6,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
- * BJCP builder.
+ * {@link BatchReview} builder.
+ * Handles all error checking for the construction of a new {@link BatchReview}.
  */
 
 public final class BatchReviewBuilder {
@@ -18,7 +20,7 @@ public final class BatchReviewBuilder {
     private final BatchReviewType batchReviewType;
 
     /**
-     * Return a collection of all available Review types.
+     * Return a collection of all available {@link BatchReviewType} types.
      *
      * @return a collection of all available Review types.
      */
@@ -28,9 +30,9 @@ public final class BatchReviewBuilder {
     }
 
     /**
-     * Create a BatchReviewBuilder.
+     * Create a {@link BatchReviewBuilder}.
      *
-     * @param batchReviewType the type of this Review (implements the Strategy pattern)
+     * @param batchReviewType the {@link BatchReviewType} of this {@link BatchReview} (implements the Strategy pattern)
      */
     public BatchReviewBuilder(final BatchReviewType batchReviewType) {
         this.batchReviewType = batchReviewType;
@@ -39,9 +41,9 @@ public final class BatchReviewBuilder {
     /**
      * Add evaluation for a category with notes.
      *
-     * @param type category.
-     * @param score    score.
-     * @param notes    notes.
+     * @param type  category.
+     * @param score score.
+     * @param notes notes.
      * @return this.
      */
     public BatchReviewBuilder addEvaluation(final EvaluationType type, final int score, final String notes) {
@@ -52,8 +54,8 @@ public final class BatchReviewBuilder {
     /**
      * Add evaluation for a category without notes.
      *
-     * @param type category.
-     * @param score    score.
+     * @param type  category.
+     * @param score score.
      * @return this.
      */
     public BatchReviewBuilder addEvaluation(final EvaluationType type, final int score) {
@@ -90,12 +92,19 @@ public final class BatchReviewBuilder {
      */
     public Result<BatchReview> build() {
         return Result.of(this)
-            .require(BatchReviewBuilder::checkEvaluationsValidity)
-            .map(builder -> new BatchReviewImpl(builder.batchReviewType, builder.evaluations, Optional.ofNullable(builder.reviewer), Optional.ofNullable(builder.notes)));
+            .require(BatchReviewBuilder::checkEvaluationsTypeValidity)
+            .require(builder -> builder.evaluations
+                .stream()
+                .allMatch(cat -> cat.getScore() >= 0
+                    && cat.getScore() <= cat.getEvaluationType().getMaxScore()))
+            .map(builder -> new BatchReviewImpl(builder.batchReviewType,
+                builder.evaluations,
+                Optional.ofNullable(builder.reviewer),
+                Optional.ofNullable(builder.notes)));
     }
 
     /**
-     * Resets the builder but not the BatchReviewType.
+     * Resets the builder but not the {@link BatchReviewType}.
      *
      * @return this
      */
@@ -106,13 +115,12 @@ public final class BatchReviewBuilder {
         return this;
     }
 
-    private boolean checkEvaluationsValidity() {
-        return this.evaluations
+    private boolean checkEvaluationsTypeValidity() {
+        Collection<EvaluationType> catTypes = this.evaluations
             .stream()
-            .allMatch(evaluation ->
-                evaluation.getEvaluationType() != null
-                    && batchReviewType.getCategories().contains(evaluation.getEvaluationType())
-            )
-            && this.evaluations.size() == this.batchReviewType.getCategories().size();
+            .map(Evaluation::getEvaluationType)
+            .collect(Collectors.toList());
+        return catTypes.containsAll(this.batchReviewType.getCategories())
+            && this.batchReviewType.getCategories().containsAll(catTypes);
     }
 }
