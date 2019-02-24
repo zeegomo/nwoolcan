@@ -95,4 +95,15 @@ public class ArticleImpl implements Article {
             && this.name.equals(other.getName());
     }
 
+    /**
+     * @return the string format of the class.
+     */
+    @Override
+    public String toString() {
+        return "[ArticleImpl] { "
+            + "Id:" + getId() + ", "
+            + "Name:" + getName() + " "
+            + "}";
+    }
+
 }

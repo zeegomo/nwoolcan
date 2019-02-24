@@ -65,7 +65,11 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
 
     @Override
     public String toString() {
-        return ""; //TODO
+        return "[BeerArticleImpl] { "
+            + "Id:" + getId() + ", "
+            + "Name:" + getName() + ", "
+            + "Batch:" + getBatch().toString() + " "
+            + "}";
     }
 
 }

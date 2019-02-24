@@ -61,7 +61,11 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
 
     @Override
     public String toString() {
-        return ""; //TODO
+        return "[IngredientArticleImpl] { "
+            + "Id:" + getId() + ", "
+            + "Name:" + getName() + ", "
+            + "IngredientType:" + getIngredientType().toString() + " "
+            + "}";
     }
 
 }
