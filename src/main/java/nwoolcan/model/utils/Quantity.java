@@ -7,6 +7,9 @@ import java.util.Objects;
  */
 public final class Quantity {
 
+    private static final String VALUE_NEGATIVE_MESSAGE = "Value cannot be negative.";
+    private static final String NULL_UM_MESSAGE = "Unit of measure cannot be null";
+
     private final Number value;
     private final UnitOfMeasure unitOfMeasure;
 
@@ -37,8 +40,15 @@ public final class Quantity {
      * @param value new quantity value.
      * @param unitOfMeasure new quantity unit of measure.
      * @return a new {@link Quantity} with the specified value and unit of measure.
+     * @throws IllegalArgumentException if the value is negative or the unit of measure is null
      */
     public static Quantity of(final Number value, final UnitOfMeasure unitOfMeasure) {
+        if (value.doubleValue() < 0) {
+            throw new IllegalArgumentException(VALUE_NEGATIVE_MESSAGE);
+        }
+        if (unitOfMeasure == null) {
+            throw new IllegalArgumentException(NULL_UM_MESSAGE);
+        }
         return new Quantity(value, unitOfMeasure);
     }
 
@@ -51,20 +61,20 @@ public final class Quantity {
             return false;
         }
         Quantity quantity = (Quantity) o;
-        return Objects.equals(value, quantity.value)
-            && unitOfMeasure == quantity.unitOfMeasure;
+        return Objects.equals(this.value, quantity.value)
+            && this.unitOfMeasure == quantity.unitOfMeasure;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value, unitOfMeasure);
+        return Objects.hash(this.value, this.unitOfMeasure);
     }
 
     @Override
     public String toString() {
         return "[Quantity]{"
-            + "value=" + value
-            + ", unitOfMeasure=" + unitOfMeasure
+            + "value=" + this.value
+            + ", unitOfMeasure=" + this.unitOfMeasure
             + '}';
     }
 }

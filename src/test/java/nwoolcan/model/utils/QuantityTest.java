@@ -11,14 +11,30 @@ import nwoolcan.utils.test.TestUtils;
 public class QuantityTest {
 
     /**
-     * Method that tests the constructor with no unit of measure.
+     * Method that tests a simple quantity creation.
      */
     @Test
-    public void testQuantitywithNoUnitOfMeasure() {
+    public void testQuantitySimpleCreation() {
         final int value = 20;
-        final Quantity q = Quantity.of(value, null);
+        final Quantity q = Quantity.of(value, UnitOfMeasure.Kilogram);
         Assert.assertEquals(value, q.getValue());
-        Assert.assertEquals(null, q.getUnitOfMeasure());
+        Assert.assertEquals(UnitOfMeasure.Kilogram, q.getUnitOfMeasure());
+    }
+
+    /**
+     * Method that tests quantity creation with negative value.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testQuantitywithNegativeValue() {
+        final Quantity q = Quantity.of(-2, UnitOfMeasure.Kilogram);
+    }
+
+    /**
+     * Method that tests quantity creation with no unit of measure.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testQuantitywithNoUnitOfMeasure() {
+        final Quantity q = Quantity.of(2, null);
     }
 
     /**
@@ -29,7 +45,7 @@ public class QuantityTest {
         final int value1 = 20;
         final int value2 = 20;
         final int value3 = 50;
-        final UnitOfMeasure um = null;
+        final UnitOfMeasure um = UnitOfMeasure.Kilogram;
         final Quantity q1 = Quantity.of(value1, um);
         final Quantity q2 = Quantity.of(value2, um);
         final Quantity q3 = Quantity.of(value3, um);
