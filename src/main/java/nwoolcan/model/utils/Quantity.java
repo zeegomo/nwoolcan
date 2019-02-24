@@ -1,5 +1,7 @@
 package nwoolcan.model.utils;
 
+import java.util.Objects;
+
 /**
  * Quantity class for handling value and unit of measure.
  */
@@ -38,5 +40,31 @@ public final class Quantity {
      */
     public static Quantity of(final Number value, final UnitOfMeasure unitOfMeasure) {
         return new Quantity(value, unitOfMeasure);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Quantity quantity = (Quantity) o;
+        return Objects.equals(value, quantity.value)
+            && unitOfMeasure == quantity.unitOfMeasure;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, unitOfMeasure);
+    }
+
+    @Override
+    public String toString() {
+        return "[Quantity]{"
+            + "value=" + value
+            + ", unitOfMeasure=" + unitOfMeasure
+            + '}';
     }
 }
