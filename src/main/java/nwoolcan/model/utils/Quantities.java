@@ -25,9 +25,8 @@ public final class Quantities {
      * @return a new {@link Result<Quantity>} that is the adding quantity added to the base quantity.
      */
     public static Result<Quantity> add(final Quantity base, final Quantity adding) {
-        return checkSameUM(base, adding)
-            ? Result.of(Quantity.of(Numbers.add(base.getValue(), adding.getValue()), base.getUnitOfMeasure()))
-            : Result.error(new ArithmeticException(NOT_SAME_UM_MESSAGE));
+        return Result.of(Quantity.of(Numbers.add(base.getValue(), adding.getValue()), base.getUnitOfMeasure()))
+                     .require(q -> checkSameUM(q, adding), new ArithmeticException(NOT_SAME_UM_MESSAGE));
     }
 
     /**
@@ -40,10 +39,9 @@ public final class Quantities {
      * @return a new {@link Result<Quantity>} that is the removing quantity removed to the base quantity.
      */
     public static Result<Quantity> remove(final Quantity base, final Quantity removing) {
-        return checkSameUM(base, removing)
-            ? Numbers.subtract(base.getValue(), removing.getValue()).doubleValue() >= 0
-                ? Result.of(Quantity.of(Numbers.subtract(base.getValue(), removing.getValue()), base.getUnitOfMeasure()))
-                : Result.error(new IllegalStateException(NEGATIVE_VALUE_MESSAGE))
-            : Result.error(new ArithmeticException(NOT_SAME_UM_MESSAGE));
+        return Result.of(Numbers.subtract(base.getValue(), removing.getValue()))
+                     .require(n -> n.doubleValue() >= 0, new IllegalStateException(NEGATIVE_VALUE_MESSAGE))
+                     .map(n -> Quantity.of(n, base.getUnitOfMeasure()))
+                     .require(q -> checkSameUM(q, removing), new ArithmeticException(NOT_SAME_UM_MESSAGE));
     }
 }
