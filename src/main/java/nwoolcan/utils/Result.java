@@ -44,14 +44,14 @@ public final class Result<T> {
     }
     /**
      * Return true if the {@link Result} holds a value.
-     * @return wheter the {@link Result} holds a value
+     * @return whether the {@link Result} holds a value
      */
     public boolean isPresent() {
         return this.elem.isPresent();
     }
     /**
      * Return true if the {@link Result} holds an exception.
-     * @return wheter the {@link Result} holds an exception
+     * @return whether the {@link Result} holds an exception
      */
     public boolean isError() {
         return this.exception.isPresent();
@@ -136,7 +136,7 @@ public final class Result<T> {
         }
     }
     /**
-     * Indicates wheter some other object is "equal to" this {@link Result}. The other object is considered equal if:
+     * Indicates whether some other object is "equal to" this {@link Result}. The other object is considered equal if:
      *  - it is also a {@link Result} and:
      *  - the present values are "equal to" each other via equals().
      * @param obj an object to be tested for equality
@@ -174,10 +174,10 @@ public final class Result<T> {
         return this.isPresent() ? this.elem.get().hashCode() : 0;
     }
     /**
-     * Return a {@link Optional}  desribing the value if present. Otherwise returns an empty {@link Optional}
+     * Return a {@link Optional}  describing the value if present. Otherwise returns an empty {@link Optional}
      * @return a {@link Optional} describing the value if present, or an empty {@link Optional} if this {@link Result} hold an exception
      */
     public Optional<T> toOptional() {
-        return this.elem;
+        return this.isPresent() ? Optional.of(this.elem.get()) : Optional.empty();
     }
 }
