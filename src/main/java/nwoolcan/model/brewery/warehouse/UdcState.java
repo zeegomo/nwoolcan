@@ -8,6 +8,6 @@ public enum UdcState {
     /**
      * In production, available to be used and already consumed.
      */
-    AVAILABLE, CONSUMED;
+    AVAILABLE, CONSUMED, EXPIRED;
 
 }
