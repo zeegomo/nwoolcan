@@ -53,13 +53,13 @@ public interface Udc {
      * @param quantity the quantity to be added to the udc.
      * @return a {@link Result} of {@link Empty} which reports possible errors.
      */
-    Result<Empty> addQuantity(Quantity quantity);
+    Result<Empty> addQuantity(Quantity quantity); //TODO delete if pr pass
     /**
      * Removes a certain quantity from the current udc.
      * @param quantity the {@link Quantity} to be removed from the current udc.
      * @return a {@link Result} of {@link Empty} which reports possible errors.
      */
-    Result<Empty> removeQuantity(Quantity quantity);
+    Result<Empty> removeQuantity(Quantity quantity); //TODO delete if pr pass
     /**
      * Consumes a certain quantity from the current udc creating a new Udc with that quantity.
      * The {@link UdcState} of the new Udc will be CONSUMED.
@@ -73,18 +73,6 @@ public interface Udc {
      * @param quantity the quantity that will be set to the current udc.
      * @return a {@link Result} of {@link Empty} which reports possible errors.
      */
-    Result<Empty> setQuantity(Quantity quantity);
-    /**
-     * Updates the last change date of the current udc.
-     * @return a {@link Result} of {@link Empty} which reports possible errors.
-     */
-    Result<Empty> updateLastChangeDate();
-    /**
-     * Changes the state of the current udc to newState.
-     * It is not possible to call this function on Article of type BeerArticle. Use consume instead.
-     * @param newState the new state of the current udc.
-     * @return a {@link Result} of {@link Empty} which reports possible errors.
-     */
-    Result<Empty> changeState(UdcState newState);
+    Result<Empty> setQuantity(Quantity quantity); //TODO delete if pr pass
 
 }
