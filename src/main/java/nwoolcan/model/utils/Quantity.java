@@ -8,13 +8,15 @@ import java.util.Objects;
 public final class Quantity {
 
     private static final String VALUE_NEGATIVE_MESSAGE = "Value cannot be negative.";
-    private static final String NULL_UM_MESSAGE = "Unit of measure cannot be null";
+    private static final String CANNOT_BE_QUANTITY_MESSAGE = "Unit of measure cannot be a quantity.";
 
     private final Number value;
     private final UnitOfMeasure unitOfMeasure;
 
     //Private constructor to use as a static factory with method Quantity.of(...).
     private Quantity(final Number value, final UnitOfMeasure um) {
+        Objects.requireNonNull(value);
+        Objects.requireNonNull(um);
         this.value = value;
         this.unitOfMeasure = um;
     }
@@ -40,16 +42,18 @@ public final class Quantity {
      * @param value new quantity value.
      * @param unitOfMeasure new quantity unit of measure.
      * @return a new {@link Quantity} with the specified value and unit of measure.
-     * @throws IllegalArgumentException if the value is negative or the unit of measure is null
+     * @throws NullPointerException if the value is null or if the unit of measure is null.
+     * @throws IllegalArgumentException if the value is negative or if the unit of measure cannot be a quantity.
      */
     public static Quantity of(final Number value, final UnitOfMeasure unitOfMeasure) {
-        if (value.doubleValue() < 0) {
+        final Quantity res = new Quantity(value, unitOfMeasure);
+        if (res.getValue().doubleValue() < 0) {
             throw new IllegalArgumentException(VALUE_NEGATIVE_MESSAGE);
         }
-        if (unitOfMeasure == null) {
-            throw new IllegalArgumentException(NULL_UM_MESSAGE);
+        if (!res.getUnitOfMeasure().canBeQuantity()) {
+            throw new IllegalArgumentException(CANNOT_BE_QUANTITY_MESSAGE);
         }
-        return new Quantity(value, unitOfMeasure);
+        return res;
     }
 
     @Override
