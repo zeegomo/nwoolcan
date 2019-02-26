@@ -20,11 +20,14 @@ public class QuantitiesTest {
     private static final Number V3 = 200;
     private static final Number V4 = 200;
 
+    private static final UnitOfMeasure UM1 = UnitOfMeasure.Kilogram;
+    private static final UnitOfMeasure UM2 = UnitOfMeasure.Liter;
+
     private void initQuantities() {
-        this.q1 = Quantity.of(V1, UnitOfMeasure.Kilogram);
-        this.q2 = Quantity.of(V2, UnitOfMeasure.Kilogram);
-        this.q3 = Quantity.of(V3, UnitOfMeasure.Kilogram);
-        this.q4 = Quantity.of(V4, UnitOfMeasure.Liter);
+        this.q1 = Quantity.of(V1, UM1);
+        this.q2 = Quantity.of(V2, UM1);
+        this.q3 = Quantity.of(V3, UM1);
+        this.q4 = Quantity.of(V4, UM2);
     }
 
     /**
@@ -41,9 +44,9 @@ public class QuantitiesTest {
         Assert.assertTrue(sum2res.isPresent());
         Assert.assertTrue(sum3res.isPresent());
 
-        TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.add(V1, V2), UnitOfMeasure.Kilogram), sum1res.getValue());
-        TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.add(V1, V3), UnitOfMeasure.Kilogram), sum2res.getValue());
-        TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.add(V2, V3), UnitOfMeasure.Kilogram), sum3res.getValue());
+        TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.add(V1, V2), UM1), sum1res.getValue());
+        TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.add(V1, V3), UM1), sum2res.getValue());
+        TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.add(V2, V3), UM1), sum3res.getValue());
     }
 
     /**
@@ -60,7 +63,7 @@ public class QuantitiesTest {
         Assert.assertTrue(rem2res.isError());
         Assert.assertTrue(rem3res.isError());
 
-        TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.subtract(V1, V2), UnitOfMeasure.Kilogram), rem1res.getValue());
+        TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.subtract(V1, V2), UM1), rem1res.getValue());
     }
 
     /**
