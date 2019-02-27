@@ -11,7 +11,7 @@ public enum UnitOfMeasure {
     /**
      * Unit of measures that cannot be used as quantity.
      */
-    Celcius(false, true);
+    Celsius(false, true);
 
     private boolean canBeQuantity;
     private boolean canBeParameter;
