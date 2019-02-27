@@ -1,7 +1,27 @@
 package nwoolcan.model.brewery.production.batch.step;
 
+import java.util.Date;
+
 /**
- * Parameter.
+ * Interface that keeps track of a parameter registered in the production process.
  */
 public interface Parameter {
+
+    /**
+     * Returns the {@link ParameterType} of this parameter.
+     * @return the {@link ParameterType} of this parameter.
+     */
+    ParameterType getType();
+
+    /**
+     * Returns the value of the registration.
+     * @return the value of the registration.
+     */
+    Number getValue();
+
+    /**
+     * Returns the date of the registration.
+     * @return the date of the registration.
+     */
+    Date getDate();
 }
