@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * Test class for {@link StepInfoImpl}.
  */
-public class StepInfoImplTest {
+public class StepInfoTest {
 
     private static final StepType ST1 = StepType.Mashing;
     private static final Date NOW = new Date();

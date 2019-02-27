@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.Assert;
 
 /**
- * Test Quantities utils class.
+ * Test class for {@link Quantities} utils class.
  */
 public class QuantitiesTest {
 

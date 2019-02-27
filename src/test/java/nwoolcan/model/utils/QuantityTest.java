@@ -6,7 +6,7 @@ import org.junit.Test;
 import nwoolcan.utils.test.TestUtils;
 
 /**
- * Test quantity class.
+ * Test class for {@link Quantity} class.
  */
 public class QuantityTest {
 
