@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Optional;
 
 /**
- * StepInfo.
+ * Interface that describes all basic information that has a production step.
  */
 public interface StepInfo {
 
