@@ -2,6 +2,7 @@ package nwoolcan.model.utils;
 
 import nwoolcan.utils.Result;
 import nwoolcan.utils.test.TestUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
 
@@ -23,7 +24,11 @@ public class QuantitiesTest {
     private static final UnitOfMeasure UM1 = UnitOfMeasure.Kilogram;
     private static final UnitOfMeasure UM2 = UnitOfMeasure.Liter;
 
-    private void initQuantities() {
+    /**
+     * Sets up fields.
+     */
+    @Before
+    public void initQuantities() {
         this.q1 = Quantity.of(V1, UM1);
         this.q2 = Quantity.of(V2, UM1);
         this.q3 = Quantity.of(V3, UM1);

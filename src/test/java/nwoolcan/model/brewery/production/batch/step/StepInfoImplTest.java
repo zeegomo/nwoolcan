@@ -6,6 +6,7 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
@@ -25,12 +26,15 @@ public class StepInfoImplTest {
 
     private StepInfo si;
 
-    private void init() {
+    /**
+     * Sets up fields.
+     */
+    @Before
+    public void setUp() {
         this.si = new StepInfoImpl(ST1, NOW);
     }
 
     private void populate() {
-        init();
         this.si.setNote(NOTE1);
         this.si.setEndDate(FUTURE);
         this.si.setEndStepSize(Q1);
@@ -41,7 +45,6 @@ public class StepInfoImplTest {
      */
     @Test
     public void simpleConstructionTest() {
-        init();
         Assert.assertEquals(ST1, this.si.getType());
         Assert.assertEquals(NOW, this.si.getStartDate());
 
@@ -122,7 +125,6 @@ public class StepInfoImplTest {
      */
     @Test
     public void invalidEndDateTest() {
-        init();
         final Result<Empty> res = this.si.setEndDate(PAST);
         Assert.assertTrue(res.isError());
     }

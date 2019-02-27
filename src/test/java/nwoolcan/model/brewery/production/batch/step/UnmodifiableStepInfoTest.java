@@ -5,6 +5,7 @@ import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
@@ -22,7 +23,11 @@ public class UnmodifiableStepInfoTest {
 
     private StepInfo si;
 
-    private void init() {
+    /**
+     * Sets up fields.
+     */
+    @Before
+    public void setUp() {
         final StepInfo modsi = new StepInfoImpl(ST, START);
         this.si = new UnmodifiableStepInfo(modsi);
     }
@@ -40,7 +45,6 @@ public class UnmodifiableStepInfoTest {
      */
     @Test
     public void simpleConstructorTest() {
-        init();
         Assert.assertEquals(ST, this.si.getType());
         Assert.assertEquals(START, this.si.getStartDate());
     }
