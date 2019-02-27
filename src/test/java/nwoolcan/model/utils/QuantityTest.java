@@ -16,7 +16,7 @@ public class QuantityTest {
 
     private static final UnitOfMeasure GOOD_UM1 = UnitOfMeasure.Kilogram;
     private static final UnitOfMeasure GOOD_UM2 = UnitOfMeasure.Liter;
-    private static final UnitOfMeasure BAD_UM = UnitOfMeasure.Celcius;
+    private static final UnitOfMeasure BAD_UM = UnitOfMeasure.Celsius;
 
     /**
      * Method that tests a simple quantity creation.
