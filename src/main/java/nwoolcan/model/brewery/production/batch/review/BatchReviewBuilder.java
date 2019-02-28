@@ -1,6 +1,9 @@
 package nwoolcan.model.brewery.production.batch.review;
 
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ClassInfoList;
 import nwoolcan.utils.Result;
+import nwoolcan.utils.Results;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -24,9 +27,17 @@ public final class BatchReviewBuilder {
      *
      * @return a collection of all available Review types.
      */
-    public static Collection<BatchReviewType> getAvailableBatchReviewTypes() {
-        //ClassGraph
-        return null;
+    public static Result<Collection<BatchReviewType>> getAvailableBatchReviewTypes() {
+        return Results.ofCloseable(() ->  new ClassGraph().enableAllInfo().scan(), scanResult -> {
+            ClassInfoList widgetClasses = scanResult.getClassesImplementing(BatchReviewType.class.getName());
+            return widgetClasses
+                .loadClasses(BatchReviewType.class)
+                .stream()
+                .map(review -> Results.ofChecked(review::newInstance))
+                .filter(Result::isPresent)
+                .map(Result::getValue)
+                .collect(Collectors.toList());
+        });
     }
 
     /**
