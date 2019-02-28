@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * BatchReviewImpl.
+ * Implementation of {@link BatchReview}.
  */
 public final class BatchReviewImpl extends EvaluationImpl implements BatchReview {
     private final Collection<Evaluation> categories;

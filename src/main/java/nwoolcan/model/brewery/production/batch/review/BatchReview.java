@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface BatchReview extends Evaluation {
     /**
      * Return an identifier of the review type.
-      * @return an identifier of the review type
+     * @return an identifier of the review type
      */
     @Override
     BatchReviewType getEvaluationType();

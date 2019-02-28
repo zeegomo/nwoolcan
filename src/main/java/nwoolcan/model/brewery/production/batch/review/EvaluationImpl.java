@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * CategoryEvaluation.
+ * Implementation for {@link Evaluation}.
  */
 public class EvaluationImpl implements Evaluation {
     private final EvaluationType category;
@@ -18,7 +18,7 @@ public class EvaluationImpl implements Evaluation {
     }
 
     /**
-     * @return an EvaluationType.
+     * @return the {@link EvaluationType} of this evaluation.
      */
     @Override
     public EvaluationType getEvaluationType() {
@@ -55,8 +55,8 @@ public class EvaluationImpl implements Evaluation {
         if (o == null) {
             return false;
         }
-        if (o instanceof Evaluation) {
-            Evaluation that = (Evaluation) o;
+        if (o instanceof EvaluationImpl) {
+            EvaluationImpl that = (EvaluationImpl) o;
             return score == that.getScore()
                 && Objects.equals(category, that.getEvaluationType());
         } else {
@@ -78,6 +78,6 @@ public class EvaluationImpl implements Evaluation {
      */
     @Override
     public String toString() {
-        return "[Evaluation] score: " + this.score + "/" + this.category.getMaxScore() + " type: " + this.category.getName();
+        return "[EvaluationImpl] { score: " + this.score + "/" + this.category.getMaxScore() + " type: " + this.category.getName() + " }";
     }
 }
