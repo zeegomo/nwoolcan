@@ -3,6 +3,7 @@ package nwoolcan.utils;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
@@ -27,14 +28,6 @@ public final class Result<T> {
         return new Result<>(Optional.of(elem), Optional.empty());
     }
     /**
-     * @param <T> the type of elem
-     * @param elem the result to be encapsulated.
-     * @return a new Result<T> holding elem
-     */
-    public static <T> Result<T> ofNullable(final T elem) {
-        return new Result<>(Optional.ofNullable(elem), Optional.empty());
-    }
-    /**
      * @param <T> the type of the value to be returned, if any
      * @param e the exception to be encapsulated.
      * @return a new {@link Result} holding e
@@ -51,14 +44,14 @@ public final class Result<T> {
     }
     /**
      * Return true if the {@link Result} holds a value.
-     * @return wheter the {@link Result} holds a value
+     * @return whether the {@link Result} holds a value
      */
     public boolean isPresent() {
         return this.elem.isPresent();
     }
     /**
      * Return true if the {@link Result} holds an exception.
-     * @return wheter the {@link Result} holds an exception
+     * @return whether the {@link Result} holds an exception
      */
     public boolean isError() {
         return this.exception.isPresent();
@@ -85,8 +78,8 @@ public final class Result<T> {
      */
     @SuppressWarnings("unchecked")
     public <U> Result<U> map(final Function<? super T, ? extends U> mapper) {
-        Objects.requireNonNull(mapper);
-        return this.isPresent() ? Result.ofNullable(mapper.apply(this.elem.get())) : (Result<U>) this;
+        Objects.requireNonNull(mapper); //could become Results.requireNonNull
+        return this.isPresent() ? Result.of(mapper.apply(this.elem.get())) : (Result<U>) this;
     }
     /**
      * If a value is present, apply the provided {@link Result}-bearing function to it returning that {@link Result}. Otherwise return a {@link Result} holding the original exception.
@@ -96,7 +89,7 @@ public final class Result<T> {
      */
     @SuppressWarnings("unchecked")
     public <U> Result<U> flatMap(final Function<? super T, Result<U>> mapper) {
-        Objects.requireNonNull(mapper);
+        Objects.requireNonNull(mapper); //could become Results.requireNonNull
         return this.isPresent() ? mapper.apply(this.elem.get()) : (Result<U>) this;
     }
     /**
@@ -115,15 +108,35 @@ public final class Result<T> {
     public T orElse(final Supplier<? extends T> other) {
         return this.isPresent() ? this.elem.get() : other.get();
     }
-    /*
     /**
-     * If a value is present, and the value matches the given predicate, return a {@link Result} describing the value, otherwise return a {@link Result} holding the original exception.
+     * If the value is not present or the value is present and matches the given predicate, return this.
+     * Otherwise return a {@link Result} holding an {@link IllegalArgumentException}.
      * @param predicate a predicate to apply to the value, if present
      * @return a {@link Result} describing the value of this Optional if a value is present and the value matches the given predicate
-     *//*
-    Result<T> filter(Predicate<? super T> predicate);*/
+     */
+    public Result<T> require(final Predicate<? super T> predicate) {
+        if (this.isPresent()) {
+            return predicate.test(this.elem.get()) ? this : Result.error(new IllegalArgumentException());
+        } else {
+            return this;
+        }
+    }
     /**
-     * Indicates wheter some other object is "equal to" this {@link Result}. The other object is considered equal if:
+     * If the value is not present or the value is present and matches the given predicate, return this.
+     *      * Otherwise return a {@link Result} holding the specified exception.
+     * @param predicate a predicate to apply to the value, if present
+     * @param exception the exception to be hold in the resulting {@link Result} if the value does not match the predicate
+     * @return a {@link Result} describing the value of this Optional if a value is present and the value matches the given predicate
+     */
+    public Result<T> require(final Predicate<? super T> predicate, final Exception exception) {
+        if (this.isPresent()) {
+            return predicate.test(this.elem.get()) ? this : Result.error(exception);
+        } else {
+            return this;
+        }
+    }
+    /**
+     * Indicates whether some other object is "equal to" this {@link Result}. The other object is considered equal if:
      *  - it is also a {@link Result} and:
      *  - the present values are "equal to" each other via equals().
      * @param obj an object to be tested for equality
@@ -161,10 +174,10 @@ public final class Result<T> {
         return this.isPresent() ? this.elem.get().hashCode() : 0;
     }
     /**
-     * Return a {@link Optional}  desribing the value if present. Otherwise returns an empty {@link Optional}
+     * Return a {@link Optional}  describing the value if present. Otherwise returns an empty {@link Optional}
      * @return a {@link Optional} describing the value if present, or an empty {@link Optional} if this {@link Result} hold an exception
      */
     public Optional<T> toOptional() {
-        return this.elem;
+        return this.isPresent() ? Optional.of(this.elem.get()) : Optional.empty();
     }
 }
