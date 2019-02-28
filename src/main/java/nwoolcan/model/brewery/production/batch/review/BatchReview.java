@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * BatchReview.
+ * A review for a production batch.
  */
 public interface BatchReview extends Evaluation {
     /**
@@ -14,13 +14,13 @@ public interface BatchReview extends Evaluation {
     @Override
     BatchReviewType getEvaluationType();
     /**
-     * Return an identifier of the reviewer, like "John Doe".
+     * Return the name of the reviewer, like "John Doe".
      * @return an identifier of the reviewer.
      */
     Optional<String> getReviewer();
     /**
-     * Returns the category evaluations.
-     * @return the category evaluations.
+     * Returns the categories of this {@link BatchReview}.
+     * @return the categories of this {@link BatchReview}.
      */
     Collection<Evaluation> getCategoryEvaluations();
 }
