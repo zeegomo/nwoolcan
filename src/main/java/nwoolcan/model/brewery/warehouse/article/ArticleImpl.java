@@ -67,12 +67,12 @@ public class ArticleImpl implements Article {
     }
 
     /**
-     * To override this method you can xor the result of this with the hash code of the other fields.
+     * To override this method you should call Objects.hash with parameters this super class and the other fields.
      * @return the result of the xor operation between id and the hash of the name.
      */
     @Override
     public int hashCode() {
-        return id ^ name.hashCode();
+        return Objects.hash(id, name);
     }
 
     /**

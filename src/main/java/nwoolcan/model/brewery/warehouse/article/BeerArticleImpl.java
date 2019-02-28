@@ -43,7 +43,7 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
 
     @Override
     public int hashCode() {
-        return super.hashCode() ^ batch.hashCode();
+        return Objects.hash(super.hashCode(), batch);
     }
 
     @Override

@@ -42,7 +42,7 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
 
     @Override
     public int hashCode() {
-        return super.hashCode() ^ ingredientType.hashCode();
+        return Objects.hash(super.hashCode(), ingredientType);
     }
 
     @Override
