@@ -15,7 +15,7 @@ import static org.junit.Assert.assertSame;
 /**
  * Test Result class.
  */
-public class TestResult {
+public class ResultTest {
     /**
      * Test Result of Empty.
      */
