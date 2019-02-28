@@ -3,6 +3,7 @@ package nwoolcan.model.brewery.production.batch.review;
 import nwoolcan.utils.Result;
 import org.junit.Test;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
@@ -37,6 +38,21 @@ public class TestBatchReview {
         assertEquals(review.getNotes(), Optional.of("Very good"));
         assertEquals(review.getScore(), expectedValue);
         assertEquals(review.getEvaluationType(), new BJCPBatchReviewType());
+    }
+
+    /**
+     * Test builder.
+     */
+    @Test
+    public void testAvailableEvaluationTypes() {
+        final int expectedSize = 1;
+        BatchReviewBuilder builder = new BatchReviewBuilder(new BJCPBatchReviewType());
+        Result<Collection<BatchReviewType>> available = BatchReviewBuilder.getAvailableBatchReviewTypes();
+        assertTrue(available.isPresent());
+        Collection<BatchReviewType> types = available.getValue();
+        assertEquals(types.size(), 1);
+        assertTrue(types.contains(new BJCPBatchReviewType()));
+        System.out.println(types);
     }
 
     /**
