@@ -2,6 +2,8 @@ package nwoolcan.utils;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -70,6 +72,8 @@ public class ResultTest {
     public void testRequire() {
         assertTrue(Result.of(4).require(i -> i > 2).isPresent());
         assertTrue(Result.of(4).require(i -> i < 2).isError());
+        assertTrue(Result.ofEmpty().require(() -> false).isError());
+        assertTrue(Result.ofEmpty().require(() -> true).isPresent());
     }
 
     /**
@@ -158,6 +162,18 @@ public class ResultTest {
         // Verify same instance
         l = duke.flatMap(s -> fixture);
         assertSame(l, fixture);
+        assertEquals(l.flatMap(() -> Result.of(4)), Result.of(4));
+    }
+
+    /**
+     * Tests peek.
+     */
+    public void testPeek() {
+        Collection<Integer> coll = new ArrayList<>();
+        Result.of(2).peek(coll::add);
+        assertEquals(coll.size(), 1);
+        Result.error(new Exception()).peek(i -> coll.add(2));
+        assertEquals(coll.size(), 1);
     }
 }
 
