@@ -1,9 +1,18 @@
-package nwoolcan.model.brewery.production.batch.review;
+package nwoolcan.model.brewery.production.batch.review.types.;
+
+import nwoolcan.model.brewery.production.batch.review.BatchReviewType;
+import nwoolcan.model.brewery.production.batch.review.EvaluationType;
 
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * Dummy Review for testing.
+ */
 public enum DummyReview implements BatchReviewType {
+    /**
+     * Test only.
+     */
     DUMMY_REVIEW;
     enum DummyReviewCategories implements EvaluationType {
         CAT1("CAT1", 10),
