@@ -1,13 +1,12 @@
 package nwoolcan.model.brewery.production.batch.review;
 
-import io.github.classgraph.ClassGraph;
-import io.github.classgraph.ClassInfoList;
 import nwoolcan.utils.Result;
-import nwoolcan.utils.Results;
-
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 /**
  * {@link BatchReview} builder.
@@ -18,8 +17,10 @@ public final class BatchReviewBuilder {
     private static final String INVALID_SCORE_MESSAGE = "Score for one or more categories is not valid";
     private static final String INVALID_CATEGORIES_MESSAGE = "Invalid categories";
     private static final String BUILDER_USED_MESSAGE = "This builder has already built";
+    private static final BatchReviewScanner SCANNER = new BatchReviewScannerImpl();
 
     private final Set<Evaluation> evaluations = new HashSet<>();
+
     private String reviewer;
     private String notes;
     private boolean built;
@@ -31,23 +32,7 @@ public final class BatchReviewBuilder {
      * @return a collection of all available Review types.
      */
     public static Result<Collection<BatchReviewType>> getAvailableBatchReviewTypes() {
-        return Results.ofCloseable(() ->  new ClassGraph().enableAllInfo().scan(), scanResult -> {
-            ClassInfoList widgetClasses = scanResult.getClassesImplementing(BatchReviewType.class.getName());
-            System.out.println(widgetClasses.size());
-            return widgetClasses
-                .loadClasses(BatchReviewType.class)
-                .stream()
-                .flatMap(review -> {
-                    if (review.isEnum()) {
-                        return Arrays.stream(review.getEnumConstants()).map(Result::of);
-                    } else {
-                        return Stream.of(Results.ofChecked(review::newInstance));
-                    }
-                })
-                .filter(Result::isPresent)
-                .map(Result::getValue)
-                .collect(Collectors.toList());
-        });
+        return SCANNER.getAvailableBatchReviewTypes();
     }
 
     /**
