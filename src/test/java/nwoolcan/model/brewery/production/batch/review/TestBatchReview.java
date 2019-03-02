@@ -1,5 +1,6 @@
 package nwoolcan.model.brewery.production.batch.review;
 
+import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchReviewType;
 import nwoolcan.utils.Result;
 import org.junit.Test;
 
