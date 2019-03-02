@@ -19,11 +19,9 @@ public final class BatchReviewScannerImpl implements BatchReviewScanner {
     public Result<Collection<BatchReviewType>> getAvailableBatchReviewTypes() {
         return Results.ofCloseable(() ->  new ClassGraph().enableAllInfo().scan(), scanResult -> {
             ClassInfoList widgetClasses = scanResult.getClassesImplementing(BatchReviewType.class.getName());
-            System.out.println(widgetClasses.size());
             return widgetClasses
                 .loadClasses(BatchReviewType.class)
                 .stream()
-                .peek(e -> System.out.println(e.toString()))
                 .flatMap(review -> {
                     if (review.isEnum()) {
                         return Arrays.stream(review.getEnumConstants()).map(Result::of);
