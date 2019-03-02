@@ -11,17 +11,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Implementation of BatchReviewScanner.
+ * Implementation for BatchReviewScanner.
  */
-public class BatchReviewScannerImpl implements BatchReviewScanner {
+public final class BatchReviewScannerImpl implements BatchReviewScanner {
 
     @Override
-    public final Result<Collection<BatchReviewType>> getAvailableBatchReviewTypes() {
+    public Result<Collection<BatchReviewType>> getAvailableBatchReviewTypes() {
         return Results.ofCloseable(() ->  new ClassGraph().enableAllInfo().scan(), scanResult -> {
             ClassInfoList widgetClasses = scanResult.getClassesImplementing(BatchReviewType.class.getName());
+            System.out.println(widgetClasses.size());
             return widgetClasses
                 .loadClasses(BatchReviewType.class)
                 .stream()
+                .peek(e -> System.out.println(e.toString()))
                 .flatMap(review -> {
                     if (review.isEnum()) {
                         return Arrays.stream(review.getEnumConstants()).map(Result::of);
