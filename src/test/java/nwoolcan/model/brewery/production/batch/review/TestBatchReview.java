@@ -3,6 +3,7 @@ package nwoolcan.model.brewery.production.batch.review;
 import nwoolcan.utils.Result;
 import org.junit.Test;
 
+
 import java.util.Collection;
 import java.util.Optional;
 
@@ -38,6 +39,7 @@ public class TestBatchReview {
         assertEquals(review.getNotes(), Optional.of("Very good"));
         assertEquals(review.getScore(), expectedValue);
         assertEquals(review.getEvaluationType(), new BJCPBatchReviewType());
+        assertTrue(builder.build().isError());
     }
 
     /**
@@ -45,12 +47,13 @@ public class TestBatchReview {
      */
     @Test
     public void testAvailableEvaluationTypes() {
-        final int expectedSize = 1;
+        final int expectedSize = 2;
         BatchReviewBuilder builder = new BatchReviewBuilder(new BJCPBatchReviewType());
         Result<Collection<BatchReviewType>> available = BatchReviewBuilder.getAvailableBatchReviewTypes();
         assertTrue(available.isPresent());
         Collection<BatchReviewType> types = available.getValue();
-        assertEquals(types.size(), 1);
+        System.out.println(types);
+        assertEquals(types.size(), expectedSize);
         assertTrue(types.contains(new BJCPBatchReviewType()));
         System.out.println(types);
     }
@@ -75,7 +78,7 @@ public class TestBatchReview {
         assertTrue(test1.isError());
 
         Result<BatchReview> test2 = builder
-            .reset()
+            .reset(new BJCPBatchReviewType())
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA,
                 BJCPBatchReviewType.BJCPCategories.AROMA.getMaxScore())
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, 3)
@@ -88,7 +91,7 @@ public class TestBatchReview {
         assertTrue(test2.isError());
 
         Result<BatchReview> test3 = builder
-            .reset()
+            .reset(new BJCPBatchReviewType())
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA,
                 BJCPBatchReviewType.BJCPCategories.AROMA.getMaxScore())
             .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, -1)
@@ -100,5 +103,19 @@ public class TestBatchReview {
             .build();
 
         assertTrue(test3.isError());
+
+        Result<BatchReview> test4 = builder
+            .reset(new BJCPBatchReviewType())
+            .addEvaluation(null,
+                BJCPBatchReviewType.BJCPCategories.AROMA.getMaxScore())
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, 1)
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR,
+                BJCPBatchReviewType.BJCPCategories.FLAVOR.getMaxScore())
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.MOUTHFEEL, 4)
+            .addEvaluation(BJCPBatchReviewType.BJCPCategories.OVERALL_IMPRESSION, 10)
+            .addReviewer("Andrea")
+            .build();
+
+        assertTrue(test4.isError());
     }
 }
