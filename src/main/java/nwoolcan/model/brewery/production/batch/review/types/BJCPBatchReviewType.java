@@ -1,16 +1,15 @@
-package nwoolcan.model.brewery.production.batch.review;
+package nwoolcan.model.brewery.production.batch.review.types;
+
+import nwoolcan.model.brewery.production.batch.review.EvaluationType;
 
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Objects;
 
 /**
  * BJCPBatchReviewType.
  */
-public final class BJCPBatchReviewType implements BatchReviewType {
+public final class BJCPBatchReviewType extends AbstractBatchReviewType {
     private static final String NAME = "Official BJCP Scoresheet";
-    private static final int MAX_SCORE = 50;
 
     /**
      * BJCPCategories.
@@ -56,20 +55,11 @@ public final class BJCPBatchReviewType implements BatchReviewType {
         }
     }
 
-    @Override
-    public String getName() {
-        return NAME;
-    }
-
-    @Override
-    public int getMaxScore() {
-        return MAX_SCORE;
-    }
-
-    @Override
-    public Collection<EvaluationType> getCategories() {
-        return Collections.unmodifiableCollection(
-            Arrays.asList(BJCPCategories.values()));
+    /**
+     * Create a new BJCP BatchReviewType.
+     */
+    public BJCPBatchReviewType() {
+        super(BJCPBatchReviewType.NAME, Arrays.asList(BJCPCategories.values()));
     }
 
     @Override
@@ -79,7 +69,7 @@ public final class BJCPBatchReviewType implements BatchReviewType {
 
     @Override
     public int hashCode() {
-        return Objects.hash(NAME, MAX_SCORE, this.getCategories());
+        return Objects.hash(NAME, this.getCategories());
     }
 
     @Override
