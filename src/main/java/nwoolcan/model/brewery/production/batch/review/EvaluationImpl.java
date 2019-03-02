@@ -78,6 +78,10 @@ public class EvaluationImpl implements Evaluation {
      */
     @Override
     public String toString() {
-        return "[EvaluationImpl] { score: " + this.score + "/" + this.category.getMaxScore() + " type: " + this.category.getName() + " }";
+        return "[EvaluationImpl] { "
+            + "score: " + this.score + ", "
+            + "maxScore: " + this.category.getMaxScore() + ", "
+            + " type: " + this.category.getName() + " "
+            + " }";
     }
 }

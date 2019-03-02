@@ -17,7 +17,6 @@ public final class BJCPBatchReviewType implements BatchReviewType {
      */
     public enum BJCPCategories implements EvaluationType {
         /**
-         * }
          * Aroma.
          */
         AROMA(12, "Aroma"),
@@ -85,7 +84,10 @@ public final class BJCPBatchReviewType implements BatchReviewType {
 
     @Override
     public String toString() {
-        return this.getName();
+        return "[BJCPBatchReviewType] { "
+            + "name: " + this.getName() + ", "
+            + "maxScore: " + this.getMaxScore() + " "
+            + "}";
     }
 
 }
