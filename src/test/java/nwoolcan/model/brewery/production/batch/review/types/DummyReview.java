@@ -1,4 +1,4 @@
-package nwoolcan.model.brewery.production.batch.review.types.;
+package nwoolcan.model.brewery.production.batch.review.types;
 
 import nwoolcan.model.brewery.production.batch.review.BatchReviewType;
 import nwoolcan.model.brewery.production.batch.review.EvaluationType;
