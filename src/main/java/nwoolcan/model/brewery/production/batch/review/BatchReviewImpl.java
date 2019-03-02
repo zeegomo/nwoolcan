@@ -38,10 +38,10 @@ public final class BatchReviewImpl extends EvaluationImpl implements BatchReview
         if (this == o) {
             return true;
         }
-        if (!(o instanceof BatchReview)) {
+        if (!(o instanceof BatchReviewImpl)) {
             return false;
         }
-        BatchReview that = (BatchReview) o;
+        BatchReviewImpl that = (BatchReviewImpl) o;
         return this.getScore() == that.getScore()
             && Objects.equals(categories, that.getCategoryEvaluations())
             && Objects.equals(this.getNotes(), that.getNotes())
@@ -56,6 +56,10 @@ public final class BatchReviewImpl extends EvaluationImpl implements BatchReview
 
     @Override
     public String toString() {
-        return "[BatchReview] score: " + this.getScore() + "/" + this.getEvaluationType().getMaxScore() + " type: " + this.getEvaluationType().toString();
+        return "[BatchReview] {"
+            + "score: " + this.getScore() + ", "
+            + "maxScore: " + this.getEvaluationType().getMaxScore() + ", "
+            + "type: " + this.getEvaluationType().toString() + " "
+            + "}";
     }
 }
