@@ -35,4 +35,15 @@ public abstract class AbstractBatchReviewType implements BatchReviewType {
             .map(EvaluationType::getMaxScore)
             .reduce(0, Integer::sum);
     }
+    /**
+     * Add the class name formatter like \"[DummyReviewType]\" before this method when overriding.
+     * @return the string representation of this class.
+     */
+    @Override
+    public String toString() {
+        return " { "
+            + "name: " + this.name + ", "
+            + "maxScore: " + this.getMaxScore() + " "
+            + "}";
+    }
 }

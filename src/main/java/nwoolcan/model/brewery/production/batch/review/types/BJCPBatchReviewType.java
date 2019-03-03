@@ -74,10 +74,7 @@ public final class BJCPBatchReviewType extends AbstractBatchReviewType {
 
     @Override
     public String toString() {
-        return "[BJCPBatchReviewType] { "
-            + "name: " + this.getName() + ", "
-            + "maxScore: " + this.getMaxScore() + " "
-            + "}";
+        return "[BJCPBatchReviewTypeaaaaaaaaa]" + super.toString();
     }
 
 }
