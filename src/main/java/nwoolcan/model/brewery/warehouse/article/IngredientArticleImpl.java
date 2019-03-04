@@ -16,7 +16,8 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
      * @param name the name of the ingredient article.
      * @param ingredientType the type of ingredient article.
      */
-    public IngredientArticleImpl(final Integer id, final String name,
+    //Package protected
+    IngredientArticleImpl(final Integer id, final String name,
                                  final IngredientType ingredientType) {
         super(id, name);
         this.ingredientType = Objects.requireNonNull(ingredientType);

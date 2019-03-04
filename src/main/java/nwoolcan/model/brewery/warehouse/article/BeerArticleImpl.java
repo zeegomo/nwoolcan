@@ -18,7 +18,8 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
      * @param name the name of the beer article.
      * @param batch the batch linked to the beer article.
      */
-    public BeerArticleImpl(final Integer id, final String name, final Batch batch) {
+    //Package protected
+    BeerArticleImpl(final Integer id, final String name, final Batch batch) {
         super(id, name);
         this.batch = Objects.requireNonNull(batch);
     }
