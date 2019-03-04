@@ -11,13 +11,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Implementation for BatchReviewScanner.
+ * Implementation for BatchEvaluationScanner.
  */
-public final class BatchReviewScannerImpl implements BatchReviewScanner {
-    private Collection<BatchReviewType> types;
+public final class BatchEvaluationScannerImpl implements BatchEvaluationScanner {
+    private Collection<BatchEvaluationType> types;
 
     @Override
-    public Result<Collection<BatchReviewType>> getAvailableBatchReviewTypes() {
+    public Result<Collection<BatchEvaluationType>> getAvailableBatchReviewTypes() {
         if (types != null) {
             return Result.of(types);
         } else {
@@ -27,11 +27,11 @@ public final class BatchReviewScannerImpl implements BatchReviewScanner {
     }
 
 
-    private Result<Collection<BatchReviewType>> scan() {
+    private Result<Collection<BatchEvaluationType>> scan() {
         return Results.ofCloseable(() ->  new ClassGraph().enableAllInfo().scan(), scanResult -> {
-            ClassInfoList widgetClasses = scanResult.getClassesImplementing(BatchReviewType.class.getName());
+            ClassInfoList widgetClasses = scanResult.getClassesImplementing(BatchEvaluationType.class.getName());
             return widgetClasses
-                .loadClasses(BatchReviewType.class)
+                .loadClasses(BatchEvaluationType.class)
                 .stream()
                 .flatMap(review -> {
                     if (review.isEnum()) {

@@ -9,40 +9,40 @@ import java.util.stream.Collectors;
 
 
 /**
- * {@link BatchReview} builder.
- * Handles all error checking for the construction of a new {@link BatchReview}.
+ * {@link BatchEvaluation} builder.
+ * Handles all error checking for the construction of a new {@link BatchEvaluation}.
  */
 
-public final class BatchReviewBuilder {
+public final class BatchEvaluationBuilder {
     private static final String INVALID_SCORE_MESSAGE = "Score for one or more categories is not valid";
     private static final String INVALID_CATEGORIES_MESSAGE = "Invalid categories";
     private static final String BUILDER_USED_MESSAGE = "This builder has already built";
-    private static final BatchReviewScanner SCANNER = new BatchReviewScannerImpl();
+    private static final BatchEvaluationScanner SCANNER = new BatchEvaluationScannerImpl();
 
     private final Set<Evaluation> evaluations = new HashSet<>();
 
     private String reviewer;
     private String notes;
     private boolean built;
-    private BatchReviewType batchReviewType;
+    private BatchEvaluationType batchEvaluationType;
 
     /**
-     * Return a collection of all available {@link BatchReviewType} types.
+     * Return a collection of all available {@link BatchEvaluationType} types.
      *
      * @return a collection of all available Review types.
      */
-    public static Result<Collection<BatchReviewType>> getAvailableBatchReviewTypes() {
+    public static Result<Collection<BatchEvaluationType>> getAvailableBatchReviewTypes() {
         return SCANNER.getAvailableBatchReviewTypes();
     }
 
     /**
-     * Create a {@link BatchReviewBuilder}.
+     * Create a {@link BatchEvaluationBuilder}.
      *
-     * @param batchReviewType the {@link BatchReviewType} of this {@link BatchReview}
+     * @param batchEvaluationType the {@link BatchEvaluationType} of this {@link BatchEvaluation}
      *                        (implements the Strategy pattern)
      */
-    public BatchReviewBuilder(final BatchReviewType batchReviewType) {
-        reset(batchReviewType);
+    public BatchEvaluationBuilder(final BatchEvaluationType batchEvaluationType) {
+        reset(batchEvaluationType);
     }
 
     /**
@@ -53,7 +53,7 @@ public final class BatchReviewBuilder {
      * @param notes notes.
      * @return this.
      */
-    public BatchReviewBuilder addEvaluation(final EvaluationType type, final int score, final String notes) {
+    public BatchEvaluationBuilder addEvaluation(final EvaluationType type, final int score, final String notes) {
         this.evaluations.add(new EvaluationImpl(type, score, Optional.of(notes)));
         return this;
     }
@@ -65,7 +65,7 @@ public final class BatchReviewBuilder {
      * @param score score.
      * @return this.
      */
-    public BatchReviewBuilder addEvaluation(final EvaluationType type, final int score) {
+    public BatchEvaluationBuilder addEvaluation(final EvaluationType type, final int score) {
         this.evaluations.add(new EvaluationImpl(type, score, Optional.empty()));
         return this;
     }
@@ -76,7 +76,7 @@ public final class BatchReviewBuilder {
      * @param notes notes.
      * @return this.
      */
-    public BatchReviewBuilder addNotes(final String notes) {
+    public BatchEvaluationBuilder addNotes(final String notes) {
         this.notes = notes;
         return this;
     }
@@ -87,7 +87,7 @@ public final class BatchReviewBuilder {
      * @param reviewer reviewer.
      * @return this.
      */
-    public BatchReviewBuilder addReviewer(final String reviewer) {
+    public BatchEvaluationBuilder addReviewer(final String reviewer) {
         this.reviewer = reviewer;
         return this;
     }
@@ -101,21 +101,21 @@ public final class BatchReviewBuilder {
     }
 
     /**
-     * Return a {@link Result} holding a {@link BatchReview} if everything went well, otherwise a
+     * Return a {@link Result} holding a {@link BatchEvaluation} if everything went well, otherwise a
      * {@link Result} holding an {@link Exception}.
      *
-     * @return a {@link Result<BatchReview>}
+     * @return a {@link Result< BatchEvaluation >}
      */
-    public Result<BatchReview> build() {
+    public Result<BatchEvaluation> build() {
         return Result.of(this)
-            .require(BatchReviewBuilder::checkEvaluationsTypeValidity,
+            .require(BatchEvaluationBuilder::checkEvaluationsTypeValidity,
                 new IllegalArgumentException(INVALID_CATEGORIES_MESSAGE))
-            .require(BatchReviewBuilder::checkScoreValidity,
+            .require(BatchEvaluationBuilder::checkScoreValidity,
                 new IllegalAccessException(INVALID_SCORE_MESSAGE))
             .require(builder -> !builder.built,
                 new IllegalStateException(BUILDER_USED_MESSAGE))
             .peek(builder -> builder.built = true)
-            .map(builder -> new BatchReviewImpl(builder.batchReviewType,
+            .map(builder -> new BatchEvaluationImpl(builder.batchEvaluationType,
                 builder.evaluations,
                 Optional.ofNullable(builder.reviewer),
                 Optional.ofNullable(builder.notes)));
@@ -124,15 +124,15 @@ public final class BatchReviewBuilder {
     /**
      * Resets the builder.
      *
-     * @param newType the {@link BatchReviewType} of the new review.
+     * @param newType the {@link BatchEvaluationType} of the new review.
      * @return this
      */
-    public BatchReviewBuilder reset(final BatchReviewType newType) {
+    public BatchEvaluationBuilder reset(final BatchEvaluationType newType) {
         this.evaluations.clear();
         this.notes = null;
         this.reviewer = null;
         this.built = false;
-        this.batchReviewType = newType;
+        this.batchEvaluationType = newType;
         return this;
     }
 
@@ -141,8 +141,8 @@ public final class BatchReviewBuilder {
             .stream()
             .map(Evaluation::getEvaluationType)
             .collect(Collectors.toList());
-        return catTypes.containsAll(this.batchReviewType.getCategories())
-            && this.batchReviewType.getCategories().containsAll(catTypes);
+        return catTypes.containsAll(this.batchEvaluationType.getCategories())
+            && this.batchEvaluationType.getCategories().containsAll(catTypes);
     }
 
     private boolean checkScoreValidity() {

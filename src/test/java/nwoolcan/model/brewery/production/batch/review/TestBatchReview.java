@@ -1,6 +1,6 @@
 package nwoolcan.model.brewery.production.batch.review;
 
-import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchReviewType;
+import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.utils.Result;
 import org.junit.Test;
 
@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test BatchReview.
+ * Test BatchEvaluation.
  */
 public class TestBatchReview {
     /**
@@ -21,25 +21,25 @@ public class TestBatchReview {
     @Test
     public void testSuccessfulBuilder() {
         final int expectedValue = 47;
-        BatchReviewBuilder builder = new BatchReviewBuilder(new BJCPBatchReviewType());
+        BatchEvaluationBuilder builder = new BatchEvaluationBuilder(new BJCPBatchEvaluationType());
 
-        Result<BatchReview> bjcp = builder
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA, 10)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, 3)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR,
-                BJCPBatchReviewType.BJCPCategories.FLAVOR.getMaxScore())
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.MOUTHFEEL, 4)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.OVERALL_IMPRESSION, 10)
+        Result<BatchEvaluation> bjcp = builder
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.AROMA, 10)
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, 3)
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.FLAVOR,
+                BJCPBatchEvaluationType.BJCPCategories.FLAVOR.getMaxScore())
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, 4)
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, 10)
             .addReviewer("Andrea")
             .addNotes("Very good")
             .build();
 
         assertTrue(bjcp.isPresent());
-        BatchReview review = bjcp.getValue();
+        BatchEvaluation review = bjcp.getValue();
         assertEquals(review.getReviewer(), Optional.of("Andrea"));
         assertEquals(review.getNotes(), Optional.of("Very good"));
         assertEquals(review.getScore(), expectedValue);
-        assertEquals(review.getEvaluationType(), new BJCPBatchReviewType());
+        assertEquals(review.getEvaluationType(), new BJCPBatchEvaluationType());
         assertTrue(builder.build().isError());
     }
 
@@ -49,13 +49,13 @@ public class TestBatchReview {
     @Test
     public void testAvailableEvaluationTypes() {
         final int expectedSize = 2;
-        BatchReviewBuilder builder = new BatchReviewBuilder(new BJCPBatchReviewType());
-        Result<Collection<BatchReviewType>> available = BatchReviewBuilder.getAvailableBatchReviewTypes();
+        BatchEvaluationBuilder builder = new BatchEvaluationBuilder(new BJCPBatchEvaluationType());
+        Result<Collection<BatchEvaluationType>> available = BatchEvaluationBuilder.getAvailableBatchReviewTypes();
         assertTrue(available.isPresent());
-        Collection<BatchReviewType> types = available.getValue();
+        Collection<BatchEvaluationType> types = available.getValue();
         System.out.println(types);
         assertEquals(types.size(), expectedSize);
-        assertTrue(types.contains(new BJCPBatchReviewType()));
+        assertTrue(types.contains(new BJCPBatchEvaluationType()));
         System.out.println(types);
     }
 
@@ -64,56 +64,56 @@ public class TestBatchReview {
      */
     @Test
     public void testFailedBuilder() {
-        BatchReviewBuilder builder = new BatchReviewBuilder(new BJCPBatchReviewType());
+        BatchEvaluationBuilder builder = new BatchEvaluationBuilder(new BJCPBatchEvaluationType());
 
-        Result<BatchReview> test1 = builder
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA, 10)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, 10)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR,
-                BJCPBatchReviewType.BJCPCategories.FLAVOR.getMaxScore())
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.MOUTHFEEL, 4)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.OVERALL_IMPRESSION, 10)
+        Result<BatchEvaluation> test1 = builder
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.AROMA, 10)
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, 10)
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.FLAVOR,
+                BJCPBatchEvaluationType.BJCPCategories.FLAVOR.getMaxScore())
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, 4)
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, 10)
             .addReviewer("Andrea")
             .build();
 
         assertTrue(test1.isError());
 
-        Result<BatchReview> test2 = builder
-            .reset(new BJCPBatchReviewType())
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA,
-                BJCPBatchReviewType.BJCPCategories.AROMA.getMaxScore())
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, 3)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR,
-                BJCPBatchReviewType.BJCPCategories.FLAVOR.getMaxScore())
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.MOUTHFEEL, 4)
+        Result<BatchEvaluation> test2 = builder
+            .reset(new BJCPBatchEvaluationType())
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.AROMA,
+                BJCPBatchEvaluationType.BJCPCategories.AROMA.getMaxScore())
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, 3)
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.FLAVOR,
+                BJCPBatchEvaluationType.BJCPCategories.FLAVOR.getMaxScore())
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, 4)
             .addReviewer("Andrea")
             .build();
 
         assertTrue(test2.isError());
 
-        Result<BatchReview> test3 = builder
-            .reset(new BJCPBatchReviewType())
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.AROMA,
-                BJCPBatchReviewType.BJCPCategories.AROMA.getMaxScore())
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, -1)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR,
-                BJCPBatchReviewType.BJCPCategories.FLAVOR.getMaxScore())
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.MOUTHFEEL, 4)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.OVERALL_IMPRESSION, 10)
+        Result<BatchEvaluation> test3 = builder
+            .reset(new BJCPBatchEvaluationType())
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.AROMA,
+                BJCPBatchEvaluationType.BJCPCategories.AROMA.getMaxScore())
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, -1)
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.FLAVOR,
+                BJCPBatchEvaluationType.BJCPCategories.FLAVOR.getMaxScore())
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, 4)
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, 10)
             .addReviewer("Andrea")
             .build();
 
         assertTrue(test3.isError());
 
-        Result<BatchReview> test4 = builder
-            .reset(new BJCPBatchReviewType())
+        Result<BatchEvaluation> test4 = builder
+            .reset(new BJCPBatchEvaluationType())
             .addEvaluation(null,
-                BJCPBatchReviewType.BJCPCategories.AROMA.getMaxScore())
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.APPEARANCE, 1)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.FLAVOR,
-                BJCPBatchReviewType.BJCPCategories.FLAVOR.getMaxScore())
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.MOUTHFEEL, 4)
-            .addEvaluation(BJCPBatchReviewType.BJCPCategories.OVERALL_IMPRESSION, 10)
+                BJCPBatchEvaluationType.BJCPCategories.AROMA.getMaxScore())
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, 1)
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.FLAVOR,
+                BJCPBatchEvaluationType.BJCPCategories.FLAVOR.getMaxScore())
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, 4)
+            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, 10)
             .addReviewer("Andrea")
             .build();
 

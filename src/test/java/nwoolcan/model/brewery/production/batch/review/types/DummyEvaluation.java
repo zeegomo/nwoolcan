@@ -1,6 +1,6 @@
 package nwoolcan.model.brewery.production.batch.review.types;
 
-import nwoolcan.model.brewery.production.batch.review.BatchReviewType;
+import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.review.EvaluationType;
 
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import java.util.Collection;
 /**
  * Dummy Review for testing.
  */
-public enum DummyReview implements BatchReviewType {
+public enum DummyEvaluation implements BatchEvaluationType {
     /**
      * Test only.
      */

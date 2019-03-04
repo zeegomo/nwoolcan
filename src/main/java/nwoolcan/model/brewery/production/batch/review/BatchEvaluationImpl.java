@@ -6,21 +6,21 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Implementation of {@link BatchReview}.
+ * Implementation of {@link BatchEvaluation}.
  */
-public final class BatchReviewImpl extends EvaluationImpl implements BatchReview {
+public final class BatchEvaluationImpl extends EvaluationImpl implements BatchEvaluation {
     private final Collection<Evaluation> categories;
     private final Optional<String> reviewer;
 
-    BatchReviewImpl(final BatchReviewType type, final Collection<Evaluation> categories, final Optional<String> reviewer, final Optional<String> notes) {
+    BatchEvaluationImpl(final BatchEvaluationType type, final Collection<Evaluation> categories, final Optional<String> reviewer, final Optional<String> notes) {
         super(type, categories.stream().map(Evaluation::getScore).reduce(0, Integer::sum), notes);
         this.categories = categories;
         this.reviewer = reviewer;
     }
 
     @Override
-    public BatchReviewType getEvaluationType() {
-        return (BatchReviewType) super.getEvaluationType();
+    public BatchEvaluationType getEvaluationType() {
+        return (BatchEvaluationType) super.getEvaluationType();
     }
 
     @Override
@@ -38,10 +38,10 @@ public final class BatchReviewImpl extends EvaluationImpl implements BatchReview
         if (this == o) {
             return true;
         }
-        if (!(o instanceof BatchReviewImpl)) {
+        if (!(o instanceof BatchEvaluationImpl)) {
             return false;
         }
-        BatchReviewImpl that = (BatchReviewImpl) o;
+        BatchEvaluationImpl that = (BatchEvaluationImpl) o;
         return this.getScore() == that.getScore()
             && Objects.equals(categories, that.getCategoryEvaluations())
             && Objects.equals(this.getNotes(), that.getNotes())
@@ -56,7 +56,7 @@ public final class BatchReviewImpl extends EvaluationImpl implements BatchReview
 
     @Override
     public String toString() {
-        return "[BatchReview] {"
+        return "[BatchEvaluation] {"
             + "score: " + this.getScore() + ", "
             + "maxScore: " + this.getEvaluationType().getMaxScore() + ", "
             + "type: " + this.getEvaluationType().toString() + " "

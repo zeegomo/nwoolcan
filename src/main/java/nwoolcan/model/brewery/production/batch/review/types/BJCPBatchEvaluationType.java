@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * BJCPBatchReviewType.
+ * BJCPBatchEvaluationType.
  */
-public final class BJCPBatchReviewType extends AbstractBatchReviewType {
+public final class BJCPBatchEvaluationType extends AbstractBatchEvaluationType {
     private static final String NAME = "Official BJCP Scoresheet";
 
     /**
@@ -56,15 +56,15 @@ public final class BJCPBatchReviewType extends AbstractBatchReviewType {
     }
 
     /**
-     * Create a new BJCP BatchReviewType.
+     * Create a new BJCP BatchEvaluationType.
      */
-    public BJCPBatchReviewType() {
-        super(BJCPBatchReviewType.NAME, Arrays.asList(BJCPCategories.values()));
+    public BJCPBatchEvaluationType() {
+        super(BJCPBatchEvaluationType.NAME, Arrays.asList(BJCPCategories.values()));
     }
 
     @Override
     public boolean equals(final Object o) {
-        return (o instanceof BJCPBatchReviewType);
+        return (o instanceof BJCPBatchEvaluationType);
     }
 
     @Override
