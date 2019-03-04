@@ -1,14 +1,13 @@
 package nwoolcan.model.utils;
 
+import nwoolcan.utils.Result;
+
 import java.util.Objects;
 
 /**
  * Quantity class for handling value and unit of measure.
  */
 public final class Quantity {
-
-    private static final String VALUE_NEGATIVE_MESSAGE = "Value cannot be negative.";
-    private static final String CANNOT_BE_QUANTITY_MESSAGE = "Unit of measure cannot be a quantity.";
 
     private final Number value;
     private final UnitOfMeasure unitOfMeasure;
@@ -46,14 +45,11 @@ public final class Quantity {
      * @throws IllegalArgumentException if the value is negative or if the unit of measure cannot be a quantity.
      */
     public static Quantity of(final Number value, final UnitOfMeasure unitOfMeasure) {
-        final Quantity res = new Quantity(value, unitOfMeasure);
-        if (res.getValue().doubleValue() < 0) {
-            throw new IllegalArgumentException(VALUE_NEGATIVE_MESSAGE);
+        final Result<Quantity> res = QuantityChecker.check(new Quantity(value, unitOfMeasure));
+        if (res.isError()) {
+            throw new IllegalArgumentException(res.getError());
         }
-        if (!res.getUnitOfMeasure().canBeQuantity()) {
-            throw new IllegalArgumentException(CANNOT_BE_QUANTITY_MESSAGE);
-        }
-        return res;
+        return res.getValue();
     }
 
     @Override
