@@ -14,10 +14,10 @@ public final class Record {
      */
     public enum Action {
         /**
-         * If the record Action is USING the quantity will be subtracted,
+         * If the record Action is REMOVING the quantity will be subtracted,
          * while it will be added if the Action is ADDING.
          */
-        USING, ADDING
+        REMOVING, ADDING
     }
 
     private final Quantity quantity;
