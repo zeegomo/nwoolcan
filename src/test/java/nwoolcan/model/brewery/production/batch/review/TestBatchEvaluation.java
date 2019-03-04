@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test BatchEvaluation.
  */
-public class TestBatchReview {
+public class TestBatchEvaluation {
     /**
      * Test builder.
      */
