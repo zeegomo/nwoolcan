@@ -49,7 +49,7 @@ public class TestBatchEvaluation {
     @Test
     public void testAvailableEvaluationTypes() {
         final int expectedSize = 2;
-        BatchEvaluationBuilder builder = new BatchEvaluationBuilder(new BJCPBatchEvaluationType());
+
         Result<Collection<BatchEvaluationType>> available = BatchEvaluationBuilder.getAvailableBatchReviewTypes();
         assertTrue(available.isPresent());
         Collection<BatchEvaluationType> types = available.getValue();

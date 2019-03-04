@@ -74,7 +74,7 @@ public final class BJCPBatchEvaluationType extends AbstractBatchEvaluationType {
 
     @Override
     public String toString() {
-        return "[BJCPBatchReviewTypeaaaaaaaaa]" + super.toString();
+        return "[BJCPBatchReviewType]" + super.toString();
     }
 
 }
