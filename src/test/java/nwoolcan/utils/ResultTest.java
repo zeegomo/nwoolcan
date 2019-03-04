@@ -2,6 +2,8 @@ package nwoolcan.utils;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -70,6 +72,8 @@ public class ResultTest {
     public void testRequire() {
         assertTrue(Result.of(4).require(i -> i > 2).isPresent());
         assertTrue(Result.of(4).require(i -> i < 2).isError());
+        assertTrue(Result.ofEmpty().require(() -> false).isError());
+        assertTrue(Result.ofEmpty().require(() -> true).isPresent());
     }
 
     /**
@@ -158,6 +162,50 @@ public class ResultTest {
         // Verify same instance
         l = duke.flatMap(s -> fixture);
         assertSame(l, fixture);
+        assertEquals(l.flatMap(() -> Result.of(4)), Result.of(4));
     }
+
+    /**
+     * Tests peek.
+     */
+    @Test
+    public void testPeek() {
+        Collection<Integer> coll = new ArrayList<>();
+        Result.of(2).peek(coll::add);
+        assertEquals(coll.size(), 1);
+        Result.error(new Exception()).peek(i -> coll.add(2));
+        assertEquals(coll.size(), 1);
+    }
+
+    /**
+     * Tests ofChecked.
+     */
+    @Test
+    public void testOfChecked() {
+        Result<Integer> r1 = Results.ofChecked(() -> 1);
+        assertTrue(r1.getValue() == 1);
+        Result<Integer> r2 = Results.ofChecked(() -> {
+            throw new IllegalAccessException("Illegal test");
+        });
+        assertTrue(r2.isError());
+        r2.getError().printStackTrace();
+        System.out.println(r2.getError().toString());
+    }
+
+    /**
+     * Tests ofCloseable.
+     */
+    @Test
+    public void testOfCloseable() {
+        Result<Integer> r1 = Results.ofCloseable(() -> () -> { }, e -> 3);
+        assertTrue(r1.getValue() == 3);
+        Result<Integer> r2 = Results.ofCloseable(() -> () -> {
+            throw new IllegalAccessException();
+            }, e -> 3);
+        assertTrue(r2.isError());
+        r2.getError().printStackTrace();
+        System.out.println(r2.getError().toString());
+    }
+
 }
 
