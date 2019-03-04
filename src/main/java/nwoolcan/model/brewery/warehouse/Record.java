@@ -24,9 +24,6 @@ public final class Record {
     private final Date date;
     private final Action action;
 
-
-
-
     /**
      * Constructor with all parameters.
      * @param quantity to be recorded.

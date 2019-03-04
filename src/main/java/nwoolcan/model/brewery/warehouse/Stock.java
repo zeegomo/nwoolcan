@@ -54,7 +54,7 @@ public interface Stock {
      */
     Date getLastChangeDate();
     /**
-     * Adds a certain quantity to the current stock.
+     * Adds or remove a certain quantity to the current stock.
      * @param record which will be saved into the stock.
      * @return a {@link Result} of {@link Empty} which reports possible errors.
      */
