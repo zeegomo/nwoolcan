@@ -16,7 +16,7 @@ import java.util.Date;
  */
 public class StepInfoTest {
 
-    private static final StepType ST1 = StepType.Mashing;
+    private static final StepType ST1 = StepTypeEnum.Mashing;
     private static final Date NOW = new Date();
     private static final Date PAST = new Date(0);
     private static final Date FUTURE = new Date(NOW.getTime() + 1000);

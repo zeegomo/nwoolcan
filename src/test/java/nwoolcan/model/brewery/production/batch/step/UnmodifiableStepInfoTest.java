@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public class UnmodifiableStepInfoTest {
 
-    private static final StepType ST = StepType.Mashing;
+    private static final StepType ST = StepTypeEnum.Mashing;
     private static final Date START = new Date();
     private static final Date END = new Date(START.getTime() + 100);
     private static final String NOTE = "Test note.";
