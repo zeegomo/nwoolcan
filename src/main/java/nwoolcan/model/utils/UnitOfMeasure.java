@@ -5,7 +5,7 @@ package nwoolcan.model.utils;
  */
 public enum UnitOfMeasure {
     /**
-     * Unit of measures that can be used as quantity and parameter.
+     * Possible unit of measures.
      */
-    Kilogram, Liter, Pound, Celsius;
+    Kilogram, Liter, Pound, Celsius, Unit;
 }

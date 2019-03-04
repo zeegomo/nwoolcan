@@ -11,7 +11,7 @@ import java.util.Date;
  */
 public class QueryParameterTest {
 
-    private static final ParameterType TEMP = ParameterType.Temperature;
+    private static final ParameterType TEMP = ParameterTypeEnum.Temperature;
     private static final Number GTV = 5;
     private static final Number LTV = 50;
     private static final Number EV = 10;

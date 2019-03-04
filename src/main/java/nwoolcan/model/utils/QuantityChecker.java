@@ -16,7 +16,8 @@ public final class QuantityChecker {
     private static final Collection<UnitOfMeasure> VALID_UMS = Arrays.asList(
         UnitOfMeasure.Liter,
         UnitOfMeasure.Kilogram,
-        UnitOfMeasure.Pound
+        UnitOfMeasure.Pound,
+        UnitOfMeasure.Unit
     );
 
     private QuantityChecker() { }

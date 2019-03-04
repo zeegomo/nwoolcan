@@ -1,11 +1,21 @@
 package nwoolcan.model.brewery.production.batch.step;
 
+import nwoolcan.model.utils.UnitOfMeasure;
+
 /**
- * ParameterType.
+ * Interface representing a parameter type that can be registered in a production step.
  */
-public enum ParameterType {
+public interface ParameterType {
+
     /**
-     * Various parameter types.
+     * Returns the name of the parameter type.
+     * @return the name of the parameter type.
      */
-    Temperature
+    String getName();
+
+    /**
+     * Returns the unit of measure of the parameter type.
+     * @return the unit of measure of the parameter type.
+     */
+    UnitOfMeasure getUnitOfMeasure();
 }
