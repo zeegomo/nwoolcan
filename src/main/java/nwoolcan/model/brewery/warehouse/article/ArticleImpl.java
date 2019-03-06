@@ -96,14 +96,14 @@ public class ArticleImpl implements Article {
     }
 
     /**
-     * @return the string format of the class.
+     * To override this method add also other elements of the new class.
+     * @return a string representation of the class.
      */
     @Override
     public String toString() {
-        return "[ArticleImpl] { "
-            + "Id:" + getId() + ", "
-            + "Name:" + getName() + " "
-            + "}";
+        return "ArticleImpl{"
+            + "id=" + id
+            + ", name='" + name + '\''
+            + '}';
     }
-
 }
