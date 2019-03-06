@@ -53,6 +53,14 @@ public class QuantityTest {
     }
 
     /**
+     * Method that tests empty quantity creation.
+     */
+    @Test
+    public void testEmptyQuantity() {
+        final Quantity q = Quantity.of(0, GOOD_UM1);
+    }
+
+    /**
      * Method that tests quantity creation with not quantity unit of measure.
      */
     @Test(expected = IllegalArgumentException.class)
