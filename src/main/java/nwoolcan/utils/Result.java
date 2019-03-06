@@ -187,15 +187,15 @@ public final class Result<T> {
         return this.isPresent() ? Optional.of(this.elem.get()) : Optional.empty();
     }
     /**
-     * Map this {@link Result} to a {@link Result<Empty>}.
-     * @return a {@link Result<Empty>}.
+     * Map this {@link Result} to a {@link Result} of {@link Empty}.
+     * @return a {@link Result}.
      */
     public Result<Empty> toEmpty() {
         return this.flatMap(Result::ofEmpty);
     }
     /**
      * Returns a {@link Stream} with this {@link Result} as its source.
-     * @return a {@link Stream<Result>>}.
+     * @return a {@link Stream}.
      */
     public Stream<Result<T>> stream() {
         return Stream.of(this);
