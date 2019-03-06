@@ -43,7 +43,7 @@ public final class StockImpl implements Stock {
         this.id = Objects.requireNonNull(id);
         this.article = Objects.requireNonNull(article);
         this.expirationDate = expirationDate; // not required to be nonNull because it is called by
-                                              // the other constructor.
+        // the other constructor.
         this.creationDate = creationMoment;
         this.lastChangeDate = creationMoment;
         this.remainingQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure());
@@ -81,7 +81,13 @@ public final class StockImpl implements Stock {
 
     @Override
     public StockState getState() {
-        return null;
+        if (this.remainingQuantity.getValue().doubleValue() > 0) {
+            if (this.expirationDate != null && this.expirationDate.before(new Date())) {
+                return StockState.EXPIRED;
+            }
+            return StockState.AVAILABLE;
+        }
+        return StockState.USED_UP;
     }
 
     @Override
@@ -111,15 +117,15 @@ public final class StockImpl implements Stock {
             res = Quantities.remove(this.remainingQuantity, record.getQuantity())
                             .peek(q ->
                                 this.usedQuantity = Quantities.add(this.usedQuantity,
-                                                                    record.getQuantity())
+                                    record.getQuantity())
                                                               .getValue());
         }
         // make the temporary quantity the official one, add the record to the records list
         // and return a Result of Empty.
         return res.peek(q -> this.remainingQuantity = q)
                   .peek(q -> {
-                            records.add(record);
-                        })
+                      records.add(record);
+                  })
                   .peek(q -> this.updateLastChangeDate())
                   .flatMap(q -> Result.ofEmpty());
     }
@@ -128,8 +134,8 @@ public final class StockImpl implements Stock {
     public List<Record> getRecords() {
         return Collections.unmodifiableList(
             new ArrayList<Record>(this.records).stream()
-                .sorted((a, b) -> (a.getDate().compareTo(b.getDate())))
-                .collect(Collectors.toList()));
+                                               .sorted((a, b) -> (a.getDate().compareTo(b.getDate())))
+                                               .collect(Collectors.toList()));
     }
 
     private void updateLastChangeDate() {
