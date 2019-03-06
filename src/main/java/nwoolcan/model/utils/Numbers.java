@@ -10,6 +10,16 @@ public final class Numbers {
     private Numbers() { }
 
     /**
+     * Returns a new {@link Number} compatible to others for operation and comparisons
+     * from the one passed by parameter.
+     * @param value the value of the number to create.
+     * @return a new {@link Number} compatible to others for operation and comparisons.
+     */
+    public static Number of(final Number value) {
+        return new BigDecimal(value.doubleValue());
+    }
+
+    /**
      * Returns a new {@link Number} that is the first plus the second passed by parameters.
      * @param x first number.
      * @param y second number.
