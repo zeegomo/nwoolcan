@@ -17,12 +17,12 @@ public final class Quantities {
     }
 
     /**
-     * Returns a new {@link Result<Quantity>} that is the adding quantity added to the base quantity.
+     * Returns a new {@link Result} with a {@link Quantity} that is the adding quantity added to the base quantity.
      * If the quantities' unit of measures do not match, the Result will contain a {@link ArithmeticException}.
      * This method does not modify the quantities passed by parameters, it creates a new one.
      * @param base base quantity.
      * @param adding adding quantity.
-     * @return a new {@link Result<Quantity>} that is the adding quantity added to the base quantity.
+     * @return a new {@link Result} with a {@link Quantity} that is the adding quantity added to the base quantity.
      */
     public static Result<Quantity> add(final Quantity base, final Quantity adding) {
         return Result.of(Quantity.of(Numbers.add(base.getValue(), adding.getValue()), base.getUnitOfMeasure()))
@@ -30,13 +30,13 @@ public final class Quantities {
     }
 
     /**
-     * Returns a new {@link Result<Quantity>} that is the removing quantity removed to the base quantity.
+     * Returns a new {@link Result} with a {@link Quantity} that is the removing quantity removed to the base quantity.
      * If the quantities' unit of measures do not match, the Result will contain a {@link ArithmeticException}.
      * If the remaining quantity value will drop below zero after the operation, the Result will contain a {@link IllegalStateException}.
      * This method does not modify the quantities passed by parameters, it creates a new one.
      * @param base base quantity.
      * @param removing removing quantity.
-     * @return a new {@link Result<Quantity>} that is the removing quantity removed to the base quantity.
+     * @return a new {@link Result} with a {@link Quantity} that is the removing quantity removed to the base quantity.
      */
     public static Result<Quantity> remove(final Quantity base, final Quantity removing) {
         return Result.of(Numbers.subtract(base.getValue(), removing.getValue()))
