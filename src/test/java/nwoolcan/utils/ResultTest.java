@@ -151,12 +151,12 @@ public class ResultTest {
         Result<Integer> fixture = Result.of(Integer.MAX_VALUE);
         l = duke.flatMap(s -> Result.of(s.length()));
         assertTrue(l.isPresent());
-        assertEquals(l.getValue().intValue(), 4);
+        assertEquals(4, l.getValue().intValue());
 
         // Verify same instance
         l = duke.flatMap(s -> fixture);
         assertSame(l, fixture);
-        assertEquals(l.flatMap(() -> Result.of(4)), Result.of(4));
+        assertEquals(Result.of(4), l.flatMap(() -> Result.of(4)));
     }
     /**
      * Tests peek.
@@ -165,9 +165,9 @@ public class ResultTest {
     public void testPeek() {
         Collection<Integer> coll = new ArrayList<>();
         Result.of(2).peek(coll::add);
-        assertEquals(coll.size(), 1);
+        assertEquals(1, coll.size());
         Result.error(new Exception()).peek(i -> coll.add(2));
-        assertEquals(coll.size(), 1);
+        assertEquals(1, coll.size());
     }
     /**
      * Tests ofChecked.
@@ -203,9 +203,9 @@ public class ResultTest {
     @Test
     public void testStream() {
         Result<Integer> r1 = Result.of(2);
-        assertEquals(r1.stream().distinct().count(), 1);
+        assertEquals(1, r1.stream().distinct().count());
         assertTrue(r1.stream().allMatch(i -> i.getValue() == 2));
-        assertEquals(r1.stream().findAny().get(), Result.of(2));
+        assertEquals(Result.of(2), r1.stream().findAny().get());
     }
     /**
      * Tests toEmpty.
