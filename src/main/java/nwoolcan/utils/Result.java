@@ -24,7 +24,7 @@ public final class Result<T> {
     /**
      * @param <T> the type of elem
      * @param elem the result to be encapsulated.
-     * @return a new Result holding elem
+     * @return a new {@link Result} holding elem
      */
     public static <T> Result<T> of(final T elem) {
         return new Result<>(Optional.of(elem), Optional.empty());
