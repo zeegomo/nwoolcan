@@ -23,10 +23,10 @@ public class StockImplTest {
     private Record record2 = new Record(Quantity.of(ONE, UOM), Record.Action.REMOVING);
     private static final Integer ID = 1;
     private static final Integer ONE = 1;
-    private static final Integer TEN = 1;
+    private static final Integer TEN = 10;
     private static final String NAME = "DummyName";
-    private static final Article ARTICLE = new ArticleImpl(ID, NAME);
     private static final UnitOfMeasure UOM = UnitOfMeasure.Kilogram;
+    private static final Article ARTICLE = new ArticleImpl(ID, NAME, UOM);
 
     /**
      * Initialize structures.

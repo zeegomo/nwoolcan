@@ -1,5 +1,6 @@
 package nwoolcan.model.brewery.warehouse.article;
 
+import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 
 import java.util.Objects;
@@ -12,15 +13,18 @@ public class ArticleImpl implements Article {
 
     private final Integer id;
     private final String name;
+    private final UnitOfMeasure unitOfMeasure;
 
     /**
      * Constructor of the class. Only article of type miscellaneous can be constructed.
      * @param id the id of the new Article.
      * @param name the name of the new Article.
+     * @param unitOfMeasure used for this article.
      */
-    public ArticleImpl(final Integer id, final String name) {
+    public ArticleImpl(final Integer id, final String name, final UnitOfMeasure unitOfMeasure) {
         this.id = Objects.requireNonNull(id, "Id can not be null.");
         this.name = Objects.requireNonNull(name, "Name can not be null.");
+        this.unitOfMeasure = Objects.requireNonNull(unitOfMeasure);
         if (this.name.equals("")) {
             throw new IllegalArgumentException("Name can not be empty.");
         }
@@ -66,13 +70,18 @@ public class ArticleImpl implements Article {
         return Result.error(new IllegalAccessException("This is not a Beer Article"));
     }
 
+    @Override
+    public final UnitOfMeasure getUnitOfMeasure() {
+        return this.unitOfMeasure;
+    }
+
     /**
      * To override this method you should call Objects.hash with parameters this super class and the other fields.
      * @return the result of the xor operation between id and the hash of the name.
      */
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, unitOfMeasure);
     }
 
     /**
@@ -92,11 +101,13 @@ public class ArticleImpl implements Article {
 
         ArticleImpl other = (ArticleImpl) obj;
         return this.id.equals(other.getId())
-            && this.name.equals(other.getName());
+            && this.name.equals(other.getName())
+            && this.unitOfMeasure.equals(other.unitOfMeasure);
     }
 
     /**
      * To override this method add also other elements of the new class.
+     *
      * @return a string representation of the class.
      */
     @Override
@@ -104,6 +115,7 @@ public class ArticleImpl implements Article {
         return "ArticleImpl{"
             + "id=" + id
             + ", name='" + name + '\''
+            + ", unitOfMeasure=" + unitOfMeasure
             + '}';
     }
 }

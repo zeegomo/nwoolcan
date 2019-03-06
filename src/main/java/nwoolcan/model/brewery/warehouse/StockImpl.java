@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
  */
 public final class StockImpl implements Stock {
 
+    private static final Integer EMPTY_VALUE = 0;
+
     private final Integer id;
     private final Article article;
     private final Date expirationDate;
@@ -37,12 +39,15 @@ public final class StockImpl implements Stock {
      */
     // Package protected
     StockImpl(final Integer id, final Article article, final Date expirationDate) {
+        Date creationMoment = new Date();
         this.id = Objects.requireNonNull(id);
         this.article = Objects.requireNonNull(article);
         this.expirationDate = expirationDate; // not required to be nonNull because it is called by
                                               // the other constructor.
-        this.creationDate = new Date();
-        this.lastChangeDate = new Date();
+        this.creationDate = creationMoment;
+        this.lastChangeDate = creationMoment;
+        this.remainingQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure());
+        this.usedQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure());
     }
     /**
      * Constructor for Stock without expiration date.
@@ -115,6 +120,7 @@ public final class StockImpl implements Stock {
                   .peek(q -> {
                             records.add(record);
                         })
+                  .peek(q -> this.updateLastChangeDate())
                   .flatMap(q -> Result.ofEmpty());
     }
 
@@ -124,6 +130,10 @@ public final class StockImpl implements Stock {
             new ArrayList<Record>(this.records).stream()
                 .sorted((a, b) -> (a.getDate().compareTo(b.getDate())))
                 .collect(Collectors.toList()));
+    }
+
+    private void updateLastChangeDate() {
+        this.lastChangeDate = new Date();
     }
 
     @Override
