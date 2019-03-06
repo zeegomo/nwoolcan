@@ -5,6 +5,7 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -44,20 +45,14 @@ public abstract class AbstractStep implements Step {
 
     @Override
     public final Result<Empty> finalize(final String note, final Date endDate, final Quantity remainingSize) {
-        Result<Empty> res = Result.ofEmpty()
-                                  .require(e -> endDate != null, new NullPointerException(END_DATE_NULL_MESSAGE))
-                                  .require(e -> remainingSize != null, new NullPointerException(REMAINING_SIZE_NULL_MESSAGE))
-                                  .require(e -> !this.finalized, new IllegalStateException(ALREADY_FINALIZED_MESSAGE));
-
-        res = res.flatMap(e -> this.stepInfo.setNote(note))
-                 .flatMap(e -> this.stepInfo.setEndDate(endDate))
-                 .flatMap(e -> this.stepInfo.setEndStepSize(remainingSize));
-
-        if (!res.isError()) {
-            this.finalized = true;
-        }
-
-        return res;
+        return Result.ofEmpty()
+                     .require(() -> endDate != null, new NullPointerException(END_DATE_NULL_MESSAGE))
+                     .require(() -> remainingSize != null, new NullPointerException(REMAINING_SIZE_NULL_MESSAGE))
+                     .require(() -> !this.finalized, new IllegalStateException(ALREADY_FINALIZED_MESSAGE))
+                     .flatMap(() -> this.stepInfo.setNote(note))
+                     .flatMap(() -> this.stepInfo.setEndDate(endDate))
+                     .flatMap(() -> this.stepInfo.setEndStepSize(remainingSize))
+                     .peek(e -> this.finalized = true);
     }
 
     @Override
@@ -120,5 +115,16 @@ public abstract class AbstractStep implements Step {
         }
 
         return res;
+    }
+
+    /**
+     * Add the class name formatter like \"[DummyStep]\" before this method when overriding.
+     * @return the string representation of this class.
+     */
+    @Override
+    public String toString() {
+        return "stepInfo=" + stepInfo
+            + ", finalized=" + finalized
+            + ", parameters=" + Arrays.toString(parameters.toArray());
     }
 }

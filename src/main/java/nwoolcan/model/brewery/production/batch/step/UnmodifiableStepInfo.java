@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Unmodifiable implementation of StepInfo using pattern decorator.
  */
-public class UnmodifiableStepInfo implements StepInfo {
+public final class UnmodifiableStepInfo implements StepInfo {
 
     private static final String UNMODIFIABLE_MESSAGE = "This StepInfo is unmodifiable.";
     private final StepInfo stepInfo;
@@ -28,42 +28,47 @@ public class UnmodifiableStepInfo implements StepInfo {
     }
 
     @Override
-    public final StepType getType() {
+    public StepType getType() {
         return this.stepInfo.getType();
     }
 
     @Override
-    public final Optional<String> getNote() {
+    public Optional<String> getNote() {
         return this.stepInfo.getNote();
     }
 
     @Override
-    public final Result<Empty> setNote(final String note) {
+    public Result<Empty> setNote(final String note) {
         return getUnmodifiableErrorResult();
     }
 
     @Override
-    public final Date getStartDate() {
+    public Date getStartDate() {
         return this.stepInfo.getStartDate();
     }
 
     @Override
-    public final Optional<Date> getEndDate() {
+    public Optional<Date> getEndDate() {
         return this.stepInfo.getEndDate();
     }
 
     @Override
-    public final Result<Empty> setEndDate(final Date endDate) {
+    public Result<Empty> setEndDate(final Date endDate) {
         return getUnmodifiableErrorResult();
     }
 
     @Override
-    public final Optional<Quantity> getEndStepSize() {
+    public Optional<Quantity> getEndStepSize() {
         return this.stepInfo.getEndStepSize();
     }
 
     @Override
-    public final Result<Empty> setEndStepSize(final Quantity endSize) {
+    public Result<Empty> setEndStepSize(final Quantity endSize) {
         return getUnmodifiableErrorResult();
+    }
+
+    @Override
+    public String toString() {
+        return "[UnmodifiableStepInfo] {" + this.stepInfo.toString() + '}';
     }
 }

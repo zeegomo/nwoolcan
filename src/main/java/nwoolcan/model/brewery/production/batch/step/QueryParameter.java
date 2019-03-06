@@ -6,7 +6,7 @@ import java.util.Optional;
 /**
  * Object for representing a query to perform on a collection of parameters.
  */
-public class QueryParameter {
+public final class QueryParameter {
 
     private ParameterType parameterType;
     private Number greaterThanValue;
@@ -187,5 +187,20 @@ public class QueryParameter {
     public QueryParameter sortDescending(final boolean sort) {
         this.sortDescending = sort;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "[QueryParameter] {"
+            + "parameterType=" + parameterType
+            + ", greaterThanValue=" + greaterThanValue
+            + ", lessThanValue=" + lessThanValue
+            + ", exactValue=" + exactValue
+            + ", startDate=" + startDate
+            + ", endDate=" + endDate
+            + ", sortByValue=" + sortByValue
+            + ", sortByDate=" + sortByDate
+            + ", sortDescending=" + sortDescending
+            + '}';
     }
 }
