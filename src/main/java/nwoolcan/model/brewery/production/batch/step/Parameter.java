@@ -17,11 +17,11 @@ public interface Parameter {
      * Returns the value of the registration.
      * @return the value of the registration.
      */
-    Number getValue();
+    Number getRegistrationValue();
 
     /**
      * Returns the date of the registration.
      * @return the date of the registration.
      */
-    Date getDate();
+    Date getRegistrationDate();
 }
