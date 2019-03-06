@@ -24,7 +24,7 @@ public final class Result<T> {
     /**
      * @param <T> the type of elem
      * @param elem the result to be encapsulated.
-     * @return a new Result<T> holding elem
+     * @return a new {@link Result} holding elem
      */
     public static <T> Result<T> of(final T elem) {
         return new Result<>(Optional.of(elem), Optional.empty());
@@ -96,7 +96,7 @@ public final class Result<T> {
     }
     /**
      * If a value is present, apply the provided {@link Result}-bearing function to it returning that {@link Result}. Otherwise return a {@link Result} holding the original exception.
-     * @param supplier a supplier of {@link Result<U>}
+     * @param supplier a supplier of {@link Result}
      * @param <U> the type of the result of the supplier
      * @return a {@link Result} describing the result of the supplier, if a value is present, otherwise a {@link Result} holding the original exception.
      */
@@ -187,15 +187,15 @@ public final class Result<T> {
         return this.isPresent() ? Optional.of(this.elem.get()) : Optional.empty();
     }
     /**
-     * Map this {@link Result} to a {@link Result<Empty>}.
-     * @return a {@link Result<Empty>}.
+     * Map this {@link Result} to a {@link Result} of {@link Empty}.
+     * @return a {@link Result} of {@link Empty}.
      */
     public Result<Empty> toEmpty() {
         return this.flatMap(Result::ofEmpty);
     }
     /**
      * Returns a {@link Stream} with this {@link Result} as its source.
-     * @return a {@link Stream<Result>>}.
+     * @return a {@link Stream}.
      */
     public Stream<Result<T>> stream() {
         return Stream.of(this);
