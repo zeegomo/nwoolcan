@@ -95,14 +95,27 @@ public final class StockImpl implements Stock {
     }
 
     @Override
-    public Result<Empty> addRecord(final Record record) { // TODO
+    public Result<Empty> addRecord(final Record record) {
         final Result<Quantity> res;
         if (record.getAction().equals(Record.Action.ADDING)) {
+            // adding the quantity of the record to the temporary current remaining quantity.
             res = Quantities.add(this.remainingQuantity, record.getQuantity());
-        } else {
-            res = Quantities.remove(this.remainingQuantity, record.getQuantity());
+        } else { //REMOVING
+            // remove the quantity of the record from the temporary current quantity and add it
+            // to the used quantity.
+            res = Quantities.remove(this.remainingQuantity, record.getQuantity())
+                            .peek(q ->
+                                this.usedQuantity = Quantities.add(this.usedQuantity,
+                                                                    record.getQuantity())
+                                                              .getValue());
         }
-        return null;
+        // make the temporary quantity the official one, add the record to the records list
+        // and return a Result of Empty.
+        return res.peek(q -> this.remainingQuantity = q)
+                  .peek(q -> {
+                            records.add(record);
+                        })
+                  .flatMap(q -> Result.ofEmpty());
     }
 
     @Override
