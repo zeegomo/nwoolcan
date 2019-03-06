@@ -63,19 +63,19 @@ public abstract class AbstractStep implements Step {
             s = s.filter(p -> p.getType().equals(query.getParameterType().get()));
         }
         if (query.getGreaterThanValue().isPresent()) {
-            s = s.filter(p -> p.getValue().doubleValue() > query.getGreaterThanValue().get().doubleValue());
+            s = s.filter(p -> p.getRegistrationValue().doubleValue() > query.getGreaterThanValue().get().doubleValue());
         }
         if (query.getLessThanValue().isPresent()) {
-            s = s.filter(p -> p.getValue().doubleValue() < query.getLessThanValue().get().doubleValue());
+            s = s.filter(p -> p.getRegistrationValue().doubleValue() < query.getLessThanValue().get().doubleValue());
         }
         if (query.getExactValue().isPresent()) {
-            s = s.filter(p -> p.getValue().doubleValue() == query.getExactValue().get().doubleValue());
+            s = s.filter(p -> p.getRegistrationValue().doubleValue() == query.getExactValue().get().doubleValue());
         }
         if (query.getStartDate().isPresent()) {
-            s = s.filter(p -> p.getDate().after(query.getStartDate().get()));
+            s = s.filter(p -> p.getRegistrationDate().after(query.getStartDate().get()));
         }
         if (query.getEndDate().isPresent()) {
-            s = s.filter(p -> p.getDate().before(query.getEndDate().get()));
+            s = s.filter(p -> p.getRegistrationDate().before(query.getEndDate().get()));
         }
 
         if (query.isSortByValue()) {
@@ -85,7 +85,7 @@ public abstract class AbstractStep implements Step {
                     p1 = p2;
                     p2 = tmp;
                 }
-                return (int) (p1.getValue().doubleValue() - p2.getValue().doubleValue());
+                return Double.compare(p1.getRegistrationValue().doubleValue(), p2.getRegistrationValue().doubleValue());
             });
         }
 
@@ -96,7 +96,7 @@ public abstract class AbstractStep implements Step {
                     p1 = p2;
                     p2 = tmp;
                 }
-                return (int) (p1.getDate().getTime() - p2.getDate().getTime());
+                return Double.compare(p1.getRegistrationDate().getTime(), p2.getRegistrationDate().getTime());
             });
         }
 
