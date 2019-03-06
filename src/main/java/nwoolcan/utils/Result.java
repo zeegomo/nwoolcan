@@ -2,6 +2,7 @@ package nwoolcan.utils;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -83,14 +84,37 @@ public final class Result<T> {
     }
     /**
      * If a value is present, apply the provided {@link Result}-bearing function to it returning that {@link Result}. Otherwise return a {@link Result} holding the original exception.
-     * @param mapper a mapping function to apply to the value, if present. The method is similar to {link} map(Function) but the provided mapper is one whose result is already a {@link Result}, and if invoked, flatMap does not wrap it with an additional {@link Result}.
+     * @param mapper a mapping function to apply to the value, if present. The method is similar to map(Function) but the provided mapper is one whose result is already a {@link Result}, and if invoked, flatMap does not wrap it with an additional {@link Result}.
      * @param <U> the type of the result of the mapping function
-     * @return a {link} Result describing the result of applying a mapping function to the value of this {@link Result}, if a value is present, otherwise a {@link Result} holding the original exception.
+     * @return a {@link Result} describing the result of the supplier, if a value is present, otherwise a {@link Result} holding the original exception.
      */
     @SuppressWarnings("unchecked")
     public <U> Result<U> flatMap(final Function<? super T, Result<U>> mapper) {
         Objects.requireNonNull(mapper); //could become Results.requireNonNull
         return this.isPresent() ? mapper.apply(this.elem.get()) : (Result<U>) this;
+    }
+    /**
+     * If a value is present, apply the provided {@link Result}-bearing function to it returning that {@link Result}. Otherwise return a {@link Result} holding the original exception.
+     * @param supplier a supplier of {@link Result<U>}
+     * @param <U> the type of the result of the supplier
+     * @return a {@link Result} describing the result of the supplier, if a value is present, otherwise a {@link Result} holding the original exception.
+     */
+    @SuppressWarnings("unchecked")
+    public <U> Result<U> flatMap(final Supplier<Result<U>> supplier) {
+        Objects.requireNonNull(supplier); //could become Results.requireNonNull
+        return this.isPresent() ? supplier.get() : (Result<U>) this;
+    }
+    /**
+     * If a value is present, execute the provided {@link Consumer}.
+     * @param action a non-interfering action to perform on the element
+     * @return this
+     */
+    public Result<T> peek(final Consumer<? super T> action) {
+        Objects.requireNonNull(action); //could become Results.requireNonNull
+        return this.map(elem -> {
+            action.accept(elem);
+            return elem;
+        });
     }
     /**
      * Return the value if present, otherwise return other.
@@ -112,25 +136,44 @@ public final class Result<T> {
      * If the value is not present or the value is present and matches the given predicate, return this.
      * Otherwise return a {@link Result} holding an {@link IllegalArgumentException}.
      * @param predicate a predicate to apply to the value, if present
-     * @return a {@link Result} describing the value of this Optional if a value is present and the value matches the given predicate
+     * @return a {@link Result} describing the value of this {@link Result} if a value is present and the value matches the given predicate
      */
     public Result<T> require(final Predicate<? super T> predicate) {
-        if (this.isPresent()) {
-            return predicate.test(this.elem.get()) ? this : Result.error(new IllegalArgumentException());
-        } else {
-            return this;
-        }
+        return this.require(predicate, new IllegalArgumentException());
     }
     /**
      * If the value is not present or the value is present and matches the given predicate, return this.
      *      * Otherwise return a {@link Result} holding the specified exception.
      * @param predicate a predicate to apply to the value, if present
      * @param exception the exception to be hold in the resulting {@link Result} if the value does not match the predicate
-     * @return a {@link Result} describing the value of this Optional if a value is present and the value matches the given predicate
+     * @return a {@link Result} describing the value of this {@link Result} if a value is present and the value matches the given predicate
      */
     public Result<T> require(final Predicate<? super T> predicate, final Exception exception) {
         if (this.isPresent()) {
             return predicate.test(this.elem.get()) ? this : Result.error(exception);
+        } else {
+            return this;
+        }
+    }
+    /**
+     * If the value is not present or the value is present and the predicate is true, return this.
+     * Otherwise return a {@link Result} holding an {@link IllegalArgumentException}.
+     * @param supplier a supplier of a boolean condition
+     * @return a {@link Result} describing the value of this {@link Result} if a value is present and the condition is true
+     */
+    public Result<T> require(final Supplier<Boolean> supplier) {
+        return this.require(supplier, new IllegalArgumentException());
+    }
+    /**
+     * If the value is not present or the value is present and the predicate is true, return this.
+     * Otherwise return a {@link Result} holding the specified exception.
+     * @param supplier a supplier of a boolean condition
+     * @param exception the exception to be hold in the resulting {@link Result} if the value does not match the predicate
+     * @return a {@link Result} describing the value of this {@link Result} if a value is present and the condition is true
+     */
+    public Result<T> require(final Supplier<Boolean> supplier, final Exception exception) {
+        if (this.isPresent()) {
+            return supplier.get() ? this : Result.error(exception);
         } else {
             return this;
         }
