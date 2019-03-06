@@ -45,7 +45,6 @@ public class ResultTest {
         assertNotEquals(present, presentEmpty);
         assertNotEquals(present, exception);
     }
-
     /**
      * Tests getting an error from a Result holding a value.
      */
@@ -54,7 +53,6 @@ public class ResultTest {
         Result<Empty> empty = Result.ofEmpty();
         Exception e = empty.getError();
     }
-
     /**
      * Tests orElse.
      */
@@ -64,7 +62,6 @@ public class ResultTest {
         assertTrue(error.orElse(2).equals(2));
         Integer i = error.getValue();
     }
-
     /**
      * Tests require.
      */
@@ -75,7 +72,6 @@ public class ResultTest {
         assertTrue(Result.ofEmpty().require(() -> false).isError());
         assertTrue(Result.ofEmpty().require(() -> true).isPresent());
     }
-
     /**
      * Tests requireNonNull.
      */
@@ -85,7 +81,6 @@ public class ResultTest {
         assertTrue(Results.requireNonNull(new Empty() {
         }).isPresent());
     }
-
     /**
      * Test map.
      */
@@ -123,7 +118,6 @@ public class ResultTest {
         Result<Integer> l = duke.map(String::length);
         assertTrue(l.getValue() == 4);
     }
-
     /**
      * Test flatMap.
      */
@@ -164,7 +158,6 @@ public class ResultTest {
         assertSame(l, fixture);
         assertEquals(l.flatMap(() -> Result.of(4)), Result.of(4));
     }
-
     /**
      * Tests peek.
      */
@@ -176,7 +169,6 @@ public class ResultTest {
         Result.error(new Exception()).peek(i -> coll.add(2));
         assertEquals(coll.size(), 1);
     }
-
     /**
      * Tests ofChecked.
      */
@@ -191,7 +183,6 @@ public class ResultTest {
         r2.getError().printStackTrace();
         System.out.println(r2.getError().toString());
     }
-
     /**
      * Tests ofCloseable.
      */
@@ -206,6 +197,27 @@ public class ResultTest {
         r2.getError().printStackTrace();
         System.out.println(r2.getError().toString());
     }
+    /**
+     * Tests stream.
+     */
+    @Test
+    public void testStream() {
+        Result<Integer> r1 = Result.of(2);
+        assertEquals(r1.stream().distinct().count(), 1);
+        assertTrue(r1.stream().allMatch(i -> i.getValue() == 2));
+        assertEquals(r1.stream().findAny().get(), Result.of(2));
+    }
+    /**
+     * Tests toEmpty.
+     */
+    @Test
+    public void testToEmpty() {
+        Result<Integer> r1 = Result.of(2);
+        assertTrue(r1.toEmpty().isPresent());
 
+        Result<Integer> r2 = Results.requireNonNull(null);
+        assertFalse(r2.toEmpty().isPresent());
+        assertTrue(r2.toEmpty().isError());
+    }
 }
 
