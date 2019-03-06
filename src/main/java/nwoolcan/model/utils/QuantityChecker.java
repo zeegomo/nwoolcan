@@ -23,14 +23,14 @@ public final class QuantityChecker {
 
     /**
      * Performs a check on the {@link Quantity} passed by parameter, returning a {@link Result}
-     * with a {@link IllegalArgumentException} error if the quantity value is null or the quantity
+     * with a {@link IllegalArgumentException} error if the quantity value is negative or the quantity
      * unit of measure is not valid for a quantity, otherwise with the same quantity passed by parameter.
      * @param quantity quantity to check.
      * @return a {@link Result} with same quantity if the check passes, with an error otherwise.
      */
     public static Result<Quantity> check(final Quantity quantity) {
         return Result.of(quantity)
-                     .require(q -> q.getValue().doubleValue() > 0, new IllegalArgumentException(VALUE_NEGATIVE_MESSAGE))
+                     .require(q -> q.getValue().doubleValue() >= 0, new IllegalArgumentException(VALUE_NEGATIVE_MESSAGE))
                      .require(q -> VALID_UMS.contains(q.getUnitOfMeasure()), new IllegalArgumentException(CANNOT_BE_QUANTITY_MESSAGE));
     }
 }
