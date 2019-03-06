@@ -5,7 +5,7 @@ import nwoolcan.utils.Result;
 import java.util.Collection;
 
 /**
- * Scan the codebase to find all implementations of BatchEvaluationImpl.
+ * Scan the codebase to find all implementations of BatchEvaluation.
  */
 public interface BatchEvaluationScanner {
 

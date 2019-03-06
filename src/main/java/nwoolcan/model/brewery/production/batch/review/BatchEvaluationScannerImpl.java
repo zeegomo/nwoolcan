@@ -26,7 +26,6 @@ public final class BatchEvaluationScannerImpl implements BatchEvaluationScanner 
         }
     }
 
-
     private Result<Collection<BatchEvaluationType>> scan() {
         return Results.ofCloseable(() ->  new ClassGraph().enableAllInfo().scan(), scanResult -> {
             ClassInfoList widgetClasses = scanResult.getClassesImplementing(BatchEvaluationType.class.getName());
