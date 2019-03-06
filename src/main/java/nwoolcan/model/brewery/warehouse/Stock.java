@@ -6,6 +6,7 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -59,5 +60,11 @@ public interface Stock {
      * @return a {@link Result} of {@link Empty} which reports possible errors.
      */
     Result<Empty> addRecord(Record record);
+
+    /**
+     * Getters of all the records of the Stock, ordered by its {@link Date}.
+     * @return the list of all the saved records.
+     */
+    List<Record> getRecords();
 
 }

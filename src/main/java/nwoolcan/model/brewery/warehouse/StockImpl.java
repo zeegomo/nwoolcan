@@ -6,6 +6,7 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -75,6 +76,11 @@ public final class StockImpl implements Stock {
 
     @Override
     public Result<Empty> addRecord(final Record record) {
+        return null;
+    }
+
+    @Override
+    public List<Record> getRecords() {
         return null;
     }
 
