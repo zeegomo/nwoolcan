@@ -11,7 +11,7 @@ public interface BatchEvaluationScanner {
 
     /**
      * Return all BatchEvaluationType found by the scanner.
-     * @return a {@link Collection} of {@link BatchEvaluationType}
+     * @return a {@link Set} of {@link BatchEvaluationType}
      */
     Result<Set<BatchEvaluationType>> getAvailableBatchEvaluationTypes();
 }
