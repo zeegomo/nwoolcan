@@ -27,7 +27,7 @@ public interface StepInfo {
     /**
      * Sets the notes written at step finalization.
      * @param note notes to be set.
-     * @return a {@link Result<Empty>} that contains a {@link UnsupportedOperationException}
+     * @return a {@link Result} of {@link Empty} that contains a {@link UnsupportedOperationException}
      * if the object is unmodifiable.
      */
     Result<Empty> setNote(String note);
@@ -39,9 +39,9 @@ public interface StepInfo {
     Date getStartDate();
 
     /**
-     * Returns an {@link Optional<Date>} with the date when the step was finalized
+     * Returns the date when the step was finalized
      * or an empty optional if not already finalized.
-     * @return an {@link Optional<Date>} with the date when the step was finalized
+     * @return the date when the step was finalized
      * or an empty optional if not already finalized.
      */
     Optional<Date> getEndDate();
@@ -49,16 +49,16 @@ public interface StepInfo {
     /**
      * Sets the date when the step is finalized.
      * @param endDate the date when the step is finalized.
-     * @return a {@link Result<Empty>} that contains a {@link UnsupportedOperationException}
+     * @return a {@link Result} that contains a {@link UnsupportedOperationException}
      * if the object is unmodifiable, or contains a {@link IllegalArgumentException} if the endDate
      * is before the startDate.
      */
     Result<Empty> setEndDate(Date endDate);
 
     /**
-     * Returns an {@link Optional<Quantity>} with the quantity at step finalization
+     * Returns the quantity at step finalization
      * or an empty optional if not already finalized.
-     * @return an {@link Optional<Quantity>} with the quantity at step finalization
+     * @return the quantity at step finalization
      * or an empty optional if not already finalized.
      */
     Optional<Quantity> getEndStepSize();
@@ -66,7 +66,7 @@ public interface StepInfo {
     /**
      * Sets the quantity size at step finalization.
      * @param endSize the quantity size at step finalization.
-     * @return a {@link Result<Empty>} that contains a {@link UnsupportedOperationException}
+     * @return a {@link Result} that contains a {@link UnsupportedOperationException}
      * if the object is unmodifiable.
      */
     Result<Empty> setEndStepSize(Quantity endSize);

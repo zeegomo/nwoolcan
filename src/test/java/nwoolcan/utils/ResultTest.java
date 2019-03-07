@@ -45,7 +45,6 @@ public class ResultTest {
         assertNotEquals(present, presentEmpty);
         assertNotEquals(present, exception);
     }
-
     /**
      * Tests getting an error from a Result holding a value.
      */
@@ -54,7 +53,6 @@ public class ResultTest {
         Result<Empty> empty = Result.ofEmpty();
         Exception e = empty.getError();
     }
-
     /**
      * Tests orElse.
      */
@@ -64,7 +62,6 @@ public class ResultTest {
         assertTrue(error.orElse(2).equals(2));
         Integer i = error.getValue();
     }
-
     /**
      * Tests require.
      */
@@ -75,17 +72,30 @@ public class ResultTest {
         assertTrue(Result.ofEmpty().require(() -> false).isError());
         assertTrue(Result.ofEmpty().require(() -> true).isPresent());
     }
-
     /**
      * Tests requireNonNull.
      */
     @Test
     public void testRequireNonNull() {
+        final String errorMessage = "argument is null";
+
         assertTrue(Results.requireNonNull(null).isError());
         assertTrue(Results.requireNonNull(new Empty() {
         }).isPresent());
-    }
+        Result<Empty> r1 = Result.ofEmpty()
+                                 .requireNonNull(null);
+        assertTrue(r1.isError());
 
+        Result<Empty> r2 = Result.ofEmpty()
+                                 .requireNonNull(new IllegalAccessError());
+        assertTrue(r2.isPresent());
+
+        Result<Empty> r3 = Result.ofEmpty()
+                                 .requireNonNull(null, errorMessage);
+        assertTrue(r3.isError());
+        assertEquals(r3.getError().getMessage(), errorMessage);
+
+    }
     /**
      * Test map.
      */
@@ -123,7 +133,6 @@ public class ResultTest {
         Result<Integer> l = duke.map(String::length);
         assertTrue(l.getValue() == 4);
     }
-
     /**
      * Test flatMap.
      */
@@ -157,14 +166,13 @@ public class ResultTest {
         Result<Integer> fixture = Result.of(Integer.MAX_VALUE);
         l = duke.flatMap(s -> Result.of(s.length()));
         assertTrue(l.isPresent());
-        assertEquals(l.getValue().intValue(), 4);
+        assertEquals(4, l.getValue().intValue());
 
         // Verify same instance
         l = duke.flatMap(s -> fixture);
         assertSame(l, fixture);
-        assertEquals(l.flatMap(() -> Result.of(4)), Result.of(4));
+        assertEquals(Result.of(4), l.flatMap(() -> Result.of(4)));
     }
-
     /**
      * Tests peek.
      */
@@ -172,11 +180,10 @@ public class ResultTest {
     public void testPeek() {
         Collection<Integer> coll = new ArrayList<>();
         Result.of(2).peek(coll::add);
-        assertEquals(coll.size(), 1);
+        assertEquals(1, coll.size());
         Result.error(new Exception()).peek(i -> coll.add(2));
-        assertEquals(coll.size(), 1);
+        assertEquals(1, coll.size());
     }
-
     /**
      * Tests ofChecked.
      */
@@ -191,7 +198,6 @@ public class ResultTest {
         r2.getError().printStackTrace();
         System.out.println(r2.getError().toString());
     }
-
     /**
      * Tests ofCloseable.
      */
@@ -206,6 +212,27 @@ public class ResultTest {
         r2.getError().printStackTrace();
         System.out.println(r2.getError().toString());
     }
+    /**
+     * Tests stream.
+     */
+    @Test
+    public void testStream() {
+        Result<Integer> r1 = Result.of(2);
+        assertEquals(1, r1.stream().distinct().count());
+        assertTrue(r1.stream().allMatch(i -> i.getValue() == 2));
+        assertEquals(Result.of(2), r1.stream().findAny().get());
+    }
+    /**
+     * Tests toEmpty.
+     */
+    @Test
+    public void testToEmpty() {
+        Result<Integer> r1 = Result.of(2);
+        assertTrue(r1.toEmpty().isPresent());
 
+        Result<Integer> r2 = Results.requireNonNull(null);
+        assertFalse(r2.toEmpty().isPresent());
+        assertTrue(r2.toEmpty().isError());
+    }
 }
 
