@@ -3,6 +3,7 @@ package nwoolcan.model.brewery.production.batch.step;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
+import nwoolcan.utils.Results;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -118,12 +119,11 @@ public abstract class AbstractStep implements Step {
 
     @Override
     public final Result<Empty> addParameter(final Parameter parameter) {
-        return Result.of(parameter)
-                     .requireNonNull(parameter, PARAMETER_NULL_MESSAGE)
-                     .require(() -> !this.isFinalized(), new IllegalStateException(CANNOT_REGISTER_PARAMETER_MESSAGE))
-                     .require(p -> getParameterTypes().contains(p.getType()), new IllegalArgumentException(INVALID_PARAMETER_MESSAGE))
-                     .peek(this.parameters::add)
-                     .toEmpty();
+        return Results.requireNonNull(parameter, PARAMETER_NULL_MESSAGE)
+                      .require(() -> !this.isFinalized(), new IllegalStateException(CANNOT_REGISTER_PARAMETER_MESSAGE))
+                      .require(p -> getParameterTypes().contains(p.getType()), new IllegalArgumentException(INVALID_PARAMETER_MESSAGE))
+                      .peek(this.parameters::add)
+                      .toEmpty();
     }
 
     /**
