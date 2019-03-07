@@ -2,9 +2,9 @@ package nwoolcan.model.brewery.production.batch.review.types;
 
 import nwoolcan.model.brewery.production.batch.review.EvaluationType;
 
+import java.util.HashSet;
 import java.util.Arrays;
 import java.util.Objects;
-
 /**
  * BJCPBatchEvaluationType.
  */
@@ -59,7 +59,7 @@ public final class BJCPBatchEvaluationType extends AbstractBatchEvaluationType {
      * Create a new BJCP BatchEvaluationType.
      */
     public BJCPBatchEvaluationType() {
-        super(BJCPBatchEvaluationType.NAME, Arrays.asList(BJCPCategories.values()));
+        super(BJCPBatchEvaluationType.NAME, new HashSet<>(Arrays.asList(BJCPCategories.values())));
     }
 
     @Override
@@ -69,7 +69,7 @@ public final class BJCPBatchEvaluationType extends AbstractBatchEvaluationType {
 
     @Override
     public int hashCode() {
-        return Objects.hash(NAME, this.getCategories());
+        return Objects.hash(NAME, Arrays.hashCode(this.getCategories().toArray()));
     }
 
     @Override
