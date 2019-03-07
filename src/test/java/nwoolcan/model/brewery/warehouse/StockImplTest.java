@@ -50,16 +50,16 @@ public class StockImplTest {
         Assert.assertEquals(ARTICLE, stock.getArticle());
         Assert.assertTrue(Quantities.remove(record1.getQuantity(), record2.getQuantity()).isPresent());
         Assert.assertEquals(Quantities.remove(record1.getQuantity(), record2.getQuantity()).getValue(),
-                            stock.getRemainingQuantity());
+            stock.getRemainingQuantity());
         Assert.assertEquals(record2.getQuantity(), stock.getUsedQuantity());
         Assert.assertTrue(stock.getExpirationDate().isPresent());
         Assert.assertEquals(expDate, stock.getExpirationDate().get());
-        Assert.assertEquals(StockState.AVAILABLE, stock.getState());
-        Assert.assertTrue(stock.getCreationDate().toInstant().isBefore(stock.getLastChangeDate().toInstant()));
+        Assert.assertEquals(StockState.EXPIRED, stock.getState());
         Assert.assertTrue(stock.getCreationDate().before(stock.getLastChangeDate()));
         Assert.assertTrue(stock.getRecords().contains(record1));
         Assert.assertTrue(stock.getRecords().contains(record2));
         Assert.assertFalse(stock1.getExpirationDate().isPresent());
+        Assert.assertEquals(StockState.AVAILABLE, stock1.getState());
     }
 
 }

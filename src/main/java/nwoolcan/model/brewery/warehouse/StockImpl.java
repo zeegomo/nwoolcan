@@ -92,7 +92,8 @@ public final class StockImpl implements Stock {
 
     @Override
     public Optional<Date> getExpirationDate() {
-        return Optional.ofNullable((Date) this.expirationDate.clone());
+        // TODO check for better solution. If expDate is present, I want to return a copy of that.
+        return Optional.ofNullable(this.expirationDate);
     }
 
     @Override
