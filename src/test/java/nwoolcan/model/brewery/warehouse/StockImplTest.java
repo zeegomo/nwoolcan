@@ -9,6 +9,7 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
@@ -40,12 +41,18 @@ public class StockImplTest {
     /**
      * Initialize structures.
      */
-    private void init() {
+    @Before
+    public void init() {
         expDate = new Date();
         stock = new StockImpl(ID, ARTICLE, expDate);
+        stock1 = new StockImpl(ID, ARTICLE);
+        try {
+            Thread.sleep(TEN);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         stock.addRecord(record1);
         stock.addRecord(record2);
-        stock1 = new StockImpl(ID, ARTICLE);
         stock1.addRecord(record1);
         stock1.addRecord(record2);
     }
@@ -54,7 +61,6 @@ public class StockImplTest {
      */
     @Test
     public void testGettersAndRecords() {
-        init();
         Assert.assertEquals(ID, stock.getId());
         Assert.assertEquals(ARTICLE, stock.getArticle());
         Assert.assertTrue(Quantities.remove(record1.getQuantity(), record2.getQuantity()).isPresent());
@@ -76,7 +82,6 @@ public class StockImplTest {
      */
     @Test
     public void testWrongRecord() {
-        init();
         final Result<Empty> r = stock.addRecord(record3);
         final Result<Empty> r1 = stock1.addRecord(record4);
         final Result<Empty> r2 = stock.addRecord(record5);
