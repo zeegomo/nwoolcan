@@ -69,9 +69,12 @@ public class UnmodifiableStepInfoTest {
         Result<Empty> res;
         res = this.si.setEndDate(END);
         Assert.assertTrue(res.isError());
+        Assert.assertSame(UnsupportedOperationException.class, res.getError().getClass());
         res = this.si.setNote(NOTE);
         Assert.assertTrue(res.isError());
+        Assert.assertSame(UnsupportedOperationException.class, res.getError().getClass());
         res = this.si.setEndStepSize(Q);
         Assert.assertTrue(res.isError());
+        Assert.assertSame(UnsupportedOperationException.class, res.getError().getClass());
     }
 }

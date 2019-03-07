@@ -77,16 +77,20 @@ public class StepTest {
         Assert.assertTrue(this.boiling.isFinalized());
 
         finRes = this.boiling.finalize("Finalized", new Date(), Q1);
-        Assert.assertTrue(finRes.isError() && finRes.getError().getClass() == IllegalStateException.class);
+        Assert.assertTrue(finRes.isError());
+        Assert.assertSame(IllegalStateException.class, finRes.getError().getClass());
 
         finRes = this.mashing.finalize(null, null, Q1);
-        Assert.assertTrue(finRes.isError() && finRes.getError().getClass() == NullPointerException.class);
+        Assert.assertTrue(finRes.isError());
+        Assert.assertSame(NullPointerException.class, finRes.getError().getClass());
 
         finRes = this.mashing.finalize(null, new Date(), null);
-        Assert.assertTrue(finRes.isError() && finRes.getError().getClass() == NullPointerException.class);
+        Assert.assertTrue(finRes.isError());
+        Assert.assertSame(NullPointerException.class, finRes.getError().getClass());
 
         finRes = this.mashing.finalize(null, new Date(this.mashing.getStepInfo().getStartDate().getTime() - 1000), Q1);
-        Assert.assertTrue(finRes.isError() && finRes.getError().getClass() == IllegalArgumentException.class);
+        Assert.assertTrue(finRes.isError());
+        Assert.assertSame(IllegalArgumentException.class, finRes.getError().getClass());
 
         Assert.assertTrue(this.boiling.getStepInfo().getNote().isPresent());
         Assert.assertTrue(this.boiling.getStepInfo().getEndDate().isPresent());
@@ -135,9 +139,11 @@ public class StepTest {
     @Test
     public void testWrongParametersAddition() {
         Result<Empty> res = this.mashing.addParameter(new ParameterImpl(ParameterTypeEnum.AddedHops, 1));
-        Assert.assertTrue(res.isError() && res.getError().getClass() == IllegalArgumentException.class);
+        Assert.assertTrue(res.isError());
+        Assert.assertSame(IllegalArgumentException.class, res.getError().getClass());
         res = this.packaging.addParameter(new ParameterImpl(ParameterTypeEnum.Temperature, 1));
-        Assert.assertTrue(res.isError() && res.getError().getClass() == IllegalArgumentException.class);
+        Assert.assertTrue(res.isError());
+        Assert.assertSame(IllegalArgumentException.class, res.getError().getClass());
     }
 
     /**
@@ -151,7 +157,8 @@ public class StepTest {
             ParameterTypeEnum.Temperature, 10
         ));
 
-        Assert.assertTrue(res.isError() && res.getError().getClass() == IllegalStateException.class);
+        Assert.assertTrue(res.isError());
+        Assert.assertSame(IllegalStateException.class, res.getError().getClass());
     }
 
     /**
@@ -162,7 +169,8 @@ public class StepTest {
         addParameters();
 
         Result<Collection<Parameter>> res = this.mashing.getParameters(null);
-        Assert.assertTrue(res.isError() && res.getError().getClass() == NullPointerException.class);
+        Assert.assertTrue(res.isError());
+        Assert.assertSame(NullPointerException.class, res.getError().getClass());
 
         res = this.mashing.getParameters(new QueryParameter().sortByValue(true));
         Assert.assertTrue(res.isPresent());

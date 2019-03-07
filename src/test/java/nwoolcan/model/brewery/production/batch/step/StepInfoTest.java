@@ -127,5 +127,6 @@ public class StepInfoTest {
     public void invalidEndDateTest() {
         final Result<Empty> res = this.si.setEndDate(PAST);
         Assert.assertTrue(res.isError());
+        Assert.assertSame(IllegalArgumentException.class, res.getError().getClass());
     }
 }
