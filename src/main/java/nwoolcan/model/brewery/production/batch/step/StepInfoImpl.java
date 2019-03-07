@@ -28,10 +28,8 @@ public final class StepInfoImpl implements StepInfo {
      * @throws NullPointerException if stepType or startDate are null.
      */
     public StepInfoImpl(final StepType stepType, final Date startDate) {
-        Objects.requireNonNull(stepType);
-        Objects.requireNonNull(startDate);
-        this.stepType = stepType;
-        this.startDate = startDate;
+        this.stepType = Objects.requireNonNull(stepType);
+        this.startDate = Objects.requireNonNull(startDate);
     }
 
     @Override
