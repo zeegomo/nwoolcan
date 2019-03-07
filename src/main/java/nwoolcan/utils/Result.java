@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Result.
@@ -23,7 +24,7 @@ public final class Result<T> {
     /**
      * @param <T> the type of elem
      * @param elem the result to be encapsulated.
-     * @return a new Result<T> holding elem
+     * @return a new {@link Result} holding elem
      */
     public static <T> Result<T> of(final T elem) {
         return new Result<>(Optional.of(elem), Optional.empty());
@@ -95,7 +96,7 @@ public final class Result<T> {
     }
     /**
      * If a value is present, apply the provided {@link Result}-bearing function to it returning that {@link Result}. Otherwise return a {@link Result} holding the original exception.
-     * @param supplier a supplier of {@link Result<U>}
+     * @param supplier a supplier of {@link Result}
      * @param <U> the type of the result of the supplier
      * @return a {@link Result} describing the result of the supplier, if a value is present, otherwise a {@link Result} holding the original exception.
      */
@@ -179,6 +180,27 @@ public final class Result<T> {
         }
     }
     /**
+     * Return a {@link Optional}  describing the value if present. Otherwise returns an empty {@link Optional}
+     * @return a {@link Optional} describing the value if present, or an empty {@link Optional} if this {@link Result} hold an exception
+     */
+    public Optional<T> toOptional() {
+        return this.isPresent() ? Optional.of(this.elem.get()) : Optional.empty();
+    }
+    /**
+     * Map this {@link Result} to a {@link Result} of {@link Empty}.
+     * @return a {@link Result} of {@link Empty}.
+     */
+    public Result<Empty> toEmpty() {
+        return this.flatMap(Result::ofEmpty);
+    }
+    /**
+     * Returns a {@link Stream} with this {@link Result} as its source.
+     * @return a {@link Stream}.
+     */
+    public Stream<Result<T>> stream() {
+        return Stream.of(this);
+    }
+    /**
      * Indicates whether some other object is "equal to" this {@link Result}. The other object is considered equal if:
      *  - it is also a {@link Result} and:
      *  - the present values are "equal to" each other via equals().
@@ -201,7 +223,7 @@ public final class Result<T> {
         }
     }
     /**
-     * Returns a non-empty string representation of this {@link Result} suitable for debugging. The exact presentation format is unspecified and may vary between implementations and versions.
+     * Return a non-empty string representation of this {@link Result} suitable for debugging. The exact presentation format is unspecified and may vary between implementations and versions.
      * @return the string representation of this instance
      */
     @Override
@@ -209,18 +231,11 @@ public final class Result<T> {
         return this.isPresent() ? this.elem.get().toString() : this.exception.get().toString();
     }
     /**
-     * Returns the hash code value of the present value, if any, or 0 if no value is present.
+     * Return the hash code value of the present value, if any, or 0 if no value is present.
      * @return hash code value of the present value or 0
      */
     @Override
     public int hashCode() {
         return this.isPresent() ? this.elem.get().hashCode() : 0;
-    }
-    /**
-     * Return a {@link Optional}  describing the value if present. Otherwise returns an empty {@link Optional}
-     * @return a {@link Optional} describing the value if present, or an empty {@link Optional} if this {@link Result} hold an exception
-     */
-    public Optional<T> toOptional() {
-        return this.isPresent() ? Optional.of(this.elem.get()) : Optional.empty();
     }
 }
