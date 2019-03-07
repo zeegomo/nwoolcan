@@ -8,6 +8,7 @@ import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
+import nwoolcan.utils.Results;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,11 +47,7 @@ public class StockImplTest {
         expDate = new Date();
         stock = new StockImpl(ID, ARTICLE, expDate);
         stock1 = new StockImpl(ID, ARTICLE);
-        try {
-            Thread.sleep(TEN);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        Results.ofChecked(() -> Thread.sleep(TEN));
         stock.addRecord(record1);
         stock.addRecord(record2);
         stock1.addRecord(record1);
