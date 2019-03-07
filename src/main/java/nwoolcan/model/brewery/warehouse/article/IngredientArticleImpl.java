@@ -1,6 +1,8 @@
 package nwoolcan.model.brewery.warehouse.article;
 
 import java.util.Objects;
+
+import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 
 /**
@@ -14,11 +16,13 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
      * Constructor of the class IngredientArticleImpl.
      * @param id the id of the ingredient article.
      * @param name the name of the ingredient article.
+     * @param unitOfMeasure used for this article.
      * @param ingredientType the type of ingredient article.
      */
-    public IngredientArticleImpl(final Integer id, final String name,
+    //Package protected
+    IngredientArticleImpl(final Integer id, final String name, final UnitOfMeasure unitOfMeasure,
                                  final IngredientType ingredientType) {
-        super(id, name);
+        super(id, name, unitOfMeasure);
         this.ingredientType = Objects.requireNonNull(ingredientType);
     }
     /**
@@ -56,7 +60,8 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
         IngredientArticleImpl other = (IngredientArticleImpl) obj;
         return (this.ingredientType == other.getIngredientType()
                && (this.getId().equals(other.getId()))
-               && (this.getName().equals(other.getName())));
+               && (this.getName().equals(other.getName())))
+               && (this.getUnitOfMeasure().equals(other.getUnitOfMeasure()));
     }
 
     @Override
@@ -64,7 +69,8 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
         return "[IngredientArticleImpl] { "
             + "Id:" + getId() + ", "
             + "Name:" + getName() + ", "
-            + "IngredientType:" + getIngredientType().toString() + " "
+            + "IngredientType:" + getIngredientType().toString() + ", "
+            + "UnitOfMeasure:" + getUnitOfMeasure() + " "
             + "}";
     }
 

@@ -43,7 +43,7 @@ public final class Quantity {
      * @throws IllegalArgumentException if the value is negative or if the unit of measure cannot be a quantity.
      */
     public static Quantity of(final Number value, final UnitOfMeasure unitOfMeasure) {
-        final Result<Quantity> res = QuantityChecker.check(new Quantity(value, unitOfMeasure));
+        final Result<Quantity> res = QuantityChecker.check(new Quantity(Numbers.of(value), unitOfMeasure));
         if (res.isError()) {
             throw new IllegalArgumentException(res.getError());
         }

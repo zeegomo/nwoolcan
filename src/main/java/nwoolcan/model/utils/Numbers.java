@@ -1,6 +1,7 @@
 package nwoolcan.model.utils;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Numbers utils for operation between Number objects.
@@ -8,6 +9,18 @@ import java.math.BigDecimal;
 public final class Numbers {
 
     private Numbers() { }
+
+    /**
+     * Returns a new {@link Number} compatible to others for operation and comparisons
+     * from the one passed by parameter.
+     * @param value the value of the number to create.
+     * @return a new {@link Number} compatible to others for operation and comparisons.
+     * @throws NullPointerException if value is null.
+     */
+    public static Number of(final Number value) {
+        Objects.requireNonNull(value);
+        return new BigDecimal(value.doubleValue());
+    }
 
     /**
      * Returns a new {@link Number} that is the first plus the second passed by parameters.

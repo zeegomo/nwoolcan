@@ -24,7 +24,7 @@ public class QuantityTest {
     @Test
     public void testQuantitySimpleCreation() {
         final Quantity q = Quantity.of(VALUE1, GOOD_UM1);
-        Assert.assertEquals(VALUE1, q.getValue());
+        Assert.assertEquals(VALUE1, q.getValue().intValue());
         Assert.assertEquals(GOOD_UM1, q.getUnitOfMeasure());
     }
 
