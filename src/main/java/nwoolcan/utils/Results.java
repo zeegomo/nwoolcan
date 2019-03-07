@@ -1,7 +1,9 @@
 package nwoolcan.utils;
 
+import nwoolcan.utils.function.FallibleFunction;
+import nwoolcan.utils.function.FallibleRunnable;
+
 import java.util.concurrent.Callable;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -51,6 +53,21 @@ public final class Results {
         }
     }
     /**
+     * Return a {@link Result} holding the value produced by runnable, if everything goes well.
+     * Otherwise return a {@link Result} holding the exception thrown by runnable.
+     * Use this to avoid try-catch blocks.
+     * @param runnable the function to call
+     * @return a {@link Result}
+     */
+    public static Result<Empty> ofChecked(final FallibleRunnable runnable) {
+        try {
+            runnable.run();
+            return Result.ofEmpty();
+        } catch (Exception e) {
+            return Result.error(e);
+        }
+    }
+    /**
      * Return a {@link Result} holding the value produced by function, in everything goes well.
      * Otherwise return a {@link Result} holding the exception thrown by closing resource.
      * Use this to avoid try with resource.
@@ -60,7 +77,7 @@ public final class Results {
      * @param <U> the type of the resource.
      * @return a {@link Result}
      */
-    public static <T, U extends AutoCloseable> Result<T> ofCloseable(final Supplier<U> resource, final Function<U, T> function) {
+    public static <T, U extends AutoCloseable> Result<T> ofCloseable(final Supplier<U> resource, final FallibleFunction<U, T> function) {
         try (U elem = resource.get()) {
             return Result.of(function.apply(elem));
         } catch (Exception e) {
