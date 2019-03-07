@@ -9,7 +9,6 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
@@ -26,6 +25,7 @@ public class StockImplTest {
     private Record record2 = new Record(Quantity.of(ONE, UOM), Record.Action.REMOVING);
     private Record record3 = new Record(Quantity.of(ONE, UOM1), Record.Action.ADDING);
     private Record record4 = new Record(Quantity.of(TEN, UOM), Record.Action.REMOVING);
+    private Record record5 = new Record(Quantity.of(TEN, UOM), Record.Action.ADDING);
     private static final Integer ID = 1;
     private static final Integer ONE = 1;
     private static final Integer TEN = 10;
@@ -40,8 +40,7 @@ public class StockImplTest {
     /**
      * Initialize structures.
      */
-    @Before
-    public void init() {
+    private void init() {
         expDate = new Date();
         stock = new StockImpl(ID, ARTICLE, expDate);
         stock.addRecord(record1);
@@ -55,6 +54,7 @@ public class StockImplTest {
      */
     @Test
     public void testGettersAndRecords() {
+        init();
         Assert.assertEquals(ID, stock.getId());
         Assert.assertEquals(ARTICLE, stock.getArticle());
         Assert.assertTrue(Quantities.remove(record1.getQuantity(), record2.getQuantity()).isPresent());
@@ -76,10 +76,13 @@ public class StockImplTest {
      */
     @Test
     public void testWrongRecord() {
+        init();
         final Result<Empty> r = stock.addRecord(record3);
         final Result<Empty> r1 = stock1.addRecord(record4);
+        final Result<Empty> r2 = stock.addRecord(record5);
         Assert.assertTrue(RECORD_WITH_DIFFERENT_UOM, r.isError());
         Assert.assertTrue(REMOVING_RECORD_WITH_QUANTITY_NOT_AVAILABLE, r1.isError());
+        Assert.assertTrue(r2.isPresent());
     }
 
 }
