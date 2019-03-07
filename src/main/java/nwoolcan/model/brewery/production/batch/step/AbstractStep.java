@@ -7,7 +7,6 @@ import nwoolcan.utils.Result;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Objects;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -58,8 +57,8 @@ public abstract class AbstractStep implements Step {
     @Override
     public final Result<Empty> finalize(final String note, final Date endDate, final Quantity remainingSize) {
         return Result.ofEmpty()
-                     .require(() -> endDate != null, new NullPointerException(END_DATE_NULL_MESSAGE))
-                     .require(() -> remainingSize != null, new NullPointerException(REMAINING_SIZE_NULL_MESSAGE))
+                     .requireNonNull(endDate, END_DATE_NULL_MESSAGE)
+                     .requireNonNull(remainingSize, REMAINING_SIZE_NULL_MESSAGE)
                      .require(() -> !this.finalized, new IllegalStateException(ALREADY_FINALIZED_MESSAGE))
                      .flatMap(() -> this.stepInfo.setNote(note))
                      .flatMap(() -> this.stepInfo.setEndDate(endDate))
@@ -120,7 +119,7 @@ public abstract class AbstractStep implements Step {
     @Override
     public final Result<Empty> addParameter(final Parameter parameter) {
         return Result.of(parameter)
-                     .require(Objects::nonNull, new NullPointerException(PARAMETER_NULL_MESSAGE))
+                     .requireNonNull(parameter, PARAMETER_NULL_MESSAGE)
                      .require(() -> !this.isFinalized(), new IllegalStateException(CANNOT_REGISTER_PARAMETER_MESSAGE))
                      .require(p -> getParameterTypes().contains(p.getType()), new IllegalArgumentException(INVALID_PARAMETER_MESSAGE))
                      .peek(this.parameters::add)
