@@ -77,9 +77,24 @@ public class ResultTest {
      */
     @Test
     public void testRequireNonNull() {
+        final String errorMessage = "argument is null";
+
         assertTrue(Results.requireNonNull(null).isError());
         assertTrue(Results.requireNonNull(new Empty() {
         }).isPresent());
+        Result<Empty> r1 = Result.ofEmpty()
+                                 .requireNonNull(null);
+        assertTrue(r1.isError());
+
+        Result<Empty> r2 = Result.ofEmpty()
+                                 .requireNonNull(new IllegalAccessError());
+        assertTrue(r2.isPresent());
+
+        Result<Empty> r3 = Result.ofEmpty()
+                                 .requireNonNull(null, errorMessage);
+        assertTrue(r3.isError());
+        assertEquals(r3.getError().getMessage(), errorMessage);
+
     }
     /**
      * Test map.
