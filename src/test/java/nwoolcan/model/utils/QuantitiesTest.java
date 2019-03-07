@@ -66,7 +66,9 @@ public class QuantitiesTest {
 
         Assert.assertTrue(rem1res.isPresent());
         Assert.assertTrue(rem2res.isError());
+        Assert.assertSame(IllegalStateException.class, rem2res.getError().getClass());
         Assert.assertTrue(rem3res.isError());
+        Assert.assertSame(IllegalStateException.class, rem3res.getError().getClass());
 
         TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.subtract(V1, V2), UM1), rem1res.getValue());
     }
@@ -80,6 +82,8 @@ public class QuantitiesTest {
         final Result<Quantity> sumRes = Quantities.add(q1, q4);
         final Result<Quantity> remRes = Quantities.remove(q1, q4);
         Assert.assertTrue(sumRes.isError());
+        Assert.assertSame(ArithmeticException.class, sumRes.getError().getClass());
         Assert.assertTrue(remRes.isError());
+        Assert.assertSame(ArithmeticException.class, remRes.getError().getClass());
     }
 }
