@@ -18,7 +18,7 @@ public final class Results {
      * @return a {@link Result} holding elem if elem is not null, otherwise holds a {@link NullPointerException}
      */
     public static <T> Result<T> requireNonNull(final T elem) {
-        requireNonNull(elem, EMPTY_MESSAGE);
+        return requireNonNull(elem, EMPTY_MESSAGE);
     }
     /**
      * Returns a {@link Result} holding elem if elem is not null, otherwise holds a {@link NullPointerException}
