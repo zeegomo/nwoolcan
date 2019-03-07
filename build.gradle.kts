@@ -21,6 +21,7 @@ repositories {
 
 dependencies {
     testCompile("junit", "junit", "4.12")
+    implementation("io.github.classgraph", "classgraph", "4.8.8")
 }
 
 configure<JavaPluginConvention> {
