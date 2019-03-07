@@ -104,7 +104,7 @@ public final class BatchEvaluationBuilder {
      * Return a {@link Result} holding a {@link BatchEvaluation} if everything went well, otherwise a
      * {@link Result} holding an {@link Exception}.
      *
-     * @return a {@link Result< BatchEvaluation >}
+     * @return a {@link Result}
      */
     public Result<BatchEvaluation> build() {
         return Result.of(this)
