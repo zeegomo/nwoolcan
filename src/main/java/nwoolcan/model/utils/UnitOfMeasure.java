@@ -7,5 +7,5 @@ public enum UnitOfMeasure {
     /**
      * Possible unit of measures.
      */
-    Kilogram, Liter, Pound, Celsius, Unit;
+    Kilogram, Liter, Pound, Celsius, Unit, Percentage
 }

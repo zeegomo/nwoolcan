@@ -74,6 +74,7 @@ public interface Step {
      * Returns a {@link Result} that can contain an error of type:
      * <ul>
      *     <li>{@link NullPointerException} if the parameter is null.</li>
+     *     <li>{@link IllegalStateException} if the step is finalized.</li>
      *     <li>{@link IllegalArgumentException} if the parameter type cannot be registered in this step.</li>
      *     <li>{@link RuntimeException} if there are errors while adding the parameter.</li>
      * </ul>

@@ -5,9 +5,10 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,7 +21,9 @@ public abstract class AbstractStep implements Step {
     private static final String REMAINING_SIZE_NULL_MESSAGE = "remainingSize cannot be null.";
     private static final String ALREADY_FINALIZED_MESSAGE = "This step is already finalized.";
     private static final String PARAMETER_NULL_MESSAGE = "parameter cannot be null.";
-    private static final String CANNOT_REGISTER_PARAMETER_MESSAGE = "The parameter type is invalid for this step.";
+    private static final String CANNOT_REGISTER_PARAMETER_MESSAGE = "Cannot register parameter if the step is finalized.";
+    private static final String INVALID_PARAMETER_MESSAGE = "The parameter type is invalid for this step.";
+    private static final String QUERY_NULL_MESSAGE = "Query parameter cannot be null.";
 
     private final StepInfo stepInfo;
     private boolean finalized;
@@ -31,6 +34,15 @@ public abstract class AbstractStep implements Step {
         this.stepInfo = stepInfo;
         this.finalized = false;
         this.parameters = new ArrayList<>();
+    }
+
+    /**
+     * Returns this object's step info that can be changed.
+     * Use this method for changing step infos properties by a subclass.
+     * @return this object's step info that can be changed.
+     */
+    protected final StepInfo getModifiableStepInfo() {
+        return this.stepInfo;
     }
 
     @Override
@@ -57,6 +69,10 @@ public abstract class AbstractStep implements Step {
 
     @Override
     public final Result<Collection<Parameter>> getParameters(final QueryParameter query) {
+        if (query == null) {
+            return Result.error(new NullPointerException(QUERY_NULL_MESSAGE));
+        }
+
         Stream<Parameter> s = this.parameters.stream();
 
         if (query.getParameterType().isPresent()) {
@@ -80,23 +96,21 @@ public abstract class AbstractStep implements Step {
 
         if (query.isSortByValue()) {
             s = s.sorted((p1, p2) -> {
+                int neg = 1;
                 if (query.isSortDescending()) {
-                    Parameter tmp = p1;
-                    p1 = p2;
-                    p2 = tmp;
+                    neg = -1;
                 }
-                return Double.compare(p1.getRegistrationValue().doubleValue(), p2.getRegistrationValue().doubleValue());
+                return neg * Double.compare(p1.getRegistrationValue().doubleValue(), p2.getRegistrationValue().doubleValue());
             });
         }
 
         if (query.isSortByDate()) {
             s = s.sorted((p1, p2) -> {
+                int neg = 1;
                 if (query.isSortDescending()) {
-                    Parameter tmp = p1;
-                    p1 = p2;
-                    p2 = tmp;
+                    neg = -1;
                 }
-                return Double.compare(p1.getRegistrationDate().getTime(), p2.getRegistrationDate().getTime());
+                return neg * Double.compare(p1.getRegistrationDate().getTime(), p2.getRegistrationDate().getTime());
             });
         }
 
@@ -105,16 +119,12 @@ public abstract class AbstractStep implements Step {
 
     @Override
     public final Result<Empty> addParameter(final Parameter parameter) {
-        Result<Empty> res = Result.ofEmpty()
-                                  .require(e -> parameter != null, new NullPointerException(PARAMETER_NULL_MESSAGE))
-                                  .require(e -> getParameterTypes().contains(parameter.getType()),
-                                           new IllegalArgumentException(CANNOT_REGISTER_PARAMETER_MESSAGE));
-
-        if (!res.isError()) {
-            this.parameters.add(parameter);
-        }
-
-        return res;
+        return Result.of(parameter)
+                     .require(Objects::nonNull, new NullPointerException(PARAMETER_NULL_MESSAGE))
+                     .require(() -> !this.isFinalized(), new IllegalStateException(CANNOT_REGISTER_PARAMETER_MESSAGE))
+                     .require(p -> getParameterTypes().contains(p.getType()), new IllegalArgumentException(INVALID_PARAMETER_MESSAGE))
+                     .peek(this.parameters::add)
+                     .toEmpty();
     }
 
     /**

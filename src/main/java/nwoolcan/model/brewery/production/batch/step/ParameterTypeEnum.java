@@ -13,7 +13,11 @@ public enum ParameterTypeEnum implements ParameterType {
     /**
      * Number of hops that can be added in some production steps.
      */
-    AddedHops(UnitOfMeasure.Unit);
+    AddedHops(UnitOfMeasure.Unit),
+    /**
+     * Alcohol by volume of the beer.
+     */
+    ABV(UnitOfMeasure.Percentage);
 
     private final UnitOfMeasure um;
 
