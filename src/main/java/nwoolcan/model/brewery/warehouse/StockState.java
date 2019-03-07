@@ -1,13 +1,13 @@
 package nwoolcan.model.brewery.warehouse;
 
 /**
- * Contains the possible state of the Udc.
+ * Contains the possible state of the Stock.
  */
-public enum UdcState {
+public enum StockState {
 
     /**
      * In production, available to be used and already consumed.
      */
-    AVAILABLE, CONSUMED, EXPIRED;
+    AVAILABLE, USED_UP, EXPIRED;
 
 }

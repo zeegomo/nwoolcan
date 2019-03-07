@@ -1,5 +1,6 @@
 package nwoolcan.model.brewery.warehouse.article;
 
+import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 
 /**
@@ -32,5 +33,10 @@ public interface Article {
      * @return a {@link Result} of {@link BeerArticle} casting the current Article.
      */
     Result<BeerArticle> toBeerArticle();
+    /**
+     * Return the unit of measure used at the model side by this particular article.
+     * @return the unit of measure used at the model side by this particular article.
+     */
+    UnitOfMeasure getUnitOfMeasure();
 
 }
