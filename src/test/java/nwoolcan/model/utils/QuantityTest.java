@@ -24,7 +24,7 @@ public class QuantityTest {
     @Test
     public void testQuantitySimpleCreation() {
         final Quantity q = Quantity.of(VALUE1, GOOD_UM1);
-        Assert.assertEquals(VALUE1, q.getValue());
+        Assert.assertEquals(VALUE1, q.getValue().intValue());
         Assert.assertEquals(GOOD_UM1, q.getUnitOfMeasure());
     }
 
@@ -50,6 +50,14 @@ public class QuantityTest {
     @Test(expected = IllegalArgumentException.class)
     public void testQuantityWithNegativeValue() {
         final Quantity q = Quantity.of(NEG_VALUE, GOOD_UM1);
+    }
+
+    /**
+     * Method that tests empty quantity creation.
+     */
+    @Test
+    public void testEmptyQuantity() {
+        final Quantity q = Quantity.of(0, GOOD_UM1);
     }
 
     /**

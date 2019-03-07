@@ -2,6 +2,8 @@ package nwoolcan.utils;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -43,7 +45,6 @@ public class ResultTest {
         assertNotEquals(present, presentEmpty);
         assertNotEquals(present, exception);
     }
-
     /**
      * Tests getting an error from a Result holding a value.
      */
@@ -52,7 +53,6 @@ public class ResultTest {
         Result<Empty> empty = Result.ofEmpty();
         Exception e = empty.getError();
     }
-
     /**
      * Tests orElse.
      */
@@ -62,7 +62,6 @@ public class ResultTest {
         assertTrue(error.orElse(2).equals(2));
         Integer i = error.getValue();
     }
-
     /**
      * Tests require.
      */
@@ -70,8 +69,9 @@ public class ResultTest {
     public void testRequire() {
         assertTrue(Result.of(4).require(i -> i > 2).isPresent());
         assertTrue(Result.of(4).require(i -> i < 2).isError());
+        assertTrue(Result.ofEmpty().require(() -> false).isError());
+        assertTrue(Result.ofEmpty().require(() -> true).isPresent());
     }
-
     /**
      * Tests requireNonNull.
      */
@@ -81,7 +81,6 @@ public class ResultTest {
         assertTrue(Results.requireNonNull(new Empty() {
         }).isPresent());
     }
-
     /**
      * Test map.
      */
@@ -119,7 +118,6 @@ public class ResultTest {
         Result<Integer> l = duke.map(String::length);
         assertTrue(l.getValue() == 4);
     }
-
     /**
      * Test flatMap.
      */
@@ -153,11 +151,73 @@ public class ResultTest {
         Result<Integer> fixture = Result.of(Integer.MAX_VALUE);
         l = duke.flatMap(s -> Result.of(s.length()));
         assertTrue(l.isPresent());
-        assertEquals(l.getValue().intValue(), 4);
+        assertEquals(4, l.getValue().intValue());
 
         // Verify same instance
         l = duke.flatMap(s -> fixture);
         assertSame(l, fixture);
+        assertEquals(Result.of(4), l.flatMap(() -> Result.of(4)));
+    }
+    /**
+     * Tests peek.
+     */
+    @Test
+    public void testPeek() {
+        Collection<Integer> coll = new ArrayList<>();
+        Result.of(2).peek(coll::add);
+        assertEquals(1, coll.size());
+        Result.error(new Exception()).peek(i -> coll.add(2));
+        assertEquals(1, coll.size());
+    }
+    /**
+     * Tests ofChecked.
+     */
+    @Test
+    public void testOfChecked() {
+        Result<Integer> r1 = Results.ofChecked(() -> 1);
+        assertTrue(r1.getValue() == 1);
+        Result<Integer> r2 = Results.ofChecked(() -> {
+            throw new IllegalAccessException("Illegal test");
+        });
+        assertTrue(r2.isError());
+        r2.getError().printStackTrace();
+        System.out.println(r2.getError().toString());
+    }
+    /**
+     * Tests ofCloseable.
+     */
+    @Test
+    public void testOfCloseable() {
+        Result<Integer> r1 = Results.ofCloseable(() -> () -> { }, e -> 3);
+        assertTrue(r1.getValue() == 3);
+        Result<Integer> r2 = Results.ofCloseable(() -> () -> {
+            throw new IllegalAccessException();
+            }, e -> 3);
+        assertTrue(r2.isError());
+        r2.getError().printStackTrace();
+        System.out.println(r2.getError().toString());
+    }
+    /**
+     * Tests stream.
+     */
+    @Test
+    public void testStream() {
+        Result<Integer> r1 = Result.of(2);
+        assertEquals(1, r1.stream().distinct().count());
+        assertTrue(r1.stream().allMatch(i -> i.getValue() == 2));
+        assertEquals(Result.of(2), r1.stream().findAny().get());
+    }
+    /**
+     * Tests toEmpty.
+     */
+    @Test
+    public void testToEmpty() {
+        Result<Integer> r1 = Result.of(2);
+        assertTrue(r1.toEmpty().isPresent());
+
+        Result<Integer> r2 = Results.requireNonNull(null);
+        assertFalse(r2.toEmpty().isPresent());
+        assertTrue(r2.toEmpty().isError());
     }
 }
 

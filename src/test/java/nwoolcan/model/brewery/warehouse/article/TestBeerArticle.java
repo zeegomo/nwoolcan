@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.warehouse.article;
 
 import nwoolcan.model.brewery.production.batch.Batch;
+import nwoolcan.model.utils.UnitOfMeasure;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,6 +12,7 @@ import java.util.Objects;
  */
 public class TestBeerArticle {
 
+    private static final UnitOfMeasure UOM = UnitOfMeasure.Kilogram;
     private final Integer id = 1;
     private final String name = "DummyName";
 
@@ -19,7 +21,7 @@ public class TestBeerArticle {
      */
     @Test(expected = NullPointerException.class)
     public void testConstructorWithNullBatch() {
-        new BeerArticleImpl(id, name, null);
+        new BeerArticleImpl(id, name, null, null);
     }
     /**
      * Method that tests the getters and their possible errors.
@@ -27,7 +29,7 @@ public class TestBeerArticle {
     @Test
     public void testGetters() {
         final Batch batch = new Batch() { };
-        final Article beerArticle = new BeerArticleImpl(id, name, batch);
+        final Article beerArticle = new BeerArticleImpl(id, name, UOM, batch);
         Assert.assertEquals(ArticleType.FINISHED_BEER, beerArticle.getArticleType());
         Objects.requireNonNull(beerArticle.toBeerArticle());
         Assert.assertTrue(beerArticle.toBeerArticle().isPresent());
@@ -42,9 +44,9 @@ public class TestBeerArticle {
     @Test
     public void testEquals() {
         Batch batch = new Batch() { };
-        final BeerArticle beerArt1 = new BeerArticleImpl(id, name, batch);
-        final BeerArticle beerArt2 = new BeerArticleImpl(id, name, batch);
-        final BeerArticle beerArt4 = new BeerArticleImpl(id + 1, name, batch);
+        final BeerArticle beerArt1 = new BeerArticleImpl(id, name, UOM, batch);
+        final BeerArticle beerArt2 = new BeerArticleImpl(id, name, UOM, batch);
+        final BeerArticle beerArt4 = new BeerArticleImpl(id + 1, name, UOM, batch);
         Assert.assertEquals(beerArt1, beerArt2);
         Assert.assertEquals(beerArt1, beerArt1);
         Assert.assertEquals(beerArt1, beerArt1);
