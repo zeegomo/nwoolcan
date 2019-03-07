@@ -1,6 +1,6 @@
 package nwoolcan.model.brewery.production.batch.review;
 
-import java.util.Collection;
+import java.util.Set;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
@@ -9,10 +9,11 @@ import java.util.Optional;
  * Implementation of {@link BatchEvaluation}.
  */
 public final class BatchEvaluationImpl extends EvaluationImpl implements BatchEvaluation {
-    private final Collection<Evaluation> categories;
+    private final Set<Evaluation> categories;
     private final Optional<String> reviewer;
 
-    BatchEvaluationImpl(final BatchEvaluationType type, final Collection<Evaluation> categories, final Optional<String> reviewer, final Optional<String> notes) {
+    //Package private
+    BatchEvaluationImpl(final BatchEvaluationType type, final Set<Evaluation> categories, final Optional<String> reviewer, final Optional<String> notes) {
         super(type, categories.stream().map(Evaluation::getScore).reduce(0, Integer::sum), notes);
         this.categories = categories;
         this.reviewer = reviewer;
@@ -29,8 +30,8 @@ public final class BatchEvaluationImpl extends EvaluationImpl implements BatchEv
     }
 
     @Override
-    public Collection<Evaluation> getCategoryEvaluations() {
-        return Collections.unmodifiableCollection(this.categories);
+    public Set<Evaluation> getCategoryEvaluations() {
+        return Collections.unmodifiableSet(this.categories);
     }
 
     @Override

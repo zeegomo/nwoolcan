@@ -11,6 +11,7 @@ public class EvaluationImpl implements Evaluation {
     private final int score;
     private final Optional<String> notes;
 
+    //Package private
     EvaluationImpl(final EvaluationType evaluationType, final int score, final Optional<String> notes) {
         this.category = evaluationType;
         this.score = score;

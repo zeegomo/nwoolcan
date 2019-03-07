@@ -31,8 +31,8 @@ public final class BatchEvaluationBuilder {
      *
      * @return a collection of all available Review types.
      */
-    public static Result<Collection<BatchEvaluationType>> getAvailableBatchReviewTypes() {
-        return SCANNER.getAvailableBatchReviewTypes();
+    public static Result<Set<BatchEvaluationType>> getAvailableBatchEvaluationTypes() {
+        return SCANNER.getAvailableBatchEvaluationTypes();
     }
 
     /**

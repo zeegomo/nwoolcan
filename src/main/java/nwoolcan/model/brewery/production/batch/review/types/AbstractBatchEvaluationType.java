@@ -3,7 +3,7 @@ package nwoolcan.model.brewery.production.batch.review.types;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.review.EvaluationType;
 
-import java.util.Collection;
+import java.util.Set;
 import java.util.Collections;
 
 /**
@@ -11,16 +11,17 @@ import java.util.Collections;
  */
 public abstract class AbstractBatchEvaluationType implements BatchEvaluationType {
     private final String name;
-    private final Collection<EvaluationType> categories;
+    private final Set<EvaluationType> categories;
 
-    AbstractBatchEvaluationType(final String name, final Collection<EvaluationType> categories) {
+    //Package private
+    AbstractBatchEvaluationType(final String name, final Set<EvaluationType> categories) {
         this.name = name;
         this.categories = categories;
     }
 
     @Override
-    public final Collection<EvaluationType> getCategories() {
-        return Collections.unmodifiableCollection(this.categories);
+    public final Set<EvaluationType> getCategories() {
+        return Collections.unmodifiableSet(this.categories);
     }
 
     @Override

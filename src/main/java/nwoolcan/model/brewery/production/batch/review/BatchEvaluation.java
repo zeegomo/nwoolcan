@@ -1,6 +1,6 @@
 package nwoolcan.model.brewery.production.batch.review;
 
-import java.util.Collection;
+import java.util.Set;
 import java.util.Optional;
 
 /**
@@ -22,5 +22,5 @@ public interface BatchEvaluation extends Evaluation {
      * Returns the categories of this {@link BatchEvaluation}.
      * @return the categories of this {@link BatchEvaluation}.
      */
-    Collection<Evaluation> getCategoryEvaluations();
+    Set<Evaluation> getCategoryEvaluations();
 }

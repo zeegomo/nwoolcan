@@ -4,7 +4,8 @@ import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.review.EvaluationType;
 
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Dummy Review for testing.
@@ -38,8 +39,8 @@ public enum DummyEvaluation implements BatchEvaluationType {
     }
 
     @Override
-    public Collection<EvaluationType> getCategories() {
-        return Arrays.asList(DummyReviewCategories.values());
+    public Set<EvaluationType> getCategories() {
+        return new HashSet<>(Arrays.asList(DummyReviewCategories.values()));
     }
 
     @Override

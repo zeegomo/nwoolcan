@@ -4,9 +4,8 @@ import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationT
 import nwoolcan.utils.Result;
 import org.junit.Test;
 
-
-import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -50,9 +49,9 @@ public class TestBatchEvaluation {
     public void testAvailableEvaluationTypes() {
         final int expectedSize = 2;
 
-        Result<Collection<BatchEvaluationType>> available = BatchEvaluationBuilder.getAvailableBatchReviewTypes();
+        Result<Set<BatchEvaluationType>> available = BatchEvaluationBuilder.getAvailableBatchEvaluationTypes();
         assertTrue(available.isPresent());
-        Collection<BatchEvaluationType> types = available.getValue();
+        Set<BatchEvaluationType> types = available.getValue();
         System.out.println(types);
         assertEquals(types.size(), expectedSize);
         assertTrue(types.contains(new BJCPBatchEvaluationType()));

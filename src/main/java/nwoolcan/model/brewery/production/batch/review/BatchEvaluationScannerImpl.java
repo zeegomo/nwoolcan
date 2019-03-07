@@ -6,7 +6,7 @@ import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -14,10 +14,13 @@ import java.util.stream.Stream;
  * Implementation for BatchEvaluationScanner.
  */
 public final class BatchEvaluationScannerImpl implements BatchEvaluationScanner {
-    private Collection<BatchEvaluationType> types;
+    private Set<BatchEvaluationType> types;
+
+    //Package private
+    BatchEvaluationScannerImpl() { }
 
     @Override
-    public Result<Collection<BatchEvaluationType>> getAvailableBatchReviewTypes() {
+    public Result<Set<BatchEvaluationType>> getAvailableBatchEvaluationTypes() {
         if (types != null) {
             return Result.of(types);
         } else {
@@ -26,7 +29,7 @@ public final class BatchEvaluationScannerImpl implements BatchEvaluationScanner 
         }
     }
 
-    private Result<Collection<BatchEvaluationType>> scan() {
+    private Result<Set<BatchEvaluationType>> scan() {
         return Results.ofCloseable(() ->  new ClassGraph().enableAllInfo().scan(), scanResult -> {
             ClassInfoList widgetClasses = scanResult.getClassesImplementing(BatchEvaluationType.class.getName());
             return widgetClasses
@@ -41,7 +44,7 @@ public final class BatchEvaluationScannerImpl implements BatchEvaluationScanner 
                 })
                 .filter(Result::isPresent)
                 .map(Result::getValue)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         });
     }
 }
