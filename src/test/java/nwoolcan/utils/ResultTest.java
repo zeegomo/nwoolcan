@@ -11,7 +11,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertSame;
 
 /**
@@ -104,14 +103,6 @@ public class ResultTest {
         Result<String> error = Result.error(new Exception("e"));
         Result<String> duke = Result.of("Duke");
 
-        // Null mapper function
-        try {
-            Result<Boolean> b = error.map(null);
-            fail("Should throw NPE on null mapping function");
-        } catch (NullPointerException npe) {
-            // expected
-        }
-
         // Map an empty value
         Result<Boolean> b = error.map(String::isEmpty);
         assertFalse(b.isPresent());
@@ -140,15 +131,6 @@ public class ResultTest {
     public void testFlatMap() {
         Result<String> error = Result.error(new Exception());
         Result<String> duke = Result.of("Duke");
-
-
-        // Null mapper function
-        try {
-            Result<Boolean> b = error.map(null);
-            fail("Should throw NPE on null mapping function");
-        } catch (NullPointerException npe) {
-            // expected
-        }
 
         // Empty won't invoke mapper function
         try {

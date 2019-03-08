@@ -14,8 +14,6 @@ public final class Quantity {
 
     //Private constructor to use as a static factory with method Quantity.of(...).
     private Quantity(final Number value, final UnitOfMeasure um) {
-        Objects.requireNonNull(value);
-        Objects.requireNonNull(um);
         this.value = value;
         this.unitOfMeasure = um;
     }

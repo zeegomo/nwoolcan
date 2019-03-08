@@ -23,7 +23,7 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
     //Package protected
     BeerArticleImpl(final Integer id, final String name, final UnitOfMeasure unitOfMeasure, final Batch batch) {
         super(id, name, unitOfMeasure);
-        this.batch = Objects.requireNonNull(batch);
+        this.batch = batch;
     }
     /**
      * Returns the {@link Result} of this {@link BeerArticle}.

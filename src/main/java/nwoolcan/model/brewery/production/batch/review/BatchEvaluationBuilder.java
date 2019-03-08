@@ -1,7 +1,6 @@
 package nwoolcan.model.brewery.production.batch.review;
 
 import nwoolcan.utils.Result;
-
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashSet;

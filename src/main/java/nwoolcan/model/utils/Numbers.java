@@ -1,7 +1,6 @@
 package nwoolcan.model.utils;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 /**
  * Numbers utils for operation between Number objects.
@@ -18,7 +17,6 @@ public final class Numbers {
      * @throws NullPointerException if value is null.
      */
     public static Number of(final Number value) {
-        Objects.requireNonNull(value);
         return new BigDecimal(value.doubleValue());
     }
 

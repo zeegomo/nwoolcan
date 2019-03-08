@@ -1,7 +1,6 @@
 package nwoolcan.model.utils;
 
 import nwoolcan.utils.Result;
-import nwoolcan.utils.Results;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -35,10 +34,8 @@ public final class QuantityChecker {
      * @return a {@link Result} with same quantity if the check passes, with an error otherwise.
      */
     public static Result<Quantity> check(final Quantity quantity) {
-        return Results.requireNonNull(quantity)
-                      .require(q -> q.getValue() != null, new NullPointerException(NULL_VALUE_MESSAGE))
+        return Result.of(quantity)
                       .require(q -> q.getValue().doubleValue() >= 0, new IllegalArgumentException(VALUE_NEGATIVE_MESSAGE))
-                      .require(q -> q.getUnitOfMeasure() != null, new NullPointerException(NULL_UM_MESSAGE))
                       .require(q -> VALID_UMS.contains(q.getUnitOfMeasure()), new IllegalArgumentException(CANNOT_BE_QUANTITY_MESSAGE));
     }
 }
