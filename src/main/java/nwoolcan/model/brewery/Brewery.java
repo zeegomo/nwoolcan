@@ -25,7 +25,7 @@ public interface Brewery {
     /**
      * Getter of the {@link Collection} of {@link Batch} in the warehouse.
      * @param queryBatch describes the type of the query.
-     * @return a {@link Collection} of {@link Batch} accordingly with the {@param queryBatch}.
+     * @return a {@link Collection} of {@link Batch} accordingly with the given {@link QueryBatch}.
      */
     Result<Collection<Batch>> getBatches(QueryBatch queryBatch);
     /**
