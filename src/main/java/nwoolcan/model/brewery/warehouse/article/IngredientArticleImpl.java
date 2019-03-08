@@ -59,9 +59,9 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
         }
         IngredientArticleImpl other = (IngredientArticleImpl) obj;
         return (this.ingredientType == other.getIngredientType()
-               && (this.getId().equals(other.getId()))
-               && (this.getName().equals(other.getName())))
-               && (this.getUnitOfMeasure().equals(other.getUnitOfMeasure()));
+               && this.getId().equals(other.getId())
+               && this.getName().equals(other.getName()))
+               && this.getUnitOfMeasure().equals(other.getUnitOfMeasure());
     }
 
     @Override

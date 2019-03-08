@@ -1,6 +1,8 @@
 package nwoolcan.model.brewery.production.batch.review;
 
 import nwoolcan.utils.Result;
+
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -21,7 +23,9 @@ public final class BatchEvaluationBuilder {
 
     private final Set<Evaluation> evaluations = new HashSet<>();
 
+    @Nullable
     private String reviewer;
+    @Nullable
     private String notes;
     private boolean built;
     private BatchEvaluationType batchEvaluationType;
@@ -42,7 +46,7 @@ public final class BatchEvaluationBuilder {
      *                        (implements the Strategy pattern)
      */
     public BatchEvaluationBuilder(final BatchEvaluationType batchEvaluationType) {
-        reset(batchEvaluationType);
+        this.batchEvaluationType = batchEvaluationType;
     }
 
     /**

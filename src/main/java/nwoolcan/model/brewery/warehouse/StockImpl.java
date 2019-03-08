@@ -6,6 +6,7 @@ import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,7 @@ public final class StockImpl implements Stock {
 
     private final Integer id;
     private final Article article;
+    @Nullable
     private final Date expirationDate;
     private final List<Record> records = new ArrayList<>();
     private final Date creationDate;
@@ -38,10 +40,10 @@ public final class StockImpl implements Stock {
      *                       but if this is the case use the other constructor.
      */
     // Package protected
-    StockImpl(final Integer id, final Article article, final Date expirationDate) {
+    StockImpl(final Integer id, final Article article, @Nullable final Date expirationDate) {
         Date creationMoment = new Date();
-        this.id = Objects.requireNonNull(id);
-        this.article = Objects.requireNonNull(article);
+        this.id = id;
+        this.article = article;
         this.expirationDate = expirationDate; // not required to be nonNull because it is called by
         // the other constructor.
         this.creationDate = creationMoment;
@@ -134,8 +136,8 @@ public final class StockImpl implements Stock {
     @Override
     public List<Record> getRecords() {
         return Collections.unmodifiableList(
-            new ArrayList<Record>(this.records).stream()
-                                               .sorted((a, b) -> (a.getDate().compareTo(b.getDate())))
+            new ArrayList<>(this.records).stream()
+                                               .sorted((a, b) -> a.getDate().compareTo(b.getDate()))
                                                .collect(Collectors.toList()));
     }
 

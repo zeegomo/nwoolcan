@@ -4,8 +4,8 @@ import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
+import javax.annotation.Nullable;
 import java.util.Date;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -16,9 +16,12 @@ public class StepInfoImpl implements StepInfo {
     private static final String INVALID_END_DATE_MESSAGE = "endDate is before startDate.";
 
     private final StepType stepType;
+    @Nullable
     private String note;
     private final Date startDate;
+    @Nullable
     private Date endDate;
+    @Nullable
     private Quantity endSize;
 
     /**
@@ -28,8 +31,6 @@ public class StepInfoImpl implements StepInfo {
      * @throws NullPointerException if stepType od startDate are null.
      */
     public StepInfoImpl(final StepType stepType, final Date startDate) {
-        Objects.requireNonNull(stepType);
-        Objects.requireNonNull(startDate);
         this.stepType = stepType;
         this.startDate = startDate;
     }

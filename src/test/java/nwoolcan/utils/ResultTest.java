@@ -33,7 +33,7 @@ public class ResultTest {
         assertFalse(exception.isPresent());
 
         assertTrue(presentEmpty.isPresent());
-        assertFalse((presentEmpty.isError()));
+        assertFalse(presentEmpty.isError());
 
         assertTrue(present.isPresent());
         assertFalse(present.isError());
@@ -124,9 +124,9 @@ public class ResultTest {
         try {
             Result<Boolean> res = error.map(s -> Optional.empty().get()).map(s -> null);
             assertFalse(res.isPresent());
-            assertTrue((res.isError()));
+            assertTrue(res.isError());
         } catch (NullPointerException npe) {
-            fail("Mapper function should not be invoked");
+            throw new AssertionError("Mapper function should not be invoked", npe);
         }
 
         // Map to value
@@ -155,7 +155,7 @@ public class ResultTest {
             Result<Boolean> b = error.flatMap(s -> null);
             assertFalse(b.isPresent());
         } catch (NullPointerException npe) {
-            fail("Mapper function should not be invoked");
+            throw new AssertionError("Mapper function should not be invoked", npe);
         }
 
         // Map an empty value

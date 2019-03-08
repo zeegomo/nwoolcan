@@ -102,22 +102,6 @@ public class StepInfoImplTest {
     }
 
     /**
-     * Checking constructor with no step type.
-     */
-    @Test(expected = NullPointerException.class)
-    public void constructorWithNoStepTypeTest() {
-        this.si = new StepInfoImpl(null, NOW);
-    }
-
-    /**
-     * Checking constructor with no start date.
-     */
-    @Test(expected = NullPointerException.class)
-    public void constructorWithNoStartDateTest() {
-        this.si = new StepInfoImpl(ST1, null);
-    }
-
-    /**
      * Checking insertion of end date that is before the start date.
      */
     @Test
