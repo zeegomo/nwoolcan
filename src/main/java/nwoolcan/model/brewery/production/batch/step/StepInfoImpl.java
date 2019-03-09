@@ -28,7 +28,6 @@ public class StepInfoImpl implements StepInfo {
      * Constructs a simple StepInfo of stepType and started at startDate.
      * @param stepType type of the step.
      * @param startDate date when the step started.
-     * @throws NullPointerException if stepType od startDate are null.
      */
     public StepInfoImpl(final StepType stepType, final Date startDate) {
         this.stepType = stepType;

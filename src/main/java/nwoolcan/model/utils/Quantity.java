@@ -39,7 +39,6 @@ public final class Quantity {
      * @param value new quantity value.
      * @param unitOfMeasure new quantity unit of measure.
      * @return a new {@link Quantity} with the specified value and unit of measure.
-     * @throws NullPointerException if the value is null or if the unit of measure is null.
      * @throws IllegalArgumentException if the value is negative or if the unit of measure cannot be a quantity.
      */
     public static Quantity of(final Number value, final UnitOfMeasure unitOfMeasure) {
