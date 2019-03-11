@@ -11,10 +11,11 @@ import nwoolcan.utils.Result;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.Arrays;
 
 /**
  * Abstract implementation of Step interface.
@@ -90,23 +91,11 @@ public abstract class AbstractStep implements Step {
         }
 
         if (query.isSortByValue()) {
-            s = s.sorted((p1, p2) -> {
-                int neg = 1;
-                if (query.isSortDescending()) {
-                    neg = -1;
-                }
-                return neg * Double.compare(p1.getRegistrationValue().doubleValue(), p2.getRegistrationValue().doubleValue());
-            });
+            s = s.sorted(Comparator.comparingDouble(d -> (query.isSortDescending() ? -1 : 1) * d.getRegistrationValue().doubleValue()));
         }
 
         if (query.isSortByDate()) {
-            s = s.sorted((p1, p2) -> {
-                int neg = 1;
-                if (query.isSortDescending()) {
-                    neg = -1;
-                }
-                return neg * Double.compare(p1.getRegistrationDate().getTime(), p2.getRegistrationDate().getTime());
-            });
+            s = s.sorted(Comparator.comparingLong(d -> (query.isSortDescending() ? -1 : 1) * d.getRegistrationDate().getTime()));
         }
 
         return Result.of(s.collect(Collectors.toList()));

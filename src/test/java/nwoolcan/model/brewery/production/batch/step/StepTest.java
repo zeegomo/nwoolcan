@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.stream.Collectors;
+import java.util.Comparator;
 
 /**
  * Test class for {@link Step} interface.
@@ -109,8 +109,8 @@ public class StepTest {
         Result<Empty> res = addParameters();
         Assert.assertFalse(res.isError());
 
-        Assert.assertEquals(MASHING_PARAMS, this.mashing.getParameters(new QueryParameter()).getValue());
-        Assert.assertEquals(BOILING_PARAMS, this.boiling.getParameters(new QueryParameter()).getValue());
+        Assert.assertArrayEquals(MASHING_PARAMS.toArray(), this.mashing.getParameters(new QueryParameter()).getValue().toArray());
+        Assert.assertArrayEquals(BOILING_PARAMS.toArray(), this.boiling.getParameters(new QueryParameter()).getValue().toArray());
     }
 
     /**
@@ -150,31 +150,34 @@ public class StepTest {
 
         Result<Collection<Parameter>> res = this.mashing.getParameters(new QueryParameter().sortByValue(true));
         Assert.assertTrue(res.isPresent());
-        Assert.assertEquals(MASHING_PARAMS.stream().sorted((p1, p2) -> Double.compare(p1.getRegistrationValue().doubleValue(), p2.getRegistrationValue().doubleValue()))
-                                                   .collect(Collectors.toList()), res.getValue());
+        Assert.assertArrayEquals(MASHING_PARAMS.stream()
+                                               .sorted(Comparator.comparingDouble(p -> p.getRegistrationValue().doubleValue()))
+                                               .toArray(), res.getValue().toArray());
 
         res = this.mashing.getParameters(new QueryParameter().sortByValue(true).sortDescending(true));
         Assert.assertTrue(res.isPresent());
-        Assert.assertEquals(MASHING_PARAMS.stream().sorted((p1, p2) -> -Double.compare(p1.getRegistrationValue().doubleValue(), p2.getRegistrationValue().doubleValue()))
-                                          .collect(Collectors.toList()), res.getValue());
+        Assert.assertArrayEquals(MASHING_PARAMS.stream()
+                                               .sorted((p1, p2) -> -Double.compare(p1.getRegistrationValue().doubleValue(), p2.getRegistrationValue().doubleValue()))
+                                               .toArray(), res.getValue().toArray());
 
         final double val = 9.9;
         res = this.mashing.getParameters(new QueryParameter().greaterThanValue(val));
         Assert.assertTrue(res.isPresent());
-        Assert.assertEquals(MASHING_PARAMS.stream().filter(p -> p.getRegistrationValue().doubleValue() > val).collect(Collectors.toList()),
-            res.getValue());
+        Assert.assertArrayEquals(MASHING_PARAMS.stream()
+                                               .filter(p -> p.getRegistrationValue().doubleValue() > val)
+                                               .toArray(), res.getValue().toArray());
 
         res = this.mashing.getParameters(new QueryParameter().parameterType(ParameterTypeEnum.Temperature));
         Assert.assertTrue(res.isPresent());
-        Assert.assertEquals(MASHING_PARAMS, res.getValue());
+        Assert.assertArrayEquals(MASHING_PARAMS.toArray(), res.getValue().toArray());
 
         final double val2 = 9.1;
         res = this.mashing.getParameters(new QueryParameter().lessThanValue(val));
         Assert.assertTrue(res.isPresent());
-        Assert.assertEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.Temperature, val2, D1)), res.getValue());
+        Assert.assertArrayEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.Temperature, val2, D1)).toArray(), res.getValue().toArray());
 
         res = this.mashing.getParameters(new QueryParameter().exactValue(val2));
         Assert.assertTrue(res.isPresent());
-        Assert.assertEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.Temperature, val2, D1)), res.getValue());
+        Assert.assertArrayEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.Temperature, val2, D1)).toArray(), res.getValue().toArray());
     }
 }
