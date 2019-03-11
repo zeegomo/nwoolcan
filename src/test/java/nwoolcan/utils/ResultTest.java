@@ -72,30 +72,6 @@ public class ResultTest {
         assertTrue(Result.ofEmpty().require(() -> true).isPresent());
     }
     /**
-     * Tests requireNonNull.
-     */
-    @Test
-    public void testRequireNonNull() {
-        final String errorMessage = "argument is null";
-
-        assertTrue(Results.requireNonNull(null).isError());
-        assertTrue(Results.requireNonNull(new Empty() {
-        }).isPresent());
-        Result<Empty> r1 = Result.ofEmpty()
-                                 .requireNonNull(null);
-        assertTrue(r1.isError());
-
-        Result<Empty> r2 = Result.ofEmpty()
-                                 .requireNonNull(new IllegalAccessError());
-        assertTrue(r2.isPresent());
-
-        Result<Empty> r3 = Result.ofEmpty()
-                                 .requireNonNull(null, errorMessage);
-        assertTrue(r3.isError());
-        assertEquals(r3.getError().getMessage(), errorMessage);
-
-    }
-    /**
      * Test map.
      */
     @Test
@@ -211,10 +187,6 @@ public class ResultTest {
     public void testToEmpty() {
         Result<Integer> r1 = Result.of(2);
         assertTrue(r1.toEmpty().isPresent());
-
-        Result<Integer> r2 = Results.requireNonNull(null);
-        assertFalse(r2.toEmpty().isPresent());
-        assertTrue(r2.toEmpty().isError());
     }
 }
 

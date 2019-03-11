@@ -154,27 +154,6 @@ public final class Result<T> {
         }
     }
     /**
-     * If the value is not present or the value is present and the given object is not null, return this.
-     * Otherwise return a {@link Result} holding a {@link NullPointerException}.
-     * @param o an object to test for nullity
-     * @return a {@link Result} describing the value of this {@link Result} if a value is present
-     * and the given object is not null
-     */
-    public Result<T> requireNonNull(final Object o) {
-        return this.require(() -> o != null, new NullPointerException());
-    }
-    /**
-     * If the value is not present or the value is present and the given object is not null, return this.
-     * Otherwise return a {@link Result} holding a {@link NullPointerException} with the specified message.
-     * @param o an object to test for nullity.
-     * @param message the message to put in the exception if the given object is null.
-     * @return a {@link Result} describing the value of this {@link Result} if a value is present
-     * and the given object is not null
-     */
-    public Result<T> requireNonNull(final Object o, final String message) {
-        return this.require(() -> o != null, new NullPointerException(message));
-    }
-    /**
      * If the value is not present or the value is present and the predicate is true, return this.
      * Otherwise return a {@link Result} holding an {@link IllegalArgumentException}.
      * @param supplier a supplier of a boolean condition
