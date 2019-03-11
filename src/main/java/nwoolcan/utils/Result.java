@@ -1,6 +1,5 @@
 package nwoolcan.utils;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -80,7 +79,6 @@ public final class Result<T> {
      */
     @SuppressWarnings("unchecked")
     public <U> Result<U> map(final Function<? super T, ? extends U> mapper) {
-        Objects.requireNonNull(mapper); //could become Results.requireNonNull
         return this.isPresent() ? Result.of(mapper.apply(this.elem.get())) : (Result<U>) this;
     }
     /**
@@ -91,7 +89,6 @@ public final class Result<T> {
      */
     @SuppressWarnings("unchecked")
     public <U> Result<U> flatMap(final Function<? super T, Result<U>> mapper) {
-        Objects.requireNonNull(mapper); //could become Results.requireNonNull
         return this.isPresent() ? mapper.apply(this.elem.get()) : (Result<U>) this;
     }
     /**
@@ -102,7 +99,6 @@ public final class Result<T> {
      */
     @SuppressWarnings("unchecked")
     public <U> Result<U> flatMap(final Supplier<Result<U>> supplier) {
-        Objects.requireNonNull(supplier); //could become Results.requireNonNull
         return this.isPresent() ? supplier.get() : (Result<U>) this;
     }
     /**
@@ -111,7 +107,6 @@ public final class Result<T> {
      * @return this
      */
     public Result<T> peek(final Consumer<? super T> action) {
-        Objects.requireNonNull(action); //could become Results.requireNonNull
         return this.map(elem -> {
             action.accept(elem);
             return elem;
@@ -157,27 +152,6 @@ public final class Result<T> {
         } else {
             return this;
         }
-    }
-    /**
-     * If the value is not present or the value is present and the given object is not null, return this.
-     * Otherwise return a {@link Result} holding a {@link NullPointerException}.
-     * @param o an object to test for nullity
-     * @return a {@link Result} describing the value of this {@link Result} if a value is present
-     * and the given object is not null
-     */
-    public Result<T> requireNonNull(final Object o) {
-        return this.require(() -> o != null, new NullPointerException());
-    }
-    /**
-     * If the value is not present or the value is present and the given object is not null, return this.
-     * Otherwise return a {@link Result} holding a {@link NullPointerException} with the specified message.
-     * @param o an object to test for nullity.
-     * @param message the message to put in the exception if the given object is null.
-     * @return a {@link Result} describing the value of this {@link Result} if a value is present
-     * and the given object is not null
-     */
-    public Result<T> requireNonNull(final Object o, final String message) {
-        return this.require(() -> o != null, new NullPointerException(message));
     }
     /**
      * If the value is not present or the value is present and the predicate is true, return this.

@@ -27,23 +27,6 @@ public class QuantityTest {
         Assert.assertEquals(VALUE1, q.getValue().intValue());
         Assert.assertEquals(GOOD_UM1, q.getUnitOfMeasure());
     }
-
-    /**
-     * Method that tests quantity creation with no value.
-     */
-    @Test(expected = NullPointerException.class)
-    public void testQuantityWithNoValue() {
-        final Quantity q2 = Quantity.of(null, GOOD_UM1);
-    }
-
-    /**
-     * Method that tests quantity creation with no unit of measure.
-     */
-    @Test(expected = NullPointerException.class)
-    public void testQuantityWithNoUM() {
-        final Quantity q = Quantity.of(VALUE1, null);
-    }
-
     /**
      * Method that tests quantity creation with negative value.
      */
