@@ -1,5 +1,7 @@
 package nwoolcan.model.brewery.production.batch.step;
 
+import nwoolcan.model.brewery.production.batch.step.info.StepInfoImpl;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
 import nwoolcan.model.brewery.production.batch.step.utils.StepHelper;
 
 import java.util.Date;
@@ -12,20 +14,20 @@ public final class BasicStepImpl extends AbstractStep {
 
     /**
      * Basic constructor with step type and start date of the step.
+     * Package-protected, to create a Step use utils class Steps.
      * @param stepType step's type.
      * @param startDate step's start date.
-     * @throws NullPointerException if step type or start date are null.
      */
-    public BasicStepImpl(final StepType stepType, final Date startDate) {
+    BasicStepImpl(final StepType stepType, final Date startDate) {
         super(new StepInfoImpl(stepType, startDate));
     }
 
     /**
      * Constructor only with step type and setting step's start date with date now.
+     * Package-protected, to create a Step use utils class Steps.
      * @param stepType step's type.
-     * @throws NullPointerException if step type is null.
      */
-    public BasicStepImpl(final StepType stepType) {
+    BasicStepImpl(final StepType stepType) {
         this(stepType, new Date());
     }
 

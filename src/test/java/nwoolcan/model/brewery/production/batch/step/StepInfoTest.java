@@ -1,5 +1,7 @@
 package nwoolcan.model.brewery.production.batch.step;
 
+import nwoolcan.model.brewery.production.batch.step.info.StepInfo;
+import nwoolcan.model.brewery.production.batch.step.info.StepInfoImpl;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
@@ -70,22 +72,6 @@ public class StepInfoTest {
     }
 
     /**
-     * Removing fields with null objects and verifying that they are correctly removed.
-     */
-    @Test
-    public void removeFieldsTest() {
-        populate();
-
-        this.si.setNote(null);
-        this.si.setEndDate(null);
-        this.si.setEndStepSize(null);
-
-        Assert.assertFalse(this.si.getNote().isPresent());
-        Assert.assertFalse(this.si.getEndDate().isPresent());
-        Assert.assertFalse(this.si.getEndStepSize().isPresent());
-    }
-
-    /**
      * Checking correct encapsulation protection for modifiable types such as Dates.
      */
     @Test
@@ -102,22 +88,6 @@ public class StepInfoTest {
         this.si.setEndDate(FUTURE);
         FUTURE.setTime(0);
         Assert.assertNotEquals(FUTURE, this.si.getEndDate().orElse(FUTURE));
-    }
-
-    /**
-     * Checking constructor with no step type.
-     */
-    @Test(expected = NullPointerException.class)
-    public void constructorWithNoStepTypeTest() {
-        this.si = new StepInfoImpl(null, NOW);
-    }
-
-    /**
-     * Checking constructor with no start date.
-     */
-    @Test(expected = NullPointerException.class)
-    public void constructorWithNoStartDateTest() {
-        this.si = new StepInfoImpl(ST1, null);
     }
 
     /**

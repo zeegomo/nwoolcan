@@ -1,10 +1,14 @@
 package nwoolcan.model.brewery.production.batch.step;
 
+import nwoolcan.model.brewery.production.batch.step.info.StepInfo;
+import nwoolcan.model.brewery.production.batch.step.info.UnmodifiableStepInfo;
+import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
+import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
-import nwoolcan.utils.Results;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -17,13 +21,9 @@ import java.util.stream.Stream;
  */
 public abstract class AbstractStep implements Step {
 
-    private static final String END_DATE_NULL_MESSAGE = "endDate cannot be null.";
-    private static final String REMAINING_SIZE_NULL_MESSAGE = "remainingSize cannot be null.";
     private static final String ALREADY_FINALIZED_MESSAGE = "This step is already finalized.";
-    private static final String PARAMETER_NULL_MESSAGE = "parameter cannot be null.";
     private static final String CANNOT_REGISTER_PARAMETER_MESSAGE = "Cannot register parameter if the step is finalized.";
     private static final String INVALID_PARAMETER_MESSAGE = "The parameter type is invalid for this step.";
-    private static final String QUERY_NULL_MESSAGE = "Query parameter cannot be null.";
 
     private final StepInfo stepInfo;
     private boolean finalized;
@@ -56,10 +56,8 @@ public abstract class AbstractStep implements Step {
     }
 
     @Override
-    public final Result<Empty> finalize(final String note, final Date endDate, final Quantity remainingSize) {
+    public final Result<Empty> finalize(@Nullable final String note, final Date endDate, final Quantity remainingSize) {
         return Result.ofEmpty()
-                     .requireNonNull(endDate, END_DATE_NULL_MESSAGE)
-                     .requireNonNull(remainingSize, REMAINING_SIZE_NULL_MESSAGE)
                      .require(() -> !this.finalized, new IllegalStateException(ALREADY_FINALIZED_MESSAGE))
                      .flatMap(() -> this.stepInfo.setNote(note))
                      .flatMap(() -> this.stepInfo.setEndDate(endDate))
@@ -69,9 +67,6 @@ public abstract class AbstractStep implements Step {
 
     @Override
     public final Result<Collection<Parameter>> getParameters(final QueryParameter query) {
-        if (query == null) {
-            return Result.error(new NullPointerException(QUERY_NULL_MESSAGE));
-        }
 
         Stream<Parameter> s = this.parameters.stream();
 
@@ -119,11 +114,11 @@ public abstract class AbstractStep implements Step {
 
     @Override
     public final Result<Empty> addParameter(final Parameter parameter) {
-        return Results.requireNonNull(parameter, PARAMETER_NULL_MESSAGE)
-                      .require(() -> !this.isFinalized(), new IllegalStateException(CANNOT_REGISTER_PARAMETER_MESSAGE))
-                      .require(p -> getParameterTypes().contains(p.getType()), new IllegalArgumentException(INVALID_PARAMETER_MESSAGE))
-                      .peek(this.parameters::add)
-                      .toEmpty();
+        return Result.of(parameter)
+                     .require(() -> !this.isFinalized(), new IllegalStateException(CANNOT_REGISTER_PARAMETER_MESSAGE))
+                     .require(p -> getParameterTypes().contains(p.getType()), new IllegalArgumentException(INVALID_PARAMETER_MESSAGE))
+                     .peek(this.parameters::add)
+                     .toEmpty();
     }
 
     /**

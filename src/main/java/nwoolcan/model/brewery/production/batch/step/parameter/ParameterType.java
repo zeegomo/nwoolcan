@@ -1,4 +1,4 @@
-package nwoolcan.model.brewery.production.batch.step;
+package nwoolcan.model.brewery.production.batch.step.parameter;
 
 import nwoolcan.model.utils.UnitOfMeasure;
 

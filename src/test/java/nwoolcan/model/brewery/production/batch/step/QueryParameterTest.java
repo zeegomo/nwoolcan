@@ -1,5 +1,8 @@
 package nwoolcan.model.brewery.production.batch.step;
 
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
+import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

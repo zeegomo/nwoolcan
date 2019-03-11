@@ -11,7 +11,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertSame;
 
 /**
@@ -33,7 +32,7 @@ public class ResultTest {
         assertFalse(exception.isPresent());
 
         assertTrue(presentEmpty.isPresent());
-        assertFalse((presentEmpty.isError()));
+        assertFalse(presentEmpty.isError());
 
         assertTrue(present.isPresent());
         assertFalse(present.isError());
@@ -73,44 +72,12 @@ public class ResultTest {
         assertTrue(Result.ofEmpty().require(() -> true).isPresent());
     }
     /**
-     * Tests requireNonNull.
-     */
-    @Test
-    public void testRequireNonNull() {
-        final String errorMessage = "argument is null";
-
-        assertTrue(Results.requireNonNull(null).isError());
-        assertTrue(Results.requireNonNull(new Empty() {
-        }).isPresent());
-        Result<Empty> r1 = Result.ofEmpty()
-                                 .requireNonNull(null);
-        assertTrue(r1.isError());
-
-        Result<Empty> r2 = Result.ofEmpty()
-                                 .requireNonNull(new IllegalAccessError());
-        assertTrue(r2.isPresent());
-
-        Result<Empty> r3 = Result.ofEmpty()
-                                 .requireNonNull(null, errorMessage);
-        assertTrue(r3.isError());
-        assertEquals(r3.getError().getMessage(), errorMessage);
-
-    }
-    /**
      * Test map.
      */
     @Test
     public void testMap() {
         Result<String> error = Result.error(new Exception("e"));
         Result<String> duke = Result.of("Duke");
-
-        // Null mapper function
-        try {
-            Result<Boolean> b = error.map(null);
-            fail("Should throw NPE on null mapping function");
-        } catch (NullPointerException npe) {
-            // expected
-        }
 
         // Map an empty value
         Result<Boolean> b = error.map(String::isEmpty);
@@ -124,9 +91,9 @@ public class ResultTest {
         try {
             Result<Boolean> res = error.map(s -> Optional.empty().get()).map(s -> null);
             assertFalse(res.isPresent());
-            assertTrue((res.isError()));
+            assertTrue(res.isError());
         } catch (NullPointerException npe) {
-            fail("Mapper function should not be invoked");
+            throw new AssertionError("Mapper function should not be invoked", npe);
         }
 
         // Map to value
@@ -141,21 +108,12 @@ public class ResultTest {
         Result<String> error = Result.error(new Exception());
         Result<String> duke = Result.of("Duke");
 
-
-        // Null mapper function
-        try {
-            Result<Boolean> b = error.map(null);
-            fail("Should throw NPE on null mapping function");
-        } catch (NullPointerException npe) {
-            // expected
-        }
-
         // Empty won't invoke mapper function
         try {
             Result<Boolean> b = error.flatMap(s -> null);
             assertFalse(b.isPresent());
         } catch (NullPointerException npe) {
-            fail("Mapper function should not be invoked");
+            throw new AssertionError("Mapper function should not be invoked", npe);
         }
 
         // Map an empty value
@@ -229,10 +187,6 @@ public class ResultTest {
     public void testToEmpty() {
         Result<Integer> r1 = Result.of(2);
         assertTrue(r1.toEmpty().isPresent());
-
-        Result<Integer> r2 = Results.requireNonNull(null);
-        assertFalse(r2.toEmpty().isPresent());
-        assertTrue(r2.toEmpty().isError());
     }
 }
 

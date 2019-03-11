@@ -1,5 +1,9 @@
 package nwoolcan.model.brewery.production.batch.step;
 
+import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterImpl;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
+import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
@@ -49,22 +53,6 @@ public class StepTest {
     }
 
     /**
-     * Test null step type.
-     */
-    @Test (expected = NullPointerException.class)
-    public void testNullStepType() {
-        Step error = new BasicStepImpl(null);
-    }
-
-    /**
-     * Test null start date.
-     */
-    @Test (expected = NullPointerException.class)
-    public void testNullStartDate() {
-        Step error = new BasicStepImpl(StepTypeEnum.Aging, null);
-    }
-
-    /**
      * Test various finalization scenarios.
      */
     @Test
@@ -79,14 +67,6 @@ public class StepTest {
         finRes = this.boiling.finalize("Finalized", new Date(), Q1);
         Assert.assertTrue(finRes.isError());
         Assert.assertSame(IllegalStateException.class, finRes.getError().getClass());
-
-        finRes = this.mashing.finalize(null, null, Q1);
-        Assert.assertTrue(finRes.isError());
-        Assert.assertSame(NullPointerException.class, finRes.getError().getClass());
-
-        finRes = this.mashing.finalize(null, new Date(), null);
-        Assert.assertTrue(finRes.isError());
-        Assert.assertSame(NullPointerException.class, finRes.getError().getClass());
 
         finRes = this.mashing.finalize(null, new Date(this.mashing.getStepInfo().getStartDate().getTime() - 1000), Q1);
         Assert.assertTrue(finRes.isError());
@@ -168,11 +148,7 @@ public class StepTest {
     public void testQueryParameters() {
         addParameters();
 
-        Result<Collection<Parameter>> res = this.mashing.getParameters(null);
-        Assert.assertTrue(res.isError());
-        Assert.assertSame(NullPointerException.class, res.getError().getClass());
-
-        res = this.mashing.getParameters(new QueryParameter().sortByValue(true));
+        Result<Collection<Parameter>> res = this.mashing.getParameters(new QueryParameter().sortByValue(true));
         Assert.assertTrue(res.isPresent());
         Assert.assertEquals(MASHING_PARAMS.stream().sorted((p1, p2) -> Double.compare(p1.getRegistrationValue().doubleValue(), p2.getRegistrationValue().doubleValue()))
                                                    .collect(Collectors.toList()), res.getValue());

@@ -23,7 +23,7 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
     IngredientArticleImpl(final Integer id, final String name, final UnitOfMeasure unitOfMeasure,
                                  final IngredientType ingredientType) {
         super(id, name, unitOfMeasure);
-        this.ingredientType = Objects.requireNonNull(ingredientType);
+        this.ingredientType = ingredientType;
     }
     /**
      * Returns the {@link Result} of this {@link IngredientArticle}.
@@ -59,9 +59,9 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
         }
         IngredientArticleImpl other = (IngredientArticleImpl) obj;
         return (this.ingredientType == other.getIngredientType()
-               && (this.getId().equals(other.getId()))
-               && (this.getName().equals(other.getName())))
-               && (this.getUnitOfMeasure().equals(other.getUnitOfMeasure()));
+               && this.getId().equals(other.getId())
+               && this.getName().equals(other.getName()))
+               && this.getUnitOfMeasure().equals(other.getUnitOfMeasure());
     }
 
     @Override

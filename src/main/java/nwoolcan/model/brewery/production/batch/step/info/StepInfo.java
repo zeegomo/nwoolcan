@@ -1,9 +1,11 @@
-package nwoolcan.model.brewery.production.batch.step;
+package nwoolcan.model.brewery.production.batch.step.info;
 
+import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.Optional;
 
@@ -30,7 +32,7 @@ public interface StepInfo {
      * @return a {@link Result} of {@link Empty} that contains a {@link UnsupportedOperationException}
      * if the object is unmodifiable.
      */
-    Result<Empty> setNote(String note);
+    Result<Empty> setNote(@Nullable String note);
 
     /**
      * Returns the date when the step was created.

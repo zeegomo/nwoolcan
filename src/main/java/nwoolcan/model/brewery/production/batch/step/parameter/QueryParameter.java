@@ -1,5 +1,6 @@
-package nwoolcan.model.brewery.production.batch.step;
+package nwoolcan.model.brewery.production.batch.step.parameter;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.Optional;
 
@@ -8,12 +9,19 @@ import java.util.Optional;
  */
 public final class QueryParameter {
 
-    private ParameterType parameterType;
-    private Number greaterThanValue;
-    private Number lessThanValue;
-    private Number exactValue;
-    private Date startDate;
-    private Date endDate;
+    @Nullable
+    private ParameterType parameterType = null;
+    @Nullable
+    private Number greaterThanValue = null;
+    @Nullable
+    private Number lessThanValue = null;
+    @Nullable
+    private Number exactValue = null;
+    @Nullable
+    private Date startDate = null;
+    @Nullable
+    private Date endDate = null;
+
     private boolean sortByValue = false;
     private boolean sortByDate = false;
     private boolean sortDescending = false;
@@ -141,9 +149,7 @@ public final class QueryParameter {
      * @return myself after setting the date to use as lower bound for filtering.
      */
     public QueryParameter startDate(final Date startDate) {
-        if (startDate != null) {
-            this.startDate = new Date(startDate.getTime());
-        }
+        this.startDate = new Date(startDate.getTime());
         return this;
     }
 
@@ -153,9 +159,7 @@ public final class QueryParameter {
      * @return myself after setting the date to use as upper bound for filtering.
      */
     public QueryParameter endDate(final Date endDate) {
-        if (endDate != null) {
-            this.endDate = new Date(endDate.getTime());
-        }
+        this.endDate = new Date(endDate.getTime());
         return this;
     }
 

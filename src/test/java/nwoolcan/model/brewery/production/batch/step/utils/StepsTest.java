@@ -2,6 +2,7 @@ package nwoolcan.model.brewery.production.batch.step.utils;
 
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
+import nwoolcan.model.brewery.production.batch.step.Steps;
 import nwoolcan.utils.Result;
 
 import org.junit.Assert;
@@ -35,15 +36,7 @@ public class StepsTest {
      */
     @Test
     public void testWrongCreation() {
-        Result<Step> res = Steps.create(null);
-        Assert.assertTrue(res.isError());
-        Assert.assertSame(res.getError().getClass(), NullPointerException.class);
-
-        res = Steps.create(StepTypeEnum.Mashing, null);
-        Assert.assertTrue(res.isError());
-        Assert.assertSame(res.getError().getClass(), NullPointerException.class);
-
-        res = Steps.create(() -> "Wrong");
+        Result<Step> res = Steps.create(() -> "Wrong");
         Assert.assertTrue(res.isError());
         Assert.assertSame(res.getError().getClass(), IllegalArgumentException.class);
     }

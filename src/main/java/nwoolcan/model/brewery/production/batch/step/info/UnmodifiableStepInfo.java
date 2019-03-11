@@ -1,9 +1,11 @@
-package nwoolcan.model.brewery.production.batch.step;
+package nwoolcan.model.brewery.production.batch.step.info;
 
+import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.Optional;
 
@@ -38,7 +40,7 @@ public final class UnmodifiableStepInfo implements StepInfo {
     }
 
     @Override
-    public Result<Empty> setNote(final String note) {
+    public Result<Empty> setNote(@Nullable final String note) {
         return getUnmodifiableErrorResult();
     }
 

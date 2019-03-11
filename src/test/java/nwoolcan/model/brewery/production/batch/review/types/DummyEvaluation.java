@@ -19,8 +19,8 @@ public enum DummyEvaluation implements BatchEvaluationType {
         CAT1("CAT1", 10),
         CAT2("CAT2", 2);
 
-        private String name;
-        private int score;
+        private final String name;
+        private final int score;
 
         DummyReviewCategories(final String name, final int score) {
             this.name = name;

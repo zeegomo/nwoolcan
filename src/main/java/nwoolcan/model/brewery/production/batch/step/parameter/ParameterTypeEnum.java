@@ -1,8 +1,6 @@
-package nwoolcan.model.brewery.production.batch.step;
+package nwoolcan.model.brewery.production.batch.step.parameter;
 
 import nwoolcan.model.utils.UnitOfMeasure;
-
-import java.util.Objects;
 
 /**
  * Parameter type enum implementation.
@@ -24,7 +22,7 @@ public enum ParameterTypeEnum implements ParameterType {
     private final UnitOfMeasure um;
 
     ParameterTypeEnum(final UnitOfMeasure um) {
-        this.um = Objects.requireNonNull(um);
+        this.um = um;
     }
 
     @Override

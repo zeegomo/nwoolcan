@@ -1,9 +1,14 @@
 package nwoolcan.model.brewery.production.batch.step;
 
+import nwoolcan.model.brewery.production.batch.step.info.StepInfo;
+import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
+import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
@@ -43,7 +48,6 @@ public interface Step {
      * Finalize this step with possible notes, the end date of the finalization and the remaining size of the batch.
      * Returns a {@link Result} with a:
      * <ul>
-     *     <li>{@link NullPointerException} if the endDate or the remainingSize is null.</li>
      *     <li>{@link IllegalArgumentException} if the endDate is before the step start date.</li>
      *     <li>{@link IllegalStateException} if the step has already been finalized.</li>
      * </ul>
@@ -52,7 +56,7 @@ public interface Step {
      * @param remainingSize the remaining size quantity of the batch in production.
      * @return a {@link Result} that can contain an error cited before.
      */
-    Result<Empty> finalize(String note, Date endDate, Quantity remainingSize);
+    Result<Empty> finalize(@Nullable String note, Date endDate, Quantity remainingSize);
 
     /**
      * Returns a {@link Result} with a collection of {@link Parameter} describing the registered parameters of this step.
@@ -60,7 +64,6 @@ public interface Step {
      * needs to be build correctly with its builder.
      * The result can contain an error of type:
      * <ul>
-     *     <li>{@link NullPointerException} if the query object is null.</li>
      *     <li>{@link IllegalArgumentException} if the object query is inconsistent.</li>
      *     <li>{@link RuntimeException} if there are errors while executing the query.</li>
      * </ul>

@@ -1,5 +1,8 @@
 package nwoolcan.model.brewery.production.batch.step;
 
+import nwoolcan.model.brewery.production.batch.step.info.StepInfo;
+import nwoolcan.model.brewery.production.batch.step.info.StepInfoImpl;
+import nwoolcan.model.brewery.production.batch.step.info.UnmodifiableStepInfo;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;

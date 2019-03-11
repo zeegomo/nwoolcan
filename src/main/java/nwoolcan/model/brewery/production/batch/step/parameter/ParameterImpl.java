@@ -1,4 +1,4 @@
-package nwoolcan.model.brewery.production.batch.step;
+package nwoolcan.model.brewery.production.batch.step.parameter;
 
 import java.util.Date;
 import java.util.Objects;
@@ -16,15 +16,11 @@ public final class ParameterImpl implements Parameter {
      * Basic constructor for the class.
      * @param parameterType the parameter's type.
      * @param registrationValue the parameters' registered value.
-     * @param registrationDate the parameter's date of registration.
-     * @throws NullPointerException if any of the parameters is null.
+     * @param registrationDate the parameter's date of registration.\
      */
     public ParameterImpl(final ParameterType parameterType,
                          final Number registrationValue,
                          final Date registrationDate) {
-        Objects.requireNonNull(parameterType);
-        Objects.requireNonNull(registrationValue);
-        Objects.requireNonNull(registrationDate);
         this.parameterType = parameterType;
         this.registrationValue = registrationValue;
         this.registrationDate = registrationDate;
@@ -34,7 +30,6 @@ public final class ParameterImpl implements Parameter {
      * Constructor that sets the registration date to now.
      * @param parameterType the parameter's type.
      * @param registrationValue the parameters' registered value.
-     * @throws NullPointerException if any of the parameters is null.
      */
     public ParameterImpl(final ParameterType parameterType, final Number registrationValue) {
         this(parameterType, registrationValue, new Date());

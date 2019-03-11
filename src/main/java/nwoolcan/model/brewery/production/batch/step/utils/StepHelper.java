@@ -1,7 +1,7 @@
 package nwoolcan.model.brewery.production.batch.step.utils;
 
-import nwoolcan.model.brewery.production.batch.step.ParameterType;
-import nwoolcan.model.brewery.production.batch.step.ParameterTypeEnum;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 
