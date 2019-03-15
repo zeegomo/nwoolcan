@@ -3,8 +3,9 @@ package nwoolcan.model.brewery.production.batch.step;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
+import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameterBuilder;
+import nwoolcan.utils.Result;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
@@ -21,70 +22,85 @@ public class QueryParameterTest {
     private static final Date SD = new Date();
     private static final Date ED = new Date(SD.getTime() + 1000);
 
-    private QueryParameter query;
-
     /**
-     * Sets up fields.
+     * Simple build test.
      */
-    @Before
-    public void setUp() {
-        this.query = new QueryParameter();
+    @Test
+    public void testSimpleCreation() {
+        final Result<QueryParameter> res = new QueryParameterBuilder().build();
+
+        Assert.assertTrue(res.isPresent());
+
+        final QueryParameter query = res.getValue();
+
+        Assert.assertFalse(query.getParameterType().isPresent());
+        Assert.assertFalse(query.getGreaterThanValue().isPresent());
+        Assert.assertFalse(query.getLessThanValue().isPresent());
+        Assert.assertFalse(query.getExactValue().isPresent());
+        Assert.assertFalse(query.getStartDate().isPresent());
+        Assert.assertFalse(query.getEndDate().isPresent());
+        Assert.assertFalse(query.isSortByValue());
+        Assert.assertFalse(query.isSortByDate());
+        Assert.assertFalse(query.isSortDescending());
     }
 
     /**
-     * Simple creation test.
+     * Complete build test.
      */
     @Test
-    public void simpleCreationTest() {
-        Assert.assertFalse(this.query.getParameterType().isPresent());
-        Assert.assertFalse(this.query.getGreaterThanValue().isPresent());
-        Assert.assertFalse(this.query.getLessThanValue().isPresent());
-        Assert.assertFalse(this.query.getExactValue().isPresent());
-        Assert.assertFalse(this.query.getStartDate().isPresent());
-        Assert.assertFalse(this.query.getEndDate().isPresent());
-        Assert.assertFalse(this.query.isSortByValue());
-        Assert.assertFalse(this.query.isSortByDate());
-        Assert.assertFalse(this.query.isSortDescending());
+    public void testCompleteConstruction() {
+        final Result<QueryParameter> res = new QueryParameterBuilder().parameterType(TEMP)
+                                                                      .greaterThanValue(GTV)
+                                                                      .lessThanValue(LTV)
+                                                                      .startDate(SD)
+                                                                      .endDate(ED)
+                                                                      .sortByValue(true)
+                                                                      .sortDescending(true)
+                                                                      .build();
+        Assert.assertTrue(res.isPresent());
+
+        final QueryParameter query = res.getValue();
+
+        Assert.assertTrue(query.getParameterType().isPresent());
+        Assert.assertTrue(query.getGreaterThanValue().isPresent());
+        Assert.assertTrue(query.getLessThanValue().isPresent());
+        Assert.assertTrue(query.getStartDate().isPresent());
+        Assert.assertTrue(query.getEndDate().isPresent());
+
+        Assert.assertEquals(TEMP, query.getParameterType().get());
+        Assert.assertEquals(GTV, query.getGreaterThanValue().get());
+        Assert.assertEquals(LTV, query.getLessThanValue().get());
+        Assert.assertEquals(SD, query.getStartDate().get());
+        Assert.assertEquals(ED, query.getEndDate().get());
+        Assert.assertTrue(query.isSortByValue());
+        Assert.assertTrue(query.isSortDescending());
     }
 
     /**
-     * Complete creation test.
+     * Wrong build test.
      */
     @Test
-    public void completeConstructionTest() {
-        query = query.parameterType(TEMP)
-                     .greaterThanValue(GTV)
-                     .lessThanValue(LTV)
-                     .exactValue(EV)
-                     .startDate(SD)
-                     .endDate(ED);
+    public void testWrongCreation() {
+        Result<QueryParameter> res = new QueryParameterBuilder().greaterThanValue(1)
+                                                                .lessThanValue(0)
+                                                                .build();
+        Assert.assertTrue(res.isError());
+        Assert.assertSame(IllegalArgumentException.class, res.getError().getClass());
+        System.out.println(res.getError().getMessage());
 
-        Assert.assertTrue(this.query.getParameterType().isPresent());
-        Assert.assertTrue(this.query.getGreaterThanValue().isPresent());
-        Assert.assertTrue(this.query.getLessThanValue().isPresent());
-        Assert.assertTrue(this.query.getExactValue().isPresent());
-        Assert.assertTrue(this.query.getStartDate().isPresent());
-        Assert.assertTrue(this.query.getEndDate().isPresent());
+        res = new QueryParameterBuilder().exactValue(EV).greaterThanValue(GTV).build();
+        Assert.assertTrue(res.isError());
+        Assert.assertSame(IllegalArgumentException.class, res.getError().getClass());
+        System.out.println(res.getError().getMessage());
 
-        Assert.assertEquals(TEMP, this.query.getParameterType().get());
-        Assert.assertEquals(GTV, this.query.getGreaterThanValue().get());
-        Assert.assertEquals(LTV, this.query.getLessThanValue().get());
-        Assert.assertEquals(EV, this.query.getExactValue().get());
-        Assert.assertEquals(SD, this.query.getStartDate().get());
-        Assert.assertEquals(ED, this.query.getEndDate().get());
-    }
+        res = new QueryParameterBuilder().startDate(ED).endDate(SD).build();
+        Assert.assertTrue(res.isError());
+        Assert.assertSame(IllegalArgumentException.class, res.getError().getClass());
+        System.out.println(res.getError().getMessage());
 
-    /**
-     * Sorting assignments test.
-     */
-    @Test
-    public void sortingTest() {
-        query = query.sortByValue(true)
-                     .sortByDate(true)
-                     .sortDescending(true);
-
-        Assert.assertTrue(this.query.isSortByValue());
-        Assert.assertTrue(this.query.isSortByDate());
-        Assert.assertTrue(this.query.isSortDescending());
+        res = new QueryParameterBuilder().sortByDate(true).sortByValue(true).build();
+        Assert.assertTrue(res.isError());
+        Assert.assertSame(IllegalArgumentException.class, res.getError().getClass());
+        System.out.println(res.getError().getMessage());
     }
 }

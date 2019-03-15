@@ -75,10 +75,10 @@ public abstract class AbstractStep implements Step {
             s = s.filter(p -> p.getType().equals(query.getParameterType().get()));
         }
         if (query.getGreaterThanValue().isPresent()) {
-            s = s.filter(p -> p.getRegistrationValue().doubleValue() > query.getGreaterThanValue().get().doubleValue());
+            s = s.filter(p -> p.getRegistrationValue().doubleValue() >= query.getGreaterThanValue().get().doubleValue());
         }
         if (query.getLessThanValue().isPresent()) {
-            s = s.filter(p -> p.getRegistrationValue().doubleValue() < query.getLessThanValue().get().doubleValue());
+            s = s.filter(p -> p.getRegistrationValue().doubleValue() <= query.getLessThanValue().get().doubleValue());
         }
         if (query.getExactValue().isPresent()) {
             s = s.filter(p -> p.getRegistrationValue().doubleValue() == query.getExactValue().get().doubleValue());

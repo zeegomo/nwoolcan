@@ -3,6 +3,7 @@ package nwoolcan.model.brewery.production.batch.step;
 import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterImpl;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
+import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameterBuilder;
 import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
@@ -85,10 +86,6 @@ public class StepTest {
     }
 
     private Result<Empty> addParameters() {
-        final Number n1 = 10;
-        final Number n2 = 10.1;
-        final Number n3 = 9.1;
-
         Result<Empty> res = Result.ofEmpty();
 
         for (Parameter p : MASHING_PARAMS) {
@@ -109,8 +106,8 @@ public class StepTest {
         Result<Empty> res = addParameters();
         Assert.assertFalse(res.isError());
 
-        Assert.assertArrayEquals(MASHING_PARAMS.toArray(), this.mashing.getParameters(new QueryParameter()).getValue().toArray());
-        Assert.assertArrayEquals(BOILING_PARAMS.toArray(), this.boiling.getParameters(new QueryParameter()).getValue().toArray());
+        Assert.assertArrayEquals(MASHING_PARAMS.toArray(), this.mashing.getParameters(new QueryParameterBuilder().build().getValue()).getValue().toArray());
+        Assert.assertArrayEquals(BOILING_PARAMS.toArray(), this.boiling.getParameters(new QueryParameterBuilder().build().getValue()).getValue().toArray());
     }
 
     /**
@@ -148,35 +145,48 @@ public class StepTest {
     public void testQueryParameters() {
         addParameters();
 
-        Result<Collection<Parameter>> res = this.mashing.getParameters(new QueryParameter().sortByValue(true));
+        Result<QueryParameter> resQ = new QueryParameterBuilder().sortByValue(true).build();
+        Assert.assertTrue(resQ.isPresent());
+        Result<Collection<Parameter>> res = this.mashing.getParameters(resQ.getValue());
         Assert.assertTrue(res.isPresent());
         Assert.assertArrayEquals(MASHING_PARAMS.stream()
                                                .sorted(Comparator.comparingDouble(p -> p.getRegistrationValue().doubleValue()))
                                                .toArray(), res.getValue().toArray());
 
-        res = this.mashing.getParameters(new QueryParameter().sortByValue(true).sortDescending(true));
+        resQ = new QueryParameterBuilder().sortByValue(true).sortDescending(true).build();
+        Assert.assertTrue(resQ.isPresent());
+        res = this.mashing.getParameters(resQ.getValue());
         Assert.assertTrue(res.isPresent());
         Assert.assertArrayEquals(MASHING_PARAMS.stream()
                                                .sorted((p1, p2) -> -Double.compare(p1.getRegistrationValue().doubleValue(), p2.getRegistrationValue().doubleValue()))
                                                .toArray(), res.getValue().toArray());
 
         final double val = 9.9;
-        res = this.mashing.getParameters(new QueryParameter().greaterThanValue(val));
+        resQ = new QueryParameterBuilder().greaterThanValue(val).build();
+        Assert.assertTrue(resQ.isPresent());
+        res = this.mashing.getParameters(resQ.getValue());
         Assert.assertTrue(res.isPresent());
         Assert.assertArrayEquals(MASHING_PARAMS.stream()
                                                .filter(p -> p.getRegistrationValue().doubleValue() > val)
                                                .toArray(), res.getValue().toArray());
 
-        res = this.mashing.getParameters(new QueryParameter().parameterType(ParameterTypeEnum.Temperature));
+        resQ = new QueryParameterBuilder().parameterType(ParameterTypeEnum.Temperature).build();
+        Assert.assertTrue(resQ.isPresent());
+        res = this.mashing.getParameters(resQ.getValue());
         Assert.assertTrue(res.isPresent());
         Assert.assertArrayEquals(MASHING_PARAMS.toArray(), res.getValue().toArray());
 
+
         final double val2 = 9.1;
-        res = this.mashing.getParameters(new QueryParameter().lessThanValue(val));
+        resQ = new QueryParameterBuilder().lessThanValue(val).build();
+        Assert.assertTrue(resQ.isPresent());
+        res = this.mashing.getParameters(resQ.getValue());
         Assert.assertTrue(res.isPresent());
         Assert.assertArrayEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.Temperature, val2, D1)).toArray(), res.getValue().toArray());
 
-        res = this.mashing.getParameters(new QueryParameter().exactValue(val2));
+        resQ = new QueryParameterBuilder().lessThanValue(val2).build();
+        Assert.assertTrue(resQ.isPresent());
+        res = this.mashing.getParameters(resQ.getValue());
         Assert.assertTrue(res.isPresent());
         Assert.assertArrayEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.Temperature, val2, D1)).toArray(), res.getValue().toArray());
     }
