@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Basic implementation of {@link Step} interface.
  */
-public final class BasicStepImpl extends AbstractStep {
+public final class BasicStep extends AbstractStep {
 
     /**
      * Basic constructor with step type and start date of the step.
@@ -18,7 +18,7 @@ public final class BasicStepImpl extends AbstractStep {
      * @param stepType step's type.
      * @param startDate step's start date.
      */
-    BasicStepImpl(final StepType stepType, final Date startDate) {
+    BasicStep(final StepType stepType, final Date startDate) {
         super(new StepInfoImpl(stepType, startDate));
     }
 
@@ -27,7 +27,7 @@ public final class BasicStepImpl extends AbstractStep {
      * Package-protected, to create a Step use utils class Steps.
      * @param stepType step's type.
      */
-    BasicStepImpl(final StepType stepType) {
+    BasicStep(final StepType stepType) {
         this(stepType, new Date());
     }
 

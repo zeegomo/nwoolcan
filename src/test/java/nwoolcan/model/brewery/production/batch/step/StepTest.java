@@ -48,9 +48,9 @@ public class StepTest {
      */
     @Before
     public void init() {
-        this.boiling = new BasicStepImpl(StepTypeEnum.Boiling);
-        this.mashing = new BasicStepImpl(StepTypeEnum.Mashing);
-        this.packaging = new BasicStepImpl(StepTypeEnum.Packaging, new Date());
+        this.boiling = new BasicStep(StepTypeEnum.Boiling);
+        this.mashing = new BasicStep(StepTypeEnum.Mashing);
+        this.packaging = new BasicStep(StepTypeEnum.Packaging, new Date());
     }
 
     /**

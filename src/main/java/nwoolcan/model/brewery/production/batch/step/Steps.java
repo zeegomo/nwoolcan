@@ -26,7 +26,7 @@ public final class Steps {
     public static Result<Step> create(final StepType stepType, final Date startDate) {
         //only one configured implementation for now
         if (stepType instanceof StepTypeEnum) {
-            return Result.of(new BasicStepImpl(stepType, startDate));
+            return Result.of(new BasicStep(stepType, startDate));
         }
         return Result.error(new IllegalArgumentException(stepType + CANNOT_FIND_STEP_IMPLEMENTATION_MESSAGE));
     }
