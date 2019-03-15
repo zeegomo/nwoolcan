@@ -1,11 +1,14 @@
 package nwoolcan.model.brewery.production.batch.step;
 
+import nwoolcan.model.brewery.production.batch.step.info.StepInfo;
+import nwoolcan.model.brewery.production.batch.step.info.StepInfoImpl;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
@@ -13,9 +16,9 @@ import java.util.Date;
 /**
  * Test class for {@link StepInfoImpl}.
  */
-public class StepInfoImplTest {
+public class StepInfoTest {
 
-    private static final StepType ST1 = StepType.Mashing;
+    private static final StepType ST1 = StepTypeEnum.Mashing;
     private static final Date NOW = new Date();
     private static final Date PAST = new Date(0);
     private static final Date FUTURE = new Date(NOW.getTime() + 1000);
@@ -25,12 +28,15 @@ public class StepInfoImplTest {
 
     private StepInfo si;
 
-    private void init() {
+    /**
+     * Sets up fields.
+     */
+    @Before
+    public void setUp() {
         this.si = new StepInfoImpl(ST1, NOW);
     }
 
     private void populate() {
-        init();
         this.si.setNote(NOTE1);
         this.si.setEndDate(FUTURE);
         this.si.setEndStepSize(Q1);
@@ -41,7 +47,6 @@ public class StepInfoImplTest {
      */
     @Test
     public void simpleConstructionTest() {
-        init();
         Assert.assertEquals(ST1, this.si.getType());
         Assert.assertEquals(NOW, this.si.getStartDate());
 
@@ -64,22 +69,6 @@ public class StepInfoImplTest {
         Assert.assertEquals(NOTE1, this.si.getNote().orElse(""));
         Assert.assertEquals(FUTURE, this.si.getEndDate().orElse(PAST));
         Assert.assertEquals(Q1, this.si.getEndStepSize().orElse(Q2));
-    }
-
-    /**
-     * Removing fields with null objects and verifying that they are correctly removed.
-     */
-    @Test
-    public void removeFieldsTest() {
-        populate();
-
-        this.si.setNote(null);
-        this.si.setEndDate(null);
-        this.si.setEndStepSize(null);
-
-        Assert.assertFalse(this.si.getNote().isPresent());
-        Assert.assertFalse(this.si.getEndDate().isPresent());
-        Assert.assertFalse(this.si.getEndStepSize().isPresent());
     }
 
     /**
@@ -106,8 +95,8 @@ public class StepInfoImplTest {
      */
     @Test
     public void invalidEndDateTest() {
-        init();
         final Result<Empty> res = this.si.setEndDate(PAST);
         Assert.assertTrue(res.isError());
+        Assert.assertSame(IllegalArgumentException.class, res.getError().getClass());
     }
 }
