@@ -6,7 +6,6 @@ import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,24 +31,39 @@ public interface Batch {
      * that happened before the current one, in chronological order.
      * @return a list describing all production steps that happened before the current one.
      */
-    Result<List<Step>> getLastSteps();
+    List<Step> getLastSteps();
 
     /**
-     * Goes to the next step of type passed by parameter if the current step has been finalized,
-     * a Result with a {@link IllegalStateException} otherwise.
+     * Goes to the next step of type passed by parameter.
+     * If the current step has not been finalized yet, it finalizes it with empty note, date now
+     * and end size equal to the current size.
+     * Returns a Result with an error of type:
+     * <ul>
+     *     <li>{@link IllegalStateException} if the batch is in ended state.</li>
+     *     <li>{@link IllegalArgumentException} if the next step type cannot be after the current step type or
+     *     f the next step type cannot be created.</li>
+     * </ul>
      * @param nextStepType the next step type.
-     * @return a Result with an error if the current step has not been finalized.
+     * @return a Result with an error if one of above conditions meet.
      */
     Result<Empty> moveToNextStep(StepType nextStepType);
 
     /**
-     * Finalize the current batch and sets a possible evaluation to the batch.
-     * If the current step has not been finalized or the batch has already been finalized,
-     * this method does nothing and returns a Result with a {@link IllegalStateException}.
-     * @param evaluation the optional evaluation of the batch.
-     * @return a Result with an error if the current step has not been finalized.
+     * Returns true if the current batch is in ended state.
+     * @return true if the current batch is in ended state.
      */
-    Result<Empty> finalizeAndSetEvaluation(@Nullable BatchEvaluation evaluation);
+    boolean isEnded();
+
+    /**
+     * Sets a possible evaluation to the batch.
+     * Returns a Result with an error if type:
+     * <ul>
+     *     <li>{@link IllegalStateException} if the batch is not in ended state.</li>
+     * </ul>
+     * @param evaluation the evaluation of the batch.
+     * @return a Result with an error if one of above conditions meet.
+     */
+    Result<Empty> setEvaluation(BatchEvaluation evaluation);
 
     /**
      * Returns the BatchEvaluation of this batch if it has one.

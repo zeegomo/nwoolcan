@@ -43,7 +43,7 @@ public class TestBeerArticle {
             }
 
             @Override
-            public Result<List<Step>> getLastSteps() {
+            public List<Step> getLastSteps() {
                 return null;
             }
 
@@ -53,7 +53,12 @@ public class TestBeerArticle {
             }
 
             @Override
-            public Result<Empty> finalizeAndSetEvaluation(final BatchEvaluation evaluation) {
+            public boolean isEnded() {
+                return false;
+            }
+
+            @Override
+            public Result<Empty> setEvaluation(final BatchEvaluation evaluation) {
                 return null;
             }
 
