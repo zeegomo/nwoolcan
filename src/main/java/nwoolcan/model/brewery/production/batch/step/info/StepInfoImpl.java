@@ -2,17 +2,15 @@ package nwoolcan.model.brewery.production.batch.step.info;
 
 import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.utils.Quantity;
-import nwoolcan.utils.Empty;
-import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.Optional;
 
 /**
- * Simple StepInfo class implementation.
+ * Implementation of StepInfo using pattern decorator for constructor.
  */
-public final class StepInfoImpl implements StepInfo {
+public class StepInfoImpl implements StepInfo {
 
     private static final String INVALID_END_DATE_MESSAGE = "endDate is before startDate.";
 
@@ -26,63 +24,50 @@ public final class StepInfoImpl implements StepInfo {
     @Nullable
     private Quantity endSize;
 
-    /**
-     * Constructs a simple StepInfo of stepType and started at startDate.
-     * @param stepType type of the step.
-     * @param startDate date when the step started.
-     */
-    public StepInfoImpl(final StepType stepType, final Date startDate) {
+    //Package-protected.
+    StepInfoImpl(final StepType stepType, final Date startDate) {
         this.stepType = stepType;
-        this.startDate = startDate;
+        this.startDate = new Date(startDate.getTime());
+    }
+
+    /**
+     * Decorator constructor effectively copying the stepInfo passed by parameter.
+     * @param stepInfo stepInfo to use as copy.
+     */
+    public StepInfoImpl(final StepInfo stepInfo) {
+        this(stepInfo.getType(), stepInfo.getStartDate());
+        stepInfo.getNote().ifPresent(n -> this.note = n);
+        stepInfo.getEndDate().ifPresent(d -> this.endDate = new Date(d.getTime()));
+        stepInfo.getEndStepSize().ifPresent(s -> this.endSize = s);
     }
 
     @Override
-    public StepType getType() {
+    public final StepType getType() {
         return this.stepType;
     }
 
     @Override
-    public Optional<String> getNote() {
+    public final Optional<String> getNote() {
         return Optional.ofNullable(this.note);
     }
 
     @Override
-    public Result<Empty> setNote(@Nullable final String note) {
-        this.note = note;
-        return Result.ofEmpty();
-    }
-
-    @Override
-    public Date getStartDate() {
+    public final Date getStartDate() {
         return new Date(this.startDate.getTime());
     }
 
     @Override
-    public Optional<Date> getEndDate() {
+    public final Optional<Date> getEndDate() {
         return Optional.ofNullable(this.endDate).map(d -> new Date(d.getTime()));
     }
 
     @Override
-    public Result<Empty> setEndDate(final Date endDate) {
-        return Result.of(endDate)
-                     .require(d -> !d.before(this.startDate), new IllegalArgumentException(INVALID_END_DATE_MESSAGE))
-                     .peek(d -> this.endDate = new Date(d.getTime()))
-                     .toEmpty();
-    }
-
-    @Override
-    public Optional<Quantity> getEndStepSize() {
+    public final Optional<Quantity> getEndStepSize() {
         return Optional.ofNullable(this.endSize);
     }
 
     @Override
-    public Result<Empty> setEndStepSize(final Quantity endSize) {
-        this.endSize = endSize;
-        return Result.ofEmpty();
-    }
-
-    @Override
-    public String toString() {
+    public final String toString() {
         return "[StepInfoImpl] {"
             + "stepType=" + stepType
             + ", note='" + note + '\''
@@ -90,5 +75,29 @@ public final class StepInfoImpl implements StepInfo {
             + ", endDate=" + endDate
             + ", endSize=" + endSize
             + '}';
+    }
+
+    /**
+     * Sets internal note.
+     * @param note string to set as note.
+     */
+    protected void setInternalNote(@Nullable final String note) {
+        this.note = note;
+    }
+
+    /**
+     * Sets internal end date.
+     * @param endDate date to set as end date.
+     */
+    protected void setInternalEndDate(final Date endDate) {
+        this.endDate = new Date(endDate.getTime());
+    }
+
+    /**
+     * Sets internal end size.
+     * @param endSize quantity to set as end size.
+     */
+    protected void setInternalEndStepSize(final Quantity endSize) {
+        this.endSize = endSize;
     }
 }
