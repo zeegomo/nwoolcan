@@ -33,7 +33,7 @@ public abstract class AbstractStep implements Step {
     //Package-protected constructor only for inheritance.
     AbstractStep(final StepInfo stepInfo) {
         this.stepInfo = stepInfo;
-        this.finalized = false;
+        this.finalized = stepInfo.getType().equals(StepTypeEnum.Finalized);
         this.parameters = new ArrayList<>();
     }
 
@@ -59,7 +59,7 @@ public abstract class AbstractStep implements Step {
     @Override
     public final Result<Empty> finalize(@Nullable final String note, final Date endDate, final Quantity remainingSize) {
         return Result.ofEmpty()
-                     .require(() -> !this.finalized, new IllegalStateException(ALREADY_FINALIZED_MESSAGE))
+                     .require(() -> !this.isFinalized(), new IllegalStateException(ALREADY_FINALIZED_MESSAGE))
                      .flatMap(() -> this.stepInfo.setNote(note))
                      .flatMap(() -> this.stepInfo.setEndDate(endDate))
                      .flatMap(() -> this.stepInfo.setEndStepSize(remainingSize))
