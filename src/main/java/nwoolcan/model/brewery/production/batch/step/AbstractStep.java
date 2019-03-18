@@ -33,7 +33,7 @@ public abstract class AbstractStep implements Step {
     //Package-protected constructor only for inheritance.
     AbstractStep(final StepInfo stepInfo) {
         this.stepInfo = stepInfo;
-        this.finalized = stepInfo.getType().equals(StepTypeEnum.Finalized);
+        this.finalized = stepInfo.getType().isEndType();
         this.parameters = new ArrayList<>();
     }
 
