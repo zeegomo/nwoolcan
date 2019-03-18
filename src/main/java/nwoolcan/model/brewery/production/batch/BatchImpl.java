@@ -5,7 +5,6 @@ import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.production.batch.step.Steps;
-import nwoolcan.model.brewery.production.batch.step.utils.StepHelper;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
@@ -78,7 +77,7 @@ public final class BatchImpl implements Batch {
     public Result<Empty> moveToNextStep(final StepType nextStepType) {
         return Result.ofEmpty()
                      .require(() -> !this.isEnded(), new IllegalStateException())
-                     .require(() -> StepHelper.getNextStepTypesOf(this.getCurrentStep().getStepInfo().getType()).contains(nextStepType),
+                     .require(() -> this.getCurrentStep().getNextStepTypes().contains(nextStepType),
                          new IllegalArgumentException())
                      .flatMap(this::checkAndFinalizeCurrentStep)
                      .flatMap(() -> Steps.create(nextStepType))
