@@ -169,10 +169,9 @@ public final class Result<T> {
      * @param function the function to apply to the exception
      * @return this
      */
-    @SuppressWarnings("unchecked")
     public Result<T> peekError(final Class<? extends Exception> exception, final Consumer<? super Exception> function) {
         if (this.isError() && exception.equals(this.exception.get().getClass())) {
-           peekError(function);
+           this.peekError(function);
         }
         return this;
     }
