@@ -167,13 +167,12 @@ public final class Result<T> {
      * the provided one.
      * @param exception the type of exception.
      * @param function the function to apply to the exception
-     * @param <E> the type of the exception
      * @return this
      */
     @SuppressWarnings("unchecked")
-    public <E extends Exception> Result<T> peekError(final Class<E> exception, final Consumer<E> function) {
+    public Result<T> peekError(final Class<? extends Exception> exception, final Consumer<? super Exception> function) {
         if (this.isError() && exception.equals(this.exception.get().getClass())) {
-           function.accept((E) this.exception.get());
+           peekError(function);
         }
         return this;
     }
@@ -182,7 +181,7 @@ public final class Result<T> {
      * @param function the function to apply to the exception
      * @return this
      */
-    public Result<T> peekError(final Consumer<Exception> function) {
+    public Result<T> peekError(final Consumer<? super Exception> function) {
         if (this.isError()) {
             function.accept(this.exception.get());
         }

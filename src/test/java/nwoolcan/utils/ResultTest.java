@@ -187,7 +187,7 @@ public class ResultTest {
     public void testToEmpty() {
         Result<Integer> r1 = Result.of(2);
         assertTrue(r1.toEmpty().isPresent());
-        r1.peekError(NullPointerException.class, NullPointerException::printStackTrace);
+        r1.peekError(NullPointerException.class, Throwable::printStackTrace);
     }
     /**
      * Tests toEmpty.
