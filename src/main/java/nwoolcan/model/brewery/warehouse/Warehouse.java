@@ -13,11 +13,17 @@ import java.util.Date;
 public interface Warehouse {
 
     /**
-     * Getter of all the Stock in the warehouse.
+     * Getter of the {@link Stock} in the warehouse, filtered with a {@link QueryStock}.
      * @param queryStock describes the nature of the query.
      * @return a {@link Result} of {@link Empty} which reports possible errors.
      */
     Result<Collection<Stock>> getStocks(QueryStock queryStock);
+    /**
+     * Getter of the {@link Article} in the warehouse, filtered with a {@link QueryArticle}.
+     * @param queryArticle describes the nature of the query.
+     * @return a {@link Result} of {@link Empty} which reports possible errors.
+     */
+    Result<Collection<Article>> getArticles(QueryArticle queryArticle);
     /**
      * Adds a Stock to the warehouse.
      * @param newArticle the new {@link Article} to be registered.
@@ -26,16 +32,20 @@ public interface Warehouse {
     Result<Empty> addArticle(Article newArticle);
     /**
      * Add a record to the warehouse: creates a {@link Stock} if it doesn't exist.
+     * It may fails if the {@link Record} is not compatible with the {@link Article}.
      * @param article which is moving in or out the warehouse.
      * @param expirationDate of the article, if present, to identify the right {@link Stock}.
      * @param record to be registered
+     * @return a {@link Result} of {@link Empty} which reports possible errors.
      */
-    void addRecord(Article article, Date expirationDate, Record record);
+    Result<Empty> addRecord(Article article, Date expirationDate, Record record);
     /**
      * Add a record to the warehouse: creates a {@link Stock} if it doesn't exist.
+     * It may fails if the {@link Record} is not compatible with the {@link Article}.
      * @param article which is moving in or out the warehouse.
      * @param record to be registered.
+     * @return a {@link Result} of {@link Empty} which reports possible errors.
      */
-    void addRecord(Article article, Record record);
+    Result<Empty> addRecord(Article article, Record record);
 
 }

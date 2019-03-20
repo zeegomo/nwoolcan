@@ -45,8 +45,8 @@ public class StockImplTest {
     @Before
     public void init() {
         expDate = new Date();
-        stock = new StockImpl(ID, ARTICLE, expDate);
-        stock1 = new StockImpl(ID, ARTICLE);
+        stock = new StockImpl(ARTICLE, expDate);
+        stock1 = new StockImpl(ARTICLE, null);
         Results.ofChecked(() -> Thread.sleep(TEN));
         stock.addRecord(record1);
         stock.addRecord(record2);
@@ -58,7 +58,6 @@ public class StockImplTest {
      */
     @Test
     public void testGettersAndRecords() {
-        Assert.assertEquals(ID, stock.getId());
         Assert.assertEquals(ARTICLE, stock.getArticle());
         Assert.assertTrue(Quantities.remove(record1.getQuantity(), record2.getQuantity()).isPresent());
         Assert.assertEquals(Quantities.remove(record1.getQuantity(), record2.getQuantity()).getValue(),
