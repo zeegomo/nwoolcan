@@ -1,7 +1,19 @@
 package nwoolcan.model.brewery.production.batch;
 
 /**
- * BatchMethod.
+ * Batch production methods.
  */
 public enum BatchMethod {
+    /**
+     * All grain.
+     */
+    ALL_GRAIN,
+    /**
+     * Partial mash.
+     */
+    PARTIAL_MASH,
+    /**
+     * Extract.
+     */
+    EXTRACT;
 }
