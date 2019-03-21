@@ -7,13 +7,25 @@ public enum BatchMethod {
     /**
      * All grain.
      */
-    ALL_GRAIN,
+    ALL_GRAIN("All grain"),
     /**
      * Partial mash.
      */
-    PARTIAL_MASH,
+    PARTIAL_MASH("Partial Mash"),
     /**
      * Extract.
      */
-    EXTRACT;
+    EXTRACT("Exctract");
+
+    private final String name;
+    BatchMethod(final String name) {
+        this.name = name;
+    }
+    /**
+     * Return a {@link String} representation of the name of the method.
+     * @return a {@link String}.
+     */
+    public String getName() {
+        return this.name;
+    }
 }
