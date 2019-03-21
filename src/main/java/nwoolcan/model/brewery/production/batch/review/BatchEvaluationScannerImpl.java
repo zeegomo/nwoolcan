@@ -41,7 +41,7 @@ public final class BatchEvaluationScannerImpl implements BatchEvaluationScanner 
                     if (review.isEnum()) {
                         return Arrays.stream(review.getEnumConstants()).map(Result::of);
                     } else {
-                        return Stream.of(Results.ofChecked(review::newInstance));
+                        return Results.ofChecked(review::newInstance).stream();
                     }
                 })
                 .filter(Result::isPresent)
