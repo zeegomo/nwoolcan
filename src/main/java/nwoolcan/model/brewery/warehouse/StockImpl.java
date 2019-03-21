@@ -37,7 +37,7 @@ public final class StockImpl implements Stock {
      * @param expirationDate of the Stock. It can be null, which means there is no expiration date.
      */
     // Package protected
-    StockImpl(final Integer id, final Article article, @Nullable final Date expirationDate) {
+    StockImpl(final Article article, @Nullable final Date expirationDate) {
         Date creationMoment = new Date();
         this.article = article;
         this.expirationDate = expirationDate; // It can be present or not.

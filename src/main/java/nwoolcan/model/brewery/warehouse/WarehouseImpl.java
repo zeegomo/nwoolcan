@@ -4,12 +4,17 @@ import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import javax.annotation.Nullable;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Collection;
-import java.util.Date;
+import java.util.ArrayList;
+
+
+
 
 /**
  * Warehouse implementation.
@@ -31,12 +36,12 @@ public final class WarehouseImpl implements Warehouse {
 
     @Override
     public Result<Collection<Stock>> getStocks(final QueryStock queryStock) {
-        return null; //TODO once queryStock will be implemented.
+        return Result.of(new ArrayList<>()); //TODO once queryStock will be implemented.
     }
 
     @Override
     public Result<Collection<Article>> getArticles(final QueryArticle queryArticle) {
-        return null; //TODO once queryArticle will be implemented.
+        return Result.of(new ArrayList<>()); //TODO once queryArticle will be implemented.
     }
 
     @Override
@@ -47,7 +52,7 @@ public final class WarehouseImpl implements Warehouse {
     }
 
     @Override
-    public Result<Empty> addRecord(final Article article, final Date expirationDate, final Record record) {
+    public Result<Empty> addRecord(final Article article, @Nullable final Date expirationDate, final Record record) {
         return Result.of(new StockImpl(article, expirationDate))
                      .peek(stock -> updateArticles(article))
                      .flatMap(stock -> Result.of(this.getStock(stock)))
