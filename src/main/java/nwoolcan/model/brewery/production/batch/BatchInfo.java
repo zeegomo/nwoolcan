@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * BatchInfo.
+ * BatchInfo (Immutable).
  */
 public interface BatchInfo {
     /**
