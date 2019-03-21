@@ -1,10 +1,14 @@
 package nwoolcan.model.brewery.production.batch.step;
 
+import nwoolcan.model.brewery.production.batch.step.info.StepInfo;
+import nwoolcan.model.brewery.production.batch.step.info.StepInfoImpl;
+import nwoolcan.model.brewery.production.batch.step.info.UnmodifiableStepInfo;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
@@ -14,7 +18,7 @@ import java.util.Date;
  */
 public class UnmodifiableStepInfoTest {
 
-    private static final StepType ST = StepType.Mashing;
+    private static final StepType ST = StepTypeEnum.Mashing;
     private static final Date START = new Date();
     private static final Date END = new Date(START.getTime() + 100);
     private static final String NOTE = "Test note.";
@@ -22,7 +26,11 @@ public class UnmodifiableStepInfoTest {
 
     private StepInfo si;
 
-    private void init() {
+    /**
+     * Sets up fields.
+     */
+    @Before
+    public void setUp() {
         final StepInfo modsi = new StepInfoImpl(ST, START);
         this.si = new UnmodifiableStepInfo(modsi);
     }
@@ -40,7 +48,6 @@ public class UnmodifiableStepInfoTest {
      */
     @Test
     public void simpleConstructorTest() {
-        init();
         Assert.assertEquals(ST, this.si.getType());
         Assert.assertEquals(START, this.si.getStartDate());
     }
@@ -65,9 +72,12 @@ public class UnmodifiableStepInfoTest {
         Result<Empty> res;
         res = this.si.setEndDate(END);
         Assert.assertTrue(res.isError());
+        Assert.assertSame(UnsupportedOperationException.class, res.getError().getClass());
         res = this.si.setNote(NOTE);
         Assert.assertTrue(res.isError());
+        Assert.assertSame(UnsupportedOperationException.class, res.getError().getClass());
         res = this.si.setEndStepSize(Q);
         Assert.assertTrue(res.isError());
+        Assert.assertSame(UnsupportedOperationException.class, res.getError().getClass());
     }
 }

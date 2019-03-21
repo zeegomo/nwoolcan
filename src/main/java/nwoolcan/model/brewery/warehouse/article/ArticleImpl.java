@@ -22,9 +22,9 @@ public class ArticleImpl implements Article {
      * @param unitOfMeasure used for this article.
      */
     public ArticleImpl(final Integer id, final String name, final UnitOfMeasure unitOfMeasure) {
-        this.id = Objects.requireNonNull(id, "Id can not be null.");
-        this.name = Objects.requireNonNull(name, "Name can not be null.");
-        this.unitOfMeasure = Objects.requireNonNull(unitOfMeasure);
+        this.id = id;
+        this.name = name;
+        this.unitOfMeasure = unitOfMeasure;
         if (this.name.equals("")) {
             throw new IllegalArgumentException("Name can not be empty.");
         }

@@ -3,7 +3,6 @@ package nwoolcan.model.brewery.warehouse;
 import nwoolcan.model.utils.Quantity;
 
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * Class which keeps track of a {@link Quantity} and a {@link Date}.
@@ -31,9 +30,9 @@ public final class Record {
      * @param action which states if quantity is added or subtracted.
      */
     public Record(final Quantity quantity, final Date date, final Action action) {
-        this.quantity = Objects.requireNonNull(quantity);
-        this.date = Objects.requireNonNull(date);
-        this.action = Objects.requireNonNull(action);
+        this.quantity = quantity;
+        this.date = date;
+        this.action = action;
     }
     /**
      * Constructor which auto instantiate the current {@link Date}.

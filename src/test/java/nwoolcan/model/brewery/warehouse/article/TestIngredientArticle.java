@@ -4,8 +4,6 @@ import nwoolcan.model.utils.UnitOfMeasure;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Objects;
-
 /**
  * Test for IngredientArticle.
  */
@@ -17,13 +15,6 @@ public class TestIngredientArticle {
     private final String name = "DummyName";
 
     /**
-     * Method that tests the constructor with null Ingredient Type.
-     */
-    @Test(expected = NullPointerException.class)
-    public void testConstructorWithNullIngredientType() {
-        new IngredientArticleImpl(id, name, null, null);
-    }
-    /**
      * Method that tests the getters and their possible errors.
      */
     @Test
@@ -31,7 +22,6 @@ public class TestIngredientArticle {
         final IngredientType ingredientType = IngredientType.FERMENTABLE;
         final Article ingredientArticle = new IngredientArticleImpl(id, name, UOM, ingredientType);
         Assert.assertEquals(ArticleType.INGREDIENT, ingredientArticle.getArticleType());
-        Objects.requireNonNull(ingredientArticle.toIngredientArticle());
         Assert.assertTrue(ingredientArticle.toIngredientArticle().isPresent());
         Assert.assertEquals(IngredientArticleImpl.class, ingredientArticle.toIngredientArticle()
                                                                           .getValue()

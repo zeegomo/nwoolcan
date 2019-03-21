@@ -30,9 +30,12 @@ public final class Quantities {
     }
 
     /**
-     * Returns a new {@link Result} with a {@link Quantity} that is the removing quantity removed to the base quantity.
-     * If the quantities' unit of measures do not match, the Result will contain a {@link ArithmeticException}.
-     * If the remaining quantity value will drop below zero after the operation, the Result will contain a {@link IllegalStateException}.
+     * Returns a new {@link Result} with a {@link Quantity} that is the removing quantity removed to the base quantity,
+     * or an error with:
+     * <ul>
+     *     <li>{@link ArithmeticException} if the quantities' unit of measures do not match.</li>
+     *     <li>{@link IllegalStateException} if the remaining quantity value will drop below zero after the operation.</li>
+     * </ul>
      * This method does not modify the quantities passed by parameters, it creates a new one.
      * @param base base quantity.
      * @param removing removing quantity.
@@ -40,8 +43,8 @@ public final class Quantities {
      */
     public static Result<Quantity> remove(final Quantity base, final Quantity removing) {
         return Result.of(Numbers.subtract(base.getValue(), removing.getValue()))
+                     .require(() -> checkSameUM(base, removing), new ArithmeticException(NOT_SAME_UM_MESSAGE))
                      .require(n -> n.doubleValue() >= 0, new IllegalStateException(NEGATIVE_VALUE_MESSAGE))
-                     .map(n -> Quantity.of(n, base.getUnitOfMeasure()))
-                     .require(q -> checkSameUM(q, removing), new ArithmeticException(NOT_SAME_UM_MESSAGE));
+                     .map(n -> Quantity.of(n, base.getUnitOfMeasure()));
     }
 }
