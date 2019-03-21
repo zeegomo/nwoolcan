@@ -28,6 +28,7 @@ public class StepTest {
     private Step boiling;
     private Step mashing;
     private Step packaging;
+    private Step finalized;
 
     private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.Liter);
     private static final Date D1 = new Date(1000);
@@ -51,6 +52,7 @@ public class StepTest {
         this.boiling = new BasicStep(StepTypeEnum.Boiling);
         this.mashing = new BasicStep(StepTypeEnum.Mashing);
         this.packaging = new BasicStep(StepTypeEnum.Packaging, new Date());
+        this.finalized = new BasicStep(StepTypeEnum.Finalized);
     }
 
     /**
@@ -79,10 +81,18 @@ public class StepTest {
 
         finRes = this.mashing.finalize(null, new Date(), Q1);
 
-        Assert.assertTrue(finRes.isPresent());
+        Assert.assertFalse(finRes.isError());
         Assert.assertFalse(this.mashing.getStepInfo().getNote().isPresent());
         Assert.assertTrue(this.mashing.getStepInfo().getEndDate().isPresent());
         Assert.assertTrue(this.mashing.getStepInfo().getEndStepSize().isPresent());
+
+        finRes = this.packaging.finalize("Ciao", new Date(), Q1);
+        Assert.assertFalse(finRes.isError());
+
+        Assert.assertTrue(this.finalized.isFinalized());
+        finRes = this.finalized.finalize(null, new Date(), Q1);
+        Assert.assertTrue(finRes.isError());
+        Assert.assertSame(IllegalStateException.class, finRes.getError().getClass());
     }
 
     private Result<Empty> addParameters() {
@@ -134,6 +144,12 @@ public class StepTest {
             ParameterTypeEnum.Temperature, 10
         ));
 
+        Assert.assertTrue(res.isError());
+        Assert.assertSame(IllegalStateException.class, res.getError().getClass());
+
+        res = this.finalized.addParameter(new ParameterImpl(
+            ParameterTypeEnum.Temperature, 10
+        ));
         Assert.assertTrue(res.isError());
         Assert.assertSame(IllegalStateException.class, res.getError().getClass());
     }
