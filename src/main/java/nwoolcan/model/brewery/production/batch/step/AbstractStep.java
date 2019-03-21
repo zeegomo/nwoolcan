@@ -10,12 +10,14 @@ import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.Arrays;
 
 /**
  * Abstract implementation of Step interface.
@@ -67,27 +69,19 @@ public abstract class AbstractStep implements Step {
     }
 
     @Override
-    public final Result<Collection<Parameter>> getParameters(final QueryParameter query) {
-
+    public final Collection<Parameter> getParameters(final QueryParameter query) {
         Stream<Parameter> s = this.parameters.stream();
+        final List<Predicate<Parameter>> filters = new ArrayList<>();
 
-        if (query.getParameterType().isPresent()) {
-            s = s.filter(p -> p.getType().equals(query.getParameterType().get()));
-        }
-        if (query.getGreaterThanValue().isPresent()) {
-            s = s.filter(p -> p.getRegistrationValue().doubleValue() >= query.getGreaterThanValue().get().doubleValue());
-        }
-        if (query.getLessThanValue().isPresent()) {
-            s = s.filter(p -> p.getRegistrationValue().doubleValue() <= query.getLessThanValue().get().doubleValue());
-        }
-        if (query.getExactValue().isPresent()) {
-            s = s.filter(p -> p.getRegistrationValue().doubleValue() == query.getExactValue().get().doubleValue());
-        }
-        if (query.getStartDate().isPresent()) {
-            s = s.filter(p -> p.getRegistrationDate().after(query.getStartDate().get()));
-        }
-        if (query.getEndDate().isPresent()) {
-            s = s.filter(p -> p.getRegistrationDate().before(query.getEndDate().get()));
+        query.getParameterType().ifPresent(pt -> filters.add(p -> p.getType().equals(pt)));
+        query.getGreaterThanValue().ifPresent(gtv -> filters.add(p -> p.getRegistrationValue().doubleValue() >= gtv.doubleValue()));
+        query.getLessThanValue().ifPresent(ltv -> filters.add(p -> p.getRegistrationValue().doubleValue() <= ltv.doubleValue()));
+        query.getExactValue().ifPresent(ev -> filters.add(p -> p.getRegistrationValue().doubleValue() == ev.doubleValue()));
+        query.getStartDate().ifPresent(sd -> filters.add(p -> !sd.after(p.getRegistrationDate())));
+        query.getEndDate().ifPresent(ed -> filters.add(p -> !ed.before(p.getRegistrationDate())));
+
+        for (final Predicate<Parameter> f : filters) {
+            s = s.filter(f);
         }
 
         if (query.isSortByValue()) {
@@ -98,7 +92,7 @@ public abstract class AbstractStep implements Step {
             s = s.sorted(Comparator.comparingLong(d -> (query.isSortDescending() ? -1 : 1) * d.getRegistrationDate().getTime()));
         }
 
-        return Result.of(s.collect(Collectors.toList()));
+        return s.collect(Collectors.toList());
     }
 
     @Override
@@ -116,7 +110,7 @@ public abstract class AbstractStep implements Step {
      */
     @Override
     public String toString() {
-        return "stepInfo=" + stepInfo
+        return "StepInfo=" + stepInfo
             + ", finalized=" + finalized
             + ", parameters=" + Arrays.toString(parameters.toArray());
     }
