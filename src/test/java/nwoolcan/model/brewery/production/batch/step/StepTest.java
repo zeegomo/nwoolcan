@@ -116,8 +116,8 @@ public class StepTest {
         Result<Empty> res = addParameters();
         Assert.assertFalse(res.isError());
 
-        Assert.assertArrayEquals(MASHING_PARAMS.toArray(), this.mashing.getParameters(new QueryParameterBuilder().build().getValue()).getValue().toArray());
-        Assert.assertArrayEquals(BOILING_PARAMS.toArray(), this.boiling.getParameters(new QueryParameterBuilder().build().getValue()).getValue().toArray());
+        Assert.assertArrayEquals(MASHING_PARAMS.toArray(), this.mashing.getParameters(new QueryParameterBuilder().build().getValue()).toArray());
+        Assert.assertArrayEquals(BOILING_PARAMS.toArray(), this.boiling.getParameters(new QueryParameterBuilder().build().getValue()).toArray());
     }
 
     /**
@@ -163,47 +163,54 @@ public class StepTest {
 
         Result<QueryParameter> resQ = new QueryParameterBuilder().sortByValue(true).build();
         Assert.assertTrue(resQ.isPresent());
-        Result<Collection<Parameter>> res = this.mashing.getParameters(resQ.getValue());
-        Assert.assertTrue(res.isPresent());
+        Collection<Parameter> res = this.mashing.getParameters(resQ.getValue());
         Assert.assertArrayEquals(MASHING_PARAMS.stream()
                                                .sorted(Comparator.comparingDouble(p -> p.getRegistrationValue().doubleValue()))
-                                               .toArray(), res.getValue().toArray());
+                                               .toArray(), res.toArray());
 
         resQ = new QueryParameterBuilder().sortByValue(true).sortDescending(true).build();
         Assert.assertTrue(resQ.isPresent());
         res = this.mashing.getParameters(resQ.getValue());
-        Assert.assertTrue(res.isPresent());
         Assert.assertArrayEquals(MASHING_PARAMS.stream()
                                                .sorted((p1, p2) -> -Double.compare(p1.getRegistrationValue().doubleValue(), p2.getRegistrationValue().doubleValue()))
-                                               .toArray(), res.getValue().toArray());
+                                               .toArray(), res.toArray());
 
         final double val = 9.9;
         resQ = new QueryParameterBuilder().greaterThanValue(val).build();
         Assert.assertTrue(resQ.isPresent());
         res = this.mashing.getParameters(resQ.getValue());
-        Assert.assertTrue(res.isPresent());
         Assert.assertArrayEquals(MASHING_PARAMS.stream()
                                                .filter(p -> p.getRegistrationValue().doubleValue() > val)
-                                               .toArray(), res.getValue().toArray());
+                                               .toArray(), res.toArray());
 
         resQ = new QueryParameterBuilder().parameterType(ParameterTypeEnum.Temperature).build();
         Assert.assertTrue(resQ.isPresent());
         res = this.mashing.getParameters(resQ.getValue());
-        Assert.assertTrue(res.isPresent());
-        Assert.assertArrayEquals(MASHING_PARAMS.toArray(), res.getValue().toArray());
+        Assert.assertArrayEquals(MASHING_PARAMS.toArray(), res.toArray());
 
 
         final double val2 = 9.1;
         resQ = new QueryParameterBuilder().lessThanValue(val).build();
         Assert.assertTrue(resQ.isPresent());
         res = this.mashing.getParameters(resQ.getValue());
-        Assert.assertTrue(res.isPresent());
-        Assert.assertArrayEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.Temperature, val2, D1)).toArray(), res.getValue().toArray());
+        Assert.assertArrayEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.Temperature, val2, D1)).toArray(),
+            res.toArray());
 
         resQ = new QueryParameterBuilder().lessThanValue(val2).build();
         Assert.assertTrue(resQ.isPresent());
         res = this.mashing.getParameters(resQ.getValue());
-        Assert.assertTrue(res.isPresent());
-        Assert.assertArrayEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.Temperature, val2, D1)).toArray(), res.getValue().toArray());
+        Assert.assertArrayEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.Temperature, val2, D1)).toArray(),
+            res.toArray());
+
+        resQ = new QueryParameterBuilder().endDate(D1).build();
+        Assert.assertTrue(resQ.isPresent());
+        res = this.mashing.getParameters(resQ.getValue());
+        Assert.assertArrayEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.Temperature, val2, D1)).toArray(),
+            res.toArray());
+
+        resQ = new QueryParameterBuilder().startDate(D1).endDate(new Date()).build();
+        Assert.assertTrue(resQ.isPresent());
+        res = this.mashing.getParameters(resQ.getValue());
+        Assert.assertArrayEquals(MASHING_PARAMS.toArray(), res.toArray());
     }
 }
