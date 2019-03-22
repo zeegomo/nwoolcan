@@ -7,22 +7,37 @@ import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.Optional;
 
-/*
-*
-* article -> precise
-* expiration date -> precise, before, after
-* change date -> only order by
-* remaining quantity -> filter more and less than
-* used quantity -> filter more and less than
-* state -> equal or different to
-*
-* */
-
 /**
  * Defines the parameters of the query on the {@link Stock} to be performed. For each getter method,
  * if the parameter is not defined, an empty {@link Optional} is returned.
  */
 public final class QueryStock {
+
+    /**
+     * Enum which denotes the field on which the sort will be based.
+     */
+    public enum OrderParameter {
+        /**
+         * No order.
+         */
+        NONE,
+        /**
+         * Order by the {@link Article} name.
+         */
+        ARTICLE_NAME,
+        /**
+         * Order by the expiration {@link Date} of the {@link Stock}.
+         */
+        EXPIRATION_DATE,
+        /**
+         * Order by the remaining {@link Quantity} of the {@link Stock}.
+         */
+        REMAINING_QUANTITY,
+        /**
+         * Order by the used {@link Quantity} of the {@link Stock}.
+         */
+        USED_QUANTITY
+    }
 
     @Nullable
     private final Article article;
@@ -39,9 +54,12 @@ public final class QueryStock {
     @Nullable
     private final Quantity maxUsedQuantity;
     @Nullable
-    private final StockState stockState;
-
-    private final boolean stockStateEquals;
+    private final StockState stockStateIncluded;
+    @Nullable
+    private final StockState stockStateExcluded;
+    @Nullable
+    private final OrderParameter orderParameter;
+    private final boolean orderDecreasingly;
 
     // Package private
     QueryStock(@Nullable final Article article,
@@ -51,8 +69,10 @@ public final class QueryStock {
                @Nullable final Quantity maxRemainingQuantity,
                @Nullable final Quantity minUsedQuantity,
                @Nullable final Quantity maxUsedQuantity,
-               @Nullable final StockState stockState,
-               final boolean stockStateEquals) {
+               @Nullable final StockState stockStateIncluded,
+               @Nullable final StockState stockStateExcluded,
+               @Nullable final OrderParameter orderParameter,
+               final boolean orderDecreasingly) {
         this.article = article;
         this.expiresBefore = expiresBefore;
         this.expiresAfter = expiresAfter;
@@ -60,8 +80,10 @@ public final class QueryStock {
         this.maxRemainingQuantity = maxRemainingQuantity;
         this.minUsedQuantity = minUsedQuantity;
         this.maxUsedQuantity = maxUsedQuantity;
-        this.stockState = stockState;
-        this.stockStateEquals = stockStateEquals;
+        this.stockStateIncluded = stockStateIncluded;
+        this.stockStateExcluded = stockStateExcluded;
+        this.orderParameter = orderParameter;
+        this.orderDecreasingly = orderDecreasingly;
     }
     /**
      * Return the specific {@link Article} required by the query.
@@ -117,14 +139,29 @@ public final class QueryStock {
      * @return the only {@link StockState} which has to be considered in the query.
      */
     public Optional<StockState> getIncludeStockState() {
-        return Optional.ofNullable(stockState);
+        return Optional.ofNullable(stockStateIncluded);
     }
     /**
      * Return the only {@link StockState} which has not to be considered in the query.
      * @return the only {@link StockState} which has not to be considered in the query.
      */
-    public boolean getStockStateEquals() {
-        return stockStateEquals;
-    };
+    public Optional<StockState> getExcluldeStockState() {
+        return Optional.ofNullable(stockStateExcluded);
+    }
+    /**
+     * Return a {@link OrderParameter} which denotes the field which has to be used for sorting the query.
+     * @return a {@link OrderParameter} which denotes the field which has to be used for sorting the query.
+     */
+    public OrderParameter getSortBy() {
+        return orderParameter == null ? OrderParameter.NONE : orderParameter;
+    }
+
+    /**
+     * Return a boolean denoting whether the sort has to be done in a decreasing order.
+     * @return a boolean denoting whether the sort has to be done in a decreasing order.
+     */
+    public boolean getOrderDecreasingly() {
+        return orderDecreasingly;
+    }
 
 }
