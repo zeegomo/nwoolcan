@@ -59,7 +59,7 @@ public final class QueryStock {
     private final StockState stockStateExcluded;
     @Nullable
     private final OrderParameter orderParameter;
-    private final boolean orderDecreasingly;
+    private final boolean sortDescending;
 
     // Package private
     QueryStock(@Nullable final Article article,
@@ -72,7 +72,7 @@ public final class QueryStock {
                @Nullable final StockState stockStateIncluded,
                @Nullable final StockState stockStateExcluded,
                @Nullable final OrderParameter orderParameter,
-               final boolean orderDecreasingly) {
+               final boolean sortDescending) {
         this.article = article;
         this.expiresBefore = expiresBefore;
         this.expiresAfter = expiresAfter;
@@ -83,7 +83,7 @@ public final class QueryStock {
         this.stockStateIncluded = stockStateIncluded;
         this.stockStateExcluded = stockStateExcluded;
         this.orderParameter = orderParameter;
-        this.orderDecreasingly = orderDecreasingly;
+        this.sortDescending = sortDescending;
     }
     /**
      * Return the specific {@link Article} required by the query.
@@ -160,8 +160,8 @@ public final class QueryStock {
      * Return a boolean denoting whether the sort has to be done in a decreasing order.
      * @return a boolean denoting whether the sort has to be done in a decreasing order.
      */
-    public boolean getOrderDecreasingly() {
-        return orderDecreasingly;
+    public boolean isSortDescending() {
+        return sortDescending;
     }
 
 }
