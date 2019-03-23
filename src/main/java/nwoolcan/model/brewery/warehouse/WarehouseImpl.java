@@ -58,7 +58,6 @@ public final class WarehouseImpl implements Warehouse {
                      .flatMap(stock -> Result.of(this.getStock(stock)))
                      .flatMap(stock -> stock.addRecord(record))
                      .toEmpty();
-                     //.flatMap(stock -> Result.ofEmpty());
     }
 
     @Override
