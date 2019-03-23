@@ -36,9 +36,9 @@ public class StepInfoImpl implements StepInfo {
      */
     public StepInfoImpl(final StepInfo stepInfo) {
         this(stepInfo.getType(), stepInfo.getStartDate());
-        stepInfo.getNote().ifPresent(n -> this.note = n);
-        stepInfo.getEndDate().ifPresent(d -> this.endDate = new Date(d.getTime()));
-        stepInfo.getEndStepSize().ifPresent(s -> this.endSize = s);
+        stepInfo.getNote().ifPresent(this::setInternalNote);
+        stepInfo.getEndDate().ifPresent(this::setInternalEndDate);
+        stepInfo.getEndStepSize().ifPresent(this::setInternalEndStepSize);
     }
 
     @Override
