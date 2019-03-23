@@ -57,7 +57,6 @@ public final class QueryStock {
     private final StockState stockStateIncluded;
     @Nullable
     private final StockState stockStateExcluded;
-    @Nullable
     private final SortParameter sortParameter;
     private final boolean sortDescending;
 
@@ -71,7 +70,7 @@ public final class QueryStock {
                @Nullable final Quantity maxUsedQuantity,
                @Nullable final StockState stockStateIncluded,
                @Nullable final StockState stockStateExcluded,
-               @Nullable final SortParameter sortParameter,
+               final SortParameter sortParameter,
                final boolean sortDescending) {
         this.article = article;
         this.expiresBefore = expiresBefore;
