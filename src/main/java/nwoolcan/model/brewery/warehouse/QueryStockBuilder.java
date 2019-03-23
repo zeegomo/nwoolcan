@@ -119,7 +119,7 @@ public final class QueryStockBuilder {
      * @param stockState the only {@link StockState} which won't result from the query.
      * @return this.
      */
-    public QueryStockBuilder setExcludedOnlyStockState(final StockState stockState) {
+    public QueryStockBuilder setExcludeOnlyStockState(final StockState stockState) {
         this.stockStateExcluded = stockState;
         return this;
     }
@@ -130,7 +130,7 @@ public final class QueryStockBuilder {
      *                      stocks in the query.
      * @return this.
      */
-    public QueryStockBuilder setSortParameter(final QueryStock.SortParameter sortParameter) {
+    public QueryStockBuilder sortBy(final QueryStock.SortParameter sortParameter) {
         this.sortParameter = sortParameter;
         return this;
     }
@@ -162,7 +162,7 @@ public final class QueryStockBuilder {
             stockStateExcluded,
             sortParameter,
             sortDescending))
-                     .require(this::checkUOMs, new IllegalStateException(UOM_ERROR));
+                     .require(this::checkUOMs, new IllegalArgumentException(UOM_ERROR));
     }
 
     private boolean checkUOMs() {

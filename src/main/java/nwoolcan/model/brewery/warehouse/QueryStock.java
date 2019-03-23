@@ -13,6 +13,8 @@ import java.util.Optional;
  */
 public final class QueryStock {
 
+
+
     /**
      * Enum which denotes the field on which the sort will be based.
      */
@@ -36,11 +38,11 @@ public final class QueryStock {
         /**
          * Order by the used {@link Quantity} of the {@link Stock}.
          */
-        USED_QUANTITY
+        USED_QUANTITY;
     }
-
     @Nullable
     private final Article article;
+
     @Nullable
     private final Date expiresBefore;
     @Nullable
@@ -59,8 +61,8 @@ public final class QueryStock {
     private final StockState stockStateExcluded;
     private final SortParameter sortParameter;
     private final boolean sortDescending;
-
     // Package private
+
     QueryStock(@Nullable final Article article,
                @Nullable final Date expiresBefore,
                @Nullable final Date expiresAfter,
@@ -144,7 +146,7 @@ public final class QueryStock {
      * Return the only {@link StockState} which has not to be considered in the query.
      * @return the only {@link StockState} which has not to be considered in the query.
      */
-    public Optional<StockState> getExcluldeStockState() {
+    public Optional<StockState> getExcludeStockState() {
         return Optional.ofNullable(stockStateExcluded);
     }
     /**
@@ -154,13 +156,29 @@ public final class QueryStock {
     public SortParameter getSortBy() {
         return sortParameter == null ? SortParameter.NONE : sortParameter;
     }
-
     /**
      * Return a boolean denoting whether the sort has to be done in a decreasing order.
      * @return a boolean denoting whether the sort has to be done in a decreasing order.
      */
     public boolean isSortDescending() {
         return sortDescending;
+    }
+
+    @Override
+    public String toString() {
+        return "QueryStock{"
+            +  "article=" + article
+            + ", expiresBefore=" + expiresBefore
+            + ", expiresAfter=" + expiresAfter
+            + ", minRemainingQuantity=" + minRemainingQuantity
+            + ", maxRemainingQuantity=" + maxRemainingQuantity
+            + ", minUsedQuantity=" + minUsedQuantity
+            + ", maxUsedQuantity=" + maxUsedQuantity
+            + ", stockStateIncluded=" + stockStateIncluded
+            + ", stockStateExcluded=" + stockStateExcluded
+            + ", sortParameter=" + sortParameter
+            + ", sortDescending=" + sortDescending
+            + '}';
     }
 
 }
