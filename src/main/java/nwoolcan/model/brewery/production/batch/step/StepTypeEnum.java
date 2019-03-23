@@ -33,4 +33,9 @@ public enum StepTypeEnum implements StepType {
     public String getName() {
         return this.name();
     }
+
+    @Override
+    public boolean isEndType() {
+        return equals(StepTypeEnum.Finalized);
+    }
 }

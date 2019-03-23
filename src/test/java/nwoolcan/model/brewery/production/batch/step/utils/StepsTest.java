@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.production.batch.step.utils;
 
 import nwoolcan.model.brewery.production.batch.step.Step;
+import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.production.batch.step.Steps;
 import nwoolcan.utils.Result;
@@ -36,7 +37,17 @@ public class StepsTest {
      */
     @Test
     public void testWrongCreation() {
-        Result<Step> res = Steps.create(() -> "Wrong");
+        Result<Step> res = Steps.create(new StepType() {
+            @Override
+            public String getName() {
+                return "test";
+            }
+
+            @Override
+            public boolean isEndType() {
+                return false;
+            }
+        });
         Assert.assertTrue(res.isError());
         Assert.assertSame(res.getError().getClass(), IllegalArgumentException.class);
     }
