@@ -16,7 +16,7 @@ public final class QueryStock {
     /**
      * Enum which denotes the field on which the sort will be based.
      */
-    public enum OrderParameter {
+    public enum SortParameter {
         /**
          * No order.
          */
@@ -58,7 +58,7 @@ public final class QueryStock {
     @Nullable
     private final StockState stockStateExcluded;
     @Nullable
-    private final OrderParameter orderParameter;
+    private final SortParameter sortParameter;
     private final boolean sortDescending;
 
     // Package private
@@ -71,7 +71,7 @@ public final class QueryStock {
                @Nullable final Quantity maxUsedQuantity,
                @Nullable final StockState stockStateIncluded,
                @Nullable final StockState stockStateExcluded,
-               @Nullable final OrderParameter orderParameter,
+               @Nullable final SortParameter sortParameter,
                final boolean sortDescending) {
         this.article = article;
         this.expiresBefore = expiresBefore;
@@ -82,7 +82,7 @@ public final class QueryStock {
         this.maxUsedQuantity = maxUsedQuantity;
         this.stockStateIncluded = stockStateIncluded;
         this.stockStateExcluded = stockStateExcluded;
-        this.orderParameter = orderParameter;
+        this.sortParameter = sortParameter;
         this.sortDescending = sortDescending;
     }
     /**
@@ -149,11 +149,11 @@ public final class QueryStock {
         return Optional.ofNullable(stockStateExcluded);
     }
     /**
-     * Return a {@link OrderParameter} which denotes the field which has to be used for sorting the query.
-     * @return a {@link OrderParameter} which denotes the field which has to be used for sorting the query.
+     * Return a {@link SortParameter} which denotes the field which has to be used for sorting the query.
+     * @return a {@link SortParameter} which denotes the field which has to be used for sorting the query.
      */
-    public OrderParameter getSortBy() {
-        return orderParameter == null ? OrderParameter.NONE : orderParameter;
+    public SortParameter getSortBy() {
+        return sortParameter == null ? SortParameter.NONE : sortParameter;
     }
 
     /**
