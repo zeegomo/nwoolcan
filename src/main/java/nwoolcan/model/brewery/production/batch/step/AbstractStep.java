@@ -1,7 +1,8 @@
 package nwoolcan.model.brewery.production.batch.step;
 
 import nwoolcan.model.brewery.production.batch.step.info.StepInfo;
-import nwoolcan.model.brewery.production.batch.step.info.UnmodifiableStepInfo;
+import nwoolcan.model.brewery.production.batch.step.info.ModifiableStepInfo;
+import nwoolcan.model.brewery.production.batch.step.info.StepInfoImpl;
 import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
 import nwoolcan.model.utils.Quantity;
@@ -28,12 +29,12 @@ public abstract class AbstractStep implements Step {
     private static final String CANNOT_REGISTER_PARAMETER_MESSAGE = "Cannot register parameter if the step is finalized.";
     private static final String INVALID_PARAMETER_MESSAGE = "The parameter type is invalid for this step.";
 
-    private final StepInfo stepInfo;
+    private final ModifiableStepInfo stepInfo;
     private boolean finalized;
     private final Collection<Parameter> parameters;
 
     //Package-protected constructor only for inheritance.
-    AbstractStep(final StepInfo stepInfo) {
+    AbstractStep(final ModifiableStepInfo stepInfo) {
         this.stepInfo = stepInfo;
         this.finalized = stepInfo.getType().isEndType();
         this.parameters = new ArrayList<>();
@@ -44,13 +45,13 @@ public abstract class AbstractStep implements Step {
      * Use this method for changing step infos properties by a subclass.
      * @return this object's step info that can be changed.
      */
-    protected final StepInfo getModifiableStepInfo() {
+    protected final ModifiableStepInfo getModifiableStepInfo() {
         return this.stepInfo;
     }
 
     @Override
     public final StepInfo getStepInfo() {
-        return new UnmodifiableStepInfo(this.stepInfo);
+        return new StepInfoImpl(this.stepInfo);
     }
 
     @Override
@@ -62,10 +63,12 @@ public abstract class AbstractStep implements Step {
     public final Result<Empty> finalize(@Nullable final String note, final Date endDate, final Quantity remainingSize) {
         return Result.ofEmpty()
                      .require(() -> !this.isFinalized(), new IllegalStateException(ALREADY_FINALIZED_MESSAGE))
-                     .flatMap(() -> this.stepInfo.setNote(note))
                      .flatMap(() -> this.stepInfo.setEndDate(endDate))
-                     .flatMap(() -> this.stepInfo.setEndStepSize(remainingSize))
-                     .peek(e -> this.finalized = true);
+                     .peek(e -> {
+                         this.stepInfo.setNote(note);
+                         this.stepInfo.setEndStepSize(remainingSize);
+                         this.finalized = true;
+                     });
     }
 
     @Override
