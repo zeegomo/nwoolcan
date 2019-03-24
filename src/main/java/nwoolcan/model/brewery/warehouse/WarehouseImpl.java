@@ -54,6 +54,64 @@ public final class WarehouseImpl implements Warehouse {
                                                && stock.getExpirationDate().isPresent()
                                                && stock.getExpirationDate().get()
                                                        .before(queryStock.getExpiresAfter().get())))
+                               // remove those where querystock.minRemainingQuantity is present and
+                               // stock.getremainingquantity is less than the one required. The UOM is not
+                               // checked because the query has to be consistent. It is checked in
+                               // the queryStock builder.
+                               .filter(stock -> !(queryStock.getMinRemainingQuantity().isPresent() //TODO change with the new functionality of Quantity
+                                   && stock.getRemainingQuantity()
+                                           .getValue()
+                                           .doubleValue()
+                                   < queryStock.getMinRemainingQuantity()
+                                               .get()
+                                               .getValue()
+                                               .doubleValue()))
+                               // remove those where queryStock.maxRemainingQuantity is present and
+                               // stock.getremainingQuantitity is more than the one required. The UOM is not
+                               // checked because the query has to be consistent. It is checked in
+                               // the queryStock builder.
+                               .filter(stock -> !(queryStock.getMaxRemainingQuantity().isPresent() //TODO change with the new functionality of Quantity
+                                   && stock.getRemainingQuantity()
+                                           .getValue()
+                                           .doubleValue()
+                                   > queryStock.getMaxRemainingQuantity()
+                                               .get()
+                                               .getValue()
+                                               .doubleValue()))
+                               // remove those where querystock.minUsedQuantity is present and
+                               // stock.getUsedQuantity is less than the one required. The UOM is not
+                               // checked because the query has to be consistent. It is checked in
+                               // the queryStock builder.
+                               .filter(stock -> !(queryStock.getMinUsedQuantity().isPresent() //TODO change with the new functionality of Quantity
+                                   && stock.getUsedQuantity()
+                                           .getValue()
+                                           .doubleValue()
+                                   < queryStock.getMinUsedQuantity()
+                                               .get()
+                                               .getValue()
+                                               .doubleValue()))
+                               // remove those where queryStock.maxUsedQuantity is present and
+                               // stock.getUsedQuantitity is more than the one required. The UOM is not
+                               // checked because the query has to be consistent. It is checked in
+                               // the queryStock builder.
+                               .filter(stock -> !(queryStock.getMaxUsedQuantity().isPresent() //TODO change with the new functionality of Quantity
+                                   && stock.getRemainingQuantity()
+                                           .getValue()
+                                           .doubleValue()
+                                   > queryStock.getMaxUsedQuantity()
+                                               .get()
+                                               .getValue()
+                                               .doubleValue()))
+                               // remove those stock which state is not the one to be included.
+                               .filter(stock -> !(queryStock.getIncludeStockState().isPresent()
+                                               && !stock.getState()
+                                                        .equals(queryStock.getIncludeStockState()
+                                                                          .get())))
+                               // remove those stock which state is the one to be excluded
+                               .filter(stock -> !(queryStock.getExcludeStockState().isPresent()
+                                               && stock.getState()
+                                                       .equals(queryStock.getExcludeStockState()
+                                                                         .get())))
                                .collect(Collectors.toSet()));
     }
 
