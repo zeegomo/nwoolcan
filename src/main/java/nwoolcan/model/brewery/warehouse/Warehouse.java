@@ -5,7 +5,7 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Warehouse.
@@ -17,13 +17,13 @@ public interface Warehouse {
      * @param queryStock describes the nature of the query.
      * @return a {@link Result} of {@link Empty} which reports possible errors.
      */
-    Result<Set<Stock>> getStocks(QueryStock queryStock);
+    Result<List<Stock>> getStocks(QueryStock queryStock);
     /**
      * Getter of the {@link Article} in the warehouse, filtered with a {@link QueryArticle}.
      * @param queryArticle describes the nature of the query.
      * @return a {@link Result} of {@link Empty} which reports possible errors.
      */
-    Result<Set<Article>> getArticles(QueryArticle queryArticle);
+    Result<List<Article>> getArticles(QueryArticle queryArticle);
     /**
      * Adds a Stock to the warehouse.
      * @param newArticle the new {@link Article} to be registered.

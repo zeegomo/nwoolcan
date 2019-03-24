@@ -5,7 +5,9 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashMap;
@@ -32,7 +34,7 @@ public final class WarehouseImpl implements Warehouse {
     }
 
     @Override
-    public Result<Set<Stock>> getStocks(final QueryStock queryStock) {
+    public Result<List<Stock>> getStocks(final QueryStock queryStock) {
         return Result.of(stocks.values()
                                .stream()
                                // remove when article is present in queryStock but the article of
@@ -112,12 +114,12 @@ public final class WarehouseImpl implements Warehouse {
                                                && stock.getState()
                                                        .equals(queryStock.getExcludeStockState()
                                                                          .get())))
-                               .collect(Collectors.toSet()));
+                               .collect(Collectors.toList()));
     }
 
     @Override
-    public Result<Set<Article>> getArticles(final QueryArticle queryArticle) {
-        return Result.of(articles); //TODO once queryArticle will be implemented.
+    public Result<List<Article>> getArticles(final QueryArticle queryArticle) {
+        return Result.of(new ArrayList<>(articles)); //TODO once queryArticle will be implemented.
     }
 
     @Override
