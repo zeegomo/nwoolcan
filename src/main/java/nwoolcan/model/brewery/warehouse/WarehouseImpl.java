@@ -65,12 +65,15 @@ public final class WarehouseImpl implements Warehouse {
     @Override
     public Result<Empty> addArticle(final Article newArticle) {
         return Result.ofEmpty()
-                     .require(() -> !this.articles.contains(newArticle), new IllegalArgumentException(ARTICLE_ALREADY_REGISTERED))
+                     .require(() -> !this.articles.contains(newArticle),
+                                    new IllegalArgumentException(ARTICLE_ALREADY_REGISTERED))
                      .peek(res -> updateArticles(newArticle));
     }
 
     @Override
-    public Result<Empty> addRecord(final Article article, @Nullable final Date expirationDate, final Record record) {
+    public Result<Empty> addRecord(final Article article,
+                                   @Nullable final Date expirationDate,
+                                   final Record record) {
         return Result.of(new StockImpl(article, expirationDate))
                      .peek(stock -> updateArticles(article))
                      .flatMap(stock -> Result.of(this.getStock(stock)))
@@ -91,7 +94,6 @@ public final class WarehouseImpl implements Warehouse {
             this.articles.add(article);
         }
     }
-
     /**
      * Given a {@link Stock}, if present it will return the {@link Stock} present in the
      * {@link Warehouse}, otherwise it adds it to the {@link Warehouse}.
