@@ -22,7 +22,6 @@ public final class StockImpl implements Stock {
 
     private static final Integer EMPTY_VALUE = 0;
 
-    private final Integer id;
     private final Article article;
     @Nullable
     private final Date expirationDate;
@@ -34,36 +33,18 @@ public final class StockImpl implements Stock {
 
     /**
      * Constructor for Stock with expiration date.
-     * @param id of the Stock.
      * @param article referred to the Stock.
-     * @param expirationDate of the Stock. It can be null, which means there is no expiration date,
-     *                       but if this is the case use the other constructor.
+     * @param expirationDate of the Stock. It can be null, which means there is no expiration date.
      */
     // Package protected
-    StockImpl(final Integer id, final Article article, @Nullable final Date expirationDate) {
+    StockImpl(final Article article, @Nullable final Date expirationDate) {
         Date creationMoment = new Date();
-        this.id = id;
         this.article = article;
-        this.expirationDate = expirationDate; // not required to be nonNull because it is called by
-        // the other constructor.
+        this.expirationDate = expirationDate; // It can be present or not.
         this.creationDate = creationMoment;
         this.lastChangeDate = creationMoment;
         this.remainingQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure());
         this.usedQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure());
-    }
-    /**
-     * Constructor for Stock without expiration date.
-     * @param id of the Stock.
-     * @param article referred to the Stock.
-     */
-    // Package protected
-    StockImpl(final Integer id, final Article article) {
-        this(id, article, null);
-    }
-
-    @Override
-    public Integer getId() {
-        return this.id;
     }
 
     @Override
@@ -130,7 +111,7 @@ public final class StockImpl implements Stock {
                       records.add(record);
                   })
                   .peek(q -> this.updateLastChangeDate())
-                  .flatMap(q -> Result.ofEmpty());
+                  .toEmpty();
     }
 
     @Override
@@ -147,7 +128,7 @@ public final class StockImpl implements Stock {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.article, this.expirationDate); // TODO check if it is logically correct
+        return Objects.hash(this.article, this.expirationDate); // TODO check if it is logically correct
     }
 
     @Override
@@ -161,8 +142,7 @@ public final class StockImpl implements Stock {
         }
 
         StockImpl other = (StockImpl) obj;
-        return this.id.equals(other.getId())
-            && this.article.equals(other.getArticle())
+        return this.article.equals(other.getArticle())
             && Optional.ofNullable(this.expirationDate).equals(other.getExpirationDate());
     }
 
@@ -170,7 +150,6 @@ public final class StockImpl implements Stock {
     @Override
     public String toString() {
         return "StockImpl{"
-            + "id=" + id
             + ", article=" + article
             + ", expirationDate=" + expirationDate
             + ", records=" + records
