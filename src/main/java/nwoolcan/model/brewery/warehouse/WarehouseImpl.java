@@ -156,9 +156,7 @@ public final class WarehouseImpl implements Warehouse {
      * @param article the article to be added.
      */
     private void updateArticles(final Article article) {
-        if (!this.articles.contains(article)) {
-            this.articles.add(article);
-        }
+        this.articles.add(article);
     }
     /**
      * Given a {@link Stock}, if present it will return the {@link Stock} present in the
