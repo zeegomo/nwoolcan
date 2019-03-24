@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
+import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
@@ -114,6 +115,11 @@ public final class WarehouseImpl implements Warehouse {
                                                && stock.getState()
                                                        .equals(queryStock.getExcludeStockState()
                                                                          .get())))
+                               .sorted((s1, s2) ->
+                                        compareBy(s1,
+                                                  s2,
+                                                  queryStock.getSortBy(),
+                                                  queryStock.isSortDescending()))
                                .collect(Collectors.toList()));
     }
 
@@ -166,6 +172,52 @@ public final class WarehouseImpl implements Warehouse {
             this.stocks.put(stock, stock);
         }
         return this.stocks.get(stock);
+    }
+    /**
+     * temp shitty method to be removed once the official is ready.
+     * @param q1 .
+     * @param q2 .
+     * @return .
+     */
+    private Integer tempCmpQt(final Quantity q1, final Quantity q2) { // it is shit on purpose so that I will remember to change it.
+        //return q1.getValue().doubleValue() == q2.getValue().doubleValue() ? 0 : q1.getValue().doubleValue() > q2.getValue().doubleValue() ? 1 : -1;
+        return Double.compare(q1.getValue().doubleValue(), q2.getValue().doubleValue()); //TODO remove
+    }
+
+    /**
+     * Comparator which selects the correct comparator accordingly with the
+     * {@link QueryStock.SortParameter} and returns its return value.
+     * @param s1 the first {@link Stock} to compare.
+     * @param s2 the second {@link Stock} to compare.
+     * @param by the parameter used to compare the two {@link Stock}.
+     * @param descending defines the order of the sorting. If true returnes the value returned by
+     *                   the comparator multiplied by -1.
+     * @return the return value of the selected comparator. An {@link Integer} less than 0 if the
+     * first element is less than the second, 0 if the two elements are equal or an {@link Integer}
+     * greater than 0 if the first element is greater than the second.
+     */
+
+    private Integer compareBy(final Stock s1, final Stock s2, final QueryStock.SortParameter by, final boolean descending) {
+        Integer des = descending ? -1 : 1;
+        switch (by) {
+            case ARTICLE_NAME:
+                return des * s1.getArticle().getName().compareTo(s2.getArticle().getName());
+            case EXPIRATION_DATE:
+                if (!s1.getExpirationDate().isPresent()) {
+                    return des; // If the first doesn't have the expiration date,
+                }                // it is considered to be greater.
+                if (!s2.getExpirationDate().isPresent()) {
+                    return -des; // If the second doesn't have the expiration date,
+                }                // the first is considered to be smaller.
+                return des * s1.getExpirationDate().get().compareTo(s2.getExpirationDate().get());
+            case REMAINING_QUANTITY:
+                return des * tempCmpQt(s1.getRemainingQuantity(), s2.getRemainingQuantity()); //TODO change
+            case USED_QUANTITY:
+                return des * tempCmpQt(s1.getUsedQuantity(), s2.getUsedQuantity()); //TODO change
+            case NONE:
+            default:
+                return 0;
+        }
     }
 
 }
