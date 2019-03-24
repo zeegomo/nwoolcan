@@ -10,10 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Collection;
-import java.util.ArrayList;
-
-
+import java.util.stream.Collectors;
 
 
 /**
@@ -35,13 +32,34 @@ public final class WarehouseImpl implements Warehouse {
     }
 
     @Override
-    public Result<Collection<Stock>> getStocks(final QueryStock queryStock) {
-        return Result.of(new ArrayList<>()); //TODO once queryStock will be implemented.
+    public Result<Set<Stock>> getStocks(final QueryStock queryStock) {
+        return Result.of(stocks.values()
+                               .stream()
+                               // remove when article is present in queryStock but the article of
+                               // the current stock is different from the one of the query.
+                               .filter(stock -> !(queryStock.getArticle().isPresent()
+                                   && !queryStock.getArticle().get().equals(stock.getArticle())))
+                               // remove those without expiration date if expiresBefore is present.
+                               .filter(stock -> !(queryStock.getExpiresBefore().isPresent()
+                                   && !stock.getExpirationDate().isPresent()))
+                               // remove those with expiration date after upper limit of
+                               // expiration date
+                               .filter(stock -> !(queryStock.getExpiresBefore().isPresent()
+                                               && stock.getExpirationDate().get()
+                                                       .after(queryStock.getExpiresBefore().get())))
+                               // remove those with expiration date before the lower limit
+                               // Stocks with no expiration date are left, since it is like they
+                               // won't ever expire.
+                               .filter(stock -> !(queryStock.getExpiresAfter().isPresent()
+                                               && stock.getExpirationDate().isPresent()
+                                               && stock.getExpirationDate().get()
+                                                       .before(queryStock.getExpiresAfter().get())))
+                               .collect(Collectors.toSet()));
     }
 
     @Override
-    public Result<Collection<Article>> getArticles(final QueryArticle queryArticle) {
-        return Result.of(new ArrayList<>()); //TODO once queryArticle will be implemented.
+    public Result<Set<Article>> getArticles(final QueryArticle queryArticle) {
+        return Result.of(articles); //TODO once queryArticle will be implemented.
     }
 
     @Override
