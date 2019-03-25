@@ -6,11 +6,13 @@ import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
 import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
+import nwoolcan.utils.Observer;
 import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Observable;
 import java.util.Set;
 
 /**
@@ -85,4 +87,6 @@ public interface Step {
      * @return a {@link Result} that can contain an error cited before.
      */
     Result<Empty> addParameter(Parameter parameter);
+
+    void addObserver(Observer<Parameter> observer);
 }

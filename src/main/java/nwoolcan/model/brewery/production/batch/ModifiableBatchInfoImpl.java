@@ -5,6 +5,7 @@ import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
+import nwoolcan.utils.Observer;
 import nwoolcan.utils.Pair;
 
 import javax.annotation.Nullable;
@@ -13,7 +14,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 //Package-protected
-class ModifiableBatchInfoImpl implements BatchInfo, BatchInfoObserver {
+class ModifiableBatchInfoImpl implements BatchInfo, Observer<Parameter> {
     private final BeerDescription beerDescription;
     private final BatchMethod method;
     private final Quantity size;

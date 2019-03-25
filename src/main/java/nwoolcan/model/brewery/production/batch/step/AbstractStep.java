@@ -6,16 +6,13 @@ import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
+import nwoolcan.utils.Observer;
 import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.Arrays;
 
 /**
  * Abstract implementation of Step interface.
@@ -29,12 +26,14 @@ public abstract class AbstractStep implements Step {
     private final StepInfo stepInfo;
     private boolean finalized;
     private final Collection<Parameter> parameters;
+    private final Collection<Observer<Parameter>> observers;
 
     //Package-protected constructor only for inheritance.
     AbstractStep(final StepInfo stepInfo) {
         this.stepInfo = stepInfo;
         this.finalized = false;
         this.parameters = new ArrayList<>();
+        this.observers = new ArrayList<>();
     }
 
     /**
@@ -107,7 +106,13 @@ public abstract class AbstractStep implements Step {
                      .require(() -> !this.isFinalized(), new IllegalStateException(CANNOT_REGISTER_PARAMETER_MESSAGE))
                      .require(p -> getParameterTypes().contains(p.getType()), new IllegalArgumentException(INVALID_PARAMETER_MESSAGE))
                      .peek(this.parameters::add)
+                     .peek(p -> this.observers.forEach(o -> o.update(p)))
                      .toEmpty();
+    }
+
+    @Override
+    public final void addObserver(final Observer<Parameter> obs) {
+        this.observers.add(obs);
     }
 
     /**
