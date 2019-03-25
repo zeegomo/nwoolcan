@@ -150,7 +150,7 @@ public final class StockImpl implements Stock {
     @Override
     public String toString() {
         return "StockImpl{"
-            + ", article=" + article
+            + "article=" + article
             + ", expirationDate=" + expirationDate
             + ", records=" + records
             + ", creationDate=" + creationDate

@@ -195,7 +195,10 @@ public final class WarehouseImpl implements Warehouse {
      * greater than 0 if the first element is greater than the second.
      */
 
-    private Integer compareBy(final Stock s1, final Stock s2, final QueryStock.SortParameter by, final boolean descending) {
+    private Integer compareBy(final Stock s1,
+                              final Stock s2,
+                              final QueryStock.SortParameter by,
+                              final boolean descending) {
         Integer des = descending ? -1 : 1;
         switch (by) {
             case ARTICLE_NAME:
