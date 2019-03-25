@@ -8,7 +8,8 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Optional;
 
-public class BatchInfoImpl implements BatchInfo {
+//Package-protected
+class ModifiableBatchInfoImpl implements ModifiableBatchInfo {
     private final BeerDescription beerDescription;
     private final BatchMethod method;
     private final Quantity size;
@@ -25,7 +26,8 @@ public class BatchInfoImpl implements BatchInfo {
     @Nullable
     private Quantity ibu;
 
-    public BatchInfoImpl(final BeerDescription beerDescription, final BatchMethod method, final Quantity size, final WaterMeasurement measurement) {
+    //Package-protected
+    ModifiableBatchInfoImpl(final BeerDescription beerDescription, final BatchMethod method, final Quantity size, final WaterMeasurement measurement) {
         this.beerDescription = beerDescription;
         this.method = method;
         this.size = size;
@@ -79,6 +81,41 @@ public class BatchInfoImpl implements BatchInfo {
 
     @Override
     public Collection<Pair<IngredientArticle, Quantity>> listIngredients() {
+        return null;
+    }
+
+    @Override
+    public ModifiableBatchInfo setOg(final Quantity og) {
+        this.og = og;
+    }
+
+    @Override
+    public ModifiableBatchInfo setFg(final Quantity fg) {
+        return null;
+    }
+
+    @Override
+    public ModifiableBatchInfo setSrm(final Quantity srm) {
+        return null;
+    }
+
+    @Override
+    public ModifiableBatchInfo setAbv(final Quantity abv) {
+        return null;
+    }
+
+    @Override
+    public ModifiableBatchInfo setIbu(final Quantity ibu) {
+        return null;
+    }
+
+    @Override
+    public ModifiableBatchInfo setWaterMeasurements(final WaterMeasurement water) {
+        return null;
+    }
+
+    @Override
+    public ModifiableBatchInfo addIngredient(final IngredientArticle ingredient) {
         return null;
     }
 }
