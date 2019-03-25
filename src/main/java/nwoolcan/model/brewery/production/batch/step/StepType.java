@@ -10,4 +10,10 @@ public interface StepType {
      * @return the name of the step type.
      */
     String getName();
+
+    /**
+     * Returns true if it is the step type representing a end state.
+     * @return true if it is the step type representing a end state.
+     */
+    boolean isEndType();
 }

@@ -33,9 +33,10 @@ public final class Results {
      * Otherwise return a {@link Result} holding the exception thrown by runnable.
      * Use this to avoid try-catch blocks.
      * @param runnable the function to call
+     * @param <E> the type of the exception.
      * @return a {@link Result}
      */
-    public static Result<Empty> ofChecked(final FallibleRunnable runnable) {
+    public static <E extends Exception> Result<Empty> ofChecked(final FallibleRunnable<E> runnable) {
         try {
             runnable.run();
             return Result.ofEmpty();
@@ -51,9 +52,10 @@ public final class Results {
      * @param function the function to call.
      * @param <T> the type of the Result.
      * @param <U> the type of the resource.
+     * @param <E> the type of the exception.
      * @return a {@link Result}
      */
-    public static <T, U extends AutoCloseable> Result<T> ofCloseable(final Supplier<U> resource, final FallibleFunction<U, T> function) {
+    public static <T, U extends AutoCloseable, E extends Exception> Result<T> ofCloseable(final Supplier<U> resource, final FallibleFunction<U, T, E> function) {
         try (U elem = resource.get()) {
             return Result.of(function.apply(elem));
         } catch (Exception e) {

@@ -11,6 +11,7 @@ import nwoolcan.utils.Pair;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 //Package-protected
@@ -33,7 +34,7 @@ class ModifiableBatchInfo implements BatchInfo, Observer<Parameter> {
     private Parameter ibu;
 
     //Package-protected
-    ModifiableBatchInfoImpl(final BeerDescription beerDescription, final BatchMethod method, final Quantity size, final WaterMeasurement measurement) {
+    ModifiableBatchInfo(final BeerDescription beerDescription, final BatchMethod method, final Quantity size, final WaterMeasurement measurement) {
         this.beerDescription = beerDescription;
         this.method = method;
         this.size = size;
@@ -41,7 +42,7 @@ class ModifiableBatchInfo implements BatchInfo, Observer<Parameter> {
     }
 
     //Package-protected
-    ModifiableBatchInfoImpl(final BeerDescription beerDescription, final BatchMethod method, final Quantity size) {
+    ModifiableBatchInfo(final BeerDescription beerDescription, final BatchMethod method, final Quantity size) {
         this.beerDescription = beerDescription;
         this.method = method;
         this.size = size;
@@ -95,7 +96,7 @@ class ModifiableBatchInfo implements BatchInfo, Observer<Parameter> {
 
     @Override
     public Collection<Pair<IngredientArticle, Quantity>> listIngredients() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

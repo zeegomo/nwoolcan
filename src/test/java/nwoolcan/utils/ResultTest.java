@@ -187,6 +187,24 @@ public class ResultTest {
     public void testToEmpty() {
         Result<Integer> r1 = Result.of(2);
         assertTrue(r1.toEmpty().isPresent());
+        r1.peekError(NullPointerException.class, NullPointerException::printStackTrace);
+    }
+    /**
+     * Tests toEmpty.
+     */
+    @Test
+    public void testPeekError() {
+        Result<Integer> r2 = Results.ofChecked(() -> {
+            throw new IllegalAccessException("Illegal test");
+        });
+        Collection<Integer> c = new ArrayList<>();
+        r2.peekError(e -> c.add(2));
+        assertEquals(1, c.size());
+        r2.peekError(IllegalAccessException.class, e -> c.add(1));
+        assertEquals(2, c.size());
+        r2.peekError(NullPointerException.class, e -> c.add(1));
+        r2.peekError(IllegalArgumentException.class, e -> c.add(1));
+        assertEquals(2, c.size());
     }
 }
 

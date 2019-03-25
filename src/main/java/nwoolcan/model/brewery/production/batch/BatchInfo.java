@@ -34,11 +34,6 @@ public interface BatchInfo {
      */
     Optional<Parameter> getOg();
     /**
-     * Return the current gravity for this batch, if available.
-     * @return a {@link Quantity}.
-     */
-    Optional<Parameter> getCg();
-    /**
      * Return the final gravity for this batch, if available.
      * @return a {@link Quantity}.
      */

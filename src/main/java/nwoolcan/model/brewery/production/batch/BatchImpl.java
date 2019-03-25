@@ -10,6 +10,7 @@ import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Pair;
 import nwoolcan.utils.Result;
+import nwoolcan.utils.Results;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -34,7 +35,7 @@ public final class BatchImpl implements Batch {
                      final Collection<Pair<IngredientArticle, Quantity>> ingredients,
                      final StepType initialStep) {
         //TODO insert parameters
-        this.batchInfo = new ModifiableBatchInfo();
+        this.batchInfo = new ModifiableBatchInfo(beerDescription, batchMethod, initialSize);
 
         final Result<Step> res = Steps.create(initialStep);
         if (res.isError()) {
@@ -62,13 +63,13 @@ public final class BatchImpl implements Batch {
     }
 
     private Result<Step> getPreviousStep() {
-        return Result.ofChecked(this.steps.get(this.steps.size() - 1));
+        return Results.ofChecked(() -> this.getPreviousSteps().get(this.getPreviousSteps().size() - 1));
     }
 
     private void checkAndFinalizeStep(final Step step) {
         if (!step.isFinalized()) {
-            Quantity currentSize = getPreviousSteps().size() == 0 ? this.batchInfo.getBatchSize() : this.getPreviousSteps().get(this.getPreviousSteps().size() - 1).getStepInfo().getEndStepSize().get();
-            step.finalize(null, new Date(), currentSize);
+            getPreviousStep().peekError(e -> step.finalize(null, new Date(), this.batchInfo.getBatchSize()))
+                             .peek(lastStep -> step.finalize(null, new Date(), lastStep.getStepInfo().getEndStepSize().get()));
         }
     }
 
@@ -86,7 +87,7 @@ public final class BatchImpl implements Batch {
 
     @Override
     public boolean isEnded() {
-        return this.getCurrentStep().getStepInfo().getType().equals(StepTypeEnum.Finalized);
+        return this.getCurrentStep().getStepInfo().getType().isEndType();
     }
 
     @Override

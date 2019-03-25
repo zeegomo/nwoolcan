@@ -1,12 +1,11 @@
 package nwoolcan.model.brewery.production.batch.step;
 
+import nwoolcan.model.brewery.production.batch.step.info.ModifiableStepInfo;
+import nwoolcan.model.brewery.production.batch.step.info.ModifiableStepInfoImpl;
 import nwoolcan.model.brewery.production.batch.step.info.StepInfo;
 import nwoolcan.model.brewery.production.batch.step.info.StepInfoImpl;
-import nwoolcan.model.brewery.production.batch.step.info.UnmodifiableStepInfo;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
-import nwoolcan.utils.Empty;
-import nwoolcan.utils.Result;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,9 +13,9 @@ import org.junit.Test;
 import java.util.Date;
 
 /**
- * Test class for {@link UnmodifiableStepInfo}.
+ * Test class for {@link StepInfoImpl}.
  */
-public class UnmodifiableStepInfoTest {
+public class StepInfoImplTest {
 
     private static final StepType ST = StepTypeEnum.Mashing;
     private static final Date START = new Date();
@@ -31,16 +30,16 @@ public class UnmodifiableStepInfoTest {
      */
     @Before
     public void setUp() {
-        final StepInfo modsi = new StepInfoImpl(ST, START);
-        this.si = new UnmodifiableStepInfo(modsi);
+        final ModifiableStepInfo modsi = new ModifiableStepInfoImpl(ST, START);
+        this.si = new StepInfoImpl(modsi);
     }
 
     private void populate() {
-        final StepInfo modsi = new StepInfoImpl(ST, START);
+        final ModifiableStepInfo modsi = new ModifiableStepInfoImpl(ST, START);
         modsi.setEndDate(END);
         modsi.setNote(NOTE);
         modsi.setEndStepSize(Q);
-        this.si = new UnmodifiableStepInfo(modsi);
+        this.si = new StepInfoImpl(modsi);
     }
 
     /**
@@ -61,23 +60,5 @@ public class UnmodifiableStepInfoTest {
         Assert.assertEquals(END, this.si.getEndDate().orElse(START));
         Assert.assertEquals(NOTE, this.si.getNote().orElse(""));
         Assert.assertEquals(Q, this.si.getEndStepSize().orElse(null));
-    }
-
-    /**
-     * Checking unmodifiability of the class.
-     */
-    @Test
-    public void unmodifiableTest() {
-        populate();
-        Result<Empty> res;
-        res = this.si.setEndDate(END);
-        Assert.assertTrue(res.isError());
-        Assert.assertSame(UnsupportedOperationException.class, res.getError().getClass());
-        res = this.si.setNote(NOTE);
-        Assert.assertTrue(res.isError());
-        Assert.assertSame(UnsupportedOperationException.class, res.getError().getClass());
-        res = this.si.setEndStepSize(Q);
-        Assert.assertTrue(res.isError());
-        Assert.assertSame(UnsupportedOperationException.class, res.getError().getClass());
     }
 }

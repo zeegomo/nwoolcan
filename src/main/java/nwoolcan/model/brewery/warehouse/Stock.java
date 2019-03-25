@@ -15,11 +15,6 @@ import java.util.Optional;
 public interface Stock {
 
     /**
-     * Returns the Id of the current stock.
-     * @return the Id of the current stock.
-     */
-    Integer getId();
-    /**
      * Returns the article related to the current stock.
      * @return the article related to the current stock.
      */

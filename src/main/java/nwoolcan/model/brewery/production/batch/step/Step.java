@@ -63,16 +63,11 @@ public interface Step {
     /**
      * Returns a {@link Result} with a collection of {@link Parameter} describing the registered parameters of this step.
      * The parameters can be filtered and rearranged by specifying a (mandatory) {@link QueryParameter} that
-     * needs to be build correctly with its builder.
-     * The result can contain an error of type:
-     * <ul>
-     *     <li>{@link IllegalArgumentException} if the object query is inconsistent.</li>
-     *     <li>{@link RuntimeException} if there are errors while executing the query.</li>
-     * </ul>
+     * needs to be build correctly with its builder ({@link nwoolcan.model.brewery.production.batch.step.parameter.QueryParameterBuilder}).
      * @param query the query object that specifies how to query the parameters.
      * @return a {@link Result} with a collection of {@link Parameter} describing the registered parameters of this step.
      */
-    Result<Collection<Parameter>> getParameters(QueryParameter query);
+    Collection<Parameter> getParameters(QueryParameter query);
 
     /**
      * Registers a {@link Parameter} to this step and adds it to its collection.

@@ -1,7 +1,7 @@
 package nwoolcan.model.brewery.production.batch.step;
 
-import nwoolcan.model.brewery.production.batch.step.info.StepInfo;
-import nwoolcan.model.brewery.production.batch.step.info.StepInfoImpl;
+import nwoolcan.model.brewery.production.batch.step.info.ModifiableStepInfo;
+import nwoolcan.model.brewery.production.batch.step.info.ModifiableStepInfoImpl;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
@@ -14,9 +14,9 @@ import org.junit.Test;
 import java.util.Date;
 
 /**
- * Test class for {@link StepInfoImpl}.
+ * Test class for {@link ModifiableStepInfoImpl}.
  */
-public class StepInfoTest {
+public class ModifiableStepInfoTest {
 
     private static final StepType ST1 = StepTypeEnum.Mashing;
     private static final Date NOW = new Date();
@@ -26,14 +26,14 @@ public class StepInfoTest {
     private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.Liter);
     private static final Quantity Q2 = Quantity.of(20, UnitOfMeasure.Liter);
 
-    private StepInfo si;
+    private ModifiableStepInfo si;
 
     /**
      * Sets up fields.
      */
     @Before
     public void setUp() {
-        this.si = new StepInfoImpl(ST1, NOW);
+        this.si = new ModifiableStepInfoImpl(ST1, NOW);
     }
 
     private void populate() {
