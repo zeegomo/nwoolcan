@@ -1,5 +1,6 @@
 package nwoolcan.model.brewery.production.batch;
 
+import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Pair;
@@ -30,27 +31,32 @@ public interface BatchInfo {
      * Return the original gravity for this batch, if available.
      * @return a {@link Quantity}.
      */
-    Optional<Quantity> getOg();
+    Optional<Parameter> getOg();
+    /**
+     * Return the current gravity for this batch, if available.
+     * @return a {@link Quantity}.
+     */
+    Optional<Parameter> getCg();
     /**
      * Return the final gravity for this batch, if available.
      * @return a {@link Quantity}.
      */
-    Optional<Quantity> getFg();
+    Optional<Parameter> getFg();
     /**
      * Return the color measurements of this batch, if available.
      * @return a {@link Quantity}.
      */
-    Optional<Quantity> getSrm();
+    Optional<Parameter> getEbc();
     /**
      * Return the alcohol by volume of this batch, if available.
      * @return a {@link Quantity}.
      */
-    Optional<Quantity> getAbv();
+    Optional<Parameter> getAbv();
     /**
      * Return the bitterness of this batch, if available.
      * @return a {@link Quantity}.
      */
-    Optional<Quantity> getIbu();
+    Optional<Parameter> getIbu();
     /**
      * Return the water measurements of this batch, if available.
      * @return a {@link Quantity}.

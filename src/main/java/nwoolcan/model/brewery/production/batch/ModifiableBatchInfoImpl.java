@@ -1,30 +1,35 @@
 package nwoolcan.model.brewery.production.batch;
 
+import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Pair;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
 //Package-protected
-class ModifiableBatchInfoImpl implements ModifiableBatchInfo {
+class ModifiableBatchInfoImpl implements BatchInfo, BatchInfoObserver {
     private final BeerDescription beerDescription;
     private final BatchMethod method;
     private final Quantity size;
+    private final Collection<IngredientArticle> ingredients = new ArrayList<>();
     @Nullable
     private final WaterMeasurement measurement;
     @Nullable
-    private Quantity og;
+    private Parameter og;
     @Nullable
-    private Quantity fg;
+    private Parameter fg;
     @Nullable
-    private Quantity srm;
+    private Parameter ebc;
     @Nullable
-    private Quantity abv;
+    private Parameter abv;
     @Nullable
-    private Quantity ibu;
+    private Parameter ibu;
 
     //Package-protected
     ModifiableBatchInfoImpl(final BeerDescription beerDescription, final BatchMethod method, final Quantity size, final WaterMeasurement measurement) {
@@ -32,6 +37,14 @@ class ModifiableBatchInfoImpl implements ModifiableBatchInfo {
         this.method = method;
         this.size = size;
         this.measurement = measurement;
+    }
+
+    //Package-protected
+    ModifiableBatchInfoImpl(final BeerDescription beerDescription, final BatchMethod method, final Quantity size) {
+        this.beerDescription = beerDescription;
+        this.method = method;
+        this.size = size;
+        this.measurement = null;
     }
 
     @Override
@@ -50,27 +63,27 @@ class ModifiableBatchInfoImpl implements ModifiableBatchInfo {
     }
 
     @Override
-    public Optional<Quantity> getOg() {
+    public Optional<Parameter> getOg() {
         return Optional.ofNullable(this.og);
     }
 
     @Override
-    public Optional<Quantity> getFg() {
+    public Optional<Parameter> getFg() {
         return Optional.ofNullable(this.fg);
     }
 
     @Override
-    public Optional<Quantity> getSrm() {
-        return Optional.ofNullable(this.srm);
+    public Optional<Parameter> getEbc() {
+        return Optional.ofNullable(this.ebc);
     }
 
     @Override
-    public Optional<Quantity> getAbv() {
+    public Optional<Parameter> getAbv() {
         return Optional.ofNullable(this.abv);
     }
 
     @Override
-    public Optional<Quantity> getIbu() {
+    public Optional<Parameter> getIbu() {
         return Optional.ofNullable(this.ibu);
     }
 
@@ -85,37 +98,25 @@ class ModifiableBatchInfoImpl implements ModifiableBatchInfo {
     }
 
     @Override
-    public ModifiableBatchInfo setOg(final Quantity og) {
-        this.og = og;
-    }
+    public void update(final Parameter p) {
+        if (p.getType().equals(ParameterTypeEnum.ABV)) {
+            this.abv = p;
+        }
 
-    @Override
-    public ModifiableBatchInfo setFg(final Quantity fg) {
-        return null;
-    }
+        if (p.getType().equals(ParameterTypeEnum.GRAVITY)) {
+            if (this.og == null) {
+                this.og = p;
+            } else {
+                this.fg = p;
+            }
+        }
 
-    @Override
-    public ModifiableBatchInfo setSrm(final Quantity srm) {
-        return null;
-    }
+        if (p.getType().equals(ParameterTypeEnum.EBC)) {
+            this.ebc = p;
+        }
 
-    @Override
-    public ModifiableBatchInfo setAbv(final Quantity abv) {
-        return null;
-    }
-
-    @Override
-    public ModifiableBatchInfo setIbu(final Quantity ibu) {
-        return null;
-    }
-
-    @Override
-    public ModifiableBatchInfo setWaterMeasurements(final WaterMeasurement water) {
-        return null;
-    }
-
-    @Override
-    public ModifiableBatchInfo addIngredient(final IngredientArticle ingredient) {
-        return null;
+        if (p.getType().equals(ParameterTypeEnum.IBU)) {
+            this.ibu = p;
+        }
     }
 }
