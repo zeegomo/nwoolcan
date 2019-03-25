@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 //Package-protected
-class ModifiableBatchInfoImpl implements BatchInfo, Observer<Parameter> {
+class ModifiableBatchInfo implements BatchInfo, Observer<Parameter> {
     private final BeerDescription beerDescription;
     private final BatchMethod method;
     private final Quantity size;
