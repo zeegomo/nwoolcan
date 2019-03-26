@@ -2,11 +2,12 @@ package nwoolcan.model.utils;
 
 import nwoolcan.utils.Result;
 import nwoolcan.utils.test.TestUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
 
 /**
- * Test Quantities utils class.
+ * Test class for {@link Quantities} utils class.
  */
 public class QuantitiesTest {
 
@@ -23,7 +24,11 @@ public class QuantitiesTest {
     private static final UnitOfMeasure UM1 = UnitOfMeasure.Kilogram;
     private static final UnitOfMeasure UM2 = UnitOfMeasure.Liter;
 
-    private void initQuantities() {
+    /**
+     * Sets up fields.
+     */
+    @Before
+    public void initQuantities() {
         this.q1 = Quantity.of(V1, UM1);
         this.q2 = Quantity.of(V2, UM1);
         this.q3 = Quantity.of(V3, UM1);
@@ -61,7 +66,9 @@ public class QuantitiesTest {
 
         Assert.assertTrue(rem1res.isPresent());
         Assert.assertTrue(rem2res.isError());
+        Assert.assertSame(IllegalStateException.class, rem2res.getError().getClass());
         Assert.assertTrue(rem3res.isError());
+        Assert.assertSame(IllegalStateException.class, rem3res.getError().getClass());
 
         TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.subtract(V1, V2), UM1), rem1res.getValue());
     }
@@ -75,6 +82,8 @@ public class QuantitiesTest {
         final Result<Quantity> sumRes = Quantities.add(q1, q4);
         final Result<Quantity> remRes = Quantities.remove(q1, q4);
         Assert.assertTrue(sumRes.isError());
+        Assert.assertSame(ArithmeticException.class, sumRes.getError().getClass());
         Assert.assertTrue(remRes.isError());
+        Assert.assertSame(ArithmeticException.class, remRes.getError().getClass());
     }
 }

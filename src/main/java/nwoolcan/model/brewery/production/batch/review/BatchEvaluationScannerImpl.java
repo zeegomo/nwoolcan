@@ -5,6 +5,7 @@ import io.github.classgraph.ClassInfoList;
 import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,6 +15,7 @@ import java.util.stream.Stream;
  * Implementation for BatchEvaluationScanner.
  */
 public final class BatchEvaluationScannerImpl implements BatchEvaluationScanner {
+    @Nullable
     private Set<BatchEvaluationType> types;
 
     //Package private

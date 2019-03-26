@@ -1,11 +1,19 @@
 package nwoolcan.model.brewery.production.batch.step;
 
 /**
- * Enum for describing the various steps that a beer has to go through production.
+ * Interface for representing a production step type.
  */
-public enum StepType {
+public interface StepType {
+
     /**
-     * Classic steps.
+     * Returns the name of the step type.
+     * @return the name of the step type.
      */
-    Mashing, Boiling, Fermenting, Packaging, Aging, Finalized;
+    String getName();
+
+    /**
+     * Returns true if it is the step type representing a end state.
+     * @return true if it is the step type representing a end state.
+     */
+    boolean isEndType();
 }

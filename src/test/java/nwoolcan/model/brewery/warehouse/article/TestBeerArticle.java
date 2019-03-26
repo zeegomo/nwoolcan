@@ -5,8 +5,6 @@ import nwoolcan.model.utils.UnitOfMeasure;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Objects;
-
 /**
  * Test for BeerArticle.
  */
@@ -17,13 +15,6 @@ public class TestBeerArticle {
     private final String name = "DummyName";
 
     /**
-     * Method that tests the constructor with null batch.
-     */
-    @Test(expected = NullPointerException.class)
-    public void testConstructorWithNullBatch() {
-        new BeerArticleImpl(id, name, null, null);
-    }
-    /**
      * Method that tests the getters and their possible errors.
      */
     @Test
@@ -31,7 +22,6 @@ public class TestBeerArticle {
         final Batch batch = new Batch() { };
         final Article beerArticle = new BeerArticleImpl(id, name, UOM, batch);
         Assert.assertEquals(ArticleType.FINISHED_BEER, beerArticle.getArticleType());
-        Objects.requireNonNull(beerArticle.toBeerArticle());
         Assert.assertTrue(beerArticle.toBeerArticle().isPresent());
         Assert.assertEquals(BeerArticleImpl.class, beerArticle.toBeerArticle()
                                                               .getValue()
