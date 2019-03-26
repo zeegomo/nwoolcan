@@ -11,10 +11,6 @@ public enum ParameterTypeEnum implements ParameterType {
      */
     Temperature(UnitOfMeasure.CelsiusDegree),
     /**
-     * Hops that can be added in some production steps.
-     */
-    AddedHops(UnitOfMeasure.Kilogram),
-    /**
      * Alcohol by volume of the beer.
      */
     ABV(UnitOfMeasure.Percentage);
