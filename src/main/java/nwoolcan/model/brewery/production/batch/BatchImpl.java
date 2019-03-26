@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.StringJoiner;
 
 /**
  * Basic batch implementation.
@@ -88,6 +89,7 @@ public final class BatchImpl implements Batch {
 
     private void checkAndFinalizeStep(final Step step) {
         if (!step.isFinalized()) {
+            //noinspection OptionalGetWithoutIsPresent
             getPreviousStep().peekError(e -> step.finalize(null, new Date(), this.batchInfo.getBatchSize()))
                              .peek(lastStep -> step.finalize(null, new Date(), lastStep.getStepInfo().getEndStepSize().get()));
         }
@@ -120,5 +122,15 @@ public final class BatchImpl implements Batch {
     @Override
     public Optional<BatchEvaluation> getEvaluation() {
         return Optional.ofNullable(this.batchEvaluation);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", BatchImpl.class.getSimpleName() + "[", "]")
+            .add("id=" + id)
+            .add("batchInfo=" + batchInfo)
+            .add("currentStep=" + this.getCurrentStep())
+            .add("batchEvaluation=" + batchEvaluation)
+            .toString();
     }
 }
