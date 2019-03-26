@@ -40,8 +40,7 @@ public class StepTest {
     );
 
     private static final List<Parameter> BOILING_PARAMS = Arrays.asList(
-        new ParameterImpl(ParameterTypeEnum.Temperature, 10.1),
-        new ParameterImpl(ParameterTypeEnum.AddedHops, 3)
+        new ParameterImpl(ParameterTypeEnum.Temperature, 10.1)
     );
 
     /**
@@ -125,10 +124,7 @@ public class StepTest {
      */
     @Test
     public void testWrongParametersAddition() {
-        Result<Empty> res = this.mashing.addParameter(new ParameterImpl(ParameterTypeEnum.AddedHops, 1));
-        Assert.assertTrue(res.isError());
-        Assert.assertSame(IllegalArgumentException.class, res.getError().getClass());
-        res = this.packaging.addParameter(new ParameterImpl(ParameterTypeEnum.Temperature, 1));
+        Result<Empty> res = this.packaging.addParameter(new ParameterImpl(ParameterTypeEnum.Temperature, 1));
         Assert.assertTrue(res.isError());
         Assert.assertSame(IllegalArgumentException.class, res.getError().getClass());
     }
