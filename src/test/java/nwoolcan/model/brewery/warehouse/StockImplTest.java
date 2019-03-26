@@ -59,9 +59,11 @@ public class StockImplTest {
     @Test
     public void testGettersAndRecords() {
         Assert.assertEquals(ARTICLE, stock.getArticle());
-        Assert.assertTrue(Quantities.remove(record1.getQuantity(), record2.getQuantity()).isPresent());
-        Assert.assertEquals(Quantities.remove(record1.getQuantity(), record2.getQuantity()).getValue(),
-            stock.getRemainingQuantity());
+        Assert.assertTrue(Quantities.remove(record1.getQuantity(),
+                                            record2.getQuantity()).isPresent());
+        Assert.assertEquals(Quantities.remove(record1.getQuantity(),
+                                              record2.getQuantity()).getValue(),
+                                              stock.getRemainingQuantity());
         Assert.assertEquals(record2.getQuantity(), stock.getUsedQuantity());
         Assert.assertTrue(stock.getExpirationDate().isPresent());
         Assert.assertEquals(expDate, stock.getExpirationDate().get());
@@ -72,7 +74,6 @@ public class StockImplTest {
         Assert.assertFalse(stock1.getExpirationDate().isPresent());
         Assert.assertEquals(StockState.AVAILABLE, stock1.getState());
     }
-
     /**
      * Test that adding an incompatible record generates an Error {@link Result}.
      */

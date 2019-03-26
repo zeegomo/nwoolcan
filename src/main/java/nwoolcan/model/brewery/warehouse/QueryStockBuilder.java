@@ -148,16 +148,16 @@ public final class QueryStockBuilder {
      */
     public Result<QueryStock> build() {
         return Result.of(new QueryStock(article,
-            expiresBefore,
-            expiresAfter,
-            minRemainingQuantity,
-            maxRemainingQuantity,
-            minUsedQuantity,
-            maxUsedQuantity,
-            stockStateIncluded,
-            stockStateExcluded,
-            sortParameter,
-            sortDescending))
+                                        expiresBefore,
+                                        expiresAfter,
+                                        minRemainingQuantity,
+                                        maxRemainingQuantity,
+                                        minUsedQuantity,
+                                        maxUsedQuantity,
+                                        stockStateIncluded,
+                                        stockStateExcluded,
+                                        sortParameter,
+                                        sortDescending))
                      .require(this::checkUOMs, new IllegalArgumentException(UOM_ERROR));
     }
 
