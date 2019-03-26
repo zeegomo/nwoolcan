@@ -1,6 +1,6 @@
 package nwoolcan.model.brewery.production.batch.step;
 
-import nwoolcan.model.brewery.production.batch.step.info.StepInfoImpl;
+import nwoolcan.model.brewery.production.batch.step.info.ModifiableStepInfoImpl;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
 import nwoolcan.model.brewery.production.batch.step.utils.StepHelper;
 
@@ -19,7 +19,7 @@ public final class BasicStep extends AbstractStep {
      * @param startDate step's start date.
      */
     BasicStep(final StepType stepType, final Date startDate) {
-        super(new StepInfoImpl(stepType, startDate));
+        super(new ModifiableStepInfoImpl(stepType, startDate));
     }
 
     /**
