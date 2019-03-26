@@ -33,6 +33,11 @@ public class TestBeerArticle {
     public void init() {
         batch = new Batch() {
             @Override
+            public int getId() {
+                return 0;
+            }
+
+            @Override
             public BatchInfo getBatchInfo() {
                 return null;
             }
@@ -43,7 +48,7 @@ public class TestBeerArticle {
             }
 
             @Override
-            public List<Step> getLastSteps() {
+            public List<Step> getPreviousSteps() {
                 return null;
             }
 

@@ -12,7 +12,6 @@ import nwoolcan.utils.Result;
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Observable;
 import java.util.Set;
 
 /**
@@ -83,5 +82,10 @@ public interface Step {
      */
     Result<Empty> addParameter(Parameter parameter);
 
-    void addObserver(Observer<Parameter> observer);
+    /**
+     * Adds an observer of {@link Parameter}. The observer's update method is called when
+     * a parameter is added.
+     * @param observer the observer object that needs to be notified when a parameter is added.
+     */
+    void addParameterObserver(Observer<Parameter> observer);
 }

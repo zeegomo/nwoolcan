@@ -3,7 +3,6 @@ package nwoolcan.model.brewery.production.batch;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepType;
-import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.production.batch.step.Steps;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
@@ -13,7 +12,12 @@ import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Basic batch implementation.
@@ -23,18 +27,29 @@ public final class BatchImpl implements Batch {
     private static final String CANNOT_CREATE_STEP_EXCEPTION = "Cannot create a step with the given type: ";
     private static final String CANNOT_FINALIZE_CURRENT_STEP = "Cannot finalize current step.";
 
+    private final int id;
     private final ModifiableBatchInfo batchInfo;
     private final List<Step> steps;
 
     @Nullable
     private BatchEvaluation batchEvaluation;
 
+    /**
+     * Creates a new {@link Batch} in production.
+     * @param beerDescription the batch's beer description.
+     * @param batchMethod the batch's method.
+     * @param initialSize the initial size of the batch.
+     * @param ingredients the ingredients of the beer made by the batch.
+     * @param initialStep the initial step of the batch.
+     */
     public BatchImpl(final BeerDescription beerDescription,
                      final BatchMethod batchMethod,
                      final Quantity initialSize,
                      final Collection<Pair<IngredientArticle, Quantity>> ingredients,
                      final StepType initialStep) {
-        //TODO insert parameters
+        this.id = BatchIdGenerator.getInstance().getNextId();
+
+        //TODO insert ingredients
         this.batchInfo = new ModifiableBatchInfo(beerDescription, batchMethod, initialSize);
 
         final Result<Step> res = Steps.create(initialStep);
@@ -42,9 +57,14 @@ public final class BatchImpl implements Batch {
             throw new IllegalArgumentException(CANNOT_CREATE_STEP_EXCEPTION + initialStep);
         }
 
-        res.getValue().addObserver(batchInfo);
+        res.getValue().addParameterObserver(batchInfo);
 
         this.steps = new ArrayList<>(Collections.singletonList(res.getValue()));
+    }
+
+    @Override
+    public int getId() {
+        return this.id;
     }
 
     @Override
@@ -81,7 +101,7 @@ public final class BatchImpl implements Batch {
                      .peek(this::checkAndFinalizeStep)
                      .flatMap(() -> Steps.create(nextStepType))
                      .peek(this.steps::add)
-                     .peek(p -> p.addObserver(this.batchInfo))
+                     .peek(p -> p.addParameterObserver(this.batchInfo))
                      .toEmpty();
     }
 

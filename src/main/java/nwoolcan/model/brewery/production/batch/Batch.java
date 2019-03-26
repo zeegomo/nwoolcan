@@ -14,6 +14,12 @@ import java.util.Optional;
  */
 public interface Batch {
     /**
+     * Returns the batch id.
+     * @return the batch id.
+     */
+    int getId();
+
+    /**
      * Returns the info of this batch.
      * @return the info of this batch.
      */

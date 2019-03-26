@@ -112,7 +112,7 @@ public abstract class AbstractStep implements Step {
     }
 
     @Override
-    public final void addObserver(final Observer<Parameter> obs) {
+    public final void addParameterObserver(final Observer<Parameter> obs) {
         this.observers.add(obs);
     }
 
