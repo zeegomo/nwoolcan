@@ -41,7 +41,8 @@ public final class ArticleIdManager {
      * @return the id corresponding to the name, the type and the unit of measure of the
      * {@link Article}.
      */
-    public synchronized Integer getId(final String name,
+    // default so that only article impl can generate it.
+    synchronized Integer getId(final String name,
                                       final ArticleType articleType,
                                       final UnitOfMeasure unitOfMeasure) {
         List<Object> tuple = Arrays.asList(name, articleType, unitOfMeasure);

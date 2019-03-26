@@ -11,9 +11,10 @@ import java.util.Objects;
  */
 public class ArticleImpl implements Article {
 
-    private final Integer id = 193;
+    private final Integer id;
     private final String name;
     private final UnitOfMeasure unitOfMeasure;
+    private final ArticleIdManager idManager = ArticleIdManager.getInstance();
 
     /**
      * Constructor of the class. Only article of type miscellaneous can be constructed.
@@ -26,6 +27,7 @@ public class ArticleImpl implements Article {
         if (this.name.equals("")) {
             throw new IllegalArgumentException("Name can not be empty.");
         }
+        this.id = idManager.getId(name, getArticleType(), unitOfMeasure);
     }
 
     @Override
@@ -76,7 +78,7 @@ public class ArticleImpl implements Article {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name, unitOfMeasure, getArticleType());
+        return Objects.hash(id, name, unitOfMeasure, getArticleType());
     }
 
     /**

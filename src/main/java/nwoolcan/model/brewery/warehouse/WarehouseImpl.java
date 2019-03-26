@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
+import nwoolcan.model.brewery.warehouse.article.ArticleIdManager;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.brewery.warehouse.stock.Record;
@@ -27,8 +28,13 @@ import java.util.stream.Collectors;
 public final class WarehouseImpl implements Warehouse {
 
     private static final String ARTICLE_ALREADY_REGISTERED = "The article was already registered.";
+    private static final String ARTICLE_NOT_REGISTERED_AT_ID_MANAGER
+                                            = "The article was not registered at the id manager. "
+                                            + "Build it with ArticleImpl or its subclass.";
     private final Map<Stock, Stock> stocks = new HashMap<>();
     private final Set<Article> articles = new HashSet<>();
+    private static final ArticleIdManager ID_MANAGER = ArticleIdManager.getInstance();
+
 
     @Override
     public Result<List<Stock>> getStocks(final QueryStock queryStock) {
@@ -129,6 +135,8 @@ public final class WarehouseImpl implements Warehouse {
         return Result.ofEmpty()
                      .require(() -> !this.articles.contains(newArticle),
                                     new IllegalArgumentException(ARTICLE_ALREADY_REGISTERED))
+                     .require(() -> ID_MANAGER.checkId(newArticle),
+                                    new IllegalArgumentException(ARTICLE_NOT_REGISTERED_AT_ID_MANAGER))
                      .peek(res -> updateArticles(newArticle));
     }
 
