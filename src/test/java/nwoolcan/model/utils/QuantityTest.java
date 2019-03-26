@@ -16,7 +16,7 @@ public class QuantityTest {
 
     private static final UnitOfMeasure GOOD_UM1 = UnitOfMeasure.Kilogram;
     private static final UnitOfMeasure GOOD_UM2 = UnitOfMeasure.Liter;
-    private static final UnitOfMeasure BAD_UM = UnitOfMeasure.Celsius;
+    private static final UnitOfMeasure BAD_UM = UnitOfMeasure.CelsiusDegree;
 
     /**
      * Method that tests a simple quantity creation.
@@ -24,7 +24,7 @@ public class QuantityTest {
     @Test
     public void testQuantitySimpleCreation() {
         final Quantity q = Quantity.of(VALUE1, GOOD_UM1);
-        Assert.assertEquals(VALUE1, q.getValue().intValue());
+        Assert.assertEquals(VALUE1, q.getValue());
         Assert.assertEquals(GOOD_UM1, q.getUnitOfMeasure());
     }
     /**
