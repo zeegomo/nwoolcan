@@ -5,7 +5,6 @@ import nwoolcan.model.brewery.warehouse.article.ArticleImpl;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
-import nwoolcan.utils.Results;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,20 +36,15 @@ public class WarehouseImplTest {
     private final Record record2 = new Record(quantity1, Record.Action.ADDING);
     private final Record record3 = new Record(quantity2, Record.Action.ADDING);
     private final Record record4 = new Record(quantity3, Record.Action.ADDING);
-    private Date date1;
-    private Date date2;
-    private Date date3;
+    private Date date1 = new Date();
+    private Date date2 = new Date(date1.getTime() + 10L);
+    private Date date3 = new Date(date2.getTime() + 10L);
 
     /**
      * Initialize the warehouse.
      */
     @Before
     public void initWarehouse() {
-        date1 = new Date();
-        Results.ofChecked(() -> Thread.sleep(10L));
-        date2 = new Date();
-        Results.ofChecked(() -> Thread.sleep(10L));
-        date3 = new Date();
         warehouse.addArticle(article);
         warehouse.addArticle(article1);
         warehouse.addRecord(article, record);
@@ -135,7 +129,7 @@ public class WarehouseImplTest {
         }
     }
     /**
-     * Filter by expiration dates.
+     * Tests getStocks with filter by expiration dates.
      */
     @Test
     public void testExpirationDatesFilters() {
