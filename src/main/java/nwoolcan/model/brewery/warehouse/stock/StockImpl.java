@@ -1,4 +1,4 @@
-package nwoolcan.model.brewery.warehouse;
+package nwoolcan.model.brewery.warehouse.stock;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.utils.Quantities;
@@ -23,8 +23,7 @@ public final class StockImpl implements Stock {
     private static final Integer EMPTY_VALUE = 0;
 
     private final Article article;
-    @Nullable
-    private final Date expirationDate;
+    @Nullable private final Date expirationDate;
     private final List<Record> records = new ArrayList<>();
     private final Date creationDate;
     private Date lastChangeDate;
@@ -36,8 +35,7 @@ public final class StockImpl implements Stock {
      * @param article referred to the Stock.
      * @param expirationDate of the Stock. It can be null, which means there is no expiration date.
      */
-    // Package protected
-    StockImpl(final Article article, @Nullable final Date expirationDate) {
+    public StockImpl(final Article article, @Nullable final Date expirationDate) {
         Date creationMoment = new Date();
         this.article = article;
         this.expirationDate = expirationDate; // It can be present or not.

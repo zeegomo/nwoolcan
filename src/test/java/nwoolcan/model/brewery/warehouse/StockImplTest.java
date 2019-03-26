@@ -2,6 +2,10 @@ package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleImpl;
+import nwoolcan.model.brewery.warehouse.stock.Record;
+import nwoolcan.model.brewery.warehouse.stock.Stock;
+import nwoolcan.model.brewery.warehouse.stock.StockImpl;
+import nwoolcan.model.brewery.warehouse.stock.StockState;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
@@ -37,7 +41,7 @@ public class StockImplTest {
                                                        + "record if the quantity is not available";
     private static final UnitOfMeasure UOM = UnitOfMeasure.Kilogram;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.Liter;
-    private static final Article ARTICLE = new ArticleImpl(ID, NAME, UOM);
+    private static final Article ARTICLE = new ArticleImpl(NAME, UOM);
 
     /**
      * Initialize structures.

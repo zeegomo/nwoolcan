@@ -2,6 +2,10 @@ package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
+import nwoolcan.model.brewery.warehouse.stock.QueryStock;
+import nwoolcan.model.brewery.warehouse.stock.Record;
+import nwoolcan.model.brewery.warehouse.stock.Stock;
+import nwoolcan.model.brewery.warehouse.stock.StockImpl;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;

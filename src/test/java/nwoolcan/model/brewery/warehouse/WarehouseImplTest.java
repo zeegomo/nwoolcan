@@ -2,6 +2,10 @@ package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleImpl;
+import nwoolcan.model.brewery.warehouse.stock.QueryStock;
+import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
+import nwoolcan.model.brewery.warehouse.stock.Record;
+import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
@@ -25,8 +29,8 @@ public class WarehouseImplTest {
     private static final UnitOfMeasure UOM = UnitOfMeasure.Kilogram;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.Liter;
     private final Warehouse warehouse = new WarehouseImpl();
-    private final Article article = new ArticleImpl(ONE, NAME, UOM);
-    private final Article article1 = new ArticleImpl(TEN, NAME, UOM);
+    private final Article article = new ArticleImpl(NAME, UOM);
+    private final Article article1 = new ArticleImpl(NAME, UOM);
     private final Quantity quantity = Quantity.of(ONE, UOM);
     private final Quantity quantity1 = Quantity.of(ONE, UOM1);
     private final Quantity quantity2 = Quantity.of(TEN, UOM);
@@ -71,9 +75,9 @@ public class WarehouseImplTest {
         Assert.assertTrue(warehouse.addArticle(article).isError()); // already added
         Assert.assertTrue(warehouse.addArticle(article1).isError()); // already added
         final Result<QueryStock> resQueryStock = new QueryStockBuilder().setArticle(article)
-                                                                     .setMinRemainingQuantity(quantity)
-                                                                     .setMaxRemainingQuantity(quantity2)
-                                                                     .build();
+                                                                        .setMinRemainingQuantity(quantity)
+                                                                        .setMaxRemainingQuantity(quantity2)
+                                                                        .build();
         Assert.assertTrue(resQueryStock.isPresent());
         final QueryStock queryStock = resQueryStock.getValue();
         final Result<List<Stock>> resLisStock = warehouse.getStocks(queryStock);
