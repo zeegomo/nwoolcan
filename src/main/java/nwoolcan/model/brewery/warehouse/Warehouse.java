@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
+import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 

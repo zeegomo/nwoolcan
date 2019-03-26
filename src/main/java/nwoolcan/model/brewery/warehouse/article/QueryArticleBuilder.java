@@ -1,6 +1,4 @@
-package nwoolcan.model.brewery.warehouse;
-
-import nwoolcan.model.brewery.warehouse.article.ArticleType;
+package nwoolcan.model.brewery.warehouse.article;
 
 import javax.annotation.Nullable;
 
