@@ -99,7 +99,7 @@ public final class QueryArticle {
      * Getter of the parameter on which the elements of the query will be sorted.
      * @return the parameter on which the elements of the query will be sorted.
      */
-    public SortParameter getSortParameter() {
+    public SortParameter getSortBy() {
         return sortParameter;
     }
     /**

@@ -12,7 +12,6 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -117,17 +116,49 @@ public final class WarehouseImpl implements Warehouse {
                                                && stock.getState()
                                                        .equals(queryStock.getExcludeStockState()
                                                                          .get())))
-                               .sorted((s1, s2) ->
-                                        compareBy(s1,
-                                                  s2,
-                                                  queryStock.getSortBy(),
-                                                  queryStock.isSortDescending()))
+                               .sorted((s1, s2) -> compareBy(s1,
+                                                             s2,
+                                                             queryStock.getSortBy(),
+                                                             queryStock.isSortDescending()))
                                .collect(Collectors.toList()));
     }
 
     @Override
     public Result<List<Article>> getArticles(final QueryArticle queryArticle) {
-        return Result.of(new ArrayList<>(articles)); //TODO once queryArticle will be implemented.
+        return Result.of(articles.stream()
+                                 // remove those article where query article specifies a min ID and
+                                 // where the id of the article is less than it.
+                                 .filter(article -> !(queryArticle.getMinID().isPresent()
+                                     && article.getId() < queryArticle.getMinID().get()))
+                                 // remove those article where query article specifies a max ID and
+                                 // where the id of the article is greater than it.
+                                 .filter(article -> !(queryArticle.getMaxID().isPresent()
+                                     && article.getId() > queryArticle.getMaxID().get()))
+                                 // remove those article where query article specifies the first
+                                 // lexicographical name and where the name of the article is
+                                 // lexicographically before it.
+                                 .filter(article -> !(queryArticle.getMinName().isPresent()
+                                     && article.getName().compareTo(queryArticle.getMinName().get()) < 0))
+                                 // remove those article where query article specifies the last
+                                 // lexicographical name and where the name of the article is
+                                 // lexicographically after it.
+                                 .filter(article -> !(queryArticle.getMaxName().isPresent()
+                                     && article.getName().compareTo(queryArticle.getMaxName().get()) < 0))
+                                 // remove those article which type is not the one to be included.
+                                 .filter(article -> !(queryArticle.getIncludeArticleType().isPresent()
+                                     && !article.getArticleType()
+                                                .equals(queryArticle.getIncludeArticleType()
+                                                .get())))
+                                 // remove those article which type is to be excluded.
+                                 .filter(article -> !(queryArticle.getExcludeArticleType().isPresent()
+                                     && article.getArticleType()
+                                               .equals(queryArticle.getExcludeArticleType()
+                                               .get())))
+                                 .sorted((a1, a2) -> compareBy(a1,
+                                                               a2,
+                                                               queryArticle.getSortBy(),
+                                                               queryArticle.getSortDescending()))
+                                 .collect(Collectors.toList()));
     }
 
     @Override
@@ -185,28 +216,29 @@ public final class WarehouseImpl implements Warehouse {
         //return q1.getValue().doubleValue() == q2.getValue().doubleValue() ? 0 : q1.getValue().doubleValue() > q2.getValue().doubleValue() ? 1 : -1;
         return Double.compare(q1.getValue().doubleValue(), q2.getValue().doubleValue()); //TODO remove
     }
-
     /**
      * Comparator which selects the correct comparator accordingly with the
      * {@link QueryStock.SortParameter} and returns its return value.
      * @param s1 the first {@link Stock} to compare.
      * @param s2 the second {@link Stock} to compare.
      * @param by the parameter used to compare the two {@link Stock}.
-     * @param descending defines the order of the sorting. If true returnes the value returned by
+     * @param descending defines the order of the sorting. If true returns the value returned by
      *                   the comparator multiplied by -1.
      * @return the return value of the selected comparator. An {@link Integer} less than 0 if the
      * first element is less than the second, 0 if the two elements are equal or an {@link Integer}
      * greater than 0 if the first element is greater than the second.
      */
-
     private Integer compareBy(final Stock s1,
                               final Stock s2,
                               final QueryStock.SortParameter by,
                               final boolean descending) {
-        Integer des = descending ? -1 : 1;
+        final int des = descending ? -1 : 1;
         switch (by) {
             case ARTICLE_NAME:
-                return des * s1.getArticle().getName().compareTo(s2.getArticle().getName());
+                return compareBy(s1.getArticle(),
+                                 s2.getArticle(),
+                                 QueryArticle.SortParameter.NAME,
+                                 descending);
             case EXPIRATION_DATE:
                 if (!s1.getExpirationDate().isPresent()) {
                     return des; // If the first doesn't have the expiration date,
@@ -219,6 +251,33 @@ public final class WarehouseImpl implements Warehouse {
                 return des * tempCmpQt(s1.getRemainingQuantity(), s2.getRemainingQuantity()); //TODO change
             case USED_QUANTITY:
                 return des * tempCmpQt(s1.getUsedQuantity(), s2.getUsedQuantity()); //TODO change
+            case NONE:
+            default:
+                return 0;
+        }
+    }
+    /**
+     * Comparator which selects the correct comparator accordingly with the
+     * {@link QueryArticle.SortParameter} and returns its return value.
+     * @param a1 the first {@link Article} to compare.
+     * @param a2 the second {@link Article} to compare.
+     * @param by the {@link QueryArticle.SortParameter} used to compare the two {@link Article}.
+     * @param descending defines the order of the sorting. If true returns the value returned by
+     *                   the comparator multiplied by -1.
+     * @return the return value of the selected comparator. An {@link Integer} less than 0 if the
+     * first element is less than the second, 0 if the two elements are equal or an {@link Integer}
+     * greater than 0 if the first element is greater than the second.
+     */
+    private Integer compareBy(final Article a1,
+                              final Article a2,
+                              final QueryArticle.SortParameter by,
+                              final boolean descending) {
+        final int des = descending ? -1 : 1;
+        switch (by) {
+            case NAME:
+                return des * a1.getName().compareTo(a2.getName());
+            case ID:
+                return des * a1.getId().compareTo(a2.getId());
             case NONE:
             default:
                 return 0;
