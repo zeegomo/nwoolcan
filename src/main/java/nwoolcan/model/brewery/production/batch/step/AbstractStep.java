@@ -1,7 +1,8 @@
 package nwoolcan.model.brewery.production.batch.step;
 
 import nwoolcan.model.brewery.production.batch.step.info.StepInfo;
-import nwoolcan.model.brewery.production.batch.step.info.UnmodifiableStepInfo;
+import nwoolcan.model.brewery.production.batch.step.info.ModifiableStepInfo;
+import nwoolcan.model.brewery.production.batch.step.info.StepInfoImpl;
 import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
 import nwoolcan.model.utils.Quantity;
@@ -10,12 +11,14 @@ import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.Arrays;
 
 /**
  * Abstract implementation of Step interface.
@@ -26,14 +29,14 @@ public abstract class AbstractStep implements Step {
     private static final String CANNOT_REGISTER_PARAMETER_MESSAGE = "Cannot register parameter if the step is finalized.";
     private static final String INVALID_PARAMETER_MESSAGE = "The parameter type is invalid for this step.";
 
-    private final StepInfo stepInfo;
+    private final ModifiableStepInfo stepInfo;
     private boolean finalized;
     private final Collection<Parameter> parameters;
 
     //Package-protected constructor only for inheritance.
-    AbstractStep(final StepInfo stepInfo) {
+    AbstractStep(final ModifiableStepInfo stepInfo) {
         this.stepInfo = stepInfo;
-        this.finalized = false;
+        this.finalized = stepInfo.getType().isEndType();
         this.parameters = new ArrayList<>();
     }
 
@@ -42,13 +45,13 @@ public abstract class AbstractStep implements Step {
      * Use this method for changing step infos properties by a subclass.
      * @return this object's step info that can be changed.
      */
-    protected final StepInfo getModifiableStepInfo() {
+    protected final ModifiableStepInfo getModifiableStepInfo() {
         return this.stepInfo;
     }
 
     @Override
     public final StepInfo getStepInfo() {
-        return new UnmodifiableStepInfo(this.stepInfo);
+        return new StepInfoImpl(this.stepInfo);
     }
 
     @Override
@@ -59,35 +62,29 @@ public abstract class AbstractStep implements Step {
     @Override
     public final Result<Empty> finalize(@Nullable final String note, final Date endDate, final Quantity remainingSize) {
         return Result.ofEmpty()
-                     .require(() -> !this.finalized, new IllegalStateException(ALREADY_FINALIZED_MESSAGE))
-                     .flatMap(() -> this.stepInfo.setNote(note))
+                     .require(() -> !this.isFinalized(), new IllegalStateException(ALREADY_FINALIZED_MESSAGE))
                      .flatMap(() -> this.stepInfo.setEndDate(endDate))
-                     .flatMap(() -> this.stepInfo.setEndStepSize(remainingSize))
-                     .peek(e -> this.finalized = true);
+                     .peek(e -> {
+                         this.stepInfo.setNote(note);
+                         this.stepInfo.setEndStepSize(remainingSize);
+                         this.finalized = true;
+                     });
     }
 
     @Override
-    public final Result<Collection<Parameter>> getParameters(final QueryParameter query) {
-
+    public final Collection<Parameter> getParameters(final QueryParameter query) {
         Stream<Parameter> s = this.parameters.stream();
+        final List<Predicate<Parameter>> filters = new ArrayList<>();
 
-        if (query.getParameterType().isPresent()) {
-            s = s.filter(p -> p.getType().equals(query.getParameterType().get()));
-        }
-        if (query.getGreaterThanValue().isPresent()) {
-            s = s.filter(p -> p.getRegistrationValue().doubleValue() >= query.getGreaterThanValue().get().doubleValue());
-        }
-        if (query.getLessThanValue().isPresent()) {
-            s = s.filter(p -> p.getRegistrationValue().doubleValue() <= query.getLessThanValue().get().doubleValue());
-        }
-        if (query.getExactValue().isPresent()) {
-            s = s.filter(p -> p.getRegistrationValue().doubleValue() == query.getExactValue().get().doubleValue());
-        }
-        if (query.getStartDate().isPresent()) {
-            s = s.filter(p -> p.getRegistrationDate().after(query.getStartDate().get()));
-        }
-        if (query.getEndDate().isPresent()) {
-            s = s.filter(p -> p.getRegistrationDate().before(query.getEndDate().get()));
+        query.getParameterType().ifPresent(pt -> filters.add(p -> p.getType().equals(pt)));
+        query.getGreaterThanValue().ifPresent(gtv -> filters.add(p -> p.getRegistrationValue().doubleValue() >= gtv.doubleValue()));
+        query.getLessThanValue().ifPresent(ltv -> filters.add(p -> p.getRegistrationValue().doubleValue() <= ltv.doubleValue()));
+        query.getExactValue().ifPresent(ev -> filters.add(p -> p.getRegistrationValue().doubleValue() == ev.doubleValue()));
+        query.getStartDate().ifPresent(sd -> filters.add(p -> !sd.after(p.getRegistrationDate())));
+        query.getEndDate().ifPresent(ed -> filters.add(p -> !ed.before(p.getRegistrationDate())));
+
+        for (final Predicate<Parameter> f : filters) {
+            s = s.filter(f);
         }
 
         if (query.isSortByValue()) {
@@ -98,7 +95,7 @@ public abstract class AbstractStep implements Step {
             s = s.sorted(Comparator.comparingLong(d -> (query.isSortDescending() ? -1 : 1) * d.getRegistrationDate().getTime()));
         }
 
-        return Result.of(s.collect(Collectors.toList()));
+        return s.collect(Collectors.toList());
     }
 
     @Override
@@ -116,7 +113,7 @@ public abstract class AbstractStep implements Step {
      */
     @Override
     public String toString() {
-        return "stepInfo=" + stepInfo
+        return "StepInfo=" + stepInfo
             + ", finalized=" + finalized
             + ", parameters=" + Arrays.toString(parameters.toArray());
     }
