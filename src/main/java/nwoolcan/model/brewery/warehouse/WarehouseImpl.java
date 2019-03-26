@@ -23,17 +23,8 @@ import java.util.stream.Collectors;
 public final class WarehouseImpl implements Warehouse {
 
     private static final String ARTICLE_ALREADY_REGISTERED = "The article was already registered.";
-    private final Map<Stock, Stock> stocks;
-    private final Set<Article> articles;
-
-    /**
-     * Constructor of the Warehouse.
-     */
-    // Package protected
-    WarehouseImpl() {
-        this.stocks = new HashMap<>();
-        this.articles = new HashSet<>();
-    }
+    private final Map<Stock, Stock> stocks = new HashMap<>();
+    private final Set<Article> articles = new HashSet<>();
 
     @Override
     public Result<List<Stock>> getStocks(final QueryStock queryStock) {
