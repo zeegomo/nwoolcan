@@ -43,14 +43,13 @@ public final class ArticleIdManager {
      */
     // default so that only article impl can generate it.
     synchronized Integer getId(final String name,
-                                      final ArticleType articleType,
-                                      final UnitOfMeasure unitOfMeasure) {
+                               final ArticleType articleType,
+                               final UnitOfMeasure unitOfMeasure) {
         List<Object> tuple = Arrays.asList(name, articleType, unitOfMeasure);
         if (!existingIds.containsKey(tuple)) {
             existingIds.put(tuple, nextAvailableId);
             nextAvailableId++;
         }
-
         return existingIds.get(tuple);
     }
     /**
