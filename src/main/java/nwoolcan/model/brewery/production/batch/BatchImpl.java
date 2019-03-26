@@ -27,6 +27,9 @@ public final class BatchImpl implements Batch {
 
     private static final String CANNOT_CREATE_STEP_EXCEPTION = "Cannot create a step with the given type: ";
     private static final String CANNOT_FINALIZE_CURRENT_STEP = "Cannot finalize current step.";
+    private static final String BATCH_IS_ENDED_MESSAGE = "Cannot perform operation because batch is in ended state.";
+    private static final Object CANNOT_GO_TO_STEP_MESSAGE = "From this step, cannot go to step: ";
+    private static final String BATCH_NOT_ENDED_MESSAGE = "Cannot perform operation because batch is not in ended state.";
 
     private final int id;
     private final ModifiableBatchInfo batchInfo;
@@ -42,6 +45,7 @@ public final class BatchImpl implements Batch {
      * @param initialSize the initial size of the batch.
      * @param ingredients the ingredients of the beer made by the batch.
      * @param initialStep the initial step of the batch.
+     * @throws IllegalArgumentException if the initial step cannot be created.
      */
     public BatchImpl(final BeerDescription beerDescription,
                      final BatchMethod batchMethod,
@@ -50,7 +54,7 @@ public final class BatchImpl implements Batch {
                      final StepType initialStep) {
         this.id = BatchIdGenerator.getInstance().getNextId();
 
-        //TODO insert ingredients
+        //TODO insert ingredients and water measurements.
         this.batchInfo = new ModifiableBatchInfo(beerDescription, batchMethod, initialSize);
 
         final Result<Step> res = Steps.create(initialStep);
@@ -98,8 +102,8 @@ public final class BatchImpl implements Batch {
     @Override
     public Result<Empty> moveToNextStep(final StepType nextStepType) {
         return Result.of(this.getCurrentStep())
-                     .require(() -> !this.isEnded(), new IllegalStateException())
-                     .require(p -> p.getNextStepTypes().contains(nextStepType), new IllegalArgumentException())
+                     .require(() -> !this.isEnded(), new IllegalStateException(BATCH_IS_ENDED_MESSAGE))
+                     .require(p -> p.getNextStepTypes().contains(nextStepType), new IllegalArgumentException(CANNOT_GO_TO_STEP_MESSAGE + nextStepType.toString()))
                      .peek(this::checkAndFinalizeStep)
                      .flatMap(() -> Steps.create(nextStepType))
                      .peek(this.steps::add)
@@ -115,7 +119,7 @@ public final class BatchImpl implements Batch {
     @Override
     public Result<Empty> setEvaluation(final BatchEvaluation evaluation) {
         return Result.ofEmpty()
-                     .require(this::isEnded, new IllegalStateException())
+                     .require(this::isEnded, new IllegalStateException(BATCH_NOT_ENDED_MESSAGE))
                      .peek(e -> this.batchEvaluation = evaluation);
     }
 
