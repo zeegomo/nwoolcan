@@ -1,6 +1,5 @@
-package nwoolcan.model.brewery.warehouse;
+package nwoolcan.model.brewery.warehouse.stock;
 
-import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import org.junit.Assert;

@@ -1,13 +1,11 @@
-package nwoolcan.model.brewery.warehouse;
+package nwoolcan.model.brewery.warehouse.stock;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleImpl;
-import nwoolcan.model.brewery.warehouse.stock.QueryStock;
-import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
-import nwoolcan.model.brewery.warehouse.stock.StockState;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
+
 import org.junit.Assert;
 import org.junit.Test;
 

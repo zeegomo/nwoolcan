@@ -1,11 +1,7 @@
-package nwoolcan.model.brewery.warehouse;
+package nwoolcan.model.brewery.warehouse.stock;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleImpl;
-import nwoolcan.model.brewery.warehouse.stock.Record;
-import nwoolcan.model.brewery.warehouse.stock.Stock;
-import nwoolcan.model.brewery.warehouse.stock.StockImpl;
-import nwoolcan.model.brewery.warehouse.stock.StockState;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;

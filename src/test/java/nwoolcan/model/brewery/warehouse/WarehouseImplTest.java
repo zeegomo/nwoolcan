@@ -2,6 +2,8 @@ package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleImpl;
+import nwoolcan.model.brewery.warehouse.article.QueryArticle;
+import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
 import nwoolcan.model.brewery.warehouse.stock.Record;
@@ -40,9 +42,14 @@ public class WarehouseImplTest {
     private final Record record2 = new Record(quantity1, Record.Action.ADDING);
     private final Record record3 = new Record(quantity2, Record.Action.ADDING);
     private final Record record4 = new Record(quantity3, Record.Action.ADDING);
+    private static final Integer MIN_ID = 1;
+    private static final Integer MAX_ID = 1;
+    private static final String MIN_NAME = "DummyName";
+    private static final String MAX_NAME = "DummyName2";
     private Date date1 = new Date();
     private Date date2 = new Date(date1.getTime() + 10L);
     private Date date3 = new Date(date2.getTime() + 10L);
+
 
     /**
      * Initialize the warehouse.
@@ -147,8 +154,44 @@ public class WarehouseImplTest {
         final List<Stock> lisStock = resLisStock.getValue();
         for (final Stock s : lisStock) {
             Assert.assertEquals(article, s.getArticle());
-            Assert.assertTrue(!s.getExpirationDate().isPresent() || !s.getExpirationDate().get().before(date2));
+            Assert.assertTrue((!s.getExpirationDate()
+                                 .isPresent())
+                           || (!s.getExpirationDate()
+                                 .get()
+                                 .before(date2)));
         }
 
+    }
+    /**
+     * Test getArticles with filter by id.
+     */
+    @Test
+    public void testGetArticlesFilterById() {
+        final QueryArticle queryArticle = new QueryArticleBuilder().setMinID(MIN_ID)
+                                                                   .setMaxID(MAX_ID)
+                                                                   .build();
+        final Result<List<Article>> resLisArticle = warehouse.getArticles(queryArticle);
+        Assert.assertTrue(resLisArticle.isPresent());
+        final List<Article> lisArticle = resLisArticle.getValue();
+        for (final Article a : lisArticle) {
+            Assert.assertTrue(a.getId() >= MIN_ID);
+            Assert.assertTrue(a.getId() <= MAX_ID);
+        }
+    }
+    /**
+     * Test getArticles with filter by name.
+     */
+    @Test
+    public void testGetArticlesFilterByName() {
+        final QueryArticle queryArticle = new QueryArticleBuilder().setMinName(MIN_NAME)
+                                                                   .setMaxName(MAX_NAME)
+                                                                   .build();
+        final Result<List<Article>> resLisArticle = warehouse.getArticles(queryArticle);
+        Assert.assertTrue(resLisArticle.isPresent());
+        final List<Article> lisArticle = resLisArticle.getValue();
+        for (final Article a : lisArticle) {
+            Assert.assertTrue(a.getName().compareTo(MIN_NAME) >= 0);
+            Assert.assertTrue(a.getName().compareTo(MAX_NAME) <= 0);
+        }
     }
 }
