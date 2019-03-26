@@ -14,7 +14,7 @@ public class ArticleImpl implements Article {
     private final Integer id;
     private final String name;
     private final UnitOfMeasure unitOfMeasure;
-    private final ArticleIdManager idManager = ArticleIdManager.getInstance();
+    private static final ArticleIdManager ID_MANAGER = ArticleIdManager.getInstance();
 
     /**
      * Constructor of the class. Only article of type miscellaneous can be constructed.
@@ -27,7 +27,7 @@ public class ArticleImpl implements Article {
         if (this.name.equals("")) {
             throw new IllegalArgumentException("Name can not be empty.");
         }
-        this.id = idManager.getId(name, getArticleType(), unitOfMeasure);
+        this.id = ID_MANAGER.getId(name, getArticleType(), unitOfMeasure);
     }
 
     @Override
