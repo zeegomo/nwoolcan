@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 public final class WarehouseImpl implements Warehouse {
 
     private static final String ARTICLE_ALREADY_REGISTERED = "The article was already registered.";
+    private static final String ARTICLE_NOT_REGISTERED = "The article was not registered yet.";
     private static final String ARTICLE_NOT_REGISTERED_AT_ID_MANAGER
                                             = "The article was not registered at the id manager. "
                                             + "Build it with ArticleImpl or its subclass.";
@@ -163,12 +164,11 @@ public final class WarehouseImpl implements Warehouse {
 
     @Override
     public Result<Empty> addArticle(final Article newArticle) {
-        return Result.ofEmpty()
-                     .require(() -> !this.articles.contains(newArticle),
-                                    new IllegalArgumentException(ARTICLE_ALREADY_REGISTERED))
-                     .require(() -> ID_MANAGER.checkId(newArticle),
-                                    new IllegalArgumentException(ARTICLE_NOT_REGISTERED_AT_ID_MANAGER))
-                     .peek(res -> updateArticles(newArticle));
+        return Result.of(newArticle)
+                     .require(this::requireArticleNotRegistered,
+                                new IllegalArgumentException(ARTICLE_ALREADY_REGISTERED))
+                     .flatMap(this::updateArticles)
+                     .toEmpty();
     }
 
     @Override
@@ -176,8 +176,9 @@ public final class WarehouseImpl implements Warehouse {
                                    @Nullable final Date expirationDate,
                                    final Record record) {
         return Result.of(new StockImpl(article, expirationDate))
-                     .peek(stock -> updateArticles(article))
-                     .flatMap(stock -> Result.of(this.getStock(stock)))
+                     .map(this::getStock)
+                     .require(() -> !requireArticleNotRegistered(article),
+                         new IllegalArgumentException(ARTICLE_NOT_REGISTERED))
                      .flatMap(stock -> stock.addRecord(record))
                      .toEmpty();
     }
@@ -189,9 +190,22 @@ public final class WarehouseImpl implements Warehouse {
     /**
      * Adds an {@link Article} to the {@link Set} of articles if not present yet.
      * @param article the article to be added.
+     * @return a {@link Result} reporting whether errors occurred.
      */
-    private void updateArticles(final Article article) {
-        this.articles.add(article);
+    private Result<Article> updateArticles(final Article article) {
+        return Result.of(article)
+                     .require(ID_MANAGER::checkId,
+                                    new IllegalArgumentException(ARTICLE_NOT_REGISTERED_AT_ID_MANAGER))
+                     .peek(articles::add);
+    }
+
+    /**
+     * Return a boolean which specifies whether the article is already registered or not.
+     * @param article to check.
+     * @return a boolean which specifies whether the article is already registered or not.
+     */
+    private boolean requireArticleNotRegistered(final Article article) {
+        return !this.articles.contains(article);
     }
     /**
      * Given a {@link Stock}, if present it will return the {@link Stock} present in the
