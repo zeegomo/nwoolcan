@@ -13,8 +13,6 @@ import java.util.Optional;
  */
 public final class QueryStock {
 
-
-
     /**
      * Enum which denotes the field on which the sort will be based.
      */
@@ -42,7 +40,6 @@ public final class QueryStock {
     }
     @Nullable
     private final Article article;
-
     @Nullable
     private final Date expiresBefore;
     @Nullable

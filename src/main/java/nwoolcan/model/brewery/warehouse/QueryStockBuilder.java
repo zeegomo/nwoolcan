@@ -50,7 +50,6 @@ public final class QueryStockBuilder {
         this.article = article;
         return this;
     }
-
     /**
      * Sets the last expiration date to be returned by query.
      * @param date the last expiration {@link Date} to be returned by the query.
@@ -123,7 +122,6 @@ public final class QueryStockBuilder {
         this.stockStateExcluded = stockState;
         return this;
     }
-
     /**
      * Sets the parameter which will be used to sort the stocks in the query.
      * @param sortParameter the {@link QueryStock.SortParameter} which will be used to sort the
@@ -134,7 +132,6 @@ public final class QueryStockBuilder {
         this.sortParameter = sortParameter;
         return this;
     }
-
     /**
      * Sets the order of the sorting.
      * @param condition a boolean which is true if the stocks have to be sort in a descending way.
@@ -144,7 +141,6 @@ public final class QueryStockBuilder {
         this.sortDescending = condition;
         return this;
     }
-
     /**
      * Builds the query, after getting all the parameters. It also checks whether the elements of
      * the query use the same {@link UnitOfMeasure}.
