@@ -15,7 +15,7 @@ import java.util.Map;
 public final class ArticleIdManager {
 
     @Nullable private static ArticleIdManager instance;
-    private Integer nextAvailableId;
+    private int nextAvailableId;
     private Map<List<Object>, Integer> existingIds; // TODO change with tuples
 
     private ArticleIdManager() {
