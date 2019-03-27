@@ -19,7 +19,8 @@ public class WaterMeasurementBuilderTest {
     @Test
     public void testSuccessfulBuild() {
         final int value = 15;
-        WaterMeasurementBuilder builder = new WaterMeasurementBuilder().addCalciumIonsRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, value));
+        WaterMeasurementBuilder builder = new WaterMeasurementBuilder()
+            .addCalciumIonsRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, value));
         Result<WaterMeasurement> water = builder.build();
         assertTrue(water.isPresent());
         assertFalse(water.getValue().getBicarbonateIons().isPresent());
@@ -42,7 +43,8 @@ public class WaterMeasurementBuilderTest {
     @Test
     public void testFailedBuild() {
         final int value = 15;
-        WaterMeasurementBuilder builder = new WaterMeasurementBuilder().addCalciumIonsRegistration(new ParameterImpl(ParameterTypeEnum.ABV, value));
+        WaterMeasurementBuilder builder = new WaterMeasurementBuilder()
+            .addCalciumIonsRegistration(new ParameterImpl(ParameterTypeEnum.ABV, value));
         Result<WaterMeasurement> water = builder.build();
         assertTrue(water.isError());
 

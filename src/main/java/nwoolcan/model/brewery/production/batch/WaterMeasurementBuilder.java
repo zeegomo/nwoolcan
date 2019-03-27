@@ -77,6 +77,13 @@ public class WaterMeasurementBuilder {
         return this;
     }
     /**
+     * Return whether this builder can build another instance or have to reset.
+     * @return true if this builder can build, false otherwise.
+     */
+    public boolean canBuild() {
+        return !this.built;
+    }
+    /**
      * Build the water measurement object.
      * @return a {@link Result} holding a {@link WaterMeasurement} if everything went well.
      */
@@ -84,7 +91,7 @@ public class WaterMeasurementBuilder {
         return Result.of(this.parameter)
                      .require(params -> params.values().stream().allMatch(p -> p.getType().equals(ParameterTypeEnum.WATER_MEASUREMENT)),
                          new IllegalArgumentException(INVALID_PARAMETER))
-                     .require(() -> !this.built, new IllegalStateException(BUILDER_BUILT))
+                     .require(this::canBuild, new IllegalStateException(BUILDER_BUILT))
                      .peek(params -> this.built = true)
                      .map(WaterMeasurementImpl::new);
     }
