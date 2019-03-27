@@ -29,9 +29,9 @@ public interface Brewery {
      */
     Result<Collection<Batch>> getBatches(QueryBatch queryBatch);
     /**
-     * Creates a Batch and inserts it into the batches of the brewery.
-     * @param batchInfo describes the main info of the new {@link Batch}.
+     * Adds a Batch to the brewery.
+     * @param batch to be added
      * @return a {@link Result} of {@link Empty} which reports possible errors.
      */
-    Result<Empty> createBatch(BatchInfo batchInfo);
+    Result<Empty> addBatch(Batch batch);
 }
