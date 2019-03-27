@@ -23,7 +23,7 @@ public class WaterMeasurementBuilder {
      * @param e the element measured.
      * @return this.
      */
-    public WaterMeasurementBuilder addCalciumIonsRegistration(final Parameter p, final WaterMeasurement.Elements e) {
+    public WaterMeasurementBuilder addRegistration(final Parameter p, final WaterMeasurement.Elements e) {
         this.parameter.put(e, p);
         return this;
     }
