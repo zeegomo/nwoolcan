@@ -16,7 +16,7 @@ public final class ArticleIdManager {
 
     @Nullable private static ArticleIdManager instance;
     private int nextAvailableId;
-    private Map<List<Object>, Integer> existingIds; // TODO change with tuples
+    private Map<List<Object>, Integer> existingIds;
 
     private ArticleIdManager() {
         nextAvailableId = 1;
