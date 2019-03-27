@@ -64,7 +64,7 @@ public final class StockImpl implements Stock {
 
     @Override
     public StockState getState() {
-        if (this.remainingQuantity.getValue().doubleValue() > 0) {
+        if (this.remainingQuantity.getValue() > 0) {
             if (this.expirationDate != null && this.expirationDate.before(new Date())) {
                 return StockState.EXPIRED;
             }

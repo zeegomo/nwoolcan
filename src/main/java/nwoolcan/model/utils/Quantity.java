@@ -9,11 +9,11 @@ import java.util.Objects;
  */
 public final class Quantity {
 
-    private final Number value;
+    private final int value;
     private final UnitOfMeasure unitOfMeasure;
 
     //Private constructor to use as a static factory with method Quantity.of(...).
-    private Quantity(final Number value, final UnitOfMeasure um) {
+    private Quantity(final int value, final UnitOfMeasure um) {
         this.value = value;
         this.unitOfMeasure = um;
     }
@@ -22,7 +22,7 @@ public final class Quantity {
      * Returns the quantity value.
      * @return quantity value.
      */
-    public Number getValue() {
+    public int getValue() {
         return this.value;
     }
 
@@ -41,8 +41,8 @@ public final class Quantity {
      * @return a new {@link Quantity} with the specified value and unit of measure.
      * @throws IllegalArgumentException if the value is negative or if the unit of measure cannot be a quantity.
      */
-    public static Quantity of(final Number value, final UnitOfMeasure unitOfMeasure) {
-        final Result<Quantity> res = QuantityChecker.check(new Quantity(Numbers.of(value), unitOfMeasure));
+    public static Quantity of(final int value, final UnitOfMeasure unitOfMeasure) {
+        final Result<Quantity> res = QuantityChecker.check(new Quantity(value, unitOfMeasure));
         if (res.isError()) {
             throw new IllegalArgumentException(res.getError());
         }
@@ -58,7 +58,7 @@ public final class Quantity {
             return false;
         }
         Quantity quantity = (Quantity) o;
-        return Objects.equals(this.value, quantity.value)
+        return this.value == quantity.value
             && this.unitOfMeasure == quantity.unitOfMeasure;
     }
 

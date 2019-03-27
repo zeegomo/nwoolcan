@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class RecordTest {
 
-    private static final Double NUM = 1.0d;
+    private static final int NUM = 1;
     /**
      * Test getters.
      */
