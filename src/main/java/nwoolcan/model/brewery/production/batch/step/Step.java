@@ -12,7 +12,6 @@ import nwoolcan.utils.Result;
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Observable;
 import java.util.Set;
 
 /**
@@ -82,6 +81,9 @@ public interface Step {
      * @return a {@link Result} that can contain an error cited before.
      */
     Result<Empty> addParameter(Parameter parameter);
-
+    /**
+     * Register an observer for this step.
+     * @param observer the observer to register.
+     */
     void addObserver(Observer<Parameter> observer);
 }
