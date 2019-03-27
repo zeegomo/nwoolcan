@@ -1,15 +1,14 @@
 package nwoolcan.model.brewery.production.batch;
 
+import javafx.util.Pair;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.brewery.production.batch.step.Steps;
-import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
-import nwoolcan.utils.Observer;
-import nwoolcan.utils.Pair;
+
 import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 
