@@ -5,13 +5,13 @@ package nwoolcan.model.utils;
  */
 public enum UnitOfMeasure {
     /**
-     * Kilograms.
+     * Grams.
      */
-    Kilogram,
+    Gram,
     /**
-     * Liters.
+     * Milliliters.
      */
-    Liter,
+    Milliliter,
     /**
      * Basic units.
      */

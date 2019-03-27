@@ -18,7 +18,7 @@ public class RecordTest {
      */
     @Test
     public void getters() {
-        final Quantity quantity = Quantity.of(NUM, UnitOfMeasure.Kilogram);
+        final Quantity quantity = Quantity.of(NUM, UnitOfMeasure.Gram);
         final Date date = new Date();
         final Record.Action action = Record.Action.ADDING;
         final Record record = new Record(quantity, date, action);
