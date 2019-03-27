@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery;
 
 import nwoolcan.model.brewery.production.batch.Batch;
+import nwoolcan.model.brewery.production.batch.QueryBatch;
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.WarehouseImpl;
 import nwoolcan.utils.Empty;

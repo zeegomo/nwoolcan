@@ -1,4 +1,4 @@
-package nwoolcan.model.brewery;
+package nwoolcan.model.brewery.production.batch;
 
 /**
  * Query Batch.
