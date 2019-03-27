@@ -3,7 +3,6 @@ package nwoolcan.model.brewery.production.batch;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepType;
-import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.production.batch.step.Steps;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
@@ -13,7 +12,13 @@ import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Date;
+
 
 /**
  * Basic batch implementation.
@@ -29,13 +34,21 @@ public final class BatchImpl implements Batch {
     @Nullable
     private BatchEvaluation batchEvaluation;
 
+    /**
+     * Batch Impl.
+     * @param beerDescription the description of the beer.
+     * @param batchMethod the method of the batch.
+     * @param initialSize the size of the batch.
+     * @param ingredients the ingredients for this batch.
+     * @param initialStep the starting point.
+     */
     public BatchImpl(final BeerDescription beerDescription,
                      final BatchMethod batchMethod,
                      final Quantity initialSize,
                      final Collection<Pair<IngredientArticle, Quantity>> ingredients,
                      final StepType initialStep) {
         //TODO insert parameters
-        this.batchInfo = new ModifiableBatchInfo(beerDescription, batchMethod, initialSize);
+        this.batchInfo = new ModifiableBatchInfo(ingredients, beerDescription, batchMethod, initialSize);
 
         final Result<Step> res = Steps.create(initialStep);
         if (res.isError()) {
