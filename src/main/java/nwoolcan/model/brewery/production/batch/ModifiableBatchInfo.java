@@ -1,7 +1,6 @@
 package nwoolcan.model.brewery.production.batch;
 
 import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
-import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
@@ -9,9 +8,7 @@ import nwoolcan.utils.Observer;
 import nwoolcan.utils.Pair;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
 
 //Package-protected
@@ -19,7 +16,7 @@ class ModifiableBatchInfo implements BatchInfo, Observer<Parameter> {
     private final BeerDescription beerDescription;
     private final BatchMethod method;
     private final Quantity size;
-    private final Collection<IngredientArticle> ingredients = new ArrayList<>();
+    private final Collection<Pair<IngredientArticle, Quantity>> ingredients;
     @Nullable
     private final WaterMeasurement measurement;
     @Nullable
@@ -33,16 +30,25 @@ class ModifiableBatchInfo implements BatchInfo, Observer<Parameter> {
     @Nullable
     private Parameter ibu;
 
-    //Package-protected
-    ModifiableBatchInfo(final BeerDescription beerDescription, final BatchMethod method, final Quantity size, final WaterMeasurement measurement) {
+    //Package-private
+    ModifiableBatchInfo(final Collection<Pair<IngredientArticle, Quantity>> ingredients,
+                        final BeerDescription beerDescription,
+                        final BatchMethod method,
+                        final Quantity size,
+                        final WaterMeasurement measurement) {
+        this.ingredients = ingredients;
         this.beerDescription = beerDescription;
         this.method = method;
         this.size = size;
         this.measurement = measurement;
     }
 
-    //Package-protected
-    ModifiableBatchInfo(final BeerDescription beerDescription, final BatchMethod method, final Quantity size) {
+    //Package-private
+    ModifiableBatchInfo(final Collection<Pair<IngredientArticle, Quantity>> ingredients,
+                        final BeerDescription beerDescription,
+                        final BatchMethod method,
+                        final Quantity size) {
+        this.ingredients = ingredients;
         this.beerDescription = beerDescription;
         this.method = method;
         this.size = size;
@@ -96,7 +102,7 @@ class ModifiableBatchInfo implements BatchInfo, Observer<Parameter> {
 
     @Override
     public Collection<Pair<IngredientArticle, Quantity>> listIngredients() {
-        return Collections.emptyList();
+        return this.ingredients;
     }
 
     @Override
