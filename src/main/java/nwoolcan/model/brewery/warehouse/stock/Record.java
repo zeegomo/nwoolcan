@@ -2,9 +2,7 @@ package nwoolcan.model.brewery.warehouse.stock;
 
 import nwoolcan.model.utils.Quantity;
 
-import java.util.Calendar;
 import java.util.Date;
-import org.apache.commons.lang3.time.DateUtils;
 
 /**
  * Class which keeps track of a {@link Quantity} and a {@link Date}.
@@ -42,7 +40,7 @@ public final class Record {
      * @param action which states if quantity is added or subtracted.
      */
     public Record(final Quantity quantity, final Action action) {
-        this(quantity, DateUtils.round(new Date(), Calendar.MINUTE), action);
+        this(quantity, new Date(), action);
     }
     /**
      * Getter for the date.
