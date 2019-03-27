@@ -3,7 +3,6 @@ package nwoolcan.model.brewery.production.batch;
 import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
-import nwoolcan.utils.Observer;
 import nwoolcan.utils.Pair;
 
 import java.util.Collection;
