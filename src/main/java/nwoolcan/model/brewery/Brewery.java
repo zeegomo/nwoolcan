@@ -15,7 +15,12 @@ public interface Brewery {
      * Getter of the name of the {@link Brewery}.
      * @return a {@link String} with the name of the {@link Brewery}.
      */
-    String getName();
+    String getBreweryName();
+    /**
+     * Getter of the name of the owner of the {@link Brewery}.
+     * @return a {@link String} with the name of the owner of the {@link Brewery}.
+     */
+    String getOwnerName();
     /**
      * Getter of the only {@link Warehouse} in the {@link Brewery}.
      * @return the only {@link Warehouse} in the {@link Brewery}.
