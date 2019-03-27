@@ -31,7 +31,7 @@ public class WaterMeasurementBuilder {
         return this;
     }
     /**
-     * Add Calcium measurement.
+     * Add magnesium measurement.
      * @param p the parameter holding the measure.
      * @return this.
      */
@@ -40,7 +40,7 @@ public class WaterMeasurementBuilder {
         return this;
     }
     /**
-     * Add Calcium measurement.
+     * Add sodium measurement.
      * @param p the parameter holding the measure.
      * @return this.
      */
@@ -49,12 +49,31 @@ public class WaterMeasurementBuilder {
         return this;
     }
     /**
-     * Add Calcium measurement.
+     * Add bicarbonate measurement.
+     * @param p the parameter holding the measure.
+     * @return this.
+     */
+    public WaterMeasurementBuilder addBicarbonateRegistration(final Parameter p) {
+        this.parameter.put(Ions.BICARBONATE, p);
+        return this;
+    }
+    /**
+     * Add sulfate measurement.
      * @param p the parameter holding the measure.
      * @return this.
      */
     public WaterMeasurementBuilder addSulfateIonsRegistration(final Parameter p) {
         this.parameter.put(Ions.SULFATE, p);
+        return this;
+    }
+
+    /**
+     * Add chloride measurement.
+     * @param p the parameter holding the measure.
+     * @return this.
+     */
+    public WaterMeasurementBuilder addChlorideIonsRegistration(final Parameter p) {
+        this.parameter.put(Ions.CHLORIDE, p);
         return this;
     }
     /**
@@ -131,6 +150,17 @@ public class WaterMeasurementBuilder {
         @Override
         public int hashCode() {
             return Objects.hash(parameter);
+        }
+
+        @Override
+        public String toString() {
+            return "[WaterMeasurementImpl]{"
+                + " calcium = " + this.parameter.get(Ions.CALCIUM)
+                + ", sodium = " + this.parameter.get(Ions.SODIUM)
+                + ", magnesium = " + this.parameter.get(Ions.SODIUM)
+                + ", bicarbonate = " + this.parameter.get(Ions.BICARBONATE)
+                + ", chloride = " + this.parameter.get(Ions.CHLORIDE)
+                + '}';
         }
     }
 }
