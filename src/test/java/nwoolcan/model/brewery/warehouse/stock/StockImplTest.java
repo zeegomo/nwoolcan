@@ -1,4 +1,4 @@
-package nwoolcan.model.brewery.warehouse;
+package nwoolcan.model.brewery.warehouse.stock;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleImpl;
@@ -37,7 +37,7 @@ public class StockImplTest {
                                                        + "record if the quantity is not available";
     private static final UnitOfMeasure UOM = UnitOfMeasure.Kilogram;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.Liter;
-    private static final Article ARTICLE = new ArticleImpl(ID, NAME, UOM);
+    private static final Article ARTICLE = new ArticleImpl(NAME, UOM);
 
     /**
      * Initialize structures.
@@ -59,9 +59,11 @@ public class StockImplTest {
     @Test
     public void testGettersAndRecords() {
         Assert.assertEquals(ARTICLE, stock.getArticle());
-        Assert.assertTrue(Quantities.remove(record1.getQuantity(), record2.getQuantity()).isPresent());
-        Assert.assertEquals(Quantities.remove(record1.getQuantity(), record2.getQuantity()).getValue(),
-            stock.getRemainingQuantity());
+        Assert.assertTrue(Quantities.remove(record1.getQuantity(),
+                                            record2.getQuantity()).isPresent());
+        Assert.assertEquals(Quantities.remove(record1.getQuantity(),
+                                              record2.getQuantity()).getValue(),
+                                              stock.getRemainingQuantity());
         Assert.assertEquals(record2.getQuantity(), stock.getUsedQuantity());
         Assert.assertTrue(stock.getExpirationDate().isPresent());
         Assert.assertEquals(expDate, stock.getExpirationDate().get());
@@ -72,7 +74,6 @@ public class StockImplTest {
         Assert.assertFalse(stock1.getExpirationDate().isPresent());
         Assert.assertEquals(StockState.AVAILABLE, stock1.getState());
     }
-
     /**
      * Test that adding an incompatible record generates an Error {@link Result}.
      */
