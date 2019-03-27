@@ -5,9 +5,11 @@ import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
+import org.apache.commons.lang3.time.DateUtils;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +40,7 @@ public final class StockImpl implements Stock {
     public StockImpl(final Article article, @Nullable final Date expirationDate) {
         Date creationMoment = new Date();
         this.article = article;
-        this.expirationDate = expirationDate; // It can be present or not.
+        this.expirationDate = expirationDate == null ? null : DateUtils.round(expirationDate, Calendar.DATE);
         this.creationDate = creationMoment;
         this.lastChangeDate = creationMoment;
         this.remainingQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure());
