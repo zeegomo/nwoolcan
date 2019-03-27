@@ -9,33 +9,39 @@ import java.util.Optional;
  */
 public interface WaterMeasurement {
         /**
-         * Returns the amount of Ca+2 in mg/L.
-         * @return a {@link Parameter} describing Ca+2 levels
+         * Water elements measured.
          */
-        Optional<Parameter> getCalciumIons();
+        enum Elements {
+                /**
+                 * Ca+2.
+                 */
+                CALCIUM,
+                /**
+                 * Mg+2.
+                 */
+                MAGNESIUM,
+                /**
+                 * Na+1.
+                 */
+                SODIUM,
+                /**
+                 * HCO3-1.
+                 */
+                BICARBONATE,
+                /**
+                 * SO4-2.
+                 */
+                SULFATE,
+                /**
+                 * Cl-1.
+                 */
+                CHLORIDE;
+        }
+
         /**
-         * Returns the amount of Mg+2 in mg/L.
-         * @return a {@link Parameter} describing Mg+2 levels
+         * Return the measurement of the specific element, if available.
+         * @param e the element of which we want to know the measurement.
+         * @return a {@link Parameter}.
          */
-        Optional<Parameter> getMagnesiumIons();
-        /**
-         * Returns the amount of Na+1 in mg/L.
-         * @return a {@link Parameter} describing Na+1 levels
-         */
-        Optional<Parameter> getSodiumIons();
-        /**
-         * Returns the amount of HCO3-1 in mg/L.
-         * @return a {@link Parameter} describing HCO3-1 levels
-         */
-        Optional<Parameter> getBicarbonateIons();
-        /**
-         * Returns the amount of SO4-2 in mg/L.
-         * @return a {@link Parameter} describing SO4-2 levels
-         */
-        Optional<Parameter> getSulfateIons();
-        /**
-         * Returns the amount of Cl-1 in mg/L.
-         * @return a {@link Parameter} describing Cl-1 levels
-         */
-        Optional<Parameter> getChlorideIons();
+        Optional<Parameter> getMeasurement(Elements e);
 }
