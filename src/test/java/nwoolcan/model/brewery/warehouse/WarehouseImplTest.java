@@ -154,11 +154,11 @@ public class WarehouseImplTest {
         final List<Stock> lisStock = resLisStock.getValue();
         for (final Stock s : lisStock) {
             Assert.assertEquals(article, s.getArticle());
-            Assert.assertTrue((!s.getExpirationDate()
-                                 .isPresent())
-                           || (!s.getExpirationDate()
+            Assert.assertTrue(!s.getExpirationDate()
+                                 .isPresent()
+                           || !s.getExpirationDate()
                                  .get()
-                                 .before(date2)));
+                                 .before(date2));
         }
 
     }
