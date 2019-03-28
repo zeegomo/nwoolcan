@@ -21,14 +21,14 @@ public class StepsTest {
      */
     @Test
     public void testSimpleCreation() {
-        Result<Step> res = Steps.create(StepTypeEnum.Aging);
+        Result<Step> res = Steps.create(StepTypeEnum.AGING);
         Assert.assertTrue(res.isPresent());
-        Assert.assertEquals(StepTypeEnum.Aging, res.getValue().getStepInfo().getType());
+        Assert.assertEquals(StepTypeEnum.AGING, res.getValue().getStepInfo().getType());
 
         Date d = new Date();
-        res = Steps.create(StepTypeEnum.Mashing, d);
+        res = Steps.create(StepTypeEnum.MASHING, d);
         Assert.assertTrue(res.isPresent());
-        Assert.assertEquals(StepTypeEnum.Mashing, res.getValue().getStepInfo().getType());
+        Assert.assertEquals(StepTypeEnum.MASHING, res.getValue().getStepInfo().getType());
         Assert.assertEquals(d, res.getValue().getStepInfo().getStartDate());
     }
 

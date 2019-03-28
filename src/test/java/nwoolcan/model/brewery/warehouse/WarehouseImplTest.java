@@ -27,8 +27,8 @@ public class WarehouseImplTest {
     private static final Integer ONE = 1;
     private static final Integer TEN = 10;
     private static final String NAME = "DummyName";
-    private static final UnitOfMeasure UOM = UnitOfMeasure.Gram;
-    private static final UnitOfMeasure UOM1 = UnitOfMeasure.Milliliter;
+    private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
+    private static final UnitOfMeasure UOM1 = UnitOfMeasure.MILLILITER;
     private final Warehouse warehouse = new WarehouseImpl();
     private final Article article = new ArticleImpl(NAME, UOM);
     private final Article article1 = new ArticleImpl(NAME, UOM);

@@ -83,7 +83,7 @@ public final class Quantity implements Comparable<Quantity> {
      * @return a boolean denoting whether the value of this is less than the other one.
      */
     public boolean lessThan(final Quantity other) {
-        return compareTo(other) < 1;
+        return compareTo(other) < 0;
     }
 
     /**
@@ -102,7 +102,7 @@ public final class Quantity implements Comparable<Quantity> {
      * @return a boolean denoting whether the value of this is more than the other one.
      */
     public boolean moreThan(final Quantity other) {
-        return compareTo(other) > 1;
+        return compareTo(other) > 0;
     }
 
     /**

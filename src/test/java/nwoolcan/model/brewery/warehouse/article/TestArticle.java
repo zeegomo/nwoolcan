@@ -10,8 +10,8 @@ import org.junit.Test;
 public class TestArticle {
 
     private final String name = "DummyName";
-    private static final UnitOfMeasure UOM = UnitOfMeasure.Gram;
-    private static final UnitOfMeasure UOM1 = UnitOfMeasure.Unit;
+    private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
+    private static final UnitOfMeasure UOM1 = UnitOfMeasure.UNIT;
 
     /**
      * Method that tests the constructor with empty name.

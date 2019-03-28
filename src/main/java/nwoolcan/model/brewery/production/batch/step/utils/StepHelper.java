@@ -16,16 +16,16 @@ import java.util.Collections;
 @SuppressWarnings("Duplicates")
 public final class StepHelper {
 
-    private static final Set<StepType> MASHING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.Boiling));
-    private static final Set<StepType> BOILING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.Fermenting));
-    private static final Set<StepType> FERMENTING_STEP_TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(StepTypeEnum.Packaging, StepTypeEnum.Aging)));
-    private static final Set<StepType> AGING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.Packaging));
-    private static final Set<StepType> PACKAGING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.Finalized));
+    private static final Set<StepType> MASHING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.BOILING));
+    private static final Set<StepType> BOILING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.FERMENTING));
+    private static final Set<StepType> FERMENTING_STEP_TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(StepTypeEnum.PACKAGING, StepTypeEnum.AGING)));
+    private static final Set<StepType> AGING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.PACKAGING));
+    private static final Set<StepType> PACKAGING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.FINALIZED));
 
-    private static final Set<ParameterType> MASHING_PARAMETER_TYPES = Collections.unmodifiableSet(Collections.singleton(ParameterTypeEnum.Temperature));
-    private static final Set<ParameterType> BOILING_PARAMETER_TYPES = Collections.unmodifiableSet(Collections.singleton(ParameterTypeEnum.Temperature));
-    private static final Set<ParameterType> FERMENTING_PARAMETER_TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(ParameterTypeEnum.Temperature, ParameterTypeEnum.ABV)));
-    private static final Set<ParameterType> AGING_PARAMETER_TYPES = Collections.unmodifiableSet(Collections.singleton(ParameterTypeEnum.Temperature));
+    private static final Set<ParameterType> MASHING_PARAMETER_TYPES = Collections.unmodifiableSet(Collections.singleton(ParameterTypeEnum.TEMPERATURE));
+    private static final Set<ParameterType> BOILING_PARAMETER_TYPES = Collections.unmodifiableSet(Collections.singleton(ParameterTypeEnum.TEMPERATURE));
+    private static final Set<ParameterType> FERMENTING_PARAMETER_TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(ParameterTypeEnum.TEMPERATURE, ParameterTypeEnum.ABV)));
+    private static final Set<ParameterType> AGING_PARAMETER_TYPES = Collections.unmodifiableSet(Collections.singleton(ParameterTypeEnum.TEMPERATURE));
 
     private StepHelper() { }
 
@@ -38,19 +38,19 @@ public final class StepHelper {
      */
     public static Set<StepType> getNextStepTypesOf(final StepType stepType) {
         //need to be changed for proper domain model
-        if (stepType.equals(StepTypeEnum.Mashing)) {
+        if (stepType.equals(StepTypeEnum.MASHING)) {
             return MASHING_STEP_TYPES;
         }
-        if (stepType.equals(StepTypeEnum.Boiling)) {
+        if (stepType.equals(StepTypeEnum.BOILING)) {
             return BOILING_STEP_TYPES;
         }
-        if (stepType.equals(StepTypeEnum.Fermenting)) {
+        if (stepType.equals(StepTypeEnum.FERMENTING)) {
             return FERMENTING_STEP_TYPES;
         }
-        if (stepType.equals(StepTypeEnum.Aging)) {
+        if (stepType.equals(StepTypeEnum.AGING)) {
             return AGING_STEP_TYPES;
         }
-        if (stepType.equals(StepTypeEnum.Packaging)) {
+        if (stepType.equals(StepTypeEnum.PACKAGING)) {
             return PACKAGING_STEP_TYPES;
         }
         return Collections.emptySet();
@@ -65,16 +65,16 @@ public final class StepHelper {
      */
     public static Set<ParameterType> getPossibleParameterTypesOf(final StepType stepType) {
         //need to be changed for proper domain model
-        if (stepType.equals(StepTypeEnum.Mashing)) {
+        if (stepType.equals(StepTypeEnum.MASHING)) {
             return MASHING_PARAMETER_TYPES;
         }
-        if (stepType.equals(StepTypeEnum.Boiling)) {
+        if (stepType.equals(StepTypeEnum.BOILING)) {
             return BOILING_PARAMETER_TYPES;
         }
-        if (stepType.equals(StepTypeEnum.Fermenting)) {
+        if (stepType.equals(StepTypeEnum.FERMENTING)) {
             return FERMENTING_PARAMETER_TYPES;
         }
-        if (stepType.equals(StepTypeEnum.Aging)) {
+        if (stepType.equals(StepTypeEnum.AGING)) {
             return AGING_PARAMETER_TYPES;
         }
         return Collections.emptySet();
