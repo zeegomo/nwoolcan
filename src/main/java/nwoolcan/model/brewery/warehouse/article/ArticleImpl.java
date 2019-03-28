@@ -108,7 +108,7 @@ public class ArticleImpl implements Article {
      */
     @Override
     public String toString() {
-        return "ArticleImpl{"
+        return "[ArticleImpl]{"
             + "id=" + id
             + ", name='" + name + '\''
             + ", unitOfMeasure=" + unitOfMeasure
