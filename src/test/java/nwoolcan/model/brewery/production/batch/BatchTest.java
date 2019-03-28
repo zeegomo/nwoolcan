@@ -188,16 +188,17 @@ public class BatchTest {
         batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.TEMPERATURE, t6));
 
         final Number abv = 13;
+        final Date d = new Date();
         Assert.assertFalse(batchAlfredo.getBatchInfo().getAbv().isPresent());
-        batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.ABV, abv));
+        batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.ABV, abv, d));
         //Check update on batchInfo
         Assert.assertTrue(batchAlfredo.getBatchInfo().getAbv().isPresent());
-        Assert.assertEquals(new ParameterImpl(ParameterTypeEnum.ABV, abv), batchAlfredo.getBatchInfo().getAbv().get());
+        Assert.assertEquals(new ParameterImpl(ParameterTypeEnum.ABV, abv, d), batchAlfredo.getBatchInfo().getAbv().get());
 
         final Number abv2 = 15;
-        batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.ABV, abv2));
+        batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.ABV, abv2, d));
         Assert.assertTrue(batchAlfredo.getBatchInfo().getAbv().isPresent());
-        Assert.assertEquals(new ParameterImpl(ParameterTypeEnum.ABV, abv2), batchAlfredo.getBatchInfo().getAbv().get());
+        Assert.assertEquals(new ParameterImpl(ParameterTypeEnum.ABV, abv2, d), batchAlfredo.getBatchInfo().getAbv().get());
 
         //Go next without finalize
         batchAlfredo.moveToNextStep(StepTypeEnum.PACKAGING).peekError(e -> {
