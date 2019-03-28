@@ -21,8 +21,8 @@ public class QuantitiesTest {
     private static final int V3 = 200;
     private static final int V4 = 200;
 
-    private static final UnitOfMeasure UM1 = UnitOfMeasure.Gram;
-    private static final UnitOfMeasure UM2 = UnitOfMeasure.Milliliter;
+    private static final UnitOfMeasure UM1 = UnitOfMeasure.GRAM;
+    private static final UnitOfMeasure UM2 = UnitOfMeasure.MILLILITER;
 
     /**
      * Sets up fields.

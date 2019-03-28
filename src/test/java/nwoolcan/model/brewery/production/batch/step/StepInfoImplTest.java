@@ -17,11 +17,11 @@ import java.util.Date;
  */
 public class StepInfoImplTest {
 
-    private static final StepType ST = StepTypeEnum.Mashing;
+    private static final StepType ST = StepTypeEnum.MASHING;
     private static final Date START = new Date();
     private static final Date END = new Date(START.getTime() + 100);
     private static final String NOTE = "Test note.";
-    private static final Quantity Q = Quantity.of(20, UnitOfMeasure.Milliliter);
+    private static final Quantity Q = Quantity.of(20, UnitOfMeasure.MILLILITER);
 
     private StepInfo si;
 

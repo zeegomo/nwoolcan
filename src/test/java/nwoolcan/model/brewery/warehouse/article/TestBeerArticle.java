@@ -10,7 +10,7 @@ import org.junit.Test;
  */
 public class TestBeerArticle {
 
-    private static final UnitOfMeasure UOM = UnitOfMeasure.Gram;
+    private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private final Integer id = 1;
     private final String name = "DummyName";
 
