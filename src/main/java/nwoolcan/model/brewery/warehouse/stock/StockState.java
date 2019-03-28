@@ -1,4 +1,4 @@
-package nwoolcan.model.brewery.warehouse;
+package nwoolcan.model.brewery.warehouse.stock;
 
 /**
  * Contains the possible state of the Stock.

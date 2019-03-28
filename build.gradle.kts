@@ -29,6 +29,7 @@ dependencies {
     annotationProcessor("com.uber.nullaway", "nullaway", "0.6.6")
     errorprone("com.google.errorprone", "error_prone_core", "2.3.2")
     errorproneJavac("com.google.errorprone", "javac", "9+181-r4173-1")
+    implementation("org.apache.commons", "commons-lang3", "3.8.1")
 }
 
 configure<JavaPluginConvention> {
