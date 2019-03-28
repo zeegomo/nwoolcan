@@ -128,11 +128,11 @@ public final class StockImpl implements Stock {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.article, this.expirationDate); // TODO check if it is logically correct
+        return Objects.hash(this.article, this.expirationDate);
     }
 
     @Override
-    public boolean equals(final Object obj) { // TODO check if it logically correct
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
