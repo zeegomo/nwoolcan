@@ -150,10 +150,10 @@ public final class WarehouseImpl implements Warehouse {
     public Result<Empty> addRecord(final Article article,
                                    @Nullable final Date expirationDate,
                                    final Record record) {
-        return Result.of(new StockImpl(article, expirationDate))
+        return Result.of(article)
+                     .require(articles::contains, new IllegalArgumentException(ARTICLE_NOT_REGISTERED))
+                     .map(a -> new StockImpl(a, expirationDate))
                      .map(this::getStock)
-                     .require(() -> !requireArticleNotRegistered(article),
-                         new IllegalArgumentException(ARTICLE_NOT_REGISTERED))
                      .flatMap(stock -> stock.addRecord(record))
                      .toEmpty();
     }
