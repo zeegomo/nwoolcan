@@ -43,7 +43,7 @@ public class TestBeerArticle {
             }
 
             @Override
-            public List<Step> getLastSteps() {
+            public List<Step> getPreviousSteps() {
                 return null;
             }
 

@@ -98,11 +98,11 @@ public final class BatchEvaluationBuilder {
     }
 
     /**
-     * Return whether this builder is already built.
-     * @return whether this builder is already built.
+     * Return whether this builder can build another instance or have to reset.
+     * @return true if this builder can build, false otherwise.
      */
-    public boolean isBuilt() {
-        return this.built;
+    public boolean canBuild() {
+        return !this.built;
     }
 
     /**
@@ -117,7 +117,7 @@ public final class BatchEvaluationBuilder {
                 new IllegalArgumentException(INVALID_CATEGORIES_MESSAGE))
             .require(BatchEvaluationBuilder::checkScoreValidity,
                 new IllegalAccessException(INVALID_SCORE_MESSAGE))
-            .require(builder -> !builder.built,
+            .require(BatchEvaluationBuilder::canBuild,
                 new IllegalStateException(BUILDER_USED_MESSAGE))
             .peek(builder -> builder.built = true)
             .map(builder -> new BatchEvaluationImpl(builder.batchEvaluationType,
