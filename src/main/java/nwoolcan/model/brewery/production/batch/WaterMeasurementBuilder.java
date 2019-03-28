@@ -14,7 +14,7 @@ import java.util.Optional;
 public class WaterMeasurementBuilder {
     private static final String INVALID_PARAMETER = "One or more parameter are not a valid water measurement type";
     private static final String BUILDER_BUILT = "This builder has already built";
-    private final EnumMap<WaterMeasurement.Elements, Parameter> parameter = new EnumMap<>(WaterMeasurement.Elements.class);
+    private final EnumMap<WaterMeasurement.Element, Parameter> parameter = new EnumMap<>(WaterMeasurement.Element.class);
     private boolean built;
 
     /**
@@ -23,7 +23,7 @@ public class WaterMeasurementBuilder {
      * @param e the element measured.
      * @return this.
      */
-    public WaterMeasurementBuilder addRegistration(final Parameter p, final WaterMeasurement.Elements e) {
+    public WaterMeasurementBuilder addRegistration(final Parameter p, final WaterMeasurement.Element e) {
         this.parameter.put(e, p);
         return this;
     }
@@ -57,14 +57,14 @@ public class WaterMeasurementBuilder {
     }
 
     private static final class WaterMeasurementImpl implements WaterMeasurement {
-        private final EnumMap<Elements, Parameter> parameter;
+        private final EnumMap<Element, Parameter> parameter;
 
-        private WaterMeasurementImpl(final EnumMap<Elements, Parameter> parameters) {
+        private WaterMeasurementImpl(final EnumMap<Element, Parameter> parameters) {
             this.parameter = parameters;
         }
 
         @Override
-        public Optional<Parameter> getMeasurement(final Elements e) {
+        public Optional<Parameter> getMeasurement(final Element e) {
             return Optional.ofNullable(this.parameter.get(e));
         }
 
@@ -88,11 +88,11 @@ public class WaterMeasurementBuilder {
         @Override
         public String toString() {
             return "[WaterMeasurementImpl]{"
-                + " calcium = " + this.parameter.get(Elements.CALCIUM)
-                + ", sodium = " + this.parameter.get(Elements.SODIUM)
-                + ", magnesium = " + this.parameter.get(Elements.SODIUM)
-                + ", bicarbonate = " + this.parameter.get(Elements.BICARBONATE)
-                + ", chloride = " + this.parameter.get(Elements.CHLORIDE)
+                + " calcium = " + this.parameter.get(Element.CALCIUM)
+                + ", sodium = " + this.parameter.get(Element.SODIUM)
+                + ", magnesium = " + this.parameter.get(Element.SODIUM)
+                + ", bicarbonate = " + this.parameter.get(Element.BICARBONATE)
+                + ", chloride = " + this.parameter.get(Element.CHLORIDE)
                 + '}';
         }
     }

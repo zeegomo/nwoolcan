@@ -11,7 +11,7 @@ public interface WaterMeasurement {
         /**
          * Water elements measured.
          */
-        enum Elements {
+        enum Element {
                 /**
                  * Ca+2.
                  */
@@ -43,5 +43,5 @@ public interface WaterMeasurement {
          * @param e the element of which we want to know the measurement.
          * @return a {@link Parameter}.
          */
-        Optional<Parameter> getMeasurement(Elements e);
+        Optional<Parameter> getMeasurement(Element e);
 }
