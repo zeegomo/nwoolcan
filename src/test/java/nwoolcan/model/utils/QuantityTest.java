@@ -14,9 +14,9 @@ public class QuantityTest {
     private static final int VALUE2 = 30;
     private static final int NEG_VALUE = -2;
 
-    private static final UnitOfMeasure GOOD_UM1 = UnitOfMeasure.Kilogram;
-    private static final UnitOfMeasure GOOD_UM2 = UnitOfMeasure.Liter;
-    private static final UnitOfMeasure BAD_UM = UnitOfMeasure.Celsius;
+    private static final UnitOfMeasure GOOD_UM1 = UnitOfMeasure.Gram;
+    private static final UnitOfMeasure GOOD_UM2 = UnitOfMeasure.Milliliter;
+    private static final UnitOfMeasure BAD_UM = UnitOfMeasure.CelsiusDegree;
 
     /**
      * Method that tests a simple quantity creation.
@@ -24,7 +24,7 @@ public class QuantityTest {
     @Test
     public void testQuantitySimpleCreation() {
         final Quantity q = Quantity.of(VALUE1, GOOD_UM1);
-        Assert.assertEquals(VALUE1, q.getValue().intValue());
+        Assert.assertEquals(VALUE1, q.getValue());
         Assert.assertEquals(GOOD_UM1, q.getUnitOfMeasure());
     }
     /**
@@ -56,7 +56,7 @@ public class QuantityTest {
      */
     @Test
     public void testQuantityEqualsAndHashcode() {
-        final UnitOfMeasure um = UnitOfMeasure.Kilogram;
+        final UnitOfMeasure um = UnitOfMeasure.Gram;
         final Quantity q1 = Quantity.of(VALUE1, GOOD_UM1);
         final Quantity q2 = Quantity.of(VALUE1, GOOD_UM1);
 

@@ -10,7 +10,7 @@ import org.junit.Test;
 public class TestArticle {
 
     private final String name = "DummyName";
-    private static final UnitOfMeasure UOM = UnitOfMeasure.Kilogram;
+    private static final UnitOfMeasure UOM = UnitOfMeasure.Gram;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.Unit;
 
     /**

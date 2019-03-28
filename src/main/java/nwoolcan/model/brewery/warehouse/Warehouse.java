@@ -19,15 +19,15 @@ public interface Warehouse {
     /**
      * Getter of the {@link Stock} in the warehouse, filtered with a {@link QueryStock}.
      * @param queryStock describes the nature of the query.
-     * @return a {@link Result} of {@link Empty} which reports possible errors.
+     * @return a {@link List} of {@link Stock} which respects the given {@link QueryStock}.
      */
-    Result<List<Stock>> getStocks(QueryStock queryStock);
+    List<Stock> getStocks(QueryStock queryStock);
     /**
      * Getter of the {@link Article} in the warehouse, filtered with a {@link QueryArticle}.
      * @param queryArticle describes the nature of the query.
-     * @return a {@link Result} of {@link Empty} which reports possible errors.
+     * @return a {@link List} of {@link Article} which respects the given {@link QueryArticle}.
      */
-    Result<List<Article>> getArticles(QueryArticle queryArticle);
+    List<Article> getArticles(QueryArticle queryArticle);
     /**
      * Adds a Stock to the warehouse.
      * @param newArticle the new {@link Article} to be registered.

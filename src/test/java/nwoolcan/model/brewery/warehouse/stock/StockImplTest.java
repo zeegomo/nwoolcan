@@ -37,8 +37,9 @@ public class StockImplTest {
     private static final String RECORD_WITH_DIFFERENT_UOM = "Can't add a record if UOMS are not the same";
     private static final String REMOVING_RECORD_WITH_QUANTITY_NOT_AVAILABLE = "Can't add a remove"
                                                        + "record if the quantity is not available";
-    private static final UnitOfMeasure UOM = UnitOfMeasure.Kilogram;
-    private static final UnitOfMeasure UOM1 = UnitOfMeasure.Liter;
+
+    private static final UnitOfMeasure UOM = UnitOfMeasure.Gram;
+    private static final UnitOfMeasure UOM1 = UnitOfMeasure.Milliliter;
     private static final Article ARTICLE = new ArticleImpl(NAME, UOM);
 
     /**
