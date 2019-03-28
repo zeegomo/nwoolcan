@@ -84,9 +84,7 @@ public class WarehouseImplTest {
                                                                         .build();
         Assert.assertTrue(resQueryStock.isPresent());
         final QueryStock queryStock = resQueryStock.getValue();
-        final Result<List<Stock>> resLisStock = warehouse.getStocks(queryStock);
-        Assert.assertTrue(resLisStock.isPresent());
-        final List<Stock> lisStock = resLisStock.getValue();
+        final List<Stock> lisStock = warehouse.getStocks(queryStock);
         for (final Stock s : lisStock) {
             Assert.assertEquals(article, s.getArticle());
             Assert.assertFalse(s.getRemainingQuantity().lessThan(quantity));
@@ -106,9 +104,7 @@ public class WarehouseImplTest {
                                                                         .build();
         Assert.assertTrue(resQueryStock.isPresent());
         final QueryStock queryStock = resQueryStock.getValue();
-        final Result<List<Stock>> resLisStock = warehouse.getStocks(queryStock);
-        Assert.assertTrue(resLisStock.isPresent());
-        final List<Stock> lisStock = resLisStock.getValue();
+        final List<Stock> lisStock = warehouse.getStocks(queryStock);
         Assert.assertEquals(0, lisStock.size());
     }
     /**
@@ -124,9 +120,7 @@ public class WarehouseImplTest {
                                                                         .build();
         Assert.assertTrue(resQueryStock.isPresent());
         final QueryStock queryStock = resQueryStock.getValue();
-        final Result<List<Stock>> resLisStock = warehouse.getStocks(queryStock);
-        Assert.assertTrue(resLisStock.isPresent());
-        final List<Stock> lisStock = resLisStock.getValue();
+        final List<Stock> lisStock = warehouse.getStocks(queryStock);
         Assert.assertTrue(lisStock.stream()
                 .map(Stock::getRemainingQuantity)
                 .reduce((prev, curr) -> {
@@ -144,9 +138,7 @@ public class WarehouseImplTest {
                                                                         .build();
         Assert.assertTrue(resQueryStock.isPresent());
         final QueryStock queryStock = resQueryStock.getValue();
-        final Result<List<Stock>> resLisStock = warehouse.getStocks(queryStock);
-        Assert.assertTrue(resLisStock.isPresent());
-        final List<Stock> lisStock = resLisStock.getValue();
+        final List<Stock> lisStock = warehouse.getStocks(queryStock);
         for (final Stock s : lisStock) {
             Assert.assertEquals(article, s.getArticle());
             Assert.assertTrue(!s.getExpirationDate()
@@ -165,9 +157,7 @@ public class WarehouseImplTest {
         final QueryArticle queryArticle = new QueryArticleBuilder().setMinID(MIN_ID)
                                                                    .setMaxID(MAX_ID)
                                                                    .build();
-        final Result<List<Article>> resLisArticle = warehouse.getArticles(queryArticle);
-        Assert.assertTrue(resLisArticle.isPresent());
-        final List<Article> lisArticle = resLisArticle.getValue();
+        final List<Article> lisArticle = warehouse.getArticles(queryArticle);
         for (final Article a : lisArticle) {
             Assert.assertTrue(a.getId() >= MIN_ID);
             Assert.assertTrue(a.getId() <= MAX_ID);
@@ -181,9 +171,7 @@ public class WarehouseImplTest {
         final QueryArticle queryArticle = new QueryArticleBuilder().setMinName(MIN_NAME)
                                                                    .setMaxName(MAX_NAME)
                                                                    .build();
-        final Result<List<Article>> resLisArticle = warehouse.getArticles(queryArticle);
-        Assert.assertTrue(resLisArticle.isPresent());
-        final List<Article> lisArticle = resLisArticle.getValue();
+        final List<Article> lisArticle = warehouse.getArticles(queryArticle);
         for (final Article a : lisArticle) {
             Assert.assertTrue(a.getName().compareTo(MIN_NAME) >= 0);
             Assert.assertTrue(a.getName().compareTo(MAX_NAME) <= 0);

@@ -36,105 +36,105 @@ public final class WarehouseImpl implements Warehouse {
 
 
     @Override
-    public Result<List<Stock>> getStocks(final QueryStock queryStock) {
-        return Result.of(stocks.values()
-                               .stream()
-                               // remove when article is present in queryStock but the article of
-                               // the current stock is different from the one of the query.
-                               .filter(stock -> !(queryStock.getArticle().isPresent()
-                                   && !queryStock.getArticle().get().equals(stock.getArticle())))
-                               // remove those without expiration date if expiresBefore is present.
-                               .filter(stock -> !(queryStock.getExpiresBefore().isPresent()
-                                   && !stock.getExpirationDate().isPresent()))
-                               // remove those with expiration date after upper limit of
-                               // expiration date
-                               .filter(stock -> !(queryStock.getExpiresBefore().isPresent()
-                                               && stock.getExpirationDate().get()
-                                                       .after(queryStock.getExpiresBefore().get())))
-                               // remove those with expiration date before the lower limit
-                               // Stocks with no expiration date are left, since it is like they
-                               // won't ever expire.
-                               .filter(stock -> !(queryStock.getExpiresAfter().isPresent()
-                                               && stock.getExpirationDate().isPresent()
-                                               && stock.getExpirationDate().get()
-                                                       .before(queryStock.getExpiresAfter().get())))
-                               // remove those where querystock.minRemainingQuantity is present and
-                               // stock.getremainingquantity is less than the one required. The UOM is not
-                               // checked because the query has to be consistent. It is checked in
-                               // the queryStock builder.
-                               .filter(stock -> !(queryStock.getMinRemainingQuantity().isPresent() //TODO change with the new functionality of Quantity
-                                   && stock.getRemainingQuantity().lessThan(queryStock.getMinRemainingQuantity().get())))
-                               // remove those where queryStock.maxRemainingQuantity is present and
-                               // stock.getremainingQuantitity is more than the one required. The UOM is not
-                               // checked because the query has to be consistent. It is checked in
-                               // the queryStock builder.
-                               .filter(stock -> !(queryStock.getMaxRemainingQuantity().isPresent() //TODO change with the new functionality of Quantity
-                                   && stock.getRemainingQuantity().moreThan(queryStock.getMaxRemainingQuantity().get())))
-                               // remove those where querystock.minUsedQuantity is present and
-                               // stock.getUsedQuantity is less than the one required. The UOM is not
-                               // checked because the query has to be consistent. It is checked in
-                               // the queryStock builder.
-                               .filter(stock -> !(queryStock.getMinUsedQuantity().isPresent() //TODO change with the new functionality of Quantity
-                                   && stock.getUsedQuantity().lessThan(queryStock.getMinUsedQuantity().get())))
-                               // remove those where queryStock.maxUsedQuantity is present and
-                               // stock.getUsedQuantitity is more than the one required. The UOM is not
-                               // checked because the query has to be consistent. It is checked in
-                               // the queryStock builder.
-                               .filter(stock -> !(queryStock.getMaxUsedQuantity().isPresent() //TODO change with the new functionality of Quantity
-                                   && stock.getRemainingQuantity().moreThan(queryStock.getMaxUsedQuantity().get())))
-                               // remove those stock which state is not the one to be included.
-                               .filter(stock -> !(queryStock.getIncludeStockState().isPresent()
-                                               && !stock.getState()
-                                                        .equals(queryStock.getIncludeStockState()
-                                                                          .get())))
-                               // remove those stock which state is the one to be excluded
-                               .filter(stock -> !(queryStock.getExcludeStockState().isPresent()
-                                               && stock.getState()
-                                                       .equals(queryStock.getExcludeStockState()
-                                                                         .get())))
-                               .sorted((s1, s2) -> compareBy(s1,
-                                                             s2,
-                                                             queryStock.getSortBy(),
-                                                             queryStock.isSortDescending()))
-                               .collect(Collectors.toList()));
+    public List<Stock> getStocks(final QueryStock queryStock) {
+        return stocks.values()
+                     .stream()
+                     // remove when article is present in queryStock but the article of
+                     // the current stock is different from the one of the query.
+                     .filter(stock -> !(queryStock.getArticle().isPresent()
+                         && !queryStock.getArticle().get().equals(stock.getArticle())))
+                     // remove those without expiration date if expiresBefore is present.
+                     .filter(stock -> !(queryStock.getExpiresBefore().isPresent()
+                         && !stock.getExpirationDate().isPresent()))
+                     // remove those with expiration date after upper limit of
+                     // expiration date
+                     .filter(stock -> !(queryStock.getExpiresBefore().isPresent()
+                                     && stock.getExpirationDate().get()
+                                             .after(queryStock.getExpiresBefore().get())))
+                     // remove those with expiration date before the lower limit
+                     // Stocks with no expiration date are left, since it is like they
+                     // won't ever expire.
+                     .filter(stock -> !(queryStock.getExpiresAfter().isPresent()
+                                     && stock.getExpirationDate().isPresent()
+                                     && stock.getExpirationDate().get()
+                                             .before(queryStock.getExpiresAfter().get())))
+                     // remove those where querystock.minRemainingQuantity is present and
+                     // stock.getremainingquantity is less than the one required. The UOM is not
+                     // checked because the query has to be consistent. It is checked in
+                     // the queryStock builder.
+                     .filter(stock -> !(queryStock.getMinRemainingQuantity().isPresent() //TODO change with the new functionality of Quantity
+                         && stock.getRemainingQuantity().lessThan(queryStock.getMinRemainingQuantity().get())))
+                     // remove those where queryStock.maxRemainingQuantity is present and
+                     // stock.getremainingQuantitity is more than the one required. The UOM is not
+                     // checked because the query has to be consistent. It is checked in
+                     // the queryStock builder.
+                     .filter(stock -> !(queryStock.getMaxRemainingQuantity().isPresent() //TODO change with the new functionality of Quantity
+                         && stock.getRemainingQuantity().moreThan(queryStock.getMaxRemainingQuantity().get())))
+                     // remove those where querystock.minUsedQuantity is present and
+                     // stock.getUsedQuantity is less than the one required. The UOM is not
+                     // checked because the query has to be consistent. It is checked in
+                     // the queryStock builder.
+                     .filter(stock -> !(queryStock.getMinUsedQuantity().isPresent() //TODO change with the new functionality of Quantity
+                         && stock.getUsedQuantity().lessThan(queryStock.getMinUsedQuantity().get())))
+                     // remove those where queryStock.maxUsedQuantity is present and
+                     // stock.getUsedQuantitity is more than the one required. The UOM is not
+                     // checked because the query has to be consistent. It is checked in
+                     // the queryStock builder.
+                     .filter(stock -> !(queryStock.getMaxUsedQuantity().isPresent() //TODO change with the new functionality of Quantity
+                         && stock.getRemainingQuantity().moreThan(queryStock.getMaxUsedQuantity().get())))
+                     // remove those stock which state is not the one to be included.
+                     .filter(stock -> !(queryStock.getIncludeStockState().isPresent()
+                                     && !stock.getState()
+                                              .equals(queryStock.getIncludeStockState()
+                                                                .get())))
+                     // remove those stock which state is the one to be excluded
+                     .filter(stock -> !(queryStock.getExcludeStockState().isPresent()
+                                     && stock.getState()
+                                             .equals(queryStock.getExcludeStockState()
+                                                               .get())))
+                     .sorted((s1, s2) -> compareBy(s1,
+                                                   s2,
+                                                   queryStock.getSortBy(),
+                                                   queryStock.isSortDescending()))
+                     .collect(Collectors.toList());
     }
 
     @Override
-    public Result<List<Article>> getArticles(final QueryArticle queryArticle) {
-        return Result.of(articles.stream()
-                                 // remove those article where query article specifies a min ID and
-                                 // where the id of the article is less than it.
-                                 .filter(article -> !(queryArticle.getMinID().isPresent()
-                                     && article.getId() < queryArticle.getMinID().get()))
-                                 // remove those article where query article specifies a max ID and
-                                 // where the id of the article is greater than it.
-                                 .filter(article -> !(queryArticle.getMaxID().isPresent()
-                                     && article.getId() > queryArticle.getMaxID().get()))
-                                 // remove those article where query article specifies the first
-                                 // lexicographical name and where the name of the article is
-                                 // lexicographically before it.
-                                 .filter(article -> !(queryArticle.getMinName().isPresent()
-                                     && article.getName().compareTo(queryArticle.getMinName().get()) < 0))
-                                 // remove those article where query article specifies the last
-                                 // lexicographical name and where the name of the article is
-                                 // lexicographically after it.
-                                 .filter(article -> !(queryArticle.getMaxName().isPresent()
-                                     && article.getName().compareTo(queryArticle.getMaxName().get()) < 0))
-                                 // remove those article which type is not the one to be included.
-                                 .filter(article -> !(queryArticle.getIncludeArticleType().isPresent()
-                                     && !article.getArticleType()
-                                                .equals(queryArticle.getIncludeArticleType()
-                                                .get())))
-                                 // remove those article which type is to be excluded.
-                                 .filter(article -> !(queryArticle.getExcludeArticleType().isPresent()
-                                     && article.getArticleType()
-                                               .equals(queryArticle.getExcludeArticleType()
-                                               .get())))
-                                 .sorted((a1, a2) -> compareBy(a1,
-                                                               a2,
-                                                               queryArticle.getSortBy(),
-                                                               queryArticle.getSortDescending()))
-                                 .collect(Collectors.toList()));
+    public List<Article> getArticles(final QueryArticle queryArticle) {
+        return articles.stream()
+                       // remove those article where query article specifies a min ID and
+                       // where the id of the article is less than it.
+                       .filter(article -> !(queryArticle.getMinID().isPresent()
+                            && article.getId() < queryArticle.getMinID().get()))
+                       // remove those article where query article specifies a max ID and
+                       // where the id of the article is greater than it.
+                       .filter(article -> !(queryArticle.getMaxID().isPresent()
+                            && article.getId() > queryArticle.getMaxID().get()))
+                       // remove those article where query article specifies the first
+                       // lexicographical name and where the name of the article is
+                       // lexicographically before it.
+                       .filter(article -> !(queryArticle.getMinName().isPresent()
+                            && article.getName().compareTo(queryArticle.getMinName().get()) < 0))
+                       // remove those article where query article specifies the last
+                       // lexicographical name and where the name of the article is
+                       // lexicographically after it.
+                       .filter(article -> !(queryArticle.getMaxName().isPresent()
+                            && article.getName().compareTo(queryArticle.getMaxName().get()) < 0))
+                       // remove those article which type is not the one to be included.
+                       .filter(article -> !(queryArticle.getIncludeArticleType().isPresent()
+                           && !article.getArticleType()
+                                      .equals(queryArticle.getIncludeArticleType()
+                                      .get())))
+                       // remove those article which type is to be excluded.
+                       .filter(article -> !(queryArticle.getExcludeArticleType().isPresent()
+                            && article.getArticleType()
+                                      .equals(queryArticle.getExcludeArticleType()
+                                      .get())))
+                       .sorted((a1, a2) -> compareBy(a1,
+                                                     a2,
+                                                     queryArticle.getSortBy(),
+                                                     queryArticle.getSortDescending()))
+                       .collect(Collectors.toList());
     }
 
     @Override
