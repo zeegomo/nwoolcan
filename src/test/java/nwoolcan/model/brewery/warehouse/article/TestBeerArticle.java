@@ -1,19 +1,16 @@
 package nwoolcan.model.brewery.warehouse.article;
 
 import nwoolcan.model.brewery.production.batch.Batch;
-import nwoolcan.model.brewery.production.batch.BatchInfo;
-import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
-import nwoolcan.model.brewery.production.batch.step.Step;
-import nwoolcan.model.brewery.production.batch.step.StepType;
+import nwoolcan.model.brewery.production.batch.BatchImpl;
+import nwoolcan.model.brewery.production.batch.BatchMethod;
+import nwoolcan.model.brewery.production.batch.BeerDescriptionImpl;
+import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
+import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
-import nwoolcan.utils.Empty;
-import nwoolcan.utils.Result;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.Collections;
 
 /**
  * Test for BeerArticle.
@@ -21,65 +18,23 @@ import java.util.Optional;
 public class TestBeerArticle {
 
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
-    private final Integer id = 1;
+    private static final UnitOfMeasure UOM1 = UnitOfMeasure.UNIT;
     private final String name = "DummyName";
 
-    private Batch batch;
-
-    /**
-     * Initialization method.
-     */
-    @Before
-    public void init() {
-        batch = new Batch() {
-            @Override
-            public int getId() {
-                return 0;
-            }
-
-            @Override
-            public BatchInfo getBatchInfo() {
-                return null;
-            }
-
-            @Override
-            public Step getCurrentStep() {
-                return null;
-            }
-
-            @Override
-            public List<Step> getPreviousSteps() {
-                return null;
-            }
-
-            @Override
-            public Result<Empty> moveToNextStep(final StepType nextStepType) {
-                return null;
-            }
-
-            @Override
-            public boolean isEnded() {
-                return false;
-            }
-
-            @Override
-            public Result<Empty> setEvaluation(final BatchEvaluation evaluation) {
-                return null;
-            }
-
-            @Override
-            public Optional<BatchEvaluation> getEvaluation() {
-                return Optional.empty();
-            }
-        };
-    }
+    private final Batch batch = new BatchImpl(
+        new BeerDescriptionImpl("Test beer", "Test style"),
+        BatchMethod.ALL_GRAIN,
+        Quantity.of(1000, UnitOfMeasure.MILLILITER),
+        Collections.EMPTY_LIST,
+        StepTypeEnum.MASHING
+    );
 
     /**
      * Method that tests the getters and their possible errors.
      */
     @Test
     public void testGetters() {
-        final Article beerArticle = new BeerArticleImpl(id, name, UOM, batch);
+        final Article beerArticle = new BeerArticleImpl(name, UOM, batch);
         Assert.assertEquals(ArticleType.FINISHED_BEER, beerArticle.getArticleType());
         Assert.assertTrue(beerArticle.toBeerArticle().isPresent());
         Assert.assertEquals(BeerArticleImpl.class, beerArticle.toBeerArticle()
@@ -92,14 +47,12 @@ public class TestBeerArticle {
      */
     @Test
     public void testEquals() {
-        final BeerArticle beerArt1 = new BeerArticleImpl(id, name, UOM, batch);
-        final BeerArticle beerArt2 = new BeerArticleImpl(id, name, UOM, batch);
-        final BeerArticle beerArt4 = new BeerArticleImpl(id + 1, name, UOM, batch);
+        final BeerArticle beerArt1 = new BeerArticleImpl(name, UOM, batch);
+        final BeerArticle beerArt2 = new BeerArticleImpl(name, UOM, batch);
+        final BeerArticle beerArt4 = new BeerArticleImpl(name, UOM1, batch);
         Assert.assertEquals(beerArt1, beerArt2);
         Assert.assertEquals(beerArt1, beerArt1);
-        Assert.assertEquals(beerArt1, beerArt1);
         Assert.assertNotEquals(beerArt1, beerArt4);
-        Assert.assertNotEquals(beerArt4, beerArt1);
     }
 
 }

@@ -2,11 +2,8 @@ package nwoolcan.model.brewery.production.batch;
 
 import javafx.util.Pair;
 import nwoolcan.model.brewery.production.batch.step.Step;
-import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
-import nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl;
-import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
@@ -15,7 +12,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;

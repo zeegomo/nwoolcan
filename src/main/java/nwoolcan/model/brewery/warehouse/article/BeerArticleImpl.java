@@ -15,14 +15,12 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
 
     /**
      * Constructor which uses the constructor of the super class and sets the batch.
-     * @param id the id of the beer article.
      * @param name the name of the beer article.
      * @param unitOfMeasure used for this article.
      * @param batch the batch linked to the beer article.
      */
-    //Package protected
-    BeerArticleImpl(final Integer id, final String name, final UnitOfMeasure unitOfMeasure, final Batch batch) {
-        super(id, name, unitOfMeasure);
+    public BeerArticleImpl(final String name, final UnitOfMeasure unitOfMeasure, final Batch batch) {
+        super(name, unitOfMeasure);
         this.batch = batch;
     }
     /**
@@ -51,20 +49,7 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (!(obj instanceof BeerArticleImpl)) {
-            return false;
-        }
-
-        BeerArticleImpl other = (BeerArticleImpl) obj;
-
-        return this.batch.equals(other.getBatch())
-            && this.getName().equals(other.getName())
-            && this.getId().equals(other.getId())
-            && this.getUnitOfMeasure().equals(other.getUnitOfMeasure());
+        return super.equals(obj) && this.batch.equals(((BeerArticle) obj).getBatch());
     }
 
     @Override
@@ -73,7 +58,7 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
             + "Id:" + getId() + ", "
             + "Name:" + getName() + ", "
             + "UnitOfMeasure:" + getUnitOfMeasure() + ", "
-            + "Batch:" + getBatch().toString() + " "
+            + "Batch:" + getBatch()
             + "}";
     }
 
