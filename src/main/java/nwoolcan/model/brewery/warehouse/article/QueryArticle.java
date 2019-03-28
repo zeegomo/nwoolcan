@@ -6,7 +6,6 @@ import java.util.Optional;
 /**
  * QueryArticle.
  */
-// Package Private.
 public final class QueryArticle {
 
     /**

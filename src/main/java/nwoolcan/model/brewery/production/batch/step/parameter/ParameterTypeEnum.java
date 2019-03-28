@@ -9,11 +9,11 @@ public enum ParameterTypeEnum implements ParameterType {
     /**
      * Temperature parameter type.
      */
-    Temperature(UnitOfMeasure.Celsius),
+    TEMPERATURE(UnitOfMeasure.CELSIUS_DEGREE),
     /**
      * Alcohol by volume of the beer.
      */
-    ABV(UnitOfMeasure.Percentage);
+    ABV(UnitOfMeasure.PERCENTAGE);
 
     private final UnitOfMeasure um;
 

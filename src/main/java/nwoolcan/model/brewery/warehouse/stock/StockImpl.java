@@ -5,9 +5,12 @@ import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
+import org.apache.commons.lang3.time.DateUtils;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +41,7 @@ public final class StockImpl implements Stock {
     public StockImpl(final Article article, @Nullable final Date expirationDate) {
         Date creationMoment = new Date();
         this.article = article;
-        this.expirationDate = expirationDate; // It can be present or not.
+        this.expirationDate = expirationDate == null ? null : DateUtils.round(expirationDate, Calendar.DATE);
         this.creationDate = creationMoment;
         this.lastChangeDate = creationMoment;
         this.remainingQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure());
@@ -62,7 +65,7 @@ public final class StockImpl implements Stock {
 
     @Override
     public StockState getState() {
-        if (this.remainingQuantity.getValue().doubleValue() > 0) {
+        if (this.remainingQuantity.getValue() > 0) {
             if (this.expirationDate != null && this.expirationDate.before(new Date())) {
                 return StockState.EXPIRED;
             }
@@ -73,8 +76,8 @@ public final class StockImpl implements Stock {
 
     @Override
     public Optional<Date> getExpirationDate() {
-        // TODO check for better solution. If expDate is present, I want to return a copy of that.
-        return Optional.ofNullable(this.expirationDate);
+        final Date d = expirationDate == null ? null : (Date) expirationDate.clone();
+        return Optional.ofNullable(d);
     }
 
     @Override
@@ -99,8 +102,8 @@ public final class StockImpl implements Stock {
             res = Quantities.remove(this.remainingQuantity, record.getQuantity())
                             .peek(q ->
                                 this.usedQuantity = Quantities.add(this.usedQuantity,
-                                    record.getQuantity())
-                                                              .getValue());
+                                                                   record.getQuantity())
+                                                                         .getValue());
         }
         // make the temporary quantity the official one, add the record to the records list
         // and return a Result of Empty.
@@ -116,8 +119,8 @@ public final class StockImpl implements Stock {
     public List<Record> getRecords() {
         return Collections.unmodifiableList(
             new ArrayList<>(this.records).stream()
-                                               .sorted((a, b) -> a.getDate().compareTo(b.getDate()))
-                                               .collect(Collectors.toList()));
+                                         .sorted(Comparator.comparing(Record::getDate))
+                                         .collect(Collectors.toList()));
     }
 
     private void updateLastChangeDate() {
@@ -126,11 +129,11 @@ public final class StockImpl implements Stock {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.article, this.expirationDate); // TODO check if it is logically correct
+        return Objects.hash(this.article, this.expirationDate);
     }
 
     @Override
-    public boolean equals(final Object obj) { // TODO check if it logically correct
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -147,7 +150,7 @@ public final class StockImpl implements Stock {
 
     @Override
     public String toString() {
-        return "StockImpl{"
+        return "[StockImpl]{"
             + "article=" + article
             + ", expirationDate=" + expirationDate
             + ", records=" + records

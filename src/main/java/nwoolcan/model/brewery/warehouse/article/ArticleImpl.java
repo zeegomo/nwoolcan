@@ -24,7 +24,7 @@ public class ArticleImpl implements Article {
     public ArticleImpl(final String name, final UnitOfMeasure unitOfMeasure) {
         this.name = name;
         this.unitOfMeasure = unitOfMeasure;
-        if (this.name.equals("")) {
+        if (this.name.isEmpty()) {
             throw new IllegalArgumentException("Name can not be empty.");
         }
         this.id = ID_MANAGER.getId(name, getArticleType(), unitOfMeasure);
@@ -108,7 +108,7 @@ public class ArticleImpl implements Article {
      */
     @Override
     public String toString() {
-        return "ArticleImpl{"
+        return "[ArticleImpl]{"
             + "id=" + id
             + ", name='" + name + '\''
             + ", unitOfMeasure=" + unitOfMeasure

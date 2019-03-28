@@ -19,8 +19,7 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
      * @param unitOfMeasure used for this article.
      * @param batch the batch linked to the beer article.
      */
-    //Package protected
-    BeerArticleImpl(final String name, final UnitOfMeasure unitOfMeasure, final Batch batch) {
+    public BeerArticleImpl(final String name, final UnitOfMeasure unitOfMeasure, final Batch batch) {
         super(name, unitOfMeasure);
         this.batch = batch;
     }

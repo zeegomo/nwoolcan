@@ -16,13 +16,13 @@ public class QuantitiesTest {
     private Quantity q3;
     private Quantity q4;
 
-    private static final Number V1 = 10;
-    private static final Number V2 = 3.14;
-    private static final Number V3 = 200;
-    private static final Number V4 = 200;
+    private static final int V1 = 10;
+    private static final int V2 = 3;
+    private static final int V3 = 200;
+    private static final int V4 = 200;
 
-    private static final UnitOfMeasure UM1 = UnitOfMeasure.Kilogram;
-    private static final UnitOfMeasure UM2 = UnitOfMeasure.Liter;
+    private static final UnitOfMeasure UM1 = UnitOfMeasure.GRAM;
+    private static final UnitOfMeasure UM2 = UnitOfMeasure.MILLILITER;
 
     /**
      * Sets up fields.
@@ -49,9 +49,9 @@ public class QuantitiesTest {
         Assert.assertTrue(sum2res.isPresent());
         Assert.assertTrue(sum3res.isPresent());
 
-        TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.add(V1, V2), UM1), sum1res.getValue());
-        TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.add(V1, V3), UM1), sum2res.getValue());
-        TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.add(V2, V3), UM1), sum3res.getValue());
+        TestUtils.assertEqualsWithMessage(Quantity.of(V1 + V2, UM1), sum1res.getValue());
+        TestUtils.assertEqualsWithMessage(Quantity.of(V1 + V3, UM1), sum2res.getValue());
+        TestUtils.assertEqualsWithMessage(Quantity.of(V2 + V3, UM1), sum3res.getValue());
     }
 
     /**
@@ -66,11 +66,11 @@ public class QuantitiesTest {
 
         Assert.assertTrue(rem1res.isPresent());
         Assert.assertTrue(rem2res.isError());
-        Assert.assertSame(IllegalStateException.class, rem2res.getError().getClass());
+        Assert.assertSame(IllegalArgumentException.class, rem2res.getError().getClass());
         Assert.assertTrue(rem3res.isError());
-        Assert.assertSame(IllegalStateException.class, rem3res.getError().getClass());
+        Assert.assertSame(IllegalArgumentException.class, rem3res.getError().getClass());
 
-        TestUtils.assertEqualsWithMessage(Quantity.of(Numbers.subtract(V1, V2), UM1), rem1res.getValue());
+        TestUtils.assertEqualsWithMessage(Quantity.of(V1 - V2, UM1), rem1res.getValue());
     }
 
     /**
@@ -84,6 +84,6 @@ public class QuantitiesTest {
         Assert.assertTrue(sumRes.isError());
         Assert.assertSame(ArithmeticException.class, sumRes.getError().getClass());
         Assert.assertTrue(remRes.isError());
-        Assert.assertSame(ArithmeticException.class, remRes.getError().getClass());
+        Assert.assertSame(IllegalArgumentException.class, remRes.getError().getClass());
     }
 }

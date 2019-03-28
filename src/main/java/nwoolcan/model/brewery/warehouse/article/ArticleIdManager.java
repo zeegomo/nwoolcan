@@ -3,10 +3,9 @@ package nwoolcan.model.brewery.warehouse.article;
 import nwoolcan.model.utils.UnitOfMeasure;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.tuple.Triple;
 
 /**
  * Id manager for {@link Article} objects. It is used by ArticleImpl to generate the
@@ -15,8 +14,8 @@ import java.util.Map;
 public final class ArticleIdManager {
 
     @Nullable private static ArticleIdManager instance;
-    private Integer nextAvailableId;
-    private Map<List<Object>, Integer> existingIds; // TODO change with tuples
+    private int nextAvailableId;
+    private Map<Triple<String, ArticleType, UnitOfMeasure>, Integer> existingIds;
 
     private ArticleIdManager() {
         nextAvailableId = 1;
@@ -45,7 +44,7 @@ public final class ArticleIdManager {
     synchronized Integer getId(final String name,
                                final ArticleType articleType,
                                final UnitOfMeasure unitOfMeasure) {
-        List<Object> tuple = Arrays.asList(name, articleType, unitOfMeasure);
+        Triple<String, ArticleType, UnitOfMeasure> tuple = Triple.of(name, articleType, unitOfMeasure);
         if (!existingIds.containsKey(tuple)) {
             existingIds.put(tuple, nextAvailableId);
             nextAvailableId++;
@@ -58,9 +57,9 @@ public final class ArticleIdManager {
      * @return a boolean denoting whether the id is correct or not.
      */
     public synchronized boolean checkId(final Article article) {
-        List<Object> tuple = Arrays.asList(article.getName(),
-                                           article.getArticleType(),
-                                           article.getUnitOfMeasure());
+        Triple<String, ArticleType, UnitOfMeasure> tuple = Triple.of(article.getName(),
+                                                                     article.getArticleType(),
+                                                                     article.getUnitOfMeasure());
         return existingIds.containsKey(tuple) && article.getId().equals(existingIds.get(tuple));
     }
 }

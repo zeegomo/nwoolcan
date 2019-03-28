@@ -18,8 +18,7 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
      * @param unitOfMeasure used for this article.
      * @param ingredientType the type of ingredient article.
      */
-    //Package protected
-    IngredientArticleImpl(final String name,
+    public IngredientArticleImpl(final String name,
                           final UnitOfMeasure unitOfMeasure,
                           final IngredientType ingredientType) {
         super(name, unitOfMeasure);
