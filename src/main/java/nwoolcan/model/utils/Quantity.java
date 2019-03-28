@@ -59,6 +59,7 @@ public final class Quantity implements Comparable<Quantity> {
      * @param other the {@link Quantity} which has to be compared with this.
      * @return an integer denoting the result of the comparison.
      */
+    @Override
     public int compareTo(final Quantity other) {
         if (this.equals(other)) {
             return 0;
