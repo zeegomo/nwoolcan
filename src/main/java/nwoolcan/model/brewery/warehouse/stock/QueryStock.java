@@ -1,4 +1,4 @@
-package nwoolcan.model.brewery.warehouse;
+package nwoolcan.model.brewery.warehouse.stock;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.utils.Quantity;
@@ -12,8 +12,6 @@ import java.util.Optional;
  * if the parameter is not defined, an empty {@link Optional} is returned.
  */
 public final class QueryStock {
-
-
 
     /**
      * Enum which denotes the field on which the sort will be based.
@@ -42,7 +40,6 @@ public final class QueryStock {
     }
     @Nullable
     private final Article article;
-
     @Nullable
     private final Date expiresBefore;
     @Nullable

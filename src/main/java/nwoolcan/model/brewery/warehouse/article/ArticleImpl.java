@@ -14,23 +14,20 @@ public class ArticleImpl implements Article {
     private final Integer id;
     private final String name;
     private final UnitOfMeasure unitOfMeasure;
+    private static final ArticleIdManager ID_MANAGER = ArticleIdManager.getInstance();
 
     /**
      * Constructor of the class. Only article of type miscellaneous can be constructed.
-     * @param id the id of the new Article.
      * @param name the name of the new Article.
      * @param unitOfMeasure used for this article.
      */
-    public ArticleImpl(final Integer id, final String name, final UnitOfMeasure unitOfMeasure) {
-        this.id = id;
+    public ArticleImpl(final String name, final UnitOfMeasure unitOfMeasure) {
         this.name = name;
         this.unitOfMeasure = unitOfMeasure;
-        if (this.name.equals("")) {
+        if (this.name.isEmpty()) {
             throw new IllegalArgumentException("Name can not be empty.");
         }
-        if (this.id <= 0) {
-            throw new IllegalArgumentException("Id must be greater than zero.");
-        }
+        this.id = ID_MANAGER.getId(name, getArticleType(), unitOfMeasure);
     }
 
     @Override
@@ -81,7 +78,7 @@ public class ArticleImpl implements Article {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, unitOfMeasure);
+        return Objects.hash(id, name, unitOfMeasure, getArticleType());
     }
 
     /**
@@ -100,22 +97,22 @@ public class ArticleImpl implements Article {
         }
 
         ArticleImpl other = (ArticleImpl) obj;
-        return this.id.equals(other.getId())
-            && this.name.equals(other.getName())
-            && this.unitOfMeasure.equals(other.unitOfMeasure);
+        return this.name.equals(other.getName())
+            && this.unitOfMeasure.equals(other.unitOfMeasure)
+            && this.getArticleType().equals(other.getArticleType());
     }
 
     /**
      * To override this method add also other elements of the new class.
-     *
      * @return a string representation of the class.
      */
     @Override
     public String toString() {
-        return "ArticleImpl{"
+        return "[ArticleImpl]{"
             + "id=" + id
             + ", name='" + name + '\''
             + ", unitOfMeasure=" + unitOfMeasure
+            + ", articleType=" + getArticleType()
             + '}';
     }
 }

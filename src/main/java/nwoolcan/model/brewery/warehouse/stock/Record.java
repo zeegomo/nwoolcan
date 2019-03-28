@@ -1,7 +1,9 @@
-package nwoolcan.model.brewery.warehouse;
+package nwoolcan.model.brewery.warehouse.stock;
 
 import nwoolcan.model.utils.Quantity;
+import org.apache.commons.lang3.time.DateUtils;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -31,7 +33,7 @@ public final class Record {
      */
     public Record(final Quantity quantity, final Date date, final Action action) {
         this.quantity = quantity;
-        this.date = date;
+        this.date = DateUtils.round(date, Calendar.SECOND);
         this.action = action;
     }
     /**
