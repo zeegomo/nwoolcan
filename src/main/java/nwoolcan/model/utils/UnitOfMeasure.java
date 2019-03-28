@@ -7,21 +7,21 @@ public enum UnitOfMeasure {
     /**
      * Grams.
      */
-    Gram,
+    GRAM,
     /**
      * Milliliters.
      */
-    Milliliter,
+    MILLILITER,
     /**
      * Basic units.
      */
-    Unit,
+    UNIT,
     /**
      * Percentage.
      */
-    Percentage,
+    PERCENTAGE,
     /**
      * Celsius degrees.
      */
-    CelsiusDegree;
+    CELSIUS_DEGREE;
 }

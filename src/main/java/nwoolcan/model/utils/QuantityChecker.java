@@ -16,9 +16,9 @@ final class QuantityChecker {
     private static final String CANNOT_BE_QUANTITY_MESSAGE = "Unit of measure cannot be a quantity.";
 
     private static final Collection<UnitOfMeasure> VALID_UMS = Arrays.asList(
-        UnitOfMeasure.Milliliter,
-        UnitOfMeasure.Gram,
-        UnitOfMeasure.Unit
+        UnitOfMeasure.MILLILITER,
+        UnitOfMeasure.GRAM,
+        UnitOfMeasure.UNIT
     );
 
     private QuantityChecker() { }

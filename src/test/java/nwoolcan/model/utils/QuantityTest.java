@@ -14,9 +14,9 @@ public class QuantityTest {
     private static final int VALUE2 = 30;
     private static final int NEG_VALUE = -2;
 
-    private static final UnitOfMeasure GOOD_UM1 = UnitOfMeasure.Gram;
-    private static final UnitOfMeasure GOOD_UM2 = UnitOfMeasure.Milliliter;
-    private static final UnitOfMeasure BAD_UM = UnitOfMeasure.CelsiusDegree;
+    private static final UnitOfMeasure GOOD_UM1 = UnitOfMeasure.GRAM;
+    private static final UnitOfMeasure GOOD_UM2 = UnitOfMeasure.MILLILITER;
+    private static final UnitOfMeasure BAD_UM = UnitOfMeasure.CELSIUS_DEGREE;
 
     /**
      * Method that tests a simple quantity creation.
@@ -56,7 +56,7 @@ public class QuantityTest {
      */
     @Test
     public void testQuantityEqualsAndHashcode() {
-        final UnitOfMeasure um = UnitOfMeasure.Gram;
+        final UnitOfMeasure um = UnitOfMeasure.GRAM;
         final Quantity q1 = Quantity.of(VALUE1, GOOD_UM1);
         final Quantity q2 = Quantity.of(VALUE1, GOOD_UM1);
 
@@ -68,5 +68,28 @@ public class QuantityTest {
 
         TestUtils.assertNotEqualsWithMessage(q1, q3);
         TestUtils.assertNotEqualsWithMessage(q3, q4);
+    }
+
+    /**
+     * Method that tests comparison between quantities.
+     */
+    @Test
+    public void testCompareQuantities() {
+        final Quantity q1 = Quantity.of(VALUE1, GOOD_UM1);
+        final Quantity q2 = Quantity.of(VALUE2, GOOD_UM1);
+
+        final Quantity q3 = Quantity.of(VALUE1, GOOD_UM2);
+        final Quantity q4 = Quantity.of(VALUE2, GOOD_UM2);
+
+        Assert.assertTrue(q1.lessThan(q2));
+        Assert.assertTrue(q2.moreThan(q1));
+        Assert.assertTrue(q2.compareTo(q1) > 0);
+
+        Assert.assertTrue(q1.checkedCompareTo(q3).isError());
+        Assert.assertTrue(q2.checkedLessThan(q3).isError());
+        Assert.assertTrue(q2.checkedMoreThan(q4).isError());
+
+        Assert.assertTrue(q3.checkedLessThan(q4).isPresent());
+        q3.checkedLessThan(q4).peek(Assert::assertTrue);
     }
 }
