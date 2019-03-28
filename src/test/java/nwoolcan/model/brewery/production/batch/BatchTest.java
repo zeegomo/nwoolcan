@@ -81,7 +81,8 @@ public class BatchTest {
             BatchMethod.PARTIAL_MASH,
             Q1,
             rossinaIngredients,
-            StepTypeEnum.MASHING
+            StepTypeEnum.MASHING,
+            new WaterMeasurementBuilder().build().getValue()
         );
 
         batchBiondina = new BatchImpl(
@@ -89,7 +90,8 @@ public class BatchTest {
             BatchMethod.EXTRACT,
             Q2,
             biondinaIngredients,
-            StepTypeEnum.MASHING
+            StepTypeEnum.MASHING,
+            null
         );
     }
 

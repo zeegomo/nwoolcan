@@ -46,15 +46,22 @@ public final class BatchImpl implements Batch {
      * @param initialSize the initial size of the batch.
      * @param ingredients the ingredients of the beer made by the batch.
      * @param initialStep the initial step of the batch.
+     * @param waterMeasurement the water measurement of the batch.
      * @throws IllegalArgumentException if the initial step cannot be created.
      */
     public BatchImpl(final BeerDescription beerDescription,
                      final BatchMethod batchMethod,
                      final Quantity initialSize,
                      final Collection<Pair<IngredientArticle, Quantity>> ingredients,
-                     final StepType initialStep) {
+                     final StepType initialStep,
+                     @Nullable final WaterMeasurement waterMeasurement) {
         this.id = BatchIdGenerator.getInstance().getNextId();
-        this.batchInfo = new ModifiableBatchInfoImpl(ingredients, beerDescription, batchMethod, initialSize);
+
+        if (waterMeasurement == null) {
+            this.batchInfo = new ModifiableBatchInfoImpl(ingredients, beerDescription, batchMethod, initialSize);
+        } else {
+            this.batchInfo = new ModifiableBatchInfoImpl(ingredients, beerDescription, batchMethod, initialSize, waterMeasurement);
+        }
 
         final Result<Step> res = Steps.create(initialStep);
         if (res.isError()) {
@@ -64,6 +71,23 @@ public final class BatchImpl implements Batch {
         res.getValue().addParameterObserver(batchInfo);
 
         this.steps = new ArrayList<>(Collections.singletonList(res.getValue()));
+    }
+
+    /**
+     * Creates a new {@link Batch} in production.
+     * @param beerDescription the batch's beer description.
+     * @param batchMethod the batch's method.
+     * @param initialSize the initial size of the batch.
+     * @param ingredients the ingredients of the beer made by the batch.
+     * @param initialStep the initial step of the batch.
+     * @throws IllegalArgumentException if the initial step cannot be created.
+     */
+    public BatchImpl(final BeerDescription beerDescription,
+                     final BatchMethod batchMethod,
+                     final Quantity initialSize,
+                     final Collection<Pair<IngredientArticle, Quantity>> ingredients,
+                     final StepType initialStep) {
+        this(beerDescription, batchMethod, initialSize, ingredients, initialStep, null);
     }
 
     @Override
