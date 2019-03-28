@@ -231,5 +231,8 @@ public class BatchTest {
 
         //Check all steps are registered.
         Assert.assertEquals(4, batchAlfredo.getPreviousSteps().size());
+
+        //Trying to go after ended.
+        batchAlfredo.moveToNextStep(StepTypeEnum.FINALIZED).peek(e -> Assert.fail());
     }
 }
