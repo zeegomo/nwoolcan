@@ -10,6 +10,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -118,8 +119,8 @@ public final class StockImpl implements Stock {
     public List<Record> getRecords() {
         return Collections.unmodifiableList(
             new ArrayList<>(this.records).stream()
-                                               .sorted((a, b) -> a.getDate().compareTo(b.getDate()))
-                                               .collect(Collectors.toList()));
+                                         .sorted(Comparator.comparing(Record::getDate))
+                                         .collect(Collectors.toList()));
     }
 
     private void updateLastChangeDate() {
