@@ -38,7 +38,6 @@ public class BatchTest {
     private static final Quantity Q2 = Quantity.of(TEN_THOUSAND - 1, UnitOfMeasure.MILLILITER);
 
     private Batch batchAlfredo, batchRossina, batchBiondina;
-    private BeerDescription alfredo, rossina, biondina;
 
     private List<Pair<IngredientArticle, Quantity>> alfredoIngredients = Arrays.asList(
         new Pair<>(new IngredientArticleImpl("Luppolo alfredo", UnitOfMeasure.GRAM, IngredientType.HOPS),
@@ -64,9 +63,9 @@ public class BatchTest {
      */
     @Before
     public void init() {
-        alfredo = new BeerDescriptionImpl("Alfredo", "Alfredo style");
-        rossina = new BeerDescriptionImpl("Rossina", "Rossina style", "Best category");
-        biondina = new BeerDescriptionImpl("Biondina", "Biondina style");
+        final BeerDescription alfredo = new BeerDescriptionImpl("Alfredo", "Alfredo style");
+        final BeerDescription rossina = new BeerDescriptionImpl("Rossina", "Rossina style", "Best category");
+        final BeerDescription biondina = new BeerDescriptionImpl("Biondina", "Biondina style");
 
         batchAlfredo = new BatchImpl(
             alfredo,
@@ -82,7 +81,8 @@ public class BatchTest {
             Q1,
             rossinaIngredients,
             StepTypeEnum.MASHING,
-            new WaterMeasurementBuilder().build().getValue()
+            new WaterMeasurementBuilder().addRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 1), WaterMeasurement.Element.CALCIUM)
+                .build().getValue()
         );
 
         batchBiondina = new BatchImpl(
@@ -100,7 +100,7 @@ public class BatchTest {
      */
     @Test
     public void testChangeStep() {
-        //Without finalizing
+        //Without finalizing.
         Result<Empty> res = batchAlfredo.moveToNextStep(StepTypeEnum.BOILING);
         Assert.assertTrue(res.isPresent());
 
@@ -117,7 +117,7 @@ public class BatchTest {
         Assert.assertTrue(prevStep.getStepInfo().getEndStepSize().isPresent());
         Assert.assertEquals(Q1, prevStep.getStepInfo().getEndStepSize().get());
 
-        //With finalizing
+        //With finalizing.
         String notes = "Dummy notes.";
         Date endDate = new Date();
 
@@ -135,6 +135,10 @@ public class BatchTest {
         Assert.assertTrue(prevStep.getStepInfo().getEndDate().isPresent());
         Assert.assertEquals(endDate, prevStep.getStepInfo().getEndDate().get());
         Assert.assertEquals(Q2, prevStep.getStepInfo().getEndStepSize().get());
+
+        //Wrong step change.
+        res = batchBiondina.moveToNextStep(StepTypeEnum.FINALIZED);
+        Assert.assertTrue(res.isError());
     }
 
     /**
