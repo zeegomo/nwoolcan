@@ -101,8 +101,8 @@ public final class StockImpl implements Stock {
             res = Quantities.remove(this.remainingQuantity, record.getQuantity())
                             .peek(q ->
                                 this.usedQuantity = Quantities.add(this.usedQuantity,
-                                    record.getQuantity())
-                                                              .getValue());
+                                                                   record.getQuantity())
+                                                                         .getValue());
         }
         // make the temporary quantity the official one, add the record to the records list
         // and return a Result of Empty.
@@ -149,7 +149,7 @@ public final class StockImpl implements Stock {
 
     @Override
     public String toString() {
-        return "StockImpl{"
+        return "[StockImpl]{"
             + "article=" + article
             + ", expirationDate=" + expirationDate
             + ", records=" + records
