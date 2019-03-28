@@ -1,20 +1,23 @@
 package nwoolcan.model.brewery.production.batch;
 
 final class BatchIdGenerator {
-    private static BatchIdGenerator singleton = new BatchIdGenerator(0);
+
+    private static class LazyHolder {
+        private static final BatchIdGenerator SINGLETON = new BatchIdGenerator(0);
+    }
 
     private int nextId;
+
+    private BatchIdGenerator(final int startId) {
+        this.nextId = startId;
+    }
 
     /**
      * Returns the singleton instance.
      * @return the singleton instance.
      */
     static BatchIdGenerator getInstance() {
-        return singleton;
-    }
-
-    private BatchIdGenerator(final int startId) {
-        this.nextId = startId;
+        return LazyHolder.SINGLETON;
     }
 
     /**
