@@ -7,7 +7,6 @@ import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.brewery.warehouse.stock.StockImpl;
-import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
@@ -64,49 +63,25 @@ public final class WarehouseImpl implements Warehouse {
                                // checked because the query has to be consistent. It is checked in
                                // the queryStock builder.
                                .filter(stock -> !(queryStock.getMinRemainingQuantity().isPresent() //TODO change with the new functionality of Quantity
-                                   && stock.getRemainingQuantity()
-                                           .getValue()
-                                           .doubleValue()
-                                   < queryStock.getMinRemainingQuantity()
-                                               .get()
-                                               .getValue()
-                                               .doubleValue()))
+                                   && stock.getRemainingQuantity().lessThan(queryStock.getMinRemainingQuantity().get())))
                                // remove those where queryStock.maxRemainingQuantity is present and
                                // stock.getremainingQuantitity is more than the one required. The UOM is not
                                // checked because the query has to be consistent. It is checked in
                                // the queryStock builder.
                                .filter(stock -> !(queryStock.getMaxRemainingQuantity().isPresent() //TODO change with the new functionality of Quantity
-                                   && stock.getRemainingQuantity()
-                                           .getValue()
-                                           .doubleValue()
-                                   > queryStock.getMaxRemainingQuantity()
-                                               .get()
-                                               .getValue()
-                                               .doubleValue()))
+                                   && stock.getRemainingQuantity().moreThan(queryStock.getMaxRemainingQuantity().get())))
                                // remove those where querystock.minUsedQuantity is present and
                                // stock.getUsedQuantity is less than the one required. The UOM is not
                                // checked because the query has to be consistent. It is checked in
                                // the queryStock builder.
                                .filter(stock -> !(queryStock.getMinUsedQuantity().isPresent() //TODO change with the new functionality of Quantity
-                                   && stock.getUsedQuantity()
-                                           .getValue()
-                                           .doubleValue()
-                                   < queryStock.getMinUsedQuantity()
-                                               .get()
-                                               .getValue()
-                                               .doubleValue()))
+                                   && stock.getUsedQuantity().lessThan(queryStock.getMinUsedQuantity().get())))
                                // remove those where queryStock.maxUsedQuantity is present and
                                // stock.getUsedQuantitity is more than the one required. The UOM is not
                                // checked because the query has to be consistent. It is checked in
                                // the queryStock builder.
                                .filter(stock -> !(queryStock.getMaxUsedQuantity().isPresent() //TODO change with the new functionality of Quantity
-                                   && stock.getRemainingQuantity()
-                                           .getValue()
-                                           .doubleValue()
-                                   > queryStock.getMaxUsedQuantity()
-                                               .get()
-                                               .getValue()
-                                               .doubleValue()))
+                                   && stock.getRemainingQuantity().moreThan(queryStock.getMaxUsedQuantity().get())))
                                // remove those stock which state is not the one to be included.
                                .filter(stock -> !(queryStock.getIncludeStockState().isPresent()
                                                && !stock.getState()
@@ -221,16 +196,6 @@ public final class WarehouseImpl implements Warehouse {
         return this.stocks.get(stock);
     }
     /**
-     * temp shitty method to be removed once the official is ready.
-     * @param q1 .
-     * @param q2 .
-     * @return .
-     */
-    private Integer tempCmpQt(final Quantity q1, final Quantity q2) { // it is shit on purpose so that I will remember to change it.
-        //return q1.getValue().doubleValue() == q2.getValue().doubleValue() ? 0 : q1.getValue().doubleValue() > q2.getValue().doubleValue() ? 1 : -1;
-        return Double.compare(q1.getValue().doubleValue(), q2.getValue().doubleValue()); //TODO remove
-    }
-    /**
      * Comparator which selects the correct comparator accordingly with the
      * {@link QueryStock.SortParameter} and returns its return value.
      * @param s1 the first {@link Stock} to compare.
@@ -242,7 +207,7 @@ public final class WarehouseImpl implements Warehouse {
      * first element is less than the second, 0 if the two elements are equal or an {@link Integer}
      * greater than 0 if the first element is greater than the second.
      */
-    private Integer compareBy(final Stock s1,
+    private int compareBy(final Stock s1,
                               final Stock s2,
                               final QueryStock.SortParameter by,
                               final boolean descending) {
@@ -262,9 +227,9 @@ public final class WarehouseImpl implements Warehouse {
                 }                // the first is considered to be smaller.
                 return des * s1.getExpirationDate().get().compareTo(s2.getExpirationDate().get());
             case REMAINING_QUANTITY:
-                return des * tempCmpQt(s1.getRemainingQuantity(), s2.getRemainingQuantity()); //TODO change
+                return des * s1.getRemainingQuantity().compareTo(s2.getRemainingQuantity());
             case USED_QUANTITY:
-                return des * tempCmpQt(s1.getUsedQuantity(), s2.getUsedQuantity()); //TODO change
+                return des * s1.getUsedQuantity().compareTo(s2.getUsedQuantity());
             case NONE:
             default:
                 return 0;

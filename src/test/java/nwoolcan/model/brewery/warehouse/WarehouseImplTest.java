@@ -26,7 +26,6 @@ public class WarehouseImplTest {
 
     private static final Integer ONE = 1;
     private static final Integer TEN = 10;
-    private static final Double INF = 1e9;
     private static final String NAME = "DummyName";
     private static final UnitOfMeasure UOM = UnitOfMeasure.Gram;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.Milliliter;
@@ -40,8 +39,6 @@ public class WarehouseImplTest {
     private final Record record = new Record(quantity, Record.Action.ADDING);
     private final Record record1 = new Record(quantity, new Date(), Record.Action.ADDING);
     private final Record record2 = new Record(quantity1, Record.Action.ADDING);
-    private final Record record3 = new Record(quantity2, Record.Action.ADDING);
-    private final Record record4 = new Record(quantity3, Record.Action.ADDING);
     private static final Integer MIN_ID = 1;
     private static final Integer MAX_ID = 1;
     private static final String MIN_NAME = "DummyName";
@@ -92,8 +89,8 @@ public class WarehouseImplTest {
         final List<Stock> lisStock = resLisStock.getValue();
         for (final Stock s : lisStock) {
             Assert.assertEquals(article, s.getArticle());
-            Assert.assertTrue(s.getRemainingQuantity().getValue().doubleValue() >= quantity.getValue().doubleValue());
-            Assert.assertTrue(s.getRemainingQuantity().getValue().doubleValue() <= quantity2.getValue().doubleValue());
+            Assert.assertFalse(s.getRemainingQuantity().lessThan(quantity));
+            Assert.assertFalse(s.getRemainingQuantity().moreThan(quantity2));
             System.out.println(s.toString());
         }
 
@@ -130,14 +127,12 @@ public class WarehouseImplTest {
         final Result<List<Stock>> resLisStock = warehouse.getStocks(queryStock);
         Assert.assertTrue(resLisStock.isPresent());
         final List<Stock> lisStock = resLisStock.getValue();
-        double preVal = INF;
-        for (final Stock s : lisStock) {
-            Assert.assertEquals(article, s.getArticle());
-            Assert.assertTrue(s.getRemainingQuantity().getValue().doubleValue() >= quantity.getValue().doubleValue());
-            Assert.assertTrue(s.getRemainingQuantity().getValue().doubleValue() <= quantity2.getValue().doubleValue());
-            Assert.assertTrue(s.getRemainingQuantity().getValue().doubleValue() <= preVal);
-            preVal = s.getRemainingQuantity().getValue().doubleValue(); // assert it is sorted
-        }
+        Assert.assertTrue(lisStock.stream()
+                .map(Stock::getRemainingQuantity)
+                .reduce((prev, curr) -> {
+                    Assert.assertFalse(curr.moreThan(prev));
+                    return curr;
+                }).isPresent());
     }
     /**
      * Tests getStocks with filter by expiration dates.
