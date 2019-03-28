@@ -1,9 +1,9 @@
 package nwoolcan.model.brewery.production.batch;
 
+import javafx.util.Pair;
 import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
-import nwoolcan.utils.Pair;
 
 import java.util.Collection;
 import java.util.Optional;

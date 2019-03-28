@@ -9,7 +9,6 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Implementation for BatchEvaluationScanner.
@@ -41,7 +40,7 @@ public final class BatchEvaluationScannerImpl implements BatchEvaluationScanner 
                     if (review.isEnum()) {
                         return Arrays.stream(review.getEnumConstants()).map(Result::of);
                     } else {
-                        return Stream.of(Results.ofChecked(review::newInstance));
+                        return Results.ofChecked(review::newInstance).stream();
                     }
                 })
                 .filter(Result::isPresent)

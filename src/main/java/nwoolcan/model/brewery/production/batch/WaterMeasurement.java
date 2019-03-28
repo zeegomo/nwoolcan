@@ -1,6 +1,6 @@
 package nwoolcan.model.brewery.production.batch;
 
-import nwoolcan.model.utils.Quantity;
+import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 
 import java.util.Optional;
 
@@ -9,33 +9,39 @@ import java.util.Optional;
  */
 public interface WaterMeasurement {
         /**
-         * Returns the amount of Ca+2.
-         * @return a {@link Quantity} describing Ca+2 levels
+         * Water elements measured.
          */
-        Optional<Quantity> getCalciumIons();
+        enum Element {
+                /**
+                 * Ca+2.
+                 */
+                CALCIUM,
+                /**
+                 * Mg+2.
+                 */
+                MAGNESIUM,
+                /**
+                 * Na+1.
+                 */
+                SODIUM,
+                /**
+                 * HCO3-1.
+                 */
+                BICARBONATE,
+                /**
+                 * SO4-2.
+                 */
+                SULFATE,
+                /**
+                 * Cl-1.
+                 */
+                CHLORIDE;
+        }
+
         /**
-         * Returns the amount of Mg+2.
-         * @return a {@link Quantity} describing Mg+2 levels
+         * Return the measurement of the specific element, if available.
+         * @param e the element of which we want to know the measurement.
+         * @return a {@link Parameter}.
          */
-        Optional<Quantity> getMagnesiumIons();
-        /**
-         * Returns the amount of Na+1.
-         * @return a {@link Quantity} describing Na+1 levels
-         */
-        Optional<Quantity> getSodiumIons();
-        /**
-         * Returns the amount of HCO3-1.
-         * @return a {@link Quantity} describing HCO3-1 levels
-         */
-        Optional<Quantity> getBicarbonateIons();
-        /**
-         * Returns the amount of SO4-2.
-         * @return a {@link Quantity} describing SO4-2 levels
-         */
-        Optional<Quantity> getSulfateIons();
-        /**
-         * Returns the amount of Cl-1.
-         * @return a {@link Quantity} describing Cl-1 levels
-         */
-        Optional<Quantity> getChlorideIons();
+        Optional<Parameter> getMeasurement(Element e);
 }
