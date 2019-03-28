@@ -62,25 +62,25 @@ public final class WarehouseImpl implements Warehouse {
                      // stock.getremainingquantity is less than the one required. The UOM is not
                      // checked because the query has to be consistent. It is checked in
                      // the queryStock builder.
-                     .filter(stock -> !(queryStock.getMinRemainingQuantity().isPresent() //TODO change with the new functionality of Quantity
+                     .filter(stock -> !(queryStock.getMinRemainingQuantity().isPresent()
                          && stock.getRemainingQuantity().lessThan(queryStock.getMinRemainingQuantity().get())))
                      // remove those where queryStock.maxRemainingQuantity is present and
                      // stock.getremainingQuantitity is more than the one required. The UOM is not
                      // checked because the query has to be consistent. It is checked in
                      // the queryStock builder.
-                     .filter(stock -> !(queryStock.getMaxRemainingQuantity().isPresent() //TODO change with the new functionality of Quantity
+                     .filter(stock -> !(queryStock.getMaxRemainingQuantity().isPresent()
                          && stock.getRemainingQuantity().moreThan(queryStock.getMaxRemainingQuantity().get())))
                      // remove those where querystock.minUsedQuantity is present and
                      // stock.getUsedQuantity is less than the one required. The UOM is not
                      // checked because the query has to be consistent. It is checked in
                      // the queryStock builder.
-                     .filter(stock -> !(queryStock.getMinUsedQuantity().isPresent() //TODO change with the new functionality of Quantity
+                     .filter(stock -> !(queryStock.getMinUsedQuantity().isPresent()
                          && stock.getUsedQuantity().lessThan(queryStock.getMinUsedQuantity().get())))
                      // remove those where queryStock.maxUsedQuantity is present and
                      // stock.getUsedQuantitity is more than the one required. The UOM is not
                      // checked because the query has to be consistent. It is checked in
                      // the queryStock builder.
-                     .filter(stock -> !(queryStock.getMaxUsedQuantity().isPresent() //TODO change with the new functionality of Quantity
+                     .filter(stock -> !(queryStock.getMaxUsedQuantity().isPresent()
                          && stock.getRemainingQuantity().moreThan(queryStock.getMaxUsedQuantity().get())))
                      // remove those stock which state is not the one to be included.
                      .filter(stock -> !(queryStock.getIncludeStockState().isPresent()
