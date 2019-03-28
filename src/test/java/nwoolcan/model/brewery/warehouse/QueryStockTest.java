@@ -18,8 +18,8 @@ public final class QueryStockTest {
     private static final Integer ID = 1;
     private static final Integer TWO = 2;
     private static final String ARTICLE_NAME = "ArticleName";
-    private static final UnitOfMeasure UOM = UnitOfMeasure.Kilogram;
-    private static final UnitOfMeasure UOM1 = UnitOfMeasure.Unit;
+    private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
+    private static final UnitOfMeasure UOM1 = UnitOfMeasure.UNIT;
     private static final Article ARTICLE = new ArticleImpl(ID, ARTICLE_NAME, UOM);
     private static final Date DATE = new Date();
     private static final Quantity QUANTITY = Quantity.of(TWO, UOM);

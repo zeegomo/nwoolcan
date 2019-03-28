@@ -5,7 +5,39 @@ package nwoolcan.model.utils;
  */
 public enum UnitOfMeasure {
     /**
-     * Possible unit of measures.
+     * Grams.
      */
-    Kilogram, Liter, Celsius, Unit, Percentage, Ebc, Ibu, Gravity, MilligramsPerLiter
+    GRAM,
+    /**
+     * Milliliters.
+     */
+    MILLILITER,
+    /**
+     * Basic units.
+     */
+    UNIT,
+    /**
+     * Percentage.
+     */
+    PERCENTAGE,
+    /**
+     * Celsius degrees.
+     */
+    CELSIUS_DEGREE,
+    /**
+     * Milligrams per liter.
+     */
+    MILLIGRAMS_PER_LITER,
+    /**
+     * Pure number.
+     */
+    UNITLESS,
+    /**
+     * Ebc special unit of measure.
+     */
+    EBC,
+    /**
+     * IBU special unit of measure.
+     */
+    IBU;
 }

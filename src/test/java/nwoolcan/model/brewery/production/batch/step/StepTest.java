@@ -30,7 +30,7 @@ public class StepTest {
     private Step packaging;
     private Step finalized;
 
-    private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.Liter);
+    private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.MILLILITER);
     private static final Date D1 = new Date(1000);
 
     private static final List<Parameter> MASHING_PARAMS = Arrays.asList(
@@ -48,10 +48,10 @@ public class StepTest {
      */
     @Before
     public void init() {
-        this.boiling = new BasicStep(StepTypeEnum.Boiling);
-        this.mashing = new BasicStep(StepTypeEnum.Mashing);
-        this.packaging = new BasicStep(StepTypeEnum.Packaging, new Date());
-        this.finalized = new BasicStep(StepTypeEnum.Finalized);
+        this.boiling = new BasicStep(StepTypeEnum.BOILING);
+        this.mashing = new BasicStep(StepTypeEnum.MASHING);
+        this.packaging = new BasicStep(StepTypeEnum.PACKAGING, new Date());
+        this.finalized = new BasicStep(StepTypeEnum.FINALIZED);
     }
 
     /**

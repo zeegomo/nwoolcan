@@ -9,27 +9,27 @@ public enum ParameterTypeEnum implements ParameterType {
     /**
      * Temperature parameter type.
      */
-    TEMPERATURE(UnitOfMeasure.Celsius),
+    TEMPERATURE(UnitOfMeasure.CELSIUS_DEGREE),
     /**
      * Alcohol by volume of the beer.
      */
-    ABV(UnitOfMeasure.Percentage),
+    ABV(UnitOfMeasure.PERCENTAGE),
     /**
      * Color of the beer.
      */
-    EBC(UnitOfMeasure.Ebc),
+    EBC(UnitOfMeasure.EBC),
     /**
      * Bitterness of the beer.
      */
-    IBU(UnitOfMeasure.Ibu),
+    IBU(UnitOfMeasure.IBU),
     /**
      * Specific gravity of the beer.
      */
-    GRAVITY(UnitOfMeasure.Gravity),
+    GRAVITY(UnitOfMeasure.UNITLESS),
     /**
      * Water measurements for the beer.
      */
-    WATER_MEASUREMENT(UnitOfMeasure.MilligramsPerLiter);
+    WATER_MEASUREMENT(UnitOfMeasure.MILLIGRAMS_PER_LITER);
 
     private final UnitOfMeasure um;
 

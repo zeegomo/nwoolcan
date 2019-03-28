@@ -20,7 +20,7 @@ import java.util.Optional;
  */
 public class TestBeerArticle {
 
-    private static final UnitOfMeasure UOM = UnitOfMeasure.Kilogram;
+    private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private final Integer id = 1;
     private final String name = "DummyName";
 

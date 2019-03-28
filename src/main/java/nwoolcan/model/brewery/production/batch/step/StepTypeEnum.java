@@ -7,27 +7,27 @@ public enum StepTypeEnum implements StepType {
     /**
      * Mashing step.
      */
-    Mashing,
+    MASHING,
     /**
      * Boiling step.
      */
-    Boiling,
+    BOILING,
     /**
      * Fermenting step.
      */
-    Fermenting,
+    FERMENTING,
     /**
      * Packaging step.
      */
-    Packaging,
+    PACKAGING,
     /**
      * Aging step.
      */
-    Aging,
+    AGING,
     /**
      * Placeholder step representing a finalized batch.
      */
-    Finalized;
+    FINALIZED;
 
     @Override
     public String getName() {
@@ -36,6 +36,6 @@ public enum StepTypeEnum implements StepType {
 
     @Override
     public boolean isEndType() {
-        return equals(StepTypeEnum.Finalized);
+        return equals(StepTypeEnum.FINALIZED);
     }
 }
