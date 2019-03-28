@@ -14,13 +14,13 @@ import java.util.Date;
  */
 public class RecordTest {
 
-    private static final Double NUM = 1.0d;
+    private static final int NUM = 1;
     /**
      * Test getters.
      */
     @Test
     public void getters() {
-        final Quantity quantity = Quantity.of(NUM, UnitOfMeasure.Kilogram);
+        final Quantity quantity = Quantity.of(NUM, UnitOfMeasure.Gram);
         final Date date = new Date();
         final Record.Action action = Record.Action.ADDING;
         final Record record = new Record(quantity, date, action);

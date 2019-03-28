@@ -21,7 +21,7 @@ public class StepInfoImplTest {
     private static final Date START = new Date();
     private static final Date END = new Date(START.getTime() + 100);
     private static final String NOTE = "Test note.";
-    private static final Quantity Q = Quantity.of(20, UnitOfMeasure.Liter);
+    private static final Quantity Q = Quantity.of(20, UnitOfMeasure.Milliliter);
 
     private StepInfo si;
 

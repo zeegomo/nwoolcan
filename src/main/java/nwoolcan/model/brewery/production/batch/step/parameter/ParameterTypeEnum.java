@@ -9,7 +9,7 @@ public enum ParameterTypeEnum implements ParameterType {
     /**
      * Temperature parameter type.
      */
-    Temperature(UnitOfMeasure.Celsius),
+    Temperature(UnitOfMeasure.CelsiusDegree),
     /**
      * Alcohol by volume of the beer.
      */

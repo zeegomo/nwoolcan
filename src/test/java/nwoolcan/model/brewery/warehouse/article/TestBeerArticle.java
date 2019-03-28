@@ -10,9 +10,8 @@ import org.junit.Test;
  */
 public class TestBeerArticle {
 
-    private static final UnitOfMeasure UOM = UnitOfMeasure.Kilogram;
+    private static final UnitOfMeasure UOM = UnitOfMeasure.Gram;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.Unit;
-    private final Integer id = 1;
     private final String name = "DummyName";
 
     /**
