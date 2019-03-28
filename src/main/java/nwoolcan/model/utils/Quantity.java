@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Quantity class for handling value and unit of measure.
  */
-public final class Quantity {
+public final class Quantity implements Comparable<Quantity> {
 
     private final int value;
     private final UnitOfMeasure unitOfMeasure;
@@ -59,7 +59,7 @@ public final class Quantity {
      * @param other the {@link Quantity} which has to be compared with this.
      * @return an integer denoting the result of the comparison.
      */
-    public Integer compareTo(final Quantity other) {
+    public int compareTo(final Quantity other) {
         if (this.equals(other)) {
             return 0;
         }
