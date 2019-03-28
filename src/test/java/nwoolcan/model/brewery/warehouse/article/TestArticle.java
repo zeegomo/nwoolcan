@@ -12,7 +12,7 @@ public class TestArticle {
     private final Integer id = 1;
     private final Integer negId = -1;
     private final String name = "DummyName";
-    private static final UnitOfMeasure UOM = UnitOfMeasure.Kilogram;
+    private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
 
     /**
      * Method that tests the constructor with null name.
