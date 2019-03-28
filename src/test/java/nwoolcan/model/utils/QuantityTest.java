@@ -14,8 +14,8 @@ public class QuantityTest {
     private static final int VALUE2 = 30;
     private static final int NEG_VALUE = -2;
 
-    private static final UnitOfMeasure GOOD_UM1 = UnitOfMeasure.Kilogram;
-    private static final UnitOfMeasure GOOD_UM2 = UnitOfMeasure.Liter;
+    private static final UnitOfMeasure GOOD_UM1 = UnitOfMeasure.Gram;
+    private static final UnitOfMeasure GOOD_UM2 = UnitOfMeasure.Milliliter;
     private static final UnitOfMeasure BAD_UM = UnitOfMeasure.CelsiusDegree;
 
     /**
@@ -56,7 +56,7 @@ public class QuantityTest {
      */
     @Test
     public void testQuantityEqualsAndHashcode() {
-        final UnitOfMeasure um = UnitOfMeasure.Kilogram;
+        final UnitOfMeasure um = UnitOfMeasure.Gram;
         final Quantity q1 = Quantity.of(VALUE1, GOOD_UM1);
         final Quantity q2 = Quantity.of(VALUE1, GOOD_UM1);
 

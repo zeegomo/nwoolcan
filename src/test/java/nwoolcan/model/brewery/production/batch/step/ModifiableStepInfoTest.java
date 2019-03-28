@@ -23,8 +23,8 @@ public class ModifiableStepInfoTest {
     private static final Date PAST = new Date(0);
     private static final Date FUTURE = new Date(NOW.getTime() + 1000);
     private static final String NOTE1 = "Test note.";
-    private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.Liter);
-    private static final Quantity Q2 = Quantity.of(20, UnitOfMeasure.Liter);
+    private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.Milliliter);
+    private static final Quantity Q2 = Quantity.of(20, UnitOfMeasure.Milliliter);
 
     private ModifiableStepInfo si;
 

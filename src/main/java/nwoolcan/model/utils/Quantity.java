@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Quantity class for handling value and unit of measure.
  */
-public final class Quantity {
+public final class Quantity implements Comparable<Quantity> {
 
     private final int value;
     private final UnitOfMeasure unitOfMeasure;
@@ -47,6 +47,70 @@ public final class Quantity {
             throw new IllegalArgumentException(res.getError());
         }
         return res.getValue();
+    }
+
+    /**
+     * Compares the value of two {@link Quantity}. It returns:
+     * <ul>
+     *     <li>0 when they are equals.</li>
+     *     <li>An integer smaller than 0 when this is less than other.</li>
+     *     <li>An integer greater than 0 when this is greater than other.</li>
+     * </ul>
+     * @param other the {@link Quantity} which has to be compared with this.
+     * @return an integer denoting the result of the comparison.
+     */
+    public int compareTo(final Quantity other) {
+        if (this.equals(other)) {
+            return 0;
+        }
+        return this.getValue() < other.getValue() ? -1 : 1;
+    }
+
+    /**
+     * Compares this {@link Quantity} with another one, checking the {@link UnitOfMeasure} and calling the method compareTo.
+     * @param other the {@link Quantity} which has to be compared with this.
+     * @return a {@link Result} containing the return value of the method compareTo.
+     */
+    public Result<Integer> checkedCompareTo(final Quantity other) {
+        return Result.of(compareTo(other)).require(() -> Quantities.checkSameUM(this, other));
+    }
+
+    /**
+     * Compares this with another {@link Quantity} and returns true when the value of this is less
+     * than the other one.
+     * @param other to be compared with this.
+     * @return a boolean denoting whether the value of this is less than the other one.
+     */
+    public boolean lessThan(final Quantity other) {
+        return compareTo(other) < 1;
+    }
+
+    /**
+     * Compares this {@link Quantity} with another one, checking the {@link UnitOfMeasure} and calling the method lessThan.
+     * @param other the {@link Quantity} which has to be compared with this.
+     * @return a {@link Result} containing the return value of the method lessThan.
+     */
+    public Result<Boolean> checkedLessThan(final Quantity other) {
+        return Result.of(lessThan(other)).require(() -> Quantities.checkSameUM(this, other));
+    }
+
+    /**
+     * Compares this with another {@link Quantity} and returns true when the value of this is more
+     * than the other one.
+     * @param other to be compared with this.
+     * @return a boolean denoting whether the value of this is more than the other one.
+     */
+    public boolean moreThan(final Quantity other) {
+        return compareTo(other) > 1;
+    }
+
+    /**
+     * Compares this {@link Quantity} with another one, checking the {@link UnitOfMeasure} and calling the method moreThan.
+     * @param other the {@link Quantity} which has to be compared with this.
+     * @return a {@link Result} containing the return value of the method moreThan.
+     */
+    public Result<Boolean> checkedMoreThan(final Quantity other) {
+        return Result.of(moreThan(other)).require(() -> Quantities.checkSameUM(this, other));
     }
 
     @Override

@@ -12,7 +12,8 @@ public final class Quantities {
 
     private Quantities() { }
 
-    private static boolean checkSameUM(final Quantity q1, final Quantity q2) {
+    // Package private
+    static boolean checkSameUM(final Quantity q1, final Quantity q2) {
         return q1.getUnitOfMeasure().equals(q2.getUnitOfMeasure());
     }
 
