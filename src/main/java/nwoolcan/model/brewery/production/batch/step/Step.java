@@ -81,9 +81,11 @@ public interface Step {
      * @return a {@link Result} that can contain an error cited before.
      */
     Result<Empty> addParameter(Parameter parameter);
+
     /**
-     * Register an observer for this step.
-     * @param observer the observer to register.
+     * Adds an observer of {@link Parameter}. The observer's update method is called when
+     * a parameter is added.
+     * @param observer the observer object that needs to be notified when a parameter is added.
      */
-    void addObserver(Observer<Parameter> observer);
+    void addParameterObserver(Observer<Parameter> observer);
 }

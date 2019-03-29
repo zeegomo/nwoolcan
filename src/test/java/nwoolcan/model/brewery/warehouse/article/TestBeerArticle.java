@@ -1,19 +1,16 @@
 package nwoolcan.model.brewery.warehouse.article;
 
 import nwoolcan.model.brewery.production.batch.Batch;
-import nwoolcan.model.brewery.production.batch.BatchInfo;
-import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
-import nwoolcan.model.brewery.production.batch.step.Step;
-import nwoolcan.model.brewery.production.batch.step.StepType;
+import nwoolcan.model.brewery.production.batch.BatchImpl;
+import nwoolcan.model.brewery.production.batch.BatchMethod;
+import nwoolcan.model.brewery.production.batch.BeerDescriptionImpl;
+import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
+import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
-import nwoolcan.utils.Empty;
-import nwoolcan.utils.Result;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.Collections;
 
 /**
  * Test for BeerArticle.
@@ -24,50 +21,13 @@ public class TestBeerArticle {
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.UNIT;
     private final String name = "DummyName";
 
-    private Batch batch;
-
-    /**
-     * Initialization method.
-     */
-    @Before
-    public void init() {
-        batch = new Batch() {
-            @Override
-            public BatchInfo getBatchInfo() {
-                return null;
-            }
-
-            @Override
-            public Step getCurrentStep() {
-                return null;
-            }
-
-            @Override
-            public List<Step> getPreviousSteps() {
-                return null;
-            }
-
-            @Override
-            public Result<Empty> moveToNextStep(final StepType nextStepType) {
-                return null;
-            }
-
-            @Override
-            public boolean isEnded() {
-                return false;
-            }
-
-            @Override
-            public Result<Empty> setEvaluation(final BatchEvaluation evaluation) {
-                return null;
-            }
-
-            @Override
-            public Optional<BatchEvaluation> getEvaluation() {
-                return Optional.empty();
-            }
-        };
-    }
+    private final Batch batch = new BatchImpl(
+        new BeerDescriptionImpl("Test beer", "Test style"),
+        BatchMethod.ALL_GRAIN,
+        Quantity.of(1000, UnitOfMeasure.MILLILITER),
+        Collections.EMPTY_LIST,
+        StepTypeEnum.MASHING
+    );
 
     /**
      * Method that tests the getters and their possible errors.

@@ -5,7 +5,6 @@ import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
 
-
 import java.util.Collection;
 import java.util.Optional;
 

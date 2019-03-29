@@ -14,6 +14,12 @@ import java.util.Optional;
  */
 public interface Batch {
     /**
+     * Returns the batch id.
+     * @return the batch id.
+     */
+    int getId();
+
+    /**
      * Returns the info of this batch.
      * @return the info of this batch.
      */
@@ -40,7 +46,7 @@ public interface Batch {
      * <ul>
      *     <li>{@link IllegalStateException} if the batch is in ended state.</li>
      *     <li>{@link IllegalArgumentException} if the next step type cannot be after the current step type or
-     *     f the next step type cannot be created.</li>
+     *     if the next step type cannot be created.</li>
      * </ul>
      * @param nextStepType the next step type.
      * @return a Result with an error if one of above conditions meet.

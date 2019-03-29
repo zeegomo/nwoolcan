@@ -1,14 +1,15 @@
 package nwoolcan.utils;
 
 /**
- * Observer pattern.
- * @param <T> the type of objects
+ * Interface representing an observer object that observes an update of a object
+ * of type T.
+ * @param <T> the object's type to observe.
  */
 @FunctionalInterface
 public interface Observer<T> {
     /**
-     * This method is called whenever the observed object is changed.
-     * @param arg an argument passed.
+     * Called when an update is observed.
+     * @param arg the observed update object.
      */
     void update(T arg);
 }

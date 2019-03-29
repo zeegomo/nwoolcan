@@ -16,10 +16,10 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Date;
-
+import java.util.StringJoiner;
 
 /**
  * Basic batch implementation.
@@ -28,7 +28,11 @@ public final class BatchImpl implements Batch {
 
     private static final String CANNOT_CREATE_STEP_EXCEPTION = "Cannot create a step with the given type: ";
     private static final String CANNOT_FINALIZE_CURRENT_STEP = "Cannot finalize current step.";
+    private static final String BATCH_IS_ENDED_MESSAGE = "Cannot perform operation because batch is in ended state.";
+    private static final Object CANNOT_GO_TO_STEP_MESSAGE = "From this step, cannot go to step: ";
+    private static final String BATCH_NOT_ENDED_MESSAGE = "Cannot perform operation because batch is not in ended state.";
 
+    private final int id;
     private final ModifiableBatchInfo batchInfo;
     private final List<Step> steps;
 
@@ -36,29 +40,59 @@ public final class BatchImpl implements Batch {
     private BatchEvaluation batchEvaluation;
 
     /**
-     * Batch Impl.
-     * @param beerDescription the description of the beer.
-     * @param batchMethod the method of the batch.
-     * @param initialSize the size of the batch.
-     * @param ingredients the ingredients for this batch.
-     * @param initialStep the starting point.
+     * Creates a new {@link Batch} in production.
+     * @param beerDescription the batch's beer description.
+     * @param batchMethod the batch's method.
+     * @param initialSize the initial size of the batch.
+     * @param ingredients the ingredients of the beer made by the batch.
+     * @param initialStep the initial step of the batch.
+     * @param waterMeasurement the water measurement of the batch.
+     * @throws IllegalArgumentException if the initial step cannot be created.
      */
     public BatchImpl(final BeerDescription beerDescription,
                      final BatchMethod batchMethod,
                      final Quantity initialSize,
                      final Collection<Pair<IngredientArticle, Quantity>> ingredients,
-                     final StepType initialStep) {
-        //TODO insert parameters
-        this.batchInfo = new ModifiableBatchInfoImpl(ingredients, beerDescription, batchMethod, initialSize);
+                     final StepType initialStep,
+                     @Nullable final WaterMeasurement waterMeasurement) {
+        this.id = BatchIdGenerator.getInstance().getNextId();
+
+        if (waterMeasurement == null) {
+            this.batchInfo = new ModifiableBatchInfoImpl(ingredients, beerDescription, batchMethod, initialSize);
+        } else {
+            this.batchInfo = new ModifiableBatchInfoImpl(ingredients, beerDescription, batchMethod, initialSize, waterMeasurement);
+        }
 
         final Result<Step> res = Steps.create(initialStep);
         if (res.isError()) {
             throw new IllegalArgumentException(CANNOT_CREATE_STEP_EXCEPTION + initialStep);
         }
 
-        res.getValue().addObserver(batchInfo);
+        res.peek(step -> step.addParameterObserver(batchInfo));
 
         this.steps = new ArrayList<>(Collections.singletonList(res.getValue()));
+    }
+
+    /**
+     * Creates a new {@link Batch} in production.
+     * @param beerDescription the batch's beer description.
+     * @param batchMethod the batch's method.
+     * @param initialSize the initial size of the batch.
+     * @param ingredients the ingredients of the beer made by the batch.
+     * @param initialStep the initial step of the batch.
+     * @throws IllegalArgumentException if the initial step cannot be created.
+     */
+    public BatchImpl(final BeerDescription beerDescription,
+                     final BatchMethod batchMethod,
+                     final Quantity initialSize,
+                     final Collection<Pair<IngredientArticle, Quantity>> ingredients,
+                     final StepType initialStep) {
+        this(beerDescription, batchMethod, initialSize, ingredients, initialStep, null);
+    }
+
+    @Override
+    public int getId() {
+        return this.id;
     }
 
     @Override
@@ -82,6 +116,7 @@ public final class BatchImpl implements Batch {
 
     private void checkAndFinalizeStep(final Step step) {
         if (!step.isFinalized()) {
+            //noinspection OptionalGetWithoutIsPresent
             getPreviousStep().peekError(e -> step.finalize(null, new Date(), this.batchInfo.getBatchSize()))
                              .peek(lastStep -> step.finalize(null, new Date(), lastStep.getStepInfo().getEndStepSize().get()));
         }
@@ -90,12 +125,12 @@ public final class BatchImpl implements Batch {
     @Override
     public Result<Empty> moveToNextStep(final StepType nextStepType) {
         return Result.of(this.getCurrentStep())
-                     .require(() -> !this.isEnded(), new IllegalStateException())
-                     .require(p -> p.getNextStepTypes().contains(nextStepType), new IllegalArgumentException())
+                     .require(() -> !this.isEnded(), new IllegalStateException(BATCH_IS_ENDED_MESSAGE))
+                     .require(p -> p.getNextStepTypes().contains(nextStepType), new IllegalArgumentException(CANNOT_GO_TO_STEP_MESSAGE + nextStepType.toString()))
                      .peek(this::checkAndFinalizeStep)
                      .flatMap(() -> Steps.create(nextStepType))
                      .peek(this.steps::add)
-                     .peek(p -> p.addObserver(this.batchInfo))
+                     .peek(p -> p.addParameterObserver(this.batchInfo))
                      .toEmpty();
     }
 
@@ -107,12 +142,22 @@ public final class BatchImpl implements Batch {
     @Override
     public Result<Empty> setEvaluation(final BatchEvaluation evaluation) {
         return Result.ofEmpty()
-                     .require(this::isEnded, new IllegalStateException())
+                     .require(this::isEnded, new IllegalStateException(BATCH_NOT_ENDED_MESSAGE))
                      .peek(e -> this.batchEvaluation = evaluation);
     }
 
     @Override
     public Optional<BatchEvaluation> getEvaluation() {
         return Optional.ofNullable(this.batchEvaluation);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", BatchImpl.class.getSimpleName() + "[", "]")
+            .add("id=" + id)
+            .add("batchInfo=" + batchInfo)
+            .add("currentStep=" + this.getCurrentStep())
+            .add("batchEvaluation=" + batchEvaluation)
+            .toString();
     }
 }
