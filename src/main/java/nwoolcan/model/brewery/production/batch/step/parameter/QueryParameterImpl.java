@@ -6,6 +6,7 @@ import java.util.Optional;
 
 /**
  * Object for representing a query to perform on a collection of parameters.
+ * Package-private.
  */
 final class QueryParameterImpl implements QueryParameter {
 
@@ -26,6 +27,7 @@ final class QueryParameterImpl implements QueryParameter {
     private final boolean sortByDate;
     private final boolean sortDescending;
 
+    //Package-private.
     QueryParameterImpl(@Nullable final ParameterType parameterType,
                        @Nullable final Number greaterThanValue,
                        @Nullable final Number lessThanValue,

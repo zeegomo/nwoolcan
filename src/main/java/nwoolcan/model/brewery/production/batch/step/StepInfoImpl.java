@@ -1,6 +1,5 @@
-package nwoolcan.model.brewery.production.batch.step.info;
+package nwoolcan.model.brewery.production.batch.step;
 
-import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.utils.Quantity;
 
 import javax.annotation.Nullable;
@@ -9,8 +8,9 @@ import java.util.Optional;
 
 /**
  * Implementation of StepInfo using pattern decorator for constructor.
+ * Package-private.
  */
-public class StepInfoImpl implements StepInfo {
+class StepInfoImpl implements StepInfo {
 
     private static final String INVALID_END_DATE_MESSAGE = "endDate is before startDate.";
 
@@ -24,7 +24,6 @@ public class StepInfoImpl implements StepInfo {
     @Nullable
     private Quantity endSize;
 
-    //Package-protected.
     StepInfoImpl(final StepType stepType, final Date startDate) {
         this.stepType = stepType;
         this.startDate = new Date(startDate.getTime());
@@ -34,7 +33,7 @@ public class StepInfoImpl implements StepInfo {
      * Decorator constructor effectively copying the stepInfo passed by parameter.
      * @param stepInfo stepInfo to use as copy.
      */
-    public StepInfoImpl(final StepInfo stepInfo) {
+    StepInfoImpl(final StepInfo stepInfo) {
         this(stepInfo.getType(), stepInfo.getStartDate());
         stepInfo.getNote().ifPresent(this::setInternalNote);
         stepInfo.getEndDate().ifPresent(this::setInternalEndDate);
@@ -81,7 +80,7 @@ public class StepInfoImpl implements StepInfo {
      * Sets internal note.
      * @param note string to set as note.
      */
-    protected void setInternalNote(@Nullable final String note) {
+    void setInternalNote(@Nullable final String note) {
         this.note = note;
     }
 
@@ -89,7 +88,7 @@ public class StepInfoImpl implements StepInfo {
      * Sets internal end date.
      * @param endDate date to set as end date.
      */
-    protected void setInternalEndDate(final Date endDate) {
+    void setInternalEndDate(final Date endDate) {
         this.endDate = new Date(endDate.getTime());
     }
 
@@ -97,7 +96,7 @@ public class StepInfoImpl implements StepInfo {
      * Sets internal end size.
      * @param endSize quantity to set as end size.
      */
-    protected void setInternalEndStepSize(final Quantity endSize) {
+    void setInternalEndStepSize(final Quantity endSize) {
         this.endSize = endSize;
     }
 }

@@ -1,6 +1,5 @@
 package nwoolcan.model.brewery.production.batch.step;
 
-import nwoolcan.model.brewery.production.batch.step.info.StepInfo;
 import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
 import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
