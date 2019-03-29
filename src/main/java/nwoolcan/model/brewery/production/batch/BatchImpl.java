@@ -60,9 +60,9 @@ public final class BatchImpl implements Batch {
         this.id = BatchIdGenerator.getInstance().getNextId();
 
         if (waterMeasurement == null) {
-            this.batchInfo = new ModifiableBatchInfoImpl(ingredients, beerDescription, batchMethod, initialSize);
+            this.batchInfo = ModifiableBatchInfoFactory.of(ingredients, beerDescription, batchMethod, initialSize);
         } else {
-            this.batchInfo = new ModifiableBatchInfoImpl(ingredients, beerDescription, batchMethod, initialSize, waterMeasurement);
+            this.batchInfo = ModifiableBatchInfoFactory.of(ingredients, beerDescription, batchMethod, initialSize, waterMeasurement);
         }
 
         final Result<Step> res = Steps.create(initialStep);
