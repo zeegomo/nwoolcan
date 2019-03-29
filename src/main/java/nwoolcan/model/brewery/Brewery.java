@@ -32,7 +32,7 @@ public interface Brewery {
      * @param queryBatch describes the type of the query.
      * @return a {@link Collection} of {@link Batch} accordingly with the given {@link QueryBatch}.
      */
-    Result<Collection<Batch>> getBatches(QueryBatch queryBatch);
+    Collection<Batch> getBatches(QueryBatch queryBatch);
     /**
      * Adds a Batch to the brewery.
      * @param batch to be added

@@ -9,6 +9,7 @@ import nwoolcan.utils.Result;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * Brewery Implementation.
@@ -47,8 +48,24 @@ public final class BreweryImpl implements Brewery {
     }
 
     @Override
-    public Result<Collection<Batch>> getBatches(final QueryBatch queryBatch) {
-        return Result.of(batches); // TODO filters will be added once QueryBatch will be implemented.
+    public Collection<Batch> getBatches(final QueryBatch queryBatch) {
+        return batches.stream()
+                      .filter(batch -> !(queryBatch.getMinId().isPresent()
+                          && batch.getId() < queryBatch.getMinId().get()))
+                      .filter(batch -> !(queryBatch.getMaxId().isPresent()
+                          && batch.getId() > queryBatch.getMaxId().get()))
+                      .filter(batch -> !(queryBatch.getBatchMethod().isPresent()
+                                      && batch.getBatchInfo().getMethod()
+                                         != queryBatch.getBatchMethod().get()))
+                      .filter(batch -> !(queryBatch.getMinBatchSize().isPresent()
+                          && batch.getBatchInfo()
+                                  .getBatchSize()
+                                  .lessThan(queryBatch.getMinBatchSize().get())))
+                      .filter(batch -> !(queryBatch.getMaxBatchSize().isPresent()
+                          && batch.getBatchInfo()
+                                  .getBatchSize()
+                                  .moreThan(queryBatch.getMaxBatchSize().get())))
+                      .collect(Collectors.toList());
     }
 
     @Override
