@@ -6,29 +6,37 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 /**
- * Query Batch.
+ * Query Batch. All the getters return an parametric {@link Optional},
+ * because each field can be present or not.
  */
 public class QueryBatch {
 
-    @Nullable private Integer minId;
-    @Nullable private Integer maxId;
-    @Nullable private BatchMethod batchMethod;
-    @Nullable private Quantity minBatchSize;
-    @Nullable private Quantity maxBatchSize;
+    @Nullable private final Integer minId;
+    @Nullable private final Integer maxId;
+    @Nullable private final BatchMethod batchMethod;
+    @Nullable private final Quantity minBatchSize;
+    @Nullable private final Quantity maxBatchSize;
 
+    /**
+     * Constructor of the class.
+     * @param minId the min id to be displayed.
+     * @param maxId the max id to be displayed.
+     * @param batchMethod the only {@link BatchMethod} to be displayed.
+     * @param minBatchSize a {@link Quantity} denoting the minimum size of the {@link Batch}.
+     * @param maxBatchSize a {@link Quantity} denoting the maximum size of the {@link Batch}.
+     */
     // Package-private
-    QueryBatch(@Nullable Integer minId,
-               @Nullable Integer maxId,
-               @Nullable BatchMethod batchMethod,
-               @Nullable Quantity minBatchSize,
-               @Nullable Quantity maxBatchSize) {
+    QueryBatch(@Nullable final Integer minId,
+               @Nullable final Integer maxId,
+               @Nullable final BatchMethod batchMethod,
+               @Nullable final Quantity minBatchSize,
+               @Nullable final Quantity maxBatchSize) {
         this.minId = minId;
         this.maxId = maxId;
         this.batchMethod = batchMethod;
         this.minBatchSize = minBatchSize;
         this.maxBatchSize = maxBatchSize;
     }
-
     /**
      * Return an int denoting the min id to be displayed.
      * @return an int denoting the min id to be displayed.
