@@ -37,24 +37,12 @@ class ModifiableBatchInfoImpl implements ModifiableBatchInfo {
                             final BeerDescription beerDescription,
                             final BatchMethod method,
                             final Quantity size,
-                            final WaterMeasurement measurement) {
+                            @Nullable final WaterMeasurement measurement) {
         this.ingredients = ingredients;
         this.beerDescription = beerDescription;
         this.method = method;
         this.size = size;
         this.measurement = measurement;
-    }
-
-    //Package-private
-    ModifiableBatchInfoImpl(final Collection<Pair<IngredientArticle, Quantity>> ingredients,
-                            final BeerDescription beerDescription,
-                            final BatchMethod method,
-                            final Quantity size) {
-        this.ingredients = ingredients;
-        this.beerDescription = beerDescription;
-        this.method = method;
-        this.size = size;
-        this.measurement = null;
     }
 
     @Override
