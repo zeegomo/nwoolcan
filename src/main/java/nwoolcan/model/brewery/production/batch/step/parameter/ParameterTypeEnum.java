@@ -13,7 +13,23 @@ public enum ParameterTypeEnum implements ParameterType {
     /**
      * Alcohol by volume of the beer.
      */
-    ABV(UnitOfMeasure.PERCENTAGE);
+    ABV(UnitOfMeasure.PERCENTAGE),
+    /**
+     * Color of the beer.
+     */
+    EBC(UnitOfMeasure.EBC),
+    /**
+     * Bitterness of the beer.
+     */
+    IBU(UnitOfMeasure.IBU),
+    /**
+     * Specific gravity of the beer.
+     */
+    GRAVITY(UnitOfMeasure.UNITLESS),
+    /**
+     * Water measurements for the beer.
+     */
+    WATER_MEASUREMENT(UnitOfMeasure.MILLIGRAMS_PER_LITER);
 
     private final UnitOfMeasure um;
 

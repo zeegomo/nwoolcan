@@ -1,16 +1,15 @@
 package nwoolcan.model.brewery.production.batch.step;
 
-import nwoolcan.model.brewery.production.batch.step.info.ModifiableStepInfoImpl;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
-import nwoolcan.model.brewery.production.batch.step.utils.StepHelper;
 
 import java.util.Date;
 import java.util.Set;
 
 /**
  * Basic implementation of {@link Step} interface.
+ * Package-private. Create instances using static factory {@link Steps}.
  */
-public final class BasicStep extends AbstractStep {
+final class BasicStep extends AbstractStep {
 
     /**
      * Basic constructor with step type and start date of the step.

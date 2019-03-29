@@ -1,9 +1,7 @@
-package nwoolcan.model.brewery.production.batch.step.utils;
+package nwoolcan.model.brewery.production.batch.step;
 
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
-import nwoolcan.model.brewery.production.batch.step.StepType;
-import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -12,9 +10,10 @@ import java.util.Collections;
 
 /**
  * Helper class for step information about next step types and parameter types.
+ * Package-private.
  */
 @SuppressWarnings("Duplicates")
-public final class StepHelper {
+final class StepHelper {
 
     private static final Set<StepType> MASHING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.BOILING));
     private static final Set<StepType> BOILING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.FERMENTING));
@@ -36,7 +35,7 @@ public final class StepHelper {
      * @return a set of {@link StepType} representing all the possible step types that can be reached
      * by a given step type.
      */
-    public static Set<StepType> getNextStepTypesOf(final StepType stepType) {
+    static Set<StepType> getNextStepTypesOf(final StepType stepType) {
         //need to be changed for proper domain model
         if (stepType.equals(StepTypeEnum.MASHING)) {
             return MASHING_STEP_TYPES;
@@ -63,7 +62,7 @@ public final class StepHelper {
      * @return a set of {@link ParameterType} representing all the possible parameter types that can be registered
      * in a given step type.
      */
-    public static Set<ParameterType> getPossibleParameterTypesOf(final StepType stepType) {
+    static Set<ParameterType> getPossibleParameterTypesOf(final StepType stepType) {
         //need to be changed for proper domain model
         if (stepType.equals(StepTypeEnum.MASHING)) {
             return MASHING_PARAMETER_TYPES;

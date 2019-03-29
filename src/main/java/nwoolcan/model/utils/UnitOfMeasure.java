@@ -23,5 +23,21 @@ public enum UnitOfMeasure {
     /**
      * Celsius degrees.
      */
-    CELSIUS_DEGREE;
+    CELSIUS_DEGREE,
+    /**
+     * Milligrams per liter.
+     */
+    MILLIGRAMS_PER_LITER,
+    /**
+     * Pure number.
+     */
+    UNITLESS,
+    /**
+     * Ebc special unit of measure.
+     */
+    EBC,
+    /**
+     * IBU special unit of measure.
+     */
+    IBU;
 }

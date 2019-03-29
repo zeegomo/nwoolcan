@@ -1,11 +1,11 @@
 package nwoolcan.model.brewery.production.batch.step;
 
-import nwoolcan.model.brewery.production.batch.step.info.StepInfo;
 import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
 import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
+import nwoolcan.utils.Observer;
 import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
@@ -80,4 +80,11 @@ public interface Step {
      * @return a {@link Result} that can contain an error cited before.
      */
     Result<Empty> addParameter(Parameter parameter);
+
+    /**
+     * Adds an observer of {@link Parameter}. The observer's update method is called when
+     * a parameter is added.
+     * @param observer the observer object that needs to be notified when a parameter is added.
+     */
+    void addParameterObserver(Observer<Parameter> observer);
 }
