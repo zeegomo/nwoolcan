@@ -9,11 +9,11 @@ import nwoolcan.model.utils.Quantity;
 import java.util.Collection;
 
 /**
- * Constructs a {@link ModifiableBatchInfo}
+ * Constructs a {@link ModifiableBatchInfo}.
  */
 //Package private
 final class ModifiableBatchInfoFactory {
-    
+
     private ModifiableBatchInfoFactory() { }
 
     static ModifiableBatchInfo of(final Collection<Pair<IngredientArticle, Quantity>> ingredients,
