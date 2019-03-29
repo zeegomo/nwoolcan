@@ -10,7 +10,7 @@ import nwoolcan.model.utils.UnitOfMeasure;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Collections;
+import java.util.ArrayList;
 
 /**
  * Test for BeerArticle.
@@ -25,7 +25,7 @@ public class TestBeerArticle {
         new BeerDescriptionImpl("Test beer", "Test style"),
         BatchMethod.ALL_GRAIN,
         Quantity.of(1000, UnitOfMeasure.MILLILITER),
-        Collections.EMPTY_LIST,
+        new ArrayList<>(),
         StepTypeEnum.MASHING
     );
 
