@@ -16,6 +16,19 @@ public class QueryBatch {
     @Nullable private Quantity minBatchSize;
     @Nullable private Quantity maxBatchSize;
 
+    // Package-private
+    QueryBatch(@Nullable Integer minId,
+               @Nullable Integer maxId,
+               @Nullable BatchMethod batchMethod,
+               @Nullable Quantity minBatchSize,
+               @Nullable Quantity maxBatchSize) {
+        this.minId = minId;
+        this.maxId = maxId;
+        this.batchMethod = batchMethod;
+        this.minBatchSize = minBatchSize;
+        this.maxBatchSize = maxBatchSize;
+    }
+
     /**
      * Return an int denoting the min id to be displayed.
      * @return an int denoting the min id to be displayed.
