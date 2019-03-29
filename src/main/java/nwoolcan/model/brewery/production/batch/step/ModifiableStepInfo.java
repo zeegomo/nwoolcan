@@ -1,4 +1,4 @@
-package nwoolcan.model.brewery.production.batch.step.info;
+package nwoolcan.model.brewery.production.batch.step;
 
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
