@@ -1,8 +1,10 @@
 package nwoolcan.model.brewery.production.batch;
 
+import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
+import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementBuilder;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterImpl;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
-import nwoolcan.model.brewery.production.batch.WaterMeasurement.Element;
+import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement.Element;
 import nwoolcan.utils.Result;
 import org.junit.Test;
 

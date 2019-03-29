@@ -3,7 +3,7 @@ package nwoolcan.model.brewery.warehouse.article;
 import nwoolcan.model.brewery.production.batch.Batch;
 import nwoolcan.model.brewery.production.batch.BatchImpl;
 import nwoolcan.model.brewery.production.batch.BatchMethod;
-import nwoolcan.model.brewery.production.batch.BeerDescriptionImpl;
+import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;

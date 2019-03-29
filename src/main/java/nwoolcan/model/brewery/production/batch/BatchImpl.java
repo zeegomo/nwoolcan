@@ -1,6 +1,8 @@
 package nwoolcan.model.brewery.production.batch;
 
 import javafx.util.Pair;
+import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
+import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepType;

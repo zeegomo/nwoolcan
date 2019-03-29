@@ -1,4 +1,4 @@
-package nwoolcan.model.brewery.production.batch;
+package nwoolcan.model.brewery.production.batch.misc;
 
 import java.util.Optional;
 
