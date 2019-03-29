@@ -1,6 +1,5 @@
-package nwoolcan.model.brewery.production.batch.step.info;
+package nwoolcan.model.brewery.production.batch.step;
 
-import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
@@ -10,8 +9,9 @@ import java.util.Date;
 
 /**
  * Simple ModifiableStepInfo class implementation.
+ * Package-private.
  */
-public final class ModifiableStepInfoImpl extends StepInfoImpl implements ModifiableStepInfo {
+final class ModifiableStepInfoImpl extends StepInfoImpl implements ModifiableStepInfo {
 
     private static final String INVALID_END_DATE_MESSAGE = "endDate is before startDate.";
 
@@ -20,7 +20,7 @@ public final class ModifiableStepInfoImpl extends StepInfoImpl implements Modifi
      * @param stepType type of the step.
      * @param startDate date when the step started.
      */
-    public ModifiableStepInfoImpl(final StepType stepType, final Date startDate) {
+    ModifiableStepInfoImpl(final StepType stepType, final Date startDate) {
         super(stepType, startDate);
     }
 
