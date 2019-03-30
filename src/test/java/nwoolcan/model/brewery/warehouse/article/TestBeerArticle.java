@@ -10,8 +10,6 @@ import nwoolcan.model.utils.UnitOfMeasure;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 /**
  * Test for BeerArticle.
  */

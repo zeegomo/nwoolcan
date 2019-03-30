@@ -13,30 +13,39 @@ import nwoolcan.utils.Result;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Test class for BatchBuilder.
+ */
 public class BatchBuilderTest {
 
-    private static final BeerDescription bd = new BeerDescriptionImpl("test description", "test style", "test category");
-    private static final BatchMethod bm = BatchMethod.ALL_GRAIN;
-    private static final Quantity initSize = Quantity.of(10000, UnitOfMeasure.MILLILITER);
+    private static final BeerDescription BD = new BeerDescriptionImpl("test description", "test style", "test category");
+    private static final BatchMethod BM = BatchMethod.ALL_GRAIN;
+    private static final Quantity INIT_SIZE = Quantity.of(10000, UnitOfMeasure.MILLILITER);
 
+    /**
+     * Test simple build.
+     */
     @Test
     public void testSimpleBuild() {
         Result<Batch> res = new BatchBuilder(
-            bd,
-            bm,
-            initSize,
+            BD,
+            BM,
+            INIT_SIZE,
             StepTypeEnum.MASHING
         ).build();
 
         Assert.assertTrue(res.isPresent());
     }
 
+    /**
+     * Test build with wrong initial step type.
+     */
     @Test
     public void testWrongInitialStep() {
         Result<Batch> res = new BatchBuilder(
-            bd,
-            bm,
-            initSize,
+            BD,
+            BM,
+            INIT_SIZE,
             new StepType() {
                 @Override
                 public String getName() {
@@ -53,31 +62,20 @@ public class BatchBuilderTest {
         Assert.assertTrue(res.isError());
     }
 
+    /**
+     * Test build inserting same ingredient twice.
+     */
     @Test
     public void testSameIngredientTwice() {
         final IngredientArticle ing = new IngredientArticleImpl("test", UnitOfMeasure.GRAM, IngredientType.OTHER);
 
         Result<Batch> res = new BatchBuilder(
-            bd,
-            bm,
-            initSize,
+            BD,
+            BM,
+            INIT_SIZE,
             StepTypeEnum.MASHING
-        ).addIngredient(ing, Quantity.of(1, UnitOfMeasure.GRAM))
-         .addIngredient(ing, Quantity.of(2, UnitOfMeasure.GRAM)).build();
-
-        Assert.assertTrue(res.isError());
-    }
-
-    @Test
-    public void testIngredientWithWrongUnitOfMeasure() {
-        final IngredientArticle ing = new IngredientArticleImpl("test", UnitOfMeasure.GRAM, IngredientType.OTHER);
-
-        Result<Batch> res = new BatchBuilder(
-            bd,
-            bm,
-            initSize,
-            StepTypeEnum.MASHING
-        ).addIngredient(ing, Quantity.of(1, UnitOfMeasure.MILLILITER)).build();
+        ).addIngredient(ing, 1)
+         .addIngredient(ing, 2).build();
 
         Assert.assertTrue(res.isError());
     }
