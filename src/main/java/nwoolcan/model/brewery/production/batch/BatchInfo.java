@@ -25,7 +25,7 @@ public interface BatchInfo {
      */
     BatchMethod getMethod();
     /**
-     * Return the size of this batch.
+     * Return the size create this batch.
      * @return a {@link Quantity}.
      */
     Quantity getBatchSize();
@@ -40,22 +40,22 @@ public interface BatchInfo {
      */
     Optional<Parameter> getFg();
     /**
-     * Return the color measurements of this batch, if available.
+     * Return the color measurements create this batch, if available.
      * @return a {@link Quantity}.
      */
     Optional<Parameter> getEbc();
     /**
-     * Return the alcohol by volume of this batch, if available.
+     * Return the alcohol by volume create this batch, if available.
      * @return a {@link Quantity}.
      */
     Optional<Parameter> getAbv();
     /**
-     * Return the bitterness of this batch, if available.
+     * Return the bitterness create this batch, if available.
      * @return a {@link Quantity}.
      */
     Optional<Parameter> getIbu();
     /**
-     * Return the water measurements of this batch, if available.
+     * Return the water measurements create this batch, if available.
      * @return a {@link Quantity}.
      */
     Optional<WaterMeasurement> getWaterMeasurements();

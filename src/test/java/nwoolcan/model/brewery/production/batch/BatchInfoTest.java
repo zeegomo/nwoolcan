@@ -32,7 +32,7 @@ public class BatchInfoTest {
     public void testConstructor() {
         final Collection<Pair<IngredientArticle, Quantity>> ingredients = new ArrayList<>();
         final BeerDescription desc = new BeerDescriptionImpl("test", "lager");
-        ModifiableBatchInfo info = ModifiableBatchInfoFactory.of(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
+        ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
         assertFalse(info.getAbv().isPresent());
         assertFalse(info.getWaterMeasurements().isPresent());
         assertEquals(info.getBeerDescription(), desc);
@@ -48,7 +48,7 @@ public class BatchInfoTest {
         final int fg = 1020;
         final Collection<Pair<IngredientArticle, Quantity>> ingredients = new ArrayList<>();
         final BeerDescription desc = new BeerDescriptionImpl("test", "lager");
-        ModifiableBatchInfo info = ModifiableBatchInfoFactory.of(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
+        ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
 
         info.update(new ParameterImpl(ParameterTypeEnum.GRAVITY, og));
         assertEquals(info.getOg().get().getRegistrationValue(), og);

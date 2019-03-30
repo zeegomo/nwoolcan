@@ -16,18 +16,18 @@ final class ModifiableBatchInfoFactory {
 
     private ModifiableBatchInfoFactory() { }
 
-    static ModifiableBatchInfo of(final Collection<Pair<IngredientArticle, Quantity>> ingredients,
-                           final BeerDescription beerDescription,
-                           final BatchMethod method,
-                           final Quantity size,
-                           final WaterMeasurement measurement) {
+    static ModifiableBatchInfo create(final Collection<Pair<IngredientArticle, Quantity>> ingredients,
+                                      final BeerDescription beerDescription,
+                                      final BatchMethod method,
+                                      final Quantity size,
+                                      final WaterMeasurement measurement) {
         return new ModifiableBatchInfoImpl(ingredients, beerDescription, method, size, measurement);
     }
 
-    static ModifiableBatchInfo of(final Collection<Pair<IngredientArticle, Quantity>> ingredients,
-                           final BeerDescription beerDescription,
-                           final BatchMethod method,
-                           final Quantity size) {
+    static ModifiableBatchInfo create(final Collection<Pair<IngredientArticle, Quantity>> ingredients,
+                                      final BeerDescription beerDescription,
+                                      final BatchMethod method,
+                                      final Quantity size) {
         return new ModifiableBatchInfoImpl(ingredients, beerDescription, method, size, null);
     }
 

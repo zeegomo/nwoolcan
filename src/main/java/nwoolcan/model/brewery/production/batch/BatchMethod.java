@@ -22,7 +22,7 @@ public enum BatchMethod {
         this.name = name;
     }
     /**
-     * Return a {@link String} representation of the name of the method.
+     * Return a {@link String} representation create the name create the method.
      * @return a {@link String}.
      */
     public String getName() {
