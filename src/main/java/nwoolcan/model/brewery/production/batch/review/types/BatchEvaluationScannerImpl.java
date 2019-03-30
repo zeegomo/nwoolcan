@@ -13,9 +13,9 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Implementation for BatchEvaluationScanner.
+ * Implementation for BatchEvaluationTypeScanner.
  */
-public final class BatchEvaluationScannerImpl implements BatchEvaluationScanner {
+public final class BatchEvaluationScannerImpl implements BatchEvaluationTypeScanner {
     @Nullable
     private Set<BatchEvaluationType> types;
 

@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * Scan the codebase to find all implementations of BatchEvaluation.
  */
-public interface BatchEvaluationScanner {
+public interface BatchEvaluationTypeScanner {
 
     /**
      * Return all BatchEvaluationType found by the scanner.

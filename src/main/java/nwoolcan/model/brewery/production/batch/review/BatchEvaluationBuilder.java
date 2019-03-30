@@ -1,6 +1,6 @@
 package nwoolcan.model.brewery.production.batch.review;
 
-import nwoolcan.model.brewery.production.batch.review.types.BatchEvaluationScanner;
+import nwoolcan.model.brewery.production.batch.review.types.BatchEvaluationTypeScanner;
 import nwoolcan.model.brewery.production.batch.review.types.BatchEvaluationScannerImpl;
 import nwoolcan.utils.Result;
 import javax.annotation.Nullable;
@@ -22,7 +22,7 @@ public final class BatchEvaluationBuilder {
     private static final String INVALID_SCORE_MESSAGE = "Score for one or more categories is not valid";
     private static final String INVALID_CATEGORIES_MESSAGE = "Invalid categories";
     private static final String BUILDER_USED_MESSAGE = "This builder has already built";
-    private static final BatchEvaluationScanner SCANNER = new BatchEvaluationScannerImpl();
+    private static final BatchEvaluationTypeScanner SCANNER = new BatchEvaluationScannerImpl();
 
     private final Set<Evaluation> evaluations = new HashSet<>();
 
