@@ -1,5 +1,7 @@
 package nwoolcan.model.brewery.production.batch.review;
 
+import nwoolcan.model.brewery.production.batch.review.types.BatchEvaluationScanner;
+import nwoolcan.model.brewery.production.batch.review.types.BatchEvaluationScannerImpl;
 import nwoolcan.utils.Result;
 import javax.annotation.Nullable;
 import java.util.Collections;

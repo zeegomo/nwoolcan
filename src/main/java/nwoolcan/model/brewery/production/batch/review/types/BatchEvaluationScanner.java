@@ -1,5 +1,6 @@
-package nwoolcan.model.brewery.production.batch.review;
+package nwoolcan.model.brewery.production.batch.review.types;
 
+import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
 import nwoolcan.utils.Result;
 
 import java.util.Set;
