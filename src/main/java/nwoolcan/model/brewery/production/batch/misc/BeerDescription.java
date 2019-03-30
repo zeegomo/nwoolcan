@@ -13,6 +13,7 @@ public interface BeerDescription {
     String getName();
     /**
      * Set the name of the beer.
+     * @param name the name of the beer.
      */
     void setName(String name);
     /**
@@ -22,6 +23,7 @@ public interface BeerDescription {
     String getStyle();
     /**
      * Set the style of the beer (es 'Doppelbock').
+     * @param style  the style of the beer.
      */
     void setStyle(String style);
     /**
@@ -31,6 +33,7 @@ public interface BeerDescription {
     Optional<String> getStyleCategory();
     /**
      * Set the style category of the style, if available (es 'Dark European Lager').
+     * @param styleCategory the style category of the beer.
      */
-    void setStyleCategory(String name);
+    void setStyleCategory(String styleCategory);
 }
