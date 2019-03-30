@@ -48,7 +48,6 @@ public class BatchBuilder {
         this.initialStep = initialStep;
         this.ingredients = new ArrayList<>();
     }
-
     /**
      * Adds an ingredient to the batch.
      * The ingredients must be distinct, so you cannot add the same ingredients twice.
@@ -60,7 +59,6 @@ public class BatchBuilder {
         this.ingredients.add(Pair.of(article, quantity));
         return this;
     }
-
     /**
      * Set the water measurement of the batch.
      * @param waterMeasurement batch's water measurement.
@@ -70,7 +68,6 @@ public class BatchBuilder {
         this.waterMeasurement = waterMeasurement;
         return this;
     }
-
     /**
      * Builds the batch and return a result containing that batch.
      * Contains an error of type:
