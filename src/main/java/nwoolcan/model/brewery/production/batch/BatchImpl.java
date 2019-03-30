@@ -66,9 +66,9 @@ final class BatchImpl implements Batch {
         }
 
         final Result<Step> res = Steps.create(initialStep);
-        if (res.isError()) {
-            throw new IllegalArgumentException(CANNOT_CREATE_STEP_EXCEPTION + initialStep);
-        }
+        res.peekError(e -> {
+            throw new IllegalArgumentException(e);
+        });
 
         res.peek(step -> step.addParameterObserver(batchInfo));
 
