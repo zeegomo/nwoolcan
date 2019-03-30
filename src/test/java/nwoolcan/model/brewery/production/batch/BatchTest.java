@@ -43,23 +43,17 @@ public class BatchTest {
 
     private Batch batchAlfredo, batchRossina, batchBiondina;
 
-    private List<Pair<IngredientArticle, Quantity>> alfredoIngredients = Arrays.asList(
-        new Pair<>(new IngredientArticleImpl("Luppolo alfredo", UnitOfMeasure.GRAM, IngredientType.HOPS),
-            Quantity.of(N1, UnitOfMeasure.GRAM)),
-        new Pair<>(new IngredientArticleImpl("Pepe gigio", UnitOfMeasure.GRAM, IngredientType.OTHER),
-            Quantity.of(N2, UnitOfMeasure.GRAM))
+    private List<Pair<IngredientArticle, Integer>> alfredoIngredients = Arrays.asList(
+        new Pair<>(new IngredientArticleImpl("Luppolo alfredo", UnitOfMeasure.GRAM, IngredientType.HOPS), N1),
+        new Pair<>(new IngredientArticleImpl("Pepe gigio", UnitOfMeasure.GRAM, IngredientType.OTHER), N2)
     );
-    private List<Pair<IngredientArticle, Quantity>> rossinaIngredients = Arrays.asList(
-        new Pair<>(new IngredientArticleImpl("Luppolo rossino", UnitOfMeasure.GRAM, IngredientType.HOPS),
-            Quantity.of(N3, UnitOfMeasure.GRAM)),
-        new Pair<>(new IngredientArticleImpl("Pepe faggio", UnitOfMeasure.GRAM, IngredientType.OTHER),
-            Quantity.of(N4, UnitOfMeasure.GRAM))
+    private List<Pair<IngredientArticle, Integer>> rossinaIngredients = Arrays.asList(
+        new Pair<>(new IngredientArticleImpl("Luppolo rossino", UnitOfMeasure.GRAM, IngredientType.HOPS), N3),
+        new Pair<>(new IngredientArticleImpl("Pepe faggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N4)
     );
-    private List<Pair<IngredientArticle, Quantity>> biondinaIngredients = Arrays.asList(
-        new Pair<>(new IngredientArticleImpl("Luppolo biondino", UnitOfMeasure.GRAM, IngredientType.HOPS),
-            Quantity.of(N5, UnitOfMeasure.GRAM)),
-        new Pair<>(new IngredientArticleImpl("Pepe daggio", UnitOfMeasure.GRAM, IngredientType.OTHER),
-            Quantity.of(N6, UnitOfMeasure.GRAM))
+    private List<Pair<IngredientArticle, Integer>> biondinaIngredients = Arrays.asList(
+        new Pair<>(new IngredientArticleImpl("Luppolo biondino", UnitOfMeasure.GRAM, IngredientType.HOPS), N5),
+        new Pair<>(new IngredientArticleImpl("Pepe daggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N6)
     );
 
     /**
@@ -76,7 +70,8 @@ public class BatchTest {
             BatchMethod.ALL_GRAIN,
             Q1,
             alfredoIngredients,
-            StepTypeEnum.MASHING
+            StepTypeEnum.MASHING,
+            null
         );
 
         batchRossina = new BatchImpl(
@@ -100,7 +95,21 @@ public class BatchTest {
     }
 
     /**
-     * Methods that tests passages from one step to another.
+     * Method that tests equality between batches.
+     */
+    @Test
+    public void testDifferentIds() {
+        Assert.assertNotEquals(batchAlfredo.getId(), batchBiondina.getId());
+        Assert.assertNotEquals(batchAlfredo.getId(), batchRossina.getId());
+        Assert.assertNotEquals(batchBiondina.getId(), batchRossina.getId());
+
+        Assert.assertNotEquals(batchAlfredo, batchBiondina);
+        Assert.assertNotEquals(batchAlfredo, batchRossina);
+        Assert.assertNotEquals(batchBiondina, batchRossina);
+    }
+
+    /**
+     * Method that tests passages from one step to another.
      */
     @Test
     public void testChangeStep() {
