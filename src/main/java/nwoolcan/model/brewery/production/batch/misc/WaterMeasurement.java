@@ -37,7 +37,6 @@ public interface WaterMeasurement {
                  */
                 CHLORIDE;
         }
-
         /**
          * Return the measurement of the specific element, if available.
          * @param e the element of which we want to know the measurement.

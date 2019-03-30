@@ -1,10 +1,10 @@
 package nwoolcan.model.brewery.production.batch;
 
-import javafx.util.Pair;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Collection;
 

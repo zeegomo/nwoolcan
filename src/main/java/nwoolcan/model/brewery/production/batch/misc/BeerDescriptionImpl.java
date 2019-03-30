@@ -8,8 +8,9 @@ import java.util.Optional;
  * BeerDescription impl.
  */
 public final class BeerDescriptionImpl implements BeerDescription {
-    private final String name;
-    private final String style;
+    
+    private String name;
+    private String style;
     @Nullable
     private final String styleCategory;
 
