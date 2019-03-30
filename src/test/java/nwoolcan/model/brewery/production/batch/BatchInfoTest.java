@@ -1,6 +1,8 @@
 package nwoolcan.model.brewery.production.batch;
 
 import javafx.util.Pair;
+import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
+import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterImpl;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
@@ -30,7 +32,7 @@ public class BatchInfoTest {
     public void testConstructor() {
         final Collection<Pair<IngredientArticle, Quantity>> ingredients = new ArrayList<>();
         final BeerDescription desc = new BeerDescriptionImpl("test", "lager");
-        ModifiableBatchInfo info = new ModifiableBatchInfoImpl(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
+        ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
         assertFalse(info.getAbv().isPresent());
         assertFalse(info.getWaterMeasurements().isPresent());
         assertEquals(info.getBeerDescription(), desc);
@@ -46,7 +48,7 @@ public class BatchInfoTest {
         final int fg = 1020;
         final Collection<Pair<IngredientArticle, Quantity>> ingredients = new ArrayList<>();
         final BeerDescription desc = new BeerDescriptionImpl("test", "lager");
-        ModifiableBatchInfo info = new ModifiableBatchInfoImpl(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
+        ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
 
         info.update(new ParameterImpl(ParameterTypeEnum.GRAVITY, og));
         assertEquals(info.getOg().get().getRegistrationValue(), og);

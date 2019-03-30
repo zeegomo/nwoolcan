@@ -1,6 +1,8 @@
 package nwoolcan.model.brewery.production.batch;
 
 import javafx.util.Pair;
+import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
+import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepType;
@@ -58,9 +60,9 @@ public final class BatchImpl implements Batch {
         this.id = BatchIdGenerator.getInstance().getNextId();
 
         if (waterMeasurement == null) {
-            this.batchInfo = new ModifiableBatchInfoImpl(ingredients, beerDescription, batchMethod, initialSize);
+            this.batchInfo = ModifiableBatchInfoFactory.create(ingredients, beerDescription, batchMethod, initialSize);
         } else {
-            this.batchInfo = new ModifiableBatchInfoImpl(ingredients, beerDescription, batchMethod, initialSize, waterMeasurement);
+            this.batchInfo = ModifiableBatchInfoFactory.create(ingredients, beerDescription, batchMethod, initialSize, waterMeasurement);
         }
 
         final Result<Step> res = Steps.create(initialStep);

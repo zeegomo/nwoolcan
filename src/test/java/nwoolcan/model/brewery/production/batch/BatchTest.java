@@ -1,6 +1,10 @@
 package nwoolcan.model.brewery.production.batch;
 
 import javafx.util.Pair;
+import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
+import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
+import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
+import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementBuilder;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationBuilder;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.step.Step;
@@ -82,7 +86,7 @@ public class BatchTest {
             rossinaIngredients,
             StepTypeEnum.MASHING,
             new WaterMeasurementBuilder().addRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 1), WaterMeasurement.Element.CALCIUM)
-                .build().getValue()
+                                         .build().getValue()
         );
 
         batchBiondina = new BatchImpl(
