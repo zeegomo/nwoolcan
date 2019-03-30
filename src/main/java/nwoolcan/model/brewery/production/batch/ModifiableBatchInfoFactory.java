@@ -14,20 +14,21 @@ import java.util.Collection;
 //Package private
 final class ModifiableBatchInfoFactory {
 
-    private ModifiableBatchInfoFactory() { }
+    private ModifiableBatchInfoFactory() {
+    }
 
     static ModifiableBatchInfo create(final Collection<Pair<IngredientArticle, Quantity>> ingredients,
-                           final BeerDescription beerDescription,
-                           final BatchMethod method,
-                           final Quantity size,
-                           final WaterMeasurement measurement) {
+                                      final BeerDescription beerDescription,
+                                      final BatchMethod method,
+                                      final Quantity size,
+                                      final WaterMeasurement measurement) {
         return new ModifiableBatchInfoImpl(ingredients, beerDescription, method, size, measurement);
     }
 
     static ModifiableBatchInfo create(final Collection<Pair<IngredientArticle, Quantity>> ingredients,
-                           final BeerDescription beerDescription,
-                           final BatchMethod method,
-                           final Quantity size) {
+                                      final BeerDescription beerDescription,
+                                      final BatchMethod method,
+                                      final Quantity size) {
         return new ModifiableBatchInfoImpl(ingredients, beerDescription, method, size, null);
     }
 
