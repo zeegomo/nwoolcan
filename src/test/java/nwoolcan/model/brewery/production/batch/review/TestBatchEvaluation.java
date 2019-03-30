@@ -106,8 +106,6 @@ public class TestBatchEvaluation {
 
         Result<BatchEvaluation> test4 = builder
             .reset(new BJCPBatchEvaluationType())
-            .addEvaluation(null,
-                BJCPBatchEvaluationType.BJCPCategories.AROMA.getMaxScore())
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, 1)
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.FLAVOR,
                 BJCPBatchEvaluationType.BJCPCategories.FLAVOR.getMaxScore())
