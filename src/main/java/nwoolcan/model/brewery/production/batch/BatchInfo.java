@@ -1,11 +1,11 @@
 package nwoolcan.model.brewery.production.batch;
 
-import javafx.util.Pair;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -63,5 +63,5 @@ public interface BatchInfo {
      * Return the ingredients used in this batch.
      * @return a {@link Collection}.
      */
-    Collection<Pair<IngredientArticle, Quantity>> listIngredients();
+    Collection<Pair<IngredientArticle, Integer>> listIngredients();
 }

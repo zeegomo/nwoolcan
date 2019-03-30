@@ -11,7 +11,6 @@ final class BatchIdGenerator {
     private BatchIdGenerator(final int startId) {
         this.nextId = startId;
     }
-
     /**
      * Returns the singleton instance.
      * @return the singleton instance.
@@ -19,7 +18,6 @@ final class BatchIdGenerator {
     static BatchIdGenerator getInstance() {
         return LazyHolder.SINGLETON;
     }
-
     /**
      * Returns the next available id.
      * @return the next available id.

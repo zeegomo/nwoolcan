@@ -12,6 +12,7 @@ import java.util.Optional;
  * Water measurement implementation.
  */
 public class WaterMeasurementBuilder {
+
     private static final String INVALID_PARAMETER = "One or more parameter are not a valid water measurement type";
     private static final String BUILDER_BUILT = "This builder has already built";
     private final EnumMap<WaterMeasurement.Element, Parameter> parameter = new EnumMap<>(WaterMeasurement.Element.class);
@@ -57,6 +58,7 @@ public class WaterMeasurementBuilder {
     }
 
     private static final class WaterMeasurementImpl implements WaterMeasurement {
+
         private final EnumMap<Element, Parameter> parameter;
 
         private WaterMeasurementImpl(final EnumMap<Element, Parameter> parameters) {
