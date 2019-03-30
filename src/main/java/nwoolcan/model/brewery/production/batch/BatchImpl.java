@@ -26,7 +26,7 @@ import java.util.StringJoiner;
 /**
  * Basic batch implementation.
  */
-public final class BatchImpl implements Batch {
+final class BatchImpl implements Batch {
 
     private static final String CANNOT_CREATE_STEP_EXCEPTION = "Cannot create a step with the given type: ";
     private static final String CANNOT_FINALIZE_CURRENT_STEP = "Cannot finalize current step.";
@@ -51,7 +51,7 @@ public final class BatchImpl implements Batch {
      * @param waterMeasurement the water measurement of the batch.
      * @throws IllegalArgumentException if the initial step cannot be created.
      */
-    public BatchImpl(final BeerDescription beerDescription,
+    BatchImpl(final BeerDescription beerDescription,
                      final BatchMethod batchMethod,
                      final Quantity initialSize,
                      final Collection<Pair<IngredientArticle, Quantity>> ingredients,
@@ -73,23 +73,6 @@ public final class BatchImpl implements Batch {
         res.peek(step -> step.addParameterObserver(batchInfo));
 
         this.steps = new ArrayList<>(Collections.singletonList(res.getValue()));
-    }
-
-    /**
-     * Creates a new {@link Batch} in production.
-     * @param beerDescription the batch's beer description.
-     * @param batchMethod the batch's method.
-     * @param initialSize the initial size of the batch.
-     * @param ingredients the ingredients of the beer made by the batch.
-     * @param initialStep the initial step of the batch.
-     * @throws IllegalArgumentException if the initial step cannot be created.
-     */
-    public BatchImpl(final BeerDescription beerDescription,
-                     final BatchMethod batchMethod,
-                     final Quantity initialSize,
-                     final Collection<Pair<IngredientArticle, Quantity>> ingredients,
-                     final StepType initialStep) {
-        this(beerDescription, batchMethod, initialSize, ingredients, initialStep, null);
     }
 
     @Override

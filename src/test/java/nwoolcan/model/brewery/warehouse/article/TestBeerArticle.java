@@ -1,7 +1,7 @@
 package nwoolcan.model.brewery.warehouse.article;
 
 import nwoolcan.model.brewery.production.batch.Batch;
-import nwoolcan.model.brewery.production.batch.BatchImpl;
+import nwoolcan.model.brewery.production.batch.BatchBuilder;
 import nwoolcan.model.brewery.production.batch.BatchMethod;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
@@ -21,13 +21,12 @@ public class TestBeerArticle {
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.UNIT;
     private final String name = "DummyName";
 
-    private final Batch batch = new BatchImpl(
+    private final Batch batch = new BatchBuilder(
         new BeerDescriptionImpl("Test beer", "Test style"),
         BatchMethod.ALL_GRAIN,
         Quantity.of(1000, UnitOfMeasure.MILLILITER),
-        new ArrayList<>(),
         StepTypeEnum.MASHING
-    );
+    ).build().getValue();
 
     /**
      * Method that tests the getters and their possible errors.

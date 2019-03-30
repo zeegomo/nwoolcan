@@ -76,7 +76,8 @@ public class BatchTest {
             BatchMethod.ALL_GRAIN,
             Q1,
             alfredoIngredients,
-            StepTypeEnum.MASHING
+            StepTypeEnum.MASHING,
+            null
         );
 
         batchRossina = new BatchImpl(
@@ -97,6 +98,17 @@ public class BatchTest {
             StepTypeEnum.MASHING,
             null
         );
+    }
+
+    @Test
+    public void testDifferentIds() {
+        Assert.assertNotEquals(batchAlfredo.getId(), batchBiondina.getId());
+        Assert.assertNotEquals(batchAlfredo.getId(), batchRossina.getId());
+        Assert.assertNotEquals(batchBiondina.getId(), batchRossina.getId());
+
+        Assert.assertNotEquals(batchAlfredo, batchBiondina);
+        Assert.assertNotEquals(batchAlfredo, batchRossina);
+        Assert.assertNotEquals(batchBiondina, batchRossina);
     }
 
     /**
