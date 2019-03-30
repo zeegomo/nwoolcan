@@ -1,6 +1,5 @@
 package nwoolcan.model.brewery.warehouse.article;
 
-import nwoolcan.model.brewery.production.batch.Batch;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 
@@ -11,17 +10,13 @@ import java.util.Objects;
  */
 public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
 
-    private final Batch batch;
-
     /**
      * Constructor which uses the constructor of the super class and sets the batch.
      * @param name the name of the beer article.
      * @param unitOfMeasure used for this article.
-     * @param batch the batch linked to the beer article.
      */
-    public BeerArticleImpl(final String name, final UnitOfMeasure unitOfMeasure, final Batch batch) {
+    public BeerArticleImpl(final String name, final UnitOfMeasure unitOfMeasure) {
         super(name, unitOfMeasure);
-        this.batch = batch;
     }
     /**
      * Returns the {@link Result} of this {@link BeerArticle}.
@@ -38,18 +33,13 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
     }
 
     @Override
-    public Batch getBatch() {
-        return this.batch;
-    }
-
-    @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), batch);
+        return Objects.hash(super.hashCode());
     }
 
     @Override
     public boolean equals(final Object obj) {
-        return super.equals(obj) && this.batch.equals(((BeerArticle) obj).getBatch());
+        return super.equals(obj);
     }
 
     @Override
@@ -58,7 +48,6 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
             + "Id:" + getId() + ", "
             + "Name:" + getName() + ", "
             + "UnitOfMeasure:" + getUnitOfMeasure() + ", "
-            + "Batch:" + getBatch()
             + "}";
     }
 
