@@ -8,11 +8,11 @@ import java.util.Optional;
  * BeerDescription impl.
  */
 public final class BeerDescriptionImpl implements BeerDescription {
-    
+
     private String name;
     private String style;
     @Nullable
-    private final String styleCategory;
+    private String styleCategory;
 
     /**
      * New {@link BeerDescription}.
@@ -42,13 +42,28 @@ public final class BeerDescriptionImpl implements BeerDescription {
     }
 
     @Override
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    @Override
     public String getStyle() {
         return this.name;
     }
 
     @Override
+    public void setStyle(final String style) {
+        this.style = style;
+    }
+
+    @Override
     public Optional<String> getStyleCategory() {
         return Optional.ofNullable(styleCategory);
+    }
+
+    @Override
+    public void setStyleCategory(final String styleCategory) {
+        this.styleCategory = styleCategory;
     }
 
     @Override

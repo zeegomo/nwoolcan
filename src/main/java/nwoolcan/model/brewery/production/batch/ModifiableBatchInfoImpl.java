@@ -18,7 +18,7 @@ class ModifiableBatchInfoImpl implements ModifiableBatchInfo {
     private final BeerDescription beerDescription;
     private final BatchMethod method;
     private final Quantity size;
-    private final Collection<Pair<IngredientArticle, Quantity>> ingredients;
+    private final Collection<Pair<IngredientArticle, Integer>> ingredients;
     @Nullable
     private final WaterMeasurement measurement;
     @Nullable
@@ -33,7 +33,7 @@ class ModifiableBatchInfoImpl implements ModifiableBatchInfo {
     private Parameter ibu;
 
     //Package-private
-    ModifiableBatchInfoImpl(final Collection<Pair<IngredientArticle, Quantity>> ingredients,
+    ModifiableBatchInfoImpl(final Collection<Pair<IngredientArticle, Integer>> ingredients,
                             final BeerDescription beerDescription,
                             final BatchMethod method,
                             final Quantity size,
@@ -91,7 +91,7 @@ class ModifiableBatchInfoImpl implements ModifiableBatchInfo {
     }
 
     @Override
-    public Collection<Pair<IngredientArticle, Quantity>> listIngredients() {
+    public Collection<Pair<IngredientArticle, Integer>> listIngredients() {
         return this.ingredients;
     }
 
