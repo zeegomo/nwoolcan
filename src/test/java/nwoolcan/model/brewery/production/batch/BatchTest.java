@@ -152,14 +152,14 @@ public class BatchTest {
     public void testCompleteStepChanges() {
         Assert.assertFalse(batchAlfredo.isEnded());
 
-        //Example create production phase.
+        //Example of production phase.
         //Check no last steps.
         Assert.assertTrue(batchAlfredo.getPreviousSteps().isEmpty());
 
         final Number t1 = 20.1;
         final Number t2 = 18.9;
 
-        //Register a bunch create temperatures.
+        //Register a bunch of temperatures.
         batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.TEMPERATURE, t1));
         batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.TEMPERATURE, t2));
 

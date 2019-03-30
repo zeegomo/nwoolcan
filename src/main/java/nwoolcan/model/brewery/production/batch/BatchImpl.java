@@ -45,10 +45,10 @@ public final class BatchImpl implements Batch {
      * Creates a new {@link Batch} in production.
      * @param beerDescription the batch's beer description.
      * @param batchMethod the batch's method.
-     * @param initialSize the initial size create the batch.
-     * @param ingredients the ingredients create the beer made by the batch.
-     * @param initialStep the initial step create the batch.
-     * @param waterMeasurement the water measurement create the batch.
+     * @param initialSize the initial size of the batch.
+     * @param ingredients the ingredients of the beer made by the batch.
+     * @param initialStep the initial step of the batch.
+     * @param waterMeasurement the water measurement of the batch.
      * @throws IllegalArgumentException if the initial step cannot be created.
      */
     public BatchImpl(final BeerDescription beerDescription,
@@ -79,9 +79,9 @@ public final class BatchImpl implements Batch {
      * Creates a new {@link Batch} in production.
      * @param beerDescription the batch's beer description.
      * @param batchMethod the batch's method.
-     * @param initialSize the initial size create the batch.
-     * @param ingredients the ingredients create the beer made by the batch.
-     * @param initialStep the initial step create the batch.
+     * @param initialSize the initial size of the batch.
+     * @param ingredients the ingredients of the beer made by the batch.
+     * @param initialStep the initial step of the batch.
      * @throws IllegalArgumentException if the initial step cannot be created.
      */
     public BatchImpl(final BeerDescription beerDescription,

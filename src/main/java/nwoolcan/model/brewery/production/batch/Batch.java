@@ -20,14 +20,14 @@ public interface Batch {
     int getId();
 
     /**
-     * Returns the info create this batch.
-     * @return the info create this batch.
+     * Returns the info of this batch.
+     * @return the info of this batch.
      */
     BatchInfo getBatchInfo();
 
     /**
-     * Returns the current production step create the batch.
-     * @return the current production step create the batch.
+     * Returns the current production step of the batch.
+     * @return the current production step of the batch.
      */
     Step getCurrentStep();
 
@@ -39,17 +39,17 @@ public interface Batch {
     List<Step> getPreviousSteps();
 
     /**
-     * Goes to the next step create type passed by parameter.
+     * Goes to the next step of type passed by parameter.
      * If the current step has not been finalized yet, it finalizes it with empty note, date now
      * and end size equal to the current size.
-     * Returns a Result with an error create type:
+     * Returns a Result with an error of type:
      * <ul>
      *     <li>{@link IllegalStateException} if the batch is in ended state.</li>
      *     <li>{@link IllegalArgumentException} if the next step type cannot be after the current step type or
      *     if the next step type cannot be created.</li>
      * </ul>
      * @param nextStepType the next step type.
-     * @return a Result with an error if one create above conditions meet.
+     * @return a Result with an error if one of above conditions meet.
      */
     Result<Empty> moveToNextStep(StepType nextStepType);
 
@@ -65,14 +65,14 @@ public interface Batch {
      * <ul>
      *     <li>{@link IllegalStateException} if the batch is not in ended state.</li>
      * </ul>
-     * @param evaluation the evaluation create the batch.
-     * @return a Result with an error if one create above conditions meet.
+     * @param evaluation the evaluation of the batch.
+     * @return a Result with an error if one of above conditions meet.
      */
     Result<Empty> setEvaluation(BatchEvaluation evaluation);
 
     /**
-     * Returns the BatchEvaluation create this batch if it has one.
-     * @return the BatchEvaluation create this batch if it has one.
+     * Returns the BatchEvaluation of this batch if it has one.
+     * @return the BatchEvaluation of this batch if it has one.
      */
     Optional<BatchEvaluation> getEvaluation();
 }
