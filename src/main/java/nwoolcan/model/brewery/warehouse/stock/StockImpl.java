@@ -32,15 +32,17 @@ public class StockImpl implements Stock {
     private Date lastChangeDate;
     private Quantity remainingQuantity;
     private Quantity usedQuantity;
-    private final int id = 1;
+    private final int id;
 
     /**
      * Constructor for Stock with expiration date.
      * @param article referred to the Stock.
      * @param expirationDate of the Stock. It can be null, which means there is no expiration date.
      */
-    public StockImpl(final Article article, @Nullable final Date expirationDate) {
+    // Package-Private
+    StockImpl(final int id, final Article article, @Nullable final Date expirationDate) {
         Date creationMoment = new Date();
+        this.id = id;
         this.article = article;
         this.expirationDate = expirationDate == null ? null : DateUtils.round(expirationDate, Calendar.DATE);
         this.creationDate = creationMoment;

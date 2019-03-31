@@ -21,8 +21,8 @@ public final class BeerStockImpl extends StockImpl implements BeerStock {
      * @param batch the {@link Batch} related to this {@link BeerStock}.
      */
     // Package-Private
-    BeerStockImpl(final BeerArticle beerArticle, @Nullable final Date expirationDate, final Batch batch) {
-        super(beerArticle, expirationDate);
+    BeerStockImpl(final int id, final BeerArticle beerArticle, @Nullable final Date expirationDate, final Batch batch) {
+        super(id, beerArticle, expirationDate);
         this.batch = batch;
     }
 
