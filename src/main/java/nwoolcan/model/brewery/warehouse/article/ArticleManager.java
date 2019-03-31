@@ -114,7 +114,7 @@ public final class ArticleManager {
      * @param article to be checked.
      * @return the parameter if it is not in the map. Otherwise the corresponding into the map.
      */
-    private Article getArticle(final Article article) {
+    private synchronized Article getArticle(final Article article) {
         if (!articleToArticle.containsKey(article)) {
             nextAvailableId++;
             articleToArticle.put(article, article);
