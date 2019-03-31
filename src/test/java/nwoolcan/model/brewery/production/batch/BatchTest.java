@@ -5,6 +5,7 @@ import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementBuilder;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationBuilder;
+import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
@@ -40,6 +41,11 @@ public class BatchTest {
     private static final int N6 = 70;
     private static final Quantity Q1 = Quantity.of(TEN_THOUSAND, UnitOfMeasure.MILLILITER);
     private static final Quantity Q2 = Quantity.of(TEN_THOUSAND - 1, UnitOfMeasure.MILLILITER);
+    private final BatchEvaluationType bjcpType = BatchEvaluationBuilder.getAvailableBatchEvaluationTypes()
+                                                                       .getValue()
+                                                                       .stream()
+                                                                       .filter(s -> s.getClass().equals(BJCPBatchEvaluationType.class))
+                                                                       .findAny().get();
 
     private Batch batchAlfredo, batchRossina, batchBiondina;
 
@@ -235,7 +241,7 @@ public class BatchTest {
         final int overrallImpression = 9;
 
         //Insert review.
-        batchAlfredo.setEvaluation(new BatchEvaluationBuilder(new BJCPBatchEvaluationType())
+        batchAlfredo.setEvaluation(new BatchEvaluationBuilder(bjcpType)
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.FLAVOR, flavor)
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.AROMA, aroma)
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, appearance)

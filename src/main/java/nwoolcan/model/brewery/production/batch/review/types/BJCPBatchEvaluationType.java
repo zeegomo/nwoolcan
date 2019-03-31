@@ -58,7 +58,7 @@ public final class BJCPBatchEvaluationType extends AbstractBatchEvaluationType {
     /**
      * Create a new BJCP BatchEvaluationType.
      */
-    public BJCPBatchEvaluationType() {
+    BJCPBatchEvaluationType() {
         super(BJCPBatchEvaluationType.NAME, new HashSet<>(Arrays.asList(BJCPCategories.values())));
     }
 

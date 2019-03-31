@@ -1,24 +1,23 @@
-package nwoolcan.model.brewery.production.batch.review;
+package nwoolcan.model.brewery.production.batch.review.types;
 
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfoList;
+import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
 import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Implementation for BatchEvaluationScanner.
+ * Implementation for BatchEvaluationTypeScanner.
  */
-public final class BatchEvaluationScannerImpl implements BatchEvaluationScanner {
+public final class BatchEvaluationScannerImpl implements BatchEvaluationTypeScanner {
     @Nullable
     private Set<BatchEvaluationType> types;
-
-    //Package private
-    BatchEvaluationScannerImpl() { }
 
     @Override
     public Result<Set<BatchEvaluationType>> getAvailableBatchEvaluationTypes() {
@@ -40,7 +39,9 @@ public final class BatchEvaluationScannerImpl implements BatchEvaluationScanner 
                     if (review.isEnum()) {
                         return Arrays.stream(review.getEnumConstants()).map(Result::of);
                     } else {
-                        return Results.ofChecked(review::newInstance).stream();
+                        return Results.ofChecked(review::newInstance)
+                                      .peekError(error -> Logger.getGlobal().warning(error.getMessage()))
+                                      .stream();
                     }
                 })
                 .filter(Result::isPresent)
