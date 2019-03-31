@@ -1,7 +1,6 @@
 package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
-import nwoolcan.model.brewery.warehouse.article.ArticleImpl;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
@@ -11,10 +10,9 @@ import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.junit.Assert;
 
 import java.util.Date;
 import java.util.List;
@@ -30,8 +28,8 @@ public class WarehouseImplTest {
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.MILLILITER;
     private final Warehouse warehouse = new WarehouseImpl();
-    private final Article article = new ArticleImpl(NAME, UOM);
-    private final Article article1 = new ArticleImpl(NAME, UOM);
+    private final Article article = warehouse.createMiscArticle(NAME, UOM);
+    private final Article article1 = warehouse.createMiscArticle(NAME, UOM);
     private final Quantity quantity = Quantity.of(ONE, UOM);
     private final Quantity quantity1 = Quantity.of(ONE, UOM1);
     private final Quantity quantity2 = Quantity.of(TEN, UOM);
@@ -53,8 +51,6 @@ public class WarehouseImplTest {
      */
     @Before
     public void initWarehouse() {
-        warehouse.addArticle(article);
-        warehouse.addArticle(article1);
         warehouse.addRecord(article, record);
         warehouse.addRecord(article, record1);
         warehouse.addRecord(article, date1, record);
@@ -66,7 +62,6 @@ public class WarehouseImplTest {
      */
     @Test
     public void testAdders() {
-        Assert.assertTrue(warehouse.addArticle(article).isError()); // already added
         Assert.assertTrue(warehouse.addRecord(article, record).isPresent());
         Assert.assertTrue(warehouse.addRecord(article, record1).isPresent());
         Assert.assertTrue(warehouse.addRecord(article, record2).isError());
@@ -76,8 +71,6 @@ public class WarehouseImplTest {
      */
     @Test
     public void testRemainingQuantityWorkingStocksGetter() {
-        Assert.assertTrue(warehouse.addArticle(article).isError()); // already added
-        Assert.assertTrue(warehouse.addArticle(article1).isError()); // already added
         final Result<QueryStock> resQueryStock = new QueryStockBuilder().setArticle(article)
                                                                         .setMinRemainingQuantity(quantity)
                                                                         .setMaxRemainingQuantity(quantity2)

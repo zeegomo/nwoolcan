@@ -1,11 +1,12 @@
 package nwoolcan.model.brewery.warehouse.article;
 
 import nwoolcan.model.utils.UnitOfMeasure;
-import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Id manager for {@link Article} objects. It is used by ArticleImpl to generate the
@@ -14,14 +15,13 @@ import java.util.Map;
 public final class ArticleManager {
 
     @Nullable private static ArticleManager instance;
+    private static int fakeId = 1;
     private int nextAvailableId;
-    private Map<Triple<String, ArticleType, UnitOfMeasure>, Integer> existingIds;
     private Map<Article, Integer> articleToId;
     private Map<Integer, Article> idToArticle;
 
     private ArticleManager() {
         nextAvailableId = 1;
-        existingIds = new HashMap<>();
         articleToId = new HashMap<>();
         idToArticle = new HashMap<>();
     }
@@ -36,35 +36,12 @@ public final class ArticleManager {
         return instance;
     }
     /**
-     * Getter of the id corresponding to the name, the type and the unit of measure of the
-     * {@link Article}.
-     * @param name of the new {@link Article}.
-     * @param articleType of the new {@link Article}.
-     * @param unitOfMeasure of the new {@link Article}.
-     * @return the id corresponding to the name, the type and the unit of measure of the
-     * {@link Article}.
-     */
-    // default so that only article impl can generate it.
-    synchronized Integer getId(final String name,
-                               final ArticleType articleType,
-                               final UnitOfMeasure unitOfMeasure) {
-        Triple<String, ArticleType, UnitOfMeasure> tuple = Triple.of(name, articleType, unitOfMeasure);
-        if (!existingIds.containsKey(tuple)) {
-            existingIds.put(tuple, nextAvailableId);
-            nextAvailableId++;
-        }
-        return existingIds.get(tuple);
-    }
-    /**
      * Checks the consistency of the article.
      * @param article to be checked.
      * @return a boolean denoting whether the id is correct or not.
      */
     public synchronized boolean checkId(final Article article) {
-        Triple<String, ArticleType, UnitOfMeasure> tuple = Triple.of(article.getName(),
-                                                                     article.getArticleType(),
-                                                                     article.getUnitOfMeasure());
-        return existingIds.containsKey(tuple) && article.getId().equals(existingIds.get(tuple));
+        return articleToId.containsKey(article) && article.getId().equals(articleToId.get(article));
     }
     /**
      * Creates a misc {@link Article} and insert it into the {@link ArticleManager}. If it already exists, it will be returned.
@@ -75,10 +52,10 @@ public final class ArticleManager {
     @SuppressWarnings("NullAway")
     public synchronized Article createMiscArticle(final String name,
                                               final UnitOfMeasure unitOfMeasure) {
-        Article article = new ArticleImpl(name, unitOfMeasure); // TODO when creating an article to check it, just put a false id. This require hashing not to include the id of the article in articleImpl.
+        Article article = new ArticleImpl(fakeId, name, unitOfMeasure); // TODO when creating an article to check it, just put a false id. This require hashing not to include the id of the article in articleImpl.
         if (!articleToId.containsKey(article)) {
             int newId = nextAvailableId++;
-            article = new ArticleImpl(name, unitOfMeasure); // TODO here i should put the real id: newID
+            article = new ArticleImpl(newId, name, unitOfMeasure); // TODO here i should put the real id: newID
             articleToId.put(article, newId);
             idToArticle.put(newId, article);
         }
@@ -93,10 +70,10 @@ public final class ArticleManager {
     @SuppressWarnings("NullAway")
     public synchronized BeerArticle createBeerArticle(final String name,
                                                       final UnitOfMeasure unitOfMeasure) {
-        Article beerArticle = new BeerArticleImpl(name, unitOfMeasure); // TODO when creating an article to check it, just put a false id. This require hashing not to include the id of the article in articleImpl.
+        Article beerArticle = new BeerArticleImpl(fakeId, name, unitOfMeasure); // TODO when creating an article to check it, just put a false id. This require hashing not to include the id of the article in articleImpl.
         if (!articleToId.containsKey(beerArticle)) {
             int newId = nextAvailableId++;
-            beerArticle = new BeerArticleImpl(name, unitOfMeasure); // TODO here i should put the real id: newID
+            beerArticle = new BeerArticleImpl(fakeId, name, unitOfMeasure); // TODO here i should put the real id: newID
             articleToId.put(beerArticle, newId);
             idToArticle.put(newId, beerArticle);
         }
@@ -113,13 +90,21 @@ public final class ArticleManager {
     public synchronized IngredientArticle createIngredientArticle(final String name,
                                                                   final UnitOfMeasure unitOfMeasure,
                                                                   final IngredientType ingredientType) {
-        Article ingredientArticle = new IngredientArticleImpl(name, unitOfMeasure, ingredientType);  // TODO when creating an article to check it, just put a false id. This require hashing not to include the id of the article in articleImpl.
+        Article ingredientArticle = new IngredientArticleImpl(fakeId, name, unitOfMeasure, ingredientType);  // TODO when creating an article to check it, just put a false id. This require hashing not to include the id of the article in articleImpl.
         if (!articleToId.containsKey(ingredientArticle)) {
             int newId = nextAvailableId++;
-            ingredientArticle = new IngredientArticleImpl(name, unitOfMeasure, ingredientType); // TODO here i should put the real id: newID
+            ingredientArticle = new IngredientArticleImpl(fakeId, name, unitOfMeasure, ingredientType); // TODO here i should put the real id: newID
             articleToId.put(ingredientArticle, newId);
             idToArticle.put(newId, ingredientArticle);
         }
         return (IngredientArticle) idToArticle.get(articleToId.get(ingredientArticle));
+    }
+
+    /**
+     * Return a {@link Set} of all the managed {@link Article}.
+     * @return a {@link Set} of all the managed {@link Article}.
+     */
+    public Set<Article> getArticles() {
+        return new HashSet<>(articleToId.keySet());
     }
 }

@@ -18,7 +18,7 @@ public class TestBeerArticleImpl {
      */
     @Test
     public void testGetters() {
-        final Article beerArticle = new BeerArticleImpl(name, UOM);
+        final Article beerArticle = ArticleManager.getInstance().createBeerArticle(name, UOM);
         Assert.assertEquals(ArticleType.FINISHED_BEER, beerArticle.getArticleType());
         Assert.assertTrue(beerArticle.toBeerArticle().isPresent());
         Assert.assertEquals(BeerArticleImpl.class, beerArticle.toBeerArticle()
@@ -30,9 +30,9 @@ public class TestBeerArticleImpl {
      */
     @Test
     public void testEquals() {
-        final BeerArticle beerArt1 = new BeerArticleImpl(name, UOM);
-        final BeerArticle beerArt2 = new BeerArticleImpl(name, UOM);
-        final BeerArticle beerArt4 = new BeerArticleImpl(name, UOM1);
+        final BeerArticle beerArt1 = ArticleManager.getInstance().createBeerArticle(name, UOM);
+        final BeerArticle beerArt2 = ArticleManager.getInstance().createBeerArticle(name, UOM);
+        final BeerArticle beerArt4 = ArticleManager.getInstance().createBeerArticle(name, UOM1);
         Assert.assertEquals(beerArt1, beerArt2);
         Assert.assertEquals(beerArt1, beerArt1);
         Assert.assertNotEquals(beerArt1, beerArt4);

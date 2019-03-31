@@ -16,11 +16,10 @@ import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.stream.Collectors;
 
 
@@ -35,7 +34,6 @@ public final class WarehouseImpl implements Warehouse {
                                             = "The article was not registered at the id manager. "
                                             + "Build it with ArticleImpl or its subclass.";
     private final Map<Stock, Stock> stocks = new HashMap<>();
-    private final Set<Article> articles = new HashSet<>();
     private static final ArticleManager ARTICLE_MANAGER = ArticleManager.getInstance();
 
 
@@ -105,6 +103,7 @@ public final class WarehouseImpl implements Warehouse {
 
     @Override
     public List<Article> getArticles(final QueryArticle queryArticle) {
+        final Set<Article> articles = ARTICLE_MANAGER.getArticles();
         return articles.stream()
                        // remove those article where query article specifies a min ID and
                        // where the id of the article is less than it.
@@ -142,20 +141,11 @@ public final class WarehouseImpl implements Warehouse {
     }
 
     @Override
-    public Result<Empty> addArticle(final Article newArticle) {
-        return Result.of(newArticle)
-                     .require(this::requireArticleNotRegistered,
-                                new IllegalArgumentException(ARTICLE_ALREADY_REGISTERED))
-                     .flatMap(this::updateArticles)
-                     .toEmpty();
-    }
-
-    @Override
     public Result<Empty> addRecord(final Article article,
                                    @Nullable final Date expirationDate,
                                    final Record record) {
         return Result.of(article)
-                     .require(articles::contains, new IllegalArgumentException(ARTICLE_NOT_REGISTERED))
+                     .require(ARTICLE_MANAGER::checkId, new IllegalArgumentException(ARTICLE_NOT_REGISTERED))
                      .map(a -> new StockImpl(a, expirationDate))
                      .map(this::getStock)
                      .flatMap(stock -> stock.addRecord(record))
@@ -182,27 +172,6 @@ public final class WarehouseImpl implements Warehouse {
                                                      final UnitOfMeasure unitOfMeasure,
                                                      final IngredientType ingredientType) {
         return ARTICLE_MANAGER.createIngredientArticle(name, unitOfMeasure, ingredientType);
-    }
-
-    /**
-     * Adds an {@link Article} to the {@link Set} of articles if not present yet.
-     * @param article the article to be added.
-     * @return a {@link Result} reporting whether errors occurred.
-     */
-    private Result<Article> updateArticles(final Article article) {
-        return Result.of(article)
-                     .require(ARTICLE_MANAGER::checkId,
-                                    new IllegalArgumentException(ARTICLE_NOT_REGISTERED_AT_ID_MANAGER))
-                     .peek(articles::add);
-    }
-
-    /**
-     * Return a boolean which specifies whether the article is already registered or not.
-     * @param article to check.
-     * @return a boolean which specifies whether the article is already registered or not.
-     */
-    private boolean requireArticleNotRegistered(final Article article) {
-        return !this.articles.contains(article);
     }
     /**
      * Given a {@link Stock}, if present it will return the {@link Stock} present in the

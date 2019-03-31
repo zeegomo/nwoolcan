@@ -1,13 +1,12 @@
 package nwoolcan.model.brewery.warehouse.stock;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
-import nwoolcan.model.brewery.warehouse.article.ArticleImpl;
+import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
-
 import nwoolcan.utils.Results;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Assert;
@@ -41,7 +40,7 @@ public class StockImplTest {
 
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.MILLILITER;
-    private static final Article ARTICLE = new ArticleImpl(NAME, UOM);
+    private static final Article ARTICLE = ArticleManager.getInstance().createMiscArticle(NAME, UOM);
 
     /**
      * Initialize structures.
