@@ -148,11 +148,11 @@ public class StockImpl implements Stock {
             return true;
         }
 
-        if (!(obj instanceof StockImpl)) {
+        if (!(obj instanceof Stock)) {
             return false;
         }
 
-        StockImpl other = (StockImpl) obj;
+        Stock other = (Stock) obj;
         return this.article.equals(other.getArticle())
             && Optional.ofNullable(this.expirationDate).equals(other.getExpirationDate());
     }

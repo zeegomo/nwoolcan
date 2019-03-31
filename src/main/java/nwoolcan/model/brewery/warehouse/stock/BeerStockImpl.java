@@ -5,6 +5,7 @@ import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 
 import javax.annotation.Nullable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * {@link BeerStock} implementation.
@@ -28,6 +29,25 @@ public final class BeerStockImpl extends StockImpl implements BeerStock {
     @Override
     public Batch getBatch() {
         return batch;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), batch);
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof BeerStock)) {
+            return false;
+        }
+
+        BeerStock other = (BeerStock) obj;
+        return super.equals(obj) && batch.equals(other.getBatch());
     }
 
     @Override
