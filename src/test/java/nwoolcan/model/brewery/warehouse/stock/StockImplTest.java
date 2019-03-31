@@ -1,13 +1,12 @@
 package nwoolcan.model.brewery.warehouse.stock;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
-import nwoolcan.model.brewery.warehouse.article.ArticleImpl;
+import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
-
 import nwoolcan.utils.Results;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Assert;
@@ -32,8 +31,8 @@ public class StockImplTest {
     private Record record5 = new Record(Quantity.of(TEN, UOM), Record.Action.ADDING);
 
 
-    private static final Integer ONE = 1;
-    private static final Integer TEN = 10;
+    private static final int ONE = 1;
+    private static final int TEN = 10;
     private static final String NAME = "DummyName";
     private static final String RECORD_WITH_DIFFERENT_UOM = "Can't add a record if UOMS are not the same";
     private static final String REMOVING_RECORD_WITH_QUANTITY_NOT_AVAILABLE = "Can't add a remove"
@@ -41,7 +40,7 @@ public class StockImplTest {
 
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.MILLILITER;
-    private static final Article ARTICLE = new ArticleImpl(NAME, UOM);
+    private static final Article ARTICLE = ArticleManager.getInstance().createMiscArticle(NAME, UOM);
 
     /**
      * Initialize structures.

@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  */
 public final class StockImpl implements Stock {
 
-    private static final Integer EMPTY_VALUE = 0;
+    private static final int EMPTY_VALUE = 0;
 
     private final Article article;
     @Nullable private final Date expirationDate;

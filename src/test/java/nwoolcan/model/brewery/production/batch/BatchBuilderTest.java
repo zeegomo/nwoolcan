@@ -4,8 +4,8 @@ import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
 import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
+import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
-import nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
@@ -67,7 +67,7 @@ public class BatchBuilderTest {
      */
     @Test
     public void testSameIngredientTwice() {
-        final IngredientArticle ing = new IngredientArticleImpl("test", UnitOfMeasure.GRAM, IngredientType.OTHER);
+        final IngredientArticle ing = ArticleManager.getInstance().createIngredientArticle("test", UnitOfMeasure.GRAM, IngredientType.OTHER);
 
         Result<Batch> res = new BatchBuilder(
             BD,

@@ -1,22 +1,25 @@
 package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
-import nwoolcan.model.brewery.warehouse.article.ArticleIdManager;
+import nwoolcan.model.brewery.warehouse.article.ArticleManager;
+import nwoolcan.model.brewery.warehouse.article.BeerArticle;
+import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
+import nwoolcan.model.brewery.warehouse.article.IngredientType;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.brewery.warehouse.stock.StockImpl;
+import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.stream.Collectors;
 
 
@@ -31,8 +34,7 @@ public final class WarehouseImpl implements Warehouse {
                                             = "The article was not registered at the id manager. "
                                             + "Build it with ArticleImpl or its subclass.";
     private final Map<Stock, Stock> stocks = new HashMap<>();
-    private final Set<Article> articles = new HashSet<>();
-    private static final ArticleIdManager ID_MANAGER = ArticleIdManager.getInstance();
+    private static final ArticleManager ARTICLE_MANAGER = ArticleManager.getInstance();
 
 
     @Override
@@ -101,6 +103,7 @@ public final class WarehouseImpl implements Warehouse {
 
     @Override
     public List<Article> getArticles(final QueryArticle queryArticle) {
+        final Set<Article> articles = ARTICLE_MANAGER.getArticles();
         return articles.stream()
                        // remove those article where query article specifies a min ID and
                        // where the id of the article is less than it.
@@ -114,7 +117,7 @@ public final class WarehouseImpl implements Warehouse {
                        // lexicographical name and where the name of the article is
                        // lexicographically before it.
                        .filter(article -> !(queryArticle.getMinName().isPresent()
-                            && article.getName().compareTo(queryArticle.getMinName().get()) < 0))
+                            && article.getName().compareTo(queryArticle.getMinName().get()) > 0))
                        // remove those article where query article specifies the last
                        // lexicographical name and where the name of the article is
                        // lexicographically after it.
@@ -138,20 +141,11 @@ public final class WarehouseImpl implements Warehouse {
     }
 
     @Override
-    public Result<Empty> addArticle(final Article newArticle) {
-        return Result.of(newArticle)
-                     .require(this::requireArticleNotRegistered,
-                                new IllegalArgumentException(ARTICLE_ALREADY_REGISTERED))
-                     .flatMap(this::updateArticles)
-                     .toEmpty();
-    }
-
-    @Override
     public Result<Empty> addRecord(final Article article,
                                    @Nullable final Date expirationDate,
                                    final Record record) {
         return Result.of(article)
-                     .require(articles::contains, new IllegalArgumentException(ARTICLE_NOT_REGISTERED))
+                     .require(ARTICLE_MANAGER::checkId, new IllegalArgumentException(ARTICLE_NOT_REGISTERED))
                      .map(a -> new StockImpl(a, expirationDate))
                      .map(this::getStock)
                      .flatMap(stock -> stock.addRecord(record))
@@ -162,26 +156,29 @@ public final class WarehouseImpl implements Warehouse {
     public Result<Empty> addRecord(final Article article, final Record record) {
         return addRecord(article, null, record);
     }
-    /**
-     * Adds an {@link Article} to the {@link Set} of articles if not present yet.
-     * @param article the article to be added.
-     * @return a {@link Result} reporting whether errors occurred.
-     */
-    private Result<Article> updateArticles(final Article article) {
-        return Result.of(article)
-                     .require(ID_MANAGER::checkId,
-                                    new IllegalArgumentException(ARTICLE_NOT_REGISTERED_AT_ID_MANAGER))
-                     .peek(articles::add);
+
+    @Override
+    public Article createMiscArticle(final String name, final UnitOfMeasure unitOfMeasure) {
+        return ARTICLE_MANAGER.createMiscArticle(name, unitOfMeasure);
     }
 
-    /**
-     * Return a boolean which specifies whether the article is already registered or not.
-     * @param article to check.
-     * @return a boolean which specifies whether the article is already registered or not.
-     */
-    private boolean requireArticleNotRegistered(final Article article) {
-        return !this.articles.contains(article);
+    @Override
+    public BeerArticle createBeerArticle(final String name, final UnitOfMeasure unitOfMeasure) {
+        return ARTICLE_MANAGER.createBeerArticle(name, unitOfMeasure);
     }
+
+    @Override
+    public IngredientArticle createIngredientArticle(final String name,
+                                                     final UnitOfMeasure unitOfMeasure,
+                                                     final IngredientType ingredientType) {
+        return ARTICLE_MANAGER.createIngredientArticle(name, unitOfMeasure, ingredientType);
+    }
+
+    @Override
+    public Result<Article> setName(final Article article, final String newName) {
+        return ARTICLE_MANAGER.setName(article, newName);
+    }
+
     /**
      * Given a {@link Stock}, if present it will return the {@link Stock} present in the
      * {@link Warehouse}, otherwise it adds it to the {@link Warehouse}.
@@ -247,7 +244,7 @@ public final class WarehouseImpl implements Warehouse {
      * first element is less than the second, 0 if the two elements are equal or an {@link Integer}
      * greater than 0 if the first element is greater than the second.
      */
-    private Integer compareBy(final Article a1,
+    private int compareBy(final Article a1,
                               final Article a2,
                               final QueryArticle.SortParameter by,
                               final boolean descending) {
@@ -256,7 +253,7 @@ public final class WarehouseImpl implements Warehouse {
             case NAME:
                 return des * a1.getName().compareTo(a2.getName());
             case ID:
-                return des * a1.getId().compareTo(a2.getId());
+                return des * Integer.compare(a1.getId(), a2.getId());
             case NONE:
             default:
                 return 0;

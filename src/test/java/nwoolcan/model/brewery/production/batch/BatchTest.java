@@ -11,8 +11,8 @@ import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterImpl;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
+import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
-import nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
@@ -42,6 +42,7 @@ public class BatchTest {
     private static final int N6 = 70;
     private static final Quantity Q1 = Quantity.of(TEN_THOUSAND, UnitOfMeasure.MILLILITER);
     private static final Quantity Q2 = Quantity.of(TEN_THOUSAND - 1, UnitOfMeasure.MILLILITER);
+    private static final ArticleManager ARTICLE_MANAGER = ArticleManager.getInstance();
     private final BatchEvaluationType bjcpType = BatchEvaluationBuilder.getAvailableBatchEvaluationTypes()
                                                                        .getValue()
                                                                        .stream()
@@ -51,16 +52,16 @@ public class BatchTest {
     private Batch batchAlfredo, batchRossina, batchBiondina;
 
     private List<Pair<IngredientArticle, Integer>> alfredoIngredients = Arrays.asList(
-        Pair.of(new IngredientArticleImpl("Luppolo alfredo", UnitOfMeasure.GRAM, IngredientType.HOPS), N1),
-        Pair.of(new IngredientArticleImpl("Pepe gigio", UnitOfMeasure.GRAM, IngredientType.OTHER), N2)
+        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Luppolo alfredo", UnitOfMeasure.GRAM, IngredientType.HOPS), N1),
+        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Pepe gigio", UnitOfMeasure.GRAM, IngredientType.OTHER), N2)
     );
     private List<Pair<IngredientArticle, Integer>> rossinaIngredients = Arrays.asList(
-        Pair.of(new IngredientArticleImpl("Luppolo rossino", UnitOfMeasure.GRAM, IngredientType.HOPS), N3),
-        Pair.of(new IngredientArticleImpl("Pepe faggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N4)
+        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Luppolo rossino", UnitOfMeasure.GRAM, IngredientType.HOPS), N3),
+        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Pepe faggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N4)
     );
     private List<Pair<IngredientArticle, Integer>> biondinaIngredients = Arrays.asList(
-        Pair.of(new IngredientArticleImpl("Luppolo biondino", UnitOfMeasure.GRAM, IngredientType.HOPS), N5),
-        Pair.of(new IngredientArticleImpl("Pepe daggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N6)
+        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Luppolo biondino", UnitOfMeasure.GRAM, IngredientType.HOPS), N5),
+        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Pepe daggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N6)
     );
 
     /**
