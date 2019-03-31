@@ -27,7 +27,7 @@ public class ArticleImpl implements Article {
         if (this.name.isEmpty()) {
             throw new IllegalArgumentException("Name can not be empty.");
         }
-        this.id = ID_MANAGER.getId(name, getArticleType(), unitOfMeasure);
+        this.id = ID_MANAGER.getId(name, getArticleType(), unitOfMeasure); // TODO change. it will be given as a parameter.
     }
 
     @Override

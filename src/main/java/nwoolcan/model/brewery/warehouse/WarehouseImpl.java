@@ -32,7 +32,7 @@ public final class WarehouseImpl implements Warehouse {
                                             + "Build it with ArticleImpl or its subclass.";
     private final Map<Stock, Stock> stocks = new HashMap<>();
     private final Set<Article> articles = new HashSet<>();
-    private static final ArticleManager ID_MANAGER = ArticleManager.getInstance();
+    private static final ArticleManager ARTICLE_MANAGER = ArticleManager.getInstance();
 
 
     @Override
@@ -169,7 +169,7 @@ public final class WarehouseImpl implements Warehouse {
      */
     private Result<Article> updateArticles(final Article article) {
         return Result.of(article)
-                     .require(ID_MANAGER::checkId,
+                     .require(ARTICLE_MANAGER::checkId,
                                     new IllegalArgumentException(ARTICLE_NOT_REGISTERED_AT_ID_MANAGER))
                      .peek(articles::add);
     }
