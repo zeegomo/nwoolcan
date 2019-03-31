@@ -10,8 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Id manager for {@link Article} objects. It is used by ArticleImpl to generate the
- * id and by WarehouseImpl to check the id of the elements.
+ * Manager for {@link Article} objects. It is used by tests and by the
+ * {@link nwoolcan.model.brewery.warehouse.Warehouse} in order to create {@link Article}, check the
+ * id of the {@link Article}, avoid repetitions and set name of the {@link Article}.
  */
 public final class ArticleManager {
 
