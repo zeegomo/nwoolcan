@@ -124,6 +124,8 @@ public final class ArticleManager {
         articleToId.remove(article);
         ((AbstractArticle) article).setName(newName);
         if (articleToId.containsKey(article)) {
+            ((AbstractArticle) article).setName(oldName);
+            articleToId.put(article, id);
             return Result.error(new IllegalArgumentException(ARTICLE_WITH_NEW_NAME_ALREADY_REGISTERED));
         }
         articleToId.put(article, id);

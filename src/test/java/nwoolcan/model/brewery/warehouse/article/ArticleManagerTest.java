@@ -17,6 +17,7 @@ public class ArticleManagerTest {
     private static final String NEW_NAME = "New Dummy Name";
     private static final String SBORN_NEW_NAME = "New Sborning Dummy Name";
     private static final String SBORN_NAME = "Sborning Dummy Name";
+    private static final String FRANK_NAME = "Super Frank Name";
     private static final UnitOfMeasure UOM = UnitOfMeasure.BOTTLE_33_CL;
     private final Article article = articleManager.createMiscArticle(NAME, UOM);
     private final BeerArticle beerArticle = articleManager.createBeerArticle(NAME, UOM);
@@ -86,5 +87,8 @@ public class ArticleManagerTest {
     public void setName() {
         Assert.assertTrue(articleManager.setName(article, NEW_NAME).isPresent());
         Assert.assertTrue(articleManager.setName(new ArticleImpl(0, SBORN_NEW_NAME, UOM), SBORN_NAME).isError());
+        final Article frankArticle = articleManager.createMiscArticle(FRANK_NAME, UOM);
+        Assert.assertTrue(articleManager.setName(frankArticle, NEW_NAME).isError());
+        Assert.assertEquals(FRANK_NAME, frankArticle.getName());
     }
 }
