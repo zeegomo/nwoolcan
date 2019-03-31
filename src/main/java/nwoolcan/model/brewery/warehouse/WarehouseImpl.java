@@ -117,7 +117,7 @@ public final class WarehouseImpl implements Warehouse {
                        // lexicographical name and where the name of the article is
                        // lexicographically before it.
                        .filter(article -> !(queryArticle.getMinName().isPresent()
-                            && article.getName().compareTo(queryArticle.getMinName().get()) < 0))
+                            && article.getName().compareTo(queryArticle.getMinName().get()) > 0))
                        // remove those article where query article specifies the last
                        // lexicographical name and where the name of the article is
                        // lexicographically after it.

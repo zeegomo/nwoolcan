@@ -18,7 +18,7 @@ public final class ArticleManager {
     @Nullable private static ArticleManager instance;
     private static final String ARTICLE_NOT_REGISTERED = "The article was not registered. You can not change its name.";
     private static final String ARTICLE_WITH_NEW_NAME_ALREADY_REGISTERED = "Changing the name to this article would produce an article which already exists.";
-    private static int fakeId = 1;
+    private static int fakeId = -1;
     private int nextAvailableId;
     private Map<Article, Integer> articleToId;
     private Map<Integer, Article> idToArticle;
@@ -76,7 +76,7 @@ public final class ArticleManager {
         Article beerArticle = new BeerArticleImpl(fakeId, name, unitOfMeasure);
         if (!articleToId.containsKey(beerArticle)) {
             int newId = nextAvailableId++;
-            beerArticle = new BeerArticleImpl(fakeId, name, unitOfMeasure);
+            beerArticle = new BeerArticleImpl(newId, name, unitOfMeasure);
             articleToId.put(beerArticle, newId);
             idToArticle.put(newId, beerArticle);
         }
@@ -96,7 +96,7 @@ public final class ArticleManager {
         Article ingredientArticle = new IngredientArticleImpl(fakeId, name, unitOfMeasure, ingredientType);
         if (!articleToId.containsKey(ingredientArticle)) {
             int newId = nextAvailableId++;
-            ingredientArticle = new IngredientArticleImpl(fakeId, name, unitOfMeasure, ingredientType);
+            ingredientArticle = new IngredientArticleImpl(newId, name, unitOfMeasure, ingredientType);
             articleToId.put(ingredientArticle, newId);
             idToArticle.put(newId, ingredientArticle);
         }

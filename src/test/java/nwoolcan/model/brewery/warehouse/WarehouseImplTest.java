@@ -29,11 +29,9 @@ public class WarehouseImplTest {
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.MILLILITER;
     private final Warehouse warehouse = new WarehouseImpl();
     private final Article article = warehouse.createMiscArticle(NAME, UOM);
-    private final Article article1 = warehouse.createMiscArticle(NAME, UOM);
     private final Quantity quantity = Quantity.of(ONE, UOM);
     private final Quantity quantity1 = Quantity.of(ONE, UOM1);
     private final Quantity quantity2 = Quantity.of(TEN, UOM);
-    private final Quantity quantity3 = Quantity.of(TEN * TEN, UOM);
     private final Record record = new Record(quantity, Record.Action.ADDING);
     private final Record record1 = new Record(quantity, new Date(), Record.Action.ADDING);
     private final Record record2 = new Record(quantity1, Record.Action.ADDING);

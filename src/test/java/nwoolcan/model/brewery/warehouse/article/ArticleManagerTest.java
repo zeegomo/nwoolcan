@@ -4,6 +4,7 @@ import nwoolcan.model.utils.UnitOfMeasure;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -72,6 +73,11 @@ public class ArticleManagerTest {
         Assert.assertTrue(articles.contains(article));
         Assert.assertTrue(articles.contains(beerArticle));
         Assert.assertTrue(articles.contains(ingredientArticle));
+        final Set<Integer> articlesIds = new HashSet<>();
+        for (final Article a : articles) {
+            Assert.assertFalse(articlesIds.contains(a.getId()));
+            articlesIds.add(a.getId());
+        }
     }
     /**
      * Test for setName.
