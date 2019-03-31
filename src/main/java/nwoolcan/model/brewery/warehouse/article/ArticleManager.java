@@ -17,6 +17,7 @@ public final class ArticleManager {
 
     @Nullable private static ArticleManager instance;
     private static final String ARTICLE_NOT_REGISTERED = "The article was not registered. You can not change its name.";
+    private static final String ARTICLE_WITH_NEW_NAME_ALREADY_REGISTERED = "Changing the name to this article would produce an article which already exists.";
     private static int fakeId = 1;
     private int nextAvailableId;
     private Map<Article, Integer> articleToId;
@@ -118,9 +119,13 @@ public final class ArticleManager {
         if (!checkId(article)) {
             return Result.error(new IllegalArgumentException(ARTICLE_NOT_REGISTERED));
         }
+        String oldName = article.getName();
         int id = article.getId();
         articleToId.remove(article);
         ((AbstractArticle) article).setName(newName);
+        if (articleToId.containsKey(article)) {
+            return Result.error(new IllegalArgumentException(ARTICLE_WITH_NEW_NAME_ALREADY_REGISTERED));
+        }
         articleToId.put(article, id);
         idToArticle.put(id, article); // TODO check if it is necessary.
         return Result.of(article);

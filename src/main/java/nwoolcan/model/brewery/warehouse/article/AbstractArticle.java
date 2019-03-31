@@ -32,9 +32,11 @@ abstract class AbstractArticle implements Article {
     /**
      * Package private setter for the name of the {@link Article}.
      * @param newName the new name of the {@link Article}.
+     * @return this for fluency.
      */
     // Package-Private
-    protected void setName(final String newName) {
+    protected AbstractArticle setName(final String newName) {
         this.name = newName;
+        return this;
     }
 }
