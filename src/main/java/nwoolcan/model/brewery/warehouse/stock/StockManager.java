@@ -10,7 +10,9 @@ import nwoolcan.utils.Result;
 import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Manager for {@link Stock} objects. It is used by tests and by the
@@ -58,7 +60,8 @@ public final class StockManager {
           return Result.of(article)
                        .require(articleManager::checkId)
                        .require(this::checkNotFinishedBeer)
-                       .map(a -> new StockImpl(a, expirationDate)); // TODO register the id and require it was not registered yet.
+                       .map(a -> new StockImpl(a, expirationDate)) // TODO add the nextAvailableId in the id field.
+                       .map(this::getStock);
     }
     /**
      * Constructor of the {@link BeerStock}.
@@ -72,10 +75,18 @@ public final class StockManager {
                                   final Batch batch) { // TODO register and require it was not registered yet.
         return Result.of(beerArticle)
                      .require(articleManager::checkId)
-                     .map(ba -> new BeerStockImpl(ba, expirationDate, batch));
-        // return Result.of(new BeerStockImpl(beerArticle, expirationDate, batch));
+                     .map(ba -> new BeerStockImpl(ba, expirationDate, batch)) // TODO add the nextAvailableId in the id field.
+                     .map(this::getStock)
+                     .map(stock -> (BeerStock) stock);
     }
 
+    /**
+     * Returns a {@link Set} of the {@link Stock} currently registered at the {@link StockManager}.
+     * @return a {@link Set} of the {@link Stock} currently registered at the {@link StockManager}.
+     */
+    public Set<Stock> getStocks() {
+        return new HashSet<>(stockToStock.keySet());
+    }
     /**
      * Return a boolean denoting whether the article is not a {@link BeerArticle}.
      * @param article to be checked.
@@ -84,7 +95,6 @@ public final class StockManager {
     private boolean checkNotFinishedBeer(final Article article) {
         return article.getArticleType() != ArticleType.FINISHED_BEER;
     }
-
     /**
      * It checks whether the {@link Stock} is already in the map. If it is, it returns the one in the map.
      * If it is not, it adds it to the map and returns itself.
