@@ -19,7 +19,7 @@ public final class ArticleManager {
     @Nullable private static ArticleManager instance;
     private static final String ARTICLE_NOT_REGISTERED = "The article was not registered. You can not change its name.";
     private static final String ARTICLE_WITH_NEW_NAME_ALREADY_REGISTERED = "Changing the name to this article would produce an article which already exists.";
-    private static final int fakeId = -1;
+    private static final int FAKE_ID = -1;
     private int nextAvailableId;
     private Map<Article, Integer> articleToId;
     private Map<Integer, Article> idToArticle;
@@ -56,7 +56,7 @@ public final class ArticleManager {
     @SuppressWarnings("NullAway")
     public synchronized Article createMiscArticle(final String name,
                                               final UnitOfMeasure unitOfMeasure) {
-        Article article = new ArticleImpl(fakeId, name, unitOfMeasure);
+        Article article = new ArticleImpl(FAKE_ID, name, unitOfMeasure);
         if (!articleToId.containsKey(article)) {
             int newId = nextAvailableId++;
             article = new ArticleImpl(newId, name, unitOfMeasure);
@@ -74,7 +74,7 @@ public final class ArticleManager {
     @SuppressWarnings("NullAway")
     public synchronized BeerArticle createBeerArticle(final String name,
                                                       final UnitOfMeasure unitOfMeasure) {
-        Article beerArticle = new BeerArticleImpl(fakeId, name, unitOfMeasure);
+        Article beerArticle = new BeerArticleImpl(FAKE_ID, name, unitOfMeasure);
         if (!articleToId.containsKey(beerArticle)) {
             int newId = nextAvailableId++;
             beerArticle = new BeerArticleImpl(newId, name, unitOfMeasure);
@@ -94,7 +94,7 @@ public final class ArticleManager {
     public synchronized IngredientArticle createIngredientArticle(final String name,
                                                                   final UnitOfMeasure unitOfMeasure,
                                                                   final IngredientType ingredientType) {
-        Article ingredientArticle = new IngredientArticleImpl(fakeId, name, unitOfMeasure, ingredientType);
+        Article ingredientArticle = new IngredientArticleImpl(FAKE_ID, name, unitOfMeasure, ingredientType);
         if (!articleToId.containsKey(ingredientArticle)) {
             int newId = nextAvailableId++;
             ingredientArticle = new IngredientArticleImpl(newId, name, unitOfMeasure, ingredientType);
