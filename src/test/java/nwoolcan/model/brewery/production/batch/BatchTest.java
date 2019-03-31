@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class BatchTest {
 
-    private static final int TEN_THOUSAND = 1000;
+    private static final int TEN_THOUSAND = 10000;
     private static final int N1 = 500;
     private static final int N2 = 50;
     private static final int N3 = 450;
@@ -225,7 +225,10 @@ public class BatchTest {
             Assert.fail();
         });
 
-        //Go next without finalize
+        final int bottles = 7;
+        //Finalize packaging with bottle um.
+        batchAlfredo.getCurrentStep().finalize("Packaged in 75 cl bottles", new Date(), Quantity.of(bottles, UnitOfMeasure.BOTTLE_75_CL));
+
         batchAlfredo.moveToNextStep(StepTypeEnum.FINALIZED).peekError(e -> {
             e.printStackTrace();
             Assert.fail();
