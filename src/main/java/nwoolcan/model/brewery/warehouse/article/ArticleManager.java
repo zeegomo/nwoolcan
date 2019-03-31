@@ -19,7 +19,7 @@ public final class ArticleManager {
     @Nullable private static ArticleManager instance;
     private static final String ARTICLE_NOT_REGISTERED = "The article was not registered. You can not change its name.";
     private static final String ARTICLE_WITH_NEW_NAME_ALREADY_REGISTERED = "Changing the name to this article would produce an article which already exists.";
-    private static int fakeId = -1;
+    private static final int fakeId = -1;
     private int nextAvailableId;
     private Map<Article, Integer> articleToId;
     private Map<Integer, Article> idToArticle;
