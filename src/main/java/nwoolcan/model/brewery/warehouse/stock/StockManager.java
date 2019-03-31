@@ -21,16 +21,13 @@ public final class StockManager {
 
     @Nullable private static StockManager instance;
     private final ArticleManager articleManager;
-    private final Map<Stock, Integer> stockToId;
-    private final Map<Integer, Stock> idToStock;
-    private static final int FAKE_ID = -1;
+    private final Map<Stock, Stock> stockToStock;
     private int nextAvailableId;
 
     private StockManager() {
         articleManager = ArticleManager.getInstance();
         nextAvailableId = 1;
-        stockToId = new HashMap<>();
-        idToStock = new HashMap<>();
+        stockToStock = new HashMap<>();
     }
     /**
      * Returns the only instance of the {@link StockManager} using a singleton pattern.
@@ -48,8 +45,7 @@ public final class StockManager {
      * @return a boolean denoting whether the id is correct or not.
      */
     public synchronized boolean checkId(final Stock stock) {
-        return true; // TODO remove comment and use the other check.
-        //return stockToId.containsKey(stock) && stock.getId().equals(stockToId.get(stock));
+        return stockToStock.containsKey(stock) && stock.getId() == stockToStock.get(stock).getId();
     }
     /**
      * Constructor of the {@link Stock}.
@@ -57,7 +53,7 @@ public final class StockManager {
      * @param expirationDate linked to the {@link Stock}.
      * @return a {@link Result} indicating errors.
      */
-    public Result<Stock> createStock(final Article article,
+    public synchronized Result<Stock> createStock(final Article article,
                                      @Nullable final Date expirationDate) {
           return Result.of(article)
                        .require(articleManager::checkId)
@@ -71,7 +67,7 @@ public final class StockManager {
      * @param batch linked to this {@link BeerStock}.
      * @return a {@link Result} indicating errors.
      */
-    public Result<BeerStock> createBeerStock(final BeerArticle beerArticle,
+    public synchronized Result<BeerStock> createBeerStock(final BeerArticle beerArticle,
                                   @Nullable final Date expirationDate,
                                   final Batch batch) { // TODO register and require it was not registered yet.
         return Result.of(beerArticle)

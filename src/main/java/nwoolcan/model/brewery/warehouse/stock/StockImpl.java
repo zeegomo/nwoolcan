@@ -32,6 +32,7 @@ public class StockImpl implements Stock {
     private Date lastChangeDate;
     private Quantity remainingQuantity;
     private Quantity usedQuantity;
+    private final int id = 1;
 
     /**
      * Constructor for Stock with expiration date.
@@ -46,6 +47,11 @@ public class StockImpl implements Stock {
         this.lastChangeDate = creationMoment;
         this.remainingQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure());
         this.usedQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure());
+    }
+
+    @Override
+    public final int getId() {
+        return id;
     }
 
     @Override
