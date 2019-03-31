@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public final class QueryStockTest {
 
-    private static final Integer TWO = 2;
+    private static final int TWO = 2;
     private static final String ARTICLE_NAME = "ArticleName";
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.UNIT;
