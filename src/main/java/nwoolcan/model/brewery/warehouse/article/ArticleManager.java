@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.warehouse.article;
 
 import nwoolcan.model.utils.UnitOfMeasure;
+import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.Set;
 public final class ArticleManager {
 
     @Nullable private static ArticleManager instance;
+    private static final String ARTICLE_NOT_REGISTERED = "The article was not registered. You can not change its name.";
     private static int fakeId = 1;
     private int nextAvailableId;
     private Map<Article, Integer> articleToId;
@@ -99,7 +101,6 @@ public final class ArticleManager {
         }
         return (IngredientArticle) idToArticle.get(articleToId.get(ingredientArticle));
     }
-
     /**
      * Return a {@link Set} of all the managed {@link Article}.
      * @return a {@link Set} of all the managed {@link Article}.
@@ -107,4 +108,22 @@ public final class ArticleManager {
     public Set<Article> getArticles() {
         return new HashSet<>(articleToId.keySet());
     }
+    /**
+     * Setter for the name of the {@link Article}.
+     * @param article the {@link Article} to which we want to change the name.
+     * @param newName the new name to be assigned to the {@link Article}.
+     * @return a {@link Result} of {@link Article} for fluency.
+     */
+    public synchronized Result<Article> setName(final Article article, final String newName) {
+        if (!checkId(article)) {
+            return Result.error(new IllegalArgumentException(ARTICLE_NOT_REGISTERED));
+        }
+        int id = article.getId();
+        articleToId.remove(article);
+        ((AbstractArticle) article).setName(newName);
+        articleToId.put(article, id);
+        idToArticle.put(id, article); // TODO check if it is necessary.
+        return Result.of(article);
+    }
+
 }

@@ -9,12 +9,9 @@ import java.util.Objects;
  * General implementation of Article. It can contains only article of MISC type.
  * Override your class for a particular Article implementation.
  */
-public class ArticleImpl implements Article {
+public class ArticleImpl extends AbstractArticle {
 
-    private final Integer id;
-    private final String name;
-    private final UnitOfMeasure unitOfMeasure;
-    private static final ArticleManager ID_MANAGER = ArticleManager.getInstance();
+
 
     /**
      * Constructor of the class. Only article of type miscellaneous can be constructed.
@@ -24,18 +21,13 @@ public class ArticleImpl implements Article {
      */
     // Package-private
     ArticleImpl(final int id, final String name, final UnitOfMeasure unitOfMeasure) {
-        this.name = name;
-        this.unitOfMeasure = unitOfMeasure;
-        if (this.name.isEmpty()) {
+        super(id, name, unitOfMeasure);
+        if (name.isEmpty()) {
             throw new IllegalArgumentException("Name can not be empty.");
         }
-        this.id = id;
     }
 
-    @Override
-    public final Integer getId() {
-        return this.id;
-    }
+
     /**
      * Returns the type of article.
      * Override this method according on the type of article which is being represented.
@@ -44,11 +36,6 @@ public class ArticleImpl implements Article {
     @Override
     public ArticleType getArticleType() {
         return ArticleType.MISC;
-    }
-
-    @Override
-    public final String getName() {
-        return this.name;
     }
     /**
      * To override this method return the linked IngredientArticle in case it is an ingredient,
@@ -69,20 +56,14 @@ public class ArticleImpl implements Article {
         return Result.error(new IllegalAccessException("This is not a Beer Article"));
     }
 
-    @Override
-    public final UnitOfMeasure getUnitOfMeasure() {
-        return this.unitOfMeasure;
-    }
-
     /**
      * To override this method you should call Objects.hash with parameters this super class and the other fields.
      * @return the result of the xor operation between id and the hash of the name.
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name, unitOfMeasure, getArticleType());
+        return Objects.hash(getName(), getUnitOfMeasure(), getArticleType());
     }
-
     /**
      * To override this method compare all the fields of the classes.
      * @param obj the object to be compared with.
@@ -99,8 +80,8 @@ public class ArticleImpl implements Article {
         }
 
         ArticleImpl other = (ArticleImpl) obj;
-        return this.name.equals(other.getName())
-            && this.unitOfMeasure.equals(other.unitOfMeasure)
+        return getName().equals(other.getName())
+            && getUnitOfMeasure().equals(other.getUnitOfMeasure())
             && this.getArticleType().equals(other.getArticleType());
     }
 
@@ -111,9 +92,9 @@ public class ArticleImpl implements Article {
     @Override
     public String toString() {
         return "[ArticleImpl]{"
-            + "id=" + id
-            + ", name='" + name + '\''
-            + ", unitOfMeasure=" + unitOfMeasure
+            + "id=" + getId()
+            + ", name='" + super.getName() + '\''
+            + ", unitOfMeasure=" + getUnitOfMeasure()
             + ", articleType=" + getArticleType()
             + '}';
     }

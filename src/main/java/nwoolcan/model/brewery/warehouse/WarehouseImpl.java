@@ -173,6 +173,12 @@ public final class WarehouseImpl implements Warehouse {
                                                      final IngredientType ingredientType) {
         return ARTICLE_MANAGER.createIngredientArticle(name, unitOfMeasure, ingredientType);
     }
+
+    @Override
+    public Result<Article> setName(final Article article, final String newName) {
+        return ARTICLE_MANAGER.setName(article, newName);
+    }
+
     /**
      * Given a {@link Stock}, if present it will return the {@link Stock} present in the
      * {@link Warehouse}, otherwise it adds it to the {@link Warehouse}.

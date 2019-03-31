@@ -73,5 +73,12 @@ public interface Warehouse {
     IngredientArticle createIngredientArticle(String name,
                                               UnitOfMeasure unitOfMeasure,
                                               IngredientType ingredientType);
+    /**
+     * Setter for the name of the {@link Article}.
+     * @param article the {@link Article} to which we want to change the name.
+     * @param newName the new name to be assigned to the {@link Article}.
+     * @return a {@link Result} of {@link Article} for fluency.
+     */
+    Result<Article> setName(Article article, String newName);
 
 }
