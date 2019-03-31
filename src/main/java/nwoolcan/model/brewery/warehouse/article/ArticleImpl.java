@@ -22,7 +22,8 @@ public class ArticleImpl implements Article {
      * @param name the name of the new {@link Article}.
      * @param unitOfMeasure used for this {@link Article}.
      */
-    public ArticleImpl(final int id, final String name, final UnitOfMeasure unitOfMeasure) {
+    // Package-private
+    ArticleImpl(final int id, final String name, final UnitOfMeasure unitOfMeasure) {
         this.name = name;
         this.unitOfMeasure = unitOfMeasure;
         if (this.name.isEmpty()) {

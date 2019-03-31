@@ -16,7 +16,8 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
      * @param name the name of the beer article.
      * @param unitOfMeasure used for this article.
      */
-    public BeerArticleImpl(final int id, final String name, final UnitOfMeasure unitOfMeasure) {
+    // Package-private
+    BeerArticleImpl(final int id, final String name, final UnitOfMeasure unitOfMeasure) {
         super(id, name, unitOfMeasure);
     }
     /**
