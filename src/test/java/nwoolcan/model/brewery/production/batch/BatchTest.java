@@ -14,6 +14,7 @@ import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
+import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
@@ -180,10 +181,7 @@ public class BatchTest {
 
         //Finalize and go next.
         batchAlfredo.getCurrentStep().finalize("Mashing ended.", new Date(), batchAlfredo.getBatchInfo().getBatchSize());
-        batchAlfredo.moveToNextStep(StepTypeEnum.BOILING).peekError(e -> {
-           e.printStackTrace();
-           Assert.fail();
-        });
+        batchAlfredo.moveToNextStep(StepTypeEnum.BOILING).peekError(e -> Assert.fail(e.getMessage()));
 
         final Number t3 = 120.9;
         final Number t4 = 106.3;
@@ -194,10 +192,7 @@ public class BatchTest {
 
         //Finalize and go next.
         batchAlfredo.getCurrentStep().finalize("Boiling ended.", new Date(), batchAlfredo.getBatchInfo().getBatchSize());
-        batchAlfredo.moveToNextStep(StepTypeEnum.FERMENTING).peekError(e -> {
-            e.printStackTrace();
-            Assert.fail();
-        });
+        batchAlfredo.moveToNextStep(StepTypeEnum.FERMENTING).peekError(e -> Assert.fail(e.getMessage()));
 
         final Number t5 = 50;
         final Number t6 = 45.8;
@@ -220,19 +215,13 @@ public class BatchTest {
         Assert.assertEquals(new ParameterImpl(ParameterTypeEnum.ABV, abv2, d), batchAlfredo.getBatchInfo().getAbv().get());
 
         //Go next without finalize
-        batchAlfredo.moveToNextStep(StepTypeEnum.PACKAGING).peekError(e -> {
-            e.printStackTrace();
-            Assert.fail();
-        });
+        batchAlfredo.moveToNextStep(StepTypeEnum.PACKAGING).peekError(e -> Assert.fail(e.getMessage()));
 
         final int bottles = 7;
         //Finalize packaging with bottle um.
         batchAlfredo.getCurrentStep().finalize("Packaged in 75 cl bottles", new Date(), Quantity.of(bottles, UnitOfMeasure.BOTTLE_75_CL));
 
-        batchAlfredo.moveToNextStep(StepTypeEnum.FINALIZED).peekError(e -> {
-            e.printStackTrace();
-            Assert.fail();
-        });
+        batchAlfredo.moveToNextStep(StepTypeEnum.FINALIZED).peekError(e -> Assert.fail(e.getMessage()));
 
         //Check end.
         Assert.assertTrue(batchAlfredo.isEnded());
@@ -257,5 +246,29 @@ public class BatchTest {
 
         //Trying to go after ended.
         batchAlfredo.moveToNextStep(StepTypeEnum.FINALIZED).peek(e -> Assert.fail());
+    }
+
+    /**
+     * Method that tests end step sizes correctness.
+     */
+    @Test
+    public void testEndSizeSteps() {
+        batchBiondina.moveToNextStep(StepTypeEnum.BOILING).peekError(e -> Assert.fail(e.getMessage()));
+
+        //Check same size as started
+        Assert.assertEquals(batchBiondina.getBatchInfo().getBatchSize(),
+            batchBiondina.getPreviousSteps().get(0).getStepInfo().getEndStepSize().get());
+
+        final int evapo = 1000;
+        batchBiondina.getCurrentStep().finalize("Evaporated",
+            new Date(),
+            Quantities.remove(Q2, Quantity.of(evapo, UnitOfMeasure.MILLILITER)).getValue()
+        );
+
+        batchBiondina.moveToNextStep(StepTypeEnum.FERMENTING).peekError(e -> Assert.fail(e.getMessage()));
+
+        //Check changed.
+        Assert.assertNotEquals(batchBiondina.getPreviousSteps().get(1).getStepInfo().getEndStepSize().get(),
+            batchBiondina.getBatchInfo().getBatchSize());
     }
 }
