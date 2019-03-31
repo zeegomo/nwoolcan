@@ -14,7 +14,7 @@ public class ArticleImpl implements Article {
     private final Integer id;
     private final String name;
     private final UnitOfMeasure unitOfMeasure;
-    private static final ArticleIdManager ID_MANAGER = ArticleIdManager.getInstance();
+    private static final ArticleManager ID_MANAGER = ArticleManager.getInstance();
 
     /**
      * Constructor of the class. Only article of type miscellaneous can be constructed.

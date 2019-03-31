@@ -1,7 +1,7 @@
 package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
-import nwoolcan.model.brewery.warehouse.article.ArticleIdManager;
+import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.brewery.warehouse.stock.Record;
@@ -32,7 +32,7 @@ public final class WarehouseImpl implements Warehouse {
                                             + "Build it with ArticleImpl or its subclass.";
     private final Map<Stock, Stock> stocks = new HashMap<>();
     private final Set<Article> articles = new HashSet<>();
-    private static final ArticleIdManager ID_MANAGER = ArticleIdManager.getInstance();
+    private static final ArticleManager ID_MANAGER = ArticleManager.getInstance();
 
 
     @Override

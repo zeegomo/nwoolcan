@@ -1,33 +1,33 @@
 package nwoolcan.model.brewery.warehouse.article;
 
 import nwoolcan.model.utils.UnitOfMeasure;
+import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.lang3.tuple.Triple;
 
 /**
  * Id manager for {@link Article} objects. It is used by ArticleImpl to generate the
  * id and by WarehouseImpl to check the id of the elements.
  */
-public final class ArticleIdManager {
+public final class ArticleManager {
 
-    @Nullable private static ArticleIdManager instance;
+    @Nullable private static ArticleManager instance;
     private int nextAvailableId;
     private Map<Triple<String, ArticleType, UnitOfMeasure>, Integer> existingIds;
 
-    private ArticleIdManager() {
+    private ArticleManager() {
         nextAvailableId = 1;
         existingIds = new HashMap<>();
     }
     /**
-     * Returns the only instance of the {@link ArticleIdManager} using a singleton pattern.
-     * @return the only instance of the {@link ArticleIdManager} using a singleton pattern.
+     * Returns the only instance of the {@link ArticleManager} using a singleton pattern.
+     * @return the only instance of the {@link ArticleManager} using a singleton pattern.
      */
-    public static synchronized ArticleIdManager getInstance() {
+    public static synchronized ArticleManager getInstance() {
         if (instance == null) {
-            instance = new ArticleIdManager();
+            instance = new ArticleManager();
         }
         return instance;
     }
