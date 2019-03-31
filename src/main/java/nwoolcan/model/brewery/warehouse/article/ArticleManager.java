@@ -51,7 +51,6 @@ public final class ArticleManager {
      * @param unitOfMeasure the {@link UnitOfMeasure} of the {@link Article}.
      * @return a new {@link Article} if it does not exist in the {@link ArticleManager}, otherwise the existing one.
      */
-    @SuppressWarnings("NullAway")
     public synchronized Article createMiscArticle(final String name,
                                               final UnitOfMeasure unitOfMeasure) {
         Article article = new ArticleImpl(FAKE_ID, name, unitOfMeasure);
@@ -59,6 +58,7 @@ public final class ArticleManager {
             int newId = nextAvailableId++;
             article = new ArticleImpl(newId, name, unitOfMeasure);
             articleToArticle.put(article, article);
+            return article;
         }
         return articleToArticle.get(article);
     }
@@ -68,14 +68,14 @@ public final class ArticleManager {
      * @param unitOfMeasure the {@link UnitOfMeasure} of the {@link BeerArticle}.
      * @return a new {@link BeerArticle} if it does not exist in the {@link ArticleManager}, otherwise the existing one.
      */
-    @SuppressWarnings("NullAway")
     public synchronized BeerArticle createBeerArticle(final String name,
                                                       final UnitOfMeasure unitOfMeasure) {
-        Article beerArticle = new BeerArticleImpl(FAKE_ID, name, unitOfMeasure);
+        BeerArticle beerArticle = new BeerArticleImpl(FAKE_ID, name, unitOfMeasure);
         if (!articleToArticle.containsKey(beerArticle)) {
             int newId = nextAvailableId++;
             beerArticle = new BeerArticleImpl(newId, name, unitOfMeasure);
             articleToArticle.put(beerArticle, beerArticle);
+            return beerArticle;
         }
         return (BeerArticle) articleToArticle.get(beerArticle);
     }
@@ -86,16 +86,15 @@ public final class ArticleManager {
      * @param ingredientType the {@link IngredientType} of the {@link IngredientArticle}.
      * @return a new {@link IngredientArticle} if it does not exist in the {@link ArticleManager}, otherwise the existing one.
      */
-    @SuppressWarnings("NullAway")
     public synchronized IngredientArticle createIngredientArticle(final String name,
                                                                   final UnitOfMeasure unitOfMeasure,
                                                                   final IngredientType ingredientType) {
-        Article ingredientArticle = new IngredientArticleImpl(FAKE_ID, name, unitOfMeasure, ingredientType);
+        IngredientArticle ingredientArticle = new IngredientArticleImpl(FAKE_ID, name, unitOfMeasure, ingredientType);
         if (!articleToArticle.containsKey(ingredientArticle)) {
             int newId = nextAvailableId++;
             ingredientArticle = new IngredientArticleImpl(newId, name, unitOfMeasure, ingredientType);
             articleToArticle.put(ingredientArticle, ingredientArticle);
-
+            return ingredientArticle;
         }
         return (IngredientArticle) articleToArticle.get(ingredientArticle);
     }
