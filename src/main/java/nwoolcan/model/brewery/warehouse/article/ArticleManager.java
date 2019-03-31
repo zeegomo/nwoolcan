@@ -19,7 +19,6 @@ public final class ArticleManager {
     @Nullable private static ArticleManager instance;
     private static final String ARTICLE_NOT_REGISTERED = "The article was not registered. You can not change its name.";
     private static final String ARTICLE_WITH_NEW_NAME_ALREADY_REGISTERED = "Changing the name to this article would produce an article which already exists.";
-    private static final int FAKE_ID = -1;
     private int nextAvailableId;
     private Map<Article, Article> articleToArticle;
 
@@ -53,14 +52,8 @@ public final class ArticleManager {
      */
     public synchronized Article createMiscArticle(final String name,
                                               final UnitOfMeasure unitOfMeasure) {
-        Article article = new ArticleImpl(FAKE_ID, name, unitOfMeasure);
-        if (!articleToArticle.containsKey(article)) {
-            int newId = nextAvailableId++;
-            article = new ArticleImpl(newId, name, unitOfMeasure);
-            articleToArticle.put(article, article);
-            return article;
-        }
-        return articleToArticle.get(article);
+        Article article = new ArticleImpl(nextAvailableId, name, unitOfMeasure);
+        return getArticle(article);
     }
     /**
      * Creates a {@link BeerArticle} and insert it into the {@link ArticleManager}. If it already exists, it will be returned.
@@ -70,14 +63,8 @@ public final class ArticleManager {
      */
     public synchronized BeerArticle createBeerArticle(final String name,
                                                       final UnitOfMeasure unitOfMeasure) {
-        BeerArticle beerArticle = new BeerArticleImpl(FAKE_ID, name, unitOfMeasure);
-        if (!articleToArticle.containsKey(beerArticle)) {
-            int newId = nextAvailableId++;
-            beerArticle = new BeerArticleImpl(newId, name, unitOfMeasure);
-            articleToArticle.put(beerArticle, beerArticle);
-            return beerArticle;
-        }
-        return (BeerArticle) articleToArticle.get(beerArticle);
+        BeerArticle beerArticle = new BeerArticleImpl(nextAvailableId, name, unitOfMeasure);
+        return (BeerArticle) getArticle(beerArticle);
     }
     /**
      * Creates a {@link IngredientArticle} and insert it into the {@link ArticleManager}. If it already exists, it will be returned.
@@ -89,14 +76,8 @@ public final class ArticleManager {
     public synchronized IngredientArticle createIngredientArticle(final String name,
                                                                   final UnitOfMeasure unitOfMeasure,
                                                                   final IngredientType ingredientType) {
-        IngredientArticle ingredientArticle = new IngredientArticleImpl(FAKE_ID, name, unitOfMeasure, ingredientType);
-        if (!articleToArticle.containsKey(ingredientArticle)) {
-            int newId = nextAvailableId++;
-            ingredientArticle = new IngredientArticleImpl(newId, name, unitOfMeasure, ingredientType);
-            articleToArticle.put(ingredientArticle, ingredientArticle);
-            return ingredientArticle;
-        }
-        return (IngredientArticle) articleToArticle.get(ingredientArticle);
+        IngredientArticle ingredientArticle = new IngredientArticleImpl(nextAvailableId, name, unitOfMeasure, ingredientType);
+        return (IngredientArticle) getArticle(ingredientArticle);
     }
     /**
      * Return a {@link Set} of all the managed {@link Article}.
@@ -126,6 +107,20 @@ public final class ArticleManager {
         }
         articleToArticle.put(article, article);
         return Result.of(article);
+    }
+    /**
+     * It checks whether the article is already in the map. If it is, it returns the one in the map.
+     * If it is not, it adds it to the map and returns itself.
+     * @param article to be checked.
+     * @return the parameter if it is not in the map. Otherwise the corresponding into the map.
+     */
+    private Article getArticle(final Article article) {
+        if (!articleToArticle.containsKey(article)) {
+            nextAvailableId++;
+            articleToArticle.put(article, article);
+            return article;
+        }
+        return articleToArticle.get(article);
     }
 
 }
