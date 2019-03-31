@@ -21,13 +21,11 @@ public final class ArticleManager {
     private static final String ARTICLE_WITH_NEW_NAME_ALREADY_REGISTERED = "Changing the name to this article would produce an article which already exists.";
     private static final int FAKE_ID = -1;
     private int nextAvailableId;
-    private Map<Article, Integer> articleToId;
-    private Map<Integer, Article> idToArticle;
+    private Map<Article, Article> articleToArticle;
 
     private ArticleManager() {
         nextAvailableId = 1;
-        articleToId = new HashMap<>();
-        idToArticle = new HashMap<>();
+        articleToArticle = new HashMap<>();
     }
     /**
      * Returns the only instance of the {@link ArticleManager} using a singleton pattern.
@@ -45,7 +43,7 @@ public final class ArticleManager {
      * @return a boolean denoting whether the id is correct or not.
      */
     public synchronized boolean checkId(final Article article) {
-        return articleToId.containsKey(article) && article.getId().equals(articleToId.get(article));
+        return articleToArticle.containsKey(article) && article.getId().equals(articleToArticle.get(article).getId());
     }
     /**
      * Creates a misc {@link Article} and insert it into the {@link ArticleManager}. If it already exists, it will be returned.
@@ -57,13 +55,12 @@ public final class ArticleManager {
     public synchronized Article createMiscArticle(final String name,
                                               final UnitOfMeasure unitOfMeasure) {
         Article article = new ArticleImpl(FAKE_ID, name, unitOfMeasure);
-        if (!articleToId.containsKey(article)) {
+        if (!articleToArticle.containsKey(article)) {
             int newId = nextAvailableId++;
             article = new ArticleImpl(newId, name, unitOfMeasure);
-            articleToId.put(article, newId);
-            idToArticle.put(newId, article);
+            articleToArticle.put(article, article);
         }
-        return idToArticle.get(articleToId.get(article));
+        return articleToArticle.get(article);
     }
     /**
      * Creates a {@link BeerArticle} and insert it into the {@link ArticleManager}. If it already exists, it will be returned.
@@ -75,13 +72,12 @@ public final class ArticleManager {
     public synchronized BeerArticle createBeerArticle(final String name,
                                                       final UnitOfMeasure unitOfMeasure) {
         Article beerArticle = new BeerArticleImpl(FAKE_ID, name, unitOfMeasure);
-        if (!articleToId.containsKey(beerArticle)) {
+        if (!articleToArticle.containsKey(beerArticle)) {
             int newId = nextAvailableId++;
             beerArticle = new BeerArticleImpl(newId, name, unitOfMeasure);
-            articleToId.put(beerArticle, newId);
-            idToArticle.put(newId, beerArticle);
+            articleToArticle.put(beerArticle, beerArticle);
         }
-        return (BeerArticle) idToArticle.get(articleToId.get(beerArticle));
+        return (BeerArticle) articleToArticle.get(beerArticle);
     }
     /**
      * Creates a {@link IngredientArticle} and insert it into the {@link ArticleManager}. If it already exists, it will be returned.
@@ -95,20 +91,20 @@ public final class ArticleManager {
                                                                   final UnitOfMeasure unitOfMeasure,
                                                                   final IngredientType ingredientType) {
         Article ingredientArticle = new IngredientArticleImpl(FAKE_ID, name, unitOfMeasure, ingredientType);
-        if (!articleToId.containsKey(ingredientArticle)) {
+        if (!articleToArticle.containsKey(ingredientArticle)) {
             int newId = nextAvailableId++;
             ingredientArticle = new IngredientArticleImpl(newId, name, unitOfMeasure, ingredientType);
-            articleToId.put(ingredientArticle, newId);
-            idToArticle.put(newId, ingredientArticle);
+            articleToArticle.put(ingredientArticle, ingredientArticle);
+
         }
-        return (IngredientArticle) idToArticle.get(articleToId.get(ingredientArticle));
+        return (IngredientArticle) articleToArticle.get(ingredientArticle);
     }
     /**
      * Return a {@link Set} of all the managed {@link Article}.
      * @return a {@link Set} of all the managed {@link Article}.
      */
     public Set<Article> getArticles() {
-        return new HashSet<>(articleToId.keySet());
+        return new HashSet<>(articleToArticle.keySet());
     }
     /**
      * Setter for the name of the {@link Article}.
@@ -122,15 +118,14 @@ public final class ArticleManager {
         }
         String oldName = article.getName();
         int id = article.getId();
-        articleToId.remove(article);
+        articleToArticle.remove(article);
         ((AbstractArticle) article).setName(newName);
-        if (articleToId.containsKey(article)) {
+        if (articleToArticle.containsKey(article)) {
             ((AbstractArticle) article).setName(oldName);
-            articleToId.put(article, id);
+            articleToArticle.put(article, article);
             return Result.error(new IllegalArgumentException(ARTICLE_WITH_NEW_NAME_ALREADY_REGISTERED));
         }
-        articleToId.put(article, id);
-        idToArticle.put(id, article); // TODO check if it is necessary.
+        articleToArticle.put(article, article);
         return Result.of(article);
     }
 
