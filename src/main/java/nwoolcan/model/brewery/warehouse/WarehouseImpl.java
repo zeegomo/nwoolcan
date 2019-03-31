@@ -253,7 +253,7 @@ public final class WarehouseImpl implements Warehouse {
             case NAME:
                 return des * a1.getName().compareTo(a2.getName());
             case ID:
-                return des * a1.getId().compareTo(a2.getId());
+                return des * Integer.compare(a1.getId(), a2.getId());
             case NONE:
             default:
                 return 0;

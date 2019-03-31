@@ -42,7 +42,7 @@ public final class ArticleManager {
      * @return a boolean denoting whether the id is correct or not.
      */
     public synchronized boolean checkId(final Article article) {
-        return articleToArticle.containsKey(article) && article.getId().equals(articleToArticle.get(article).getId());
+        return articleToArticle.containsKey(article) && article.getId() == articleToArticle.get(article).getId();
     }
     /**
      * Creates a misc {@link Article} and insert it into the {@link ArticleManager}. If it already exists, it will be returned.

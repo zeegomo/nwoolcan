@@ -16,7 +16,7 @@ abstract class AbstractArticle implements Article {
     }
 
     @Override
-    public final Integer getId() {
+    public final int getId() {
         return this.id;
     }
 
