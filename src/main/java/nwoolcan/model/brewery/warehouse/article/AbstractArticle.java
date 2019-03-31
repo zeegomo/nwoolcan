@@ -6,10 +6,10 @@ import nwoolcan.model.utils.UnitOfMeasure;
 abstract class AbstractArticle implements Article {
 
     private String name;
-    private final Integer id;
+    private final int id;
     private final UnitOfMeasure unitOfMeasure;
 
-    AbstractArticle(final Integer id, final String name, final UnitOfMeasure unitOfMeasure) {
+    AbstractArticle(final int id, final String name, final UnitOfMeasure unitOfMeasure) {
         this.id = id;
         this.name = name;
         this.unitOfMeasure = unitOfMeasure;

@@ -21,7 +21,7 @@ public final class QueryArticleBuilder {
      * @param id the min ID included in the query.
      * @return this for fluency.
      */
-    public QueryArticleBuilder setMinID(final Integer id) {
+    public QueryArticleBuilder setMinID(final int id) {
         this.minID = id;
         return this;
     }
@@ -30,7 +30,7 @@ public final class QueryArticleBuilder {
      * @param id the max ID included in the query.
      * @return this for fluency.
      */
-    public QueryArticleBuilder setMaxID(final Integer id) {
+    public QueryArticleBuilder setMaxID(final int id) {
         this.maxID = id;
         return this;
     }

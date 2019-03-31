@@ -244,7 +244,7 @@ public final class WarehouseImpl implements Warehouse {
      * first element is less than the second, 0 if the two elements are equal or an {@link Integer}
      * greater than 0 if the first element is greater than the second.
      */
-    private Integer compareBy(final Article a1,
+    private int compareBy(final Article a1,
                               final Article a2,
                               final QueryArticle.SortParameter by,
                               final boolean descending) {

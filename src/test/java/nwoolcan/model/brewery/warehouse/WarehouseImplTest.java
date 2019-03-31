@@ -22,8 +22,8 @@ import java.util.List;
  */
 public class WarehouseImplTest {
 
-    private static final Integer ONE = 1;
-    private static final Integer TEN = 10;
+    private static final int ONE = 1;
+    private static final int TEN = 10;
     private static final String NAME = "DummyName";
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.MILLILITER;
@@ -35,8 +35,8 @@ public class WarehouseImplTest {
     private final Record record = new Record(quantity, Record.Action.ADDING);
     private final Record record1 = new Record(quantity, new Date(), Record.Action.ADDING);
     private final Record record2 = new Record(quantity1, Record.Action.ADDING);
-    private static final Integer MIN_ID = 1;
-    private static final Integer MAX_ID = 1;
+    private static final int MIN_ID = 1;
+    private static final int MAX_ID = 1;
     private static final String MIN_NAME = "DummyName";
     private static final String MAX_NAME = "DummyName2";
     private Date date1 = new Date();
