@@ -80,7 +80,7 @@ public class ArticleImpl implements Article {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, unitOfMeasure, getArticleType());
+        return Objects.hash(name, unitOfMeasure, getArticleType());
     }
 
     /**

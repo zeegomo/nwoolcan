@@ -52,10 +52,10 @@ public final class ArticleManager {
     @SuppressWarnings("NullAway")
     public synchronized Article createMiscArticle(final String name,
                                               final UnitOfMeasure unitOfMeasure) {
-        Article article = new ArticleImpl(fakeId, name, unitOfMeasure); // TODO when creating an article to check it, just put a false id. This require hashing not to include the id of the article in articleImpl.
+        Article article = new ArticleImpl(fakeId, name, unitOfMeasure);
         if (!articleToId.containsKey(article)) {
             int newId = nextAvailableId++;
-            article = new ArticleImpl(newId, name, unitOfMeasure); // TODO here i should put the real id: newID
+            article = new ArticleImpl(newId, name, unitOfMeasure);
             articleToId.put(article, newId);
             idToArticle.put(newId, article);
         }
@@ -70,10 +70,10 @@ public final class ArticleManager {
     @SuppressWarnings("NullAway")
     public synchronized BeerArticle createBeerArticle(final String name,
                                                       final UnitOfMeasure unitOfMeasure) {
-        Article beerArticle = new BeerArticleImpl(fakeId, name, unitOfMeasure); // TODO when creating an article to check it, just put a false id. This require hashing not to include the id of the article in articleImpl.
+        Article beerArticle = new BeerArticleImpl(fakeId, name, unitOfMeasure);
         if (!articleToId.containsKey(beerArticle)) {
             int newId = nextAvailableId++;
-            beerArticle = new BeerArticleImpl(fakeId, name, unitOfMeasure); // TODO here i should put the real id: newID
+            beerArticle = new BeerArticleImpl(fakeId, name, unitOfMeasure);
             articleToId.put(beerArticle, newId);
             idToArticle.put(newId, beerArticle);
         }
@@ -90,10 +90,10 @@ public final class ArticleManager {
     public synchronized IngredientArticle createIngredientArticle(final String name,
                                                                   final UnitOfMeasure unitOfMeasure,
                                                                   final IngredientType ingredientType) {
-        Article ingredientArticle = new IngredientArticleImpl(fakeId, name, unitOfMeasure, ingredientType);  // TODO when creating an article to check it, just put a false id. This require hashing not to include the id of the article in articleImpl.
+        Article ingredientArticle = new IngredientArticleImpl(fakeId, name, unitOfMeasure, ingredientType);
         if (!articleToId.containsKey(ingredientArticle)) {
             int newId = nextAvailableId++;
-            ingredientArticle = new IngredientArticleImpl(fakeId, name, unitOfMeasure, ingredientType); // TODO here i should put the real id: newID
+            ingredientArticle = new IngredientArticleImpl(fakeId, name, unitOfMeasure, ingredientType);
             articleToId.put(ingredientArticle, newId);
             idToArticle.put(newId, ingredientArticle);
         }
