@@ -22,7 +22,7 @@ final class BatchIdGenerator {
      * Returns the next available id.
      * @return the next available id.
      */
-    int getNextId() {
+    synchronized int getNextId() {
         return this.nextId++;
     }
 }
