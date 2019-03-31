@@ -22,6 +22,8 @@ import java.util.Set;
 public final class StockManager {
 
     @Nullable private static StockManager instance;
+    private static final String STOCK_WITH_FINISHED_BEER = "You can not create a stock of finished"
+                                                         + "beer. Create a BeerStock instead.";
     private final ArticleManager articleManager;
     private final Map<Stock, Stock> stockToStock;
     private int nextAvailableId;
@@ -59,7 +61,7 @@ public final class StockManager {
                                      @Nullable final Date expirationDate) {
           return Result.of(article)
                        .require(articleManager::checkId)
-                       .require(this::checkNotFinishedBeer)
+                       .require(this::checkNotFinishedBeer, new IllegalArgumentException(STOCK_WITH_FINISHED_BEER))
                        .map(a -> new StockImpl(a, expirationDate)) // TODO add the nextAvailableId in the id field.
                        .map(this::getStock);
     }
@@ -85,7 +87,7 @@ public final class StockManager {
      * @return a {@link Set} of the {@link Stock} currently registered at the {@link StockManager}.
      */
     public Set<Stock> getStocks() {
-        return new HashSet<>(stockToStock.keySet());
+        return new HashSet<>(stockToStock.values());
     }
     /**
      * Return a boolean denoting whether the article is not a {@link BeerArticle}.
@@ -101,7 +103,7 @@ public final class StockManager {
      * @param stock to be checked.
      * @return the parameter if it is not in the map. Otherwise the corresponding into the map.
      */
-    private synchronized Stock getStock(final Stock stock) {
+    public synchronized Stock getStock(final Stock stock) {
         if (!stockToStock.containsKey(stock)) {
             nextAvailableId++;
             stockToStock.put(stock, stock);

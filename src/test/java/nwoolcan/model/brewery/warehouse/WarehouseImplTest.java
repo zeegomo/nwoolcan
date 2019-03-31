@@ -43,26 +43,40 @@ public class WarehouseImplTest {
     private Date date2 = new Date(date1.getTime() + 10L);
     private Date date3 = new Date(date2.getTime() + 10L);
 
-
     /**
      * Initialize the warehouse.
      */
     @Before
     public void initWarehouse() {
-        warehouse.addRecord(article, record);
-        warehouse.addRecord(article, record1);
-        warehouse.addRecord(article, date1, record);
-        warehouse.addRecord(article, date2, record);
-        warehouse.addRecord(article, date3, record);
+        final Result<Stock> stockResult = warehouse.createStock(article);
+        final Result<Stock> stockResult1 = warehouse.createStock(article, date1);
+        final Result<Stock> stockResult2 = warehouse.createStock(article, date2);
+        final Result<Stock> stockResult3 = warehouse.createStock(article, date3);
+        Assert.assertTrue(stockResult.isPresent());
+        Assert.assertTrue(stockResult1.isPresent());
+        Assert.assertTrue(stockResult2.isPresent());
+        Assert.assertTrue(stockResult3.isPresent());
+        final Stock stock = stockResult.getValue();
+        final Stock stock1 = stockResult1.getValue();
+        final Stock stock2 = stockResult2.getValue();
+        final Stock stock3 = stockResult3.getValue();
+        warehouse.addRecord(stock, record);
+        warehouse.addRecord(stock, record1);
+        warehouse.addRecord(stock1, record);
+        warehouse.addRecord(stock2, record);
+        warehouse.addRecord(stock3, record);
     }
     /**
      * Test the adders.
      */
     @Test
     public void testAdders() {
-        Assert.assertTrue(warehouse.addRecord(article, record).isPresent());
-        Assert.assertTrue(warehouse.addRecord(article, record1).isPresent());
-        Assert.assertTrue(warehouse.addRecord(article, record2).isError());
+        final Result<Stock> stockResult = warehouse.createStock(article);
+        Assert.assertTrue(stockResult.isPresent());
+        final Stock stock = stockResult.getValue();
+        Assert.assertTrue(warehouse.addRecord(stock, record).isPresent());
+        Assert.assertTrue(warehouse.addRecord(stock, record1).isPresent());
+        Assert.assertTrue(warehouse.addRecord(stock, record2).isError());
     }
     /**
      * Test the stocks getter.
@@ -112,12 +126,12 @@ public class WarehouseImplTest {
         Assert.assertTrue(resQueryStock.isPresent());
         final QueryStock queryStock = resQueryStock.getValue();
         final List<Stock> lisStock = warehouse.getStocks(queryStock);
-        Assert.assertTrue(lisStock.stream()
-                .map(Stock::getRemainingQuantity)
-                .reduce((prev, curr) -> {
-                    Assert.assertFalse(curr.moreThan(prev));
-                    return curr;
-                }).isPresent());
+        Result.of(lisStock.stream()
+                        .map(Stock::getRemainingQuantity)
+                        .reduce((prev, curr) -> {
+                            Assert.assertFalse(curr.moreThan(prev));
+                            return curr;
+                        }));
     }
     /**
      * Tests getStocks with filter by expiration dates.

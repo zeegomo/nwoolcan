@@ -1,10 +1,12 @@
 package nwoolcan.model.brewery.warehouse;
 
+import nwoolcan.model.brewery.production.batch.Batch;
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
+import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.model.brewery.warehouse.stock.Stock;
@@ -12,6 +14,7 @@ import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.List;
 
@@ -33,22 +36,13 @@ public interface Warehouse {
      */
     List<Article> getArticles(QueryArticle queryArticle);
     /**
-     * Add a record to the warehouse: creates a {@link Stock} if it doesn't exist.
-     * It may fails if the {@link Record} is not compatible with the {@link Article}.
-     * @param article which is moving in or out the warehouse.
-     * @param expirationDate of the article, if present, to identify the right {@link Stock}.
-     * @param record to be registered
-     * @return a {@link Result} of {@link Empty} which reports possible errors.
-     */
-    Result<Empty> addRecord(Article article, Date expirationDate, Record record);
-    /**
-     * Add a record to the warehouse: creates a {@link Stock} if it doesn't exist.
-     * It may fails if the {@link Record} is not compatible with the {@link Article}.
-     * @param article which is moving in or out the warehouse.
+     * Add a record to the {@link Stock} in the {@link Warehouse}.
+     * It may fails if the {@link Record} is not compatible with the {@link Article} in the {@link Stock}.
+     * @param stock on which effect the transaction.
      * @param record to be registered.
      * @return a {@link Result} of {@link Empty} which reports possible errors.
      */
-    Result<Empty> addRecord(Article article, Record record);
+    Result<Empty> addRecord(Stock stock, Record record);
     /**
      * If it does not exist, creates a misc {@link Article}, otherwise it will be returned.
      * @param name of the {@link Article}.
@@ -73,6 +67,29 @@ public interface Warehouse {
     IngredientArticle createIngredientArticle(String name,
                                               UnitOfMeasure unitOfMeasure,
                                               IngredientType ingredientType);
+    /**
+     * Constructor of the {@link Stock}.
+     * @param article linked to the {@link Stock}.
+     * @param expirationDate linked to the {@link Stock}.
+     * @return a {@link Result} indicating errors.
+     */
+    Result<Stock> createStock(Article article, @Nullable Date expirationDate);
+    /**
+     * Constructor of the {@link Stock}.
+     * @param article linked to the {@link Stock}.
+     * @return a {@link Result} indicating errors.
+     */
+    Result<Stock> createStock(Article article);
+    /**
+     * Constructor of the {@link BeerStock}.
+     * @param beerArticle linked to this {@link BeerStock}.
+     * @param expirationDate linked to this {@link BeerStock}.
+     * @param batch linked to this {@link BeerStock}.
+     * @return a {@link Result} indicating errors.
+     */
+    Result<BeerStock> createBeerStock(BeerArticle beerArticle,
+                                      @Nullable Date expirationDate,
+                                      Batch batch);
     /**
      * Setter for the name of the {@link Article}.
      * @param article the {@link Article} to which we want to change the name.
