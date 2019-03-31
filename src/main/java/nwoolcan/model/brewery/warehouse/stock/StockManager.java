@@ -85,4 +85,19 @@ public final class StockManager {
         return article.getArticleType() != ArticleType.FINISHED_BEER;
     }
 
+    /**
+     * It checks whether the {@link Stock} is already in the map. If it is, it returns the one in the map.
+     * If it is not, it adds it to the map and returns itself.
+     * @param stock to be checked.
+     * @return the parameter if it is not in the map. Otherwise the corresponding into the map.
+     */
+    private synchronized Stock getStock(final Stock stock) {
+        if (!stockToStock.containsKey(stock)) {
+            nextAvailableId++;
+            stockToStock.put(stock, stock);
+            return stock;
+        }
+        return stockToStock.get(stock);
+    }
+
 }
