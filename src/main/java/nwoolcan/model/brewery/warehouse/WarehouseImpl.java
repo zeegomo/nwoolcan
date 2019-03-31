@@ -2,11 +2,15 @@ package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleManager;
+import nwoolcan.model.brewery.warehouse.article.BeerArticle;
+import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
+import nwoolcan.model.brewery.warehouse.article.IngredientType;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.brewery.warehouse.stock.StockImpl;
+import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
@@ -162,6 +166,24 @@ public final class WarehouseImpl implements Warehouse {
     public Result<Empty> addRecord(final Article article, final Record record) {
         return addRecord(article, null, record);
     }
+
+    @Override
+    public Article createMiscArticle(final String name, final UnitOfMeasure unitOfMeasure) {
+        return ARTICLE_MANAGER.createMiscArticle(name, unitOfMeasure);
+    }
+
+    @Override
+    public BeerArticle createBeerArticle(final String name, final UnitOfMeasure unitOfMeasure) {
+        return ARTICLE_MANAGER.createBeerArticle(name, unitOfMeasure);
+    }
+
+    @Override
+    public IngredientArticle createIngredientArticle(final String name,
+                                                     final UnitOfMeasure unitOfMeasure,
+                                                     final IngredientType ingredientType) {
+        return ARTICLE_MANAGER.createIngredientArticle(name, unitOfMeasure, ingredientType);
+    }
+
     /**
      * Adds an {@link Article} to the {@link Set} of articles if not present yet.
      * @param article the article to be added.
