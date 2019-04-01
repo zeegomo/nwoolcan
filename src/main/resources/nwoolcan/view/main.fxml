@@ -6,9 +6,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nwoolcan.view.ViewImpl"
+            fx:controller="nwoolcan.view.ViewController"
             prefHeight="400.0" prefWidth="600.0">
+    <center>
+        <TabPane fx:id="mainLayout" tabClosingPolicy="UNAVAILABLE" side="LEFT">
+            <tabs>
+                <Tab fx:id="tabDashboard" text="Dashboard">
+                    <Label>Testone</Label>
+                </Tab>
+                <Tab fx:id="tabWarehouse" text="Dashboard">
+                    <Button fx:id="btnPrint" onAction="#btnPrintClicked">Ciao</Button>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
 
-</AnchorPane>
+</BorderPane>
