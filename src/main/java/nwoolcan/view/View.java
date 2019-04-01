@@ -7,5 +7,5 @@ public interface View {
     /**
      * Opens the main window.
      */
-    void start();
+    void launch();
 }

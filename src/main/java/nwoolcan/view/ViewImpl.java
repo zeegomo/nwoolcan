@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 
 /**
@@ -13,11 +14,16 @@ import java.io.IOException;
  */
 public final class ViewImpl extends Application implements View {
 
-    @Override
-    public void start(final Stage primaryStage) throws IOException {
-        final Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+    @Nullable private Parent rootWindow;
 
-        final Scene scene = new Scene(root);
+    @Override
+    public void init() throws IOException {
+        this.rootWindow = FXMLLoader.load(getClass().getResource("main.fxml"));
+    }
+
+    @Override
+    public void start(final Stage primaryStage) {
+        final Scene scene = new Scene(this.rootWindow);
 
         primaryStage.setTitle("nWoolcan");
         primaryStage.setScene(scene);
@@ -25,7 +31,7 @@ public final class ViewImpl extends Application implements View {
     }
 
     @Override
-    public void start() {
-        launch();
+    public void launch() {
+        super.launch();
     }
 }

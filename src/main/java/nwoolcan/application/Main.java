@@ -11,6 +11,6 @@ final class Main {
 
         System.out.println("Mago Iulius");
 
-        view.start();
+        view.launch();
     }
 }
