@@ -8,7 +8,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ViewImpl extends Application implements View {
+/**
+ * Sets up the whole JavaFX application.
+ */
+public final class ViewImpl extends Application implements View {
 
     @Override
     public void start(final Stage primaryStage) throws IOException {
