@@ -9,53 +9,23 @@ import org.junit.Test;
  */
 public class TestArticle {
 
-    private final Integer id = 1;
-    private final Integer negId = -1;
     private final String name = "DummyName";
-    private static final UnitOfMeasure UOM = UnitOfMeasure.Gram;
+    private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
+    private static final UnitOfMeasure UOM1 = UnitOfMeasure.UNIT;
 
     /**
-     * Method that tests the constructor with null name.
-     */
-    @Test(expected = NullPointerException.class)
-    public void testConstructorWithNameNull() {
-        new ArticleImpl(id, null, UOM);
-    }
-    /**
-     * Method that tests the constructor with null id.
-     */
-    @Test(expected = NullPointerException.class)
-    public void testConstructorWithIdNull() {
-        new ArticleImpl(null, name, UOM);
-    }
-    /**
-     * Method that tests the constructor with both null id and name.
-     */
-    @Test(expected = NullPointerException.class)
-    public void testConstructorWithNullParameters() {
-        new ArticleImpl(null, null, null);
-    }
-    /**
-     * Method that tests the constructor with both null empty name.
+     * Method that tests the constructor with empty name.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorWithEmptyName() {
-        new ArticleImpl(id, "", UOM);
-    }
-    /**
-     * Method that tests the constructor with both null empty name.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void testConstructorWithNegativeId() {
-        new ArticleImpl(negId, name, UOM);
+        ArticleManager.getInstance().createMiscArticle("", UOM);
     }
     /**
      * Method that tests the getters and relative errors.
      */
     @Test
     public void testGetters() {
-        final Article article = new ArticleImpl(id, name, UOM);
-        Assert.assertEquals(id, article.getId());
+        final Article article = ArticleManager.getInstance().createMiscArticle(name, UOM);
         Assert.assertEquals(name, article.getName());
         Assert.assertEquals(ArticleType.MISC, article.getArticleType());
         Assert.assertTrue(article.toIngredientArticle().isError());
@@ -72,17 +42,12 @@ public class TestArticle {
      */
     @Test
     public void testEquals() {
-        final Article art1
-            = new ArticleImpl(id, name, UOM);
-        final Article art2
-            = new ArticleImpl(id, name, UOM);
-        final Article art4
-            = new ArticleImpl(id + 1, name, UOM);
+        final Article art1 = ArticleManager.getInstance().createMiscArticle(name, UOM);
+        final Article art2 = ArticleManager.getInstance().createMiscArticle(name, UOM);
+        final Article art4 = ArticleManager.getInstance().createMiscArticle(name, UOM1);
         Assert.assertEquals(art1, art2);
         Assert.assertEquals(art1, art1);
-        Assert.assertEquals(art1, art1);
         Assert.assertNotEquals(art1, art4);
-        Assert.assertNotEquals(art4, art1);
     }
 
 }

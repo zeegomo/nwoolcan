@@ -1,18 +1,19 @@
-package nwoolcan.model.brewery.warehouse;
+package nwoolcan.model.brewery.warehouse.stock;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
-import nwoolcan.model.brewery.warehouse.article.ArticleImpl;
+import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
-
 import nwoolcan.utils.Results;
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -28,23 +29,25 @@ public class StockImplTest {
     private Record record3 = new Record(Quantity.of(ONE, UOM1), Record.Action.ADDING);
     private Record record4 = new Record(Quantity.of(TEN, UOM), Record.Action.REMOVING);
     private Record record5 = new Record(Quantity.of(TEN, UOM), Record.Action.ADDING);
-    private static final Integer ID = 1;
-    private static final Integer ONE = 1;
-    private static final Integer TEN = 10;
+
+
+    private static final int ONE = 1;
+    private static final int TEN = 10;
     private static final String NAME = "DummyName";
     private static final String RECORD_WITH_DIFFERENT_UOM = "Can't add a record if UOMS are not the same";
     private static final String REMOVING_RECORD_WITH_QUANTITY_NOT_AVAILABLE = "Can't add a remove"
                                                        + "record if the quantity is not available";
-    private static final UnitOfMeasure UOM = UnitOfMeasure.Gram;
-    private static final UnitOfMeasure UOM1 = UnitOfMeasure.Milliliter;
-    private static final Article ARTICLE = new ArticleImpl(ID, NAME, UOM);
+
+    private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
+    private static final UnitOfMeasure UOM1 = UnitOfMeasure.MILLILITER;
+    private static final Article ARTICLE = ArticleManager.getInstance().createMiscArticle(NAME, UOM);
 
     /**
      * Initialize structures.
      */
     @Before
     public void init() {
-        expDate = new Date();
+        expDate = DateUtils.addDays(new Date(), -1); // YESTERDAY
         stock = new StockImpl(ARTICLE, expDate);
         stock1 = new StockImpl(ARTICLE, null);
         Results.ofChecked(() -> Thread.sleep(TEN));
@@ -59,12 +62,14 @@ public class StockImplTest {
     @Test
     public void testGettersAndRecords() {
         Assert.assertEquals(ARTICLE, stock.getArticle());
-        Assert.assertTrue(Quantities.remove(record1.getQuantity(), record2.getQuantity()).isPresent());
-        Assert.assertEquals(Quantities.remove(record1.getQuantity(), record2.getQuantity()).getValue(),
-            stock.getRemainingQuantity());
+        Assert.assertTrue(Quantities.remove(record1.getQuantity(),
+                                            record2.getQuantity()).isPresent());
+        Assert.assertEquals(Quantities.remove(record1.getQuantity(),
+                                              record2.getQuantity()).getValue(),
+                                              stock.getRemainingQuantity());
         Assert.assertEquals(record2.getQuantity(), stock.getUsedQuantity());
         Assert.assertTrue(stock.getExpirationDate().isPresent());
-        Assert.assertEquals(expDate, stock.getExpirationDate().get());
+        Assert.assertEquals(DateUtils.round(expDate, Calendar.DATE), stock.getExpirationDate().get());
         Assert.assertEquals(StockState.EXPIRED, stock.getState());
         Assert.assertTrue(stock.getCreationDate().before(stock.getLastChangeDate()));
         Assert.assertTrue(stock.getRecords().contains(record1));
@@ -72,7 +77,6 @@ public class StockImplTest {
         Assert.assertFalse(stock1.getExpirationDate().isPresent());
         Assert.assertEquals(StockState.AVAILABLE, stock1.getState());
     }
-
     /**
      * Test that adding an incompatible record generates an Error {@link Result}.
      */

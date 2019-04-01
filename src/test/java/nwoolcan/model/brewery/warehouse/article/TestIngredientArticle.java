@@ -9,9 +9,7 @@ import org.junit.Test;
  */
 public class TestIngredientArticle {
 
-    private static final UnitOfMeasure UOM = UnitOfMeasure.Gram;
-
-    private final Integer id = 1;
+    private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private final String name = "DummyName";
 
     /**
@@ -20,7 +18,7 @@ public class TestIngredientArticle {
     @Test
     public void testGetters() {
         final IngredientType ingredientType = IngredientType.FERMENTABLE;
-        final Article ingredientArticle = new IngredientArticleImpl(id, name, UOM, ingredientType);
+        final Article ingredientArticle = ArticleManager.getInstance().createIngredientArticle(name, UOM, ingredientType);
         Assert.assertEquals(ArticleType.INGREDIENT, ingredientArticle.getArticleType());
         Assert.assertTrue(ingredientArticle.toIngredientArticle().isPresent());
         Assert.assertEquals(IngredientArticleImpl.class, ingredientArticle.toIngredientArticle()
@@ -36,11 +34,11 @@ public class TestIngredientArticle {
     @Test
     public void testEquals() {
         final IngredientArticle ingArt1
-            = new IngredientArticleImpl(id, name, UOM, IngredientType.FERMENTABLE);
+            = ArticleManager.getInstance().createIngredientArticle(name, UOM, IngredientType.FERMENTABLE);
         final IngredientArticle ingArt2
-            = new IngredientArticleImpl(id, name, UOM, IngredientType.FERMENTABLE);
+            = ArticleManager.getInstance().createIngredientArticle(name, UOM, IngredientType.FERMENTABLE);
         final IngredientArticle ingArt4
-            = new IngredientArticleImpl(id, name, UOM, IngredientType.HOPS);
+            = ArticleManager.getInstance().createIngredientArticle(name, UOM, IngredientType.HOPS);
         Assert.assertEquals(ingArt1, ingArt2);
         Assert.assertEquals(ingArt1, ingArt1);
         Assert.assertEquals(ingArt1, ingArt1);

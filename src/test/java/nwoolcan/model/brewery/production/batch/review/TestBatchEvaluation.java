@@ -14,13 +14,20 @@ import static org.junit.Assert.assertEquals;
  * Test BatchEvaluation.
  */
 public class TestBatchEvaluation {
+
+    private final BatchEvaluationType bjcpType = BatchEvaluationBuilder.getAvailableBatchEvaluationTypes()
+                                                         .getValue()
+                                                         .stream()
+                                                         .filter(s -> s.getClass().equals(BJCPBatchEvaluationType.class))
+                                                         .findAny().get();
+
     /**
      * Test builder.
      */
     @Test
     public void testSuccessfulBuilder() {
         final int expectedValue = 47;
-        BatchEvaluationBuilder builder = new BatchEvaluationBuilder(new BJCPBatchEvaluationType());
+        BatchEvaluationBuilder builder = new BatchEvaluationBuilder(bjcpType);
 
         Result<BatchEvaluation> bjcp = builder
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.AROMA, 10)
@@ -38,7 +45,7 @@ public class TestBatchEvaluation {
         assertEquals(review.getReviewer(), Optional.of("Andrea"));
         assertEquals(review.getNotes(), Optional.of("Very good"));
         assertEquals(review.getScore(), expectedValue);
-        assertEquals(review.getEvaluationType(), new BJCPBatchEvaluationType());
+        assertEquals(review.getEvaluationType(), bjcpType);
         assertTrue(builder.build().isError());
     }
 
@@ -54,7 +61,7 @@ public class TestBatchEvaluation {
         Set<BatchEvaluationType> types = available.getValue();
         System.out.println(types);
         assertEquals(types.size(), expectedSize);
-        assertTrue(types.contains(new BJCPBatchEvaluationType()));
+        assertTrue(types.contains(bjcpType));
         System.out.println(types);
     }
 
@@ -63,7 +70,7 @@ public class TestBatchEvaluation {
      */
     @Test
     public void testFailedBuilder() {
-        BatchEvaluationBuilder builder = new BatchEvaluationBuilder(new BJCPBatchEvaluationType());
+        BatchEvaluationBuilder builder = new BatchEvaluationBuilder(bjcpType);
 
         Result<BatchEvaluation> test1 = builder
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.AROMA, 10)
@@ -78,7 +85,7 @@ public class TestBatchEvaluation {
         assertTrue(test1.isError());
 
         Result<BatchEvaluation> test2 = builder
-            .reset(new BJCPBatchEvaluationType())
+            .reset(bjcpType)
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.AROMA,
                 BJCPBatchEvaluationType.BJCPCategories.AROMA.getMaxScore())
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, 3)
@@ -91,7 +98,7 @@ public class TestBatchEvaluation {
         assertTrue(test2.isError());
 
         Result<BatchEvaluation> test3 = builder
-            .reset(new BJCPBatchEvaluationType())
+            .reset(bjcpType)
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.AROMA,
                 BJCPBatchEvaluationType.BJCPCategories.AROMA.getMaxScore())
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, -1)
@@ -105,9 +112,7 @@ public class TestBatchEvaluation {
         assertTrue(test3.isError());
 
         Result<BatchEvaluation> test4 = builder
-            .reset(new BJCPBatchEvaluationType())
-            .addEvaluation(null,
-                BJCPBatchEvaluationType.BJCPCategories.AROMA.getMaxScore())
+            .reset(bjcpType)
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, 1)
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.FLAVOR,
                 BJCPBatchEvaluationType.BJCPCategories.FLAVOR.getMaxScore())

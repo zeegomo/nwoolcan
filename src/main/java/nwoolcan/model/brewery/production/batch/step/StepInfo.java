@@ -1,6 +1,5 @@
-package nwoolcan.model.brewery.production.batch.step.info;
+package nwoolcan.model.brewery.production.batch.step;
 
-import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.utils.Quantity;
 
 import java.util.Date;

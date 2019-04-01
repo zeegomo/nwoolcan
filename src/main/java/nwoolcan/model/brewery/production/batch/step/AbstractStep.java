@@ -1,12 +1,10 @@
 package nwoolcan.model.brewery.production.batch.step;
 
-import nwoolcan.model.brewery.production.batch.step.info.StepInfo;
-import nwoolcan.model.brewery.production.batch.step.info.ModifiableStepInfo;
-import nwoolcan.model.brewery.production.batch.step.info.StepInfoImpl;
 import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
+import nwoolcan.utils.Observer;
 import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
@@ -23,7 +21,7 @@ import java.util.stream.Stream;
 /**
  * Abstract implementation of Step interface.
  */
-public abstract class AbstractStep implements Step {
+abstract class AbstractStep implements Step {
 
     private static final String ALREADY_FINALIZED_MESSAGE = "This step is already finalized.";
     private static final String CANNOT_REGISTER_PARAMETER_MESSAGE = "Cannot register parameter if the step is finalized.";
@@ -32,12 +30,14 @@ public abstract class AbstractStep implements Step {
     private final ModifiableStepInfo stepInfo;
     private boolean finalized;
     private final Collection<Parameter> parameters;
+    private final Collection<Observer<Parameter>> observers;
 
-    //Package-protected constructor only for inheritance.
+    //Package-private constructor only for inheritance.
     AbstractStep(final ModifiableStepInfo stepInfo) {
         this.stepInfo = stepInfo;
         this.finalized = stepInfo.getType().isEndType();
         this.parameters = new ArrayList<>();
+        this.observers = new ArrayList<>();
     }
 
     /**
@@ -104,7 +104,13 @@ public abstract class AbstractStep implements Step {
                      .require(() -> !this.isFinalized(), new IllegalStateException(CANNOT_REGISTER_PARAMETER_MESSAGE))
                      .require(p -> getParameterTypes().contains(p.getType()), new IllegalArgumentException(INVALID_PARAMETER_MESSAGE))
                      .peek(this.parameters::add)
+                     .peek(p -> this.observers.forEach(o -> o.update(p)))
                      .toEmpty();
+    }
+
+    @Override
+    public final void addParameterObserver(final Observer<Parameter> obs) {
+        this.observers.add(obs);
     }
 
     /**

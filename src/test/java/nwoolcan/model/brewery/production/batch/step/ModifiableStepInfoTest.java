@@ -1,7 +1,5 @@
 package nwoolcan.model.brewery.production.batch.step;
 
-import nwoolcan.model.brewery.production.batch.step.info.ModifiableStepInfo;
-import nwoolcan.model.brewery.production.batch.step.info.ModifiableStepInfoImpl;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
@@ -18,13 +16,13 @@ import java.util.Date;
  */
 public class ModifiableStepInfoTest {
 
-    private static final StepType ST1 = StepTypeEnum.Mashing;
+    private static final StepType ST1 = StepTypeEnum.MASHING;
     private static final Date NOW = new Date();
     private static final Date PAST = new Date(0);
     private static final Date FUTURE = new Date(NOW.getTime() + 1000);
     private static final String NOTE1 = "Test note.";
-    private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.Milliliter);
-    private static final Quantity Q2 = Quantity.of(20, UnitOfMeasure.Milliliter);
+    private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.MILLILITER);
+    private static final Quantity Q2 = Quantity.of(20, UnitOfMeasure.MILLILITER);
 
     private ModifiableStepInfo si;
 
