@@ -8,10 +8,8 @@ import nwoolcan.model.brewery.warehouse.article.IngredientType;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
-import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.utils.UnitOfMeasure;
-import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
@@ -35,14 +33,6 @@ public interface Warehouse {
      * @return a {@link List} of {@link Article} which respects the given {@link QueryArticle}.
      */
     List<Article> getArticles(QueryArticle queryArticle);
-    /**
-     * Add a record to the {@link Stock} in the {@link Warehouse}.
-     * It may fails if the {@link Record} is not compatible with the {@link Article} in the {@link Stock}.
-     * @param stock on which effect the transaction.
-     * @param record to be registered.
-     * @return a {@link Result} of {@link Empty} which reports possible errors.
-     */
-    Result<Empty> addRecord(Stock stock, Record record);
     /**
      * If it does not exist, creates a misc {@link Article}, otherwise it will be returned.
      * @param name of the {@link Article}.

@@ -60,11 +60,11 @@ public class WarehouseImplTest {
         final Stock stock1 = stockResult1.getValue();
         final Stock stock2 = stockResult2.getValue();
         final Stock stock3 = stockResult3.getValue();
-        warehouse.addRecord(stock, record);
-        warehouse.addRecord(stock, record1);
-        warehouse.addRecord(stock1, record);
-        warehouse.addRecord(stock2, record);
-        warehouse.addRecord(stock3, record);
+        stock.addRecord(record);
+        stock.addRecord(record1);
+        stock1.addRecord(record);
+        stock2.addRecord(record);
+        stock3.addRecord(record);
     }
     /**
      * Test the adders.
@@ -74,9 +74,9 @@ public class WarehouseImplTest {
         final Result<Stock> stockResult = warehouse.createStock(article);
         Assert.assertTrue(stockResult.isPresent());
         final Stock stock = stockResult.getValue();
-        Assert.assertTrue(warehouse.addRecord(stock, record).isPresent());
-        Assert.assertTrue(warehouse.addRecord(stock, record1).isPresent());
-        Assert.assertTrue(warehouse.addRecord(stock, record2).isError());
+        Assert.assertTrue(stock.addRecord(record).isPresent());
+        Assert.assertTrue(stock.addRecord(record1).isPresent());
+        Assert.assertTrue(stock.addRecord(record2).isError());
     }
     /**
      * Test the stocks getter.

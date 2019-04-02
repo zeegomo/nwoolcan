@@ -9,11 +9,9 @@ import nwoolcan.model.brewery.warehouse.article.IngredientType;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
-import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.brewery.warehouse.stock.StockManager;
 import nwoolcan.model.utils.UnitOfMeasure;
-import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
@@ -132,19 +130,6 @@ public final class WarehouseImpl implements Warehouse {
                                                      queryArticle.getSortBy(),
                                                      queryArticle.getSortDescending()))
                        .collect(Collectors.toList());
-    }
-
-    @Override
-    public Result<Empty> addRecord(final Stock stock,
-                                   final Record record) {
-        return Result.of(stock)
-                     .require(() -> record.getQuantity()
-                                          .getUnitOfMeasure()
-                                          .equals(stock.getArticle()
-                                                       .getUnitOfMeasure()))
-                     .require(STOCK_MANAGER::checkId)
-                     .map(STOCK_MANAGER::getStock)
-                     .flatMap(stock1 -> stock.addRecord(record));
     }
 
     @Override
