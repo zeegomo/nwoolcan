@@ -1,13 +1,24 @@
 package nwoolcan.model.brewery.warehouse.stock;
 
+import nwoolcan.model.brewery.production.batch.Batch;
+import nwoolcan.model.brewery.production.batch.BatchBuilder;
+import nwoolcan.model.brewery.production.batch.BatchMethod;
+import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
+import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
+import nwoolcan.model.brewery.production.batch.step.StepType;
+import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleManager;
+import nwoolcan.model.brewery.warehouse.article.BeerArticle;
+import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Test the Stock manager.
@@ -58,12 +69,32 @@ public class StockManagerTest {
      */
     @Test
     public void createBeerStock() {
-
+        final BeerDescription beerDescription = new BeerDescriptionImpl(GIAMPIERO, GIAMPIERO);
+        final BatchMethod batchMethod = BatchMethod.ALL_GRAIN;
+        final Quantity initialSize = Quantity.of(3, UnitOfMeasure.MILLILITER);
+        final StepType initialStep = StepTypeEnum.PACKAGING;
+        final Batch batch = new BatchBuilder(beerDescription, batchMethod, initialSize, initialStep).build().getValue();
+        final Date date = new Date();
+        final BeerArticle beerArticle = articInstance.createBeerArticle(GIAMPIERO, UnitOfMeasure.BOTTLE_33_CL);
+        final Result<BeerStock> beerStockResult = stockInstance.createBeerStock(beerArticle, date, batch);
+        final Result<BeerStock> beerStockResult1 = stockInstance.createBeerStock(beerArticle, date, batch);
+        Assert.assertTrue(beerStockResult.isPresent());
+        Assert.assertTrue(beerStockResult1.isPresent());
+        final BeerStock beerStock = beerStockResult.getValue();
+        final BeerStock beerStock1 = beerStockResult1.getValue();
+        Assert.assertSame(beerStock.getId(), beerStock1.getId());
+        Assert.assertFalse(stockInstance.getStocks().isEmpty());
     }
     /**
      * Test get stock. It should return all the stock registered.
      */
     @Test
     public void getStocks() {
+        final Set<Stock> stocks = stockInstance.getStocks();
+        final Set<Integer> stocksIds = new HashSet<>();
+        for (final Stock s : stocks) {
+            Assert.assertFalse(stocksIds.contains(s.getId()));
+            stocksIds.add(s.getId());
+        }
     }
 }
