@@ -73,7 +73,7 @@ public interface Warehouse {
      * @param expirationDate linked to the {@link Stock}.
      * @return a {@link Result} indicating errors.
      */
-    Result<Stock> createStock(Article article, @Nullable Date expirationDate);
+    Result<Stock> createStock(Article article, Date expirationDate);
     /**
      * Constructor of the {@link Stock}.
      * @param article linked to the {@link Stock}.

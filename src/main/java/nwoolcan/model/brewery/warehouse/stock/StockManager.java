@@ -62,7 +62,7 @@ public final class StockManager {
           return Result.of(article)
                        .require(articleManager::checkId)
                        .require(this::checkNotFinishedBeer, new IllegalArgumentException(STOCK_WITH_FINISHED_BEER))
-                       .map(a -> new StockImpl(nextAvailableId, a, expirationDate)) // TODO add the nextAvailableId in the id field.
+                       .map(a -> new StockImpl(nextAvailableId, a, expirationDate))
                        .map(this::getStock);
     }
     /**
@@ -74,10 +74,10 @@ public final class StockManager {
      */
     public synchronized Result<BeerStock> createBeerStock(final BeerArticle beerArticle,
                                   @Nullable final Date expirationDate,
-                                  final Batch batch) { // TODO register and require it was not registered yet.
+                                  final Batch batch) {
         return Result.of(beerArticle)
                      .require(articleManager::checkId)
-                     .map(ba -> new BeerStockImpl(nextAvailableId, ba, expirationDate, batch)) // TODO add the nextAvailableId in the id field.
+                     .map(ba -> new BeerStockImpl(nextAvailableId, ba, expirationDate, batch))
                      .map(this::getStock)
                      .map(stock -> (BeerStock) stock);
     }

@@ -165,13 +165,13 @@ public final class WarehouseImpl implements Warehouse {
     }
 
     @Override
-    public Result<Stock> createStock(final Article article, @Nullable final Date expirationDate) {
+    public Result<Stock> createStock(final Article article, final Date expirationDate) {
         return STOCK_MANAGER.createStock(article, expirationDate);
     }
 
     @Override
     public Result<Stock> createStock(final Article article) {
-        return createStock(article, null);
+        return STOCK_MANAGER.createStock(article, null);
     }
 
     @Override
