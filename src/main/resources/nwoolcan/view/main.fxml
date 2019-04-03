@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import nwoolcan.view.SubViewContainer?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="nwoolcan.view.MainController">
@@ -24,7 +25,7 @@
         </MenuBar>
     </top>
     <center>
-        <Pane fx:id="contentPane" />
+        <SubViewContainer fx:id="contentPane" />
     </center>
 
 </BorderPane>

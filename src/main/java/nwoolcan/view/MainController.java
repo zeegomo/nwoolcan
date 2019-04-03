@@ -13,16 +13,7 @@ import javafx.scene.layout.Pane;
 public final class MainController {
 
     @FXML
-    private Pane contentPane;
-
-    /**
-     * Sets visible the given view.
-     * @param view The view to show
-     */
-    private void setView(final Parent view) {
-        contentPane.getChildren().clear();
-        contentPane.getChildren().add(view);
-    }
+    private SubViewContainer contentPane;
 
     /**
      * Shows the Dashboard.
@@ -30,7 +21,7 @@ public final class MainController {
      */
     @FXML
     public void menuViewDashboardClick(final ActionEvent event) {
-        this.setView(ViewImpl.getViews().get(ViewType.DASHBOARD));
+        this.contentPane.substitute(ViewImpl.getViews().get(ViewType.DASHBOARD));
     }
 
     /**
@@ -39,7 +30,7 @@ public final class MainController {
      */
     @FXML
     public void menuViewWarehouseClick(final ActionEvent event) {
-        this.setView(ViewImpl.getViews().get(ViewType.WAREHOUSE));
+        this.contentPane.substitute(ViewImpl.getViews().get(ViewType.WAREHOUSE));
     }
 
     /**
