@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import nwoolcan.view.SubViewContainer?>
+<?import nwoolcan.view.subview.SubViewContainer?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="nwoolcan.view.MainController">
@@ -13,6 +13,7 @@
                 <Menu text="File">
                     <items>
                         <MenuItem text="Quit" onAction="#menuFileQuitClick" />
+                        <MenuItem text="Count Overlays" onAction="#menuFileCountOverlaysClick" />
                     </items>
                 </Menu>
                 <Menu text="View">

@@ -3,8 +3,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nwoolcan.view.DashboardController">
-    <Label text="This is the dashboard"></Label>
-</AnchorPane>
+<?import nwoolcan.view.subview.SubView?>
+<SubView xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:id="content"
+         fx:controller="nwoolcan.view.DashboardController">
+    <FlowPane>
+        <Label text="This is the dashboard"></Label>
+        <Button text="Back" onAction="#btnBackClicked" />
+        <Button text="New" onAction="#btnNewClicked" />
+        <Button text="To warehouse" onAction="#btnToWarehouseClicked" />
+        <TextField />
+    </FlowPane>
+</SubView>

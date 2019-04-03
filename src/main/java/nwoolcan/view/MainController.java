@@ -3,6 +3,7 @@ package nwoolcan.view;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import nwoolcan.view.subview.SubViewContainer;
 
 /**
  * Handles the Main view.
@@ -40,4 +41,7 @@ public final class MainController {
         Platform.exit();
     }
 
+    public void menuFileCountOverlaysClick(ActionEvent event) {
+        System.out.println(contentPane.getOverlaysCount());
+    }
 }

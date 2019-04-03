@@ -1,4 +1,4 @@
-package nwoolcan.view;
+package nwoolcan.view.subview;
 
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
@@ -40,6 +40,9 @@ public class SubViewContainer extends Pane {
      */
     public void overlay(final Parent view) {
         this.overlays.push(view);
+        if (view instanceof SubView) {
+            ((SubView)view).setContainer(this);
+        }
         this.setCurrentView();
     }
 
