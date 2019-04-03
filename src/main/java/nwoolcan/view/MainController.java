@@ -29,7 +29,7 @@ public final class MainController {
      */
     @FXML
     public void menuViewWarehouseClick(final ActionEvent event) {
-        ViewManager.getView(ViewType.WAREHOUSE).peek(view -> this.contentPane.substitute(view));
+        ViewManager.getView(ViewType.WAREHOUSE, new WarehouseViewModel("ciccio")).peek(view -> this.contentPane.substitute(view));
     }
 
     /**
