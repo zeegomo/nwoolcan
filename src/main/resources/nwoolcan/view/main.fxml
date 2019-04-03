@@ -5,8 +5,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nwoolcan.view.MainController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="nwoolcan.view.MainController">
     <top>
         <MenuBar>
             <menus>

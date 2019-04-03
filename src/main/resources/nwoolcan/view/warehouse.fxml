@@ -8,8 +8,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nwoolcan.view.WarehouseController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="nwoolcan.view.WarehouseController">
 
     <Label text="This is the warehouse" />
 </AnchorPane>
