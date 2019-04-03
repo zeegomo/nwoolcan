@@ -1,16 +1,24 @@
 package nwoolcan.application;
 
-import nwoolcan.view.View;
-import nwoolcan.view.ViewImpl;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import nwoolcan.view.ViewManager;
+import nwoolcan.view.ViewType;
 
-final class Main {
-    private Main() { }
+public class Main extends Application {
+    private static final String TITLE = "nWoolcan";
+    private static final ViewType MAIN_VIEW_TYPE = ViewType.MAIN;
 
-    public static void main(final String[] args) {
-        final View view = new ViewImpl();
 
-        System.out.println("Mago Iulius");
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-        view.launch();
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle(TITLE);
+        primaryStage.setScene(new Scene(ViewManager.getView(MAIN_VIEW_TYPE).getValue()));
+        primaryStage.show();
     }
 }

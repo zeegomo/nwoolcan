@@ -3,8 +3,6 @@ package nwoolcan.view;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.layout.Pane;
 
 /**
  * Handles the Main view.
@@ -21,7 +19,7 @@ public final class MainController {
      */
     @FXML
     public void menuViewDashboardClick(final ActionEvent event) {
-        this.contentPane.substitute(ViewImpl.getViews().get(ViewType.DASHBOARD));
+        ViewManager.getView(ViewType.DASHBOARD).peek(view -> this.contentPane.substitute(view));
     }
 
     /**
@@ -30,7 +28,7 @@ public final class MainController {
      */
     @FXML
     public void menuViewWarehouseClick(final ActionEvent event) {
-        this.contentPane.substitute(ViewImpl.getViews().get(ViewType.WAREHOUSE));
+        ViewManager.getView(ViewType.WAREHOUSE).peek(view -> this.contentPane.substitute(view));
     }
 
     /**
