@@ -14,65 +14,65 @@ import java.util.function.BiConsumer;
 public abstract class SubViewController {
     /**
      * Changes the current view.
-     * @param content TODO To remove in next commit
      * @param type The type of the new view
      * @param viewModel View model object (may be null)
      * @param action Action to perform on the SubViewContainer
      * @param <T> The type of the view model
      */
-    private <T> void changeView(final SubView content, final ViewType type, @Nullable final T viewModel, final BiConsumer<SubViewContainer, Parent> action) {
-        content.getContainer().ifPresent(c -> (viewModel == null ? ViewManager.getView(type) : ViewManager.getView(type, viewModel))
+    private <T> void changeView(final ViewType type, @Nullable final T viewModel, final BiConsumer<SubViewContainer, Parent> action) {
+        this.getSubView().getContainer().ifPresent(c -> (viewModel == null ? ViewManager.getView(type) : ViewManager.getView(type, viewModel))
             .peek(v -> action.accept(c, v))
             .peekError(err -> new Alert(Alert.AlertType.ERROR, "Error loading " + type.toString()).showAndWait()));
     }
 
     /**
      * Substitutes the current view.
-     * @param content TODO To remove in next commit
      * @param type The type of the new view
      */
-    protected final void substituteView(final SubView content, final ViewType type) {
-        this.changeView(content, type, null, SubViewContainer::substitute);
+    protected final void substituteView(final ViewType type) {
+        this.changeView(type, null, SubViewContainer::substitute);
     }
 
     /**
      * Substitutes the current view and injects the given view model into the controller.
-     * @param content TODO To remove in next commit
      * @param type The type of the new view
      * @param viewModel The view model to inject
      * @param <T> The type of the view model
      */
-    protected final <T> void substituteView(final SubView content, final ViewType type, final T viewModel) {
-        this.changeView(content, type, viewModel, SubViewContainer::substitute);
+    protected final <T> void substituteView(final ViewType type, final T viewModel) {
+        this.changeView(type, viewModel, SubViewContainer::substitute);
     }
 
     /**
      * Put a new overlay over the current one.
-     * @param content TODO To remove in next commit
      * @param type The type of the new view
      */
-    protected final void overlayView(final SubView content, final ViewType type) {
-        this.changeView(content, type, null, SubViewContainer::overlay);
+    protected final void overlayView(final ViewType type) {
+        this.changeView(type, null, SubViewContainer::overlay);
     }
 
     /**
      * Put a new overlay over the current one and injects the given view model into the controller.
-     * @param content TODO To remove in next commit
      * @param type The type of the new view
      * @param viewModel The view model to inject
      * @param <T> The type of the view model
      */
-    protected final <T> void overlayView(final SubView content, final ViewType type, final T viewModel) {
-        this.changeView(content, type, viewModel, SubViewContainer::overlay);
+    protected final <T> void overlayView(final ViewType type, final T viewModel) {
+        this.changeView(type, viewModel, SubViewContainer::overlay);
     }
 
     /**
      * Pops the current overlay and show the previous one.
-     * @param content TODO To remove in next commit
      */
-    protected final void previousView(final SubView content) {
-        content.getContainer()
+    protected final void previousView() {
+        this.getSubView().getContainer()
                .ifPresent(c -> c.previous()
                                 .peekError(err -> new Alert(Alert.AlertType.WARNING, "No previous found").showAndWait()));
     }
+
+    /**
+     * Override this so that it returns your {@link SubView} object from FXML (it should be only one, the main container of your view).
+     * @return The main container of the view, a {@link SubView} object
+     */
+    protected abstract SubView getSubView();
 }

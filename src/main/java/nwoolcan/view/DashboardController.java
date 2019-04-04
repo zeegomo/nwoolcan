@@ -18,7 +18,7 @@ public final class DashboardController extends SubViewController {
      * @param event The occurred event
      */
     public void btnBackClicked(final ActionEvent event) {
-        this.previousView(content);
+        this.previousView();
     }
 
     /**
@@ -26,7 +26,7 @@ public final class DashboardController extends SubViewController {
      * @param event The occurred event
      */
     public void btnNewClicked(final ActionEvent event) {
-        this.overlayView(content, ViewType.DASHBOARD);
+        this.overlayView(ViewType.DASHBOARD);
     }
 
     /**
@@ -34,6 +34,11 @@ public final class DashboardController extends SubViewController {
      * @param event The occurred event
      */
     public void btnToWarehouseClicked(final ActionEvent event) {
-        this.substituteView(content, ViewType.WAREHOUSE, new Object());
+        this.substituteView(ViewType.WAREHOUSE, new WarehouseViewModel("Samir"));
+    }
+
+    @Override
+    protected SubView getSubView() {
+        return this.content;
     }
 }
