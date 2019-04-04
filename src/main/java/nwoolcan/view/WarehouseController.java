@@ -7,13 +7,13 @@ import javafx.scene.control.Label;
  * Handles the Warehouse view.
  */
 @SuppressWarnings("NullAway")
-public class WarehouseController implements InitializableController<WarehouseViewModel> {
+public final class WarehouseController implements InitializableController<WarehouseViewModel> {
 
     @FXML
-    public Label lblName;
+    private Label lblName;
 
     @Override
-    public void initData(WarehouseViewModel data) {
+    public void initData(final WarehouseViewModel data) {
         this.lblName.setText(data.getName());
     }
 }

@@ -9,6 +9,10 @@ import javax.annotation.Nullable;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+/**
+ * This is a container that can handle multiple overlays. You can put views on top ov others and then pop them to view the old ones (like a stack).
+ * This works well together with {@link SubView}: in that case your SubView can reference its SubViewContainer.
+ */
 public class SubViewContainer extends Pane {
     private Deque<Parent> overlays = new ArrayDeque<>();
 
@@ -41,7 +45,7 @@ public class SubViewContainer extends Pane {
     public void overlay(final Parent view) {
         this.overlays.push(view);
         if (view instanceof SubView) {
-            ((SubView)view).setContainer(this);
+            ((SubView) view).setContainer(this);
         }
         this.setCurrentView();
     }
@@ -69,7 +73,7 @@ public class SubViewContainer extends Pane {
     }
 
     /**
-     * To get the number of overlays in this container
+     * To get the number of overlays in this container.
      * @return The number of overlays in this container
      */
     public int getOverlaysCount() {

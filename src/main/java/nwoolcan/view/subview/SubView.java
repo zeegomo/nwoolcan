@@ -5,7 +5,10 @@ import javafx.scene.layout.Pane;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class SubView extends Pane {
+/**
+ * This is a container that can be put inside a {@link SubViewContainer}.
+ */
+public final class SubView extends Pane {
     @Nullable
     private SubViewContainer container;
 
@@ -14,6 +17,10 @@ public class SubView extends Pane {
         this.container = container;
     }
 
+    /**
+     * Gets the {@link SubViewContainer} (if any) of this SubView.
+     * @return the {@link SubViewContainer} of this SubView, or an empty {@link Optional}
+     */
     public Optional<SubViewContainer> getContainer() {
         return Optional.ofNullable(this.container);
     }

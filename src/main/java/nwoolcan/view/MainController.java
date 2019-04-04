@@ -18,7 +18,6 @@ public final class MainController {
      * Shows the Dashboard.
      * @param event The occurred event
      */
-    @FXML
     public void menuViewDashboardClick(final ActionEvent event) {
         ViewManager.getView(ViewType.DASHBOARD).peek(view -> this.contentPane.substitute(view));
     }
@@ -27,7 +26,6 @@ public final class MainController {
      * Shows the Warehouse view.
      * @param event The occurred event
      */
-    @FXML
     public void menuViewWarehouseClick(final ActionEvent event) {
         ViewManager.getView(ViewType.WAREHOUSE, new WarehouseViewModel("ciccio")).peek(view -> this.contentPane.substitute(view));
     }
@@ -36,12 +34,15 @@ public final class MainController {
      * Quits the application.
      * @param event The occurred event
      */
-    @FXML
     public void menuFileQuitClick(final ActionEvent event) {
         Platform.exit();
     }
 
-    public void menuFileCountOverlaysClick(ActionEvent event) {
+    /**
+     * Print on the stdout the current number of overlays.
+     * @param event The occurred event
+     */
+    public void menuFileCountOverlaysClick(final ActionEvent event) {
         System.out.println(contentPane.getOverlaysCount());
     }
 }

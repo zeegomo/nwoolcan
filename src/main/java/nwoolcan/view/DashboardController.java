@@ -8,21 +8,32 @@ import nwoolcan.view.subview.SubView;
  * Handles the Dashboard view.
  */
 @SuppressWarnings("NullAway")
-public class DashboardController extends SubViewController {
+public final class DashboardController extends SubViewController {
 
     @FXML
-    public SubView content;
+    private SubView content;
 
-    @FXML
-    public void btnBackClicked(ActionEvent event) {
+    /**
+     * Removes this Dashboard view.
+     * @param event The occurred event
+     */
+    public void btnBackClicked(final ActionEvent event) {
         this.previousView(content);
     }
 
-    public void btnNewClicked(ActionEvent event) {
+    /**
+     * Overlay another Dashboard over this one.
+     * @param event The occurred event
+     */
+    public void btnNewClicked(final ActionEvent event) {
         this.overlayView(content, ViewType.DASHBOARD);
     }
 
-    public void btnToWarehouseClicked(ActionEvent event) {
+    /**
+     * Substitute this view with Warehouse.
+     * @param event The occurred event
+     */
+    public void btnToWarehouseClicked(final ActionEvent event) {
         this.substituteView(content, ViewType.WAREHOUSE, new Object());
     }
 }
