@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 /**
  *
  */
-public final class StockImpl implements Stock {
+public class StockImpl implements Stock {
 
     private static final int EMPTY_VALUE = 0;
 
@@ -32,14 +32,17 @@ public final class StockImpl implements Stock {
     private Date lastChangeDate;
     private Quantity remainingQuantity;
     private Quantity usedQuantity;
+    private final int id;
 
     /**
      * Constructor for Stock with expiration date.
      * @param article referred to the Stock.
      * @param expirationDate of the Stock. It can be null, which means there is no expiration date.
      */
-    public StockImpl(final Article article, @Nullable final Date expirationDate) {
+    // Package-Private
+    StockImpl(final int id, final Article article, @Nullable final Date expirationDate) {
         Date creationMoment = new Date();
+        this.id = id;
         this.article = article;
         this.expirationDate = expirationDate == null ? null : DateUtils.round(expirationDate, Calendar.DATE);
         this.creationDate = creationMoment;
@@ -49,22 +52,27 @@ public final class StockImpl implements Stock {
     }
 
     @Override
-    public Article getArticle() {
+    public final int getId() {
+        return id;
+    }
+
+    @Override
+    public final Article getArticle() {
         return this.article;
     }
 
     @Override
-    public Quantity getRemainingQuantity() {
+    public final Quantity getRemainingQuantity() {
         return this.remainingQuantity;
     }
 
     @Override
-    public Quantity getUsedQuantity() {
+    public final Quantity getUsedQuantity() {
         return this.usedQuantity;
     }
 
     @Override
-    public StockState getState() {
+    public final StockState getState() {
         if (this.remainingQuantity.getValue() > 0) {
             if (this.expirationDate != null && this.expirationDate.before(new Date())) {
                 return StockState.EXPIRED;
@@ -75,23 +83,23 @@ public final class StockImpl implements Stock {
     }
 
     @Override
-    public Optional<Date> getExpirationDate() {
+    public final Optional<Date> getExpirationDate() {
         final Date d = expirationDate == null ? null : (Date) expirationDate.clone();
         return Optional.ofNullable(d);
     }
 
     @Override
-    public Date getCreationDate() {
+    public final Date getCreationDate() {
         return (Date) this.creationDate.clone();
     }
 
     @Override
-    public Date getLastChangeDate() {
+    public final Date getLastChangeDate() {
         return (Date) this.lastChangeDate.clone();
     }
 
     @Override
-    public Result<Empty> addRecord(final Record record) {
+    public final Result<Empty> addRecord(final Record record) {
         final Result<Quantity> res;
         if (record.getAction().equals(Record.Action.ADDING)) {
             // adding the quantity of the record to the temporary current remaining quantity.
@@ -116,43 +124,55 @@ public final class StockImpl implements Stock {
     }
 
     @Override
-    public List<Record> getRecords() {
+    public final List<Record> getRecords() {
         return Collections.unmodifiableList(
             new ArrayList<>(this.records).stream()
                                          .sorted(Comparator.comparing(Record::getDate))
                                          .collect(Collectors.toList()));
     }
-
+    /**
+     * Update the lastChangeDate.
+     */
     private void updateLastChangeDate() {
         this.lastChangeDate = new Date();
     }
-
+    /**
+     * Return the hash code of the class. To override this method call hash this hash and eventual
+     * other parameters. Do not include id in hash.
+     * @return the hash code of the class.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(this.article, this.expirationDate);
     }
-
+    /**
+     * Return a boolean denoting whether the {@link Stock} is the same. To override this method
+     * call compare eventual other element and call super() on this.
+     * @return the hash code of the class.
+     */
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
 
-        if (!(obj instanceof StockImpl)) {
+        if (!(obj instanceof Stock)) {
             return false;
         }
 
-        StockImpl other = (StockImpl) obj;
+        Stock other = (Stock) obj;
         return this.article.equals(other.getArticle())
             && Optional.ofNullable(this.expirationDate).equals(other.getExpirationDate());
     }
-
-
+    /**
+     * Returns a string representation of the class. To extend it insert also eventual other parameters.
+     * @return a string representation of the class.
+     */
     @Override
     public String toString() {
         return "[StockImpl]{"
             + "article=" + article
-            + ", expirationDate=" + expirationDate
+            + ", expirationDate=" + (getExpirationDate().isPresent() ? getExpirationDate().get() : "null")
             + ", records=" + records
             + ", creationDate=" + creationDate
             + ", lastChangeDate=" + lastChangeDate
