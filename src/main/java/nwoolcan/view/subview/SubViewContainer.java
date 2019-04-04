@@ -1,7 +1,7 @@
 package nwoolcan.view.subview;
 
 import javafx.scene.Parent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
@@ -13,7 +13,7 @@ import java.util.Deque;
  * This is a container that can handle multiple overlays. You can put views on top ov others and then pop them to view the old ones (like a stack).
  * This works well together with {@link SubView}: in that case your SubView can reference its SubViewContainer.
  */
-public class SubViewContainer extends Pane {
+public class SubViewContainer extends AnchorPane {
     private Deque<Parent> overlays = new ArrayDeque<>();
 
     /**
