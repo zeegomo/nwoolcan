@@ -1,33 +1,76 @@
 package nwoolcan.controller.viewModel.warehouse.stock;
 
+import nwoolcan.controller.viewModel.warehouse.article.ViewArticle;
+import nwoolcan.model.brewery.warehouse.stock.StockState;
+import nwoolcan.model.utils.Quantity;
+
+import java.util.Date;
+
 /**
- * View-Model interface with methods callable to obtain information about the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
+ * View-Model representation of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
  */
-public interface ViewStock {
+public final class ViewStock {
+
+    private final ViewArticle article;
+    private final Quantity remainingQuantity;
+    private final Quantity usedQuantity;
+    private final StockState stockState;
+    private final Date expirationDate;
+
+    /**
+     * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
+     * @param article the {@link ViewArticle} linked to this.
+     * @param remainingQuantity of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
+     * @param usedQuantity of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
+     * @param stockState the {@link StockState} of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
+     * @param expirationDate of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
+     */
+    // Package-private
+    ViewStock(final ViewArticle article,
+              final Quantity remainingQuantity,
+              final Quantity usedQuantity,
+              final StockState stockState,
+              final Date expirationDate) {
+        this.article = article;
+        this.remainingQuantity = remainingQuantity;
+        this.usedQuantity = usedQuantity;
+        this.stockState = stockState;
+        this.expirationDate = expirationDate;
+    }
 
     /**
      * Return the name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @return the name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
-    String getArticleName();
+    public ViewArticle getArticle() {
+        return article;
+    }
     /**
-     * Return the string representation of the remaining {@link nwoolcan.model.utils.Quantity}.
-     * @return the string representation of the remaining {@link nwoolcan.model.utils.Quantity}.
+     * Return the remaining {@link nwoolcan.model.utils.Quantity}.
+     * @return the remaining {@link nwoolcan.model.utils.Quantity}.
      */
-    String getRemainingQuantity();
+    public Quantity getRemainingQuantity() {
+        return remainingQuantity;
+    }
     /**
-     * Return the string representation of the used {@link nwoolcan.model.utils.Quantity}.
-     * @return the string representation of the used {@link nwoolcan.model.utils.Quantity}.
+     * Return the used {@link nwoolcan.model.utils.Quantity}.
+     * @return the used {@link nwoolcan.model.utils.Quantity}.
      */
-    String getUsedQuantity();
+    public Quantity getUsedQuantity() {
+        return usedQuantity;
+    }
     /**
-     * Return the string representation of the current {@link nwoolcan.model.brewery.warehouse.stock.StockState}.
-     * @return the string representation of the current {@link nwoolcan.model.brewery.warehouse.stock.StockState}.
+     * Return the current {@link nwoolcan.model.brewery.warehouse.stock.StockState}.
+     * @return the current {@link nwoolcan.model.brewery.warehouse.stock.StockState}.
      */
-    String getState();
+    public StockState getState() {
+        return stockState;
+    }
     /**
-     * Return the string representation of the expiration {@link java.util.Date}.
-     * @return the string representation of the expiration {@link java.util.Date}.
+     * Return the expiration {@link java.util.Date}.
+     * @return the expiration {@link java.util.Date}.
      */
-    String getExpirationDate();
+    public Date getExpirationDate() {
+        return expirationDate;
+    }
 }

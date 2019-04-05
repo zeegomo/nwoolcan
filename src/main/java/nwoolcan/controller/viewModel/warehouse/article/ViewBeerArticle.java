@@ -1,11 +1,23 @@
 package nwoolcan.controller.viewModel.warehouse.article;
 
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
+import nwoolcan.model.utils.UnitOfMeasure;
 
-public interface ViewBeerArticle extends ViewArticle {
+/**
+ * View-Model representation of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
+ */
+public final class ViewBeerArticle extends ViewArticle {
 
-    @Override
-    default ArticleType getArticleType() {
-        return ArticleType.FINISHED_BEER;
+    /**
+     * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
+     * @param id of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
+     * @param name of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
+     * @param unitOfMeasure of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
+     */
+    // Package-private
+    ViewBeerArticle(final int id,
+                final String name,
+                final UnitOfMeasure unitOfMeasure) {
+        super(id, name, ArticleType.FINISHED_BEER, unitOfMeasure);
     }
 }
