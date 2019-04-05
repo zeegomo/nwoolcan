@@ -1,6 +1,6 @@
-package nwoolcan.controller.viewModel.warehouse;
+package nwoolcan.controller.warehouse;
 
-import nwoolcan.controller.viewModel.warehouse.stock.ViewStock;
+import nwoolcan.controller.warehouse.stock.ViewStock;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 
 import java.util.List;

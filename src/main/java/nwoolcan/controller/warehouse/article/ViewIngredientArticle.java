@@ -1,4 +1,4 @@
-package nwoolcan.controller.viewModel.warehouse.article;
+package nwoolcan.controller.warehouse.article;
 
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
