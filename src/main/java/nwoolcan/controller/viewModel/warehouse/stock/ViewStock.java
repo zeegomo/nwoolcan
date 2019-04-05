@@ -5,6 +5,7 @@ import nwoolcan.model.brewery.warehouse.stock.StockState;
 import nwoolcan.model.utils.Quantity;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * View-Model representation of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
@@ -16,6 +17,7 @@ public final class ViewStock {
     private final Quantity usedQuantity;
     private final StockState stockState;
     private final Date expirationDate;
+    private final List<ViewRecord> records;
 
     /**
      * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
@@ -30,12 +32,14 @@ public final class ViewStock {
               final Quantity remainingQuantity,
               final Quantity usedQuantity,
               final StockState stockState,
-              final Date expirationDate) {
+              final Date expirationDate,
+              final List<ViewRecord> records) {
         this.article = article;
         this.remainingQuantity = remainingQuantity;
         this.usedQuantity = usedQuantity;
         this.stockState = stockState;
         this.expirationDate = expirationDate;
+        this.records = records;
     }
 
     /**
@@ -72,5 +76,12 @@ public final class ViewStock {
      */
     public Date getExpirationDate() {
         return expirationDate;
+    }
+    /**
+     * Return the {@link List} of {@link ViewRecord}.
+     * @return the {@link List} of {@link ViewRecord}.
+     */
+    public List<ViewRecord> getRecords() {
+        return records;
     }
 }
