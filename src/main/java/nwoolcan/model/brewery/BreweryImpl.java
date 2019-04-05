@@ -4,8 +4,6 @@ import nwoolcan.model.brewery.production.batch.Batch;
 import nwoolcan.model.brewery.production.batch.QueryBatch;
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.WarehouseImpl;
-import nwoolcan.utils.Empty;
-import nwoolcan.utils.Result;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +18,6 @@ public final class BreweryImpl implements Brewery {
     private final String ownerName;
     private final Warehouse warehouse = new WarehouseImpl();
     private final Collection<Batch> batches = new ArrayList<>();
-    // private final BatchIdManager ID_MANAGER = BatchIdManager.getInstance();
 
     /**
      * Constructor of an Implementation of the {@link Brewery}.
@@ -49,7 +46,8 @@ public final class BreweryImpl implements Brewery {
 
     @Override
     public Collection<Batch> getBatches(final QueryBatch queryBatch) {
-        return batches.stream()
+        final Collection<Batch> retBatches = new ArrayList<>(batches);
+        return retBatches.stream()
                       .filter(batch -> !(queryBatch.getMinId().isPresent()
                           && batch.getId() < queryBatch.getMinId().get()))
                       .filter(batch -> !(queryBatch.getMaxId().isPresent()
@@ -69,11 +67,7 @@ public final class BreweryImpl implements Brewery {
     }
 
     @Override
-    public Result<Empty> addBatch(final Batch newBatch) {
-        return Result.of(newBatch)
-                     // TODO it will be added once the BatchImpl and BatchIdManager will be finished.
-                     //.require(ID_MANAGER::checkId)
-                     .peek(batches::add)
-                     .toEmpty();
+    public void addBatch(final Batch newBatch) {
+        batches.add(newBatch);
     }
 }
