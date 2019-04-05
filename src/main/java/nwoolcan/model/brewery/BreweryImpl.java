@@ -48,22 +48,22 @@ public final class BreweryImpl implements Brewery {
     public Collection<Batch> getBatches(final QueryBatch queryBatch) {
         final Collection<Batch> retBatches = new ArrayList<>(batches);
         return retBatches.stream()
-                      .filter(batch -> !(queryBatch.getMinId().isPresent()
-                          && batch.getId() < queryBatch.getMinId().get()))
-                      .filter(batch -> !(queryBatch.getMaxId().isPresent()
-                          && batch.getId() > queryBatch.getMaxId().get()))
-                      .filter(batch -> !(queryBatch.getBatchMethod().isPresent()
-                                      && batch.getBatchInfo().getMethod()
+                         .filter(batch -> !(queryBatch.getMinId().isPresent()
+                             && batch.getId() < queryBatch.getMinId().get()))
+                         .filter(batch -> !(queryBatch.getMaxId().isPresent()
+                              && batch.getId() > queryBatch.getMaxId().get()))
+                         .filter(batch -> !(queryBatch.getBatchMethod().isPresent()
+                                         && batch.getBatchInfo().getMethod()
                                          != queryBatch.getBatchMethod().get()))
-                      .filter(batch -> !(queryBatch.getMinBatchSize().isPresent()
-                          && batch.getBatchInfo()
-                                  .getBatchSize()
-                                  .lessThan(queryBatch.getMinBatchSize().get())))
-                      .filter(batch -> !(queryBatch.getMaxBatchSize().isPresent()
-                          && batch.getBatchInfo()
-                                  .getBatchSize()
-                                  .moreThan(queryBatch.getMaxBatchSize().get())))
-                      .collect(Collectors.toList());
+                         .filter(batch -> !(queryBatch.getMinBatchSize().isPresent()
+                              && batch.getBatchInfo()
+                                      .getBatchSize()
+                                      .lessThan(queryBatch.getMinBatchSize().get())))
+                         .filter(batch -> !(queryBatch.getMaxBatchSize().isPresent()
+                              && batch.getBatchInfo()
+                                      .getBatchSize()
+                                      .moreThan(queryBatch.getMaxBatchSize().get())))
+                         .collect(Collectors.toList());
     }
 
     @Override
