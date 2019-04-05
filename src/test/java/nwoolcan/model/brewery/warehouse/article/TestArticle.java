@@ -18,14 +18,14 @@ public class TestArticle {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorWithEmptyName() {
-        new ArticleImpl("", UOM);
+        ArticleManager.getInstance().createMiscArticle("", UOM);
     }
     /**
      * Method that tests the getters and relative errors.
      */
     @Test
     public void testGetters() {
-        final Article article = new ArticleImpl(name, UOM);
+        final Article article = ArticleManager.getInstance().createMiscArticle(name, UOM);
         Assert.assertEquals(name, article.getName());
         Assert.assertEquals(ArticleType.MISC, article.getArticleType());
         Assert.assertTrue(article.toIngredientArticle().isError());
@@ -42,9 +42,9 @@ public class TestArticle {
      */
     @Test
     public void testEquals() {
-        final Article art1 = new ArticleImpl(name, UOM);
-        final Article art2 = new ArticleImpl(name, UOM);
-        final Article art4 = new ArticleImpl(name, UOM1);
+        final Article art1 = ArticleManager.getInstance().createMiscArticle(name, UOM);
+        final Article art2 = ArticleManager.getInstance().createMiscArticle(name, UOM);
+        final Article art4 = ArticleManager.getInstance().createMiscArticle(name, UOM1);
         Assert.assertEquals(art1, art2);
         Assert.assertEquals(art1, art1);
         Assert.assertNotEquals(art1, art4);

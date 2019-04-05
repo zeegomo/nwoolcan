@@ -1,7 +1,6 @@
 package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
-import nwoolcan.model.brewery.warehouse.article.ArticleImpl;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
@@ -11,10 +10,9 @@ import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.junit.Assert;
 
 import java.util.Date;
 import java.util.List;
@@ -24,60 +22,67 @@ import java.util.List;
  */
 public class WarehouseImplTest {
 
-    private static final Integer ONE = 1;
-    private static final Integer TEN = 10;
+    private static final int ONE = 1;
+    private static final int TEN = 10;
     private static final String NAME = "DummyName";
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.MILLILITER;
     private final Warehouse warehouse = new WarehouseImpl();
-    private final Article article = new ArticleImpl(NAME, UOM);
-    private final Article article1 = new ArticleImpl(NAME, UOM);
+    private final Article article = warehouse.createMiscArticle(NAME, UOM);
     private final Quantity quantity = Quantity.of(ONE, UOM);
     private final Quantity quantity1 = Quantity.of(ONE, UOM1);
     private final Quantity quantity2 = Quantity.of(TEN, UOM);
-    private final Quantity quantity3 = Quantity.of(TEN * TEN, UOM);
     private final Record record = new Record(quantity, Record.Action.ADDING);
     private final Record record1 = new Record(quantity, new Date(), Record.Action.ADDING);
     private final Record record2 = new Record(quantity1, Record.Action.ADDING);
-    private static final Integer MIN_ID = 1;
-    private static final Integer MAX_ID = 1;
+    private static final int MIN_ID = 1;
+    private static final int MAX_ID = 1;
     private static final String MIN_NAME = "DummyName";
     private static final String MAX_NAME = "DummyName2";
     private Date date1 = new Date();
     private Date date2 = new Date(date1.getTime() + 10L);
     private Date date3 = new Date(date2.getTime() + 10L);
 
-
     /**
      * Initialize the warehouse.
      */
     @Before
     public void initWarehouse() {
-        warehouse.addArticle(article);
-        warehouse.addArticle(article1);
-        warehouse.addRecord(article, record);
-        warehouse.addRecord(article, record1);
-        warehouse.addRecord(article, date1, record);
-        warehouse.addRecord(article, date2, record);
-        warehouse.addRecord(article, date3, record);
+        final Result<Stock> stockResult = warehouse.createStock(article);
+        final Result<Stock> stockResult1 = warehouse.createStock(article, date1);
+        final Result<Stock> stockResult2 = warehouse.createStock(article, date2);
+        final Result<Stock> stockResult3 = warehouse.createStock(article, date3);
+        Assert.assertTrue(stockResult.isPresent());
+        Assert.assertTrue(stockResult1.isPresent());
+        Assert.assertTrue(stockResult2.isPresent());
+        Assert.assertTrue(stockResult3.isPresent());
+        final Stock stock = stockResult.getValue();
+        final Stock stock1 = stockResult1.getValue();
+        final Stock stock2 = stockResult2.getValue();
+        final Stock stock3 = stockResult3.getValue();
+        stock.addRecord(record);
+        stock.addRecord(record1);
+        stock1.addRecord(record);
+        stock2.addRecord(record);
+        stock3.addRecord(record);
     }
     /**
      * Test the adders.
      */
     @Test
     public void testAdders() {
-        Assert.assertTrue(warehouse.addArticle(article).isError()); // already added
-        Assert.assertTrue(warehouse.addRecord(article, record).isPresent());
-        Assert.assertTrue(warehouse.addRecord(article, record1).isPresent());
-        Assert.assertTrue(warehouse.addRecord(article, record2).isError());
+        final Result<Stock> stockResult = warehouse.createStock(article);
+        Assert.assertTrue(stockResult.isPresent());
+        final Stock stock = stockResult.getValue();
+        Assert.assertTrue(stock.addRecord(record).isPresent());
+        Assert.assertTrue(stock.addRecord(record1).isPresent());
+        Assert.assertTrue(stock.addRecord(record2).isError());
     }
     /**
      * Test the stocks getter.
      */
     @Test
     public void testRemainingQuantityWorkingStocksGetter() {
-        Assert.assertTrue(warehouse.addArticle(article).isError()); // already added
-        Assert.assertTrue(warehouse.addArticle(article1).isError()); // already added
         final Result<QueryStock> resQueryStock = new QueryStockBuilder().setArticle(article)
                                                                         .setMinRemainingQuantity(quantity)
                                                                         .setMaxRemainingQuantity(quantity2)
@@ -121,12 +126,12 @@ public class WarehouseImplTest {
         Assert.assertTrue(resQueryStock.isPresent());
         final QueryStock queryStock = resQueryStock.getValue();
         final List<Stock> lisStock = warehouse.getStocks(queryStock);
-        Assert.assertTrue(lisStock.stream()
-                .map(Stock::getRemainingQuantity)
-                .reduce((prev, curr) -> {
-                    Assert.assertFalse(curr.moreThan(prev));
-                    return curr;
-                }).isPresent());
+        Result.of(lisStock.stream()
+                        .map(Stock::getRemainingQuantity)
+                        .reduce((prev, curr) -> {
+                            Assert.assertFalse(curr.moreThan(prev));
+                            return curr;
+                        }));
     }
     /**
      * Tests getStocks with filter by expiration dates.

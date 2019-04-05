@@ -12,7 +12,7 @@ public interface Article {
      * Returns the Id of the current article.
      * @return the Id of the current article.
      */
-    Integer getId();
+    int getId();
     /**
      * Returns the {@link ArticleType} linked to the Article.
      * @return the {@link ArticleType} linked to the current Article.

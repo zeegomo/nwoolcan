@@ -1,19 +1,25 @@
 package nwoolcan.model.brewery.production.batch;
 
-import javafx.util.Pair;
+import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
+import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
+import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
+import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementBuilder;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationBuilder;
+import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterImpl;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
+import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
-import nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
+import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +33,7 @@ import java.util.List;
  */
 public class BatchTest {
 
-    private static final int TEN_THOUSAND = 1000;
+    private static final int TEN_THOUSAND = 10000;
     private static final int N1 = 500;
     private static final int N2 = 50;
     private static final int N3 = 450;
@@ -36,26 +42,26 @@ public class BatchTest {
     private static final int N6 = 70;
     private static final Quantity Q1 = Quantity.of(TEN_THOUSAND, UnitOfMeasure.MILLILITER);
     private static final Quantity Q2 = Quantity.of(TEN_THOUSAND - 1, UnitOfMeasure.MILLILITER);
+    private static final ArticleManager ARTICLE_MANAGER = ArticleManager.getInstance();
+    private final BatchEvaluationType bjcpType = BatchEvaluationBuilder.getAvailableBatchEvaluationTypes()
+                                                                       .getValue()
+                                                                       .stream()
+                                                                       .filter(s -> s.getClass().equals(BJCPBatchEvaluationType.class))
+                                                                       .findAny().get();
 
     private Batch batchAlfredo, batchRossina, batchBiondina;
 
-    private List<Pair<IngredientArticle, Quantity>> alfredoIngredients = Arrays.asList(
-        new Pair<>(new IngredientArticleImpl("Luppolo alfredo", UnitOfMeasure.GRAM, IngredientType.HOPS),
-            Quantity.of(N1, UnitOfMeasure.GRAM)),
-        new Pair<>(new IngredientArticleImpl("Pepe gigio", UnitOfMeasure.GRAM, IngredientType.OTHER),
-            Quantity.of(N2, UnitOfMeasure.GRAM))
+    private List<Pair<IngredientArticle, Integer>> alfredoIngredients = Arrays.asList(
+        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Luppolo alfredo", UnitOfMeasure.GRAM, IngredientType.HOPS), N1),
+        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Pepe gigio", UnitOfMeasure.GRAM, IngredientType.OTHER), N2)
     );
-    private List<Pair<IngredientArticle, Quantity>> rossinaIngredients = Arrays.asList(
-        new Pair<>(new IngredientArticleImpl("Luppolo rossino", UnitOfMeasure.GRAM, IngredientType.HOPS),
-            Quantity.of(N3, UnitOfMeasure.GRAM)),
-        new Pair<>(new IngredientArticleImpl("Pepe faggio", UnitOfMeasure.GRAM, IngredientType.OTHER),
-            Quantity.of(N4, UnitOfMeasure.GRAM))
+    private List<Pair<IngredientArticle, Integer>> rossinaIngredients = Arrays.asList(
+        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Luppolo rossino", UnitOfMeasure.GRAM, IngredientType.HOPS), N3),
+        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Pepe faggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N4)
     );
-    private List<Pair<IngredientArticle, Quantity>> biondinaIngredients = Arrays.asList(
-        new Pair<>(new IngredientArticleImpl("Luppolo biondino", UnitOfMeasure.GRAM, IngredientType.HOPS),
-            Quantity.of(N5, UnitOfMeasure.GRAM)),
-        new Pair<>(new IngredientArticleImpl("Pepe daggio", UnitOfMeasure.GRAM, IngredientType.OTHER),
-            Quantity.of(N6, UnitOfMeasure.GRAM))
+    private List<Pair<IngredientArticle, Integer>> biondinaIngredients = Arrays.asList(
+        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Luppolo biondino", UnitOfMeasure.GRAM, IngredientType.HOPS), N5),
+        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Pepe daggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N6)
     );
 
     /**
@@ -72,7 +78,8 @@ public class BatchTest {
             BatchMethod.ALL_GRAIN,
             Q1,
             alfredoIngredients,
-            StepTypeEnum.MASHING
+            StepTypeEnum.MASHING,
+            null
         );
 
         batchRossina = new BatchImpl(
@@ -82,7 +89,7 @@ public class BatchTest {
             rossinaIngredients,
             StepTypeEnum.MASHING,
             new WaterMeasurementBuilder().addRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 1), WaterMeasurement.Element.CALCIUM)
-                .build().getValue()
+                                         .build().getValue()
         );
 
         batchBiondina = new BatchImpl(
@@ -96,7 +103,21 @@ public class BatchTest {
     }
 
     /**
-     * Methods that tests passages from one step to another.
+     * Method that tests equality between batches.
+     */
+    @Test
+    public void testDifferentIds() {
+        Assert.assertNotEquals(batchAlfredo.getId(), batchBiondina.getId());
+        Assert.assertNotEquals(batchAlfredo.getId(), batchRossina.getId());
+        Assert.assertNotEquals(batchBiondina.getId(), batchRossina.getId());
+
+        Assert.assertNotEquals(batchAlfredo, batchBiondina);
+        Assert.assertNotEquals(batchAlfredo, batchRossina);
+        Assert.assertNotEquals(batchBiondina, batchRossina);
+    }
+
+    /**
+     * Method that tests passages from one step to another.
      */
     @Test
     public void testChangeStep() {
@@ -161,10 +182,7 @@ public class BatchTest {
 
         //Finalize and go next.
         batchAlfredo.getCurrentStep().finalize("Mashing ended.", new Date(), batchAlfredo.getBatchInfo().getBatchSize());
-        batchAlfredo.moveToNextStep(StepTypeEnum.BOILING).peekError(e -> {
-           e.printStackTrace();
-           Assert.fail();
-        });
+        batchAlfredo.moveToNextStep(StepTypeEnum.BOILING).peekError(e -> Assert.fail(e.getMessage()));
 
         final Number t3 = 120.9;
         final Number t4 = 106.3;
@@ -175,10 +193,7 @@ public class BatchTest {
 
         //Finalize and go next.
         batchAlfredo.getCurrentStep().finalize("Boiling ended.", new Date(), batchAlfredo.getBatchInfo().getBatchSize());
-        batchAlfredo.moveToNextStep(StepTypeEnum.FERMENTING).peekError(e -> {
-            e.printStackTrace();
-            Assert.fail();
-        });
+        batchAlfredo.moveToNextStep(StepTypeEnum.FERMENTING).peekError(e -> Assert.fail(e.getMessage()));
 
         final Number t5 = 50;
         final Number t6 = 45.8;
@@ -201,16 +216,13 @@ public class BatchTest {
         Assert.assertEquals(new ParameterImpl(ParameterTypeEnum.ABV, abv2, d), batchAlfredo.getBatchInfo().getAbv().get());
 
         //Go next without finalize
-        batchAlfredo.moveToNextStep(StepTypeEnum.PACKAGING).peekError(e -> {
-            e.printStackTrace();
-            Assert.fail();
-        });
+        batchAlfredo.moveToNextStep(StepTypeEnum.PACKAGING).peekError(e -> Assert.fail(e.getMessage()));
 
-        //Go next without finalize
-        batchAlfredo.moveToNextStep(StepTypeEnum.FINALIZED).peekError(e -> {
-            e.printStackTrace();
-            Assert.fail();
-        });
+        final int bottles = 7;
+        //Finalize packaging with bottle um.
+        batchAlfredo.getCurrentStep().finalize("Packaged in 75 cl bottles", new Date(), Quantity.of(bottles, UnitOfMeasure.BOTTLE_75_CL));
+
+        batchAlfredo.moveToNextStep(StepTypeEnum.FINALIZED).peekError(e -> Assert.fail(e.getMessage()));
 
         //Check end.
         Assert.assertTrue(batchAlfredo.isEnded());
@@ -222,7 +234,7 @@ public class BatchTest {
         final int overrallImpression = 9;
 
         //Insert review.
-        batchAlfredo.setEvaluation(new BatchEvaluationBuilder(new BJCPBatchEvaluationType())
+        batchAlfredo.setEvaluation(new BatchEvaluationBuilder(bjcpType)
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.FLAVOR, flavor)
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.AROMA, aroma)
             .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, appearance)
@@ -235,5 +247,29 @@ public class BatchTest {
 
         //Trying to go after ended.
         batchAlfredo.moveToNextStep(StepTypeEnum.FINALIZED).peek(e -> Assert.fail());
+    }
+
+    /**
+     * Method that tests end step sizes correctness.
+     */
+    @Test
+    public void testEndSizeSteps() {
+        batchBiondina.moveToNextStep(StepTypeEnum.BOILING).peekError(e -> Assert.fail(e.getMessage()));
+
+        //Check same size as started
+        Assert.assertEquals(batchBiondina.getBatchInfo().getBatchSize(),
+            batchBiondina.getPreviousSteps().get(0).getStepInfo().getEndStepSize().get());
+
+        final int evapo = 1000;
+        batchBiondina.getCurrentStep().finalize("Evaporated",
+            new Date(),
+            Quantities.remove(Q2, Quantity.of(evapo, UnitOfMeasure.MILLILITER)).getValue()
+        );
+
+        batchBiondina.moveToNextStep(StepTypeEnum.FERMENTING).peekError(e -> Assert.fail(e.getMessage()));
+
+        //Check changed.
+        Assert.assertNotEquals(batchBiondina.getPreviousSteps().get(1).getStepInfo().getEndStepSize().get(),
+            batchBiondina.getBatchInfo().getBatchSize());
     }
 }

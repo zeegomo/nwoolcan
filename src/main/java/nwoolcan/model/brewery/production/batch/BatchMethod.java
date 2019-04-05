@@ -18,6 +18,7 @@ public enum BatchMethod {
     EXTRACT("Exctract");
 
     private final String name;
+
     BatchMethod(final String name) {
         this.name = name;
     }

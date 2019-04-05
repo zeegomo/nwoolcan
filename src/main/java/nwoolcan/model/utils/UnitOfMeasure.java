@@ -39,5 +39,21 @@ public enum UnitOfMeasure {
     /**
      * IBU special unit of measure.
      */
-    IBU;
+    IBU,
+    /**
+     * Bottle unit of measure for a 33 cl capacity.
+     */
+    BOTTLE_33_CL,
+    /**
+     * Bottle unit of measure for a 50 cl capacity.
+     */
+    BOTTLE_50_CL,
+    /**
+     * Bottle unit of measure for a 75 cl capacity.
+     */
+    BOTTLE_75_CL,
+    /**
+     * Magnum bottle unit of measure corresponding to 1.5 liters.
+     */
+    BOTTLE_MAGNUM;
 }
