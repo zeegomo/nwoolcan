@@ -36,7 +36,7 @@ public final class ViewRecord {
      * Return a {@link Boolean} which is true if the {@link Quantity} has to be added.
      * @return a {@link Boolean} which is true if the {@link Quantity} has to be added.
      */
-    public Boolean getIsAdding() {
+    public Boolean isAdding() {
         return isAdding;
     }
     /**
