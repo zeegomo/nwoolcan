@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+
+<FlowPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="nwoolcan.view.WarehouseController">
+
+    <Label text="This is the warehouse. Name is: " />
+    <Label fx:id="lblName" />
+</FlowPane>
