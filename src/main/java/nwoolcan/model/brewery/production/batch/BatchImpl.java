@@ -30,7 +30,6 @@ final class BatchImpl implements Batch {
 
     private static final String CANNOT_CREATE_STEP_EXCEPTION = "Cannot create a step with the given type: ";
     private static final String CANNOT_FINALIZE_CURRENT_STEP = "Cannot finalize current step.";
-    private static final String BATCH_IS_ENDED_MESSAGE = "Cannot perform operation because batch is in ended state.";
     private static final Object CANNOT_GO_TO_STEP_MESSAGE = "From this step, cannot go to step: ";
     private static final String BATCH_NOT_ENDED_MESSAGE = "Cannot perform operation because batch is not in ended state.";
 
@@ -52,11 +51,11 @@ final class BatchImpl implements Batch {
      * @throws IllegalArgumentException if the initial step cannot be created.
      */
     BatchImpl(final BeerDescription beerDescription,
-                     final BatchMethod batchMethod,
-                     final Quantity initialSize,
-                     final Collection<Pair<IngredientArticle, Integer>> ingredients,
-                     final StepType initialStep,
-                     @Nullable final WaterMeasurement waterMeasurement) {
+              final BatchMethod batchMethod,
+              final Quantity initialSize,
+              final Collection<Pair<IngredientArticle, Integer>> ingredients,
+              final StepType initialStep,
+              @Nullable final WaterMeasurement waterMeasurement) {
         this.id = BatchIdGenerator.getInstance().getNextId();
 
         if (waterMeasurement == null) {
@@ -89,6 +88,16 @@ final class BatchImpl implements Batch {
     }
 
     @Override
+    public Quantity getCurrentSize() {
+        final Result<Quantity> prev = this.getPreviousStep()
+                                          .flatMap(s -> Results.ofChecked(() -> s.getStepInfo().getEndStepSize().get()));
+        if (prev.isPresent()) {
+            return prev.getValue();
+        }
+        return this.batchInfo.getBatchSize();
+    }
+
+    @Override
     public List<Step> getPreviousSteps() {
         return this.steps.subList(0, this.steps.size() - 1);
     }
@@ -99,16 +108,13 @@ final class BatchImpl implements Batch {
 
     private void checkAndFinalizeStep(final Step step) {
         if (!step.isFinalized()) {
-            //noinspection OptionalGetWithoutIsPresent
-            getPreviousStep().peekError(e -> step.finalize(null, new Date(), this.batchInfo.getBatchSize()))
-                             .peek(lastStep -> step.finalize(null, new Date(), lastStep.getStepInfo().getEndStepSize().get()));
+            step.finalize(null, new Date(), this.getCurrentSize());
         }
     }
 
     @Override
     public Result<Empty> moveToNextStep(final StepType nextStepType) {
         return Result.of(this.getCurrentStep())
-                     .require(() -> !this.isEnded(), new IllegalStateException(BATCH_IS_ENDED_MESSAGE))
                      .require(p -> p.getNextStepTypes().contains(nextStepType), new IllegalArgumentException(CANNOT_GO_TO_STEP_MESSAGE + nextStepType.toString()))
                      .peek(this::checkAndFinalizeStep)
                      .flatMap(() -> Steps.create(nextStepType))
