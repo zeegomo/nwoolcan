@@ -56,7 +56,7 @@ public interface Batch {
     boolean isEnded();
     /**
      * Sets a possible evaluation to the batch.
-     * Returns a Result with an error if type:
+     * Returns a Result with an error of type:
      * <ul>
      *     <li>{@link IllegalStateException} if the batch is not in ended state.</li>
      * </ul>
