@@ -6,6 +6,8 @@ import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementBuilder;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationBuilder;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
+import nwoolcan.model.brewery.production.batch.review.Evaluation;
+import nwoolcan.model.brewery.production.batch.review.EvaluationImpl;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
@@ -27,6 +29,9 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Test class for Batch.
@@ -234,12 +239,18 @@ public class BatchTest {
         final int overrallImpression = 9;
 
         //Insert review.
-        batchAlfredo.setEvaluation(new BatchEvaluationBuilder(bjcpType)
-            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.FLAVOR, flavor)
-            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.AROMA, aroma)
-            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, appearance)
-            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, mouthfeel)
-            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, overrallImpression)
+        Set<Evaluation> evals = Stream.<Result<Evaluation>>builder()
+            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.AROMA, aroma))
+            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, appearance))
+            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.FLAVOR, flavor))
+            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, mouthfeel))
+            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, overrallImpression))
+            .build()
+            .filter(Result::isPresent)
+            .map(Result::getValue)
+            .collect(Collectors.toSet());
+
+        batchAlfredo.setEvaluation(new BatchEvaluationBuilder(bjcpType, evals)
             .build().getValue());
 
         //Check all steps are registered.
