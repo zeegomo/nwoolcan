@@ -7,7 +7,6 @@ import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.brewery.production.batch.step.Steps;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
-import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 
@@ -31,10 +30,8 @@ final class BatchImpl implements Batch {
 
     private static final String CANNOT_CREATE_STEP_EXCEPTION = "Cannot create a step with the given type: ";
     private static final String CANNOT_FINALIZE_CURRENT_STEP = "Cannot finalize current step.";
-    private static final String BATCH_IS_ENDED_MESSAGE = "Cannot perform operation because batch is in ended state.";
     private static final Object CANNOT_GO_TO_STEP_MESSAGE = "From this step, cannot go to step: ";
     private static final String BATCH_NOT_ENDED_MESSAGE = "Cannot perform operation because batch is not in ended state.";
-    private static final String ALREADY_STOCKED_MESSAGE = "Cannot stock this batch again.";
 
     private final int id;
     private final ModifiableBatchInfo batchInfo;
@@ -42,8 +39,6 @@ final class BatchImpl implements Batch {
 
     @Nullable
     private BatchEvaluation batchEvaluation;
-    @Nullable
-    private Stock stock;
 
     /**
      * Creates a new {@link Batch} in production.
