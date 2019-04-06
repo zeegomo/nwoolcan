@@ -26,6 +26,7 @@ public final class ViewStock {
      * @param usedQuantity of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      * @param stockState the {@link StockState} of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      * @param expirationDate of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
+     * @param records of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      */
     public ViewStock(final ViewArticle article,
               final Quantity remainingQuantity,
