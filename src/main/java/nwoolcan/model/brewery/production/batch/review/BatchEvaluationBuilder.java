@@ -24,7 +24,7 @@ public final class BatchEvaluationBuilder {
     private static final String BUILDER_USED_MESSAGE = "This builder has already built";
     private static final BatchEvaluationTypeScanner SCANNER = new BatchEvaluationScannerImpl();
 
-    private final Set<Evaluation> evaluations = new HashSet<>();
+    private final Set<Evaluation> evaluations;
 
     @Nullable
     private String reviewer;
@@ -41,42 +41,17 @@ public final class BatchEvaluationBuilder {
     public static Result<Set<BatchEvaluationType>> getAvailableBatchEvaluationTypes() {
         return SCANNER.getAvailableBatchEvaluationTypes();
     }
-
     /**
      * Create a {@link BatchEvaluationBuilder}.
      *
      * @param batchEvaluationType the {@link BatchEvaluationType} of this {@link BatchEvaluation}
      *                        (implements the Strategy pattern)
+     * @param evaluations the evaluations.
      */
-    public BatchEvaluationBuilder(final BatchEvaluationType batchEvaluationType) {
+    public BatchEvaluationBuilder(final BatchEvaluationType batchEvaluationType, final Set<Evaluation> evaluations) {
         this.batchEvaluationType = batchEvaluationType;
+        this.evaluations = new HashSet<>(evaluations);
     }
-
-    /**
-     * Add evaluation for a category with notes.
-     *
-     * @param type  category.
-     * @param score score.
-     * @param notes notes.
-     * @return this.
-     */
-    public BatchEvaluationBuilder addEvaluation(final EvaluationType type, final int score, final String notes) {
-        this.evaluations.add(new EvaluationImpl(type, score, Optional.of(notes)));
-        return this;
-    }
-
-    /**
-     * Add evaluation for a category without notes.
-     *
-     * @param type  category.
-     * @param score score.
-     * @return this.
-     */
-    public BatchEvaluationBuilder addEvaluation(final EvaluationType type, final int score) {
-        this.evaluations.add(new EvaluationImpl(type, score, Optional.empty()));
-        return this;
-    }
-
     /**
      * Add notes for the review.
      *
@@ -87,7 +62,6 @@ public final class BatchEvaluationBuilder {
         this.notes = notes;
         return this;
     }
-
     /**
      * Add reviewer for the review.
      *
@@ -98,7 +72,6 @@ public final class BatchEvaluationBuilder {
         this.reviewer = reviewer;
         return this;
     }
-
     /**
      * Return whether this builder can build another instance or have to reset.
      * @return true if this builder can build, false otherwise.
@@ -106,7 +79,6 @@ public final class BatchEvaluationBuilder {
     public boolean canBuild() {
         return !this.built;
     }
-
     /**
      * Return a {@link Result} holding a {@link BatchEvaluation} if everything went well, otherwise a
      * {@link Result} holding an {@link Exception}.
@@ -117,8 +89,6 @@ public final class BatchEvaluationBuilder {
         return Result.of(this)
             .require(BatchEvaluationBuilder::checkEvaluationsTypeValidity,
                 new IllegalArgumentException(INVALID_CATEGORIES_MESSAGE))
-            .require(BatchEvaluationBuilder::checkScoreValidity,
-                new IllegalAccessException(INVALID_SCORE_MESSAGE))
             .require(BatchEvaluationBuilder::canBuild,
                 new IllegalStateException(BUILDER_USED_MESSAGE))
             .peek(builder -> builder.built = true)
@@ -132,10 +102,12 @@ public final class BatchEvaluationBuilder {
      * Resets the builder.
      *
      * @param newType the {@link BatchEvaluationType} of the new review.
+     * @param evaluations the {@link Evaluation} set for this review.
      * @return this
      */
-    public BatchEvaluationBuilder reset(final BatchEvaluationType newType) {
+    public BatchEvaluationBuilder reset(final BatchEvaluationType newType, final Set<Evaluation> evaluations) {
         this.evaluations.clear();
+        this.evaluations.addAll(evaluations);
         this.notes = null;
         this.reviewer = null;
         this.built = false;
@@ -152,12 +124,6 @@ public final class BatchEvaluationBuilder {
             && this.batchEvaluationType.getCategories().containsAll(catTypes);
     }
 
-    private boolean checkScoreValidity() {
-        return this.evaluations
-            .stream()
-            .allMatch(cat -> cat.getScore() >= 0
-                && cat.getScore() <= cat.getEvaluationType().getMaxScore());
-    }
 
     private static final class BatchEvaluationImpl extends EvaluationImpl implements BatchEvaluation {
         private final Set<Evaluation> categories;
