@@ -6,7 +6,7 @@ import nwoolcan.model.utils.UnitOfMeasure;
 /**
  * View-Model representation of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
  */
-public final class ViewMiscArticle extends ViewArticle {
+public final class MiscArticleViewModel extends ArticleViewModel {
 
     /**
      * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
@@ -14,9 +14,9 @@ public final class ViewMiscArticle extends ViewArticle {
      * @param name of the {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      * @param unitOfMeasure of the {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      */
-    public ViewMiscArticle(final int id,
-                          final String name,
-                          final UnitOfMeasure unitOfMeasure) {
+    public MiscArticleViewModel(final int id,
+                                final String name,
+                                final UnitOfMeasure unitOfMeasure) {
         super(id, name, ArticleType.MISC, unitOfMeasure);
     }
 }

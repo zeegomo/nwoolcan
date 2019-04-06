@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * View-Model representation of the {@link nwoolcan.model.brewery.warehouse.stock.Record}.
  */
-public final class ViewRecord {
+public final class RecordViewModel {
 
     private final Quantity quantity;
     private final Boolean isAdding;
@@ -19,7 +19,7 @@ public final class ViewRecord {
      * @param isAdding is true if the quantity has to be added to the total of the {@link nwoolcan.model.brewery.warehouse.stock.Record}.
      * @param date of the {@link nwoolcan.model.brewery.warehouse.stock.Record}.
      */
-    public ViewRecord(final Quantity quantity, final Boolean isAdding, final Date date) {
+    public RecordViewModel(final Quantity quantity, final Boolean isAdding, final Date date) {
         this.quantity = quantity;
         this.isAdding = isAdding;
         this.date = date;

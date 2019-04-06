@@ -1,6 +1,6 @@
 package nwoolcan.view.model.warehouse.stock;
 
-import nwoolcan.view.model.warehouse.article.ViewArticle;
+import nwoolcan.view.model.warehouse.article.ArticleViewModel;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
 import nwoolcan.model.utils.Quantity;
 
@@ -10,30 +10,30 @@ import java.util.List;
 /**
  * View-Model representation of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
  */
-public final class ViewStock {
+public final class StockViewModel {
 
-    private final ViewArticle article;
+    private final ArticleViewModel article;
     private final Quantity remainingQuantity;
     private final Quantity usedQuantity;
     private final StockState stockState;
     private final Date expirationDate;
-    private final List<ViewRecord> records;
+    private final List<RecordViewModel> records;
 
     /**
      * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
-     * @param article the {@link ViewArticle} linked to this.
+     * @param article the {@link ArticleViewModel} linked to this.
      * @param remainingQuantity of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      * @param usedQuantity of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      * @param stockState the {@link StockState} of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      * @param expirationDate of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      * @param records of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      */
-    public ViewStock(final ViewArticle article,
-              final Quantity remainingQuantity,
-              final Quantity usedQuantity,
-              final StockState stockState,
-              final Date expirationDate,
-              final List<ViewRecord> records) {
+    public StockViewModel(final ArticleViewModel article,
+                          final Quantity remainingQuantity,
+                          final Quantity usedQuantity,
+                          final StockState stockState,
+                          final Date expirationDate,
+                          final List<RecordViewModel> records) {
         this.article = article;
         this.remainingQuantity = remainingQuantity;
         this.usedQuantity = usedQuantity;
@@ -46,7 +46,7 @@ public final class ViewStock {
      * Return the name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @return the name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
-    public ViewArticle getArticle() {
+    public ArticleViewModel getArticle() {
         return article;
     }
     /**
@@ -78,10 +78,10 @@ public final class ViewStock {
         return expirationDate;
     }
     /**
-     * Return the {@link List} of {@link ViewRecord}.
-     * @return the {@link List} of {@link ViewRecord}.
+     * Return the {@link List} of {@link RecordViewModel}.
+     * @return the {@link List} of {@link RecordViewModel}.
      */
-    public List<ViewRecord> getRecords() {
+    public List<RecordViewModel> getRecords() {
         return records;
     }
 }

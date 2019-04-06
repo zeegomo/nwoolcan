@@ -6,7 +6,7 @@ import nwoolcan.model.utils.UnitOfMeasure;
 /**
  * Abstract View-Model representation of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
  */
-public abstract class ViewArticle {
+public abstract class ArticleViewModel {
 
     private final int id;
     private final String name;
@@ -20,10 +20,10 @@ public abstract class ViewArticle {
      * @param articleType of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @param unitOfMeasure of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
-    public ViewArticle(final int id,
-                final String name,
-                final ArticleType articleType,
-                final UnitOfMeasure unitOfMeasure) {
+    public ArticleViewModel(final int id,
+                            final String name,
+                            final ArticleType articleType,
+                            final UnitOfMeasure unitOfMeasure) {
         this.id = id;
         this.name = name;
         this.articleType = articleType;

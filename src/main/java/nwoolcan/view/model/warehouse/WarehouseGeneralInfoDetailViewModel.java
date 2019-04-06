@@ -3,7 +3,7 @@ package nwoolcan.view.model.warehouse;
 /**
  * ViewWarehouse: general info section.
  */
-public class ViewWarehouseGeneralInfo {
+public class WarehouseGeneralInfoDetailViewModel {
 
     private final int nBeerAvailable;
     private final int nMiscAvailable;
@@ -27,15 +27,15 @@ public class ViewWarehouseGeneralInfo {
      * @param nMiscUsed of the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
      * @param nIngredientUsed of the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
      */
-    public ViewWarehouseGeneralInfo(final int nBeerAvailable,
-                                    final int nMiscAvailable,
-                                    final int nIngredientAvailable,
-                                    final int nBeerExpired,
-                                    final int nMiscExpired,
-                                    final int nIngredientExpired,
-                                    final int nBeerUsed,
-                                    final int nMiscUsed,
-                                    final int nIngredientUsed) {
+    public WarehouseGeneralInfoDetailViewModel(final int nBeerAvailable,
+                                               final int nMiscAvailable,
+                                               final int nIngredientAvailable,
+                                               final int nBeerExpired,
+                                               final int nMiscExpired,
+                                               final int nIngredientExpired,
+                                               final int nBeerUsed,
+                                               final int nMiscUsed,
+                                               final int nIngredientUsed) {
         this.nBeerAvailable = nBeerAvailable;
         this.nMiscAvailable = nMiscAvailable;
         this.nIngredientAvailable = nIngredientAvailable;

@@ -7,7 +7,7 @@ import nwoolcan.model.utils.UnitOfMeasure;
 /**
  * View-Model representation of the {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
  */
-public final class ViewIngredientArticle extends ViewArticle {
+public final class IngredientArticleViewModel extends ArticleViewModel {
 
     private final IngredientType ingredientType;
 
@@ -18,10 +18,10 @@ public final class ViewIngredientArticle extends ViewArticle {
      * @param unitOfMeasure of the {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      * @param ingredientType of the {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      */
-    public ViewIngredientArticle(final int id,
-                    final String name,
-                    final UnitOfMeasure unitOfMeasure,
-                    final IngredientType ingredientType) {
+    public IngredientArticleViewModel(final int id,
+                                      final String name,
+                                      final UnitOfMeasure unitOfMeasure,
+                                      final IngredientType ingredientType) {
         super(id, name, ArticleType.INGREDIENT, unitOfMeasure);
         this.ingredientType = ingredientType;
     }
