@@ -6,6 +6,7 @@ import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.WarehouseImpl;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
+import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
@@ -82,11 +83,11 @@ public final class BreweryImpl implements Brewery {
         return Result.of(batch)
                      .require(batch::isEnded)
                      .peek(b -> b.moveToNextStep(StepTypeEnum.STOCKED))
-                     //.map(Batch::getCurrentQuantity)
-                     //.require(q -> q.getUnitOfMeasure().equals(beerArticle.getUnitOfMeasure()))
-                     //.map(b -> batch)
+                     .map(Batch::getCurrentSize)
+                     .require(q -> q.getUnitOfMeasure().equals(beerArticle.getUnitOfMeasure()))
+                     .map(quantity -> batch)
                      .flatMap(b -> warehouse.createBeerStock(beerArticle, expirationDate, batch))
-                     //.peek(beerStock -> beerStock.addRecord(new Record(batch.getCurrentQuantity(), Record.Action.ADDING)))
+                     .peek(beerStock -> beerStock.addRecord(new Record(batch.getCurrentSize(), Record.Action.ADDING)))
                      .toEmpty();
     }
 }
