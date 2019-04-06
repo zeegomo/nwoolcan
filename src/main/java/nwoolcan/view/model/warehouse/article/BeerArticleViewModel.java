@@ -17,6 +17,11 @@ public final class BeerArticleViewModel extends ArticleViewModel {
     public BeerArticleViewModel(final int id,
                                 final String name,
                                 final UnitOfMeasure unitOfMeasure) {
-        super(id, name, ArticleType.FINISHED_BEER, unitOfMeasure);
+        super(id, name, unitOfMeasure);
+    }
+
+    @Override
+    public ArticleType getArticleType() {
+        return ArticleType.FINISHED_BEER;
     }
 }

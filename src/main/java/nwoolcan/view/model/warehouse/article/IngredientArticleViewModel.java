@@ -22,7 +22,7 @@ public final class IngredientArticleViewModel extends ArticleViewModel {
                                       final String name,
                                       final UnitOfMeasure unitOfMeasure,
                                       final IngredientType ingredientType) {
-        super(id, name, ArticleType.INGREDIENT, unitOfMeasure);
+        super(id, name, unitOfMeasure);
         this.ingredientType = ingredientType;
     }
     /**
@@ -31,5 +31,10 @@ public final class IngredientArticleViewModel extends ArticleViewModel {
      */
     public IngredientType getIngredientType() {
         return ingredientType;
+    }
+
+    @Override
+    public ArticleType getArticleType() {
+        return ArticleType.INGREDIENT;
     }
 }

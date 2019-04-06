@@ -10,23 +10,19 @@ public abstract class ArticleViewModel {
 
     private final int id;
     private final String name;
-    private final ArticleType articleType;
     private final UnitOfMeasure unitOfMeasure;
 
     /**
      * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @param id of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @param name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
-     * @param articleType of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @param unitOfMeasure of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     public ArticleViewModel(final int id,
                             final String name,
-                            final ArticleType articleType,
                             final UnitOfMeasure unitOfMeasure) {
         this.id = id;
         this.name = name;
-        this.articleType = articleType;
         this.unitOfMeasure = unitOfMeasure;
     }
     /**
@@ -47,9 +43,7 @@ public abstract class ArticleViewModel {
      * Returns the {@link ArticleType} of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @return the {@link ArticleType} of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
-    public ArticleType getArticleType() {
-        return articleType;
-    }
+    public abstract ArticleType getArticleType();
     /**
      * Returns the {@link UnitOfMeasure} of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @return the {@link UnitOfMeasure} of the {@link nwoolcan.model.brewery.warehouse.article.Article}.

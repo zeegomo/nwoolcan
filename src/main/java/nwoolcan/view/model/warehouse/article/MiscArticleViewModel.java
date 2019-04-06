@@ -17,6 +17,12 @@ public final class MiscArticleViewModel extends ArticleViewModel {
     public MiscArticleViewModel(final int id,
                                 final String name,
                                 final UnitOfMeasure unitOfMeasure) {
-        super(id, name, ArticleType.MISC, unitOfMeasure);
+        super(id, name, unitOfMeasure);
     }
+
+    @Override
+    public ArticleType getArticleType() {
+        return ArticleType.MISC;
+    }
+
 }
