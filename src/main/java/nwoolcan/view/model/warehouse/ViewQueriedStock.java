@@ -15,8 +15,7 @@ public final class ViewQueriedStock {
      * Constructor of the view version of the content of the {@link nwoolcan.model.brewery.warehouse.stock.StockManager} of the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
      * @param stocks produced by a query.
      */
-    // Package-private
-    ViewQueriedStock(final List<ViewStock> stocks) {
+    public ViewQueriedStock(final List<ViewStock> stocks) {
         this.stocks = stocks;
     }
 

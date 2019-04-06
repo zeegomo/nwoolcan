@@ -19,8 +19,7 @@ public final class ViewRecord {
      * @param isAdding is true if the quantity has to be added to the total of the {@link nwoolcan.model.brewery.warehouse.stock.Record}.
      * @param date of the {@link nwoolcan.model.brewery.warehouse.stock.Record}.
      */
-    // Package-private
-    ViewRecord(final Quantity quantity, final Boolean isAdding, final Date date) {
+    public ViewRecord(final Quantity quantity, final Boolean isAdding, final Date date) {
         this.quantity = quantity;
         this.isAdding = isAdding;
         this.date = date;

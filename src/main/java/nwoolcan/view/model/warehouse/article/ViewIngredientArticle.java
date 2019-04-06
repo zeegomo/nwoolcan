@@ -17,8 +17,7 @@ public final class ViewIngredientArticle extends ViewArticle {
      * @param name of the {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      * @param unitOfMeasure of the {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      */
-    // Package-private
-    ViewIngredientArticle(final int id,
+    public ViewIngredientArticle(final int id,
                     final String name,
                     final UnitOfMeasure unitOfMeasure,
                     final IngredientType ingredientType) {

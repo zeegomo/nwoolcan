@@ -15,7 +15,7 @@ public final class ViewQueriedArticle {
      * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.article.ArticleManager} of the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
      * @param articles produced by a query.
      */
-    ViewQueriedArticle(final List<ViewArticle> articles) {
+    public ViewQueriedArticle(final List<ViewArticle> articles) {
         this.articles = articles;
     }
     /**

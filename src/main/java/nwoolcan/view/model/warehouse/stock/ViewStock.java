@@ -27,8 +27,7 @@ public final class ViewStock {
      * @param stockState the {@link StockState} of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      * @param expirationDate of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      */
-    // Package-private
-    ViewStock(final ViewArticle article,
+    public ViewStock(final ViewArticle article,
               final Quantity remainingQuantity,
               final Quantity usedQuantity,
               final StockState stockState,

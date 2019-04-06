@@ -13,8 +13,7 @@ public final class ViewWarehouse {
      * @param numberOfStocks the total number of registered {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      * @param numberOfArticles the total number of registered {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
-    // Package-private
-    ViewWarehouse(final int numberOfStocks, final int numberOfArticles) {
+    public ViewWarehouse(final int numberOfStocks, final int numberOfArticles) {
         this.numberOfStocks = numberOfStocks;
         this.numberOfArticles = numberOfArticles;
     }

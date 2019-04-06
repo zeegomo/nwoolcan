@@ -14,8 +14,7 @@ public final class ViewBeerArticle extends ViewArticle {
      * @param name of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
      * @param unitOfMeasure of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
      */
-    // Package-private
-    ViewBeerArticle(final int id,
+    public ViewBeerArticle(final int id,
                 final String name,
                 final UnitOfMeasure unitOfMeasure) {
         super(id, name, ArticleType.FINISHED_BEER, unitOfMeasure);

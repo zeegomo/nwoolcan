@@ -17,8 +17,7 @@ public final class DashBoard {
      * Constructor of the model of main view of the application.
      * @param numberOfOngoingBatches the number of batches currently started which are not finished yet.
      */
-    // Package-private
-    DashBoard(final int numberOfOngoingBatches) {
+    public DashBoard(final int numberOfOngoingBatches) {
         this.numberOfOngoingBatches = numberOfOngoingBatches;
     }
 

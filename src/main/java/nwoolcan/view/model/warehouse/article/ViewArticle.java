@@ -20,8 +20,7 @@ public abstract class ViewArticle {
      * @param articleType of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @param unitOfMeasure of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
-    // Package-private
-    ViewArticle(final int id,
+    public ViewArticle(final int id,
                 final String name,
                 final ArticleType articleType,
                 final UnitOfMeasure unitOfMeasure) {
