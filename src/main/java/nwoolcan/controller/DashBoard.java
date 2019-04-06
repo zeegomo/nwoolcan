@@ -9,13 +9,22 @@ package nwoolcan.controller;
  *     <li>{@link nwoolcan.model.brewery.warehouse.stock.Stock} which have a low {@link nwoolcan.model.utils.Quantity}.</li>
  * </ul>
  */
-public interface DashBoard {
+public final class DashBoard {
+
+    private final int numberOfOngoingBatches;
+
+    // Package-private
+    DashBoard(final int numberOfOngoingBatches) {
+        this.numberOfOngoingBatches = numberOfOngoingBatches;
+    }
 
     /**
      * Returns the number of ongoing {@link nwoolcan.model.brewery.production.batch.Batch}.
      * @return the number of ongoing {@link nwoolcan.model.brewery.production.batch.Batch}.
      */
-    int getNumberOfOngoingBatches();
+    public int getNumberOfOngoingBatches() {
+        return numberOfOngoingBatches;
+    }
 
 
 }
