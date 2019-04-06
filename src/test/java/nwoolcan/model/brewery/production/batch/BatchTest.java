@@ -152,6 +152,7 @@ public class BatchTest {
         Assert.assertTrue(res.isPresent());
 
         Assert.assertNotEquals(Q2, batchRossina.getBatchInfo().getBatchSize());
+        Assert.assertEquals(Q2, batchRossina.getCurrentSize());
         Assert.assertEquals(1, batchRossina.getPreviousSteps().size());
         prevStep = batchRossina.getPreviousSteps().get(0);
 
@@ -228,6 +229,9 @@ public class BatchTest {
         batchAlfredo.getCurrentStep().finalize("Packaged in 75 cl bottles", new Date(), Quantity.of(bottles, UnitOfMeasure.BOTTLE_75_CL));
 
         batchAlfredo.moveToNextStep(StepTypeEnum.FINALIZED).peekError(e -> Assert.fail(e.getMessage()));
+
+        //Check current batch size.
+        Assert.assertEquals(Quantity.of(bottles, UnitOfMeasure.BOTTLE_75_CL), batchAlfredo.getCurrentSize());
 
         //Check end.
         Assert.assertTrue(batchAlfredo.isEnded());
