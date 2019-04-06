@@ -88,6 +88,16 @@ final class BatchImpl implements Batch {
     }
 
     @Override
+    public Quantity getCurrentSize() {
+        final Result<Quantity> prev = this.getPreviousStep()
+                                          .flatMap(s -> Results.ofChecked(() -> s.getStepInfo().getEndStepSize().get()));
+        if (prev.isPresent()) {
+            return prev.getValue();
+        }
+        return this.batchInfo.getBatchSize();
+    }
+
+    @Override
     public List<Step> getPreviousSteps() {
         return this.steps.subList(0, this.steps.size() - 1);
     }
@@ -98,9 +108,7 @@ final class BatchImpl implements Batch {
 
     private void checkAndFinalizeStep(final Step step) {
         if (!step.isFinalized()) {
-            //noinspection OptionalGetWithoutIsPresent
-            getPreviousStep().peekError(e -> step.finalize(null, new Date(), this.batchInfo.getBatchSize()))
-                             .peek(lastStep -> step.finalize(null, new Date(), lastStep.getStepInfo().getEndStepSize().get()));
+            step.finalize(null, new Date(), this.getCurrentSize());
         }
     }
 

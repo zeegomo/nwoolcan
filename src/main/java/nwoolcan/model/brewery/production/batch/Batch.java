@@ -3,6 +3,7 @@ package nwoolcan.model.brewery.production.batch;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepType;
+import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
@@ -29,6 +30,11 @@ public interface Batch {
      * @return the current production step of the batch.
      */
     Step getCurrentStep();
+    /**
+     * Returns the current batch size as a {@link Quantity}.
+     * @return the current batch size.
+     */
+    Quantity getCurrentSize();
     /**
      * Returns a Result containing a list describing all production steps
      * that happened before the current one, in chronological order.
