@@ -256,8 +256,11 @@ public class BatchTest {
         //Check all steps are registered.
         Assert.assertEquals(4, batchAlfredo.getPreviousSteps().size());
 
-        //Trying to go after ended.
-        batchAlfredo.moveToNextStep(StepTypeEnum.FINALIZED).peek(e -> Assert.fail());
+        //Stock this batch.
+        batchAlfredo.moveToNextStep(StepTypeEnum.STOCKED).peekError(e -> Assert.fail(e.getMessage()));
+
+        //Go to wrong step type.
+        batchAlfredo.moveToNextStep(StepTypeEnum.MASHING).peek(e -> Assert.fail());
     }
 
     /**
