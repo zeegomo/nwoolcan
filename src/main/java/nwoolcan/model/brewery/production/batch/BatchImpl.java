@@ -7,6 +7,7 @@ import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepType;
 import nwoolcan.model.brewery.production.batch.step.Steps;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
+import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 
@@ -33,6 +34,7 @@ final class BatchImpl implements Batch {
     private static final String BATCH_IS_ENDED_MESSAGE = "Cannot perform operation because batch is in ended state.";
     private static final Object CANNOT_GO_TO_STEP_MESSAGE = "From this step, cannot go to step: ";
     private static final String BATCH_NOT_ENDED_MESSAGE = "Cannot perform operation because batch is not in ended state.";
+    private static final String ALREADY_STOCKED_MESSAGE = "Cannot stock this batch again.";
 
     private final int id;
     private final ModifiableBatchInfo batchInfo;
@@ -40,6 +42,8 @@ final class BatchImpl implements Batch {
 
     @Nullable
     private BatchEvaluation batchEvaluation;
+    @Nullable
+    private Stock stock;
 
     /**
      * Creates a new {@link Batch} in production.
@@ -52,11 +56,11 @@ final class BatchImpl implements Batch {
      * @throws IllegalArgumentException if the initial step cannot be created.
      */
     BatchImpl(final BeerDescription beerDescription,
-                     final BatchMethod batchMethod,
-                     final Quantity initialSize,
-                     final Collection<Pair<IngredientArticle, Integer>> ingredients,
-                     final StepType initialStep,
-                     @Nullable final WaterMeasurement waterMeasurement) {
+              final BatchMethod batchMethod,
+              final Quantity initialSize,
+              final Collection<Pair<IngredientArticle, Integer>> ingredients,
+              final StepType initialStep,
+              @Nullable final WaterMeasurement waterMeasurement) {
         this.id = BatchIdGenerator.getInstance().getNextId();
 
         if (waterMeasurement == null) {
@@ -108,7 +112,6 @@ final class BatchImpl implements Batch {
     @Override
     public Result<Empty> moveToNextStep(final StepType nextStepType) {
         return Result.of(this.getCurrentStep())
-                     .require(() -> !this.isEnded(), new IllegalStateException(BATCH_IS_ENDED_MESSAGE))
                      .require(p -> p.getNextStepTypes().contains(nextStepType), new IllegalArgumentException(CANNOT_GO_TO_STEP_MESSAGE + nextStepType.toString()))
                      .peek(this::checkAndFinalizeStep)
                      .flatMap(() -> Steps.create(nextStepType))
