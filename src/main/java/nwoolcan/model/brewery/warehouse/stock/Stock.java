@@ -15,6 +15,11 @@ import java.util.Optional;
 public interface Stock {
 
     /**
+     * Return the id of the {@link Stock}.
+     * @return the id of the {@link Stock}.
+     */
+    int getId();
+    /**
      * Returns the article related to the current stock.
      * @return the article related to the current stock.
      */
