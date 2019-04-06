@@ -1,5 +1,8 @@
 package nwoolcan.view.model.warehouse;
 
+/**
+ * ViewWarehouse: general info section.
+ */
 public class ViewWarehouseGeneralInfo {
 
     private final int nBeerAvailable;
