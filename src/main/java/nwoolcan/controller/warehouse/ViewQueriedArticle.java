@@ -1,20 +1,29 @@
 package nwoolcan.controller.warehouse;
 
 import nwoolcan.controller.warehouse.article.ViewArticle;
-import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 
 import java.util.List;
 
 /**
  * Model of the view of the list of the articles.
  */
-public interface ViewQueriedArticle {
+public final class ViewQueriedArticle {
+
+    private final List<ViewArticle> articles;
 
     /**
-     * Returns a {@link List} of {@link ViewArticle}, accordingly with the {@link QueryArticle}.
-     * @param queryArticle the {@link QueryArticle}.
-     * @return a {@link List} of {@link ViewArticle}, accordingly with the {@link QueryArticle}.
+     * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.article.ArticleManager} of the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
+     * @param articles produced by a query.
      */
-    List<ViewArticle> getLastArticles(QueryArticle queryArticle);
+    ViewQueriedArticle(final List<ViewArticle> articles) {
+        this.articles = articles;
+    }
+    /**
+     * Returns a {@link List} of {@link ViewArticle}.
+     * @return a {@link List} of {@link ViewArticle}.
+     */
+    public List<ViewArticle> getQueriedArticles() {
+        return articles;
+    }
 
 }
