@@ -1,4 +1,4 @@
-package nwoolcan.controller.warehouse;
+package nwoolcan.view.model.warehouse;
 
 /**
  * View-Model representation of the {@link nwoolcan.model.brewery.warehouse.Warehouse}.

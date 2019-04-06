@@ -1,4 +1,4 @@
-package nwoolcan.controller.warehouse.article;
+package nwoolcan.view.model.warehouse.article;
 
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.utils.UnitOfMeasure;

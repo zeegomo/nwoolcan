@@ -1,6 +1,6 @@
-package nwoolcan.controller.warehouse.stock;
+package nwoolcan.view.model.warehouse.stock;
 
-import nwoolcan.controller.warehouse.article.ViewArticle;
+import nwoolcan.view.model.warehouse.article.ViewArticle;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
 import nwoolcan.model.utils.Quantity;
 
