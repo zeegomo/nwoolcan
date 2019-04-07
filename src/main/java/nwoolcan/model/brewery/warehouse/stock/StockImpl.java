@@ -106,7 +106,7 @@ public class StockImpl implements Stock {
             res = Quantities.add(this.remainingQuantity, record.getQuantity());
         } else { //REMOVING
             // remove the quantity of the record from the temporary current quantity and add it
-            // to the used quantity.
+            // to the used quantity. It fails when quantity gets negative.
             res = Quantities.remove(this.remainingQuantity, record.getQuantity())
                             .peek(q ->
                                 this.usedQuantity = Quantities.add(this.usedQuantity,
@@ -116,9 +116,7 @@ public class StockImpl implements Stock {
         // make the temporary quantity the official one, add the record to the records list
         // and return a Result of Empty.
         return res.peek(q -> this.remainingQuantity = q)
-                  .peek(q -> {
-                      records.add(record);
-                  })
+                  .peek(q -> records.add(record))
                   .peek(q -> this.updateLastChangeDate())
                   .toEmpty();
     }
