@@ -1,7 +1,7 @@
 package nwoolcan.viewmodel.brewery.warehouse;
 
 import nwoolcan.viewmodel.brewery.warehouse.article.ArticleViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.stock.StockViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.stock.AbstractStockViewModel;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class WarehouseViewModel {
     private final int nBeerUsed;
     private final int nMiscUsed;
     private final int nIngredientUsed;
-    private final List<StockViewModel> stocks;
+    private final List<AbstractStockViewModel> stocks;
     private final List<ArticleViewModel> articles;
 
 
@@ -46,7 +46,7 @@ public class WarehouseViewModel {
                               final int nBeerUsed,
                               final int nMiscUsed,
                               final int nIngredientUsed,
-                              final List<StockViewModel> stocks,
+                              final List<AbstractStockViewModel> stocks,
                               final List<ArticleViewModel> articles) {
         this.nBeerAvailable = nBeerAvailable;
         this.nMiscAvailable = nMiscAvailable;
@@ -124,10 +124,10 @@ public class WarehouseViewModel {
         return nIngredientUsed;
     }
     /**
-     * Returns the list of all {@link StockViewModel}.
-     * @return a list of {@link StockViewModel}.
+     * Returns the list of all {@link AbstractStockViewModel}.
+     * @return a list of {@link AbstractStockViewModel}.
      */
-    public List<StockViewModel> getStocks() {
+    public List<AbstractStockViewModel> getStocks() {
         return stocks;
     }
     /**
