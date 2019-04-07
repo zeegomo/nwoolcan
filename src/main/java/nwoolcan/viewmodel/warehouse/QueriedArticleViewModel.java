@@ -1,6 +1,6 @@
-package nwoolcan.view.model.warehouse;
+package nwoolcan.viewmodel.warehouse;
 
-import nwoolcan.view.model.warehouse.article.ArticleViewModel;
+import nwoolcan.viewmodel.warehouse.article.ArticleViewModel;
 
 import java.util.List;
 

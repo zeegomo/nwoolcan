@@ -1,4 +1,4 @@
-package nwoolcan.view.model.warehouse.stock;
+package nwoolcan.viewmodel.warehouse.stock;
 
 import nwoolcan.model.utils.Quantity;
 

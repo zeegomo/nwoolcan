@@ -1,4 +1,4 @@
-package nwoolcan.view.model.warehouse;
+package nwoolcan.viewmodel.warehouse;
 
 /**
  * ViewWarehouse: general info section.

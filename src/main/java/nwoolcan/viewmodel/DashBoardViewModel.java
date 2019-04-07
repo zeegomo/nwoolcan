@@ -1,4 +1,4 @@
-package nwoolcan.view.model;
+package nwoolcan.viewmodel;
 
 /**
  * View-Model interface with methods callable to obtain general information about the warehouse.
