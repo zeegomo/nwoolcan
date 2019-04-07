@@ -1,11 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import nwoolcan.view.subview.SubView?>
-
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
-<SubView xmlns="http://javafx.com/javafx"
-         xmlns:fx="http://javafx.com/fxml"
-         fx:controller="nwoolcan.view.ProductionController"
-         fx:id="productionSubView" >
-    <Label text="I'm the production view!"></Label>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import nwoolcan.view.subview.SubView?>
+<?import nwoolcan.view.subview.SubViewContainer?>
+
+<SubView fx:id="productionSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.ProductionController">
+    <ScrollPane>
+        <BorderPane>
+            <top>
+                <Label text="Production" BorderPane.alignment="CENTER_LEFT">
+                    <font>
+                        <Font size="28.0" />
+                    </font></Label>
+            </top>
+            <center>
+                <VBox>
+                    <TitledPane text="General information">
+                        <BorderPane>
+                            <left>
+                                <VBox>
+                                    <FlowPane>
+                                        <Label text="Total number of batches : " />
+                                        <Label fx:id="lblTotalNumberBatches" />
+                                    </FlowPane>
+                                    <FlowPane>
+                                        <Label text="Number of batches in production : " />
+                                        <Label fx:id="lblNumberProductionBatches" />
+                                    </FlowPane>
+                                    <FlowPane>
+                                        <Label text="Number of ended batches : " />
+                                        <Label fx:id="lblNumberEndedBatches" />
+                                    </FlowPane>
+                                </VBox>
+                            </left>
+                            <right>
+                                <HBox>
+                                    <PieChart fx:id="pieChartBatchesStatus" maxHeight="280.0" maxWidth="300.0" title="Batches">
+                                    </PieChart>
+                                    <PieChart fx:id="pieChartBatchesStyleTypes" maxHeight="280.0" maxWidth="300.0" title="Styles">
+                                    </PieChart>
+                                </HBox>
+                            </right>
+                        </BorderPane>
+                    </TitledPane>
+                    <SubViewContainer>
+
+                    </SubViewContainer>
+                    <TitledPane text="Review">
+                        <SubViewContainer>
+
+                        </SubViewContainer>
+                    </TitledPane>
+                </VBox>
+            </center>
+        </BorderPane>
+    </ScrollPane>
 </SubView>

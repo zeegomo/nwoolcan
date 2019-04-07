@@ -35,8 +35,7 @@ public final class MainController {
      * @param event the occurred event.
      */
     public void menuViewProductionClick(final ActionEvent event) {
-        //TODO get viewmodel from controller.
-        ViewManager.getView(ViewType.PRODUCTION).peek(view -> this.contentPane.substitute(view));
+        ViewManager.getView(ViewType.PRODUCTION /*, TODO insert view model here */).peek(view -> this.contentPane.substitute(view));
     }
 
     /**

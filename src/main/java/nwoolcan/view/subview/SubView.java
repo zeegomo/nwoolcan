@@ -1,6 +1,6 @@
 package nwoolcan.view.subview;
 
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.FlowPane;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * This is a container that can be put inside a {@link SubViewContainer}.
  */
-public final class SubView extends Pane {
+public final class SubView extends FlowPane {
     @Nullable
     private SubViewContainer container;
 
