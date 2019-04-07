@@ -37,10 +37,10 @@ public interface Batch {
     Quantity getCurrentSize();
     /**
      * Returns a Result containing a list describing all production steps
-     * that happened before the current one, in chronological order.
-     * @return a list describing all production steps that happened before the current one.
+     * that happened, in chronological order.
+     * @return a list describing all production steps that happened.
      */
-    List<Step> getPreviousSteps();
+    List<Step> getSteps();
     /**
      * Goes to the next step of type passed by parameter.
      * If the current step has not been finalized yet, it finalizes it with empty note, date now
