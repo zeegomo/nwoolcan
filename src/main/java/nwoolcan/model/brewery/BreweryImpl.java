@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -21,29 +22,33 @@ import java.util.stream.Collectors;
  */
 public final class BreweryImpl implements Brewery {
 
-    private final String breweryName;
-    private final String ownerName;
+    @Nullable private static BreweryImpl instance;
+    @Nullable private String breweryName;
+    @Nullable private String ownerName;
     private final Warehouse warehouse = new WarehouseImpl();
     private final Collection<Batch> batches = new ArrayList<>();
 
+    private BreweryImpl() { }
+
     /**
-     * Constructor of an Implementation of the {@link Brewery}.
-     * @param breweryName the name of the {@link Brewery}.
-     * @param ownerName the name of the owner.
+     * Return the only instance of the {@link Brewery}.
+     * @return the only instance of the {@link Brewery}.
      */
-    public BreweryImpl(final String breweryName, final String ownerName) {
-        this.breweryName = breweryName;
-        this.ownerName = ownerName;
+    public static synchronized Brewery getInstance() {
+        if (instance == null) {
+            instance = new BreweryImpl();
+        }
+        return instance;
     }
 
     @Override
-    public String getBreweryName() {
-        return breweryName;
+    public Optional<String> getBreweryName() {
+        return Optional.ofNullable(breweryName);
     }
 
     @Override
-    public String getOwnerName() {
-        return ownerName;
+    public Optional<String> getOwnerName() {
+        return Optional.ofNullable(ownerName);
     }
 
     @Override
@@ -89,5 +94,13 @@ public final class BreweryImpl implements Brewery {
                      .flatMap(b -> warehouse.createBeerStock(beerArticle, expirationDate, batch))
                      .peek(beerStock -> beerStock.addRecord(new Record(batch.getCurrentSize(), Record.Action.ADDING)))
                      .toEmpty();
+    }
+    @Override
+    public void setBreweryName(final String breweryName) {
+        this.breweryName = breweryName;
+    }
+    @Override
+    public void setOwnerName(final String ownerName) {
+        this.ownerName = ownerName;
     }
 }
