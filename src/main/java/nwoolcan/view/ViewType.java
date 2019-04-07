@@ -17,7 +17,11 @@ public enum ViewType {
     /**
      * The warehouse view.
      */
-    WAREHOUSE;
+    WAREHOUSE,
+    /**
+     * The main production view.
+     */
+    PRODUCTION;
 
     /**
      * Name of the FXML files associated with this type of view.

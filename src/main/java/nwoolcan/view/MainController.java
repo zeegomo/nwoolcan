@@ -31,6 +31,15 @@ public final class MainController {
     }
 
     /**
+     * Shows the Production view.
+     * @param event the occurred event.
+     */
+    public void menuViewProductionClick(final ActionEvent event) {
+        //TODO get viewmodel from controller.
+        ViewManager.getView(ViewType.PRODUCTION).peek(view -> this.contentPane.substitute(view));
+    }
+
+    /**
      * Quits the application.
      * @param event The occurred event
      */
