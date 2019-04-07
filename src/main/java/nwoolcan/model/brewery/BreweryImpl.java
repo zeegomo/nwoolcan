@@ -15,6 +15,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -22,38 +23,42 @@ import java.util.stream.Collectors;
  */
 public final class BreweryImpl implements Brewery {
 
-    private final String breweryName;
-    private final String ownerName;
+    @Nullable private static BreweryImpl instance;
+    @Nullable private String breweryName;
+    @Nullable private String ownerName;
     private final Warehouse warehouse = new WarehouseImpl();
     private final Collection<Batch> batches = new ArrayList<>();
 
+    private BreweryImpl() { }
+
     /**
-     * Constructor of an Implementation of the {@link Brewery}.
-     * @param breweryName the name of the {@link Brewery}.
-     * @param ownerName the name of the owner.
+     * Return the only instance of the {@link Brewery}.
+     * @return the only instance of the {@link Brewery}.
      */
-    public BreweryImpl(final String breweryName, final String ownerName) {
-        this.breweryName = breweryName;
-        this.ownerName = ownerName;
+    public static synchronized Brewery getInstance() {
+        if (instance == null) {
+            instance = new BreweryImpl();
+        }
+        return instance;
     }
 
     @Override
-    public String getBreweryName() {
-        return breweryName;
+    public synchronized Optional<String> getBreweryName() {
+        return Optional.ofNullable(breweryName);
     }
 
     @Override
-    public String getOwnerName() {
-        return ownerName;
+    public synchronized Optional<String> getOwnerName() {
+        return Optional.ofNullable(ownerName);
     }
 
     @Override
-    public Warehouse getWarehouse() {
+    public synchronized Warehouse getWarehouse() {
         return warehouse;
     }
 
     @Override
-    public Collection<Batch> getBatches(final QueryBatch queryBatch) {
+    public synchronized Collection<Batch> getBatches(final QueryBatch queryBatch) {
         final Collection<Batch> retBatches = new ArrayList<>(batches);
         return retBatches.stream()
                          .filter(batch -> !(queryBatch.getMinId().isPresent()
@@ -75,12 +80,12 @@ public final class BreweryImpl implements Brewery {
     }
 
     @Override
-    public void addBatch(final Batch newBatch) {
+    public synchronized void addBatch(final Batch newBatch) {
         batches.add(newBatch);
     }
 
     @Override
-    public Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle, @Nullable final Date expirationDate) {
+    public synchronized Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle, @Nullable final Date expirationDate) {
         return Result.of(batch)
                      .require(batch::isEnded)
                      .peek(b -> b.moveToNextStep(StepTypeEnum.STOCKED))
@@ -92,11 +97,19 @@ public final class BreweryImpl implements Brewery {
                      .toEmpty();
     }
     @Override
-    public Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle) {
+    public synchronized void setBreweryName(final String breweryName) {
+        this.breweryName = breweryName;
+    }
+    @Override
+    public synchronized void setOwnerName(final String ownerName) {
+        this.ownerName = ownerName;
+    }
+    @Override
+    public synchronized Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle) {
         return stockBatch(batch, beerArticle, null);
     }
 
-    private Result<BeerStock> createBeerStock(final BeerArticle beerArticle,
+    private synchronized Result<BeerStock> createBeerStock(final BeerArticle beerArticle,
                                               @Nullable final Date expirationDate,
                                               final Batch batch) {
         if (expirationDate == null) {
