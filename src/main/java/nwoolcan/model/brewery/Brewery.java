@@ -49,4 +49,11 @@ public interface Brewery {
      * @return a {@link Result} with an {@link Exception} if the {@link Batch} was not in the final {@link nwoolcan.model.brewery.production.batch.step.Step}.
      */
     Result<Empty> stockBatch(Batch batch, BeerArticle beerArticle, @Nullable Date expirationDate);
+    /**
+     * Takes a {@link Batch}, checks to be in the final {@link nwoolcan.model.brewery.production.batch.step.Step} and creates a {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
+     * @param batch from which create a {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
+     * @param beerArticle the {@link BeerArticle} related to the new {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
+     * @return a {@link Result} with an {@link Exception} if the {@link Batch} was not in the final {@link nwoolcan.model.brewery.production.batch.step.Step}.
+     */
+    Result<Empty> stockBatch(Batch batch, BeerArticle beerArticle);
 }
