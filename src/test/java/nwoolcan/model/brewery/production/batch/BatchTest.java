@@ -133,8 +133,8 @@ public class BatchTest {
         Assert.assertEquals(StepTypeEnum.BOILING, batchAlfredo.getCurrentStep().getStepInfo().getType());
         Assert.assertEquals(Q1, batchAlfredo.getBatchInfo().getBatchSize());
 
-        Assert.assertEquals(1, batchAlfredo.getPreviousSteps().size());
-        Step prevStep = batchAlfredo.getPreviousSteps().get(0);
+        Assert.assertEquals(2, batchAlfredo.getSteps().size());
+        Step prevStep = batchAlfredo.getSteps().get(0);
 
         Assert.assertTrue(prevStep.isFinalized());
         Assert.assertFalse(prevStep.getStepInfo().getNote().isPresent());
@@ -153,8 +153,8 @@ public class BatchTest {
 
         Assert.assertNotEquals(Q2, batchRossina.getBatchInfo().getBatchSize());
         Assert.assertEquals(Q2, batchRossina.getCurrentSize());
-        Assert.assertEquals(1, batchRossina.getPreviousSteps().size());
-        prevStep = batchRossina.getPreviousSteps().get(0);
+        Assert.assertEquals(2, batchRossina.getSteps().size());
+        prevStep = batchRossina.getSteps().get(0);
 
         Assert.assertTrue(prevStep.isFinalized());
         Assert.assertTrue(prevStep.getStepInfo().getNote().isPresent());
@@ -175,9 +175,11 @@ public class BatchTest {
     public void testCompleteStepChanges() {
         Assert.assertFalse(batchAlfredo.isEnded());
 
+        int nSteps = 1;
+
         //Example of production phase.
         //Check no last steps.
-        Assert.assertTrue(batchAlfredo.getPreviousSteps().isEmpty());
+        Assert.assertEquals(nSteps, batchAlfredo.getSteps().size());
 
         final Number t1 = 20.1;
         final Number t2 = 18.9;
@@ -190,6 +192,8 @@ public class BatchTest {
         batchAlfredo.getCurrentStep().finalize("Mashing ended.", new Date(), batchAlfredo.getBatchInfo().getBatchSize());
         batchAlfredo.moveToNextStep(StepTypeEnum.BOILING).peekError(e -> Assert.fail(e.getMessage()));
 
+        Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
+
         final Number t3 = 120.9;
         final Number t4 = 106.3;
 
@@ -200,6 +204,8 @@ public class BatchTest {
         //Finalize and go next.
         batchAlfredo.getCurrentStep().finalize("Boiling ended.", new Date(), batchAlfredo.getBatchInfo().getBatchSize());
         batchAlfredo.moveToNextStep(StepTypeEnum.FERMENTING).peekError(e -> Assert.fail(e.getMessage()));
+
+        Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
 
         final Number t5 = 50;
         final Number t6 = 45.8;
@@ -223,6 +229,8 @@ public class BatchTest {
 
         //Go next without finalize
         batchAlfredo.moveToNextStep(StepTypeEnum.PACKAGING).peekError(e -> Assert.fail(e.getMessage()));
+
+        Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
 
         final int bottles = 7;
         //Finalize packaging with bottle um.
@@ -258,13 +266,15 @@ public class BatchTest {
             .build().getValue());
 
         //Check all steps are registered.
-        Assert.assertEquals(4, batchAlfredo.getPreviousSteps().size());
+        Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
 
         //Stock this batch.
         batchAlfredo.moveToNextStep(StepTypeEnum.STOCKED).peekError(e -> Assert.fail(e.getMessage()));
+        Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
 
         //Go to wrong step type.
         batchAlfredo.moveToNextStep(StepTypeEnum.MASHING).peek(e -> Assert.fail());
+        Assert.assertNotEquals(++nSteps, batchAlfredo.getSteps().size());
     }
 
     /**
@@ -276,7 +286,7 @@ public class BatchTest {
 
         //Check same size as started
         Assert.assertEquals(batchBiondina.getBatchInfo().getBatchSize(),
-            batchBiondina.getPreviousSteps().get(0).getStepInfo().getEndStepSize().get());
+            batchBiondina.getSteps().get(0).getStepInfo().getEndStepSize().get());
 
         final int evapo = 1000;
         batchBiondina.getCurrentStep().finalize("Evaporated",
@@ -287,7 +297,7 @@ public class BatchTest {
         batchBiondina.moveToNextStep(StepTypeEnum.FERMENTING).peekError(e -> Assert.fail(e.getMessage()));
 
         //Check changed.
-        Assert.assertNotEquals(batchBiondina.getPreviousSteps().get(1).getStepInfo().getEndStepSize().get(),
+        Assert.assertNotEquals(batchBiondina.getSteps().get(1).getStepInfo().getEndStepSize().get(),
             batchBiondina.getBatchInfo().getBatchSize());
     }
 }
