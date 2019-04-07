@@ -9,7 +9,7 @@ package nwoolcan.view.model;
  *     <li>{@link nwoolcan.model.brewery.warehouse.stock.Stock} which have a low {@link nwoolcan.model.utils.Quantity}.</li>
  * </ul>
  */
-public final class DashBoard {
+public final class DashBoardViewModel {
 
     private final int numberOfOngoingBatches;
 
@@ -17,7 +17,7 @@ public final class DashBoard {
      * Constructor of the model of main view of the application.
      * @param numberOfOngoingBatches the number of batches currently started which are not finished yet.
      */
-    public DashBoard(final int numberOfOngoingBatches) {
+    public DashBoardViewModel(final int numberOfOngoingBatches) {
         this.numberOfOngoingBatches = numberOfOngoingBatches;
     }
 
