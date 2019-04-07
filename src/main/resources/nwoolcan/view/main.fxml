@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import nwoolcan.view.subview.SubViewContainer?>
 
-<BorderPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.MainController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.MainController">
     <top>
         <MenuBar>
             <menus>
