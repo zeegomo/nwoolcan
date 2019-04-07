@@ -20,6 +20,7 @@ import java.util.List;
  * Controller of the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
  */
 public interface WarehouseController {
+
     /**
      * Creates a {@link List} of {@link ArticleViewModel} accordingly to the query.
      * @param queryArticle describes the nature of the query.
