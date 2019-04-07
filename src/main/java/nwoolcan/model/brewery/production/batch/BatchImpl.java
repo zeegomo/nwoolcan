@@ -98,12 +98,12 @@ final class BatchImpl implements Batch {
     }
 
     @Override
-    public List<Step> getPreviousSteps() {
-        return this.steps.subList(0, this.steps.size() - 1);
+    public List<Step> getSteps() {
+        return Collections.unmodifiableList(this.steps);
     }
 
     private Result<Step> getPreviousStep() {
-        return Results.ofChecked(() -> this.getPreviousSteps().get(this.getPreviousSteps().size() - 1));
+        return Results.ofChecked(() -> this.getSteps().get(this.getSteps().size() - 2));
     }
 
     private void checkAndFinalizeStep(final Step step) {

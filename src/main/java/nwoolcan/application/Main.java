@@ -1,16 +1,30 @@
 package nwoolcan.application;
 
-import nwoolcan.view.View;
-import nwoolcan.view.ViewImpl;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import nwoolcan.view.ViewManager;
+import nwoolcan.view.ViewType;
 
-final class Main {
-    private Main() { }
+/**
+ * Main class run when the program starts.
+ */
+public final class Main extends Application {
+    private static final String TITLE = "nWoolcan";
+    private static final ViewType MAIN_VIEW_TYPE = ViewType.MAIN;
 
+    /**
+     * The start point of the program.
+     * @param args The arguments from the command line.
+     */
     public static void main(final String[] args) {
-        final View view = new ViewImpl();
+        launch(args);
+    }
 
-        System.out.println("Mago Iulius");
-
-        view.launch();
+    @Override
+    public void start(final Stage primaryStage) {
+        primaryStage.setTitle(TITLE);
+        primaryStage.setScene(new Scene(ViewManager.getView(MAIN_VIEW_TYPE).getValue()));
+        primaryStage.show();
     }
 }

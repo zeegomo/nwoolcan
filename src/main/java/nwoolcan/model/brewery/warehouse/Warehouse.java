@@ -12,7 +12,6 @@ import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 
-import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.List;
 
@@ -78,7 +77,15 @@ public interface Warehouse {
      * @return a {@link Result} indicating errors.
      */
     Result<BeerStock> createBeerStock(BeerArticle beerArticle,
-                                      @Nullable Date expirationDate,
+                                      Date expirationDate,
+                                      Batch batch);
+    /**
+     * Constructor of the {@link BeerStock}.
+     * @param beerArticle linked to this {@link BeerStock}.
+     * @param batch linked to this {@link BeerStock}.
+     * @return a {@link Result} indicating errors.
+     */
+    Result<BeerStock> createBeerStock(BeerArticle beerArticle,
                                       Batch batch);
     /**
      * Setter for the name of the {@link Article}.

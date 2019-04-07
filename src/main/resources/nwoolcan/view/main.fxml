@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
 
+<?import nwoolcan.view.subview.SubViewContainer?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nwoolcan.view.ViewController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="nwoolcan.view.MainController">
+    <top>
+        <MenuBar>
+            <menus>
+                <Menu text="File">
+                    <items>
+                        <MenuItem text="Quit" onAction="#menuFileQuitClick" />
+                        <MenuItem text="Count Overlays" onAction="#menuFileCountOverlaysClick" />
+                    </items>
+                </Menu>
+                <Menu text="View">
+                    <items>
+                        <MenuItem text="Dashboard" onAction="#menuViewDashboardClick" />
+                        <MenuItem text="Warehouse" onAction="#menuViewWarehouseClick" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
     <center>
-        <TabPane fx:id="mainLayout" tabClosingPolicy="UNAVAILABLE" side="LEFT">
-            <tabs>
-                <Tab fx:id="tabDashboard" text="Dashboard">
-                    <Label>Testone</Label>
-                </Tab>
-                <Tab fx:id="tabWarehouse" text="Dashboard">
-                    <Button fx:id="btnPrint" onAction="#btnPrintClicked">Ciao</Button>
-                </Tab>
-            </tabs>
-        </TabPane>
+        <SubViewContainer fx:id="contentPane" />
     </center>
 
 </BorderPane>
