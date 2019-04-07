@@ -1,9 +1,14 @@
-package nwoolcan.viewmodel.warehouse;
+package nwoolcan.viewmodel.brewery.warehouse;
+
+import nwoolcan.viewmodel.brewery.warehouse.article.ArticleViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.stock.StockViewModel;
+
+import java.util.List;
 
 /**
  * ViewWarehouse: general info section.
  */
-public class WarehouseGeneralInfoDetailViewModel {
+public class WarehouseViewModel {
 
     private final int nBeerAvailable;
     private final int nMiscAvailable;
@@ -14,6 +19,9 @@ public class WarehouseGeneralInfoDetailViewModel {
     private final int nBeerUsed;
     private final int nMiscUsed;
     private final int nIngredientUsed;
+    private final List<StockViewModel> stocks;
+    private final List<ArticleViewModel> articles;
+
 
     /**
      * Constructor of the view part of the {@link nwoolcan.model.brewery.warehouse.Warehouse} which specifies the general statistics.
@@ -26,16 +34,20 @@ public class WarehouseGeneralInfoDetailViewModel {
      * @param nBeerUsed of the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
      * @param nMiscUsed of the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
      * @param nIngredientUsed of the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
+     * @param stocks of the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
+     * @param articles of the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
      */
-    public WarehouseGeneralInfoDetailViewModel(final int nBeerAvailable,
-                                               final int nMiscAvailable,
-                                               final int nIngredientAvailable,
-                                               final int nBeerExpired,
-                                               final int nMiscExpired,
-                                               final int nIngredientExpired,
-                                               final int nBeerUsed,
-                                               final int nMiscUsed,
-                                               final int nIngredientUsed) {
+    public WarehouseViewModel(final int nBeerAvailable,
+                              final int nMiscAvailable,
+                              final int nIngredientAvailable,
+                              final int nBeerExpired,
+                              final int nMiscExpired,
+                              final int nIngredientExpired,
+                              final int nBeerUsed,
+                              final int nMiscUsed,
+                              final int nIngredientUsed,
+                              final List<StockViewModel> stocks,
+                              final List<ArticleViewModel> articles) {
         this.nBeerAvailable = nBeerAvailable;
         this.nMiscAvailable = nMiscAvailable;
         this.nIngredientAvailable = nIngredientAvailable;
@@ -45,6 +57,8 @@ public class WarehouseGeneralInfoDetailViewModel {
         this.nBeerUsed = nBeerUsed;
         this.nMiscUsed = nMiscUsed;
         this.nIngredientUsed = nIngredientUsed;
+        this.stocks = stocks;
+        this.articles = articles;
     }
     /**
      * Return the number of available {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
@@ -109,6 +123,19 @@ public class WarehouseGeneralInfoDetailViewModel {
     public int getnIngredientUsed() {
         return nIngredientUsed;
     }
-
+    /**
+     * Returns the list of all {@link StockViewModel}.
+     * @return a list of {@link StockViewModel}.
+     */
+    public List<StockViewModel> getStocks() {
+        return stocks;
+    }
+    /**
+     * Returns a {@link List} of {@link ArticleViewModel}.
+     * @return a {@link List} of {@link ArticleViewModel}.
+     */
+    public List<ArticleViewModel> getArticles() {
+        return articles;
+    }
 
 }

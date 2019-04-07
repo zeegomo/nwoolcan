@@ -1,11 +1,13 @@
-package nwoolcan.viewmodel.warehouse.stock;
+package nwoolcan.viewmodel.brewery.warehouse.stock;
 
-import nwoolcan.viewmodel.warehouse.article.ArticleViewModel;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
 import nwoolcan.model.utils.Quantity;
+import nwoolcan.viewmodel.brewery.warehouse.article.ArticleViewModel;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * View-Model representation of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
@@ -16,6 +18,7 @@ public final class StockViewModel {
     private final Quantity remainingQuantity;
     private final Quantity usedQuantity;
     private final StockState stockState;
+    @Nullable
     private final Date expirationDate;
     private final List<RecordViewModel> records;
 
@@ -32,7 +35,7 @@ public final class StockViewModel {
                           final Quantity remainingQuantity,
                           final Quantity usedQuantity,
                           final StockState stockState,
-                          final Date expirationDate,
+                          @Nullable final Date expirationDate,
                           final List<RecordViewModel> records) {
         this.article = article;
         this.remainingQuantity = remainingQuantity;
@@ -74,8 +77,8 @@ public final class StockViewModel {
      * Return the expiration {@link java.util.Date}.
      * @return the expiration {@link java.util.Date}.
      */
-    public Date getExpirationDate() {
-        return expirationDate;
+    public Optional<Date> getExpirationDate() {
+        return Optional.ofNullable(expirationDate);
     }
     /**
      * Return the {@link List} of {@link RecordViewModel}.

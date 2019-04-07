@@ -1,4 +1,4 @@
-package nwoolcan.viewmodel;
+package nwoolcan.viewmodel.brewery;
 
 /**
  * View representation of the {@link nwoolcan.model.brewery.Brewery}.
