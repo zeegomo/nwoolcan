@@ -43,22 +43,22 @@ public final class BreweryImpl implements Brewery {
     }
 
     @Override
-    public Optional<String> getBreweryName() {
+    public synchronized Optional<String> getBreweryName() {
         return Optional.ofNullable(breweryName);
     }
 
     @Override
-    public Optional<String> getOwnerName() {
+    public synchronized Optional<String> getOwnerName() {
         return Optional.ofNullable(ownerName);
     }
 
     @Override
-    public Warehouse getWarehouse() {
+    public synchronized Warehouse getWarehouse() {
         return warehouse;
     }
 
     @Override
-    public Collection<Batch> getBatches(final QueryBatch queryBatch) {
+    public synchronized Collection<Batch> getBatches(final QueryBatch queryBatch) {
         final Collection<Batch> retBatches = new ArrayList<>(batches);
         return retBatches.stream()
                          .filter(batch -> !(queryBatch.getMinId().isPresent()
@@ -80,12 +80,12 @@ public final class BreweryImpl implements Brewery {
     }
 
     @Override
-    public void addBatch(final Batch newBatch) {
+    public synchronized void addBatch(final Batch newBatch) {
         batches.add(newBatch);
     }
 
     @Override
-    public Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle, @Nullable final Date expirationDate) {
+    public synchronized Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle, @Nullable final Date expirationDate) {
         return Result.of(batch)
                      .require(batch::isEnded)
                      .peek(b -> b.moveToNextStep(StepTypeEnum.STOCKED))
@@ -97,19 +97,19 @@ public final class BreweryImpl implements Brewery {
                      .toEmpty();
     }
     @Override
-    public void setBreweryName(final String breweryName) {
+    public synchronized void setBreweryName(final String breweryName) {
         this.breweryName = breweryName;
     }
     @Override
-    public void setOwnerName(final String ownerName) {
+    public synchronized void setOwnerName(final String ownerName) {
         this.ownerName = ownerName;
     }
     @Override
-    public Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle) {
+    public synchronized Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle) {
         return stockBatch(batch, beerArticle, null);
     }
 
-    private Result<BeerStock> createBeerStock(final BeerArticle beerArticle,
+    private synchronized Result<BeerStock> createBeerStock(final BeerArticle beerArticle,
                                               @Nullable final Date expirationDate,
                                               final Batch batch) {
         if (expirationDate == null) {
