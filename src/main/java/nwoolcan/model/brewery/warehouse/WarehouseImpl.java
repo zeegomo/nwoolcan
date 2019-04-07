@@ -14,7 +14,6 @@ import nwoolcan.model.brewery.warehouse.stock.StockManager;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 
-import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -161,9 +160,14 @@ public final class WarehouseImpl implements Warehouse {
 
     @Override
     public Result<BeerStock> createBeerStock(final BeerArticle beerArticle,
-                                             @Nullable final Date expirationDate,
+                                             final Date expirationDate,
                                              final Batch batch) {
         return STOCK_MANAGER.createBeerStock(beerArticle, expirationDate, batch);
+    }
+
+    @Override
+    public Result<BeerStock> createBeerStock(final BeerArticle beerArticle, final Batch batch) {
+        return STOCK_MANAGER.createBeerStock(beerArticle, null, batch);
     }
 
     @Override
