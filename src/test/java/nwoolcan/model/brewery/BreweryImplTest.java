@@ -75,7 +75,7 @@ public class BreweryImplTest {
         final BeerArticle beerArticle = brewery.getWarehouse()
                                                .createBeerArticle("SUPERSBORNARTICLE",
                                                                   UnitOfMeasure.BOTTLE_33_CL);
-        final Result<Empty> stockBatchRes = brewery.stockBatch(batch, beerArticle, null);
+        final Result<Empty> stockBatchRes = brewery.stockBatch(batch, beerArticle);
         Assert.assertTrue(stockBatchRes.isPresent());
         final Result<QueryStock> queryStockRes = new QueryStockBuilder().setArticle(beerArticle).build();
         Assert.assertTrue(queryStockRes.isPresent());
