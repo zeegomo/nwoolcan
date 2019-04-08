@@ -14,6 +14,6 @@
     <FlowPane>
         <Label text="This is the warehouse. Name is: " />
         <Label fx:id="lblName" />
-        <SubViewContainer fx:id="stockTable" />
+        <SubViewContainer fx:id="stockTable" parent="$warehouseSubView" />
     </FlowPane>
 </SubView>

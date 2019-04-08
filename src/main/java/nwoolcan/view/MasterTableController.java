@@ -1,6 +1,7 @@
 package nwoolcan.view;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -40,4 +41,8 @@ public final class MasterTableController<T> extends SubViewController implements
         return this.masterTableSubView;
     }
 
+    @FXML
+    void btnBackClick(final ActionEvent event) {
+        this.previousView();
+    }
 }
