@@ -3,6 +3,7 @@ package nwoolcan.view;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import nwoolcan.controller.ProductionContext;
 import nwoolcan.view.subview.SubViewContainer;
 
 /**
@@ -35,7 +36,7 @@ public final class MainController {
      * @param event the occurred event.
      */
     public void menuViewProductionClick(final ActionEvent event) {
-        ViewManager.getView(ViewType.PRODUCTION /*, TODO insert view model here */).peek(view -> this.contentPane.substitute(view));
+        ViewManager.getView(ViewType.PRODUCTION, ProductionContext.getController().getViewModel()).peek(view -> this.contentPane.substitute(view));
     }
 
     /**
