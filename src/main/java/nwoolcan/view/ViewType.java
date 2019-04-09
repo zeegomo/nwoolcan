@@ -21,7 +21,11 @@ public enum ViewType {
     /**
      * The main production view.
      */
-    PRODUCTION;
+    PRODUCTION,
+    /**
+     * The master table view.
+     */
+    MASTER_TABLE;
 
     /**
      * Name of the FXML files associated with this type of view.

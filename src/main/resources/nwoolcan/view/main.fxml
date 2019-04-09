@@ -5,17 +5,20 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
 <?import nwoolcan.view.subview.SubViewContainer?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nwoolcan.view.MainController">
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.MainController">
     <top>
         <MenuBar>
             <menus>
                 <Menu text="File">
                     <items>
-                        <MenuItem text="Quit" onAction="#menuFileQuitClick" />
-                        <MenuItem text="Count Overlays" onAction="#menuFileCountOverlaysClick" />
+                        <MenuItem onAction="#menuFileQuitClick" text="Quit" />
+                        <MenuItem onAction="#menuFileCountOverlaysClick" text="Count Overlays" />
                     </items>
                 </Menu>
                 <Menu text="View">

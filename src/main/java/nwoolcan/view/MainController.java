@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import nwoolcan.controller.ProductionContext;
+import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.subview.SubViewContainer;
 
 /**
