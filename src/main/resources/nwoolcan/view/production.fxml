@@ -56,12 +56,9 @@
                         </right>
                     </BorderPane>
                 </TitledPane>
-                <SubViewContainer parent="$productionSubView"
-                                  fx:id="masterTableContainer">
-                </SubViewContainer>
-                <TitledPane text="Review">
-                    <SubViewContainer parent="$productionSubView">
-                        <!-- TODO the review container -->
+                <TitledPane text="Batches">
+                    <SubViewContainer parent="$productionSubView"
+                                      fx:id="masterTableContainer">
                     </SubViewContainer>
                 </TitledPane>
             </VBox>
