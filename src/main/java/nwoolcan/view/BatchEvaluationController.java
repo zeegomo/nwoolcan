@@ -34,14 +34,9 @@ public class BatchEvaluationController
     @Override
     public void initData(final BatchEvaluationViewModel data) {
         this.lblEvaluationTypeName.setText("andrea");
-        /*this.lblEvaluationMaxScore.setText(Integer.toString(data.getMaxScore()));
+        this.lblEvaluationMaxScore.setText(Integer.toString(data.getMaxScore()));
         this.lblEvaluationScore.setText(Integer.toString(data.getScore()));
         this.lblReviewer.setText(data.getReviewer().orElse(UNSPECIFIED_REVIEWER));
-        */
-        for (int i = 0; i < 10; i++) {
-            categories.getChildren().add(new TitledPane("Category" + 1 + i, new Label("Hnelo")));
-        }
-
     }
 
     @Override
