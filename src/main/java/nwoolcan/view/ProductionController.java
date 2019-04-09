@@ -73,7 +73,7 @@ public final class ProductionController
                 new ColumnDescriptor("Ended", "isEnded")
             ),
             data.getBatches(),
-            ViewType.DASHBOARD
+            ViewType.BATCH_DETAIL
         );
 
         ViewManager.getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));

@@ -7,11 +7,11 @@ public enum UnitOfMeasure {
     /**
      * Grams.
      */
-    GRAM,
+    GRAM("g"),
     /**
      * Milliliters.
      */
-    MILLILITER,
+    MILLILITER("mL"),
     /**
      * Basic units.
      */
@@ -19,15 +19,15 @@ public enum UnitOfMeasure {
     /**
      * Percentage.
      */
-    PERCENTAGE,
+    PERCENTAGE("%"),
     /**
      * Celsius degrees.
      */
-    CELSIUS_DEGREE,
+    CELSIUS_DEGREE("°C"),
     /**
      * Milligrams per liter.
      */
-    MILLIGRAMS_PER_LITER,
+    MILLIGRAMS_PER_LITER("mg/L"),
     /**
      * Pure number.
      */
@@ -56,4 +56,22 @@ public enum UnitOfMeasure {
      * Magnum bottle unit of measure corresponding to 1.5 liters.
      */
     BOTTLE_MAGNUM;
+
+    private final String symbol;
+
+    UnitOfMeasure() {
+        this.symbol = "";
+    }
+
+    UnitOfMeasure(final String symbol) {
+        this.symbol = symbol;
+    }
+
+    /**
+     * Returns the symbol of the unit of measure.
+     * @return the symbol of the unit of measure.
+     */
+    public String getSymbol() {
+        return this.symbol;
+    }
 }
