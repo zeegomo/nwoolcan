@@ -13,16 +13,19 @@ public class MasterTableViewModel<T> {
 
     private final List<ColumnDescriptor> columnDescriptors;
     private final List<T> values;
+    private final ViewType detailViewType;
 
     /**
      * Default constructor.
      * @param columnDescriptors a list of column descriptors, specifying the name of the column
      *                          and the respective field name in the type {@link T}.
      * @param values the list of {@link T} representing the actual data to be displayed.
+     * @param detailViewType view type for the detail
      */
-    public MasterTableViewModel(final List<ColumnDescriptor> columnDescriptors, final List<T> values) {
+    public MasterTableViewModel(final List<ColumnDescriptor> columnDescriptors, final List<T> values, final ViewType detailViewType) {
         this.columnDescriptors = columnDescriptors;
         this.values = values;
+        this.detailViewType = detailViewType;
     }
 
     /**
@@ -40,5 +43,13 @@ public class MasterTableViewModel<T> {
      */
     public List<T> getValues() {
         return Collections.unmodifiableList(this.values);
+    }
+
+    /**
+     * Returns the type of the view to display the detail of an object.
+     * @return the type of the view to display the detail of an object.
+     */
+    public ViewType getDetailViewType() {
+        return this.detailViewType;
     }
 }

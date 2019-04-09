@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -14,7 +13,7 @@
     <BorderPane>
         <top>
             <FlowPane fx:id="filtersPane">
-
+                <Button text="Back" onAction="#btnBackClick" />
             </FlowPane>
         </top>
         <center>
