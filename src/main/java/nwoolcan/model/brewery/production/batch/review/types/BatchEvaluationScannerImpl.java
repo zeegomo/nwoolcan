@@ -33,6 +33,7 @@ public final class BatchEvaluationScannerImpl implements BatchEvaluationTypeScan
         return Results.ofCloseable(() ->  new ClassGraph().enableAllInfo().scan(), scanResult -> {
             ClassInfoList widgetClasses = scanResult.getClassesImplementing(BatchEvaluationType.class.getName());
             return widgetClasses
+                .filter(klass -> !klass.isAbstract())
                 .loadClasses(BatchEvaluationType.class)
                 .stream()
                 .flatMap(review -> {

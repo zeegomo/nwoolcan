@@ -25,6 +25,7 @@ public final class Main extends Application {
     public void start(final Stage primaryStage) {
         primaryStage.setTitle(TITLE);
         primaryStage.setScene(new Scene(ViewManager.getView(MAIN_VIEW_TYPE).getValue()));
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 }
