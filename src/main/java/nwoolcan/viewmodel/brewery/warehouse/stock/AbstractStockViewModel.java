@@ -5,7 +5,7 @@ import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
 import nwoolcan.model.utils.Quantity;
-import nwoolcan.viewmodel.brewery.warehouse.article.ArticleViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 
 import java.util.Date;
 import java.util.List;
@@ -30,8 +30,8 @@ public abstract class AbstractStockViewModel {
      * Return the name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @return the name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
-    public final ArticleViewModel getArticle() {
-        return ArticleViewModel.getViewArticle(stock.getArticle());
+    public final AbstractArticleViewModel getArticle() {
+        return AbstractArticleViewModel.getViewArticle(stock.getArticle());
     }
     /**
      * Return the remaining {@link nwoolcan.model.utils.Quantity}.

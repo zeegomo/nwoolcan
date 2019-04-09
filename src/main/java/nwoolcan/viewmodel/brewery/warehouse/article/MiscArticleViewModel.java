@@ -6,7 +6,7 @@ import nwoolcan.model.brewery.warehouse.article.ArticleType;
 /**
  * View-Model representation of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
  */
-public final class MiscArticleViewModel extends ArticleViewModel {
+public final class MiscArticleViewModel extends AbstractArticleViewModel {
 
     /**
      * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.

@@ -6,7 +6,7 @@ import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.article.ArticleViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.MiscArticleViewModel;
@@ -22,11 +22,11 @@ import java.util.List;
 public interface WarehouseController {
 
     /**
-     * Creates a {@link List} of {@link ArticleViewModel} accordingly to the query.
+     * Creates a {@link List} of {@link AbstractArticleViewModel} accordingly to the query.
      * @param queryArticle describes the nature of the query.
-     * @return a {@link List} of {@link ArticleViewModel} accordingly to the query.
+     * @return a {@link List} of {@link AbstractArticleViewModel} accordingly to the query.
      */
-    List<ArticleViewModel> getArticles(QueryArticle queryArticle);
+    List<AbstractArticleViewModel> getArticles(QueryArticle queryArticle);
     /**
      * Creates a {@link List} of {@link AbstractStockViewModel} accordingly to the query.
      * @param queryStock describes the nature of the query.
@@ -39,10 +39,10 @@ public interface WarehouseController {
      */
     WarehouseViewModel getWarehouseViewModel();
     /**
-     * Create a {@link nwoolcan.model.brewery.warehouse.article.Article} and return its {@link ArticleViewModel}.
+     * Create a {@link nwoolcan.model.brewery.warehouse.article.Article} and return its {@link AbstractArticleViewModel}.
      * @param name of the new {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @param unitOfMeasure of the new {@link nwoolcan.model.brewery.warehouse.article.Article}.
-     * @return the {@link ArticleViewModel}.
+     * @return the {@link AbstractArticleViewModel}.
      */
     MiscArticleViewModel createMiscArticle(String name, UnitOfMeasure unitOfMeasure);
     /**
@@ -79,8 +79,8 @@ public interface WarehouseController {
      * Set a new name of an existing {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @param articleId of the existing {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @param newName to be set.
-     * @return the new {@link ArticleViewModel} representation of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
+     * @return the new {@link AbstractArticleViewModel} representation of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
-    Result<ArticleViewModel> setName(int articleId, String newName);
+    Result<AbstractArticleViewModel> setName(int articleId, String newName);
 
 }

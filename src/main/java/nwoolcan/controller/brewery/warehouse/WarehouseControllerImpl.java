@@ -10,7 +10,7 @@ import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.article.ArticleViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.MiscArticleViewModel;
@@ -39,10 +39,10 @@ public final class WarehouseControllerImpl implements WarehouseController {
     }
 
     @Override
-    public List<ArticleViewModel> getArticles(final QueryArticle queryArticle) {
+    public List<AbstractArticleViewModel> getArticles(final QueryArticle queryArticle) {
         return warehouse.getArticles(queryArticle)
                         .stream()
-                        .map(ArticleViewModel::getViewArticle)
+                        .map(AbstractArticleViewModel::getViewArticle)
                         .collect(Collectors.toList());
     }
 
@@ -102,11 +102,11 @@ public final class WarehouseControllerImpl implements WarehouseController {
     }
 
     @Override
-    public Result<ArticleViewModel> setName(final int articleId, final String newName) {
+    public Result<AbstractArticleViewModel> setName(final int articleId, final String newName) {
         return Result.of(articleId)
                      .flatMap(this::getArticleById)
                      .flatMap(article -> warehouse.setName(article, newName))
-                     .map(ArticleViewModel::getViewArticle);
+                     .map(AbstractArticleViewModel::getViewArticle);
     }
 
 }

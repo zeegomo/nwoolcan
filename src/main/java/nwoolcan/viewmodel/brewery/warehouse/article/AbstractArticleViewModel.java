@@ -7,15 +7,15 @@ import nwoolcan.model.utils.UnitOfMeasure;
 /**
  * Abstract View-Model representation of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
  */
-public abstract class ArticleViewModel {
+public abstract class AbstractArticleViewModel {
 
     private final Article article;
 
     /**
      * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
-     * @param article to be converted in {@link ArticleViewModel}.
+     * @param article to be converted in {@link AbstractArticleViewModel}.
      */
-    public ArticleViewModel(final Article article) {
+    public AbstractArticleViewModel(final Article article) {
         this.article = article;
     }
     /**
@@ -45,12 +45,12 @@ public abstract class ArticleViewModel {
         return article.getUnitOfMeasure();
     }
     /**
-     * Generates an {@link ArticleViewModel} starting from a common {@link Article},
+     * Generates an {@link AbstractArticleViewModel} starting from a common {@link Article},
      * creating a specific one accordingly with the {@link ArticleType} of the {@link Article}.
      * @param article to be converted.
      * @return the converted one.
      */
-    public static ArticleViewModel getViewArticle(final Article article) {
+    public static AbstractArticleViewModel getViewArticle(final Article article) {
         switch (article.getArticleType()) {
             case INGREDIENT:
                 return new IngredientArticleViewModel(article.toIngredientArticle().getValue());
