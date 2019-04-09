@@ -3,10 +3,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 
-<FlowPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nwoolcan.view.WarehouseController">
+<?import nwoolcan.view.subview.SubViewContainer?>
+<?import nwoolcan.view.subview.SubView?>
 
-    <Label text="This is the warehouse. Name is: " />
-    <Label fx:id="lblName" />
-</FlowPane>
+<SubView xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:controller="nwoolcan.view.warehouse.WarehouseController"
+         fx:id="warehouseSubView" >
+
+    <FlowPane>
+        <Label text="This is the warehouse. Name is: " />
+        <Label fx:id="lblName" />
+        <SubViewContainer fx:id="stockTable" parent="$warehouseSubView" />
+    </FlowPane>
+</SubView>
