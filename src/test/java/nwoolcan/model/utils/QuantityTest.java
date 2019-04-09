@@ -104,10 +104,10 @@ public class QuantityTest {
         final double c = 0.1;
         final double d = 0.100001;
 
-        final Quantity qa = Quantity.of(a, UnitOfMeasure.UNIT);
-        final Quantity qb = Quantity.of(b, UnitOfMeasure.UNIT);
-        final Quantity qc = Quantity.of(c, UnitOfMeasure.UNIT);
-        final Quantity qd = Quantity.of(d, UnitOfMeasure.UNIT);
+        final Quantity qa = Quantity.of(a, UnitOfMeasure.GRAM);
+        final Quantity qb = Quantity.of(b, UnitOfMeasure.GRAM);
+        final Quantity qc = Quantity.of(c, UnitOfMeasure.GRAM);
+        final Quantity qd = Quantity.of(d, UnitOfMeasure.GRAM);
 
         Assert.assertEquals(a, qa.getValue(), 0);
         Assert.assertEquals(b, qb.getValue(), 0);
