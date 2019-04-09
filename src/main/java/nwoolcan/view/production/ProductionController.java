@@ -1,9 +1,15 @@
-package nwoolcan.view;
+package nwoolcan.view.production;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
+import nwoolcan.view.ColumnDescriptor;
+import nwoolcan.view.InitializableController;
+import nwoolcan.view.MasterTableViewModel;
+import nwoolcan.view.SubViewController;
+import nwoolcan.view.ViewManager;
+import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.ProductionViewModel;

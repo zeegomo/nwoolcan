@@ -15,7 +15,7 @@
 <SubView fx:id="productionSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="nwoolcan.view.ProductionController">
+         fx:controller="nwoolcan.view.production.ProductionController">
     <BorderPane>
         <top>
             <Label text="Production" BorderPane.alignment="CENTER">

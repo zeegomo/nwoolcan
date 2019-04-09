@@ -23,7 +23,7 @@ public enum UnitOfMeasure {
     /**
      * Celsius degrees.
      */
-    CELSIUS_DEGREE("°C"),
+    CELSIUS_DEGREE("C"),
     /**
      * Milligrams per liter.
      */
