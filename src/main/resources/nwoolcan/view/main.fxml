@@ -6,22 +6,21 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <?import nwoolcan.view.subview.SubViewContainer?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nwoolcan.view.MainController">
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.MainController">
     <top>
         <MenuBar>
             <menus>
                 <Menu text="File">
                     <items>
-                        <MenuItem text="Quit" onAction="#menuFileQuitClick" />
-                        <MenuItem text="Count Overlays" onAction="#menuFileCountOverlaysClick" />
+                        <MenuItem onAction="#menuFileQuitClick" text="Quit" />
+                        <MenuItem onAction="#menuFileCountOverlaysClick" text="Count Overlays" />
                     </items>
                 </Menu>
                 <Menu text="View">
                     <items>
-                        <MenuItem text="Dashboard" onAction="#menuViewDashboardClick" />
-                        <MenuItem text="Warehouse" onAction="#menuViewWarehouseClick" />
+                        <MenuItem onAction="#menuViewDashboardClick" text="Dashboard" />
+                        <MenuItem onAction="#menuViewWarehouseClick" text="Warehouse" />
                     </items>
                 </Menu>
             </menus>
