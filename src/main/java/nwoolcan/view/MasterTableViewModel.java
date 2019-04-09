@@ -20,6 +20,7 @@ public class MasterTableViewModel<T> {
      * @param columnDescriptors a list of column descriptors, specifying the name of the column
      *                          and the respective field name in the type {@link T}.
      * @param values the list of {@link T} representing the actual data to be displayed.
+     * @param detailViewType view type for the detail
      */
     public MasterTableViewModel(final List<ColumnDescriptor> columnDescriptors, final List<T> values, final ViewType detailViewType) {
         this.columnDescriptors = columnDescriptors;

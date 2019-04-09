@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import nwoolcan.view.subview.SubView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.FlowPane?>
+<SubView xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:controller="nwoolcan.view.StockDetailController"
+         fx:id="subView">
+    <FlowPane>
+        <Button text="Back" onAction="#btnBackClick"/>
+        <GridPane>
+            <Label text="Name: " GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Label fx:id="lblName" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <Label text="Id: " GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Label fx:id="lblId" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        </GridPane>
+    </FlowPane>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nwoolcan.view.StockDetailController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+</SubView>

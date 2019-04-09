@@ -23,7 +23,7 @@ public enum ViewType {
      */
     MASTER_TABLE,
     /**
-     * Detail view to show a {@link nwoolcan.model.brewery.warehouse.stock.Stock}
+     * Detail view to show a {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      */
     STOCK_DETAIL;
 
