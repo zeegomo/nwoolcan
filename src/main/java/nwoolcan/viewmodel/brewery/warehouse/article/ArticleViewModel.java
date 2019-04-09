@@ -44,4 +44,21 @@ public abstract class ArticleViewModel {
     public UnitOfMeasure getUnitOfMeasure() {
         return article.getUnitOfMeasure();
     }
+    /**
+     * Generates an {@link ArticleViewModel} starting from a common {@link Article},
+     * creating a specific one accordingly with the {@link ArticleType} of the {@link Article}.
+     * @param article to be converted.
+     * @return the converted one.
+     */
+    public static ArticleViewModel getViewArticle(final Article article) {
+        switch (article.getArticleType()) {
+            case INGREDIENT:
+                return new IngredientArticleViewModel(article.toIngredientArticle().getValue());
+            case FINISHED_BEER:
+                return new BeerArticleViewModel(article.toBeerArticle().getValue());
+            case MISC:
+            default:
+                return new MiscArticleViewModel(article);
+        }
+    }
 }

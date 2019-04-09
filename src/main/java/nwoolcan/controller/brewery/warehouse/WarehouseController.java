@@ -37,7 +37,7 @@ public interface WarehouseController {
      * Return an updated instance of the {@link WarehouseViewModel}.
      * @return an updated instance of the {@link WarehouseViewModel}.
      */
-    WarehouseViewModel getWarhouseViewModel();
+    WarehouseViewModel getWarehouseViewModel();
     /**
      * Create a {@link nwoolcan.model.brewery.warehouse.article.Article} and return its {@link ArticleViewModel}.
      * @param name of the new {@link nwoolcan.model.brewery.warehouse.article.Article}.
