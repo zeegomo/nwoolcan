@@ -1,5 +1,6 @@
 package nwoolcan.viewmodel.brewery.warehouse.article;
 
+import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.utils.UnitOfMeasure;
 
@@ -8,36 +9,28 @@ import nwoolcan.model.utils.UnitOfMeasure;
  */
 public abstract class ArticleViewModel {
 
-    private final int id;
-    private final String name;
-    private final UnitOfMeasure unitOfMeasure;
+    private final Article article;
 
     /**
      * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
-     * @param id of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
-     * @param name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
-     * @param unitOfMeasure of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
+     * @param article to be converted in {@link ArticleViewModel}.
      */
-    public ArticleViewModel(final int id,
-                            final String name,
-                            final UnitOfMeasure unitOfMeasure) {
-        this.id = id;
-        this.name = name;
-        this.unitOfMeasure = unitOfMeasure;
+    public ArticleViewModel(final Article article) {
+        this.article = article;
     }
     /**
      * Returns the id of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @return the id of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     public int getId() {
-        return id;
+        return article.getId();
     }
     /**
      * Returns the name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @return the name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     public String getName() {
-        return name;
+        return article.getName();
     }
     /**
      * Returns the {@link ArticleType} of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
@@ -49,6 +42,6 @@ public abstract class ArticleViewModel {
      * @return the {@link UnitOfMeasure} of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     public UnitOfMeasure getUnitOfMeasure() {
-        return unitOfMeasure;
+        return article.getUnitOfMeasure();
     }
 }
