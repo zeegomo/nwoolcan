@@ -5,8 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import nwoolcan.view.subview.SubView;
+import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.ProductionViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /**
@@ -31,6 +34,8 @@ public final class ProductionController
 
     @FXML
     private SubView productionSubView;
+    @FXML
+    private SubViewContainer masterTableContainer;
 
     @Override
     public void initData(final ProductionViewModel data) {
@@ -54,6 +59,24 @@ public final class ProductionController
                     .collect(Collectors.toList())
             )
         );
+
+        final MasterTableViewModel<MasterBatchViewModel> masterViewModel = new MasterTableViewModel<>(
+            Arrays.asList(
+                new ColumnDescriptor("ID", "id"),
+                new ColumnDescriptor("Beer name", "beerDescriptionName"),
+                new ColumnDescriptor("Style", "beerStyleName"),
+                new ColumnDescriptor("Batch method", "batchMethodName"),
+                new ColumnDescriptor("Current step", "currentStepName"),
+                new ColumnDescriptor("Start date", "startDate"),
+                new ColumnDescriptor("Initial size", "initialBatchSize"),
+                new ColumnDescriptor("Current size", "currentBatchSize"),
+                new ColumnDescriptor("Ended", "isEnded")
+            ),
+            data.getBatches(),
+            ViewType.DASHBOARD
+        );
+
+        ViewManager.getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
 
         //Experiment with events in pie chart.
 //        final Label tooltipPieChart = new Label("");

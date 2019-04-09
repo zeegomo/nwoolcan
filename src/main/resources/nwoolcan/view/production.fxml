@@ -54,7 +54,8 @@
                         </right>
                     </BorderPane>
                 </TitledPane>
-                <SubViewContainer parent="$productionSubView">
+                <SubViewContainer parent="$productionSubView"
+                                  fx:id="masterTableContainer">
                     <!-- TODO the master table -->
                 </SubViewContainer>
                 <TitledPane text="Review">
