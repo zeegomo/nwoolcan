@@ -30,7 +30,7 @@ public class BreweryImplTest {
 
     private static final String BREWERY_NAME = "Ciusseppe-Mastro-Birraio";
     private static final String OWNER_NAME = "Ciusseppe";
-    private final Brewery brewery = new BreweryImpl(BREWERY_NAME, OWNER_NAME);
+    private final Brewery brewery = BreweryContext.getInstance();
     private final BeerDescription beerDescription = new BeerDescriptionImpl(OWNER_NAME, OWNER_NAME);
     private final BatchMethod batchMethod = BatchMethod.ALL_GRAIN;
     private final Quantity initialSize = Quantity.of(3, UnitOfMeasure.BOTTLE_33_CL);
@@ -45,14 +45,18 @@ public class BreweryImplTest {
      */
     @Test
     public void getBreweryName() {
-        Assert.assertEquals(BREWERY_NAME, brewery.getBreweryName());
+        brewery.setBreweryName(BREWERY_NAME);
+        Assert.assertTrue(brewery.getBreweryName().isPresent());
+        Assert.assertEquals(BREWERY_NAME, brewery.getBreweryName().get());
     }
     /**
      * Test the getter of the name of the owner of the {@link Brewery}.
      */
     @Test
     public void getOwnerName() {
-        Assert.assertEquals(OWNER_NAME, brewery.getOwnerName());
+        brewery.setOwnerName(OWNER_NAME);
+        Assert.assertTrue(brewery.getOwnerName().isPresent());
+        Assert.assertEquals(OWNER_NAME, brewery.getOwnerName().get());
     }
     /**
      * Test that once a {@link Batch} is added, it is present in the {@link Collection}

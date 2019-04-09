@@ -23,8 +23,15 @@ public enum ViewType {
     /**
      * The review view.
      */
-    BATCHEVALUATION;
-
+    BATCHEVALUATION,
+    /**
+     *
+     */
+    MASTER_TABLE,
+    /**
+     * Detail view to show a {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
+     */
+    STOCK_DETAIL;
     /**
      * Name of the FXML files associated with this type of view.
      * @return The resource name, relative to this package.

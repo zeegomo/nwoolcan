@@ -17,7 +17,6 @@
          xmlns:fx="http://javafx.com/fxml/1"
          fx:controller="nwoolcan.view.BatchEvaluationController">
 
-    <ScrollPane>
         <BorderPane>
             <top>
                 <Label text="Batch Review" BorderPane.alignment="CENTER">
@@ -26,7 +25,7 @@
                     </font>
                 </Label>
             </top>
-            <right>
+            <center>
                 <BorderPane>
                     <left>
                         <VBox>
@@ -49,7 +48,6 @@
                         </HBox>
                     </right>
                 </BorderPane>
-            </right>
+            </center>
         </BorderPane>
-    </ScrollPane>
 </SubView>

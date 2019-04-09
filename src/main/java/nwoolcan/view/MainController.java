@@ -10,6 +10,7 @@ import nwoolcan.model.brewery.production.batch.review.Evaluation;
 import nwoolcan.model.brewery.production.batch.review.EvaluationImpl;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.utils.Result;
+import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationViewModel;
 

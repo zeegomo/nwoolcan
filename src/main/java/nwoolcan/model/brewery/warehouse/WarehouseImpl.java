@@ -36,6 +36,10 @@ public final class WarehouseImpl implements Warehouse {
                      // the current stock is different from the one of the query.
                      .filter(stock -> !(queryStock.getArticle().isPresent()
                          && !queryStock.getArticle().get().equals(stock.getArticle())))
+                     // remove when articletype is present in queryStock but the articletype of
+                     // the current stock is different from the one of the query.
+                     .filter(stock -> !(queryStock.getArticleType().isPresent()
+                         && !(queryStock.getArticleType().get() == stock.getArticle().getArticleType())))
                      // remove those without expiration date if expiresBefore is present.
                      .filter(stock -> !(queryStock.getExpiresBefore().isPresent()
                          && !stock.getExpirationDate().isPresent()))
