@@ -104,7 +104,7 @@ public class MasterBatchViewModel {
      * Returns true if the batch is in ended state, false otherwise.
      * @return true if the batch is in ended state, false otherwise.
      */
-    public boolean isEnded() {
+    public boolean getIsEnded() {
         return this.isEnded;
     }
 }
