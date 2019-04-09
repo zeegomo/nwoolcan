@@ -18,7 +18,6 @@ public class BeerStockViewModel extends AbstractStockViewModel {
         super(beerStock);
         this.beerStock = beerStock;
     }
-
     /**
      * Return the {@link MasterBatchViewModel} related to this {@link BeerStockViewModel}.
      * @return the {@link MasterBatchViewModel} related to this {@link BeerStockViewModel}.
