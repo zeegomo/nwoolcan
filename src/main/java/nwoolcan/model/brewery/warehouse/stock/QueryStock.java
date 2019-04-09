@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.warehouse.stock;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
+import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.utils.Quantity;
 
 import javax.annotation.Nullable;
@@ -41,6 +42,8 @@ public final class QueryStock {
     @Nullable
     private final Article article;
     @Nullable
+    private final ArticleType articleType;
+    @Nullable
     private final Date expiresBefore;
     @Nullable
     private final Date expiresAfter;
@@ -61,6 +64,7 @@ public final class QueryStock {
     // Package private
 
     QueryStock(@Nullable final Article article,
+               @Nullable final ArticleType articleType,
                @Nullable final Date expiresBefore,
                @Nullable final Date expiresAfter,
                @Nullable final Quantity minRemainingQuantity,
@@ -72,6 +76,7 @@ public final class QueryStock {
                final SortParameter sortParameter,
                final boolean sortDescending) {
         this.article = article;
+        this.articleType = articleType;
         this.expiresBefore = expiresBefore;
         this.expiresAfter = expiresAfter;
         this.minRemainingQuantity = minRemainingQuantity;
@@ -89,6 +94,13 @@ public final class QueryStock {
      */
     public Optional<Article> getArticle() {
         return Optional.ofNullable(article);
+    }
+    /**
+     * Return the specific {@link ArticleType} required by the query.
+     * @return the specific {@link ArticleType} required by the query.
+     */
+    public Optional<ArticleType> getArticleType() {
+        return Optional.ofNullable(articleType);
     }
     /**
      * Return the latest {@link Date} (included) which has to be considered in the query.
