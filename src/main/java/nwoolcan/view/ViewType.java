@@ -1,5 +1,7 @@
 package nwoolcan.view;
 
+import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
+
 /**
  * Types of views of the application.
  * For each type must exist a resource with the same name, lowercased and with ".fxml" at the end
@@ -17,7 +19,11 @@ public enum ViewType {
     /**
      * The warehouse view.
      */
-    WAREHOUSE;
+    WAREHOUSE,
+    /**
+     * The review view.
+     */
+    BATCHEVALUATION;
 
     /**
      * Name of the FXML files associated with this type of view.

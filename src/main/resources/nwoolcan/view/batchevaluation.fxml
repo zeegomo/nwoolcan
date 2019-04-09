@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import nwoolcan.view.subview.SubView?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.chart.PieChart?>
+<?import nwoolcan.view.subview.SubViewContainer?>
+
+<SubView fx:id="batchEvaluationSubView" xmlns="http://javafx.com/javafx/8.0.172-ea"
+         xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="nwoolcan.view.BatchEvaluationController">
+
+    <ScrollPane>
+        <BorderPane>
+            <top>
+                <Label text="Batch Review" BorderPane.alignment="CENTER">
+                    <font>
+                        <Font size="28.0"/>
+                    </font>
+                </Label>
+            </top>
+            <center>
+                <VBox>
+                    <VBox>
+                        <FlowPane>
+                            <Label text="Scoresheet: "/>
+                            <Label fx:id="lblEvaluationTypeName"/>
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Score: "/>
+                            <Label fx:id="lblEvaluationScore"/>
+                            <Label text="/"/>
+                            <Label fx:id="lblEvaluationMaxScore"/>
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Reviewer: "/>
+                            <Label fx:id="lblReviewer"/>
+                        </FlowPane>
+                    </VBox>
+                    <SubViewContainer>
+
+                    </SubViewContainer>
+                    <VBox fx:id="categories">
+                    </VBox>
+                </VBox>
+            </center>
+        </BorderPane>
+    </ScrollPane>
+</SubView>
