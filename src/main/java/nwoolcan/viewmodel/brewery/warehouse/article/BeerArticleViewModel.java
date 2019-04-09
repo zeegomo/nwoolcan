@@ -1,7 +1,7 @@
 package nwoolcan.viewmodel.brewery.warehouse.article;
 
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
-import nwoolcan.model.utils.UnitOfMeasure;
+import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 
 /**
  * View-Model representation of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
@@ -10,14 +10,10 @@ public final class BeerArticleViewModel extends ArticleViewModel {
 
     /**
      * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
-     * @param id of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
-     * @param name of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
-     * @param unitOfMeasure of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
+     * @param article to be converted in {@link BeerArticleViewModel}.
      */
-    public BeerArticleViewModel(final int id,
-                                final String name,
-                                final UnitOfMeasure unitOfMeasure) {
-        super(id, name, unitOfMeasure);
+    public BeerArticleViewModel(final BeerArticle article) {
+        super(article);
     }
 
     @Override
