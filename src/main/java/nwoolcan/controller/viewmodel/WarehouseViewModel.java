@@ -1,4 +1,4 @@
-package nwoolcan.view;
+package nwoolcan.controller.viewmodel;
 
 /**
  * Data used inside a Warehouse view.

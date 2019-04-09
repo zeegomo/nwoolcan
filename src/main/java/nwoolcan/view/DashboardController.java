@@ -2,6 +2,7 @@ package nwoolcan.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.subview.SubView;
 
 /**

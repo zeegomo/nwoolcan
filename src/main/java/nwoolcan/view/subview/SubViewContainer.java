@@ -1,5 +1,6 @@
 package nwoolcan.view.subview;
 
+import javafx.beans.NamedArg;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import nwoolcan.utils.Empty;
@@ -8,6 +9,7 @@ import nwoolcan.utils.Result;
 import javax.annotation.Nullable;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Optional;
 
 /**
  * This is a container that can handle multiple overlays. You can put views on top ov others and then pop them to view the old ones (like a stack).
@@ -15,6 +17,25 @@ import java.util.Deque;
  */
 public class SubViewContainer extends AnchorPane {
     private Deque<Parent> overlays = new ArrayDeque<>();
+    /**
+     * The optional parent of this container.
+     * If set, this container is considered transparent and his children believe they are children of parent.
+     */
+    @Nullable
+    private SubView parent;
+
+    /**
+     * Default constructor.
+     */
+    public SubViewContainer() { }
+
+    /**
+     * Builds a transparent SubViewContainer: his children believe they are children of another container (parent).
+     * @param parent The "fake" parent of the children of this container
+     */
+    public SubViewContainer(@NamedArg("parent") final SubView parent) {
+        this.parent = parent;
+    }
 
     /**
      * Shows the last overlay in the stack.
@@ -45,7 +66,10 @@ public class SubViewContainer extends AnchorPane {
     public void overlay(final Parent view) {
         this.overlays.push(view);
         if (view instanceof SubView) {
-            ((SubView) view).setContainer(this);
+            final SubViewContainer container = Optional.ofNullable(this.parent)
+                                                       .map(c -> (SubViewContainer) new TransparentSubViewContainer(c))
+                                                       .orElse(this);
+            ((SubView) view).setContainer(container);
         }
         this.setCurrentView();
     }
