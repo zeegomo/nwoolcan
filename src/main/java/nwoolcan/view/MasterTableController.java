@@ -39,7 +39,7 @@ public final class MasterTableController<T> extends SubViewController implements
         final TableColumn<T, Button> actionColumn = new TableColumn<>();
         actionColumn.setCellValueFactory(obj -> {
             final Button btn = new Button("View");
-            btn.setOnAction(event -> masterTableSubView.getContainer().ifPresent(c -> ViewManager.getView(data.getDetailViewType(), obj.getValue()).peek(v -> c.overlay(v))));
+            btn.setOnAction(event -> this.overlayView(data.getDetailViewType(), obj.getValue()));
             return new SimpleObjectProperty<>(btn);
         });
         masterTable.getColumns().add(actionColumn);
