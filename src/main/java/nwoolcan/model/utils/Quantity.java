@@ -64,7 +64,7 @@ public final class Quantity implements Comparable<Quantity> {
         if (this.equals(other)) {
             return 0;
         }
-        return this.getValue() < other.getValue() ? -1 : 1;
+        return Integer.compare(getValue(), other.getValue());
     }
 
     /**

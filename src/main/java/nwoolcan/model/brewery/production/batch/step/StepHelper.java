@@ -20,6 +20,7 @@ final class StepHelper {
     private static final Set<StepType> FERMENTING_STEP_TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(StepTypeEnum.PACKAGING, StepTypeEnum.AGING)));
     private static final Set<StepType> AGING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.PACKAGING));
     private static final Set<StepType> PACKAGING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.FINALIZED));
+    private static final Set<StepType> FINALIZED_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.STOCKED));
 
     private static final Set<ParameterType> MASHING_PARAMETER_TYPES = Collections.unmodifiableSet(Collections.singleton(ParameterTypeEnum.TEMPERATURE));
     private static final Set<ParameterType> BOILING_PARAMETER_TYPES = Collections.unmodifiableSet(Collections.singleton(ParameterTypeEnum.TEMPERATURE));
@@ -51,6 +52,9 @@ final class StepHelper {
         }
         if (stepType.equals(StepTypeEnum.PACKAGING)) {
             return PACKAGING_STEP_TYPES;
+        }
+        if (stepType.equals(StepTypeEnum.FINALIZED)) {
+            return FINALIZED_STEP_TYPES;
         }
         return Collections.emptySet();
     }

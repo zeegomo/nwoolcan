@@ -3,6 +3,7 @@ package nwoolcan.model.brewery.production.batch;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepType;
+import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
@@ -30,11 +31,16 @@ public interface Batch {
      */
     Step getCurrentStep();
     /**
-     * Returns a Result containing a list describing all production steps
-     * that happened before the current one, in chronological order.
-     * @return a list describing all production steps that happened before the current one.
+     * Returns the current batch size as a {@link Quantity}.
+     * @return the current batch size.
      */
-    List<Step> getPreviousSteps();
+    Quantity getCurrentSize();
+    /**
+     * Returns a Result containing a list describing all production steps
+     * that happened, in chronological order.
+     * @return a list describing all production steps that happened.
+     */
+    List<Step> getSteps();
     /**
      * Goes to the next step of type passed by parameter.
      * If the current step has not been finalized yet, it finalizes it with empty note, date now
@@ -56,7 +62,7 @@ public interface Batch {
     boolean isEnded();
     /**
      * Sets a possible evaluation to the batch.
-     * Returns a Result with an error if type:
+     * Returns a Result with an error of type:
      * <ul>
      *     <li>{@link IllegalStateException} if the batch is not in ended state.</li>
      * </ul>

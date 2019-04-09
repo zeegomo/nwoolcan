@@ -25,9 +25,13 @@ public enum StepTypeEnum implements StepType {
      */
     AGING,
     /**
-     * Placeholder step representing a finalized batch.
+     * Step representing a finalized batch.
      */
-    FINALIZED;
+    FINALIZED,
+    /**
+     * Step representing a stocked batch.
+     */
+    STOCKED;
 
     @Override
     public String getName() {
@@ -36,6 +40,6 @@ public enum StepTypeEnum implements StepType {
 
     @Override
     public boolean isEndType() {
-        return equals(StepTypeEnum.FINALIZED);
+        return equals(StepTypeEnum.FINALIZED) || equals(StepTypeEnum.STOCKED);
     }
 }
