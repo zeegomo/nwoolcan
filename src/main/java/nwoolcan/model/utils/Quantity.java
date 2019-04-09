@@ -2,7 +2,6 @@ package nwoolcan.model.utils;
 
 import nwoolcan.utils.Result;
 
-import javax.annotation.Nullable;
 import java.util.Objects;
 
 /**
