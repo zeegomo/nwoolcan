@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.warehouse.stock;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
+import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
@@ -17,23 +18,25 @@ public final class QueryStockBuilder {
                                           + "select an article when selecting a quantity filter"
                                           + " and to select the same unit of measure.";
     @Nullable
-    private Article article = null;
+    private Article article;
     @Nullable
-    private Date expiresBefore = null;
+    private ArticleType articleType;
     @Nullable
-    private Date expiresAfter = null;
+    private Date expiresBefore;
     @Nullable
-    private Quantity minRemainingQuantity = null;
+    private Date expiresAfter;
     @Nullable
-    private Quantity maxRemainingQuantity = null;
+    private Quantity minRemainingQuantity;
     @Nullable
-    private Quantity minUsedQuantity = null;
+    private Quantity maxRemainingQuantity;
     @Nullable
-    private Quantity maxUsedQuantity = null;
+    private Quantity minUsedQuantity;
     @Nullable
-    private StockState stockStateIncluded = null;
+    private Quantity maxUsedQuantity;
     @Nullable
-    private StockState stockStateExcluded = null;
+    private StockState stockStateIncluded;
+    @Nullable
+    private StockState stockStateExcluded;
     private QueryStock.SortParameter sortParameter = QueryStock.SortParameter.NONE;
     private boolean sortDescending = false;
 
@@ -48,6 +51,15 @@ public final class QueryStockBuilder {
      */
     public QueryStockBuilder setArticle(final Article article) {
         this.article = article;
+        return this;
+    }
+    /**
+     * Sets the {@link ArticleType} required by the query.
+     * @param articleType to filter the query.
+     * @return this.
+     */
+    public QueryStockBuilder setArticleType(final ArticleType articleType) {
+        this.articleType = articleType;
         return this;
     }
     /**
@@ -148,6 +160,7 @@ public final class QueryStockBuilder {
      */
     public Result<QueryStock> build() {
         return Result.of(new QueryStock(article,
+                                        articleType,
                                         expiresBefore,
                                         expiresAfter,
                                         minRemainingQuantity,
