@@ -23,24 +23,10 @@ import java.util.stream.Collectors;
  */
 public final class BreweryImpl implements Brewery {
 
-    @Nullable private static BreweryImpl instance;
     @Nullable private String breweryName;
     @Nullable private String ownerName;
     private final Warehouse warehouse = new WarehouseImpl();
     private final Collection<Batch> batches = new ArrayList<>();
-
-    private BreweryImpl() { }
-
-    /**
-     * Return the only instance of the {@link Brewery}.
-     * @return the only instance of the {@link Brewery}.
-     */
-    public static synchronized Brewery getInstance() {
-        if (instance == null) {
-            instance = new BreweryImpl();
-        }
-        return instance;
-    }
 
     @Override
     public synchronized Optional<String> getBreweryName() {

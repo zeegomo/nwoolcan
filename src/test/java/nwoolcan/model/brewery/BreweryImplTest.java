@@ -30,7 +30,7 @@ public class BreweryImplTest {
 
     private static final String BREWERY_NAME = "Ciusseppe-Mastro-Birraio";
     private static final String OWNER_NAME = "Ciusseppe";
-    private final Brewery brewery = BreweryImpl.getInstance();
+    private final Brewery brewery = BreweryContext.getInstance();
     private final BeerDescription beerDescription = new BeerDescriptionImpl(OWNER_NAME, OWNER_NAME);
     private final BatchMethod batchMethod = BatchMethod.ALL_GRAIN;
     private final Quantity initialSize = Quantity.of(3, UnitOfMeasure.BOTTLE_33_CL);
