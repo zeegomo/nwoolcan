@@ -31,6 +31,8 @@ public final class ProductionController
     private PieChart pieChartBatchesStatus;
     @FXML
     private PieChart pieChartBatchesStyleTypes;
+    @FXML
+    private PieChart pieChartBatchesMethods;
 
     @FXML
     private SubView productionSubView;
@@ -53,6 +55,16 @@ public final class ProductionController
         pieChartBatchesStyleTypes.setData(
             FXCollections.observableList(
                 data.getStylesFrequency()
+                    .entrySet()
+                    .stream()
+                    .map(es -> new PieChart.Data(es.getKey(), es.getValue()))
+                    .collect(Collectors.toList())
+            )
+        );
+
+        pieChartBatchesMethods.setData(
+            FXCollections.observableList(
+                data.getMethodsFrequency()
                     .entrySet()
                     .stream()
                     .map(es -> new PieChart.Data(es.getKey(), es.getValue()))

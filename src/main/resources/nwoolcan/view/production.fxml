@@ -50,6 +50,8 @@
                                 </PieChart>
                                 <PieChart fx:id="pieChartBatchesStyleTypes" maxHeight="280.0" maxWidth="300.0" title="Styles">
                                 </PieChart>
+                                <PieChart fx:id="pieChartBatchesMethods" maxHeight="280.0" maxWidth="300.0" title="Methods">
+                                </PieChart>
                             </HBox>
                         </right>
                     </BorderPane>
