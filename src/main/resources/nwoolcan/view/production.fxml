@@ -11,6 +11,7 @@
 <?import nwoolcan.view.subview.SubViewContainer?>
 
 <?import javafx.scene.layout.FlowPane?>
+
 <SubView fx:id="productionSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
@@ -53,11 +54,11 @@
                         </right>
                     </BorderPane>
                 </TitledPane>
-                <SubViewContainer>
+                <SubViewContainer parent="$productionSubView">
                     <!-- TODO the master table -->
                 </SubViewContainer>
                 <TitledPane text="Review">
-                    <SubViewContainer>
+                    <SubViewContainer parent="$productionSubView">
                         <!-- TODO the review container -->
                     </SubViewContainer>
                 </TitledPane>
