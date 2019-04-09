@@ -12,5 +12,4 @@ public interface BreweryController {
      * @return the {@link WarehouseController}.
      */
     WarehouseController getWarehouseController();
-
 }
