@@ -19,13 +19,21 @@ public enum ViewType {
      */
     WAREHOUSE,
     /**
+     * The main production view.
+     */
+    PRODUCTION,
+    /**
      * The master table view.
      */
     MASTER_TABLE,
     /**
      * Detail view to show a {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      */
-    STOCK_DETAIL;
+    STOCK_DETAIL,
+    /**
+     * Detail view to show a batch.
+     */
+    BATCH_DETAIL;
 
     /**
      * Name of the FXML files associated with this type of view.

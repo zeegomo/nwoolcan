@@ -3,6 +3,7 @@ package nwoolcan.view;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import nwoolcan.controller.ProductionContext;
 import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.subview.SubViewContainer;
 
@@ -29,6 +30,14 @@ public final class MainController {
      */
     public void menuViewWarehouseClick(final ActionEvent event) {
         ViewManager.getView(ViewType.WAREHOUSE, new WarehouseViewModel("ciccio")).peek(view -> this.contentPane.substitute(view));
+    }
+
+    /**
+     * Shows the Production view.
+     * @param event the occurred event.
+     */
+    public void menuViewProductionClick(final ActionEvent event) {
+        ViewManager.getView(ViewType.PRODUCTION, ProductionContext.getController().getViewModel()).peek(view -> this.contentPane.substitute(view));
     }
 
     /**

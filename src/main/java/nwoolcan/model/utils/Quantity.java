@@ -132,11 +132,12 @@ public final class Quantity implements Comparable<Quantity> {
         return Objects.hash(this.value, this.unitOfMeasure);
     }
 
+    /**
+     * Returns a string representation of the quantity (VALUE UNIT_OF_MEASURE_SYMBOL).
+     * @return  a string representation of the quantity.
+     */
     @Override
     public String toString() {
-        return "[Quantity]{"
-            + "value=" + this.value
-            + ", unitOfMeasure=" + this.unitOfMeasure
-            + '}';
+        return this.value + " " + this.unitOfMeasure.getSymbol();
     }
 }
