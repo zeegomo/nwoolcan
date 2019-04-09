@@ -30,7 +30,7 @@ public class BreweryImplTest {
 
     private static final String BREWERY_NAME = "Ciusseppe-Mastro-Birraio";
     private static final String OWNER_NAME = "Ciusseppe";
-    private final Brewery brewery = BreweryImpl.getInstance();
+    private final Brewery brewery = BreweryContext.getInstance();
     private final BeerDescription beerDescription = new BeerDescriptionImpl(OWNER_NAME, OWNER_NAME);
     private final BatchMethod batchMethod = BatchMethod.ALL_GRAIN;
     private final Quantity initialSize = Quantity.of(3, UnitOfMeasure.BOTTLE_33_CL);
@@ -79,7 +79,7 @@ public class BreweryImplTest {
         final BeerArticle beerArticle = brewery.getWarehouse()
                                                .createBeerArticle("SUPERSBORNARTICLE",
                                                                   UnitOfMeasure.BOTTLE_33_CL);
-        final Result<Empty> stockBatchRes = brewery.stockBatch(batch, beerArticle, null);
+        final Result<Empty> stockBatchRes = brewery.stockBatch(batch, beerArticle);
         Assert.assertTrue(stockBatchRes.isPresent());
         final Result<QueryStock> queryStockRes = new QueryStockBuilder().setArticle(beerArticle).build();
         Assert.assertTrue(queryStockRes.isPresent());
