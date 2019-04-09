@@ -21,7 +21,11 @@ public enum ViewType {
     /**
      * The master table view.
      */
-    MASTER_TABLE;
+    MASTER_TABLE,
+    /**
+     * Detail view to show a {@link nwoolcan.model.brewery.warehouse.stock.Stock}
+     */
+    STOCK_DETAIL;
 
     /**
      * Name of the FXML files associated with this type of view.

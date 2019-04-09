@@ -38,7 +38,8 @@ public final class WarehouseController extends SubViewController implements Init
             new ArrayList<>(Arrays.asList(new ColumnDescriptor("Id", "id"),
                 new ColumnDescriptor("Name", "name"))),
             new ArrayList<>(Arrays.asList(new StockViewModel(1, "ciao"),
-                new StockViewModel(2, "ciaone")))
+                new StockViewModel(2, "ciaone"))),
+            ViewType.STOCK_DETAIL
         )).peek(view -> this.stockTable.substitute(view));
     }
 
