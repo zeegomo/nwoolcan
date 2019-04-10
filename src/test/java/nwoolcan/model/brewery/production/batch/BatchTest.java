@@ -262,8 +262,8 @@ public class BatchTest {
             .map(Result::getValue)
             .collect(Collectors.toSet());
 
-        batchAlfredo.setEvaluation(new BatchEvaluationBuilder(bjcpType, evals)
-            .build().getValue());
+        batchAlfredo.setEvaluation(new BatchEvaluationBuilder()
+            .build(bjcpType, evals).getValue());
 
         //Check all steps are registered.
         Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());

@@ -43,11 +43,11 @@ public class TestBatchEvaluation {
                                       .collect(Collectors.toSet());
 
 
-        BatchEvaluationBuilder builder = new BatchEvaluationBuilder(bjcpType, evals);
+        BatchEvaluationBuilder builder = new BatchEvaluationBuilder();
 
         Result<BatchEvaluation> bjcp = builder.addReviewer("Andrea")
                                               .addNotes("Very good")
-                                              .build();
+                                              .build(bjcpType, evals);
 
         assertTrue(bjcp.isPresent());
         BatchEvaluation review = bjcp.getValue();
@@ -55,13 +55,17 @@ public class TestBatchEvaluation {
         assertEquals(review.getNotes(), Optional.of("Very good"));
         assertEquals(review.getScore(), expectedValue);
         assertEquals(review.getEvaluationType(), bjcpType);
-        assertTrue(builder.build().isError());
         assertEquals(review.getCategoryEvaluations()
                            .stream()
                            .filter(e -> e.getEvaluationType().equals(BJCPCategories.APPEARANCE))
                            .findAny()
                            .get()
                            .getScore(), 3);
+
+        Result<BatchEvaluation> bjcp2 = builder.addReviewer("Mirko")
+                                              .addNotes("Code Smell")
+                                              .build(bjcpType, evals);
+        assertTrue(bjcp2.isPresent());
     }
 
     /**
@@ -97,10 +101,10 @@ public class TestBatchEvaluation {
             .map(Result::getValue)
             .collect(Collectors.toSet());
 
-        BatchEvaluationBuilder builder = new BatchEvaluationBuilder(bjcpType, evals);
+        BatchEvaluationBuilder builder = new BatchEvaluationBuilder();
 
         Result<BatchEvaluation> test1 = builder.addReviewer("Andrea")
-                                               .build();
+                                               .build(bjcpType, evals);
 
         assertTrue(test1.isError());
 
@@ -114,9 +118,8 @@ public class TestBatchEvaluation {
             .map(Result::getValue)
             .collect(Collectors.toSet());
 
-        Result<BatchEvaluation> test2 = builder.reset(bjcpType, evals)
-                                               .addReviewer("Andrea")
-                                               .build();
+        Result<BatchEvaluation> test2 = builder.addReviewer("Andrea")
+                                               .build(bjcpType, evals1);
 
         assertTrue(test2.isError());
 
@@ -132,9 +135,8 @@ public class TestBatchEvaluation {
             .collect(Collectors.toSet());
 
 
-        Result<BatchEvaluation> test3 = builder.reset(bjcpType, evals)
-                                               .addReviewer("Andrea")
-                                               .build();
+        Result<BatchEvaluation> test3 = builder.addReviewer("Andrea")
+                                               .build(bjcpType, evals2);
 
         assertTrue(test3.isError());
     }
