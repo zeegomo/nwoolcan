@@ -83,13 +83,13 @@ public class ResultTest {
         Result<Boolean> b = error.map(String::isEmpty);
         assertFalse(b.isPresent());
         // Map into null
-        b = error.map(n -> null);
+        b = error.map(n -> true);
         assertFalse(b.isPresent());
         b = duke.map(s -> true);
         assertTrue(b.isPresent());
 
         try {
-            Result<Boolean> res = error.map(s -> Optional.empty().get()).map(s -> null);
+            Result<Boolean> res = error.map(s -> Optional.empty().get()).map(s -> false);
             assertFalse(res.isPresent());
             assertTrue(res.isError());
         } catch (NullPointerException npe) {
