@@ -2,6 +2,7 @@ package nwoolcan.view;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import nwoolcan.application.ViewManagerImpl;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
 
@@ -20,7 +21,7 @@ public abstract class SubViewController {
      * @param <T> The type of the view model
      */
     private <T> void changeView(final ViewType type, @Nullable final T viewModel, final BiConsumer<SubViewContainer, Parent> action) {
-        this.getSubView().getContainer().ifPresent(c -> (viewModel == null ? ViewManager.getView(type) : ViewManager.getView(type, viewModel))
+        this.getSubView().getContainer().ifPresent(c -> (viewModel == null ? ViewManagerImpl.getView(type) : ViewManagerImpl.getView(type, viewModel))
             .peek(v -> action.accept(c, v))
             .peekError(err -> new Alert(Alert.AlertType.ERROR, "Error loading " + type.toString()).showAndWait()));
     }

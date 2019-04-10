@@ -3,6 +3,7 @@ package nwoolcan.view;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import nwoolcan.application.ViewManagerImpl;
 import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.subview.SubViewContainer;
 
@@ -20,7 +21,7 @@ public final class MainController {
      * @param event The occurred event
      */
     public void menuViewDashboardClick(final ActionEvent event) {
-        ViewManager.getView(ViewType.DASHBOARD).peek(view -> this.contentPane.substitute(view));
+        ViewManagerImpl.getView(ViewType.DASHBOARD).peek(view -> this.contentPane.substitute(view));
     }
 
     /**
@@ -28,7 +29,7 @@ public final class MainController {
      * @param event The occurred event
      */
     public void menuViewWarehouseClick(final ActionEvent event) {
-        ViewManager.getView(ViewType.WAREHOUSE, new WarehouseViewModel("ciccio")).peek(view -> this.contentPane.substitute(view));
+        ViewManagerImpl.getView(ViewType.WAREHOUSE, new WarehouseViewModel("ciccio")).peek(view -> this.contentPane.substitute(view));
     }
 
     /**

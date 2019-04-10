@@ -8,7 +8,7 @@ import nwoolcan.view.ColumnDescriptor;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.MasterTableViewModel;
 import nwoolcan.view.SubViewController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.application.ViewManagerImpl;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
@@ -34,7 +34,7 @@ public final class WarehouseController extends SubViewController implements Init
         this.lblName.setText(data.getName());
 
         //load master table
-        ViewManager.getView(ViewType.MASTER_TABLE, new MasterTableViewModel<StockViewModel>(
+        ViewManagerImpl.getView(ViewType.MASTER_TABLE, new MasterTableViewModel<StockViewModel>(
             new ArrayList<>(Arrays.asList(new ColumnDescriptor("Id", "id"),
                 new ColumnDescriptor("Name", "name"))),
             new ArrayList<>(Arrays.asList(new StockViewModel(1, "ciao"),
