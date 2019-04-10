@@ -4,13 +4,18 @@ import nwoolcan.controller.brewery.BreweryController;
 import nwoolcan.controller.brewery.BreweryControllerImpl;
 import nwoolcan.model.brewery.Brewery;
 
-public class ControllerImpl implements Controller {
+/**
+ * Controller basic implementation.
+ */
+public final class ControllerImpl implements Controller {
 
-    private final Brewery model;
     private final BreweryController breweryController;
 
+    /**
+     * Construct a controller and inject the model ({@link Brewery}) to the subcontrollers.
+     * @param model the model to inject,
+     */
     public ControllerImpl(final Brewery model) {
-        this.model = model;
         this.breweryController = new BreweryControllerImpl(model);
     }
 

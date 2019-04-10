@@ -3,8 +3,6 @@ package nwoolcan.view;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import nwoolcan.application.ViewManager;
-import nwoolcan.application.ViewManagerImpl;
 import nwoolcan.controller.Controller;
 import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.subview.SubViewContainer;
@@ -18,6 +16,11 @@ public final class MainController extends AbstractViewController {
     @FXML
     private SubViewContainer contentPane;
 
+    /**
+     * Creates itself and gets injected.
+     * @param controller injected controller.
+     * @param viewManager injected view manager.
+     */
     public MainController(final Controller controller, final ViewManager viewManager) {
         super(controller, viewManager);
     }

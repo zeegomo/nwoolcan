@@ -2,7 +2,7 @@ package nwoolcan.view.warehouse;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import nwoolcan.application.ViewManager;
+import nwoolcan.view.ViewManager;
 import nwoolcan.controller.Controller;
 import nwoolcan.controller.viewmodel.StockViewModel;
 import nwoolcan.controller.viewmodel.WarehouseViewModel;
@@ -10,7 +10,6 @@ import nwoolcan.view.ColumnDescriptor;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.MasterTableViewModel;
 import nwoolcan.view.SubViewController;
-import nwoolcan.application.ViewManagerImpl;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
@@ -31,6 +30,11 @@ public final class WarehouseController extends SubViewController implements Init
     @FXML
     private Label lblName;
 
+    /**
+     * Creates itself and gets injected.
+     * @param controller injected controller.
+     * @param viewManager injected view manager.
+     */
     public WarehouseController(final Controller controller, final ViewManager viewManager) {
         super(controller, viewManager);
     }
@@ -40,7 +44,7 @@ public final class WarehouseController extends SubViewController implements Init
         this.lblName.setText(data.getName());
 
         //load master table
-        this.getViewManager().getView(ViewType.MASTER_TABLE, new MasterTableViewModel<StockViewModel>(
+        this.getViewManager().getView(ViewType.MASTER_TABLE, new MasterTableViewModel<>(
             new ArrayList<>(Arrays.asList(new ColumnDescriptor("Id", "id"),
                 new ColumnDescriptor("Name", "name"))),
             new ArrayList<>(Arrays.asList(new StockViewModel(1, "ciao"),

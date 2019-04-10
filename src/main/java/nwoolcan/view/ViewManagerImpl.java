@@ -1,18 +1,16 @@
-package nwoolcan.application;
+package nwoolcan.view;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import nwoolcan.controller.Controller;
 import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
-import nwoolcan.view.InitializableController;
-import nwoolcan.view.MainController;
-import nwoolcan.view.ViewType;
 
 import java.lang.reflect.Constructor;
 
 /**
- * Sets up the whole JavaFX application.
+ * View manager impl that can inject a controller and itself to the view controllers constructors.
+ * After loaded the view controller can inject a specific view model to the view controller.
  */
 public final class ViewManagerImpl implements ViewManager {
 
@@ -20,6 +18,10 @@ public final class ViewManagerImpl implements ViewManager {
 
     private final Controller controller;
 
+    /**
+     * Creates a view manager that injects the passed {@link Controller}.
+     * @param controller the controller to be injected.
+     */
     public ViewManagerImpl(final Controller controller) {
         this.controller = controller;
     }

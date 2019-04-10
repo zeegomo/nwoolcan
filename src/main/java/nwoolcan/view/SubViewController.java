@@ -2,8 +2,6 @@ package nwoolcan.view;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import nwoolcan.application.ViewManager;
-import nwoolcan.application.ViewManagerImpl;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
@@ -16,6 +14,11 @@ import java.util.function.BiConsumer;
  */
 public abstract class SubViewController extends AbstractViewController {
 
+    /**
+     * Creates itself and gets injected.
+     * @param controller injected controller.
+     * @param viewManager injected view manager.
+     */
     protected SubViewController(final Controller controller, final ViewManager viewManager) {
         super(controller, viewManager);
     }
