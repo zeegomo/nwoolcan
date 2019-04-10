@@ -44,6 +44,11 @@ tasks.withType<JavaCompile> {
     }
 }
 
+tasks.withType<com.github.spotbugs.SpotBugsTask> {
+    reports.xml.isEnabled = false
+    reports.html.isEnabled = true
+}
+
 tasks.named("check") {
     dependsOn("javadoc")
 }
