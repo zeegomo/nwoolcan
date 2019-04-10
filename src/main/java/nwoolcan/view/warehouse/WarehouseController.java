@@ -2,6 +2,8 @@ package nwoolcan.view.warehouse;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import nwoolcan.application.ViewManager;
+import nwoolcan.controller.Controller;
 import nwoolcan.controller.viewmodel.StockViewModel;
 import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.ColumnDescriptor;
@@ -29,12 +31,16 @@ public final class WarehouseController extends SubViewController implements Init
     @FXML
     private Label lblName;
 
+    public WarehouseController(final Controller controller, final ViewManager viewManager) {
+        super(controller, viewManager);
+    }
+
     @Override
     public void initData(final WarehouseViewModel data) {
         this.lblName.setText(data.getName());
 
         //load master table
-        ViewManagerImpl.getView(ViewType.MASTER_TABLE, new MasterTableViewModel<StockViewModel>(
+        this.getViewManager().getView(ViewType.MASTER_TABLE, new MasterTableViewModel<StockViewModel>(
             new ArrayList<>(Arrays.asList(new ColumnDescriptor("Id", "id"),
                 new ColumnDescriptor("Name", "name"))),
             new ArrayList<>(Arrays.asList(new StockViewModel(1, "ciao"),

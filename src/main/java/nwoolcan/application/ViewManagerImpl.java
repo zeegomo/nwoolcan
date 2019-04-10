@@ -1,13 +1,12 @@
 package nwoolcan.application;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.LoadException;
 import javafx.scene.Parent;
 import nwoolcan.controller.Controller;
 import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 import nwoolcan.view.InitializableController;
+import nwoolcan.view.MainController;
 import nwoolcan.view.ViewType;
 
 import java.lang.reflect.Constructor;
@@ -57,9 +56,10 @@ public final class ViewManagerImpl implements ViewManager {
      * @param type The type of the view you want to get
      * @return The loaded views
      */
+    @Override
     public Result<Parent> getView(final ViewType type) {
         return Results.ofChecked(() -> {
-            final FXMLLoader loader = new FXMLLoader(ViewManagerImpl.class.getResource(type.getResourceName()));
+            final FXMLLoader loader = new FXMLLoader(ViewType.class.getResource(type.getResourceName()));
             this.injectIntoController(loader);
             return loader.load();
         });
@@ -72,8 +72,9 @@ public final class ViewManagerImpl implements ViewManager {
      * @param <T> The type of the view model
      * @return The loaded views
      */
+    @Override
     public <T> Result<Parent> getView(final ViewType type, final T viewModel) {
-        final FXMLLoader loader = new FXMLLoader(ViewManagerImpl.class.getResource(type.getResourceName()));
+        final FXMLLoader loader = new FXMLLoader(ViewType.class.getResource(type.getResourceName()));
         return Results.ofChecked(() -> {
             this.injectIntoController(loader);
             final Parent parent = loader.load();

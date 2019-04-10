@@ -41,10 +41,10 @@ public final class Main extends Application {
         //Now we have the brewery to inject into the controller
         Controller controller = new ControllerImpl(brewery);
         //Creates the view manager
-        ViewManager vm = new ViewManagerImpl();
+        ViewManager vm = new ViewManagerImpl(controller);
 
         primaryStage.setTitle(TITLE);
-        primaryStage.setScene(new Scene(ViewManagerImpl.getView(MAIN_VIEW_TYPE).getValue()));
+        primaryStage.setScene(new Scene(vm.getView(MAIN_VIEW_TYPE).getValue()));
         primaryStage.setMaximized(true);
         primaryStage.show();
     }

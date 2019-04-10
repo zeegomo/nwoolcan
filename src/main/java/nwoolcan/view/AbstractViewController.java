@@ -1,14 +1,14 @@
 package nwoolcan.view;
 
-import nwoolcan.application.ViewManagerImpl;
+import nwoolcan.application.ViewManager;
 import nwoolcan.controller.Controller;
 
 public abstract class AbstractViewController {
 
     private final Controller controller;
-    private final ViewManagerImpl viewManager;
+    private final ViewManager viewManager;
 
-    AbstractViewController(final Controller controller, final ViewManagerImpl viewManager) {
+    AbstractViewController(final Controller controller, final ViewManager viewManager) {
         this.controller = controller;
         this.viewManager = viewManager;
     }
@@ -17,7 +17,7 @@ public abstract class AbstractViewController {
         return this.controller;
     }
 
-    public ViewManagerImpl getViewManager() {
+    public ViewManager getViewManager() {
         return this.viewManager;
     }
 }

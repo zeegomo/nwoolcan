@@ -3,6 +3,8 @@ package nwoolcan.view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import nwoolcan.application.ViewManager;
+import nwoolcan.controller.Controller;
 import nwoolcan.controller.viewmodel.StockViewModel;
 import nwoolcan.view.subview.SubView;
 
@@ -19,6 +21,10 @@ public final class StockDetailController extends SubViewController implements In
 
     @FXML
     private SubView subView;
+
+    public StockDetailController(final Controller controller, final ViewManager viewManager) {
+        super(controller, viewManager);
+    }
 
     @Override
     public void initData(final StockViewModel data) {

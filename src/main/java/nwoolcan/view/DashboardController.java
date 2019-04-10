@@ -2,6 +2,8 @@ package nwoolcan.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import nwoolcan.application.ViewManager;
+import nwoolcan.controller.Controller;
 import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.subview.SubView;
 
@@ -13,6 +15,10 @@ public final class DashboardController extends SubViewController {
 
     @FXML
     private SubView content;
+
+    public DashboardController(final Controller controller, final ViewManager viewManager) {
+        super(controller, viewManager);
+    }
 
     /**
      * Removes this Dashboard view.
