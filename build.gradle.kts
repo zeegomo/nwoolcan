@@ -4,6 +4,7 @@ plugins {
     java
     checkstyle
     application
+    id("com.github.spotbugs") version "1.7.1"
     id("net.ltgt.errorprone") version "0.6"
 }
 
