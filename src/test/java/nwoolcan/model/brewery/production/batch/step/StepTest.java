@@ -30,7 +30,7 @@ public class StepTest {
     private Step packaging;
     private Step finalized;
 
-    private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.MILLILITER);
+    private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.MILLILITER).getValue();
     private static final Date D1 = new Date(1000);
 
     private static final List<Parameter> MASHING_PARAMS = Arrays.asList(

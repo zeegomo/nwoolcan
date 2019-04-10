@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import nwoolcan.utils.test.TestUtils;
 
+import java.util.NoSuchElementException;
+
 /**
  * Test class for {@link Quantity} class.
  */
@@ -24,16 +26,16 @@ public class QuantityTest {
      */
     @Test
     public void testQuantitySimpleCreation() {
-        final Quantity q = Quantity.of(VALUE1, GOOD_UM1);
+        final Quantity q = Quantity.of(VALUE1, GOOD_UM1).getValue();
         Assert.assertEquals(VALUE1, q.getValue(), 0);
         Assert.assertEquals(GOOD_UM1, q.getUnitOfMeasure());
     }
     /**
      * Method that tests quantity creation with negative value.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NoSuchElementException.class)
     public void testQuantityWithNegativeValue() {
-        final Quantity q = Quantity.of(NEG_VALUE, GOOD_UM1);
+        final Quantity q = Quantity.of(NEG_VALUE, GOOD_UM1).getValue();
     }
 
     /**
@@ -41,15 +43,15 @@ public class QuantityTest {
      */
     @Test
     public void testEmptyQuantity() {
-        final Quantity q = Quantity.of(0, GOOD_UM1);
+        final Quantity q = Quantity.of(0, GOOD_UM1).getValue();
     }
 
     /**
      * Method that tests quantity creation with not quantity unit of measure.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NoSuchElementException.class)
     public void testQuantityWithNoQuantityUM() {
-        final Quantity q = Quantity.of(VALUE1, BAD_UM);
+        final Quantity q = Quantity.of(VALUE1, BAD_UM).getValue();
     }
 
     /**
@@ -58,11 +60,11 @@ public class QuantityTest {
     @Test
     public void testQuantityEqualsAndHashcode() {
         final UnitOfMeasure um = UnitOfMeasure.GRAM;
-        final Quantity q1 = Quantity.of(VALUE1, GOOD_UM1);
-        final Quantity q2 = Quantity.of(VALUE1, GOOD_UM1);
+        final Quantity q1 = Quantity.of(VALUE1, GOOD_UM1).getValue();
+        final Quantity q2 = Quantity.of(VALUE1, GOOD_UM1).getValue();
 
-        final Quantity q3 = Quantity.of(VALUE1, GOOD_UM2);
-        final Quantity q4 = Quantity.of(VALUE2, GOOD_UM2);
+        final Quantity q3 = Quantity.of(VALUE1, GOOD_UM2).getValue();
+        final Quantity q4 = Quantity.of(VALUE2, GOOD_UM2).getValue();
 
         TestUtils.assertEqualsWithMessage(q1, q2);
         Assert.assertEquals(q1.hashCode(), q2.hashCode());
@@ -76,11 +78,10 @@ public class QuantityTest {
      */
     @Test
     public void testCompareQuantities() {
-        final Quantity q1 = Quantity.of(VALUE1, GOOD_UM1);
-        final Quantity q2 = Quantity.of(VALUE2, GOOD_UM1);
-
-        final Quantity q3 = Quantity.of(VALUE1, GOOD_UM2);
-        final Quantity q4 = Quantity.of(VALUE2, GOOD_UM2);
+        final Quantity q1 = Quantity.of(VALUE1, GOOD_UM1).getValue();
+        final Quantity q2 = Quantity.of(VALUE2, GOOD_UM1).getValue();
+        final Quantity q3 = Quantity.of(VALUE1, GOOD_UM2).getValue();
+        final Quantity q4 = Quantity.of(VALUE2, GOOD_UM2).getValue();
 
         Assert.assertTrue(q1.lessThan(q2));
         Assert.assertTrue(q2.moreThan(q1));
@@ -104,10 +105,10 @@ public class QuantityTest {
         final double c = 0.1;
         final double d = 0.100001;
 
-        final Quantity qa = Quantity.of(a, UnitOfMeasure.UNIT);
-        final Quantity qb = Quantity.of(b, UnitOfMeasure.UNIT);
-        final Quantity qc = Quantity.of(c, UnitOfMeasure.UNIT);
-        final Quantity qd = Quantity.of(d, UnitOfMeasure.UNIT);
+        final Quantity qa = Quantity.of(a, UnitOfMeasure.UNIT).getValue();
+        final Quantity qb = Quantity.of(b, UnitOfMeasure.UNIT).getValue();
+        final Quantity qc = Quantity.of(c, UnitOfMeasure.UNIT).getValue();
+        final Quantity qd = Quantity.of(d, UnitOfMeasure.UNIT).getValue();
 
         Assert.assertEquals(a, qa.getValue(), 0);
         Assert.assertEquals(b, qb.getValue(), 0);
@@ -130,6 +131,6 @@ public class QuantityTest {
 
         //0.100001 - 0.1 > 0
         res = Quantities.remove(qd, qc);
-        Assert.assertTrue(res.getValue().moreThan(Quantity.of(0, UnitOfMeasure.UNIT)));
+        Assert.assertTrue(res.getValue().moreThan(Quantity.of(0, UnitOfMeasure.UNIT).getValue()));
     }
 }

@@ -47,8 +47,8 @@ public class StockImpl implements Stock {
         this.expirationDate = expirationDate == null ? null : DateUtils.round(expirationDate, Calendar.DATE);
         this.creationDate = creationMoment;
         this.lastChangeDate = creationMoment;
-        this.remainingQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure());
-        this.usedQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure());
+        this.remainingQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure()).getValue();
+        this.usedQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure()).getValue();
     }
 
     @Override
