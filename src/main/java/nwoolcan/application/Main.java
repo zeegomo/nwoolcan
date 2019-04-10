@@ -27,21 +27,21 @@ public final class Main extends Application {
     @Override
     public void start(final Stage primaryStage) {
         //Stage for selection of data to load or to create a new data set
-        Stage selectStartData = new Stage();
+        //final Stage selectStartData = new Stage();
         //TODO
-        selectStartData.showAndWait();
+        //selectStartData.showAndWait();
 
         //Supposing a new brewery is created, creates the brewery
-        Brewery brewery = new BreweryImpl();
+        final Brewery brewery = new BreweryImpl();
         brewery.setBreweryName("Test brewery");
         brewery.setOwnerName("Giasamuglio");
         //Or maybe load it from the selected file
         //TODO
 
         //Now we have the brewery to inject into the controller
-        Controller controller = new ControllerImpl(brewery);
+        final Controller controller = new ControllerImpl(brewery);
         //Creates the view manager
-        ViewManager vm = new ViewManagerImpl(controller);
+        final ViewManager vm = new ViewManagerImpl(controller);
 
         primaryStage.setTitle(TITLE);
         primaryStage.setScene(new Scene(vm.getView(MAIN_VIEW_TYPE).getValue()));
