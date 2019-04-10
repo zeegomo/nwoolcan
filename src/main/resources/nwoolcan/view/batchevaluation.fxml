@@ -15,14 +15,12 @@
 
 <SubView fx:id="batchEvaluationSubView" xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
+         stylesheets="@style.css"
          fx:controller="nwoolcan.view.BatchEvaluationController">
 
         <BorderPane>
             <top>
-                <Label text="Batch Review" BorderPane.alignment="CENTER">
-                    <font>
-                        <Font size="28.0"/>
-                    </font>
+                <Label text="Batch Review" BorderPane.alignment="CENTER" styleClass="title">
                 </Label>
             </top>
             <center>

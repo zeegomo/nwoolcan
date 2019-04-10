@@ -1,0 +1,9 @@
+.label {
+    -fx-font-family: "sans-serif";
+    -fx-font-size: 14;
+}
+
+.title {
+    -fx-font-family: "serif";
+    -fx-font-size: 28;
+}
