@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery;
 
 import nwoolcan.model.brewery.production.batch.Batch;
+import nwoolcan.model.brewery.production.batch.BatchBuilder;
 import nwoolcan.model.brewery.production.batch.QueryBatch;
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
@@ -41,6 +42,11 @@ public interface Brewery {
      * @param batch to be added
      */
     void addBatch(Batch batch);
+    /**
+     * Returns the builder to use to create a new batch.
+     * @return the builder to use to create a new batch.
+     */
+    BatchBuilder getBatchBuilder();
     /**
      * Takes a {@link Batch}, checks to be in the final {@link nwoolcan.model.brewery.production.batch.step.Step} and creates a {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
      * @param batch from which create a {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
