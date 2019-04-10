@@ -1,5 +1,7 @@
 package nwoolcan.model.brewery.production.batch;
 
+import nwoolcan.model.brewery.Brewery;
+import nwoolcan.model.brewery.BreweryImpl;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
@@ -7,7 +9,7 @@ import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementBuilder;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationBuilder;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.review.Evaluation;
-import nwoolcan.model.brewery.production.batch.review.EvaluationImpl;
+import nwoolcan.model.brewery.production.batch.review.EvaluationFactory;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
@@ -53,6 +55,7 @@ public class BatchTest {
                                                                        .stream()
                                                                        .filter(s -> s.getClass().equals(BJCPBatchEvaluationType.class))
                                                                        .findAny().get();
+    private final Brewery brewery = new BreweryImpl();
 
     private Batch batchAlfredo, batchRossina, batchBiondina;
 
@@ -78,33 +81,37 @@ public class BatchTest {
         final BeerDescription rossina = new BeerDescriptionImpl("Rossina", "Rossina style", "Best category");
         final BeerDescription biondina = new BeerDescriptionImpl("Biondina", "Biondina style");
 
-        batchAlfredo = new BatchImpl(
+        final BatchBuilder b1 = brewery.getBatchBuilder();
+        alfredoIngredients.forEach(i -> b1.addIngredient(i.getLeft(), i.getRight()));
+
+        batchAlfredo = b1.build(
             alfredo,
             BatchMethod.ALL_GRAIN,
             Q1,
-            alfredoIngredients,
-            StepTypeEnum.MASHING,
-            null
-        );
+            StepTypeEnum.MASHING
+        ).getValue();
 
-        batchRossina = new BatchImpl(
+        final BatchBuilder b2 = brewery.getBatchBuilder();
+        biondinaIngredients.forEach(i -> b2.addIngredient(i.getLeft(), i.getRight()));
+        b2.setWaterMeasurement(new WaterMeasurementBuilder().addRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 1), WaterMeasurement.Element.CALCIUM)
+                                                            .build().getValue());
+
+        batchRossina = b2.build(
             rossina,
             BatchMethod.PARTIAL_MASH,
             Q1,
-            rossinaIngredients,
-            StepTypeEnum.MASHING,
-            new WaterMeasurementBuilder().addRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 1), WaterMeasurement.Element.CALCIUM)
-                                         .build().getValue()
-        );
+            StepTypeEnum.MASHING
+        ).getValue();
 
-        batchBiondina = new BatchImpl(
+        final BatchBuilder b3 = brewery.getBatchBuilder();
+        biondinaIngredients.forEach(i -> b3.addIngredient(i.getLeft(), i.getRight()));
+
+        batchBiondina = b3.build(
             biondina,
             BatchMethod.EXTRACT,
             Q2,
-            biondinaIngredients,
-            StepTypeEnum.MASHING,
-            null
-        );
+            StepTypeEnum.MASHING
+        ).getValue();
     }
 
     /**
@@ -252,11 +259,11 @@ public class BatchTest {
 
         //Insert review.
         Set<Evaluation> evals = Stream.<Result<Evaluation>>builder()
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.AROMA, aroma))
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, appearance))
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.FLAVOR, flavor))
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, mouthfeel))
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, overrallImpression))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.AROMA, aroma))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, appearance))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.FLAVOR, flavor))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, mouthfeel))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, overrallImpression))
             .build()
             .filter(Result::isPresent)
             .map(Result::getValue)
