@@ -1,14 +1,11 @@
 package nwoolcan.viewmodel.brewery.warehouse.stock;
 
-import nwoolcan.model.brewery.warehouse.article.BeerArticle;
-import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
+import nwoolcan.model.brewery.warehouse.article.ArticleType;
+import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
 import nwoolcan.model.utils.Quantity;
-import nwoolcan.viewmodel.brewery.warehouse.article.ArticleViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.article.MiscArticleViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 
 import java.util.Date;
 import java.util.List;
@@ -29,21 +26,12 @@ public abstract class AbstractStockViewModel {
     public AbstractStockViewModel(final Stock stock) {
         this.stock = stock;
     }
-
     /**
      * Return the name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @return the name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
-    public final ArticleViewModel getArticle() {
-        switch (stock.getArticle().getArticleType()) {
-            case INGREDIENT:
-                return new IngredientArticleViewModel((IngredientArticle) stock.getArticle());
-            case MISC:
-                return new MiscArticleViewModel(stock.getArticle());
-            case FINISHED_BEER:
-            default:
-            return new BeerArticleViewModel((BeerArticle) stock.getArticle());
-        }
+    public final AbstractArticleViewModel getArticle() {
+        return AbstractArticleViewModel.getViewArticle(stock.getArticle());
     }
     /**
      * Return the remaining {@link nwoolcan.model.utils.Quantity}.
@@ -79,5 +67,16 @@ public abstract class AbstractStockViewModel {
      */
     public final List<RecordViewModel> getRecords() {
         return stock.getRecords().stream().map(RecordViewModel::new).collect(Collectors.toList());
+    }
+    /**
+     * Generated a proper {@link AbstractStockViewModel} from a general {@link Stock} accordingly with the {@link ArticleType} of the {@link nwoolcan.model.brewery.warehouse.article.Article} of the {@link Stock}.
+     * @param stock to be converted
+     * @return the converted {@link AbstractStockViewModel}.
+     */
+    public static AbstractStockViewModel getViewStock(final Stock stock) {
+        if (stock.getArticle().getArticleType() == ArticleType.FINISHED_BEER) {
+            return new BeerStockViewModel((BeerStock) stock);
+        }
+        return new StockViewModel(stock);
     }
 }

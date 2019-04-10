@@ -7,7 +7,7 @@ import nwoolcan.model.brewery.warehouse.article.IngredientType;
 /**
  * View-Model representation of the {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
  */
-public final class IngredientArticleViewModel extends ArticleViewModel {
+public final class IngredientArticleViewModel extends AbstractArticleViewModel {
 
     private final IngredientArticle ingredientArticle;
 
