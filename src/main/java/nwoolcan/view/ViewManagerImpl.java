@@ -33,8 +33,8 @@ public final class ViewManagerImpl implements ViewManager {
             try {
                 //Search for injection constructor
                 for (final Constructor<?> cons : constructors) {
-                    if (cons.getParameters().length == 2 && cons.getParameters()[0].getType() == Controller.class
-                        && cons.getParameters()[1].getType() == ViewManager.class) {
+                    if (cons.getParameters().length == 2 && cons.getParameters()[0].getType().equals(Controller.class)
+                        && cons.getParameters()[1].getType().equals(ViewManager.class)) {
                         return cons.newInstance(controller, this);
                     }
                 }
