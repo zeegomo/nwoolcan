@@ -33,7 +33,7 @@ public class QuantityTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testQuantityWithNegativeValue() {
-        final Quantity q = Quantity.of(NEG_VALUE, GOOD_UM1);
+        Quantity.of(NEG_VALUE, GOOD_UM1);
     }
 
     /**
@@ -41,7 +41,7 @@ public class QuantityTest {
      */
     @Test
     public void testEmptyQuantity() {
-        final Quantity q = Quantity.of(0, GOOD_UM1);
+        Quantity.of(0, GOOD_UM1);
     }
 
     /**
@@ -49,7 +49,7 @@ public class QuantityTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testQuantityWithNoQuantityUM() {
-        final Quantity q = Quantity.of(VALUE1, BAD_UM);
+        Quantity.of(VALUE1, BAD_UM);
     }
 
     /**
@@ -57,7 +57,6 @@ public class QuantityTest {
      */
     @Test
     public void testQuantityEqualsAndHashcode() {
-        final UnitOfMeasure um = UnitOfMeasure.GRAM;
         final Quantity q1 = Quantity.of(VALUE1, GOOD_UM1);
         final Quantity q2 = Quantity.of(VALUE1, GOOD_UM1);
 

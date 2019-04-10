@@ -51,9 +51,6 @@ tasks.withType<JavaCompile> {
 }
 
 tasks.withType<SpotBugsTask> {
-    if (name == "spotbugsTest") {
-        reportLevel = "high"
-    }
     reports.xml.isEnabled = false
     reports.html.isEnabled = true
 }
