@@ -1,3 +1,4 @@
+import com.github.spotbugs.SpotBugsTask
 import net.ltgt.gradle.errorprone.*
 
 plugins {
@@ -11,6 +12,11 @@ plugins {
 checkstyle {
     config = resources.text.fromFile("style.xml")
     maxWarnings = 0
+}
+
+spotbugs {
+    toolVersion = "4.0.0-beta1"
+    effort = "max"
 }
 
 application {
@@ -44,7 +50,10 @@ tasks.withType<JavaCompile> {
     }
 }
 
-tasks.withType<com.github.spotbugs.SpotBugsTask> {
+tasks.withType<SpotBugsTask> {
+    if (name == "spotbugsTest") {
+        reportLevel = "high"
+    }
     reports.xml.isEnabled = false
     reports.html.isEnabled = true
 }
