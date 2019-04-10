@@ -9,11 +9,11 @@ import java.util.Objects;
  */
 public final class Quantity implements Comparable<Quantity> {
 
-    private final int value;
+    private final double value;
     private final UnitOfMeasure unitOfMeasure;
 
     //Private constructor to use as a static factory with method Quantity.of(...).
-    private Quantity(final int value, final UnitOfMeasure um) {
+    private Quantity(final double value, final UnitOfMeasure um) {
         this.value = value;
         this.unitOfMeasure = um;
     }
@@ -22,7 +22,7 @@ public final class Quantity implements Comparable<Quantity> {
      * Returns the quantity value.
      * @return quantity value.
      */
-    public int getValue() {
+    public double getValue() {
         return this.value;
     }
 
@@ -41,7 +41,7 @@ public final class Quantity implements Comparable<Quantity> {
      * @return a new {@link Quantity} with the specified value and unit of measure.
      * @throws IllegalArgumentException if the value is negative or if the unit of measure cannot be a quantity.
      */
-    public static Quantity of(final int value, final UnitOfMeasure unitOfMeasure) {
+    public static Quantity of(final double value, final UnitOfMeasure unitOfMeasure) {
         final Result<Quantity> res = QuantityChecker.check(new Quantity(value, unitOfMeasure));
         if (res.isError()) {
             throw new IllegalArgumentException(res.getError());
@@ -64,7 +64,7 @@ public final class Quantity implements Comparable<Quantity> {
         if (this.equals(other)) {
             return 0;
         }
-        return Integer.compare(getValue(), other.getValue());
+        return Double.compare(getValue(), other.getValue());
     }
 
     /**
