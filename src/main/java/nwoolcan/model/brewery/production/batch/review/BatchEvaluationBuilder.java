@@ -3,10 +3,10 @@ package nwoolcan.model.brewery.production.batch.review;
 import nwoolcan.model.brewery.production.batch.review.types.BatchEvaluationTypeScanner;
 import nwoolcan.model.brewery.production.batch.review.types.BatchEvaluationScannerImpl;
 import nwoolcan.utils.Result;
+
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -19,19 +19,13 @@ import java.util.Optional;
  */
 
 public final class BatchEvaluationBuilder {
-    private static final String INVALID_SCORE_MESSAGE = "Score for one or more categories is not valid";
     private static final String INVALID_CATEGORIES_MESSAGE = "Invalid categories";
-    private static final String BUILDER_USED_MESSAGE = "This builder has already built";
     private static final BatchEvaluationTypeScanner SCANNER = new BatchEvaluationScannerImpl();
-
-    private final Set<Evaluation> evaluations;
 
     @Nullable
     private String reviewer;
     @Nullable
     private String notes;
-    private boolean built;
-    private BatchEvaluationType batchEvaluationType;
 
     /**
      * Return a collection of all available {@link BatchEvaluationType} types.
@@ -40,17 +34,6 @@ public final class BatchEvaluationBuilder {
      */
     public static Result<Set<BatchEvaluationType>> getAvailableBatchEvaluationTypes() {
         return SCANNER.getAvailableBatchEvaluationTypes();
-    }
-    /**
-     * Create a {@link BatchEvaluationBuilder}.
-     *
-     * @param batchEvaluationType the {@link BatchEvaluationType} of this {@link BatchEvaluation}
-     *                        (implements the Strategy pattern)
-     * @param evaluations the evaluations.
-     */
-    public BatchEvaluationBuilder(final BatchEvaluationType batchEvaluationType, final Set<Evaluation> evaluations) {
-        this.batchEvaluationType = batchEvaluationType;
-        this.evaluations = new HashSet<>(evaluations);
     }
     /**
      * Add notes for the review.
@@ -73,55 +56,38 @@ public final class BatchEvaluationBuilder {
         return this;
     }
     /**
-     * Return whether this builder can build another instance or have to reset.
-     * @return true if this builder can build, false otherwise.
-     */
-    public boolean canBuild() {
-        return !this.built;
-    }
-    /**
      * Return a {@link Result} holding a {@link BatchEvaluation} if everything went well, otherwise a
      * {@link Result} holding an {@link Exception}.
+     * Automatically resets after use.
      *
+     * @param type the {@link BatchEvaluationType} of this {@link BatchEvaluation}
+     *             (implements the Strategy pattern)
+     * @param categories the evaluations.
      * @return a {@link Result}
      */
-    public Result<BatchEvaluation> build() {
-        return Result.of(this)
-            .require(BatchEvaluationBuilder::checkEvaluationsTypeValidity,
-                new IllegalArgumentException(INVALID_CATEGORIES_MESSAGE))
-            .require(BatchEvaluationBuilder::canBuild,
-                new IllegalStateException(BUILDER_USED_MESSAGE))
-            .peek(builder -> builder.built = true)
-            .map(builder -> new BatchEvaluationImpl(builder.batchEvaluationType,
-                builder.evaluations,
-                Optional.ofNullable(builder.reviewer),
-                Optional.ofNullable(builder.notes)));
+    public Result<BatchEvaluation> build(final BatchEvaluationType type, final Set<Evaluation> categories) {
+        return this.checkEvaluationsTypeValidity(type, categories)
+                   .<BatchEvaluation>map(builder -> new BatchEvaluationImpl(type,
+                       categories,
+                       Optional.ofNullable(builder.reviewer),
+                       Optional.ofNullable(builder.notes)))
+                   .peek(batchEvaluation -> this.reset());
     }
 
-    /**
-     * Resets the builder.
-     *
-     * @param newType the {@link BatchEvaluationType} of the new review.
-     * @param evaluations the {@link Evaluation} set for this review.
-     * @return this
-     */
-    public BatchEvaluationBuilder reset(final BatchEvaluationType newType, final Set<Evaluation> evaluations) {
-        this.evaluations.clear();
-        this.evaluations.addAll(evaluations);
+    private void reset() {
         this.notes = null;
         this.reviewer = null;
-        this.built = false;
-        this.batchEvaluationType = newType;
-        return this;
     }
 
-    private boolean checkEvaluationsTypeValidity() {
-        Collection<EvaluationType> catTypes = this.evaluations
+    private Result<BatchEvaluationBuilder> checkEvaluationsTypeValidity(final BatchEvaluationType type, final Set<Evaluation> evaluations) {
+        Collection<EvaluationType> catTypes = evaluations
             .stream()
             .map(Evaluation::getEvaluationType)
             .collect(Collectors.toList());
-        return catTypes.containsAll(this.batchEvaluationType.getCategories())
-            && this.batchEvaluationType.getCategories().containsAll(catTypes);
+        return Result.of(this)
+                     .require(() -> catTypes.containsAll(type.getCategories())
+                         && type.getCategories().containsAll(catTypes),
+                         new IllegalArgumentException(INVALID_CATEGORIES_MESSAGE));
     }
 
 
