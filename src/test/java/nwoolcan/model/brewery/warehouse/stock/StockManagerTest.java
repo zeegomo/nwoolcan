@@ -1,5 +1,6 @@
 package nwoolcan.model.brewery.warehouse.stock;
 
+import nwoolcan.model.brewery.IdGenerator;
 import nwoolcan.model.brewery.production.batch.Batch;
 import nwoolcan.model.brewery.production.batch.BatchBuilder;
 import nwoolcan.model.brewery.production.batch.BatchMethod;
@@ -73,7 +74,16 @@ public class StockManagerTest {
         final BatchMethod batchMethod = BatchMethod.ALL_GRAIN;
         final Quantity initialSize = Quantity.of(3, UnitOfMeasure.MILLILITER);
         final StepType initialStep = StepTypeEnum.PACKAGING;
-        final Batch batch = new BatchBuilder(beerDescription, batchMethod, initialSize, initialStep).build().getValue();
+        final Batch batch = new BatchBuilder(
+            new IdGenerator() {
+                private int nextId = 0;
+
+                @Override
+                public int getNextId() {
+                    return nextId++;
+                }
+            }
+        ).build(beerDescription, batchMethod, initialSize, initialStep).getValue();
         final Date date = new Date();
         final BeerArticle beerArticle = articInstance.createBeerArticle(GIAMPIERO, UnitOfMeasure.BOTTLE_33_CL);
         final Result<BeerStock> beerStockResult = stockInstance.createBeerStock(beerArticle, date, batch);
