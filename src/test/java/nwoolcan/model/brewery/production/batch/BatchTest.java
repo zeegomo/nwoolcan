@@ -7,7 +7,7 @@ import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementBuilder;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationBuilder;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.review.Evaluation;
-import nwoolcan.model.brewery.production.batch.review.EvaluationImpl;
+import nwoolcan.model.brewery.production.batch.review.EvaluationFactory;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
@@ -252,11 +252,11 @@ public class BatchTest {
 
         //Insert review.
         Set<Evaluation> evals = Stream.<Result<Evaluation>>builder()
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.AROMA, aroma))
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, appearance))
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.FLAVOR, flavor))
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, mouthfeel))
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, overrallImpression))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.AROMA, aroma))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, appearance))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.FLAVOR, flavor))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, mouthfeel))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, overrallImpression))
             .build()
             .filter(Result::isPresent)
             .map(Result::getValue)
