@@ -50,7 +50,7 @@ public class ResultTest {
     @Test(expected = NoSuchElementException.class)
     public void testEmptyGet() {
         Result<Empty> empty = Result.ofEmpty();
-        Exception e = empty.getError();
+        empty.getError();
     }
     /**
      * Tests orElse.
@@ -59,7 +59,7 @@ public class ResultTest {
     public void testEmptyOrElse() {
         Result<Integer> error = Result.error(new Exception());
         assertTrue(error.orElse(2).equals(2));
-        Integer i = error.getValue();
+        error.getValue();
     }
     /**
      * Tests require.

@@ -114,7 +114,7 @@ public class TestBatchEvaluation {
             .map(Result::getValue)
             .collect(Collectors.toSet());
 
-        Result<BatchEvaluation> test2 = builder.reset(bjcpType, evals)
+        Result<BatchEvaluation> test2 = builder.reset(bjcpType, evals1)
                                                .addReviewer("Andrea")
                                                .build();
 
@@ -132,7 +132,7 @@ public class TestBatchEvaluation {
             .collect(Collectors.toSet());
 
 
-        Result<BatchEvaluation> test3 = builder.reset(bjcpType, evals)
+        Result<BatchEvaluation> test3 = builder.reset(bjcpType, evals2)
                                                .addReviewer("Andrea")
                                                .build();
 

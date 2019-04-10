@@ -156,15 +156,14 @@ public final class BatchEvaluationBuilder {
             if (this == o) {
                 return true;
             }
-            if (!(o instanceof BatchEvaluationImpl)) {
+
+            if (o == null || getClass() != o.getClass()) {
                 return false;
             }
+
             BatchEvaluationImpl that = (BatchEvaluationImpl) o;
-            return this.getScore() == that.getScore()
-                && Objects.equals(categories, that.getCategoryEvaluations())
-                && Objects.equals(this.getNotes(), that.getNotes())
-                && Objects.equals(reviewer, that.getReviewer())
-                && Objects.equals(this.getEvaluationType(), that.getEvaluationType());
+            return categories.equals(that.categories)
+                && reviewer.equals(that.reviewer);
         }
 
         @Override
