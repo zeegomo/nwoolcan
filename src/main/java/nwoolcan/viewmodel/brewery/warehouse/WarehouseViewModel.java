@@ -8,7 +8,7 @@ import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
-import nwoolcan.viewmodel.brewery.warehouse.article.ArticleViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.MiscArticleViewModel;
@@ -140,10 +140,10 @@ public class WarehouseViewModel {
                         .collect(Collectors.toList());
     }
     /**
-     * Returns a {@link List} of {@link ArticleViewModel}.
-     * @return a {@link List} of {@link ArticleViewModel}.
+     * Returns a {@link List} of {@link AbstractArticleViewModel}.
+     * @return a {@link List} of {@link AbstractArticleViewModel}.
      */
-    public List<ArticleViewModel> getArticles() {
+    public List<AbstractArticleViewModel> getArticles() {
         return warehouse.getArticles(GENERAL_QUERY_ARTICLE)
                         .stream()
                         .map(article -> {
