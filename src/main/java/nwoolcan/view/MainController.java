@@ -13,7 +13,7 @@ import nwoolcan.utils.Result;
 import nwoolcan.controller.Controller;
 import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.subview.SubViewContainer;
-import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -81,7 +81,7 @@ public final class MainController extends AbstractViewController {
      * @param event The occurred event
      */
     public void menuViewEvaluationClick(final ActionEvent event) {
-        ViewManager.getView(ViewType.BATCHEVALUATION, new BatchEvaluationViewModel(bjcp)).peek(view -> this.contentPane.substitute(view));
+        this.getViewManager().getView(ViewType.BATCHEVALUATIONDETAIL, new BatchEvaluationDetailViewModel(bjcp)).peek(view -> this.contentPane.substitute(view));
     }
     /**
      * Quits the application.

@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
+import nwoolcan.controller.Controller;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationViewModel;
 
@@ -29,6 +30,16 @@ public class BatchEvaluationController
     private Label lblReviewer;
     @FXML
     private VBox categories;
+
+    /**
+     * Creates itself and gets injected.
+     *
+     * @param controller  injected controller.
+     * @param viewManager injected view manager.
+     */
+    public BatchEvaluationController(final Controller controller, final ViewManager viewManager) {
+        super(controller, viewManager);
+    }
 
 
     @Override

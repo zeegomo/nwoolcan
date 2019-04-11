@@ -25,6 +25,10 @@ public enum ViewType {
      */
     BATCHEVALUATION,
     /**
+     * The review view.
+     */
+    BATCHEVALUATIONDETAIL,
+    /**
      *
      */
     MASTER_TABLE,
