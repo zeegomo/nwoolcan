@@ -1,6 +1,6 @@
 package nwoolcan.model.brewery.production.batch;
 
-
+import nwoolcan.model.brewery.IdGenerator;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.production.batch.step.StepType;
@@ -21,10 +21,7 @@ public class BatchBuilder {
 
     private static final String MUST_BE_DISTINCT_INGREDIENTS_MESSAGE = "All ingredients added must be distinct.";
 
-    private final BeerDescription beerDescription;
-    private final BatchMethod batchMethod;
-    private final Quantity initialSize;
-    private final StepType initialStep;
+    private final IdGenerator generator;
 
     private Collection<Pair<IngredientArticle, Integer>> ingredients;
 
@@ -33,20 +30,11 @@ public class BatchBuilder {
 
     /**
      * Constructor with mandatory parameters for a Batch.
-     * @param beerDescription batch's beer description.
-     * @param batchMethod batch method.
-     * @param initialSize batch's initial size.
-     * @param initialStep batch's initial step type.
+     * @param generator the id generator to use for generating the batch.
      */
-    public BatchBuilder(final BeerDescription beerDescription,
-                        final BatchMethod batchMethod,
-                        final Quantity initialSize,
-                        final StepType initialStep) {
-        this.beerDescription = beerDescription;
-        this.batchMethod = batchMethod;
-        this.initialSize = initialSize;
-        this.initialStep = initialStep;
+    public BatchBuilder(final IdGenerator generator) {
         this.ingredients = new ArrayList<>();
+        this.generator = generator;
     }
     /**
      * Adds an ingredient to the batch.
@@ -75,19 +63,27 @@ public class BatchBuilder {
      *     <li>{@link IllegalStateException} if the ingredients are not distinct.</li>
      *     <li>{@link IllegalArgumentException} if the initial step type of the batch cannot be created.</li>
      * </ul>
+     * @param beerDescription the batch's beer description.
+     * @param batchMethod the batch method.
+     * @param initialSize the batch's initial size.
+     * @param initialStep the batch's initial step.
      * @return a {@link Result} containing the built {@link Batch}.
      */
-    public Result<Batch> build() {
+    public Result<Batch> build(final BeerDescription beerDescription,
+                               final BatchMethod batchMethod,
+                               final Quantity initialSize,
+                               final StepType initialStep) {
         return Result.ofEmpty()
                      .require(() -> this.ingredients.stream().map(Pair::getKey).distinct().count() == this.ingredients.size(),
                          new IllegalStateException(MUST_BE_DISTINCT_INGREDIENTS_MESSAGE))
                      .flatMap(e -> Results.ofChecked(() -> new BatchImpl(
-                         this.beerDescription,
-                         this.batchMethod,
-                         this.initialSize,
+                         beerDescription,
+                         batchMethod,
+                         initialSize,
                          this.ingredients,
-                         this.initialStep,
-                         this.waterMeasurement
+                         initialStep,
+                         this.waterMeasurement,
+                         this.generator
                      )));
     }
 }
