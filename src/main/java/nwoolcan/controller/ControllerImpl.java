@@ -7,7 +7,9 @@ import nwoolcan.model.brewery.production.batch.BatchBuilder;
 import nwoolcan.model.brewery.production.batch.QueryBatch;
 import nwoolcan.model.brewery.production.batch.QueryBatchBuilder;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
-import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementBuilder;
+import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
+import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementFactory;
+import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterImpl;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
@@ -77,18 +79,17 @@ public final class ControllerImpl implements Controller {
                                 .map(Pair::getRight).findAny().get()))
                     .forEach(p -> bBuilder.addIngredient(p.getLeft(), p.getRight().intValue())); //TODO remove intValue
 
-        //inserisco il water measurement
-        final WaterMeasurementBuilder wmBuilder = new WaterMeasurementBuilder();
-
-        batchDTO.getWaterMeasurement().forEach(t ->
-            wmBuilder.addRegistration(new ParameterImpl(//TODO use simple factory with result
-                ParameterTypeEnum.WATER_MEASUREMENT,
-                t.getMiddle(),
-                t.getRight()
-            ), t.getLeft())
-        );
-
-        wmBuilder.build().peek(bBuilder::setWaterMeasurement);
+        //create water measurement and add it to the batch builder
+        WaterMeasurementFactory.create(
+            batchDTO.getWaterMeasurement().stream()
+                                          .<Pair<WaterMeasurement.Element, Parameter>>map(t -> Pair.of(
+                                              t.getLeft(),
+                                              new ParameterImpl(//TODO use factory
+                                                  ParameterTypeEnum.WATER_MEASUREMENT,
+                                                  t.getMiddle(),
+                                                  t.getRight())))
+                                          .collect(Collectors.toList()))
+            .peek(bBuilder::setWaterMeasurement);
 
         return bBuilder.build(
             new BeerDescriptionImpl(batchDTO.getName(), batchDTO.getStyle(), batchDTO.getCategory().orElse(null)),

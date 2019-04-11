@@ -4,15 +4,17 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
-import nwoolcan.view.ColumnDescriptor;
+import nwoolcan.controller.Controller;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.MasterTableViewModel;
 import nwoolcan.view.SubViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
+import nwoolcan.view.mastertable.ColumnDescriptor;
+import nwoolcan.view.mastertable.MasterTableViewModel;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.ProductionViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
 
 import java.util.Arrays;
@@ -44,6 +46,16 @@ public final class ProductionController
     private SubView productionSubView;
     @FXML
     private SubViewContainer masterTableContainer;
+
+    /**
+     * Creates itself and gets injected.
+     *
+     * @param controller  injected controller.
+     * @param viewManager injected view manager.
+     */
+    public ProductionController(final Controller controller, final ViewManager viewManager) {
+        super(controller, viewManager);
+    }
 
     @Override
     public void initData(final ProductionViewModel data) {
@@ -78,7 +90,7 @@ public final class ProductionController
             )
         );
 
-        final MasterTableViewModel<MasterBatchViewModel> masterViewModel = new MasterTableViewModel<>(
+        final MasterTableViewModel<MasterBatchViewModel, DetailBatchViewModel> masterViewModel = new MasterTableViewModel<>(
             Arrays.asList(
                 new ColumnDescriptor("ID", "id"),
                 new ColumnDescriptor("Beer name", "beerDescriptionName"),
@@ -91,10 +103,11 @@ public final class ProductionController
                 new ColumnDescriptor("Ended", "isEnded")
             ),
             data.getBatches(),
-            ViewType.BATCH_DETAIL
+            ViewType.BATCH_DETAIL,
+            mbvm -> null //TODO this.getController().getBatchController().getDetailBatchViewModel(mbvm.getId())
         );
 
-        ViewManager.getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
+        this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
 
         //Experiment with events in pie chart.
 //        final Label tooltipPieChart = new Label("");

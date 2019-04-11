@@ -30,7 +30,7 @@ public class MasterBatchViewModel {
         this.beerStyleName = batch.getBatchInfo().getBeerDescription().getStyle();
         this.batchMethodName = batch.getBatchInfo().getMethod().getName();
         this.currentStepName = batch.getCurrentStep().getStepInfo().getType().getName();
-        this.startDate = batch.getSteps().stream().findFirst().get().getStepInfo().getStartDate();
+        this.startDate = new Date(batch.getSteps().stream().findFirst().get().getStepInfo().getStartDate().getTime());
         this.initialBatchSize = batch.getBatchInfo().getBatchSize();
         this.currentBatchSize = batch.getCurrentSize();
         this.isEnded = batch.isEnded();
@@ -81,7 +81,7 @@ public class MasterBatchViewModel {
      * @return the batch start date.
      */
     public Date getStartDate() {
-        return this.startDate;
+        return new Date(this.startDate.getTime());
     }
 
     /**
