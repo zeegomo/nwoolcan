@@ -30,7 +30,7 @@ public class BatchInfoTest {
      */
     @Test
     public void testConstructor() {
-        final Collection<Pair<IngredientArticle, Integer>> ingredients = new ArrayList<>();
+        final Collection<Pair<IngredientArticle, Double>> ingredients = new ArrayList<>();
         final BeerDescription desc = new BeerDescriptionImpl("test", "lager");
         ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
         assertFalse(info.getAbv().isPresent());
@@ -46,7 +46,7 @@ public class BatchInfoTest {
     public void testUpdate() {
         final int og = 1050;
         final int fg = 1020;
-        final Collection<Pair<IngredientArticle, Integer>> ingredients = new ArrayList<>();
+        final Collection<Pair<IngredientArticle, Double>> ingredients = new ArrayList<>();
         final BeerDescription desc = new BeerDescriptionImpl("test", "lager");
         ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
 
