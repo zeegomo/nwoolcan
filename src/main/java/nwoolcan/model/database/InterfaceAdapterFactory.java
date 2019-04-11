@@ -35,32 +35,20 @@ public class InterfaceAdapterFactory implements TypeAdapterFactory {
                     return;
                 }
                 out.beginObject();
-                out.name(CLASSNAME_FIELD).value(value.getClass().getName());
+                out.name(value.getClass().getName());
 
-                out.name(DATA_FIELD);
                 gson.getDelegateAdapter(thisFactory, type).write(out, value);
                 out.endObject();
             }
 
             @Override
             public T read(final JsonReader in) throws IOException {
-                TypeToken jsonType = null;
-                JsonElement jsonObj = null;
                 in.beginObject();
-                while (in.hasNext()) {
-                    final String name = in.nextName();
-                    if (name.equals(CLASSNAME_FIELD)) {
-                        jsonType = TypeToken.get(this.getClassFromName(in.nextString()));
-                    } else if (name.equals(DATA_FIELD)) {
-
-                    } else {
-                        in.skipValue();
-                    }
-                }
+                final String className = in.nextName();
+                final TypeToken<?> objType = TypeToken.get(this.getClassFromName(className));
+                final T obj = (T) gson.getDelegateAdapter(thisFactory, objType).read(in);
                 in.endObject();
-                final TypeAdapter<?> resultAdapter = gson.getDelegateAdapter(thisFactory, jsonType);
-                final JsonReader objReader = new Gson().newJsonReader(new StringReader(new Gson().toJson(jsonObj)));
-                return (T)resultAdapter.read(objReader);
+                return obj;
              }
         };
     }
