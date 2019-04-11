@@ -168,7 +168,7 @@ public class StepTest {
         Assert.assertTrue(resQ.isPresent());
         res = this.mashing.getParameters(resQ.getValue());
         Assert.assertArrayEquals(MASHING_PARAMS.stream()
-                                               .sorted((p1, p2) -> -Double.compare(p1.getRegistrationValue().doubleValue(), p2.getRegistrationValue().doubleValue()))
+                                               .sorted((p1, p2) -> Double.compare(p2.getRegistrationValue().doubleValue(), p1.getRegistrationValue().doubleValue()))
                                                .toArray(), res.toArray());
 
         final double val = 9.9;

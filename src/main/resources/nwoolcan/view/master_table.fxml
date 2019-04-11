@@ -7,7 +7,7 @@
 
 <SubView xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
-         fx:controller="nwoolcan.view.MasterTableController"
+         fx:controller="nwoolcan.view.mastertable.MasterTableController"
          fx:id="masterTableSubView">
 
     <BorderPane>

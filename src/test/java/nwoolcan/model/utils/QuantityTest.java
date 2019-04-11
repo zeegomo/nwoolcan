@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import nwoolcan.utils.test.TestUtils;
 
-import java.util.NoSuchElementException;
-
 /**
  * Test class for {@link Quantity} class.
  */
@@ -33,9 +31,9 @@ public class QuantityTest {
     /**
      * Method that tests quantity creation with negative value.
      */
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void testQuantityWithNegativeValue() {
-        final Quantity q = Quantity.of(NEG_VALUE, GOOD_UM1).getValue();
+        Assert.assertTrue(Quantity.of(NEG_VALUE, GOOD_UM1).isError());
     }
 
     /**
@@ -43,15 +41,15 @@ public class QuantityTest {
      */
     @Test
     public void testEmptyQuantity() {
-        final Quantity q = Quantity.of(0, GOOD_UM1).getValue();
+        Assert.assertTrue(Quantity.of(0, GOOD_UM1).isPresent());
     }
 
     /**
      * Method that tests quantity creation with not quantity unit of measure.
      */
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void testQuantityWithNoQuantityUM() {
-        final Quantity q = Quantity.of(VALUE1, BAD_UM).getValue();
+        Assert.assertTrue(Quantity.of(VALUE1, BAD_UM).isError());
     }
 
     /**
@@ -59,7 +57,6 @@ public class QuantityTest {
      */
     @Test
     public void testQuantityEqualsAndHashcode() {
-        final UnitOfMeasure um = UnitOfMeasure.GRAM;
         final Quantity q1 = Quantity.of(VALUE1, GOOD_UM1).getValue();
         final Quantity q2 = Quantity.of(VALUE1, GOOD_UM1).getValue();
 
