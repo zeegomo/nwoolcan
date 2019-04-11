@@ -33,7 +33,11 @@ public enum ViewType {
     /**
      * Detail view to show a batch.
      */
-    BATCH_DETAIL;
+    BATCH_DETAIL,
+    /**
+     * Modal for creating a new batch.
+     */
+    NEW_BATCH_MODAL;
 
     /**
      * Name of the FXML files associated with this type of view.
