@@ -23,7 +23,7 @@ public class BatchBuilder {
 
     private final IdGenerator generator;
 
-    private Collection<Pair<IngredientArticle, Integer>> ingredients;
+    private Collection<Pair<IngredientArticle, Double>> ingredients;
 
     @Nullable
     private WaterMeasurement waterMeasurement;
@@ -43,7 +43,7 @@ public class BatchBuilder {
      * @param quantity the ingredient's quantity.
      * @return this.
      */
-    public BatchBuilder addIngredient(final IngredientArticle article, final Integer quantity) {
+    public BatchBuilder addIngredient(final IngredientArticle article, final double quantity) {
         this.ingredients.add(Pair.of(article, quantity));
         return this;
     }

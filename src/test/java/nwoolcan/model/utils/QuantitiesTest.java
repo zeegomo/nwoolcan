@@ -29,10 +29,10 @@ public class QuantitiesTest {
      */
     @Before
     public void initQuantities() {
-        this.q1 = Quantity.of(V1, UM1);
-        this.q2 = Quantity.of(V2, UM1);
-        this.q3 = Quantity.of(V3, UM1);
-        this.q4 = Quantity.of(V4, UM2);
+        this.q1 = Quantity.of(V1, UM1).getValue();
+        this.q2 = Quantity.of(V2, UM1).getValue();
+        this.q3 = Quantity.of(V3, UM1).getValue();
+        this.q4 = Quantity.of(V4, UM2).getValue();
     }
 
     /**
@@ -49,9 +49,9 @@ public class QuantitiesTest {
         Assert.assertTrue(sum2res.isPresent());
         Assert.assertTrue(sum3res.isPresent());
 
-        TestUtils.assertEqualsWithMessage(Quantity.of(V1 + V2, UM1), sum1res.getValue());
-        TestUtils.assertEqualsWithMessage(Quantity.of(V1 + V3, UM1), sum2res.getValue());
-        TestUtils.assertEqualsWithMessage(Quantity.of(V2 + V3, UM1), sum3res.getValue());
+        TestUtils.assertEqualsWithMessage(Quantity.of(V1 + V2, UM1).getValue(), sum1res.getValue());
+        TestUtils.assertEqualsWithMessage(Quantity.of(V1 + V3, UM1).getValue(), sum2res.getValue());
+        TestUtils.assertEqualsWithMessage(Quantity.of(V2 + V3, UM1).getValue(), sum3res.getValue());
     }
 
     /**
@@ -70,7 +70,7 @@ public class QuantitiesTest {
         Assert.assertTrue(rem3res.isError());
         Assert.assertSame(IllegalArgumentException.class, rem3res.getError().getClass());
 
-        TestUtils.assertEqualsWithMessage(Quantity.of(V1 - V2, UM1), rem1res.getValue());
+        TestUtils.assertEqualsWithMessage(Quantity.of(V1 - V2, UM1).getValue(), rem1res.getValue());
     }
 
     /**

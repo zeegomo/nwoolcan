@@ -31,7 +31,7 @@ public class BreweryImplTest {
     private static final String OWNER_NAME = "Ciusseppe";
     private final BeerDescription beerDescription = new BeerDescriptionImpl(OWNER_NAME, OWNER_NAME);
     private final BatchMethod batchMethod = BatchMethod.ALL_GRAIN;
-    private final Quantity initialSize = Quantity.of(3, UnitOfMeasure.BOTTLE_33_CL);
+    private final Quantity initialSize = Quantity.of(3, UnitOfMeasure.BOTTLE_33_CL).getValue();
     private final StepType initialStep = StepTypeEnum.FINALIZED;
     private final Brewery brewery = new BreweryImpl();
     private final Batch batch = brewery.getBatchBuilder()
