@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
+import nwoolcan.controller.Controller;
 import nwoolcan.view.subview.SubView;
 
 /**
@@ -26,6 +27,15 @@ public final class MasterTableController<T> extends SubViewController implements
 
     @FXML
     private SubView masterTableSubView;
+
+    /**
+     * Creates itself and gets injected.
+     * @param controller injected controller.
+     * @param viewManager injected view manager.
+     */
+    public MasterTableController(final Controller controller, final ViewManager viewManager) {
+        super(controller, viewManager);
+    }
 
     @Override
     public void initData(final MasterTableViewModel<T> data) {

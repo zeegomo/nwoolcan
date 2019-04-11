@@ -9,12 +9,12 @@ import org.junit.Test;
  */
 public class TestArticle {
 
-    private final String name = "DummyName";
+    private static final String NAME = "DummyName";
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.UNIT;
 
     /**
-     * Method that tests the constructor with empty name.
+     * Method that tests the constructor with empty NAME.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorWithEmptyName() {
@@ -25,8 +25,8 @@ public class TestArticle {
      */
     @Test
     public void testGetters() {
-        final Article article = ArticleManager.getInstance().createMiscArticle(name, UOM);
-        Assert.assertEquals(name, article.getName());
+        final Article article = ArticleManager.getInstance().createMiscArticle(NAME, UOM);
+        Assert.assertEquals(NAME, article.getName());
         Assert.assertEquals(ArticleType.MISC, article.getArticleType());
         Assert.assertTrue(article.toIngredientArticle().isError());
         Assert.assertEquals(IllegalAccessException.class, article.toIngredientArticle()
@@ -42,9 +42,9 @@ public class TestArticle {
      */
     @Test
     public void testEquals() {
-        final Article art1 = ArticleManager.getInstance().createMiscArticle(name, UOM);
-        final Article art2 = ArticleManager.getInstance().createMiscArticle(name, UOM);
-        final Article art4 = ArticleManager.getInstance().createMiscArticle(name, UOM1);
+        final Article art1 = ArticleManager.getInstance().createMiscArticle(NAME, UOM);
+        final Article art2 = ArticleManager.getInstance().createMiscArticle(NAME, UOM);
+        final Article art4 = ArticleManager.getInstance().createMiscArticle(NAME, UOM1);
         Assert.assertEquals(art1, art2);
         Assert.assertEquals(art1, art1);
         Assert.assertNotEquals(art1, art4);
