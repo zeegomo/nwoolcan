@@ -31,5 +31,10 @@ public interface Controller {
      */
     List<MasterBatchViewModel> getBatches(QueryBatch query);
 
+    /**
+     * Creates a new batch in production with the specified data in the DTO passed by parameter.
+     * @param batchDTO the DTO with all the data to create a new batch.
+     * @return a {@link Result} with an error if creation failed.
+     */
     Result<Empty> createNewBatch(CreateBatchDTO batchDTO);
 }

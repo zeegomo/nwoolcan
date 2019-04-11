@@ -4,16 +4,13 @@ import nwoolcan.controller.brewery.BreweryController;
 import nwoolcan.controller.brewery.BreweryControllerImpl;
 import nwoolcan.model.brewery.Brewery;
 import nwoolcan.model.brewery.production.batch.BatchBuilder;
-import nwoolcan.model.brewery.production.batch.BatchMethod;
 import nwoolcan.model.brewery.production.batch.QueryBatch;
 import nwoolcan.model.brewery.production.batch.QueryBatchBuilder;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementBuilder;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterImpl;
-import nwoolcan.model.brewery.production.batch.step.parameter.ParameterType;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
-import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
@@ -84,7 +81,7 @@ public final class ControllerImpl implements Controller {
         final WaterMeasurementBuilder wmBuilder = new WaterMeasurementBuilder();
 
         batchDTO.getWaterMeasurement().forEach(t ->
-            wmBuilder.addRegistration(new ParameterImpl(
+            wmBuilder.addRegistration(new ParameterImpl(//TODO use simple factory with result
                 ParameterTypeEnum.WATER_MEASUREMENT,
                 t.getMiddle(),
                 t.getRight()
