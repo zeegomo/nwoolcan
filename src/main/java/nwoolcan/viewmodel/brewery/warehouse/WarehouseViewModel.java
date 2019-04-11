@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
  */
 public class WarehouseViewModel {
 
-    private final Warehouse warehouse;
     private static final QueryStock GENERAL_QUERY_STOCK = new QueryStockBuilder().build().getValue();
     private static final QueryArticle GENERAL_QUERY_ARTICLE = new QueryArticleBuilder().build();
     private static final QueryStock BEER_AVAILABLE_QUERY = new QueryStockBuilder().setIncludeOnlyStockState(StockState.AVAILABLE)
@@ -54,110 +53,132 @@ public class WarehouseViewModel {
     private static final QueryStock MISC_EXPIRED_QUERY = new QueryStockBuilder().setIncludeOnlyStockState(StockState.EXPIRED)
                                                                                 .setArticleType(ArticleType.MISC)
                                                                                 .build().getValue();
+    private final int nBeerAvailable;
+    private final int nMiscAvailable;
+    private final int nIngredientAvailable;
+    private final int nBeerExpired;
+    private final int nMiscExpired;
+    private final int nIngredientExpired;
+    private final int nBeerUsed;
+    private final int nMiscUsed;
+    private final int nIngredientUsed;
+    private final List<AbstractStockViewModel> allStocks;
+    private final List<AbstractArticleViewModel> allArticles;
+
     /**
      * Constructor of the view part of the {@link nwoolcan.model.brewery.warehouse.Warehouse} which specifies the general statistics.
      * @param warehouse to be converted in {@link WarehouseViewModel}.
      */
     public WarehouseViewModel(final Warehouse warehouse) {
-        this.warehouse = warehouse;
+        this.nBeerAvailable = warehouse.getStocks(BEER_AVAILABLE_QUERY).size();
+        this.nMiscAvailable = warehouse.getStocks(MISC_AVAILABLE_QUERY).size();
+        this.nIngredientAvailable = warehouse.getStocks(INGREDIENT_AVAILABLE_QUERY).size();
+        this.nBeerExpired = warehouse.getStocks(BEER_EXPIRED_QUERY).size();
+        this.nMiscExpired = warehouse.getStocks(MISC_EXPIRED_QUERY).size();
+        this.nIngredientExpired = warehouse.getStocks(INGREDIENT_EXPIRED_QUERY).size();
+        this.nBeerUsed = warehouse.getStocks(BEER_USED_QUERY).size();
+        this.nMiscUsed = warehouse.getStocks(MISC_USED_QUERY).size();
+        this.nIngredientUsed = warehouse.getStocks(INGREDIENT_USED_QUERY).size();
+        this.allStocks = warehouse.getStocks(GENERAL_QUERY_STOCK)
+                                  .stream()
+                                  .map(stock -> {
+                                      if (stock.getArticle().getArticleType() == ArticleType.FINISHED_BEER) {
+                                          return new BeerStockViewModel((BeerStock) stock);
+                                      }
+                                      return new StockViewModel(stock);
+                                  })
+                                  .collect(Collectors.toList());
+        this.allArticles = warehouse.getArticles(GENERAL_QUERY_ARTICLE)
+                                    .stream()
+                                    .map(article -> {
+                                        switch (article.getArticleType()) {
+                                            case FINISHED_BEER:
+                                                return new BeerArticleViewModel(article.toBeerArticle().getValue());
+                                            case INGREDIENT:
+                                                return new IngredientArticleViewModel(article.toIngredientArticle().getValue());
+                                            default:
+                                            case MISC:
+                                                return new MiscArticleViewModel(article);
+                                        }
+                                    })
+                                    .collect(Collectors.toList());
     }
     /**
      * Return the number of available {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
      * @return the number of available {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
      */
     public int getnBeerAvailable() {
-        return warehouse.getStocks(BEER_AVAILABLE_QUERY).size();
+        return nBeerAvailable;
     }
     /**
      * Return the number of available {@link nwoolcan.model.brewery.warehouse.stock.Stock} with a misc {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @return the number of available {@link nwoolcan.model.brewery.warehouse.stock.Stock} with a misc {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     public int getnMiscAvailable() {
-        return warehouse.getStocks(MISC_AVAILABLE_QUERY).size();
+        return nMiscAvailable;
     }
     /**
      * Return the number of used {@link nwoolcan.model.brewery.warehouse.stock.Stock} with an {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      * @return the number of used {@link nwoolcan.model.brewery.warehouse.stock.Stock} with an {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      */
     public int getnIngredientAvailable() {
-        return warehouse.getStocks(INGREDIENT_AVAILABLE_QUERY).size();
+        return nIngredientAvailable;
     }
     /**
      * Return the number of expired {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
      * @return the number of expired {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
      */
     public int getnBeerExpired() {
-        return warehouse.getStocks(BEER_EXPIRED_QUERY).size();
+        return nBeerExpired;
     }
     /**
      * Return the number of expired {@link nwoolcan.model.brewery.warehouse.stock.Stock} with a misc {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @return the number of expired {@link nwoolcan.model.brewery.warehouse.stock.Stock} with a misc {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     public int getnMiscExpired() {
-        return warehouse.getStocks(MISC_EXPIRED_QUERY).size();
+        return nMiscExpired;
     }
     /**
      * Return the number of used {@link nwoolcan.model.brewery.warehouse.stock.Stock} with an {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      * @return the number of used {@link nwoolcan.model.brewery.warehouse.stock.Stock} with an {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      */
     public int getnIngredientExpired() {
-        return warehouse.getStocks(INGREDIENT_EXPIRED_QUERY).size();
+        return nIngredientExpired;
     }
     /**
      * Return the number of used {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
      * @return the number of used {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
      */
     public int getnBeerUsed() {
-        return warehouse.getStocks(BEER_USED_QUERY).size();
+        return nBeerUsed;
     }
     /**
      * Return the number of used {@link nwoolcan.model.brewery.warehouse.stock.Stock} with a misc {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @return the number of used {@link nwoolcan.model.brewery.warehouse.stock.Stock} with a misc {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     public int getnMiscUsed() {
-        return warehouse.getStocks(MISC_USED_QUERY).size();
+        return nMiscUsed;
     }
     /**
      * Return the number of used {@link nwoolcan.model.brewery.warehouse.stock.Stock} with an {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      * @return the number of used {@link nwoolcan.model.brewery.warehouse.stock.Stock} with an {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      */
     public int getnIngredientUsed() {
-        return warehouse.getStocks(INGREDIENT_USED_QUERY).size();
+        return nIngredientUsed;
     }
     /**
      * Returns the list of all {@link AbstractStockViewModel}.
      * @return a list of {@link AbstractStockViewModel}.
      */
     public List<AbstractStockViewModel> getStocks() {
-        return warehouse.getStocks(GENERAL_QUERY_STOCK)
-                        .stream()
-                        .map(stock -> {
-                            if (stock.getArticle().getArticleType() == ArticleType.FINISHED_BEER) {
-                                return new BeerStockViewModel((BeerStock) stock);
-                            }
-                            return new StockViewModel(stock);
-                        })
-                        .collect(Collectors.toList());
+        return allStocks;
     }
     /**
      * Returns a {@link List} of {@link AbstractArticleViewModel}.
      * @return a {@link List} of {@link AbstractArticleViewModel}.
      */
     public List<AbstractArticleViewModel> getArticles() {
-        return warehouse.getArticles(GENERAL_QUERY_ARTICLE)
-                        .stream()
-                        .map(article -> {
-                            switch (article.getArticleType()) {
-                                case FINISHED_BEER:
-                                    return new BeerArticleViewModel(article.toBeerArticle().getValue());
-                                case INGREDIENT:
-                                    return new IngredientArticleViewModel(article.toIngredientArticle().getValue());
-                                default:
-                                case MISC:
-                                return new MiscArticleViewModel(article);
-                            }
-                        })
-                        .collect(Collectors.toList());
+        return allArticles;
     }
 
 }
