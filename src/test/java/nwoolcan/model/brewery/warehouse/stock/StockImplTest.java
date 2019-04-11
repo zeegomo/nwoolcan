@@ -27,11 +27,11 @@ public class StockImplTest {
     private Stock stock2;
     private Stock stock3;
     private Date expDate;
-    private Record record1 = new Record(Quantity.of(TEN, UOM1), Record.Action.ADDING);
-    private Record record2 = new Record(Quantity.of(ONE, UOM1), Record.Action.REMOVING);
-    private Record record3 = new Record(Quantity.of(ONE, UOM1), Record.Action.ADDING);
-    private Record record4 = new Record(Quantity.of(TEN, UOM), Record.Action.REMOVING);
-    private Record record5 = new Record(Quantity.of(TEN, UOM), Record.Action.ADDING);
+    private Record record1 = new Record(Quantity.of(TEN, UOM1).getValue(), Record.Action.ADDING);
+    private Record record2 = new Record(Quantity.of(ONE, UOM1).getValue(), Record.Action.REMOVING);
+    private Record record3 = new Record(Quantity.of(ONE, UOM1).getValue(), Record.Action.ADDING);
+    private Record record4 = new Record(Quantity.of(TEN, UOM).getValue(), Record.Action.REMOVING);
+    private Record record5 = new Record(Quantity.of(TEN, UOM).getValue(), Record.Action.ADDING);
 
     private static final int ONE = 1;
     private static final int TEN = 10;

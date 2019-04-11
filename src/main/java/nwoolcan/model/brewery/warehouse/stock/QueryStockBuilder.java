@@ -68,7 +68,7 @@ public final class QueryStockBuilder {
      * @return this.
      */
     public QueryStockBuilder setExpireBefore(final Date date) {
-        this.expiresBefore = date;
+        this.expiresBefore = new Date(date.getTime());
         return this;
     }
     /**
@@ -77,7 +77,7 @@ public final class QueryStockBuilder {
      * @return this.
      */
     public QueryStockBuilder setExpireAfter(final Date date) {
-        this.expiresAfter = date;
+        this.expiresAfter = new Date(date.getTime());
         return this;
     }
     /**

@@ -1,7 +1,6 @@
 package nwoolcan.model.brewery;
 
 import nwoolcan.model.brewery.production.batch.Batch;
-import nwoolcan.model.brewery.production.batch.BatchBuilder;
 import nwoolcan.model.brewery.production.batch.BatchMethod;
 import nwoolcan.model.brewery.production.batch.QueryBatch;
 import nwoolcan.model.brewery.production.batch.QueryBatchBuilder;
@@ -30,15 +29,14 @@ public class BreweryImplTest {
 
     private static final String BREWERY_NAME = "Ciusseppe-Mastro-Birraio";
     private static final String OWNER_NAME = "Ciusseppe";
-    private final Brewery brewery = BreweryContext.getInstance();
     private final BeerDescription beerDescription = new BeerDescriptionImpl(OWNER_NAME, OWNER_NAME);
     private final BatchMethod batchMethod = BatchMethod.ALL_GRAIN;
-    private final Quantity initialSize = Quantity.of(3, UnitOfMeasure.BOTTLE_33_CL);
+    private final Quantity initialSize = Quantity.of(3, UnitOfMeasure.BOTTLE_33_CL).getValue();
     private final StepType initialStep = StepTypeEnum.FINALIZED;
-    private final Batch batch = new BatchBuilder(beerDescription,
-                                         batchMethod,
-                                         initialSize,
-                                         initialStep).build().getValue();
+    private final Brewery brewery = new BreweryImpl();
+    private final Batch batch = brewery.getBatchBuilder()
+                                       .build(beerDescription, batchMethod, initialSize, initialStep)
+                                       .getValue();
 
     /**
      * Test the getter of the name of the {@link Brewery}.

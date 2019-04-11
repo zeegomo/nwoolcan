@@ -32,22 +32,22 @@ public class TestBatchEvaluation {
         final int expectedValue = 47;
 
         Set<Evaluation> evals = Stream.<Result<Evaluation>>builder()
-                                      .add(EvaluationImpl.create(BJCPCategories.AROMA, 10))
-                                      .add(EvaluationImpl.create(BJCPCategories.APPEARANCE, 3))
-                                      .add(EvaluationImpl.create(BJCPCategories.FLAVOR, BJCPCategories.FLAVOR.getMaxScore()))
-                                      .add(EvaluationImpl.create(BJCPCategories.MOUTHFEEL, 4))
-                                      .add(EvaluationImpl.create(BJCPCategories.OVERALL_IMPRESSION, 10))
+                                      .add(EvaluationFactory.create(BJCPCategories.AROMA, 10))
+                                      .add(EvaluationFactory.create(BJCPCategories.APPEARANCE, 3))
+                                      .add(EvaluationFactory.create(BJCPCategories.FLAVOR, BJCPCategories.FLAVOR.getMaxScore()))
+                                      .add(EvaluationFactory.create(BJCPCategories.MOUTHFEEL, 4))
+                                      .add(EvaluationFactory.create(BJCPCategories.OVERALL_IMPRESSION, 10))
                                       .build()
                                       .filter(Result::isPresent)
                                       .map(Result::getValue)
                                       .collect(Collectors.toSet());
 
 
-        BatchEvaluationBuilder builder = new BatchEvaluationBuilder(bjcpType, evals);
+        BatchEvaluationBuilder builder = new BatchEvaluationBuilder();
 
         Result<BatchEvaluation> bjcp = builder.addReviewer("Andrea")
                                               .addNotes("Very good")
-                                              .build();
+                                              .build(bjcpType, evals);
 
         assertTrue(bjcp.isPresent());
         BatchEvaluation review = bjcp.getValue();
@@ -55,13 +55,17 @@ public class TestBatchEvaluation {
         assertEquals(review.getNotes(), Optional.of("Very good"));
         assertEquals(review.getScore(), expectedValue);
         assertEquals(review.getEvaluationType(), bjcpType);
-        assertTrue(builder.build().isError());
         assertEquals(review.getCategoryEvaluations()
                            .stream()
                            .filter(e -> e.getEvaluationType().equals(BJCPCategories.APPEARANCE))
                            .findAny()
                            .get()
                            .getScore(), 3);
+
+        Result<BatchEvaluation> bjcp2 = builder.addReviewer("Mirko")
+                                              .addNotes("Code Smell")
+                                              .build(bjcpType, evals);
+        assertTrue(bjcp2.isPresent());
     }
 
     /**
@@ -87,54 +91,52 @@ public class TestBatchEvaluation {
     public void testFailedBuilder() {
 
         Set<Evaluation> evals = Stream.<Result<Evaluation>>builder()
-            .add(EvaluationImpl.create(BJCPCategories.AROMA, 10))
-            .add(EvaluationImpl.create(BJCPCategories.APPEARANCE, 10))
-            .add(EvaluationImpl.create(BJCPCategories.FLAVOR, BJCPCategories.FLAVOR.getMaxScore()))
-            .add(EvaluationImpl.create(BJCPCategories.MOUTHFEEL, 4))
-            .add(EvaluationImpl.create(BJCPCategories.OVERALL_IMPRESSION, 10))
+            .add(EvaluationFactory.create(BJCPCategories.AROMA, 10))
+            .add(EvaluationFactory.create(BJCPCategories.APPEARANCE, 10))
+            .add(EvaluationFactory.create(BJCPCategories.FLAVOR, BJCPCategories.FLAVOR.getMaxScore()))
+            .add(EvaluationFactory.create(BJCPCategories.MOUTHFEEL, 4))
+            .add(EvaluationFactory.create(BJCPCategories.OVERALL_IMPRESSION, 10))
             .build()
             .filter(Result::isPresent)
             .map(Result::getValue)
             .collect(Collectors.toSet());
 
-        BatchEvaluationBuilder builder = new BatchEvaluationBuilder(bjcpType, evals);
+        BatchEvaluationBuilder builder = new BatchEvaluationBuilder();
 
         Result<BatchEvaluation> test1 = builder.addReviewer("Andrea")
-                                               .build();
+                                               .build(bjcpType, evals);
 
         assertTrue(test1.isError());
 
         Set<Evaluation> evals1 = Stream.<Result<Evaluation>>builder()
-            .add(EvaluationImpl.create(BJCPCategories.AROMA, 10))
-            .add(EvaluationImpl.create(BJCPCategories.APPEARANCE, 10))
-            .add(EvaluationImpl.create(BJCPCategories.FLAVOR, BJCPCategories.FLAVOR.getMaxScore()))
-            .add(EvaluationImpl.create(BJCPCategories.MOUTHFEEL, 4))
+            .add(EvaluationFactory.create(BJCPCategories.AROMA, 10))
+            .add(EvaluationFactory.create(BJCPCategories.APPEARANCE, 10))
+            .add(EvaluationFactory.create(BJCPCategories.FLAVOR, BJCPCategories.FLAVOR.getMaxScore()))
+            .add(EvaluationFactory.create(BJCPCategories.MOUTHFEEL, 4))
             .build()
             .filter(Result::isPresent)
             .map(Result::getValue)
             .collect(Collectors.toSet());
 
-        Result<BatchEvaluation> test2 = builder.reset(bjcpType, evals)
-                                               .addReviewer("Andrea")
-                                               .build();
+        Result<BatchEvaluation> test2 = builder.addReviewer("Andrea")
+                                               .build(bjcpType, evals1);
 
         assertTrue(test2.isError());
 
         Set<Evaluation> evals2 = Stream.<Result<Evaluation>>builder()
-            .add(EvaluationImpl.create(BJCPCategories.AROMA, 10))
-            .add(EvaluationImpl.create(BJCPCategories.APPEARANCE, -1))
-            .add(EvaluationImpl.create(BJCPCategories.FLAVOR, BJCPCategories.FLAVOR.getMaxScore()))
-            .add(EvaluationImpl.create(BJCPCategories.MOUTHFEEL, 4))
-            .add(EvaluationImpl.create(BJCPCategories.OVERALL_IMPRESSION, 10))
+            .add(EvaluationFactory.create(BJCPCategories.AROMA, 10))
+            .add(EvaluationFactory.create(BJCPCategories.APPEARANCE, -1))
+            .add(EvaluationFactory.create(BJCPCategories.FLAVOR, BJCPCategories.FLAVOR.getMaxScore()))
+            .add(EvaluationFactory.create(BJCPCategories.MOUTHFEEL, 4))
+            .add(EvaluationFactory.create(BJCPCategories.OVERALL_IMPRESSION, 10))
             .build()
             .filter(Result::isPresent)
             .map(Result::getValue)
             .collect(Collectors.toSet());
 
 
-        Result<BatchEvaluation> test3 = builder.reset(bjcpType, evals)
-                                               .addReviewer("Andrea")
-                                               .build();
+        Result<BatchEvaluation> test3 = builder.addReviewer("Andrea")
+                                               .build(bjcpType, evals2);
 
         assertTrue(test3.isError());
     }

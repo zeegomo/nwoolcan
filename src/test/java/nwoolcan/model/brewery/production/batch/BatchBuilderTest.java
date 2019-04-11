@@ -1,5 +1,6 @@
 package nwoolcan.model.brewery.production.batch;
 
+import nwoolcan.model.brewery.IdGenerator;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
 import nwoolcan.model.brewery.production.batch.step.StepType;
@@ -18,21 +19,31 @@ import org.junit.Test;
  */
 public class BatchBuilderTest {
 
+    private static final int TEN_THOUSAND = 10000;
     private static final BeerDescription BD = new BeerDescriptionImpl("test description", "test style", "test category");
     private static final BatchMethod BM = BatchMethod.ALL_GRAIN;
-    private static final Quantity INIT_SIZE = Quantity.of(10000, UnitOfMeasure.MILLILITER);
+    private static final Quantity INIT_SIZE = Quantity.of(TEN_THOUSAND, UnitOfMeasure.MILLILITER).getValue();
+
+    private final BatchBuilder builder = new BatchBuilder(new IdGenerator() {
+        private int nextId = 0;
+
+        @Override
+        public int getNextId() {
+            return nextId++;
+        }
+    });
 
     /**
      * Test simple build.
      */
     @Test
     public void testSimpleBuild() {
-        Result<Batch> res = new BatchBuilder(
+        Result<Batch> res = builder.build(
             BD,
             BM,
             INIT_SIZE,
             StepTypeEnum.MASHING
-        ).build();
+        );
 
         Assert.assertTrue(res.isPresent());
     }
@@ -42,7 +53,7 @@ public class BatchBuilderTest {
      */
     @Test
     public void testWrongInitialStep() {
-        Result<Batch> res = new BatchBuilder(
+        Result<Batch> res = builder.build(
             BD,
             BM,
             INIT_SIZE,
@@ -57,7 +68,7 @@ public class BatchBuilderTest {
                     return false;
                 }
             }
-        ).build();
+        );
 
         Assert.assertTrue(res.isError());
     }
@@ -69,13 +80,13 @@ public class BatchBuilderTest {
     public void testSameIngredientTwice() {
         final IngredientArticle ing = ArticleManager.getInstance().createIngredientArticle("test", UnitOfMeasure.GRAM, IngredientType.OTHER);
 
-        Result<Batch> res = new BatchBuilder(
-            BD,
-            BM,
-            INIT_SIZE,
-            StepTypeEnum.MASHING
-        ).addIngredient(ing, 1)
-         .addIngredient(ing, 2).build();
+        Result<Batch> res = builder.addIngredient(ing, 1)
+                                   .addIngredient(ing, 2).build(
+                BD,
+                BM,
+                INIT_SIZE,
+                StepTypeEnum.MASHING
+            );
 
         Assert.assertTrue(res.isError());
     }

@@ -30,7 +30,7 @@ public class StepTest {
     private Step packaging;
     private Step finalized;
 
-    private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.MILLILITER);
+    private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.MILLILITER).getValue();
     private static final Date D1 = new Date(1000);
 
     private static final List<Parameter> MASHING_PARAMS = Arrays.asList(
@@ -168,7 +168,7 @@ public class StepTest {
         Assert.assertTrue(resQ.isPresent());
         res = this.mashing.getParameters(resQ.getValue());
         Assert.assertArrayEquals(MASHING_PARAMS.stream()
-                                               .sorted((p1, p2) -> -Double.compare(p1.getRegistrationValue().doubleValue(), p2.getRegistrationValue().doubleValue()))
+                                               .sorted((p1, p2) -> Double.compare(p2.getRegistrationValue().doubleValue(), p1.getRegistrationValue().doubleValue()))
                                                .toArray(), res.toArray());
 
         final double val = 9.9;

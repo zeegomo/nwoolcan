@@ -1,7 +1,8 @@
 package nwoolcan.model.utils;
 
 import nwoolcan.utils.Result;
-import nwoolcan.utils.Results;
+
+import java.math.BigDecimal;
 
 /**
  * Utils class for operations with quantity objects.
@@ -26,8 +27,9 @@ public final class Quantities {
      * @return a new {@link Result} with a {@link Quantity} that is the adding quantity added to the base quantity.
      */
     public static Result<Quantity> add(final Quantity base, final Quantity adding) {
-        return Results.ofChecked(() -> Quantity.of(base.getValue() + adding.getValue(), base.getUnitOfMeasure()))
-                      .require(q -> checkSameUM(q, adding), new ArithmeticException(NOT_SAME_UM_MESSAGE));
+        return Quantity.of(BigDecimal.valueOf(base.getValue()).add(BigDecimal.valueOf(adding.getValue())).doubleValue(),
+                           base.getUnitOfMeasure())
+                       .require(q -> checkSameUM(q, adding), new ArithmeticException(NOT_SAME_UM_MESSAGE));
     }
 
     /**
@@ -43,7 +45,8 @@ public final class Quantities {
      * @return a new {@link Result} with a {@link Quantity} that is the removing quantity removed to the base quantity.
      */
     public static Result<Quantity> remove(final Quantity base, final Quantity removing) {
-        return Results.ofChecked(() -> Quantity.of(base.getValue() - removing.getValue(), base.getUnitOfMeasure()))
-                      .require(q -> checkSameUM(q, removing), new ArithmeticException(NOT_SAME_UM_MESSAGE));
+        return Quantity.of(BigDecimal.valueOf(base.getValue()).subtract(BigDecimal.valueOf(removing.getValue())).doubleValue(),
+                           base.getUnitOfMeasure())
+                       .require(q -> checkSameUM(q, removing), new ArithmeticException(NOT_SAME_UM_MESSAGE));
     }
 }
