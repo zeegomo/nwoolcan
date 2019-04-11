@@ -5,7 +5,7 @@ import nwoolcan.model.brewery.BreweryImpl;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
-import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementBuilder;
+import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementFactory;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationBuilder;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.review.Evaluation;
@@ -93,8 +93,8 @@ public class BatchTest {
 
         final BatchBuilder b2 = brewery.getBatchBuilder();
         rossinaIngredients.forEach(i -> b2.addIngredient(i.getLeft(), i.getRight()));
-        b2.setWaterMeasurement(new WaterMeasurementBuilder().addRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 1), WaterMeasurement.Element.CALCIUM)
-                                                            .build().getValue());
+        b2.setWaterMeasurement(WaterMeasurementFactory.create(Arrays.asList(Pair.of(WaterMeasurement.Element.CALCIUM, new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 1))))
+                                                            .getValue());
 
         batchRossina = b2.build(
             rossina,
