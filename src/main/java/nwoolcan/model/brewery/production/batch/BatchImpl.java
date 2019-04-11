@@ -1,5 +1,6 @@
 package nwoolcan.model.brewery.production.batch;
 
+import nwoolcan.model.brewery.IdGenerator;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
@@ -53,10 +54,11 @@ final class BatchImpl implements Batch {
     BatchImpl(final BeerDescription beerDescription,
               final BatchMethod batchMethod,
               final Quantity initialSize,
-              final Collection<Pair<IngredientArticle, Integer>> ingredients,
+              final Collection<Pair<IngredientArticle, Double>> ingredients,
               final StepType initialStep,
-              @Nullable final WaterMeasurement waterMeasurement) {
-        this.id = BatchIdGenerator.getInstance().getNextId();
+              @Nullable final WaterMeasurement waterMeasurement,
+              final IdGenerator generator) {
+        this.id = generator.getNextId();
 
         if (waterMeasurement == null) {
             this.batchInfo = ModifiableBatchInfoFactory.create(ingredients, beerDescription, batchMethod, initialSize);

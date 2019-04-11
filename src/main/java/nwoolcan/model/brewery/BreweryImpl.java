@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery;
 
 import nwoolcan.model.brewery.production.batch.Batch;
+import nwoolcan.model.brewery.production.batch.BatchBuilder;
 import nwoolcan.model.brewery.production.batch.QueryBatch;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.warehouse.Warehouse;
@@ -27,6 +28,7 @@ public final class BreweryImpl implements Brewery {
     @Nullable private String ownerName;
     private final Warehouse warehouse = new WarehouseImpl();
     private final Collection<Batch> batches = new ArrayList<>();
+    private final IdGenerator batchIdGenerator = new BatchIdGenerator(0);
 
     @Override
     public synchronized Optional<String> getBreweryName() {
@@ -68,6 +70,11 @@ public final class BreweryImpl implements Brewery {
     @Override
     public synchronized void addBatch(final Batch newBatch) {
         batches.add(newBatch);
+    }
+
+    @Override
+    public BatchBuilder getBatchBuilder() {
+        return new BatchBuilder(this.batchIdGenerator);
     }
 
     @Override

@@ -1,13 +1,15 @@
 package nwoolcan.model.brewery.production.batch;
 
+import nwoolcan.model.brewery.Brewery;
+import nwoolcan.model.brewery.BreweryImpl;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
-import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementBuilder;
+import nwoolcan.model.brewery.production.batch.misc.WaterMeasurementFactory;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationBuilder;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.review.Evaluation;
-import nwoolcan.model.brewery.production.batch.review.EvaluationImpl;
+import nwoolcan.model.brewery.production.batch.review.EvaluationFactory;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
@@ -45,14 +47,15 @@ public class BatchTest {
     private static final int N4 = 20;
     private static final int N5 = 1000;
     private static final int N6 = 70;
-    private static final Quantity Q1 = Quantity.of(TEN_THOUSAND, UnitOfMeasure.MILLILITER);
-    private static final Quantity Q2 = Quantity.of(TEN_THOUSAND - 1, UnitOfMeasure.MILLILITER);
+    private static final Quantity Q1 = Quantity.of(TEN_THOUSAND, UnitOfMeasure.MILLILITER).getValue();
+    private static final Quantity Q2 = Quantity.of(TEN_THOUSAND - 1, UnitOfMeasure.MILLILITER).getValue();
     private static final ArticleManager ARTICLE_MANAGER = ArticleManager.getInstance();
     private final BatchEvaluationType bjcpType = BatchEvaluationBuilder.getAvailableBatchEvaluationTypes()
                                                                        .getValue()
                                                                        .stream()
                                                                        .filter(s -> s.getClass().equals(BJCPBatchEvaluationType.class))
                                                                        .findAny().get();
+    private final Brewery brewery = new BreweryImpl();
 
     private Batch batchAlfredo, batchRossina, batchBiondina;
 
@@ -78,33 +81,37 @@ public class BatchTest {
         final BeerDescription rossina = new BeerDescriptionImpl("Rossina", "Rossina style", "Best category");
         final BeerDescription biondina = new BeerDescriptionImpl("Biondina", "Biondina style");
 
-        batchAlfredo = new BatchImpl(
+        final BatchBuilder b1 = brewery.getBatchBuilder();
+        alfredoIngredients.forEach(i -> b1.addIngredient(i.getLeft(), i.getRight()));
+
+        batchAlfredo = b1.build(
             alfredo,
             BatchMethod.ALL_GRAIN,
             Q1,
-            alfredoIngredients,
-            StepTypeEnum.MASHING,
-            null
-        );
+            StepTypeEnum.MASHING
+        ).getValue();
 
-        batchRossina = new BatchImpl(
+        final BatchBuilder b2 = brewery.getBatchBuilder();
+        rossinaIngredients.forEach(i -> b2.addIngredient(i.getLeft(), i.getRight()));
+        b2.setWaterMeasurement(WaterMeasurementFactory.create(Arrays.asList(Pair.of(WaterMeasurement.Element.CALCIUM, new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 1))))
+                                                            .getValue());
+
+        batchRossina = b2.build(
             rossina,
             BatchMethod.PARTIAL_MASH,
             Q1,
-            rossinaIngredients,
-            StepTypeEnum.MASHING,
-            new WaterMeasurementBuilder().addRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 1), WaterMeasurement.Element.CALCIUM)
-                                         .build().getValue()
-        );
+            StepTypeEnum.MASHING
+        ).getValue();
 
-        batchBiondina = new BatchImpl(
+        final BatchBuilder b3 = brewery.getBatchBuilder();
+        biondinaIngredients.forEach(i -> b3.addIngredient(i.getLeft(), i.getRight()));
+
+        batchBiondina = b3.build(
             biondina,
             BatchMethod.EXTRACT,
             Q2,
-            biondinaIngredients,
-            StepTypeEnum.MASHING,
-            null
-        );
+            StepTypeEnum.MASHING
+        ).getValue();
     }
 
     /**
@@ -234,12 +241,12 @@ public class BatchTest {
 
         final int bottles = 7;
         //Finalize packaging with bottle um.
-        batchAlfredo.getCurrentStep().finalize("Packaged in 75 cl bottles", new Date(), Quantity.of(bottles, UnitOfMeasure.BOTTLE_75_CL));
+        batchAlfredo.getCurrentStep().finalize("Packaged in 75 cl bottles", new Date(), Quantity.of(bottles, UnitOfMeasure.BOTTLE_75_CL).getValue());
 
         batchAlfredo.moveToNextStep(StepTypeEnum.FINALIZED).peekError(e -> Assert.fail(e.getMessage()));
 
         //Check current batch size.
-        Assert.assertEquals(Quantity.of(bottles, UnitOfMeasure.BOTTLE_75_CL), batchAlfredo.getCurrentSize());
+        Assert.assertEquals(Quantity.of(bottles, UnitOfMeasure.BOTTLE_75_CL).getValue(), batchAlfredo.getCurrentSize());
 
         //Check end.
         Assert.assertTrue(batchAlfredo.isEnded());
@@ -252,18 +259,18 @@ public class BatchTest {
 
         //Insert review.
         Set<Evaluation> evals = Stream.<Result<Evaluation>>builder()
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.AROMA, aroma))
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, appearance))
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.FLAVOR, flavor))
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, mouthfeel))
-            .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, overrallImpression))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.AROMA, aroma))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, appearance))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.FLAVOR, flavor))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, mouthfeel))
+            .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, overrallImpression))
             .build()
             .filter(Result::isPresent)
             .map(Result::getValue)
             .collect(Collectors.toSet());
 
-        batchAlfredo.setEvaluation(new BatchEvaluationBuilder(bjcpType, evals)
-            .build().getValue());
+        batchAlfredo.setEvaluation(new BatchEvaluationBuilder()
+            .build(bjcpType, evals).getValue());
 
         //Check all steps are registered.
         Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
@@ -291,7 +298,7 @@ public class BatchTest {
         final int evapo = 1000;
         batchBiondina.getCurrentStep().finalize("Evaporated",
             new Date(),
-            Quantities.remove(Q2, Quantity.of(evapo, UnitOfMeasure.MILLILITER)).getValue()
+            Quantities.remove(Q2, Quantity.of(evapo, UnitOfMeasure.MILLILITER).getValue()).getValue()
         );
 
         batchBiondina.moveToNextStep(StepTypeEnum.FERMENTING).peekError(e -> Assert.fail(e.getMessage()));

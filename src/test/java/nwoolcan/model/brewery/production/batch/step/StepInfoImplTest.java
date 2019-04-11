@@ -13,11 +13,12 @@ import java.util.Date;
  */
 public class StepInfoImplTest {
 
+    private static final int TWENTY = 20;
     private static final StepType ST = StepTypeEnum.MASHING;
     private static final Date START = new Date();
     private static final Date END = new Date(START.getTime() + 100);
     private static final String NOTE = "Test note.";
-    private static final Quantity Q = Quantity.of(20, UnitOfMeasure.MILLILITER);
+    private static final Quantity Q = Quantity.of(TWENTY, UnitOfMeasure.MILLILITER).getValue();
 
     private StepInfo si;
 

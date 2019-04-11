@@ -97,7 +97,6 @@ public final class ArticleManager {
             return Result.error(new IllegalArgumentException(ARTICLE_NOT_REGISTERED));
         }
         String oldName = article.getName();
-        int id = article.getId();
         articleToArticle.remove(article);
         ((AbstractArticle) article).setName(newName);
         if (articleToArticle.containsKey(article)) {

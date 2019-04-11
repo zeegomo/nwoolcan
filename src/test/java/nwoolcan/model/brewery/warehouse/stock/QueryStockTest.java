@@ -21,8 +21,8 @@ public final class QueryStockTest {
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.UNIT;
     private static final Article ARTICLE = ArticleManager.getInstance().createMiscArticle(ARTICLE_NAME, UOM);
     private static final Date DATE = new Date();
-    private static final Quantity QUANTITY = Quantity.of(TWO, UOM);
-    private static final Quantity QUANTITY_WRONG = Quantity.of(TWO, UOM1);
+    private static final Quantity QUANTITY = Quantity.of(TWO, UOM).getValue();
+    private static final Quantity QUANTITY_WRONG = Quantity.of(TWO, UOM1).getValue();
 
     /**
      * Simple build test.
