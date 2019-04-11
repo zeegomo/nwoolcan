@@ -30,14 +30,14 @@ public class BatchInfoTest {
      */
     @Test
     public void testConstructor() {
-        final Collection<Pair<IngredientArticle, Integer>> ingredients = new ArrayList<>();
+        final Collection<Pair<IngredientArticle, Double>> ingredients = new ArrayList<>();
         final BeerDescription desc = new BeerDescriptionImpl("test", "lager");
-        ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
+        ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER).getValue());
         assertFalse(info.getAbv().isPresent());
         assertFalse(info.getWaterMeasurements().isPresent());
         assertEquals(info.getBeerDescription(), desc);
-        assertEquals(info.getBatchSize(), Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
-        assertNotEquals(info.getBatchSize(), Quantity.of(2, UnitOfMeasure.UNIT));
+        assertEquals(info.getBatchSize(), Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER).getValue());
+        assertNotEquals(info.getBatchSize(), Quantity.of(2, UnitOfMeasure.UNIT).getValue());
     }
     /**
      * Test update.
@@ -46,9 +46,9 @@ public class BatchInfoTest {
     public void testUpdate() {
         final int og = 1050;
         final int fg = 1020;
-        final Collection<Pair<IngredientArticle, Integer>> ingredients = new ArrayList<>();
+        final Collection<Pair<IngredientArticle, Double>> ingredients = new ArrayList<>();
         final BeerDescription desc = new BeerDescriptionImpl("test", "lager");
-        ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
+        ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER).getValue());
 
         info.update(ParameterFactory.create(ParameterTypeEnum.GRAVITY, og).getValue());
         assertEquals(info.getOg().get().getRegistrationValue(), og);

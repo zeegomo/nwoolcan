@@ -32,7 +32,7 @@ public class StepTest {
 
     private static final double TEN_POINT_ONE = 10.1;
     private static final double NINE_POINT_ONE = 9.1;
-    private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.MILLILITER);
+    private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.MILLILITER).getValue();
     private static final Date D1 = new Date(1000);
 
     private static final List<Parameter> MASHING_PARAMS = Arrays.asList(
