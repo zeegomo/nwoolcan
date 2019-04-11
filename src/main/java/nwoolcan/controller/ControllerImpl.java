@@ -19,8 +19,11 @@ import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.production.ProductionViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.CreateBatchDTO;
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.NewBatchViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,6 +60,19 @@ public final class ControllerImpl implements Controller {
         return Collections.unmodifiableList(this.brewery.getBatches(query).stream()
                                                         .map(MasterBatchViewModel::new)
                                                         .collect(Collectors.toList()));
+    }
+
+    @Override
+    public NewBatchViewModel getNewBatchViewModel() {
+        return new NewBatchViewModel(
+            this.brewery.getWarehouse()
+                        .getArticles(new QueryArticleBuilder().setIncludeArticleType(ArticleType.INGREDIENT).build())
+                        .stream()
+                        .map(a -> a.toIngredientArticle().getValue())
+                        .map(IngredientArticleViewModel::new)
+                        .collect(Collectors.toList()),
+            Arrays.asList(WaterMeasurement.Element.values())
+        );
     }
 
     @Override
@@ -118,6 +134,4 @@ public final class ControllerImpl implements Controller {
                   .peek(this.brewery::addBatch)
                   .toEmpty();
     }
-
-
 }

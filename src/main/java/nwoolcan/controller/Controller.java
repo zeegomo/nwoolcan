@@ -7,6 +7,7 @@ import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.production.ProductionViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.CreateBatchDTO;
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.NewBatchViewModel;
 
 import java.util.List;
 
@@ -30,7 +31,11 @@ public interface Controller {
      * @return the queried batches.
      */
     List<MasterBatchViewModel> getBatches(QueryBatch query);
-
+    /**
+     * Returns the build view model for the view.
+     * @return the build view model for the view.
+     */
+    NewBatchViewModel getNewBatchViewModel();
     /**
      * Creates a new batch in production with the specified data in the DTO passed by parameter.
      * @param batchDTO the DTO with all the data to create a new batch.
