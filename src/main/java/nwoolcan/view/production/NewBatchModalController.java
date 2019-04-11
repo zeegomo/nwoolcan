@@ -9,16 +9,24 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
+import nwoolcan.model.brewery.production.batch.BatchMethod;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
+import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
+import nwoolcan.model.utils.Quantity;
+import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.ViewManager;
+import nwoolcan.viewmodel.brewery.production.batch.CreateBatchDTO;
 import nwoolcan.viewmodel.brewery.production.batch.NewBatchViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 /**
@@ -140,5 +148,34 @@ public final class NewBatchModalController
 
         this.ingredientsTableView.getItems().removeIf(p -> p.getRight().getArticle().getId() == selectedElement.getArticle().getId());
         this.ingredientsTableView.getItems().add(Pair.of(quantity, selectedElement));
+    }
+
+    /**
+     * Creates the actual batch.
+     * @param event the occurred event.
+     */
+    public void createBatchClick(final ActionEvent event) {
+        //TODO get all infos and check them before creating a batch
+
+        this.getController().createNewBatch(new CreateBatchDTO(
+            "Dummy",
+            "Style",
+            null,
+            BatchMethod.ALL_GRAIN,
+            Quantity.of(1000, UnitOfMeasure.MILLILITER).getValue(),
+            StepTypeEnum.MASHING,
+            this.ingredientsTableView.getItems()
+                                     .stream()
+                                     .map(p -> Pair.of(p.getRight().getArticle().getId(), p.getLeft().doubleValue()))
+                                     .collect(Collectors.toList()),
+            this.elementsTableView.getItems()
+                                  .stream()
+                                  .map(p -> Triple.of(p.getRight(), p.getLeft().doubleValue(), new Date()))
+                                  .collect(Collectors.toList())
+        )).peekError(e -> {
+            //TODO handle the error
+        });
+
+        ((Stage) this.elementsTableView.getScene().getWindow()).close();
     }
 }
