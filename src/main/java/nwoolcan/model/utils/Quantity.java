@@ -35,18 +35,14 @@ public final class Quantity implements Comparable<Quantity> {
     }
 
     /**
-     * Returns a new {@link Quantity} with the specified value and unit of measure.
+     * Returns a {@link Result} with the new quantity created with the specified value and unit of measure.
+     * The result contains an {@link IllegalArgumentException} if the creation fails.
      * @param value new quantity value.
      * @param unitOfMeasure new quantity unit of measure.
      * @return a new {@link Quantity} with the specified value and unit of measure.
-     * @throws IllegalArgumentException if the value is negative or if the unit of measure cannot be a quantity.
      */
-    public static Quantity of(final double value, final UnitOfMeasure unitOfMeasure) {
-        final Result<Quantity> res = QuantityChecker.check(new Quantity(value, unitOfMeasure));
-        if (res.isError()) {
-            throw new IllegalArgumentException(res.getError());
-        }
-        return res.getValue();
+    public static Result<Quantity> of(final double value, final UnitOfMeasure unitOfMeasure) {
+        return QuantityChecker.check(new Quantity(value, unitOfMeasure));
     }
 
     /**
