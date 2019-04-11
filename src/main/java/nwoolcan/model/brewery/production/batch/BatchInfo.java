@@ -63,5 +63,5 @@ public interface BatchInfo {
      * Return the ingredients used in this batch.
      * @return a {@link Collection}.
      */
-    Collection<Pair<IngredientArticle, Integer>> listIngredients();
+    Collection<Pair<IngredientArticle, Double>> listIngredients();
 }
