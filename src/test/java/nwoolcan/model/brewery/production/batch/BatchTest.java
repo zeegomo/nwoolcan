@@ -92,7 +92,7 @@ public class BatchTest {
         ).getValue();
 
         final BatchBuilder b2 = brewery.getBatchBuilder();
-        biondinaIngredients.forEach(i -> b2.addIngredient(i.getLeft(), i.getRight()));
+        rossinaIngredients.forEach(i -> b2.addIngredient(i.getLeft(), i.getRight()));
         b2.setWaterMeasurement(new WaterMeasurementBuilder().addRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 1), WaterMeasurement.Element.CALCIUM)
                                                             .build().getValue());
 
