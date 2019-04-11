@@ -2,7 +2,7 @@ package nwoolcan.model.brewery.production.batch;
 
 import nwoolcan.model.brewery.production.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
-import nwoolcan.model.brewery.production.batch.step.parameter.ParameterImpl;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterFactory;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
@@ -50,17 +50,17 @@ public class BatchInfoTest {
         final BeerDescription desc = new BeerDescriptionImpl("test", "lager");
         ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER));
 
-        info.update(new ParameterImpl(ParameterTypeEnum.GRAVITY, og));
+        info.update(ParameterFactory.create(ParameterTypeEnum.GRAVITY, og).getValue());
         assertEquals(info.getOg().get().getRegistrationValue(), og);
         assertFalse(info.getFg().isPresent());
 
-        info.update(new ParameterImpl(ParameterTypeEnum.GRAVITY, fg));
+        info.update(ParameterFactory.create(ParameterTypeEnum.GRAVITY, fg).getValue());
         assertEquals(info.getFg().get().getRegistrationValue(), fg);
         assertEquals(info.getOg().get().getRegistrationValue(), og);
         assertEquals(info.getOg().get().getType(), ParameterTypeEnum.GRAVITY);
         assertEquals(info.getFg().get().getType(), ParameterTypeEnum.GRAVITY);
 
-        info.update(new ParameterImpl(ParameterTypeEnum.ABV, 2));
+        info.update(ParameterFactory.create(ParameterTypeEnum.ABV, 2).getValue());
         assertEquals(info.getAbv().get().getType(), ParameterTypeEnum.ABV);
         assertEquals(info.getAbv().get().getRegistrationValue(), 2);
 

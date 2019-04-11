@@ -1,6 +1,6 @@
 package nwoolcan.model.brewery.production.batch.misc;
 
-import nwoolcan.model.brewery.production.batch.step.parameter.ParameterImpl;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterFactory;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement.Element;
 import nwoolcan.utils.Result;
@@ -22,16 +22,16 @@ public class WaterMeasurementBuilderTest {
     public void testSuccessfulBuild() {
         final int value = 15;
         WaterMeasurementBuilder builder = new WaterMeasurementBuilder()
-            .addRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, value), Element.CALCIUM);
+            .addRegistration(ParameterFactory.create(ParameterTypeEnum.WATER_MEASUREMENT, value).getValue(), Element.CALCIUM);
         Result<WaterMeasurement> water = builder.build();
         assertTrue(water.isPresent());
         assertFalse(water.getValue().getMeasurement(Element.BICARBONATE).isPresent());
         assertEquals(water.getValue().getMeasurement(Element.CALCIUM).get().getRegistrationValue(), value);
 
         Result<WaterMeasurement> water2 = builder.reset()
-                                                 .addRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, value), Element.MAGNESIUM)
-                                                 .addRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 1),  Element.CALCIUM)
-                                                 .addRegistration(new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 0),  Element.SODIUM)
+                                                 .addRegistration(ParameterFactory.create(ParameterTypeEnum.WATER_MEASUREMENT, value).getValue(), Element.MAGNESIUM)
+                                                 .addRegistration(ParameterFactory.create(ParameterTypeEnum.WATER_MEASUREMENT, 1).getValue(),  Element.CALCIUM)
+                                                 .addRegistration(ParameterFactory.create(ParameterTypeEnum.WATER_MEASUREMENT, 0).getValue(),  Element.SODIUM)
                                                  .build();
         assertTrue(water2.isPresent());
         assertFalse(water2.getValue().getMeasurement(Element.BICARBONATE).isPresent());
@@ -46,7 +46,7 @@ public class WaterMeasurementBuilderTest {
     public void testFailedBuild() {
         final int value = 15;
         WaterMeasurementBuilder builder = new WaterMeasurementBuilder()
-            .addRegistration(new ParameterImpl(ParameterTypeEnum.ABV, value), Element.CALCIUM);
+            .addRegistration(ParameterFactory.create(ParameterTypeEnum.ABV, value).getValue(), Element.CALCIUM);
         Result<WaterMeasurement> water = builder.build();
         assertTrue(water.isError());
 
