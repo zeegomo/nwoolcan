@@ -1,9 +1,9 @@
 package nwoolcan.model.database;
 
-import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
-import nwoolcan.model.brewery.production.batch.review.BatchEvaluationBuilder;
+import nwoolcan.model.brewery.production.batch.review.*;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
-import nwoolcan.model.brewery.warehouse.Record;
+import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType.BJCPCategories;
+import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
@@ -11,7 +11,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Tests the database functionality.
@@ -19,7 +22,7 @@ import java.util.logging.Logger;
 public class DatabaseJsonImplTest {
 
     private Database db;
-    private final Record record = new Record(Quantity.of(1, UnitOfMeasure.Kilogram), Record.Action.ADDING);
+    private final Record record = new Record(Quantity.of(1, UnitOfMeasure.UNIT).getValue(), Record.Action.ADDING);
     private BatchEvaluation evaluation;
 
     /**
@@ -29,17 +32,30 @@ public class DatabaseJsonImplTest {
     public void setup() {
         db = new DatabaseJsonImpl();
 
-        final BatchEvaluationBuilder evalBuilder = new BatchEvaluationBuilder(new BJCPBatchEvaluationType());
-        Result<BatchEvaluation> bjcp = evalBuilder
-            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.AROMA, 10)
-            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, 3)
-            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.FLAVOR,
-                BJCPBatchEvaluationType.BJCPCategories.FLAVOR.getMaxScore())
-            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, 4)
-            .addEvaluation(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, 10)
-            .addReviewer("Andrea")
-            .addNotes("Very good")
-            .build();
+        final BatchEvaluationType bjcpType = BatchEvaluationBuilder.getAvailableBatchEvaluationTypes()
+                                                                   .getValue()
+                                                                   .stream()
+                                                                   .filter(s -> s.getClass().equals(BJCPBatchEvaluationType.class))
+                                                                   .findAny().get();
+
+        Set<Evaluation> evals = Stream.<Result<Evaluation>>builder()
+                                      .add(EvaluationFactory.create(BJCPCategories.AROMA, 10))
+                                      .add(EvaluationFactory.create(BJCPCategories.APPEARANCE, 3))
+                                      .add(EvaluationFactory.create(BJCPCategories.FLAVOR, BJCPCategories.FLAVOR.getMaxScore()))
+                                      .add(EvaluationFactory.create(BJCPCategories.MOUTHFEEL, 4))
+                                      .add(EvaluationFactory.create(BJCPCategories.OVERALL_IMPRESSION, 10))
+                                      .build()
+                                      .filter(Result::isPresent)
+                                      .map(Result::getValue)
+                                      .collect(Collectors.toSet());
+
+
+        BatchEvaluationBuilder builder = new BatchEvaluationBuilder();
+
+        Result<BatchEvaluation> bjcp = builder.addReviewer("Andrea")
+                                              .addNotes("Very good")
+                                              .build(bjcpType, evals);
+
 
         this.evaluation = bjcp.getValue();
     }
@@ -53,7 +69,7 @@ public class DatabaseJsonImplTest {
         Assert.assertEquals(deserializedRecord.getAction(), this.record.getAction());
         Assert.assertTrue("Dates does not match", Math.abs(deserializedRecord.getDate().getTime() - this.record.getDate().getTime()) < 1000);
         Assert.assertEquals(deserializedRecord.getQuantity().getUnitOfMeasure(), this.record.getQuantity().getUnitOfMeasure());
-        Assert.assertEquals(deserializedRecord.getQuantity().getValue().intValue(), this.record.getQuantity().getValue().intValue());
+        Assert.assertEquals(deserializedRecord.getQuantity().getValue(), this.record.getQuantity().getValue(), 0.0001);
     }
 
     /**

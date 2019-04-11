@@ -3,7 +3,7 @@ package nwoolcan.model.database;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
-import nwoolcan.model.brewery.warehouse.Record;
+import nwoolcan.model.brewery.warehouse.stock.Record;
 
 
 /**

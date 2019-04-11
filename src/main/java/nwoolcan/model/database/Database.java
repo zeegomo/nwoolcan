@@ -1,7 +1,7 @@
 package nwoolcan.model.database;
 
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
-import nwoolcan.model.brewery.warehouse.Record;
+import nwoolcan.model.brewery.warehouse.stock.Record;
 
 /**
  * Saves/loads data to/from a persistent storage.

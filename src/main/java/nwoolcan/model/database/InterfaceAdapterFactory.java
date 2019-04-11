@@ -6,14 +6,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.lang.reflect.Type;
 
 public class InterfaceAdapterFactory implements TypeAdapterFactory {
-
-    final String CLASSNAME_FIELD = "className";
-    final String DATA_FIELD = "data";
 
     @Override
     public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> type) {
