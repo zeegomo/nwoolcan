@@ -23,6 +23,7 @@ import nwoolcan.viewmodel.brewery.production.batch.NewBatchViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -114,7 +115,7 @@ public final class ControllerImpl implements Controller {
                                             .flatMap(r -> r.getRight()
                                                            .map(rr -> Pair.of(r.getLeft(), rr))))
                           //propagate errors in reduction from collection
-                          .reduce(Result.of(Collections.<Pair<WaterMeasurement.Element, Parameter>>emptyList()),
+                          .reduce(Result.of(new ArrayList<Pair<WaterMeasurement.Element, Parameter>>()),
                               (acc, r) -> acc.flatMap(col -> r.map(rr -> {
                                   col.add(rr);
                                   return col;
@@ -127,10 +128,10 @@ public final class ControllerImpl implements Controller {
 
         //finally build the batch and add it to the brewery
         return res.flatMap(e -> bBuilder.build(
-                        new BeerDescriptionImpl(batchDTO.getName(), batchDTO.getStyle(), batchDTO.getCategory().orElse(null)),
-                        batchDTO.getMethod(),
-                        batchDTO.getIntialSize(),
-                        batchDTO.getInitialStep()))
+            new BeerDescriptionImpl(batchDTO.getName(), batchDTO.getStyle(), batchDTO.getCategory().orElse(null)),
+            batchDTO.getMethod(),
+            batchDTO.getIntialSize(),
+            batchDTO.getInitialStep()))
                   .peek(this.brewery::addBatch)
                   .toEmpty();
     }
