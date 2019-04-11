@@ -39,8 +39,7 @@
                     </left>
                     <right>
                         <HBox>
-                            <Label text="Score: "/>
-                            <Label fx:id="lblEvaluationScore"/>
+                            <Label fx:id="lblEvaluationScore" styleClass="score"/>
                             <Label text="/"/>
                             <Label fx:id="lblEvaluationMaxScore"/>
                         </HBox>

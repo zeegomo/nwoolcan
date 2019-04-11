@@ -1,9 +1,14 @@
 .label {
-    -fx-font-family: "sans-serif";
+    -fx-font-family: "fantasy";
     -fx-font-size: 14;
 }
 
 .title {
-    -fx-font-family: "serif";
+    -fx-font-family: "fantasy";
     -fx-font-size: 28;
+}
+
+.score {
+    -fx-font-family: "fantasy";
+    -fx-font-size: 48;
 }
