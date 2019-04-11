@@ -161,5 +161,7 @@ public final class ProductionController
         modal.setY(window.getY() + window.getHeight() / 2 - scene.getHeight() / 2);
         modal.setResizable(false);
         modal.showAndWait();
+
+        this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
     }
 }
