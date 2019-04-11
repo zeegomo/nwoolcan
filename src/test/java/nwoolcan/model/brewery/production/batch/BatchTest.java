@@ -13,7 +13,7 @@ import nwoolcan.model.brewery.production.batch.review.EvaluationFactory;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.step.Step;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
-import nwoolcan.model.brewery.production.batch.step.parameter.ParameterImpl;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterFactory;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
@@ -93,7 +93,7 @@ public class BatchTest {
 
         final BatchBuilder b2 = brewery.getBatchBuilder();
         rossinaIngredients.forEach(i -> b2.addIngredient(i.getLeft(), i.getRight()));
-        b2.setWaterMeasurement(WaterMeasurementFactory.create(Arrays.asList(Pair.of(WaterMeasurement.Element.CALCIUM, new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 1))))
+        b2.setWaterMeasurement(WaterMeasurementFactory.create(Arrays.asList(Pair.of(WaterMeasurement.Element.CALCIUM, ParameterFactory.create(ParameterTypeEnum.WATER_MEASUREMENT, 1).getValue())))
                                                             .getValue());
 
         batchRossina = b2.build(
@@ -192,8 +192,8 @@ public class BatchTest {
         final Number t2 = 18.9;
 
         //Register a bunch of temperatures.
-        batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.TEMPERATURE, t1));
-        batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.TEMPERATURE, t2));
+        batchAlfredo.getCurrentStep().addParameter(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, t1).getValue());
+        batchAlfredo.getCurrentStep().addParameter(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, t2).getValue());
 
         //Finalize and go next.
         batchAlfredo.getCurrentStep().finalize("Mashing ended.", new Date(), batchAlfredo.getBatchInfo().getBatchSize());
@@ -205,8 +205,8 @@ public class BatchTest {
         final Number t4 = 106.3;
 
         //Register other temps.
-        batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.TEMPERATURE, t3));
-        batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.TEMPERATURE, t4));
+        batchAlfredo.getCurrentStep().addParameter(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, t3).getValue());
+        batchAlfredo.getCurrentStep().addParameter(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, t4).getValue());
 
         //Finalize and go next.
         batchAlfredo.getCurrentStep().finalize("Boiling ended.", new Date(), batchAlfredo.getBatchInfo().getBatchSize());
@@ -218,21 +218,21 @@ public class BatchTest {
         final Number t6 = 45.8;
 
         //Register other temps and ABV.
-        batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.TEMPERATURE, t5));
-        batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.TEMPERATURE, t6));
+        batchAlfredo.getCurrentStep().addParameter(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, t5).getValue());
+        batchAlfredo.getCurrentStep().addParameter(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, t6).getValue());
 
         final Number abv = 13;
         final Date d = new Date();
         Assert.assertFalse(batchAlfredo.getBatchInfo().getAbv().isPresent());
-        batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.ABV, abv, d));
+        batchAlfredo.getCurrentStep().addParameter(ParameterFactory.create(ParameterTypeEnum.ABV, abv, d).getValue());
         //Check update on batchInfo
         Assert.assertTrue(batchAlfredo.getBatchInfo().getAbv().isPresent());
-        Assert.assertEquals(new ParameterImpl(ParameterTypeEnum.ABV, abv, d), batchAlfredo.getBatchInfo().getAbv().get());
+        Assert.assertEquals(ParameterFactory.create(ParameterTypeEnum.ABV, abv, d).getValue(), batchAlfredo.getBatchInfo().getAbv().get());
 
         final Number abv2 = 15;
-        batchAlfredo.getCurrentStep().addParameter(new ParameterImpl(ParameterTypeEnum.ABV, abv2, d));
+        batchAlfredo.getCurrentStep().addParameter(ParameterFactory.create(ParameterTypeEnum.ABV, abv2, d).getValue());
         Assert.assertTrue(batchAlfredo.getBatchInfo().getAbv().isPresent());
-        Assert.assertEquals(new ParameterImpl(ParameterTypeEnum.ABV, abv2, d), batchAlfredo.getBatchInfo().getAbv().get());
+        Assert.assertEquals(ParameterFactory.create(ParameterTypeEnum.ABV, abv2, d).getValue(), batchAlfredo.getBatchInfo().getAbv().get());
 
         //Go next without finalize
         batchAlfredo.moveToNextStep(StepTypeEnum.PACKAGING).peekError(e -> Assert.fail(e.getMessage()));
