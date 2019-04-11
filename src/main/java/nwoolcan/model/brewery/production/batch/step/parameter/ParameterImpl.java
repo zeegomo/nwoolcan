@@ -6,19 +6,13 @@ import java.util.Objects;
 /**
  * Basic implementation of {@link Parameter} interface.
  */
-public final class ParameterImpl implements Parameter {
+final class ParameterImpl implements Parameter {
 
     private final ParameterType parameterType;
     private final Number registrationValue;
     private final Date registrationDate;
 
-    /**
-     * Basic constructor for the class.
-     * @param parameterType the parameter's type.
-     * @param registrationValue the parameters' registered value.
-     * @param registrationDate the parameter's date of registration.\
-     */
-    public ParameterImpl(final ParameterType parameterType,
+    ParameterImpl(final ParameterType parameterType,
                          final Number registrationValue,
                          final Date registrationDate) {
         this.parameterType = parameterType;
@@ -26,12 +20,7 @@ public final class ParameterImpl implements Parameter {
         this.registrationDate = new Date(registrationDate.getTime());
     }
 
-    /**
-     * Constructor that sets the registration date to now.
-     * @param parameterType the parameter's type.
-     * @param registrationValue the parameters' registered value.
-     */
-    public ParameterImpl(final ParameterType parameterType, final Number registrationValue) {
+    ParameterImpl(final ParameterType parameterType, final Number registrationValue) {
         this(parameterType, registrationValue, new Date());
     }
 
