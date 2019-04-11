@@ -54,7 +54,7 @@ final class BatchImpl implements Batch {
     BatchImpl(final BeerDescription beerDescription,
               final BatchMethod batchMethod,
               final Quantity initialSize,
-              final Collection<Pair<IngredientArticle, Integer>> ingredients,
+              final Collection<Pair<IngredientArticle, Double>> ingredients,
               final StepType initialStep,
               @Nullable final WaterMeasurement waterMeasurement,
               final IdGenerator generator) {
