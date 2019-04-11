@@ -77,6 +77,7 @@ public final class ControllerImpl implements Controller {
                                 .stream()
                                 .filter(p -> p.getLeft() == a.getId())
                                 .map(Pair::getRight).findAny().get()))
+                    //add all ingredients to the batch builder
                     .forEach(p -> bBuilder.addIngredient(p.getLeft(), p.getRight()));
 
         Result<Empty> res = Result.ofEmpty();
