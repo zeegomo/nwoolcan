@@ -16,6 +16,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.Button?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="nwoolcan.view.production.NewBatchModalController">
@@ -50,13 +52,45 @@
                             </FlowPane>
                         </VBox>
                     </TitledPane>
+                    <TitledPane text="Ingredients">
+                        <BorderPane>
+                            <top>
+                                <FlowPane>
+                                    <Label text="Quantity value" />
+                                    <TextField fx:id="quantityIngredientTextField" />
+                                    <ComboBox fx:id="ingredientsComboBox" />
+                                    <Button text="Add" onAction="#addIngredientClick" />
+                                </FlowPane>
+                            </top>
+                            <center>
+                                <TableView fx:id="ingredientsTableView">
+                                    <columnResizePolicy>
+                                        <TableView fx:constant = "CONSTRAINED_RESIZE_POLICY" />
+                                    </columnResizePolicy>
+                                    <columns>
+                                        <TableColumn text="Quantity" >
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="left"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn text="Ingredient" >
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="right"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                            </center>
+                        </BorderPane>
+                    </TitledPane>
                     <TitledPane text="Water measurement">
                         <BorderPane>
                             <top>
                                 <FlowPane>
                                     <Label text="Registration value" />
-                                    <TextField />
+                                    <TextField fx:id="registrationValueTextField" />
                                     <ComboBox fx:id="elementsComboBox" />
+                                    <Button text="Add" onAction="#addElementRegistrationClick" />
                                 </FlowPane>
                             </top>
                             <center>
@@ -65,9 +99,16 @@
                                         <TableView fx:constant = "CONSTRAINED_RESIZE_POLICY" />
                                     </columnResizePolicy>
                                     <columns>
-                                        <TableColumn text="Registered values" />
-                                        <TableColumn text="Elements" />
-                                        <TableColumn />
+                                        <TableColumn text="Registered values" >
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="left"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn text="Elements" >
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="right"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
                                     </columns>
                                 </TableView>
                             </center>

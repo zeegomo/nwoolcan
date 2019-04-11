@@ -9,7 +9,7 @@ import java.util.Collections;
 /**
  * View model representing the data needed to show the new batch modal.
  */
-public class NewBatchViewModel {
+public final class NewBatchViewModel {
 
     private final Collection<IngredientArticleViewModel> ingredients;
     private final Collection<WaterMeasurement.Element> waterMeasurementElements;
