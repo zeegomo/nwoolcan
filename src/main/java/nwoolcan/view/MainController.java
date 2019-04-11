@@ -7,7 +7,7 @@ import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationBuilder;
 import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.review.Evaluation;
-import nwoolcan.model.brewery.production.batch.review.EvaluationImpl;
+import nwoolcan.model.brewery.production.batch.review.EvaluationFactory;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.utils.Result;
 import nwoolcan.controller.viewmodel.WarehouseViewModel;
@@ -31,21 +31,21 @@ public final class MainController {
                                                                        .findAny().get();
 
     Set<Evaluation> evals = Stream.<Result<Evaluation>>builder()
-        .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.AROMA, 10))
-        .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, 3))
-        .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.FLAVOR, BJCPBatchEvaluationType.BJCPCategories.FLAVOR.getMaxScore()))
-        .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, 4))
-        .add(EvaluationImpl.create(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, 10))
+        .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.AROMA, 10))
+        .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.APPEARANCE, 3))
+        .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.FLAVOR, BJCPBatchEvaluationType.BJCPCategories.FLAVOR.getMaxScore()))
+        .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.MOUTHFEEL, 4))
+        .add(EvaluationFactory.create(BJCPBatchEvaluationType.BJCPCategories.OVERALL_IMPRESSION, 10))
         .build()
         .filter(Result::isPresent)
         .map(Result::getValue)
         .collect(Collectors.toSet());
 
-    BatchEvaluationBuilder builder = new BatchEvaluationBuilder(bjcpType, evals);
+    BatchEvaluationBuilder builder = new BatchEvaluationBuilder();
 
     BatchEvaluation bjcp = builder.addReviewer("Andrea")
                                           .addNotes("Very good")
-                                          .build()
+                                          .build(bjcpType, evals)
                                           .getValue();
 
     @FXML
