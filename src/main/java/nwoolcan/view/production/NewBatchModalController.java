@@ -4,7 +4,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -173,7 +175,8 @@ public final class NewBatchModalController
                                   .map(p -> Triple.of(p.getRight(), p.getLeft().doubleValue(), new Date()))
                                   .collect(Collectors.toList())
         )).peekError(e -> {
-            //TODO handle the error
+            Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while creating the batch\n" + e.getMessage(), ButtonType.CLOSE);
+            a.showAndWait();
         });
 
         ((Stage) this.elementsTableView.getScene().getWindow()).close();
