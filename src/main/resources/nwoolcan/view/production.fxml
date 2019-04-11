@@ -52,7 +52,7 @@
                             </HBox>
                         </center>
                         <right>
-                            <BorderPane style="-fx-background-color:#eeeeee">
+                            <BorderPane>
                                 <center>
                                     <VBox alignment="CENTER">
                                         <Button onAction="#createNewBatchClick" text="Create new batch" />
