@@ -1,7 +1,5 @@
 package nwoolcan.model.utils;
 
-import java.util.function.Predicate;
-
 /**
  * Enum used to identify the various unit of measures.
  */
@@ -9,70 +7,129 @@ public enum UnitOfMeasure {
     /**
      * Grams.
      */
-    GRAM("g"),
+    GRAM("g") {
+        @Override
+        public boolean validateValue(final Number value) {
+            return true;
+        }
+    },
     /**
      * Milliliters.
      */
-    MILLILITER("ml"),
+    MILLILITER("ml") {
+        @Override
+        public boolean validateValue(final Number value) {
+            return true;
+        }
+    },
     /**
      * Basic units.
      */
-    UNIT("no", n -> n.doubleValue() == n.intValue()),
+    UNIT("no") {
+        @Override
+        public boolean validateValue(final Number value) {
+            return validateWhenInteger(value);
+        }
+    },
     /**
      * Percentage.
      */
-    PERCENTAGE("%", n -> n.doubleValue() >= 0 && n.doubleValue() <= 100),
+    PERCENTAGE("%") {
+        @Override
+        public boolean validateValue(final Number value) {
+            return value.doubleValue() >= 0 && value.doubleValue() <= 100;
+        }
+    },
     /**
      * Celsius degrees.
      */
-    CELSIUS_DEGREE("C"),
+    CELSIUS_DEGREE("C") {
+        @Override
+        public boolean validateValue(final Number value) {
+            return true;
+        }
+    },
     /**
      * Milligrams per liter.
      */
-    MILLIGRAMS_PER_LITER("mg/L"),
+    MILLIGRAMS_PER_LITER("mg/L") {
+        @Override
+        public boolean validateValue(final Number value) {
+            return true;
+        }
+    },
     /**
      * Pure number.
      */
-    UNITLESS,
+    UNITLESS {
+        @Override
+        public boolean validateValue(final Number value) {
+            return true;
+        }
+    },
     /**
      * Ebc special unit of measure.
      */
-    EBC,
+    EBC {
+        @Override
+        public boolean validateValue(final Number value) {
+            return true;
+        }
+    },
     /**
      * IBU special unit of measure.
      */
-    IBU,
+    IBU {
+        @Override
+        public boolean validateValue(final Number value) {
+            return true;
+        }
+    },
     /**
      * Bottle unit of measure for a 33 cl capacity.
      */
-    BOTTLE_33_CL("bot 33cl", n -> n.doubleValue() == n.intValue()),
+    BOTTLE_33_CL("bot 33cl") {
+        @Override
+        public boolean validateValue(final Number value) {
+            return validateWhenInteger(value);
+        }
+    },
     /**
      * Bottle unit of measure for a 50 cl capacity.
      */
-    BOTTLE_50_CL("bot 50cl", n -> n.doubleValue() == n.intValue()),
+    BOTTLE_50_CL("bot 50cl") {
+        @Override
+        public boolean validateValue(final Number value) {
+            return validateWhenInteger(value);
+        }
+    },
     /**
      * Bottle unit of measure for a 75 cl capacity.
      */
-    BOTTLE_75_CL("bot 75cl", n -> n.doubleValue() == n.intValue()),
+    BOTTLE_75_CL("bot 75cl") {
+        @Override
+        public boolean validateValue(final Number value) {
+            return validateWhenInteger(value);
+        }
+    },
     /**
      * Magnum bottle unit of measure corresponding to 1.5 liters.
      */
-    BOTTLE_MAGNUM("bot magnum", n -> n.doubleValue() == n.intValue());
+    BOTTLE_MAGNUM("bot magnum") {
+        @Override
+        public boolean validateValue(final Number value) {
+            return validateWhenInteger(value);
+        }
+    };
 
     private final String symbol;
-    private final Predicate<Number> checker;
 
     UnitOfMeasure() {
         this("");
     }
 
     UnitOfMeasure(final String symbol) {
-        this(symbol, n -> true);
-    }
-
-    UnitOfMeasure(final String symbol, final Predicate<Number> checker) {
         this.symbol = symbol;
-        this.checker = checker;
     }
 
     /**
@@ -88,7 +145,9 @@ public enum UnitOfMeasure {
      * @param value the value to validate.
      * @return true if the value can be associated to this unit of measure, false otherwise.
      */
-    public boolean validateValue(final Number value) {
-        return this.checker.test(value);
+    public abstract boolean validateValue(Number value);
+
+    private static boolean validateWhenInteger(final Number value) {
+        return value.doubleValue() == value.intValue();
     }
 }
