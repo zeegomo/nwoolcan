@@ -6,11 +6,9 @@ import nwoolcan.utils.Result;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Collection;
-import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -21,17 +19,15 @@ public final class WaterMeasurementFactory {
     private static final String INVALID_PARAMETER = "One or more parameter are not a valid water measurement type";
     private static final String INVALID_SIZE = "No measurement provided";
 
-
     private WaterMeasurementFactory() { }
     /**
      * Add water measurement.
-     * @param p the parameter holding the measure.
-     * @param e the element measured.
+     * @param registration the registrations for the parameters
      * @return this.
      */
     public static Result<WaterMeasurement> create(final Collection<Pair<WaterMeasurement.Element, Parameter>> registration) {
         return Result.of(registration)
-                     .require(reg -> reg.size() > 1, new IllegalArgumentException(INVALID_SIZE))
+                     .require(reg -> reg.size() > 0, new IllegalArgumentException(INVALID_SIZE))
                      .require(reg -> reg.stream().allMatch(p -> p.getRight().getType().equals(ParameterTypeEnum.WATER_MEASUREMENT)),
                          new IllegalArgumentException(INVALID_PARAMETER))
                      .map(reg -> reg.stream()
