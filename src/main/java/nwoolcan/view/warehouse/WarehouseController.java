@@ -6,9 +6,9 @@ import nwoolcan.view.ViewManager;
 import nwoolcan.controller.Controller;
 import nwoolcan.controller.viewmodel.StockViewModel;
 import nwoolcan.controller.viewmodel.WarehouseViewModel;
-import nwoolcan.view.ColumnDescriptor;
+import nwoolcan.view.mastertable.ColumnDescriptor;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.MasterTableViewModel;
+import nwoolcan.view.mastertable.MasterTableViewModel;
 import nwoolcan.view.SubViewController;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
@@ -16,6 +16,7 @@ import nwoolcan.view.subview.SubViewContainer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.function.Function;
 
 /**
  * Handles the Warehouse view.
@@ -49,7 +50,8 @@ public final class WarehouseController extends SubViewController implements Init
                 new ColumnDescriptor("Name", "name"))),
             new ArrayList<>(Arrays.asList(new StockViewModel(1, "ciao"),
                 new StockViewModel(2, "ciaone"))),
-            ViewType.STOCK_DETAIL
+            ViewType.STOCK_DETAIL,
+            Function.identity()
         )).peek(view -> this.stockTable.substitute(view));
     }
 

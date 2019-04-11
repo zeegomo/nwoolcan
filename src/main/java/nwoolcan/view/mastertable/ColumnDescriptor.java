@@ -1,4 +1,4 @@
-package nwoolcan.view;
+package nwoolcan.view.mastertable;
 
 /**
  * Class for representing a column in javafx binding.

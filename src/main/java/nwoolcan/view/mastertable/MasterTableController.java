@@ -1,4 +1,4 @@
-package nwoolcan.view;
+package nwoolcan.view.mastertable;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -10,14 +10,18 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import nwoolcan.controller.Controller;
+import nwoolcan.view.InitializableController;
+import nwoolcan.view.SubViewController;
+import nwoolcan.view.ViewManager;
 import nwoolcan.view.subview.SubView;
 
 /**
  * The controller for a master table representing data of type {@link T}.
  * @param <T> the type of the data to display.
+ * @param <U> the type of the data to display in the detail view.
  */
 @SuppressWarnings("NullAway")
-public final class MasterTableController<T> extends SubViewController implements InitializableController<MasterTableViewModel<T>> {
+public final class MasterTableController<T, U> extends SubViewController implements InitializableController<MasterTableViewModel<T, U>> {
 
     @FXML
     private TableView<T> masterTable;
@@ -38,7 +42,7 @@ public final class MasterTableController<T> extends SubViewController implements
     }
 
     @Override
-    public void initData(final MasterTableViewModel<T> data) {
+    public void initData(final MasterTableViewModel<T, U> data) {
         data.getColumnDescriptors().stream().map(cd -> {
             TableColumn<T, String> col = new TableColumn<>(cd.getColumnName());
             col.setCellValueFactory(new PropertyValueFactory<>(cd.getFieldName()));
@@ -49,7 +53,8 @@ public final class MasterTableController<T> extends SubViewController implements
         final TableColumn<T, Button> actionColumn = new TableColumn<>();
         actionColumn.setCellValueFactory(obj -> {
             final Button btn = new Button("View");
-            btn.setOnAction(event -> this.overlayView(data.getDetailViewType(), obj.getValue()));
+            final U detailViewModel = data.getDetailMapper().apply(obj.getValue());
+            btn.setOnAction(event -> this.overlayView(data.getDetailViewType(), detailViewModel));
             return new SimpleObjectProperty<>(btn);
         });
         masterTable.getColumns().add(actionColumn);
