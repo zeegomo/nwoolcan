@@ -50,7 +50,7 @@ public class ResultTest {
     @Test(expected = NoSuchElementException.class)
     public void testEmptyGet() {
         Result<Empty> empty = Result.ofEmpty();
-        Exception e = empty.getError();
+        empty.getError();
     }
     /**
      * Tests orElse.
@@ -59,7 +59,7 @@ public class ResultTest {
     public void testEmptyOrElse() {
         Result<Integer> error = Result.error(new Exception());
         assertTrue(error.orElse(2).equals(2));
-        Integer i = error.getValue();
+        error.getValue();
     }
     /**
      * Tests require.
@@ -83,13 +83,13 @@ public class ResultTest {
         Result<Boolean> b = error.map(String::isEmpty);
         assertFalse(b.isPresent());
         // Map into null
-        b = error.map(n -> null);
+        b = error.map(n -> true);
         assertFalse(b.isPresent());
         b = duke.map(s -> true);
         assertTrue(b.isPresent());
 
         try {
-            Result<Boolean> res = error.map(s -> Optional.empty().get()).map(s -> null);
+            Result<Boolean> res = error.map(s -> Optional.empty().get()).map(s -> false);
             assertFalse(res.isPresent());
             assertTrue(res.isError());
         } catch (NullPointerException npe) {

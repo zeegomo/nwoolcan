@@ -10,6 +10,7 @@ import nwoolcan.model.brewery.production.batch.review.Evaluation;
 import nwoolcan.model.brewery.production.batch.review.EvaluationFactory;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.utils.Result;
+import nwoolcan.controller.Controller;
 import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationViewModel;
@@ -22,7 +23,7 @@ import java.util.stream.Stream;
  * Handles the Main view.
  */
 @SuppressWarnings("NullAway") // TODO
-public final class MainController {
+public final class MainController extends AbstractViewController {
 
     private final BatchEvaluationType bjcpType = BatchEvaluationBuilder.getAvailableBatchEvaluationTypes()
                                                                        .getValue()
@@ -52,11 +53,20 @@ public final class MainController {
     private SubViewContainer contentPane;
 
     /**
+     * Creates itself and gets injected.
+     * @param controller injected controller.
+     * @param viewManager injected view manager.
+     */
+    public MainController(final Controller controller, final ViewManager viewManager) {
+        super(controller, viewManager);
+    }
+
+    /**
      * Shows the Dashboard.
      * @param event The occurred event
      */
     public void menuViewDashboardClick(final ActionEvent event) {
-        ViewManager.getView(ViewType.DASHBOARD).peek(view -> this.contentPane.substitute(view));
+        this.getViewManager().getView(ViewType.DASHBOARD).peek(view -> this.contentPane.substitute(view));
     }
 
     /**
@@ -64,7 +74,7 @@ public final class MainController {
      * @param event The occurred event
      */
     public void menuViewWarehouseClick(final ActionEvent event) {
-        ViewManager.getView(ViewType.WAREHOUSE, new WarehouseViewModel("ciccio")).peek(view -> this.contentPane.substitute(view));
+        this.getViewManager().getView(ViewType.WAREHOUSE, new WarehouseViewModel("ciccio")).peek(view -> this.contentPane.substitute(view));
     }
     /**
      * Shows the Warehouse view.

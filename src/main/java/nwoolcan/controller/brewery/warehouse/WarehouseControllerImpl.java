@@ -1,6 +1,5 @@
 package nwoolcan.controller.brewery.warehouse;
 
-import nwoolcan.model.brewery.BreweryContext;
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
@@ -33,9 +32,8 @@ public final class WarehouseControllerImpl implements WarehouseController {
      * Constructor.
      * @param warehouse to be used as warehouse.
      */
-    // TODO remove the brewery singleton in order to use warehouse.
     public WarehouseControllerImpl(final Warehouse warehouse) {
-         this.warehouse = BreweryContext.getInstance().getWarehouse();
+         this.warehouse = warehouse;
     }
 
     @Override
