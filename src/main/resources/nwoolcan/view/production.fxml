@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import nwoolcan.view.subview.SubView?>
 <?import nwoolcan.view.subview.SubViewContainer?>
 
-<?import javafx.scene.layout.FlowPane?>
-
-<SubView fx:id="productionSubView"
-         xmlns="http://javafx.com/javafx/8.0.172-ea"
-         xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="nwoolcan.view.production.ProductionController">
+<SubView fx:id="productionSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.production.ProductionController">
     <BorderPane>
         <top>
             <Label text="Production" BorderPane.alignment="CENTER">
@@ -44,7 +41,7 @@
                                 </FlowPane>
                             </VBox>
                         </left>
-                        <right>
+                        <center>
                             <HBox>
                                 <PieChart fx:id="pieChartBatchesStatus" maxHeight="280.0" maxWidth="300.0" title="Batches">
                                 </PieChart>
@@ -53,12 +50,20 @@
                                 <PieChart fx:id="pieChartBatchesMethods" maxHeight="280.0" maxWidth="300.0" title="Methods">
                                 </PieChart>
                             </HBox>
+                        </center>
+                        <right>
+                            <BorderPane style="-fx-background-color:#eeeeee">
+                                <center>
+                                    <VBox alignment="CENTER">
+                                        <Button onAction="#createNewBatchClick" text="Create new batch" />
+                                    </VBox>
+                                </center>
+                            </BorderPane>
                         </right>
                     </BorderPane>
                 </TitledPane>
                 <TitledPane text="Batches">
-                    <SubViewContainer parent="$productionSubView"
-                                      fx:id="masterTableContainer">
+                    <SubViewContainer fx:id="masterTableContainer" parent="$productionSubView">
                     </SubViewContainer>
                 </TitledPane>
             </VBox>
