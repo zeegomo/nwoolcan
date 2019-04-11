@@ -3,6 +3,7 @@ package nwoolcan.view;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import nwoolcan.controller.Controller;
 import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.subview.SubViewContainer;
 
@@ -10,17 +11,26 @@ import nwoolcan.view.subview.SubViewContainer;
  * Handles the Main view.
  */
 @SuppressWarnings("NullAway") // TODO
-public final class MainController {
+public final class MainController extends AbstractViewController {
 
     @FXML
     private SubViewContainer contentPane;
+
+    /**
+     * Creates itself and gets injected.
+     * @param controller injected controller.
+     * @param viewManager injected view manager.
+     */
+    public MainController(final Controller controller, final ViewManager viewManager) {
+        super(controller, viewManager);
+    }
 
     /**
      * Shows the Dashboard.
      * @param event The occurred event
      */
     public void menuViewDashboardClick(final ActionEvent event) {
-        ViewManager.getView(ViewType.DASHBOARD).peek(view -> this.contentPane.substitute(view));
+        this.getViewManager().getView(ViewType.DASHBOARD).peek(view -> this.contentPane.substitute(view));
     }
 
     /**
@@ -28,7 +38,7 @@ public final class MainController {
      * @param event The occurred event
      */
     public void menuViewWarehouseClick(final ActionEvent event) {
-        ViewManager.getView(ViewType.WAREHOUSE, new WarehouseViewModel("ciccio")).peek(view -> this.contentPane.substitute(view));
+        this.getViewManager().getView(ViewType.WAREHOUSE, new WarehouseViewModel("ciccio")).peek(view -> this.contentPane.substitute(view));
     }
 
     /**
