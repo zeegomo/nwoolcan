@@ -146,17 +146,14 @@ public final class ProductionController
      * @param event the occurred event.
      */
     public void createNewBatchClick(final ActionEvent event) {
-        //TODO get data to build the modal
-
         final Stage modal =  new Stage();
-
         final Window window = this.getSubView().getScene().getWindow();
 
         modal.initOwner(window);
         modal.initModality(Modality.WINDOW_MODAL);
 
-        //TODO populate dialog or load a view with view manager.
-        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_BATCH_MODAL).orElse(new AnchorPane()),
+        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_BATCH_MODAL,
+            this.getController().getNewBatchViewModel()).orElse(new AnchorPane()),
             600, 400);
 
         modal.setScene(scene);
@@ -164,7 +161,5 @@ public final class ProductionController
         modal.setY(window.getY() + window.getHeight() / 2 - scene.getHeight() / 2);
         modal.setResizable(false);
         modal.showAndWait();
-
-        //TODO process result data?
     }
 }
