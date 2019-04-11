@@ -30,7 +30,7 @@ public final class ParameterImpl implements Parameter {
         }
         this.parameterType = parameterType;
         this.registrationValue = registrationValue;
-        this.registrationDate = registrationDate;
+        this.registrationDate = new Date(registrationDate.getTime());
     }
 
     /**

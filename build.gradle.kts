@@ -1,15 +1,22 @@
+import com.github.spotbugs.SpotBugsTask
 import net.ltgt.gradle.errorprone.*
 
 plugins {
     java
     checkstyle
     application
+    id("com.github.spotbugs") version "1.7.1"
     id("net.ltgt.errorprone") version "0.6"
 }
 
 checkstyle {
     config = resources.text.fromFile("style.xml")
     maxWarnings = 0
+}
+
+spotbugs {
+    toolVersion = "4.0.0-beta1"
+    effort = "max"
 }
 
 application {
@@ -41,6 +48,11 @@ tasks.withType<JavaCompile> {
         check("NullAway", CheckSeverity.ERROR)
         option("NullAway:AnnotatedPackages", "nwoolcan")
     }
+}
+
+tasks.withType<SpotBugsTask> {
+    reports.xml.isEnabled = false
+    reports.html.isEnabled = true
 }
 
 tasks.named("check") {

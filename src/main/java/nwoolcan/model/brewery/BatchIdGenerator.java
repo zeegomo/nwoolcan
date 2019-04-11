@@ -15,6 +15,7 @@ final class BatchIdGenerator implements IdGenerator {
      * Returns the next available id.
      * @return the next available id.
      */
+    @Override
     public synchronized int getNextId() {
         return this.nextId++;
     }
