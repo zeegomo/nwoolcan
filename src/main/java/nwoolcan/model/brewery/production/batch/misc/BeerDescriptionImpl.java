@@ -48,7 +48,7 @@ public final class BeerDescriptionImpl implements BeerDescription {
 
     @Override
     public String getStyle() {
-        return this.name;
+        return this.style;
     }
 
     @Override
