@@ -27,7 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Controller class for production view.
+ * Controller class for articles view.
  */
 @SuppressWarnings("NullAway")
 public final class ArticlesViewController extends SubViewController implements InitializableController<ArticlesViewModel> {
