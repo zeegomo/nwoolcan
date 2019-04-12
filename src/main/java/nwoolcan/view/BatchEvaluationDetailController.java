@@ -1,6 +1,7 @@
 package nwoolcan.view;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
@@ -14,10 +15,14 @@ import nwoolcan.viewmodel.brewery.production.batch.review.EvaluationViewModel;
 
 import java.util.logging.Logger;
 
+/**
+ * Controller for BatchEvaluationDetail.
+ */
 @SuppressWarnings("NullAway")
 public final class BatchEvaluationDetailController extends SubViewController
     implements InitializableController<BatchEvaluationDetailViewModel>  {
 
+    private static final String LOAD_FAILED = "Load failed";
     @FXML
     private SubViewContainer container;
 
@@ -39,11 +44,14 @@ public final class BatchEvaluationDetailController extends SubViewController
         Result<Parent> view = this.getViewManager().getView(ViewType.BATCHEVALUATION, data.getInfo());
         view.peek(container::substitute)
             .peekError(err -> Logger.getGlobal().severe(err::toString));
-        data.getCategories().forEach(cat -> categories.getChildren().add(new TitledPane(evalRepresentation(cat), new Label(cat.getScore() + ""))));
+        data.getCategories()
+            .forEach(cat -> categories.getChildren().add(evaluationNode(cat)));
     }
 
-    private String evalRepresentation(final EvaluationViewModel eval) {
-        return eval.getType() + "\t" + eval.getScore() + "/" + eval.getMaxScore();
+    private Node evaluationNode(final EvaluationViewModel data) {
+        return this.getViewManager().getView(ViewType.EVALUATION, data)
+                   .peekError(err -> Logger.getGlobal().severe(err.toString() + "\n" + err.getCause()))
+                   .orElse(new Label(LOAD_FAILED));
     }
 
     @Override
