@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Step factory implementation for creating basic steps.
  */
-public class BasicStepFactory implements StepFactory {
+public final class BasicStepFactory implements StepFactory {
 
     private static final String CANNOT_FIND_STEP_IMPLEMENTATION_MESSAGE = " does not have a configured implementation.";
 
