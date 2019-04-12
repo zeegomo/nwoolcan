@@ -177,8 +177,11 @@ public final class NewBatchModalController
         )).peekError(e -> {
             Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while creating the batch\n" + e.getMessage(), ButtonType.CLOSE);
             a.showAndWait();
+        }).peek(e -> {
+            final Stage stage = ((Stage) this.elementsTableView.getScene().getWindow());
+            //just for saying that i added batch to the caller
+            stage.setUserData(new Object());
+            stage.close();
         });
-
-        ((Stage) this.elementsTableView.getScene().getWindow()).close();
     }
 }
