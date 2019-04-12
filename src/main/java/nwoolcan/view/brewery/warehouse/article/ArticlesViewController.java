@@ -1,5 +1,6 @@
 package nwoolcan.view.brewery.warehouse.article;
 
+import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 
 import javax.annotation.Nullable;
@@ -9,5 +10,7 @@ import javax.annotation.Nullable;
  */
 public class ArticlesViewController {
 
-    @Nullable private AnchorPane masterArticleSubView;
+    @Nullable
+    @FXML
+    private AnchorPane masterArticleSubView;
 }
