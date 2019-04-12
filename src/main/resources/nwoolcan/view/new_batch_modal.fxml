@@ -39,20 +39,34 @@
             <center>
                 <VBox BorderPane.alignment="CENTER_LEFT">
                     <TitledPane text="General info">
-                        <VBox>
-                            <FlowPane>
-                                <Label text="Name" />
-                                <TextField />
-                            </FlowPane>
-                            <FlowPane>
-                                <Label text="Style" />
-                                <TextField />
-                            </FlowPane>
-                            <FlowPane>
-                                <Label text="Category" />
-                                <TextField />
-                            </FlowPane>
-                        </VBox>
+                        <HBox>
+                            <VBox>
+                                <FlowPane>
+                                    <Label text="Beer name" />
+                                    <TextField fx:id="beerNameTextField" />
+                                </FlowPane>
+                                <FlowPane>
+                                    <Label text="Beer style" />
+                                    <TextField fx:id="beerStyleTextField" />
+                                </FlowPane>
+                                <FlowPane>
+                                    <Label text="Beer category" />
+                                    <TextField fx:id="beerCategoryTextField" />
+                                </FlowPane>
+                            </VBox>
+                            <VBox>
+                                <FlowPane>
+                                    <Label text="Batch method" />
+                                    <ComboBox fx:id="batchMethodsComboBox" />
+                                </FlowPane>
+                                <FlowPane>
+                                    <Label text="Inital size" />
+                                    <TextField fx:id="initialSizeTextField" />
+                                    <Label fx:id="initialSizeUnitOfMeasureLabel" text="?" />
+                                    <ComboBox fx:id="possibleUnisOfMeasureComboBox" />
+                                </FlowPane>
+                            </VBox>
+                        </HBox>
                     </TitledPane>
                     <TitledPane text="Ingredients">
                         <BorderPane>

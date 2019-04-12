@@ -19,6 +19,7 @@ import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
+import nwoolcan.utils.Result;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.ViewManager;
@@ -38,6 +39,21 @@ import java.util.stream.Collectors;
 @SuppressWarnings("NullAway")
 public final class NewBatchModalController
     extends AbstractViewController implements InitializableController<NewBatchViewModel> {
+
+    @FXML
+    private TextField beerNameTextField;
+    @FXML
+    private TextField beerStyleTextField;
+    @FXML
+    private TextField beerCategoryTextField;
+    @FXML
+    private Label initialSizeUnitOfMeasureLabel;
+    @FXML
+    private ComboBox<BatchMethod> batchMethodsComboBox;
+    @FXML
+    private TextField initialSizeTextField;
+    @FXML
+    private ComboBox<UnitOfMeasure> possibleUnisOfMeasureComboBox;
 
     private static final class IngredientArticleProperty {
         private IngredientArticleViewModel article;
@@ -84,6 +100,13 @@ public final class NewBatchModalController
 
     @Override
     public void initData(final NewBatchViewModel data) {
+        this.batchMethodsComboBox.setItems(FXCollections.observableList(data.getBatchMethods()));
+
+        this.possibleUnisOfMeasureComboBox.setItems(FXCollections.observableList(data.getUnitsOfMeasure()));
+        this.possibleUnisOfMeasureComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) ->
+            this.initialSizeUnitOfMeasureLabel.setText(newV.getSymbol())
+        );
+
         final TableColumn<Pair<Number, WaterMeasurement.Element>, Button> removeElementColumn = new TableColumn<>();
         removeElementColumn.setCellValueFactory(obj -> {
             final Button btn = new Button("Remove");
@@ -164,14 +187,57 @@ public final class NewBatchModalController
      * @param event the occurred event.
      */
     public void createBatchClick(final ActionEvent event) {
-        //TODO get all infos and check them before creating a batch
+        //all possible checks before calling controller
+        if (this.beerNameTextField.getText().isEmpty()) {
+            this.showAlertAndWait("There must be a beer name!");
+            return;
+        }
+
+        if (this.beerStyleTextField.getText().isEmpty()) {
+            this.showAlertAndWait("There must be a beer style!");
+            return;
+        }
+
+        if (this.batchMethodsComboBox.getSelectionModel().getSelectedItem() == null) {
+            this.showAlertAndWait("Must select a batch method!");
+            return;
+        }
+
+        if (this.initialSizeTextField.getText().isEmpty()) {
+            this.showAlertAndWait("There must be an initial size!");
+            return;
+        }
+
+        final double size;
+        try {
+            size = Double.parseDouble(this.initialSizeTextField.getText());
+        } catch (NumberFormatException ex) {
+            this.showAlertAndWait("Initial size must be a number!");
+            return;
+        }
+
+        if (this.possibleUnisOfMeasureComboBox.getSelectionModel().getSelectedItem() == null) {
+            this.showAlertAndWait("Must select a quantity unit of measure!");
+            return;
+        }
+
+        //refactor maybe with a DTO
+        final Result<Quantity> res = Quantity.of(size, this.possibleUnisOfMeasureComboBox.getSelectionModel().getSelectedItem())
+                                                     .peekError(e -> this.showAlertAndWait(e.getMessage()));
+
+        final Quantity initialSize;
+        if (res.isPresent()) {
+            initialSize = res.getValue();
+        } else {
+            return;
+        }
 
         this.getController().createNewBatch(new CreateBatchDTO(
-            "Dummy",
-            "Style",
-            null,
-            BatchMethod.ALL_GRAIN,
-            Quantity.of(1000, UnitOfMeasure.MILLILITER).getValue(),
+            this.beerNameTextField.getText(),
+            this.beerStyleTextField.getText(),
+            this.beerCategoryTextField.getText().isEmpty() ? null : this.beerCategoryTextField.getText(),
+            this.batchMethodsComboBox.getSelectionModel().getSelectedItem(),
+            initialSize,
             StepTypeEnum.MASHING,
             this.ingredientsTableView.getItems()
                                      .stream()
@@ -180,15 +246,18 @@ public final class NewBatchModalController
             this.elementsTableView.getItems()
                                   .stream()
                                   .map(p -> Triple.of(p.getRight(), p.getLeft().doubleValue(), new Date()))
-                                  .collect(Collectors.toList())
-        )).peekError(e -> {
-            Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while creating the batch.\n" + e.getMessage(), ButtonType.CLOSE);
-            a.showAndWait();
-        }).peek(e -> {
-            final Stage stage = ((Stage) this.elementsTableView.getScene().getWindow());
-            //just for saying that i added batch to the caller
-            stage.setUserData(new Object());
-            stage.close();
-        });
+                                  .collect(Collectors.toList())))
+            .peekError(e -> this.showAlertAndWait(e.getMessage()))
+            .peek(e -> {
+                final Stage stage = ((Stage) this.elementsTableView.getScene().getWindow());
+                //just for saying that i added batch to the caller
+                stage.setUserData(new Object());
+                stage.close();
+            });
+    }
+
+    private void showAlertAndWait(final String message) {
+        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while creating the batch.\n" + message, ButtonType.CLOSE);
+        a.showAndWait();
     }
 }
