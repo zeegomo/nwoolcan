@@ -1,7 +1,7 @@
 package nwoolcan.viewmodel.brewery.production.batch;
 
 import nwoolcan.model.brewery.production.batch.Batch;
-import nwoolcan.model.utils.Quantity;
+import nwoolcan.viewmodel.brewery.utils.QuantityViewModel;
 
 import java.util.Date;
 
@@ -16,8 +16,8 @@ public class MasterBatchViewModel {
     private final String batchMethodName;
     private final String currentStepName;
     private final Date startDate;
-    private final Quantity initialBatchSize;
-    private final Quantity currentBatchSize;
+    private final QuantityViewModel initialBatchSize;
+    private final QuantityViewModel currentBatchSize;
     private final boolean isEnded;
 
     /**
@@ -31,8 +31,8 @@ public class MasterBatchViewModel {
         this.batchMethodName = batch.getBatchInfo().getMethod().getName();
         this.currentStepName = batch.getCurrentStep().getStepInfo().getType().getName();
         this.startDate = new Date(batch.getSteps().stream().findFirst().get().getStepInfo().getStartDate().getTime());
-        this.initialBatchSize = batch.getBatchInfo().getBatchSize();
-        this.currentBatchSize = batch.getCurrentSize();
+        this.initialBatchSize = new QuantityViewModel(batch.getBatchInfo().getBatchSize());
+        this.currentBatchSize = new QuantityViewModel(batch.getCurrentSize());
         this.isEnded = batch.isEnded();
     }
 
@@ -85,18 +85,18 @@ public class MasterBatchViewModel {
     }
 
     /**
-     * Returns a {@link Quantity} representing the batch initial size.
+     * Returns a {@link QuantityViewModel} representing the batch initial size.
      * @return the batch initial size.
      */
-    public Quantity getInitialBatchSize() {
+    public QuantityViewModel getInitialBatchSize() {
         return this.initialBatchSize;
     }
 
     /**
-     * Returns a {@link Quantity} representing the batch current size.
+     * Returns a {@link QuantityViewModel} representing the batch current size.
      * @return the batch current size.
      */
-    public Quantity getCurrentBatchSize() {
+    public QuantityViewModel getCurrentBatchSize() {
         return this.currentBatchSize;
     }
 
