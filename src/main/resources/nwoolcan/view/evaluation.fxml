@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TitledPane?>
+<TitledPane xmlns="http://javafx.com/javafx"
+            fx:id="title"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="nwoolcan.view.EvaluationController">
+    <VBox stylesheets="@style.css">
+        <FlowPane>
+            <Label text="Score: " styleClass="subtitle"/>
+            <Label fx:id="score"/>
+        </FlowPane>
+        <FlowPane>
+            <Label text="Notes: " styleClass="subtitle"/>
+            <Label fx:id="notes"/>
+        </FlowPane>
+    </VBox>
+</TitledPane>
