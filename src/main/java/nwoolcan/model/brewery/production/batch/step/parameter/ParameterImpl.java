@@ -8,6 +8,8 @@ import java.util.Objects;
  */
 final class ParameterImpl implements Parameter {
 
+    private static final String CANNOT_VALIDATE_PARAMETER_VALUE_MESSAGE = "Cannot validate registration value for this parameter.";
+
     private final ParameterType parameterType;
     private final Number registrationValue;
     private final Date registrationDate;
@@ -15,6 +17,9 @@ final class ParameterImpl implements Parameter {
     ParameterImpl(final ParameterType parameterType,
                          final Number registrationValue,
                          final Date registrationDate) {
+        if (!parameterType.getUnitOfMeasure().validateValue(registrationValue)) {
+            throw new IllegalArgumentException(CANNOT_VALIDATE_PARAMETER_VALUE_MESSAGE);
+        }
         this.parameterType = parameterType;
         this.registrationValue = registrationValue;
         this.registrationDate = new Date(registrationDate.getTime());
