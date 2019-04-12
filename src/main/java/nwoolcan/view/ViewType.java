@@ -19,6 +19,22 @@ public enum ViewType {
      */
     WAREHOUSE,
     /**
+     * Detail view to show a {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
+     */
+    STOCK_DETAIL,
+    /**
+     * Detail view to show a {@link nwoolcan.model.brewery.warehouse.article.Article}.
+     */
+    ARTICLE_DETAIL,
+    /**
+     * Detail view to show a {@link nwoolcan.model.brewery.warehouse.article.Article}.
+     */
+    NEW_ARTICLE_MODAL,
+    /**
+     * Detail view to show a {@link nwoolcan.model.brewery.warehouse.article.Article}.
+     */
+    ARTICLES,
+    /**
      * The main production view.
      */
     PRODUCTION,
@@ -26,10 +42,6 @@ public enum ViewType {
      * The master table view.
      */
     MASTER_TABLE,
-    /**
-     * Detail view to show a {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
-     */
-    STOCK_DETAIL,
     /**
      * Detail view to show a batch.
      */
