@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.production.batch.step.parameter;
 
 import nwoolcan.utils.Result;
+import nwoolcan.utils.Results;
 
 import java.util.Date;
 
@@ -20,8 +21,7 @@ public final class ParameterFactory {
     public static Result<Parameter> create(final ParameterType type,
                                            final Number registrationValue,
                                            final Date registrationDate) {
-        return Result.of(new ParameterImpl(type, registrationValue, registrationDate));
-                     //.require(p -> p.getType().getUnitOfMeasure()) TODO
+        return Results.ofChecked(() -> new ParameterImpl(type, registrationValue, registrationDate));
     }
 
     /**

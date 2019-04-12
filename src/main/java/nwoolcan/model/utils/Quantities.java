@@ -3,6 +3,7 @@ package nwoolcan.model.utils;
 import nwoolcan.utils.Result;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 
 /**
  * Utils class for operations with quantity objects.
@@ -48,5 +49,13 @@ public final class Quantities {
         return Quantity.of(BigDecimal.valueOf(base.getValue()).subtract(BigDecimal.valueOf(removing.getValue())).doubleValue(),
                            base.getUnitOfMeasure())
                        .require(q -> checkSameUM(q, removing), new ArithmeticException(NOT_SAME_UM_MESSAGE));
+    }
+
+    /**
+     * Returns a collection of all possible units of measure that can be associated to a quantity.
+     * @return a collection of all possible units of measure that can be associated to a quantity.
+     */
+    public static Collection<UnitOfMeasure> getValidUnitsOfMeasure() {
+        return QuantityChecker.getValidUnitsOfMeasure();
     }
 }

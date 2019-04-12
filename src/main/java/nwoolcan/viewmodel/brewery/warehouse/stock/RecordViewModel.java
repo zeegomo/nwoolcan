@@ -10,35 +10,39 @@ import java.util.Date;
  */
 public final class RecordViewModel {
 
-    private final Record record;
+    private final Quantity quantity;
+    private final boolean isAdding;
+    private final Date date;
 
     /**
      * Constructor of the View-Model representation of the {@link nwoolcan.model.brewery.warehouse.stock.Record}.
      * @param record to be converted in {@link RecordViewModel}
      */
     public RecordViewModel(final Record record) {
-        this.record = record;
+        this.quantity = record.getQuantity();
+        this.isAdding = record.getAction() == Record.Action.ADDING;
+        this.date = record.getDate();
     }
     /**
      * Return the amount of the transfer in or out the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
      * @return the amount of the transfer in or out the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
      */
     public Quantity getQuantity() {
-        return record.getQuantity();
+        return quantity;
     }
     /**
      * Return a {@link Boolean} which is true if the {@link Quantity} has to be added.
      * @return a {@link Boolean} which is true if the {@link Quantity} has to be added.
      */
 
-    public Boolean isAdding() {
-        return record.getAction() == Record.Action.ADDING;
+    public boolean isAdding() {
+        return isAdding;
     }
     /**
      * Return the {@link Date} in which the {@link nwoolcan.model.brewery.warehouse.stock.Record} has been transferred.
      * @return the {@link Date} in which the {@link nwoolcan.model.brewery.warehouse.stock.Record} has been transferred.
      */
     public Date getDate() {
-        return record.getDate();
+        return new Date(date.getTime());
     }
 }

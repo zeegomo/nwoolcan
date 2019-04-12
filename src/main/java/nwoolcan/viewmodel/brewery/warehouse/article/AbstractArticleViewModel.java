@@ -9,28 +9,32 @@ import nwoolcan.model.utils.UnitOfMeasure;
  */
 public abstract class AbstractArticleViewModel {
 
-    private final Article article;
+    private final int id;
+    private final String name;
+    private final UnitOfMeasure unitOfMeasure;
 
     /**
      * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @param article to be converted in {@link AbstractArticleViewModel}.
      */
     public AbstractArticleViewModel(final Article article) {
-        this.article = article;
+        this.id = article.getId();
+        this.name = article.getName();
+        this.unitOfMeasure = article.getUnitOfMeasure();
     }
     /**
      * Returns the id of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @return the id of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     public int getId() {
-        return article.getId();
+        return id;
     }
     /**
      * Returns the name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @return the name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     public String getName() {
-        return article.getName();
+        return name;
     }
     /**
      * Returns the {@link ArticleType} of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
@@ -42,7 +46,7 @@ public abstract class AbstractArticleViewModel {
      * @return the {@link UnitOfMeasure} of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     public UnitOfMeasure getUnitOfMeasure() {
-        return article.getUnitOfMeasure();
+        return unitOfMeasure;
     }
     /**
      * Generates an {@link AbstractArticleViewModel} starting from a common {@link Article},

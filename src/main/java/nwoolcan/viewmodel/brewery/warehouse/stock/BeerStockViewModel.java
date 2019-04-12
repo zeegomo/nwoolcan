@@ -8,7 +8,7 @@ import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
  */
 public class BeerStockViewModel extends AbstractStockViewModel {
 
-    private final BeerStock beerStock;
+    private final MasterBatchViewModel batch;
 
     /**
      * Constructor with the elements of the {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
@@ -16,13 +16,13 @@ public class BeerStockViewModel extends AbstractStockViewModel {
      */
     public BeerStockViewModel(final BeerStock beerStock) {
         super(beerStock);
-        this.beerStock = beerStock;
+        this.batch = new MasterBatchViewModel(beerStock.getBatch());
     }
     /**
      * Return the {@link MasterBatchViewModel} related to this {@link BeerStockViewModel}.
      * @return the {@link MasterBatchViewModel} related to this {@link BeerStockViewModel}.
      */
     public final MasterBatchViewModel getBatchViewModel() {
-        return new MasterBatchViewModel(beerStock.getBatch());
+        return batch;
     }
 }
