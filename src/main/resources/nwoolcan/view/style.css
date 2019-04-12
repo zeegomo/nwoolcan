@@ -6,9 +6,13 @@
 .title {
     -fx-font-family: "fantasy";
     -fx-font-size: 28;
+    -fx-font-weight: bold;
 }
 
 .score {
-    -fx-font-family: "fantasy";
-    -fx-font-size: 48;
+    -fx-font-size: 40;
+}
+
+.subtitle {
+    -fx-font-weight: bold;
 }
