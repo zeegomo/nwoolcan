@@ -60,6 +60,7 @@
                                 <HBox>
                                     <Label text="Quantity value" />
                                     <TextField fx:id="quantityIngredientTextField" />
+                                    <Label fx:id="ingredientUnitOfMeasureLabel" text="?" />
                                     <ComboBox fx:id="ingredientsComboBox" />
                                     <Button text="Add" onAction="#addIngredientClick" />
                                 </HBox>

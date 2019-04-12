@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -63,6 +64,8 @@ public final class NewBatchModalController
     private ComboBox<WaterMeasurement.Element> elementsComboBox;
 
     @FXML
+    private Label ingredientUnitOfMeasureLabel;
+    @FXML
     private TextField quantityIngredientTextField;
     @FXML
     private TableView<Pair<Number, IngredientArticleProperty>> ingredientsTableView;
@@ -101,6 +104,10 @@ public final class NewBatchModalController
         this.elementsComboBox.setItems(FXCollections.observableList(
             new ArrayList<>(data.getWaterMeasurementElements())
         ));
+
+        this.ingredientsComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) ->
+            this.ingredientUnitOfMeasureLabel.setText(newV.getArticle().getUnitOfMeasure().getSymbol())
+        );
 
         this.ingredientsComboBox.setItems(FXCollections.observableList(
             data.getIngredients()
