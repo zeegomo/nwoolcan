@@ -4,17 +4,11 @@ import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
-import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.article.MiscArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.AbstractStockViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.stock.BeerStockViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.stock.StockViewModel;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -81,26 +75,11 @@ public class WarehouseViewModel {
         this.nIngredientUsed = warehouse.getStocks(INGREDIENT_USED_QUERY).size();
         this.allStocks = warehouse.getStocks(GENERAL_QUERY_STOCK)
                                   .stream()
-                                  .map(stock -> {
-                                      if (stock.getArticle().getArticleType() == ArticleType.FINISHED_BEER) {
-                                          return new BeerStockViewModel((BeerStock) stock);
-                                      }
-                                      return new StockViewModel(stock);
-                                  })
+                                  .map(AbstractStockViewModel::getViewStock)
                                   .collect(Collectors.toList());
         this.allArticles = warehouse.getArticles(GENERAL_QUERY_ARTICLE)
                                     .stream()
-                                    .map(article -> {
-                                        switch (article.getArticleType()) {
-                                            case FINISHED_BEER:
-                                                return new BeerArticleViewModel(article.toBeerArticle().getValue());
-                                            case INGREDIENT:
-                                                return new IngredientArticleViewModel(article.toIngredientArticle().getValue());
-                                            default:
-                                            case MISC:
-                                                return new MiscArticleViewModel(article);
-                                        }
-                                    })
+                                    .map(AbstractArticleViewModel::getViewArticle)
                                     .collect(Collectors.toList());
     }
     /**
