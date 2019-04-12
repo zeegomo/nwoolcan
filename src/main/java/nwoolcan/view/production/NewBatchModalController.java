@@ -147,6 +147,7 @@ public final class NewBatchModalController
     public void addElementRegistrationClick(final ActionEvent event) {
         final WaterMeasurement.Element selectedElement = this.elementsComboBox.getSelectionModel().getSelectedItem();
         if (selectedElement == null) {
+            this.showAlertAndWait("Must select a element!");
             return;
         }
 
@@ -154,6 +155,7 @@ public final class NewBatchModalController
         try {
             registrationValue = Double.parseDouble(this.registrationValueTextField.getText());
         } catch (NumberFormatException ex) {
+            this.showAlertAndWait("Registration value must be a number!");
             return;
         }
 
@@ -168,6 +170,7 @@ public final class NewBatchModalController
     public void addIngredientClick(final ActionEvent event) {
         final IngredientArticleProperty selectedElement = this.ingredientsComboBox.getSelectionModel().getSelectedItem();
         if (selectedElement == null) {
+            this.showAlertAndWait("Must select an ingredient!");
             return;
         }
 
@@ -175,6 +178,7 @@ public final class NewBatchModalController
         try {
             quantity = Double.parseDouble(this.quantityIngredientTextField.getText());
         } catch (NumberFormatException ex) {
+            this.showAlertAndWait("Ingredient quantity must be a number!");
             return;
         }
 
