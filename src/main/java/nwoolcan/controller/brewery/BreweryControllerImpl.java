@@ -50,8 +50,8 @@ public final class BreweryControllerImpl implements BreweryController {
         final Result<Batch> batchResult = getBatchById(batchId);
         final Result<BeerArticle> beerArticleResult = getBeerArticleById(beerArticleId);
         return Result.ofEmpty()
-                     .flatMap(() -> batchResult)
-                     .flatMap(() -> beerArticleResult)
+                     .require(batchResult::isPresent, batchResult.getError())
+                     .require(beerArticleResult::isPresent, beerArticleResult.getError())
                      .flatMap(() -> brewery.stockBatch(batchResult.getValue(),
                                                        beerArticleResult.getValue(),
                                                        expirationDate));
@@ -62,8 +62,8 @@ public final class BreweryControllerImpl implements BreweryController {
         final Result<Batch> batchResult = getBatchById(batchId);
         final Result<BeerArticle> beerArticleResult = getBeerArticleById(beerArticleId);
         return Result.ofEmpty()
-                     .flatMap(() -> batchResult)
-                     .flatMap(() -> beerArticleResult)
+                     .require(batchResult::isPresent, batchResult.getError())
+                     .require(beerArticleResult::isPresent, beerArticleResult.getError())
                      .flatMap(() -> brewery.stockBatch(batchResult.getValue(),
                                                        beerArticleResult.getValue()));
     }
