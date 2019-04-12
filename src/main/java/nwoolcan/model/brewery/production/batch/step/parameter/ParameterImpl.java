@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * Basic implementation of {@link Parameter} interface.
  */
-public final class ParameterImpl implements Parameter {
+final class ParameterImpl implements Parameter {
 
     private static final String CANNOT_VALIDATE_PARAMETER_VALUE_MESSAGE = "Cannot validate registration value for this parameter.";
 
@@ -14,15 +14,7 @@ public final class ParameterImpl implements Parameter {
     private final Number registrationValue;
     private final Date registrationDate;
 
-    /**
-     * Basic constructor for the class.
-     * @param parameterType the parameter's type.
-     * @param registrationValue the parameters' registered value.
-     * @param registrationDate the parameter's date of registration.
-     * @throws IllegalArgumentException if the registration value cannot be associated with its
-     * parameter type.
-     */
-    public ParameterImpl(final ParameterType parameterType,
+    ParameterImpl(final ParameterType parameterType,
                          final Number registrationValue,
                          final Date registrationDate) {
         if (!parameterType.getUnitOfMeasure().validateValue(registrationValue)) {
@@ -33,12 +25,7 @@ public final class ParameterImpl implements Parameter {
         this.registrationDate = new Date(registrationDate.getTime());
     }
 
-    /**
-     * Constructor that sets the registration date to now.
-     * @param parameterType the parameter's type.
-     * @param registrationValue the parameters' registered value.
-     */
-    public ParameterImpl(final ParameterType parameterType, final Number registrationValue) {
+    ParameterImpl(final ParameterType parameterType, final Number registrationValue) {
         this(parameterType, registrationValue, new Date());
     }
 

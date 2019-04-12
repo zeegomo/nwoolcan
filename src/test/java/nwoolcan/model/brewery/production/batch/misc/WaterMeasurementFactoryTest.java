@@ -1,7 +1,7 @@
 package nwoolcan.model.brewery.production.batch.misc;
 
 import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
-import nwoolcan.model.brewery.production.batch.step.parameter.ParameterImpl;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterFactory;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement.Element;
 import nwoolcan.utils.Result;
@@ -30,16 +30,16 @@ public class WaterMeasurementFactoryTest {
     public void testSuccessfulBuild() {
         final int value = 15;
         Result<WaterMeasurement> water = WaterMeasurementFactory.create(Arrays.asList(Pair.of(WaterMeasurement.Element.CALCIUM,
-            new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, value))));
+            ParameterFactory.create(ParameterTypeEnum.WATER_MEASUREMENT, value).getValue())));
         assertTrue(water.isPresent());
         assertFalse(water.getValue().getMeasurement(Element.BICARBONATE).isPresent());
         assertEquals(water.getValue().getMeasurement(Element.CALCIUM).get().getRegistrationValue(), value);
 
 
         Collection<Pair<Element, Parameter>> reg = Stream.<Pair<Element, Parameter>>builder().add(Pair.of(Element.MAGNESIUM,
-            new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, value))).add(Pair.of(Element.CALCIUM,
-            new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 1))).add(Pair.of(Element.SODIUM,
-            new ParameterImpl(ParameterTypeEnum.WATER_MEASUREMENT, 0))).build().collect(Collectors.toList());
+            ParameterFactory.create(ParameterTypeEnum.WATER_MEASUREMENT, value).getValue())).add(Pair.of(Element.CALCIUM,
+            ParameterFactory.create(ParameterTypeEnum.WATER_MEASUREMENT, 1).getValue())).add(Pair.of(Element.SODIUM,
+            ParameterFactory.create(ParameterTypeEnum.WATER_MEASUREMENT, 0).getValue())).build().collect(Collectors.toList());
 
         Result<WaterMeasurement> water2 = WaterMeasurementFactory.create(reg);
         assertTrue(water2.isPresent());
@@ -56,7 +56,7 @@ public class WaterMeasurementFactoryTest {
         final int value = 15;
 
         Collection<Pair<Element, Parameter>> reg = Stream.<Pair<Element, Parameter>>builder().add(Pair.of(Element.CALCIUM,
-            new ParameterImpl(ParameterTypeEnum.ABV, value))).build().collect(Collectors.toList());
+            ParameterFactory.create(ParameterTypeEnum.ABV, value).getValue())).build().collect(Collectors.toList());
 
         Result<WaterMeasurement> water = WaterMeasurementFactory.create(reg);
         assertTrue(water.isError());
