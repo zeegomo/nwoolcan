@@ -4,6 +4,7 @@ import nwoolcan.controller.brewery.BreweryController;
 import nwoolcan.controller.brewery.BreweryControllerImpl;
 import nwoolcan.model.brewery.Brewery;
 import nwoolcan.model.brewery.production.batch.BatchBuilder;
+import nwoolcan.model.brewery.production.batch.BatchMethod;
 import nwoolcan.model.brewery.production.batch.QueryBatch;
 import nwoolcan.model.brewery.production.batch.QueryBatchBuilder;
 import nwoolcan.model.brewery.production.batch.misc.BeerDescriptionImpl;
@@ -14,6 +15,7 @@ import nwoolcan.model.brewery.production.batch.step.parameter.ParameterFactory;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
+import nwoolcan.model.utils.Quantities;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.production.ProductionViewModel;
@@ -72,7 +74,9 @@ public final class ControllerImpl implements Controller {
                         .map(a -> a.toIngredientArticle().getValue())
                         .map(IngredientArticleViewModel::new)
                         .collect(Collectors.toList()),
-            Arrays.asList(WaterMeasurement.Element.values())
+            Arrays.asList(WaterMeasurement.Element.values()),
+            Arrays.asList(BatchMethod.values()),
+            Quantities.getValidUnitsOfMeasure()
         );
     }
 

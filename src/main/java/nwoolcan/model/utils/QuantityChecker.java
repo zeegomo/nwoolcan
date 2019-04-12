@@ -3,8 +3,8 @@ package nwoolcan.model.utils;
 import nwoolcan.utils.Result;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Utils class that performs a check on a {@link Quantity} object.
@@ -17,7 +17,7 @@ final class QuantityChecker {
     private static final String CANNOT_BE_QUANTITY_MESSAGE = "Unit of measure cannot be a quantity.";
     private static final String CANNOT_VALIDATE_QUANTITY_VALUE_MESSAGE = "Cannot validate value for this quantity.";
 
-    private static final Collection<UnitOfMeasure> VALID_UMS = Arrays.asList(
+    private static final List<UnitOfMeasure> VALID_UMS = Arrays.asList(
         UnitOfMeasure.MILLILITER,
         UnitOfMeasure.GRAM,
         UnitOfMeasure.UNIT,
@@ -46,7 +46,7 @@ final class QuantityChecker {
                       .require(q -> VALID_UMS.contains(q.getUnitOfMeasure()), new IllegalArgumentException(CANNOT_BE_QUANTITY_MESSAGE));
     }
 
-    static Collection<UnitOfMeasure> getValidUnitsOfMeasure() {
-        return Collections.unmodifiableCollection(VALID_UMS);
+    static List<UnitOfMeasure> getValidUnitsOfMeasure() {
+        return Collections.unmodifiableList(VALID_UMS);
     }
 }
