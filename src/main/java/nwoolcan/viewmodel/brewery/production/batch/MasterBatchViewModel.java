@@ -1,7 +1,7 @@
 package nwoolcan.viewmodel.brewery.production.batch;
 
 import nwoolcan.model.brewery.production.batch.Batch;
-import nwoolcan.model.utils.Quantity;
+import nwoolcan.viewmodel.brewery.utils.QuantityViewModel;
 
 import java.util.Date;
 
@@ -69,19 +69,19 @@ public class MasterBatchViewModel {
     }
 
     /**
-     * Returns a {@link Quantity} representing the batch initial size.
+     * Returns a {@link QuantityViewModel} representing the batch initial size.
      * @return the batch initial size.
      */
-    public Quantity getInitialBatchSize() {
-        return this.batch.getBatchInfo().getBatchSize();
+    public QuantityViewModel getInitialBatchSize() {
+        return new QuantityViewModel(this.batch.getBatchInfo().getBatchSize());
     }
 
     /**
-     * Returns a {@link Quantity} representing the batch current size.
+     * Returns a {@link QuantityViewModel} representing the batch current size.
      * @return the batch current size.
      */
-    public Quantity getCurrentBatchSize() {
-        return this.batch.getCurrentSize();
+    public QuantityViewModel getCurrentBatchSize() {
+        return new QuantityViewModel(this.batch.getCurrentSize());
     }
 
     /**
