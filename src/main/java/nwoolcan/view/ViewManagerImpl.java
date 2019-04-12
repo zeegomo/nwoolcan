@@ -7,6 +7,7 @@ import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 
 import java.lang.reflect.Constructor;
+import java.util.logging.Logger;
 
 /**
  * View manager impl that can inject a controller and itself to the view controllers constructors.
@@ -82,6 +83,6 @@ public final class ViewManagerImpl implements ViewManager {
             final Parent parent = loader.load();
             loader.<InitializableController<T>>getController().initData(viewModel);
             return parent;
-        });
+        }).peekError(err -> Logger.getGlobal().severe(err.toString() + "\n" + err.getCause()));
     }
 }
