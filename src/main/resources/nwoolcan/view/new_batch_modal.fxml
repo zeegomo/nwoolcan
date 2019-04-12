@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Label?>
 
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.control.TextField?>
 
 <?import javafx.scene.control.TitledPane?>
@@ -39,44 +38,52 @@
             <center>
                 <VBox BorderPane.alignment="CENTER_LEFT">
                     <TitledPane text="General info">
-                        <HBox>
-                            <VBox>
-                                <FlowPane>
-                                    <Label text="Beer name" />
-                                    <TextField fx:id="beerNameTextField" />
-                                </FlowPane>
-                                <FlowPane>
-                                    <Label text="Beer style" />
-                                    <TextField fx:id="beerStyleTextField" />
-                                </FlowPane>
-                                <FlowPane>
-                                    <Label text="Beer category" />
-                                    <TextField fx:id="beerCategoryTextField" />
-                                </FlowPane>
-                            </VBox>
-                            <VBox>
-                                <FlowPane>
-                                    <Label text="Batch method" />
-                                    <ComboBox fx:id="batchMethodsComboBox" />
-                                </FlowPane>
-                                <FlowPane>
-                                    <Label text="Inital size" />
-                                    <TextField fx:id="initialSizeTextField" />
-                                    <Label fx:id="initialSizeUnitOfMeasureLabel" text="?" />
-                                </FlowPane>
-                            </VBox>
-                        </HBox>
+                        <BorderPane>
+                            <left>
+                                <VBox>
+                                    <VBox>
+                                        <Label text="Beer name" />
+                                        <TextField fx:id="beerNameTextField" />
+                                    </VBox>
+                                    <VBox>
+                                        <Label text="Beer style" />
+                                        <TextField fx:id="beerStyleTextField" />
+                                    </VBox>
+                                    <VBox>
+                                        <Label text="Beer category" />
+                                        <TextField fx:id="beerCategoryTextField" />
+                                    </VBox>
+                                </VBox>
+                            </left>
+                            <right>
+                                <VBox>
+                                    <VBox>
+                                        <Label text="Batch method" />
+                                        <ComboBox fx:id="batchMethodsComboBox" />
+                                    </VBox>
+                                    <VBox>
+                                        <Label text="Inital size" />
+                                        <HBox>
+                                            <TextField fx:id="initialSizeTextField" />
+                                            <Label fx:id="initialSizeUnitOfMeasureLabel" text="?" />
+                                        </HBox>
+                                    </VBox>
+                                </VBox>
+                            </right>
+                        </BorderPane>
                     </TitledPane>
                     <TitledPane text="Ingredients">
                         <BorderPane>
                             <top>
-                                <HBox>
+                                <VBox>
                                     <Label text="Quantity value" />
-                                    <TextField fx:id="quantityIngredientTextField" />
-                                    <Label fx:id="ingredientUnitOfMeasureLabel" text="?" />
-                                    <ComboBox fx:id="ingredientsComboBox" />
-                                    <Button text="Add" onAction="#addIngredientClick" />
-                                </HBox>
+                                    <HBox>
+                                        <TextField fx:id="quantityIngredientTextField" />
+                                        <Label fx:id="ingredientUnitOfMeasureLabel" text="?" />
+                                        <ComboBox fx:id="ingredientsComboBox" />
+                                        <Button text="Add" onAction="#addIngredientClick" />
+                                    </HBox>
+                                </VBox>
                             </top>
                             <center>
                                 <TableView fx:id="ingredientsTableView" maxHeight="150">
@@ -102,12 +109,14 @@
                     <TitledPane text="Water measurement">
                         <BorderPane>
                             <top>
-                                <HBox>
+                                <VBox>
                                     <Label text="Registration value" />
-                                    <TextField fx:id="registrationValueTextField" />
-                                    <ComboBox fx:id="elementsComboBox" />
-                                    <Button text="Add" onAction="#addElementRegistrationClick" />
-                                </HBox>
+                                    <HBox>
+                                        <TextField fx:id="registrationValueTextField" />
+                                        <ComboBox fx:id="elementsComboBox" />
+                                        <Button text="Add" onAction="#addElementRegistrationClick" />
+                                    </HBox>
+                                </VBox>
                             </top>
                             <center>
                                 <TableView fx:id="elementsTableView" maxHeight="150">

@@ -156,7 +156,6 @@ public final class ProductionController
             this.getController().getNewBatchViewModel()).orElse(new AnchorPane()));
 
         modal.setScene(scene);
-        modal.setResizable(false);
         modal.centerOnScreen();
         modal.showAndWait();
 
