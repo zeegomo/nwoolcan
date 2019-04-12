@@ -49,26 +49,9 @@ public final class NewBatchModalController
     @FXML
     private Label initialSizeUnitOfMeasureLabel;
     @FXML
-    private ComboBox<BatchMethod> batchMethodsComboBox;
+    private ComboBox<BatchMethodProperty> batchMethodsComboBox;
     @FXML
     private TextField initialSizeTextField;
-
-    private static final class IngredientArticleProperty {
-        private IngredientArticleViewModel article;
-
-        private IngredientArticleProperty(final IngredientArticleViewModel article) {
-            this.article = article;
-        }
-
-        private IngredientArticleViewModel getArticle() {
-            return this.article;
-        }
-
-        @Override
-        public String toString() {
-            return article.getName();
-        }
-    }
 
     @FXML
     private TextField registrationValueTextField;
@@ -86,6 +69,40 @@ public final class NewBatchModalController
     @FXML
     private ComboBox<IngredientArticleProperty> ingredientsComboBox;
 
+    private static final class IngredientArticleProperty {
+        private final IngredientArticleViewModel article;
+
+        private IngredientArticleProperty(final IngredientArticleViewModel article) {
+            this.article = article;
+        }
+
+        private IngredientArticleViewModel getArticle() {
+            return this.article;
+        }
+
+        @Override
+        public String toString() {
+            return this.article.getName();
+        }
+    }
+
+    private static final class BatchMethodProperty {
+        private final BatchMethod method;
+
+        private BatchMethodProperty(final BatchMethod method) {
+            this.method = method;
+        }
+
+        private BatchMethod getMethod() {
+            return this.method;
+        }
+
+        @Override
+        public String toString() {
+            return this.method.getName();
+        }
+    }
+
     /**
      * Creates itself and inject the controller and the view manager.
      *
@@ -98,7 +115,11 @@ public final class NewBatchModalController
 
     @Override
     public void initData(final NewBatchViewModel data) {
-        this.batchMethodsComboBox.setItems(FXCollections.observableList(data.getBatchMethods()));
+        this.batchMethodsComboBox.setItems(
+            FXCollections.observableList(data.getBatchMethods()
+                                             .stream()
+                                             .map(BatchMethodProperty::new)
+                                             .collect(Collectors.toList())));
 
         this.initialSizeUnitOfMeasureLabel.setText(UnitOfMeasure.MILLILITER.getSymbol());
 
@@ -217,7 +238,7 @@ public final class NewBatchModalController
 
         //refactor maybe with a DTO
         final Result<Quantity> res = Quantity.of(size, UnitOfMeasure.MILLILITER)
-                                                     .peekError(e -> this.showAlertAndWait("Initial size : " + e.getMessage()));
+                                             .peekError(e -> this.showAlertAndWait("Initial size : " + e.getMessage()));
 
         final Quantity initialSize;
         if (res.isPresent()) {
@@ -230,7 +251,7 @@ public final class NewBatchModalController
             this.beerNameTextField.getText(),
             this.beerStyleTextField.getText(),
             this.beerCategoryTextField.getText().isEmpty() ? null : this.beerCategoryTextField.getText(),
-            this.batchMethodsComboBox.getSelectionModel().getSelectedItem(),
+            this.batchMethodsComboBox.getSelectionModel().getSelectedItem().getMethod(),
             initialSize,
             StepTypeEnum.MASHING,
             this.ingredientsTableView.getItems()
