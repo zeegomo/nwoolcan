@@ -63,7 +63,6 @@
                                     <Label text="Inital size" />
                                     <TextField fx:id="initialSizeTextField" />
                                     <Label fx:id="initialSizeUnitOfMeasureLabel" text="?" />
-                                    <ComboBox fx:id="possibleUnisOfMeasureComboBox" />
                                 </FlowPane>
                             </VBox>
                         </HBox>

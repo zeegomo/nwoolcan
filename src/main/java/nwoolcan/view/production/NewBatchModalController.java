@@ -52,8 +52,6 @@ public final class NewBatchModalController
     private ComboBox<BatchMethod> batchMethodsComboBox;
     @FXML
     private TextField initialSizeTextField;
-    @FXML
-    private ComboBox<UnitOfMeasure> possibleUnisOfMeasureComboBox;
 
     private static final class IngredientArticleProperty {
         private IngredientArticleViewModel article;
@@ -102,10 +100,7 @@ public final class NewBatchModalController
     public void initData(final NewBatchViewModel data) {
         this.batchMethodsComboBox.setItems(FXCollections.observableList(data.getBatchMethods()));
 
-        this.possibleUnisOfMeasureComboBox.setItems(FXCollections.observableList(data.getUnitsOfMeasure()));
-        this.possibleUnisOfMeasureComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) ->
-            this.initialSizeUnitOfMeasureLabel.setText(newV.getSymbol())
-        );
+        this.initialSizeUnitOfMeasureLabel.setText(UnitOfMeasure.MILLILITER.getSymbol());
 
         final TableColumn<Pair<Number, WaterMeasurement.Element>, Button> removeElementColumn = new TableColumn<>();
         removeElementColumn.setCellValueFactory(obj -> {
@@ -220,14 +215,9 @@ public final class NewBatchModalController
             return;
         }
 
-        if (this.possibleUnisOfMeasureComboBox.getSelectionModel().getSelectedItem() == null) {
-            this.showAlertAndWait("Must select a quantity unit of measure!");
-            return;
-        }
-
         //refactor maybe with a DTO
-        final Result<Quantity> res = Quantity.of(size, this.possibleUnisOfMeasureComboBox.getSelectionModel().getSelectedItem())
-                                                     .peekError(e -> this.showAlertAndWait(e.getMessage()));
+        final Result<Quantity> res = Quantity.of(size, UnitOfMeasure.MILLILITER)
+                                                     .peekError(e -> this.showAlertAndWait("Initial size : " + e.getMessage()));
 
         final Quantity initialSize;
         if (res.isPresent()) {
