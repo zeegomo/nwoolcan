@@ -182,7 +182,7 @@ public final class NewBatchModalController
                                   .map(p -> Triple.of(p.getRight(), p.getLeft().doubleValue(), new Date()))
                                   .collect(Collectors.toList())
         )).peekError(e -> {
-            Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while creating the batch\n" + e.getMessage(), ButtonType.CLOSE);
+            Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while creating the batch.\n" + e.getMessage(), ButtonType.CLOSE);
             a.showAndWait();
         }).peek(e -> {
             final Stage stage = ((Stage) this.elementsTableView.getScene().getWindow());
