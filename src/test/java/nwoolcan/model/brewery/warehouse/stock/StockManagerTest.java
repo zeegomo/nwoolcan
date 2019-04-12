@@ -72,7 +72,7 @@ public class StockManagerTest {
     public void createBeerStock() {
         final BeerDescription beerDescription = new BeerDescriptionImpl(GIAMPIERO, GIAMPIERO);
         final BatchMethod batchMethod = BatchMethod.ALL_GRAIN;
-        final Quantity initialSize = Quantity.of(3, UnitOfMeasure.MILLILITER).getValue();
+        final Quantity initialSize = Quantity.of(3, UnitOfMeasure.LITER).getValue();
         final StepType initialStep = StepTypeEnum.PACKAGING;
         final Batch batch = new BatchBuilder(
             new IdGenerator() {

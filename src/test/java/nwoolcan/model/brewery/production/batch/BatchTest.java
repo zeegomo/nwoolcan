@@ -47,8 +47,8 @@ public class BatchTest {
     private static final int N4 = 20;
     private static final int N5 = 1000;
     private static final int N6 = 70;
-    private static final Quantity Q1 = Quantity.of(TEN_THOUSAND, UnitOfMeasure.MILLILITER).getValue();
-    private static final Quantity Q2 = Quantity.of(TEN_THOUSAND - 1, UnitOfMeasure.MILLILITER).getValue();
+    private static final Quantity Q1 = Quantity.of(TEN_THOUSAND, UnitOfMeasure.LITER).getValue();
+    private static final Quantity Q2 = Quantity.of(TEN_THOUSAND - 1, UnitOfMeasure.LITER).getValue();
     private static final ArticleManager ARTICLE_MANAGER = ArticleManager.getInstance();
     private final BatchEvaluationType bjcpType = BatchEvaluationBuilder.getAvailableBatchEvaluationTypes()
                                                                        .getValue()
@@ -298,7 +298,7 @@ public class BatchTest {
         final int evapo = 1000;
         batchBiondina.getCurrentStep().finalize("Evaporated",
             new Date(),
-            Quantities.remove(Q2, Quantity.of(evapo, UnitOfMeasure.MILLILITER).getValue()).getValue()
+            Quantities.remove(Q2, Quantity.of(evapo, UnitOfMeasure.LITER).getValue()).getValue()
         );
 
         batchBiondina.moveToNextStep(StepTypeEnum.FERMENTING).peekError(e -> Assert.fail(e.getMessage()));

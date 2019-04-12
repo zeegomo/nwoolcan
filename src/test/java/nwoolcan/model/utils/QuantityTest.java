@@ -16,7 +16,7 @@ public class QuantityTest {
     private static final double NEG_VALUE = -2;
 
     private static final UnitOfMeasure GOOD_UM1 = UnitOfMeasure.GRAM;
-    private static final UnitOfMeasure GOOD_UM2 = UnitOfMeasure.MILLILITER;
+    private static final UnitOfMeasure GOOD_UM2 = UnitOfMeasure.LITER;
     private static final UnitOfMeasure BAD_UM = UnitOfMeasure.CELSIUS_DEGREE;
 
     /**

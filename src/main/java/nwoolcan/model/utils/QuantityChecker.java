@@ -18,7 +18,7 @@ final class QuantityChecker {
     private static final String CANNOT_VALIDATE_QUANTITY_VALUE_MESSAGE = "Cannot validate value for this quantity.";
 
     private static final Collection<UnitOfMeasure> VALID_UMS = Arrays.asList(
-        UnitOfMeasure.MILLILITER,
+        UnitOfMeasure.LITER,
         UnitOfMeasure.GRAM,
         UnitOfMeasure.UNIT,
         UnitOfMeasure.BOTTLE_33_CL,
