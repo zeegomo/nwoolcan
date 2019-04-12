@@ -10,14 +10,30 @@ import java.util.Date;
  */
 public class MasterBatchViewModel {
 
-    private final Batch batch;
+    private final int id;
+    private final String beerDescriptionName;
+    private final String beerStyleName;
+    private final String batchMethodName;
+    private final String currentStepName;
+    private final Date startDate;
+    private final QuantityViewModel initialBatchSize;
+    private final QuantityViewModel currentBatchSize;
+    private final boolean isEnded;
 
     /**
      * Constructor with decorator.
      * @param batch the batch to use a data.
      */
     public MasterBatchViewModel(final Batch batch) {
-        this.batch = batch;
+        this.id = batch.getId();
+        this.beerDescriptionName = batch.getBatchInfo().getBeerDescription().getName();
+        this.beerStyleName = batch.getBatchInfo().getBeerDescription().getStyle();
+        this.batchMethodName = batch.getBatchInfo().getMethod().getName();
+        this.currentStepName = batch.getCurrentStep().getStepInfo().getType().getName();
+        this.startDate = new Date(batch.getSteps().stream().findFirst().get().getStepInfo().getStartDate().getTime());
+        this.initialBatchSize = new QuantityViewModel(batch.getBatchInfo().getBatchSize());
+        this.currentBatchSize = new QuantityViewModel(batch.getCurrentSize());
+        this.isEnded = batch.isEnded();
     }
 
     /**
@@ -25,7 +41,7 @@ public class MasterBatchViewModel {
      * @return the batch id.
      */
     public int getId() {
-        return this.batch.getId();
+        return this.id;
     }
 
     /**
@@ -33,7 +49,7 @@ public class MasterBatchViewModel {
      * @return the batch beer description name.
      */
     public String getBeerDescriptionName() {
-        return this.batch.getBatchInfo().getBeerDescription().getName();
+        return this.beerDescriptionName;
     }
 
     /**
@@ -41,7 +57,7 @@ public class MasterBatchViewModel {
      * @return the batch beer style name.
      */
     public String getBeerStyleName() {
-        return this.batch.getBatchInfo().getBeerDescription().getStyle();
+        return this.beerStyleName;
     }
 
     /**
@@ -49,7 +65,7 @@ public class MasterBatchViewModel {
      * @return the batch batch method name.
      */
     public String getBatchMethodName() {
-        return this.batch.getBatchInfo().getMethod().getName();
+        return this.batchMethodName;
     }
 
     /**
@@ -57,7 +73,7 @@ public class MasterBatchViewModel {
      * @return the batch current step name.
      */
     public String getCurrentStepName() {
-        return this.batch.getCurrentStep().getStepInfo().getType().getName();
+        return this.currentStepName;
     }
 
     /**
@@ -65,7 +81,7 @@ public class MasterBatchViewModel {
      * @return the batch start date.
      */
     public Date getStartDate() {
-        return this.batch.getSteps().stream().findFirst().get().getStepInfo().getStartDate();
+        return new Date(this.startDate.getTime());
     }
 
     /**
@@ -73,7 +89,7 @@ public class MasterBatchViewModel {
      * @return the batch initial size.
      */
     public QuantityViewModel getInitialBatchSize() {
-        return new QuantityViewModel(this.batch.getBatchInfo().getBatchSize());
+        return this.initialBatchSize;
     }
 
     /**
@@ -81,14 +97,14 @@ public class MasterBatchViewModel {
      * @return the batch current size.
      */
     public QuantityViewModel getCurrentBatchSize() {
-        return new QuantityViewModel(this.batch.getCurrentSize());
+        return this.currentBatchSize;
     }
 
     /**
      * Returns true if the batch is in ended state, false otherwise.
      * @return true if the batch is in ended state, false otherwise.
      */
-    public boolean isEnded() {
-        return this.batch.isEnded();
+    public boolean getIsEnded() {
+        return this.isEnded;
     }
 }
