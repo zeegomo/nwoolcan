@@ -1,7 +1,7 @@
 package nwoolcan.model.brewery.production.batch.step;
 
 import nwoolcan.model.brewery.production.batch.step.parameter.Parameter;
-import nwoolcan.model.brewery.production.batch.step.parameter.ParameterImpl;
+import nwoolcan.model.brewery.production.batch.step.parameter.ParameterFactory;
 import nwoolcan.model.brewery.production.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameterBuilder;
 import nwoolcan.model.brewery.production.batch.step.parameter.QueryParameter;
@@ -30,17 +30,19 @@ public class StepTest {
     private Step packaging;
     private Step finalized;
 
+    private static final double TEN_POINT_ONE = 10.1;
+    private static final double NINE_POINT_ONE = 9.1;
     private static final Quantity Q1 = Quantity.of(10, UnitOfMeasure.MILLILITER).getValue();
     private static final Date D1 = new Date(1000);
 
     private static final List<Parameter> MASHING_PARAMS = Arrays.asList(
-        new ParameterImpl(ParameterTypeEnum.TEMPERATURE, 10),
-        new ParameterImpl(ParameterTypeEnum.TEMPERATURE, 10.1),
-        new ParameterImpl(ParameterTypeEnum.TEMPERATURE, 9.1, D1)
+        ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, 10).getValue(),
+        ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, TEN_POINT_ONE).getValue(),
+        ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, NINE_POINT_ONE, D1).getValue()
     );
 
     private static final List<Parameter> BOILING_PARAMS = Arrays.asList(
-        new ParameterImpl(ParameterTypeEnum.TEMPERATURE, 10.1)
+        ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, TEN_POINT_ONE).getValue()
     );
 
     /**
@@ -124,7 +126,7 @@ public class StepTest {
      */
     @Test
     public void testWrongParametersAddition() {
-        Result<Empty> res = this.packaging.addParameter(new ParameterImpl(ParameterTypeEnum.TEMPERATURE, 1));
+        Result<Empty> res = this.packaging.addParameter(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, 1).getValue());
         Assert.assertTrue(res.isError());
         Assert.assertSame(IllegalArgumentException.class, res.getError().getClass());
     }
@@ -136,16 +138,16 @@ public class StepTest {
     public void testAddingParametersWhenFinalized() {
         this.boiling.finalize(null, new Date(), Q1);
         Assert.assertTrue(this.boiling.isFinalized());
-        Result<Empty> res = this.boiling.addParameter(new ParameterImpl(
+        Result<Empty> res = this.boiling.addParameter(ParameterFactory.create(
             ParameterTypeEnum.TEMPERATURE, 10
-        ));
+        ).getValue());
 
         Assert.assertTrue(res.isError());
         Assert.assertSame(IllegalStateException.class, res.getError().getClass());
 
-        res = this.finalized.addParameter(new ParameterImpl(
+        res = this.finalized.addParameter(ParameterFactory.create(
             ParameterTypeEnum.TEMPERATURE, 10
-        ));
+        ).getValue());
         Assert.assertTrue(res.isError());
         Assert.assertSame(IllegalStateException.class, res.getError().getClass());
     }
@@ -189,19 +191,19 @@ public class StepTest {
         resQ = new QueryParameterBuilder().lessThanValue(val).build();
         Assert.assertTrue(resQ.isPresent());
         res = this.mashing.getParameters(resQ.getValue());
-        Assert.assertArrayEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.TEMPERATURE, val2, D1)).toArray(),
+        Assert.assertArrayEquals(Collections.singletonList(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, val2, D1).getValue()).toArray(),
             res.toArray());
 
         resQ = new QueryParameterBuilder().lessThanValue(val2).build();
         Assert.assertTrue(resQ.isPresent());
         res = this.mashing.getParameters(resQ.getValue());
-        Assert.assertArrayEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.TEMPERATURE, val2, D1)).toArray(),
+        Assert.assertArrayEquals(Collections.singletonList(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, val2, D1).getValue()).toArray(),
             res.toArray());
 
         resQ = new QueryParameterBuilder().endDate(D1).build();
         Assert.assertTrue(resQ.isPresent());
         res = this.mashing.getParameters(resQ.getValue());
-        Assert.assertArrayEquals(Collections.singletonList(new ParameterImpl(ParameterTypeEnum.TEMPERATURE, val2, D1)).toArray(),
+        Assert.assertArrayEquals(Collections.singletonList(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, val2, D1).getValue()).toArray(),
             res.toArray());
 
         resQ = new QueryParameterBuilder().startDate(D1).endDate(new Date()).build();
