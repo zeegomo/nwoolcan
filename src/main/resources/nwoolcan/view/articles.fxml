@@ -47,7 +47,7 @@
                         </left>
                         <center>
                             <HBox>
-                                <PieChart fx:id="pieChartArticlesStatus" maxHeight="280.0" maxWidth="300.0" title="Batches">
+                                <PieChart fx:id="pieChartArticlesStatus" maxHeight="280.0" maxWidth="300.0" title="Articles">
                                 </PieChart>
                             </HBox>
                         </center>
@@ -62,7 +62,7 @@
                         </right>
                     </BorderPane>
                 </TitledPane>
-                <TitledPane text="Batches">
+                <TitledPane text="Articles">
                     <SubViewContainer fx:id="masterTableContainer" parent="$articlesSubView">
                     </SubViewContainer>
                 </TitledPane>
