@@ -154,12 +154,17 @@ final class BatchImpl implements Batch {
         return this.stockReference != null;
     }
 
+    private void setStockReference(final Stock stock) {
+        this.stockReference = stock;
+    }
+
     @Override
     public Result<Empty> stockBatchInto(final Stock stock) {
         return Result.of(stock)
                      .require(this::isEnded)
                      .require(() -> !this.isStocked(), new IllegalStateException())
-                     .flatMap(s -> s.addRecord(new Record(this.getCurrentSize(), new Date(), Record.Action.ADDING)))
+                     .require(s -> s.getArticle().getUnitOfMeasure().equals(this.getCurrentSize().getUnitOfMeasure()))
+                     .peek(this::setStockReference)
                      .toEmpty();
     }
 
