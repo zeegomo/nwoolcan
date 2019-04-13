@@ -43,6 +43,14 @@ public final class MainController extends AbstractViewController {
     }
 
     /**
+     * Shows the Production view.
+     * @param event The occurred event
+     */
+    public void menuViewProductionClick(final ActionEvent event) {
+        this.getViewManager().getView(ViewType.PRODUCTION, this.getController().getProductionViewModel()).peek(view -> this.contentPane.substitute(view));
+    }
+
+    /**
      * Quits the application.
      * @param event The occurred event
      */

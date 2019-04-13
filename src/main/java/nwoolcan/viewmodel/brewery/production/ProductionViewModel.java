@@ -45,6 +45,16 @@ public class ProductionViewModel {
     }
 
     /**
+     * Returns a map containing, for each style, how many batches have that style.
+     * @return a map containing, for each style, how many batches have that style.
+     */
+    public Map<String, Long> getMethodsFrequency() {
+        return this.batches.stream()
+                           .map(b -> b.getBatchInfo().getMethod().getName())
+                           .collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+    }
+
+    /**
      * Returns the total number of batches.
      * @return the total number of batches.
      */
