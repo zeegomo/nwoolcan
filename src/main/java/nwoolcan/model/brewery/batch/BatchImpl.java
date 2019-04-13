@@ -5,8 +5,8 @@ import nwoolcan.model.brewery.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.batch.review.BatchEvaluation;
 import nwoolcan.model.brewery.batch.step.Step;
+import nwoolcan.model.brewery.batch.step.StepFactory;
 import nwoolcan.model.brewery.batch.step.StepType;
-import nwoolcan.model.brewery.batch.step.Steps;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
@@ -37,6 +37,7 @@ final class BatchImpl implements Batch {
     private final int id;
     private final ModifiableBatchInfo batchInfo;
     private final List<Step> steps;
+    private final StepFactory stepFactory;
 
     @Nullable
     private BatchEvaluation batchEvaluation;
@@ -57,8 +58,10 @@ final class BatchImpl implements Batch {
               final Collection<Pair<IngredientArticle, Double>> ingredients,
               final StepType initialStep,
               @Nullable final WaterMeasurement waterMeasurement,
-              final IdGenerator generator) {
+              final IdGenerator generator,
+              final StepFactory stepFactory) {
         this.id = generator.getNextId();
+        this.stepFactory = stepFactory;
 
         if (waterMeasurement == null) {
             this.batchInfo = ModifiableBatchInfoFactory.create(ingredients, beerDescription, batchMethod, initialSize);
@@ -66,7 +69,7 @@ final class BatchImpl implements Batch {
             this.batchInfo = ModifiableBatchInfoFactory.create(ingredients, beerDescription, batchMethod, initialSize, waterMeasurement);
         }
 
-        final Result<Step> res = Steps.create(initialStep);
+        final Result<Step> res = this.stepFactory.create(initialStep);
         res.peekError(e -> {
             throw new IllegalArgumentException(e);
         }).peek(step -> step.addParameterObserver(batchInfo));
@@ -119,7 +122,7 @@ final class BatchImpl implements Batch {
         return Result.of(this.getCurrentStep())
                      .require(p -> p.getNextStepTypes().contains(nextStepType), new IllegalArgumentException(CANNOT_GO_TO_STEP_MESSAGE + nextStepType.toString()))
                      .peek(this::checkAndFinalizeStep)
-                     .flatMap(() -> Steps.create(nextStepType))
+                     .flatMap(() -> this.stepFactory.create(nextStepType))
                      .peek(this.steps::add)
                      .peek(p -> p.addParameterObserver(this.batchInfo))
                      .toEmpty();
