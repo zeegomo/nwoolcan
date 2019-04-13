@@ -29,6 +29,8 @@ public class BatchEvaluationController
     @FXML
     private Label lblReviewer;
     @FXML
+    private Label lblNotes;
+    @FXML
     private VBox categories;
 
     /**
@@ -48,6 +50,7 @@ public class BatchEvaluationController
         this.lblEvaluationMaxScore.setText(Integer.toString(data.getMaxScore()));
         this.lblEvaluationScore.setText(Integer.toString(data.getScore()));
         this.lblReviewer.setText(data.getReviewer().orElse(UNSPECIFIED_REVIEWER));
+        this.lblNotes.setText(data.getNotes().orElse(""));
     }
 
     @Override

@@ -7,11 +7,12 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 
+<?import javafx.geometry.Insets?>
 <SubView fx:id="batchEvaluationSubView" xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
          stylesheets="@style.css"
          fx:controller="nwoolcan.view.BatchEvaluationController">
-
+        <padding><Insets top="10" right="10" left="10" bottom="10"/></padding>
         <BorderPane>
             <top>
                 <Label text="Batch Review" BorderPane.alignment="CENTER" styleClass="title">
@@ -28,6 +29,10 @@
                             <FlowPane>
                                 <Label text="Reviewer: " styleClass="subtitle"/>
                                 <Label fx:id="lblReviewer"/>
+                            </FlowPane>
+                            <FlowPane>
+                                <Label text="Notes: " styleClass="subtitle"/>
+                                <Label fx:id="lblNotes"/>
                             </FlowPane>
                         </VBox>
                     </left>
