@@ -15,9 +15,13 @@ import nwoolcan.model.brewery.batch.step.Step;
 import nwoolcan.model.brewery.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterFactory;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum;
+import nwoolcan.model.brewery.warehouse.Warehouse;
+import nwoolcan.model.brewery.warehouse.WarehouseImpl;
 import nwoolcan.model.brewery.warehouse.article.ArticleManager;
+import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
+import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
@@ -275,9 +279,17 @@ public class BatchTest {
         //Check all steps are registered.
         Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
 
-        //Stock this batch.
-        batchAlfredo.moveToNextStep(StepTypeEnum.STOCKED).peekError(e -> Assert.fail(e.getMessage()));
-        Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
+        //Stock batch
+        final Warehouse warehouse = new WarehouseImpl();
+        final BeerArticle article = warehouse.createBeerArticle("Test 75cl", UnitOfMeasure.BOTTLE_75_CL);
+        final BeerStock stock = warehouse.createBeerStock(article, batchAlfredo).getValue();
+        final Result<Empty> res = batchAlfredo.stockBatchInto(stock);
+        Assert.assertFalse(res.isError());
+        Assert.assertEquals(batchAlfredo.getId(), stock.getBatch().getId());
+
+        //Stock again
+        final Result<Empty> again = batchAlfredo.stockBatchInto(stock);
+        Assert.assertTrue(again.isError());
 
         //Go to wrong step type.
         batchAlfredo.moveToNextStep(StepTypeEnum.MASHING).peek(e -> Assert.fail());
@@ -306,5 +318,30 @@ public class BatchTest {
         //Check changed.
         Assert.assertNotEquals(batchBiondina.getSteps().get(1).getStepInfo().getEndStepSize().get(),
             batchBiondina.getBatchInfo().getBatchSize());
+    }
+
+    /**
+     * Method that test wrong stocking of batch.
+     */
+    @Test
+    public void testWrongStocking() {
+        final Warehouse warehouse = new WarehouseImpl();
+        final BeerArticle article = warehouse.createBeerArticle("Test 75cl", UnitOfMeasure.BOTTLE_75_CL);
+        final BeerStock stock = warehouse.createBeerStock(article, batchAlfredo).getValue();
+
+        //Stocking not ended batch
+        final Result<Empty> notEnded = batchAlfredo.stockBatchInto(stock);
+        Assert.assertTrue(notEnded.isError());
+
+        final Batch fin = brewery.getBatchBuilder().build(
+            new BeerDescriptionImpl("name", "style"),
+            BatchMethod.ALL_GRAIN,
+            Quantity.of(100, UnitOfMeasure.LITER).getValue(),
+            StepTypeEnum.FINALIZED
+        ).getValue();
+
+        //Not matching units of measure
+        final Result<Empty> noMatch = fin.stockBatchInto(stock);
+        Assert.assertTrue(noMatch.isError());
     }
 }
