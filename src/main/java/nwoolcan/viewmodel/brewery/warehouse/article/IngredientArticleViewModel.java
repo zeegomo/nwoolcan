@@ -9,7 +9,7 @@ import nwoolcan.model.brewery.warehouse.article.IngredientType;
  */
 public final class IngredientArticleViewModel extends AbstractArticleViewModel {
 
-    private final IngredientArticle ingredientArticle;
+    private final IngredientType ingredientType;
 
     /**
      * Constructor of the view version of the {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
@@ -17,14 +17,14 @@ public final class IngredientArticleViewModel extends AbstractArticleViewModel {
      */
     public IngredientArticleViewModel(final IngredientArticle ingredientArticle) {
         super(ingredientArticle);
-        this.ingredientArticle = ingredientArticle;
+        this.ingredientType = ingredientArticle.getIngredientType();
     }
     /**
      * Return the {@link IngredientType} linked to the {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      * @return the {@link IngredientType} linked to the {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
      */
     public IngredientType getIngredientType() {
-        return ingredientArticle.getIngredientType();
+        return ingredientType;
     }
 
     @Override

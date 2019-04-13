@@ -32,11 +32,11 @@ public class BatchInfoTest {
     public void testConstructor() {
         final Collection<Pair<IngredientArticle, Double>> ingredients = new ArrayList<>();
         final BeerDescription desc = new BeerDescriptionImpl("test", "lager");
-        ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER).getValue());
+        ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.LITER).getValue());
         assertFalse(info.getAbv().isPresent());
         assertFalse(info.getWaterMeasurements().isPresent());
         assertEquals(info.getBeerDescription(), desc);
-        assertEquals(info.getBatchSize(), Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER).getValue());
+        assertEquals(info.getBatchSize(), Quantity.of(TWO_THOUSAND, UnitOfMeasure.LITER).getValue());
         assertNotEquals(info.getBatchSize(), Quantity.of(2, UnitOfMeasure.UNIT).getValue());
     }
     /**
@@ -48,7 +48,7 @@ public class BatchInfoTest {
         final int fg = 1020;
         final Collection<Pair<IngredientArticle, Double>> ingredients = new ArrayList<>();
         final BeerDescription desc = new BeerDescriptionImpl("test", "lager");
-        ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.MILLILITER).getValue());
+        ModifiableBatchInfo info = ModifiableBatchInfoFactory.create(ingredients, desc, BatchMethod.EXTRACT, Quantity.of(TWO_THOUSAND, UnitOfMeasure.LITER).getValue());
 
         info.update(ParameterFactory.create(ParameterTypeEnum.GRAVITY, og).getValue());
         assertEquals(info.getOg().get().getRegistrationValue(), og);
