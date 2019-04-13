@@ -1,39 +1,23 @@
 package nwoolcan.model.database;
 
-import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
-import nwoolcan.model.brewery.warehouse.stock.Record;
+import nwoolcan.model.brewery.Brewery;
+import nwoolcan.utils.Empty;
+import nwoolcan.utils.Result;
 
 /**
  * Saves/loads data to/from a persistent storage.
  */
 public interface Database {
     /**
-     * Saves a Record.
+     * Saves a {@link Brewery}.
      * @param toSave Object to be saved
-     * @return The serialized object
+     * @return A {@link Result} with an error if something went wrong.
      */
-    String save(Record toSave);
+    Result<Empty> save(Brewery toSave);
 
     /**
-     * Loads a record.
-     * @param serialized The serialized Record object
-     * @return A deserialized Record
+     * Loads a {@link Brewery}.
+     * @return A {@link Result} containing the deserialized {@link Brewery} or an error if something went wrong.
      */
-    Record loadRecord(String serialized);
-
-    /**
-     * Saves a BatchEvaluation.
-     * @param toSave Object to be saved
-     * @return The serialized object
-     */
-    String save(BatchEvaluation toSave);
-
-    /**
-     * Loads a BatchEvaluation.
-     * @param serialized The serialized Record object
-     * @return A deserialized Record
-     */
-    BatchEvaluation loadEvaluation(String serialized);
-
-
+    Result<Brewery> load();
 }
