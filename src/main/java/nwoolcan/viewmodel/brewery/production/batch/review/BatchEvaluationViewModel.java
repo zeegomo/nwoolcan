@@ -1,6 +1,6 @@
 package nwoolcan.viewmodel.brewery.production.batch.review;
 
-import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
+import nwoolcan.model.brewery.batch.review.BatchEvaluation;
 
 import java.util.Optional;
 

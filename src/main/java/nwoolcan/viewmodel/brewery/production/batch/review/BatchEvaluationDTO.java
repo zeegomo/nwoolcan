@@ -1,7 +1,7 @@
 package nwoolcan.viewmodel.brewery.production.batch.review;
 
-import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
-import nwoolcan.model.brewery.production.batch.review.EvaluationType;
+import nwoolcan.model.brewery.batch.review.BatchEvaluationType;
+import nwoolcan.model.brewery.batch.review.EvaluationType;
 import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nullable;
