@@ -1,6 +1,6 @@
 package nwoolcan.viewmodel.brewery.production.batch;
 
-import nwoolcan.model.brewery.production.batch.Batch;
+import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.utils.Quantity;
 
 import java.util.Date;
