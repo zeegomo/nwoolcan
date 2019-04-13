@@ -1,8 +1,8 @@
 package nwoolcan.model.brewery;
 
-import nwoolcan.model.brewery.production.batch.Batch;
-import nwoolcan.model.brewery.production.batch.BatchBuilder;
-import nwoolcan.model.brewery.production.batch.QueryBatch;
+import nwoolcan.model.brewery.batch.Batch;
+import nwoolcan.model.brewery.batch.BatchBuilder;
+import nwoolcan.model.brewery.batch.QueryBatch;
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.utils.Empty;
@@ -48,18 +48,18 @@ public interface Brewery {
      */
     BatchBuilder getBatchBuilder();
     /**
-     * Takes a {@link Batch}, checks to be in the final {@link nwoolcan.model.brewery.production.batch.step.Step} and creates a {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
+     * Takes a {@link Batch}, checks to be in the final {@link nwoolcan.model.brewery.batch.step.Step} and creates a {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
      * @param batch from which create a {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
      * @param beerArticle the {@link BeerArticle} related to the new {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
      * @param expirationDate the {@link Date} in which this {@link nwoolcan.model.brewery.warehouse.stock.BeerStock} will expire.
-     * @return a {@link Result} with an {@link Exception} if the {@link Batch} was not in the final {@link nwoolcan.model.brewery.production.batch.step.Step}.
+     * @return a {@link Result} with an {@link Exception} if the {@link Batch} was not in the final {@link nwoolcan.model.brewery.batch.step.Step}.
      */
     Result<Empty> stockBatch(Batch batch, BeerArticle beerArticle, Date expirationDate);
     /**
-     * Takes a {@link Batch}, checks to be in the final {@link nwoolcan.model.brewery.production.batch.step.Step} and creates a {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
+     * Takes a {@link Batch}, checks to be in the final {@link nwoolcan.model.brewery.batch.step.Step} and creates a {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
      * @param batch from which create a {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
      * @param beerArticle the {@link BeerArticle} related to the new {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
-     * @return a {@link Result} with an {@link Exception} if the {@link Batch} was not in the final {@link nwoolcan.model.brewery.production.batch.step.Step}.
+     * @return a {@link Result} with an {@link Exception} if the {@link Batch} was not in the final {@link nwoolcan.model.brewery.batch.step.Step}.
      */
     Result<Empty> stockBatch(Batch batch, BeerArticle beerArticle);
     /**

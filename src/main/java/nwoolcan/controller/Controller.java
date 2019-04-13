@@ -1,7 +1,7 @@
 package nwoolcan.controller;
 
 import nwoolcan.controller.warehouse.WarehouseController;
-import nwoolcan.model.brewery.production.batch.QueryBatch;
+import nwoolcan.model.brewery.batch.QueryBatch;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
@@ -26,16 +26,16 @@ public interface Controller {
      */
     Collection<MasterBatchViewModel> getBatches(QueryBatch queryBatch);
     /**
-     * Stocks a {@link nwoolcan.model.brewery.production.batch.Batch}.
-     * @param batchId the id of the {@link nwoolcan.model.brewery.production.batch.Batch}.
+     * Stocks a {@link nwoolcan.model.brewery.batch.Batch}.
+     * @param batchId the id of the {@link nwoolcan.model.brewery.batch.Batch}.
      * @param beerArticleId the id of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
      * @param expirationDate the expiration {@link Date}.
      * @return a {@link Result} reporting possible errors.
      */
     Result<Empty> stockBatch(int batchId, int beerArticleId, Date expirationDate);
     /**
-     * Stocks a {@link nwoolcan.model.brewery.production.batch.Batch} with no expiration {@link Date}.
-     * @param batchId the id of the {@link nwoolcan.model.brewery.production.batch.Batch}.
+     * Stocks a {@link nwoolcan.model.brewery.batch.Batch} with no expiration {@link Date}.
+     * @param batchId the id of the {@link nwoolcan.model.brewery.batch.Batch}.
      * @param beerArticleId the id of the {@link nwoolcan.model.brewery.warehouse.article.BeerArticle}.
      * @return a {@link Result} reporting possible errors.
      */

@@ -1,7 +1,7 @@
 package nwoolcan.viewmodel.brewery.production;
 
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
-import nwoolcan.model.brewery.production.batch.Batch;
+import nwoolcan.model.brewery.batch.Batch;
 
 import java.util.Collection;
 import java.util.Collections;
