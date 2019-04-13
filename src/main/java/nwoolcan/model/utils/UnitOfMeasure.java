@@ -16,7 +16,7 @@ public enum UnitOfMeasure {
     /**
      * Milliliters.
      */
-    MILLILITER("ml") {
+    LITER("L") {
         @Override
         public boolean validateValue(final Number value) {
             return true;
