@@ -1,7 +1,7 @@
-package nwoolcan.controller.brewery;
+package nwoolcan.controller;
 
-import nwoolcan.controller.brewery.warehouse.WarehouseController;
-import nwoolcan.controller.brewery.warehouse.WarehouseControllerImpl;
+import nwoolcan.controller.warehouse.WarehouseController;
+import nwoolcan.controller.warehouse.WarehouseControllerImpl;
 import nwoolcan.model.brewery.Brewery;
 import nwoolcan.model.brewery.production.batch.Batch;
 import nwoolcan.model.brewery.production.batch.QueryBatch;
@@ -19,9 +19,9 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 /**
- * {@link BreweryController} implementation.
+ * {@link Controller} implementation.
  */
-public final class BreweryControllerImpl implements BreweryController {
+public final class BreweryController implements Controller {
 
     private final WarehouseController warehouseController;
     private final Brewery brewery;
@@ -30,9 +30,9 @@ public final class BreweryControllerImpl implements BreweryController {
 
     /**
      * Constructor which creates the {@link WarehouseController}.
-     * @param brewery used to create the {@link WarehouseController}.
+     * @param brewery the brewery to be controlled.
      */
-    public BreweryControllerImpl(final Brewery brewery) {
+    public BreweryController(final Brewery brewery) {
         this.brewery = brewery;
         this.warehouseController = new WarehouseControllerImpl(brewery.getWarehouse());
     }

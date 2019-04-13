@@ -1,4 +1,4 @@
-package nwoolcan.controller.brewery.production;
+package nwoolcan.controller.production;
 
 /**
  * Controller of production.

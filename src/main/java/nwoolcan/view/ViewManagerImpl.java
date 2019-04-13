@@ -9,18 +9,18 @@ import nwoolcan.utils.Results;
 import java.lang.reflect.Constructor;
 
 /**
- * View manager impl that can inject a controller and itself to the view controllers constructors.
- * After loaded the view controller can inject a specific view model to the view controller.
+ * View manager impl that can inject a controller1 and itself to the view controllers constructors.
+ * After loaded the view controller1 can inject a specific view model to the view controller1.
  */
 public final class ViewManagerImpl implements ViewManager {
 
-    private static final String NO_DESIGNATED_CONSTRUCTOR_FOUND_MESSAGE = "No designated constructor found for view controller.";
+    private static final String NO_DESIGNATED_CONSTRUCTOR_FOUND_MESSAGE = "No designated constructor found for view controller1.";
 
     private final Controller controller;
 
     /**
      * Creates a view manager that injects the passed {@link Controller}.
-     * @param controller the controller to be injected.
+     * @param controller the controller1 to be injected.
      */
     public ViewManagerImpl(final Controller controller) {
         this.controller = controller;
@@ -68,7 +68,7 @@ public final class ViewManagerImpl implements ViewManager {
     }
 
     /**
-     * Loads and returns the specified view, injecting the given view model into the controller.
+     * Loads and returns the specified view, injecting the given view model into the controller1.
      * @param type The type of the view you want to get
      * @param viewModel The object you want to inject
      * @param <T> The type of the view model

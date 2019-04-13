@@ -17,7 +17,7 @@ public final class MainController extends AbstractViewController {
 
     /**
      * Creates itself and gets injected.
-     * @param controller injected controller.
+     * @param controller injected controller1.
      * @param viewManager injected view manager.
      */
     public MainController(final Controller controller, final ViewManager viewManager) {
@@ -37,9 +37,9 @@ public final class MainController extends AbstractViewController {
      * @param event The occurred event
      */
     public void menuViewWarehouseClick(final ActionEvent event) {
-        getController().getBreweryController().setBreweryName("ciccio");
-        getController().getBreweryController().setOwnerName("ciccia");
-        this.getViewManager().getView(ViewType.WAREHOUSE, getController().getBreweryController().getWarehouseController().getWarehouseViewModel()).peek(view -> this.contentPane.substitute(view));
+        getController().setBreweryName("ciccio");
+        getController().setOwnerName("ciccia");
+        this.getViewManager().getView(ViewType.WAREHOUSE, getController().getWarehouseController().getWarehouseViewModel()).peek(view -> this.contentPane.substitute(view));
     }
 
     /**

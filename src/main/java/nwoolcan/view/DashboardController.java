@@ -16,7 +16,7 @@ public final class DashboardController extends SubViewController {
 
     /**
      * Creates itself and gets injected.
-     * @param controller injected controller.
+     * @param controller injected controller1.
      * @param viewManager injected view manager.
      */
     public DashboardController(final Controller controller, final ViewManager viewManager) {
@@ -44,7 +44,7 @@ public final class DashboardController extends SubViewController {
      * @param event The occurred event
      */
     public void btnToWarehouseClicked(final ActionEvent event) {
-        this.substituteView(ViewType.WAREHOUSE, getController().getBreweryController().getWarehouseController().getWarehouseViewModel());
+        this.substituteView(ViewType.WAREHOUSE, getController().getWarehouseController().getWarehouseViewModel());
     }
 
     @Override

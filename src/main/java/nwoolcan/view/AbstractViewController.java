@@ -3,7 +3,7 @@ package nwoolcan.view;
 import nwoolcan.controller.Controller;
 
 /**
- * Abstract class representing a view controller that has been injected with a {@link Controller}
+ * Abstract class representing a view controller1 that has been injected with a {@link Controller}
  * and a {@link ViewManager}.
  */
 abstract class AbstractViewController {
@@ -17,8 +17,8 @@ abstract class AbstractViewController {
     }
 
     /**
-     * Returns the injected controller.
-     * @return the injected controller.
+     * Returns the injected controller1.
+     * @return the injected controller1.
      */
     protected Controller getController() {
         return this.controller;

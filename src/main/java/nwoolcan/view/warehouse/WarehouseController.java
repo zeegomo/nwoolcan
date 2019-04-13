@@ -33,7 +33,7 @@ public final class WarehouseController extends SubViewController implements Init
 
     /**
      * Creates itself and gets injected.
-     * @param controller injected controller.
+     * @param controller injected controller1.
      * @param viewManager injected view manager.
      */
     public WarehouseController(final Controller controller, final ViewManager viewManager) {
@@ -43,15 +43,15 @@ public final class WarehouseController extends SubViewController implements Init
     @Override
     public void initData(final WarehouseViewModel data) {
         this.lblName.setText("DummyWarehouseName");
-        getController().getBreweryController().getWarehouseController().createMiscArticle("Dum", UnitOfMeasure.BOTTLE_33_CL);
-        getController().getBreweryController().getWarehouseController().createMiscArticle("Dum2", UnitOfMeasure.BOTTLE_33_CL);
+        getController().getWarehouseController().createMiscArticle("Dum", UnitOfMeasure.BOTTLE_33_CL);
+        getController().getWarehouseController().createMiscArticle("Dum2", UnitOfMeasure.BOTTLE_33_CL);
 
         //load master table
         this.getViewManager().getView(ViewType.MASTER_TABLE, new MasterTableViewModel<>(
             new ArrayList<>(Arrays.asList(new ColumnDescriptor("Id", "id"),
                 new ColumnDescriptor("Name", "name"))),
-            new ArrayList<>(Arrays.asList(getController().getBreweryController().getWarehouseController().createStock(1),
-                getController().getBreweryController().getWarehouseController().createStock(0).getValue())),
+            new ArrayList<>(Arrays.asList(getController().getWarehouseController().createStock(1),
+                getController().getWarehouseController().createStock(0).getValue())),
             ViewType.STOCK_DETAIL,
             Function.identity()
         )).peek(view -> this.stockTable.substitute(view));

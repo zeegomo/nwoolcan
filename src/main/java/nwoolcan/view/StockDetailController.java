@@ -23,7 +23,7 @@ public final class StockDetailController extends SubViewController implements In
 
     /**
      * Creates itself and gets injected.
-     * @param controller injected controller.
+     * @param controller injected controller1.
      * @param viewManager injected view manager.
      */
     public StockDetailController(final Controller controller, final ViewManager viewManager) {

@@ -16,7 +16,7 @@ public abstract class SubViewController extends AbstractViewController {
 
     /**
      * Creates itself and gets injected.
-     * @param controller injected controller.
+     * @param controller injected controller1.
      * @param viewManager injected view manager.
      */
     protected SubViewController(final Controller controller, final ViewManager viewManager) {
@@ -46,7 +46,7 @@ public abstract class SubViewController extends AbstractViewController {
     }
 
     /**
-     * Substitutes the current view and injects the given view model into the controller.
+     * Substitutes the current view and injects the given view model into the controller1.
      * @param type The type of the new view
      * @param viewModel The view model to inject
      * @param <T> The type of the view model
@@ -64,7 +64,7 @@ public abstract class SubViewController extends AbstractViewController {
     }
 
     /**
-     * Put a new overlay over the current one and injects the given view model into the controller.
+     * Put a new overlay over the current one and injects the given view model into the controller1.
      * @param type The type of the new view
      * @param viewModel The view model to inject
      * @param <T> The type of the view model
