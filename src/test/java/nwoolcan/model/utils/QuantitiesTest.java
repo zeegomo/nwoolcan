@@ -22,7 +22,7 @@ public class QuantitiesTest {
     private static final int V4 = 200;
 
     private static final UnitOfMeasure UM1 = UnitOfMeasure.GRAM;
-    private static final UnitOfMeasure UM2 = UnitOfMeasure.MILLILITER;
+    private static final UnitOfMeasure UM2 = UnitOfMeasure.LITER;
 
     /**
      * Sets up fields.
