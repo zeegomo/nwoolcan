@@ -3,6 +3,7 @@ package nwoolcan.model.brewery.batch;
 import nwoolcan.model.brewery.IdGenerator;
 import nwoolcan.model.brewery.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurement;
+import nwoolcan.model.brewery.batch.step.BasicStepFactory;
 import nwoolcan.model.brewery.batch.step.StepType;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
@@ -83,7 +84,8 @@ public class BatchBuilder {
                          this.ingredients,
                          initialStep,
                          this.waterMeasurement,
-                         this.generator
+                         this.generator,
+                         new BasicStepFactory()
                      )));
     }
 }
