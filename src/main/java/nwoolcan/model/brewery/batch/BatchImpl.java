@@ -8,6 +8,8 @@ import nwoolcan.model.brewery.batch.step.Step;
 import nwoolcan.model.brewery.batch.step.StepFactory;
 import nwoolcan.model.brewery.batch.step.StepType;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
+import nwoolcan.model.brewery.warehouse.stock.Record;
+import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 
@@ -41,6 +43,8 @@ final class BatchImpl implements Batch {
 
     @Nullable
     private BatchEvaluation batchEvaluation;
+    @Nullable
+    private Stock stockReference;
 
     /**
      * Creates a new {@link Batch} in production.
@@ -146,12 +150,31 @@ final class BatchImpl implements Batch {
     }
 
     @Override
+    public boolean isStocked() {
+        return this.stockReference != null;
+    }
+
+    @Override
+    public Result<Empty> stockBatchInto(final Stock stock) {
+        return Result.of(stock)
+                     .require(() -> !this.isStocked(), new IllegalStateException())
+                     .flatMap(s -> s.addRecord(new Record(this.getCurrentSize(), new Date(), Record.Action.ADDING)))
+                     .toEmpty();
+    }
+
+    @Override
+    public Optional<Stock> getStockReference() {
+        return Optional.ofNullable(this.stockReference);
+    }
+
+    @Override
     public String toString() {
         return new StringJoiner(", ", BatchImpl.class.getSimpleName() + "[", "]")
-            .add("id=" + id)
-            .add("batchInfo=" + batchInfo)
+            .add("id=" + this.id)
+            .add("batchInfo=" + this.batchInfo)
             .add("currentStep=" + this.getCurrentStep())
-            .add("batchEvaluation=" + batchEvaluation)
+            .add("batchEvaluation=" + this.batchEvaluation)
+            .add("stockReference=" + this.stockReference)
             .toString();
     }
 }
