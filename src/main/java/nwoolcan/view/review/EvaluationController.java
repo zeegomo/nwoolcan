@@ -1,8 +1,9 @@
-package nwoolcan.view;
+package nwoolcan.view.review;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import nwoolcan.view.InitializableController;
 import nwoolcan.viewmodel.brewery.production.batch.review.EvaluationViewModel;
 
 @SuppressWarnings("NullAway")

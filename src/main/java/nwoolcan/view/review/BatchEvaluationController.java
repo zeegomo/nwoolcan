@@ -1,10 +1,12 @@
-package nwoolcan.view;
+package nwoolcan.view.review;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 import nwoolcan.controller.Controller;
+import nwoolcan.view.InitializableController;
+import nwoolcan.view.SubViewController;
+import nwoolcan.view.ViewManager;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationViewModel;
 

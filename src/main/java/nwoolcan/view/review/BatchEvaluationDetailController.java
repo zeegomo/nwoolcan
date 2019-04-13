@@ -1,13 +1,16 @@
-package nwoolcan.view;
+package nwoolcan.view.review;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 import nwoolcan.controller.Controller;
 import nwoolcan.utils.Result;
+import nwoolcan.view.InitializableController;
+import nwoolcan.view.SubViewController;
+import nwoolcan.view.ViewManager;
+import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
@@ -20,7 +23,7 @@ import java.util.logging.Logger;
  */
 @SuppressWarnings("NullAway")
 public final class BatchEvaluationDetailController extends SubViewController
-    implements InitializableController<BatchEvaluationDetailViewModel>  {
+    implements InitializableController<BatchEvaluationDetailViewModel> {
 
     private static final String LOAD_FAILED = "Load failed";
     @FXML
