@@ -3,6 +3,7 @@ package nwoolcan.model.brewery.batch;
 import nwoolcan.model.brewery.batch.review.BatchEvaluation;
 import nwoolcan.model.brewery.batch.step.Step;
 import nwoolcan.model.brewery.batch.step.StepType;
+import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
@@ -75,4 +76,24 @@ public interface Batch {
      * @return the BatchEvaluation of this batch if it has one.
      */
     Optional<BatchEvaluation> getEvaluation();
+    /**
+     * Returns true if the current batch has been stocked.
+     * @return true if the current batch has been stocked.
+     */
+    boolean isStocked();
+    /**
+     * Gets a {@link Stock} and put it's current size (quantity) in it if possible.
+     * Then changes this batch into stocked state and returns a result with errors
+     * if the current size of the batch (quantity) cannot be inserted into the stock or
+     * of the batch was already stocked.
+     * @param stock the stock to populate with current size.
+     * @return a {@link Result} bearing possible errors.
+     */
+    Result<Empty> stockBatchInto(Stock stock);
+    /**
+     * Returns the stock reference of this batch if it has been stocked,
+     * an empty optional otherwise.
+     * @return an {@link Optional} with the stock if this batch has been stocked.
+     */
+    Optional<Stock> getStockReference();
 }
