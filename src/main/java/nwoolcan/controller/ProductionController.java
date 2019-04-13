@@ -1,4 +1,4 @@
-package nwoolcan.controller.production;
+package nwoolcan.controller;
 
 /**
  * Controller of production.
