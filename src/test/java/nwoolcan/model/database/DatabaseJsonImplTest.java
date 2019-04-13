@@ -1,13 +1,13 @@
 package nwoolcan.model.database;
 
 import com.google.gson.reflect.TypeToken;
-import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
-import nwoolcan.model.brewery.production.batch.review.BatchEvaluationBuilder;
-import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
-import nwoolcan.model.brewery.production.batch.review.Evaluation;
-import nwoolcan.model.brewery.production.batch.review.EvaluationFactory;
-import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
-import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType.BJCPCategories;
+import nwoolcan.model.brewery.batch.review.BatchEvaluation;
+import nwoolcan.model.brewery.batch.review.BatchEvaluationBuilder;
+import nwoolcan.model.brewery.batch.review.BatchEvaluationType;
+import nwoolcan.model.brewery.batch.review.Evaluation;
+import nwoolcan.model.brewery.batch.review.EvaluationFactory;
+import nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType;
+import nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType.BJCPCategories;
 import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;

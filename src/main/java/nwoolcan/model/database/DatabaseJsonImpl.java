@@ -8,15 +8,14 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.file.Files;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 
 /**
@@ -39,6 +38,10 @@ public final class DatabaseJsonImpl implements Database {
         this.filePath = filePath;
     }
 
+    /**
+     * Initialize JSON serialization.
+     * @param filePath The path of the file to save/load data to/from.
+     */
     public DatabaseJsonImpl(final String filePath) {
         this(new File(filePath));
     }
@@ -90,13 +93,13 @@ public final class DatabaseJsonImpl implements Database {
 
     @Override
     public Result<Empty> save(final Brewery toSave) {
-        return Results.ofChecked(() -> new BufferedWriter(new FileWriter(this.filePath)))
+        return Results.ofChecked(() -> Files.newBufferedWriter(this.filePath.toPath(), UTF_8))
             .flatMap(buf -> this.serialize(toSave, buf));
     }
 
     @Override
     public Result<Brewery> load() {
-        return Results.ofChecked(() -> new BufferedReader(new FileReader(this.filePath)))
+        return Results.ofChecked(() -> Files.newBufferedReader(this.filePath.toPath(), UTF_8))
             .flatMap(buf -> this.deserialize(buf, new TypeToken<Brewery>() { }));
     }
 }
