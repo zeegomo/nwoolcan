@@ -82,7 +82,7 @@ public interface Batch {
      */
     boolean isStocked();
     /**
-     * Gets a {@link Stock} and put it's current size (quantity) in it if possible.
+     * Gets a {@link Stock} to save as reference stock.
      * Then changes this batch into stocked state and returns a result with errors
      * if the current size of the batch (quantity) cannot be inserted into the stock or
      * of the batch was already stocked.
