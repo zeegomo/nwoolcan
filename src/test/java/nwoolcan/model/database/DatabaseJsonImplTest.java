@@ -1,6 +1,11 @@
 package nwoolcan.model.database;
 
-import nwoolcan.model.brewery.production.batch.review.*;
+import com.google.gson.reflect.TypeToken;
+import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
+import nwoolcan.model.brewery.production.batch.review.BatchEvaluationBuilder;
+import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
+import nwoolcan.model.brewery.production.batch.review.Evaluation;
+import nwoolcan.model.brewery.production.batch.review.EvaluationFactory;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType.BJCPCategories;
 import nwoolcan.model.brewery.warehouse.stock.Record;
@@ -11,8 +16,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,9 +26,11 @@ import java.util.stream.Stream;
  */
 public class DatabaseJsonImplTest {
 
-    private Database db;
+    private static final double DOUBLE_DELTA = 0.0001;
+    private DatabaseJsonImpl db;
     private final Record record = new Record(Quantity.of(1, UnitOfMeasure.UNIT).getValue(), Record.Action.ADDING);
     private BatchEvaluation evaluation;
+    private final Quantity quantity = Quantity.of(10, UnitOfMeasure.UNIT).getValue();
 
     /**
      * Initialized shared objects.
@@ -69,7 +76,7 @@ public class DatabaseJsonImplTest {
         Assert.assertEquals(deserializedRecord.getAction(), this.record.getAction());
         Assert.assertTrue("Dates does not match", Math.abs(deserializedRecord.getDate().getTime() - this.record.getDate().getTime()) < 1000);
         Assert.assertEquals(deserializedRecord.getQuantity().getUnitOfMeasure(), this.record.getQuantity().getUnitOfMeasure());
-        Assert.assertEquals(deserializedRecord.getQuantity().getValue(), this.record.getQuantity().getValue(), 0.0001);
+        Assert.assertEquals(deserializedRecord.getQuantity().getValue(), this.record.getQuantity().getValue(), this.DOUBLE_DELTA);
     }
 
     /**
@@ -77,9 +84,44 @@ public class DatabaseJsonImplTest {
      */
     @Test
     public void loadBatchEvaluation() {
-        final String json = db.save(this.evaluation);
-        Logger.getAnonymousLogger().warning(json);
-        final BatchEvaluation deserializedEvaluation = db.loadEvaluation(json);
-        Assert.assertEquals(deserializedEvaluation, this.evaluation);
+        Assert.assertEquals(db.loadEvaluation(db.save(this.evaluation)), this.evaluation);
+    }
+
+    /**
+     * Test (de)serialization of Optional of a simple type like Integer.
+     */
+    @Test
+    public void optionalSimpleType() {
+        final Optional<Integer> optIntValue = Optional.of(10);
+        final Optional<Integer> optIntEmpty = Optional.empty();
+
+        Assert.assertEquals(this.db.deserialize(this.db.serialize(optIntValue), new TypeToken<Optional<Integer>>() { }), optIntValue);
+        Assert.assertEquals(this.db.deserialize(this.db.serialize(optIntEmpty), new TypeToken<Optional<Integer>>() { }), optIntEmpty);
+    }
+
+    /**
+     * Test (de)serialization of Optional of a complex type (with attributes).
+     */
+    @Test
+    public void optionalComplexType() {
+        final Optional<Quantity> optQuantValue = Optional.of(this.quantity);
+        final Optional<Quantity> optQuantEmpty = Optional.empty();
+
+        Assert.assertEquals(this.db.deserialize(this.db.serialize(optQuantValue), new TypeToken<Optional<Quantity>>() { }), optQuantValue);
+        Assert.assertEquals(this.db.deserialize(this.db.serialize(optQuantEmpty), new TypeToken<Optional<Quantity>>() { }), optQuantEmpty);
+    }
+
+    /**
+     * Test (de)serialization of Result of a complex type (with attributes).
+     */
+    @Test
+    public void resultComplexType() {
+        final Result<Quantity> resQuantValue = Result.of(this.quantity);
+        final Result<Quantity> resQuantError = Result.error(new Exception());
+
+        Assert.assertEquals(this.db.deserialize(this.db.serialize(resQuantValue), new TypeToken<Result<Quantity>>() { }), resQuantValue);
+        final Result<Quantity> resQuantErrorDeserialized = this.db.deserialize(this.db.serialize(resQuantError), new TypeToken<Result<Quantity>>() { });
+        Assert.assertEquals(resQuantErrorDeserialized.isError(), resQuantError.isError());
+        Assert.assertEquals(resQuantErrorDeserialized.getError().getClass(), resQuantError.getError().getClass());
     }
 }
