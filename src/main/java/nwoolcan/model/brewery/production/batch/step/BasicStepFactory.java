@@ -13,10 +13,10 @@ public final class BasicStepFactory implements StepFactory {
 
     @Override
     public Result<Step> create(final StepType stepType, final Date startDate) {
-        if (stepType instanceof StepTypeEnum) {
-            return Result.of(new BasicStep(stepType, startDate));
-        }
-        return Result.error(new IllegalArgumentException(stepType + CANNOT_FIND_STEP_IMPLEMENTATION_MESSAGE));
+        return Result.of(stepType)
+                     .require(st -> st instanceof StepTypeEnum,
+                         new IllegalArgumentException(stepType + CANNOT_FIND_STEP_IMPLEMENTATION_MESSAGE))
+                     .map(e -> new BasicStep(stepType, startDate));
     }
 
     @Override
