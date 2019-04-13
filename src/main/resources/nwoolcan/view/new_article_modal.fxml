@@ -41,7 +41,7 @@
                     </FlowPane>
                     <FlowPane>
                         <Label text="Name " />
-                        <TextField fx:id="newArticleName"/>
+                        <TextField fx:id="newArticleName" onKeyReleased="#newNameFieldChanged"/>
                     </FlowPane>
                     <FlowPane>
                         <Label text="Unit of measure " />
@@ -58,7 +58,7 @@
                 </VBox>
             </center>
             <bottom>
-                <Button text="Create" BorderPane.alignment="CENTER" onAction="#createArticleClick">
+                <Button text="Create" BorderPane.alignment="CENTER" onAction="#createArticleClick" fx:id="createArticleButton">
                     <BorderPane.margin>
                         <Insets bottom="10.0" />
                     </BorderPane.margin>

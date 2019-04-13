@@ -2,8 +2,10 @@ package nwoolcan.view.brewery.warehouse.article;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
@@ -20,6 +22,8 @@ import nwoolcan.view.ViewManager;
 @SuppressWarnings("NullAway")
 public final class NewArticleModalController extends AbstractViewController {
 
+    @FXML
+    private Button createArticleButton;
     @FXML
     private FlowPane ingredientTypeFlowPane;
     @FXML
@@ -39,27 +43,33 @@ public final class NewArticleModalController extends AbstractViewController {
      */
     public NewArticleModalController(final Controller controller, final ViewManager viewManager) {
         super(controller, viewManager);
-        newArticleUnitOfMeasure.getItems().setAll(UnitOfMeasure.values());
-        newArticleType.getItems().setAll(ArticleType.values());
-        newArticleIngredientType.getItems().setAll(IngredientType.values());
     }
 
-//    @Override
-//    public void initData(final NewArticleViewModel data) {
-//
-//    }
-
+    /**
+     * Initialize the view create article.
+     */
+    @FXML
+    public void initialize() {
+        newArticleUnitOfMeasure.getItems().setAll(UnitOfMeasure.values());
+        newArticleUnitOfMeasure.getSelectionModel().selectFirst();
+        newArticleType.getItems().setAll(ArticleType.values());
+        newArticleType.getSelectionModel().selectFirst();
+        newArticleIngredientType.getItems().setAll(IngredientType.values());
+        newArticleIngredientType.getSelectionModel().selectFirst();
+        updateClicks();
+    }
 
     /**
      * Creates or deletes combo boxes in the view accordingly with the currently selected {@link ArticleType}.
      * @param event the occurred event.
      */
     public void selectArticleTypeClick(final ActionEvent event) {
-        if (newArticleType.getValue() == ArticleType.INGREDIENT) {
-            ingredientTypeFlowPane.setDisable(false);
-        } else {
-            ingredientTypeFlowPane.setDisable(true);
-        }
+        updateClicks();
+    }
+
+    private void updateClicks() {
+        ingredientTypeFlowPane.setDisable(newArticleType.getValue() != ArticleType.INGREDIENT);
+        createArticleButton.setDisable(newArticleName.getText().isEmpty());
     }
 
     /**
@@ -67,21 +77,36 @@ public final class NewArticleModalController extends AbstractViewController {
      * @param event the occurred event.
      */
     public void createArticleClick(final ActionEvent event) {
+        updateClicks();
+        if (newArticleName.getText().isEmpty()) {
+            return;
+        }
         final WarehouseController warehouseController = getController().getWarehouseController();
 
         switch (newArticleType.getValue()) {
             case FINISHED_BEER:
-                warehouseController.createBeerArticle(newArticleName.getText(), newArticleUnitOfMeasure.getValue()); break;
+                warehouseController.createBeerArticle(newArticleName.getText(), newArticleUnitOfMeasure.getValue());
+                break;
             case MISC:
-                warehouseController.createMiscArticle(newArticleName.getText(), newArticleUnitOfMeasure.getValue()); break;
+                warehouseController.createMiscArticle(newArticleName.getText(), newArticleUnitOfMeasure.getValue());
+                break;
             case INGREDIENT:
                 warehouseController.createIngredientArticle(newArticleName.getText(),
                                                             newArticleUnitOfMeasure.getValue(),
-                                                            newArticleIngredientType.getValue()); break;
+                                                            newArticleIngredientType.getValue());
+                break;
             default:
                 break;
         }
 
         ((Stage) this.ingredientTypeFlowPane.getScene().getWindow()).close();
+    }
+
+    /**
+     * When name field is empty, disable the create button.
+     * @param keyEvent the event occurred.
+     */
+    public void newNameFieldChanged(final KeyEvent keyEvent) {
+        updateClicks();
     }
 }
