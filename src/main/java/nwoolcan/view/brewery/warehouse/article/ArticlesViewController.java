@@ -20,7 +20,7 @@ import nwoolcan.view.mastertable.ColumnDescriptor;
 import nwoolcan.view.mastertable.MasterTableViewModel;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
-import nwoolcan.viewmodel.brewery.warehouse.ArticlesViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 
 import java.util.Arrays;
@@ -101,7 +101,7 @@ public final class ArticlesViewController extends SubViewController implements I
     /**
      * Triggered when the button "create new article" is clicked.
      * Opens a modal to retrieve data about the new article to create.
-     * @param event occured.
+     * @param event occurred.
      */
     public void createNewArticleClick(final ActionEvent event) {
         final Stage modal =  new Stage();

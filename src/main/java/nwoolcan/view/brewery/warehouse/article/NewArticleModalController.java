@@ -68,7 +68,8 @@ public final class NewArticleModalController extends AbstractViewController {
     }
 
     private void updateClicks() {
-        ingredientTypeFlowPane.setDisable(newArticleType.getValue() != ArticleType.INGREDIENT);
+        ingredientTypeFlowPane.setVisible(newArticleType.getValue() == ArticleType.INGREDIENT);
+        ingredientTypeFlowPane.setManaged(newArticleType.getValue() == ArticleType.INGREDIENT);
         createArticleButton.setDisable(newArticleName.getText().isEmpty());
     }
 

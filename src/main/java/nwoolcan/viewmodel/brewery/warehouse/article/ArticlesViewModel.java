@@ -1,10 +1,9 @@
-package nwoolcan.viewmodel.brewery.warehouse;
+package nwoolcan.viewmodel.brewery.warehouse.article;
 
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
-import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 
 import java.util.List;
 import java.util.stream.Collectors;
