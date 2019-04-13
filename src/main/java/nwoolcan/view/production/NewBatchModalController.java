@@ -121,7 +121,7 @@ public final class NewBatchModalController
                                              .map(BatchMethodProperty::new)
                                              .collect(Collectors.toList())));
 
-        this.initialSizeUnitOfMeasureLabel.setText(UnitOfMeasure.MILLILITER.getSymbol());
+        this.initialSizeUnitOfMeasureLabel.setText(UnitOfMeasure.LITER.getSymbol());
 
         final TableColumn<Pair<Number, WaterMeasurement.Element>, Button> removeElementColumn = new TableColumn<>();
         removeElementColumn.setCellValueFactory(obj -> {
@@ -237,7 +237,7 @@ public final class NewBatchModalController
         }
 
         //refactor maybe with a DTO
-        final Result<Quantity> res = Quantity.of(size, UnitOfMeasure.MILLILITER)
+        final Result<Quantity> res = Quantity.of(size, UnitOfMeasure.LITER)
                                              .peekError(e -> this.showAlertAndWait("Initial size : " + e.getMessage()));
 
         final Quantity initialSize;

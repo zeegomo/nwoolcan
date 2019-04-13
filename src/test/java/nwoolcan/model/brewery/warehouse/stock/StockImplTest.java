@@ -41,7 +41,7 @@ public class StockImplTest {
                                                        + "record if the quantity is not available";
 
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
-    private static final UnitOfMeasure UOM1 = UnitOfMeasure.MILLILITER;
+    private static final UnitOfMeasure UOM1 = UnitOfMeasure.LITER;
     private static final Article ARTICLE = ArticleManager.getInstance().createMiscArticle(NAME, UOM);
     private static final Article ARTICLE1 = ArticleManager.getInstance().createMiscArticle(NAME, UOM1);
 

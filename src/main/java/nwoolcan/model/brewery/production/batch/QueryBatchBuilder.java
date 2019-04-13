@@ -80,11 +80,11 @@ public class QueryBatchBuilder {
      */
     private boolean checkBatchSize() {
         if (minBatchSize != null
-         && minBatchSize.getUnitOfMeasure() != UnitOfMeasure.MILLILITER) {
+         && minBatchSize.getUnitOfMeasure() != UnitOfMeasure.LITER) {
             return false;
         }
         if (maxBatchSize != null
-         && maxBatchSize.getUnitOfMeasure() != UnitOfMeasure.MILLILITER) {
+         && maxBatchSize.getUnitOfMeasure() != UnitOfMeasure.LITER) {
             return false;
         }
         return true;

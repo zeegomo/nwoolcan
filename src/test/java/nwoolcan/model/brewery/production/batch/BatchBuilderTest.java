@@ -22,7 +22,7 @@ public class BatchBuilderTest {
     private static final int TEN_THOUSAND = 10000;
     private static final BeerDescription BD = new BeerDescriptionImpl("test description", "test style", "test category");
     private static final BatchMethod BM = BatchMethod.ALL_GRAIN;
-    private static final Quantity INIT_SIZE = Quantity.of(TEN_THOUSAND, UnitOfMeasure.MILLILITER).getValue();
+    private static final Quantity INIT_SIZE = Quantity.of(TEN_THOUSAND, UnitOfMeasure.LITER).getValue();
 
     private final BatchBuilder builder = new BatchBuilder(new IdGenerator() {
         private int nextId = 0;
