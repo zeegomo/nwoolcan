@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * General controller1 of the {@link nwoolcan.model.brewery.Brewery}.
+ * General controller of the {@link nwoolcan.model.brewery.Brewery}.
  */
 public interface Controller {
 

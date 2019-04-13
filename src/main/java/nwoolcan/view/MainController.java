@@ -17,7 +17,7 @@ public final class MainController extends AbstractViewController {
 
     /**
      * Creates itself and gets injected.
-     * @param controller injected controller1.
+     * @param controller injected controller.
      * @param viewManager injected view manager.
      */
     public MainController(final Controller controller, final ViewManager viewManager) {

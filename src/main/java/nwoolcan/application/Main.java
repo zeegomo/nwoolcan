@@ -40,7 +40,7 @@ public final class Main extends Application {
         //Or maybe load it from the selected file
         //TODO
 
-        //Now we have the brewery to inject into the controller1
+        //Now we have the brewery to inject into the controller
         final Controller controller = new BreweryController(brewery);
         //Creates the view manager
         final ViewManager vm = new ViewManagerImpl(controller);

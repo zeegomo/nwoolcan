@@ -14,7 +14,7 @@ public interface ViewManager {
      */
     Result<Parent> getView(ViewType type);
     /**
-     * Loads and returns the specified view, injecting the given view model into the controller1.
+     * Loads and returns the specified view, injecting the given view model into the controller.
      * @param type The type of the view you want to get
      * @param viewModel The object you want to inject
      * @param <T> The type of the view model

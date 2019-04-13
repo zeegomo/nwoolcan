@@ -1,8 +1,8 @@
 package nwoolcan.view;
 
 /**
- * A controller1 to which you can inject some data to fill the view.
- * @param <T> The type of the view model supported by this controller1
+ * A controller to which you can inject some data to fill the view.
+ * @param <T> The type of the view model supported by this controller
  */
 public interface InitializableController<T> {
     /**

@@ -16,7 +16,7 @@ import nwoolcan.view.ViewManager;
 import nwoolcan.view.subview.SubView;
 
 /**
- * The controller1 for a master table representing data of type {@link T}.
+ * The controller for a master table representing data of type {@link T}.
  * @param <T> the type of the data to display.
  * @param <U> the type of the data to display in the detail view.
  */
@@ -34,7 +34,7 @@ public final class MasterTableController<T, U> extends SubViewController impleme
 
     /**
      * Creates itself and gets injected.
-     * @param controller injected controller1.
+     * @param controller injected controller.
      * @param viewManager injected view manager.
      */
     public MasterTableController(final Controller controller, final ViewManager viewManager) {

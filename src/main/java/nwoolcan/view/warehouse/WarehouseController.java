@@ -33,7 +33,7 @@ public final class WarehouseController extends SubViewController implements Init
 
     /**
      * Creates itself and gets injected.
-     * @param controller injected controller1.
+     * @param controller injected controller.
      * @param viewManager injected view manager.
      */
     public WarehouseController(final Controller controller, final ViewManager viewManager) {
