@@ -50,6 +50,20 @@ public final class MainController extends AbstractViewController {
     }
 
     /**
+     * Shows the Articles view.
+     * @param event The occurred event
+     */
+    public void menuViewArticlesClick(final ActionEvent event) {
+        this.getViewManager()
+            .getView(ViewType.ARTICLES,
+                     this.getController()
+                         .getBreweryController()
+                         .getWarehouseController()
+                         .getArticlesViewModel())
+            .peek(view -> this.contentPane.substitute(view));
+    }
+
+    /**
      * Quits the application.
      * @param event The occurred event
      */
