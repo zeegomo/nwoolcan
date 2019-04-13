@@ -41,7 +41,7 @@
                     </FlowPane>
                     <FlowPane>
                         <Label text="Name " />
-                        <TextField fx:id="newArticleName" onKeyReleased="#newNameFieldChanged"/>
+                        <TextField text="Article Name" fx:id="newArticleName" onKeyReleased="#newNameFieldChanged"/>
                     </FlowPane>
                     <FlowPane>
                         <Label text="Unit of measure " />
