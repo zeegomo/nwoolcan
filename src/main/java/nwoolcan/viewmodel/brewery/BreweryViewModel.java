@@ -1,8 +1,8 @@
 package nwoolcan.viewmodel.brewery;
 
 import nwoolcan.model.brewery.Brewery;
-import nwoolcan.model.brewery.production.batch.QueryBatch;
-import nwoolcan.model.brewery.production.batch.QueryBatchBuilder;
+import nwoolcan.model.brewery.batch.QueryBatch;
+import nwoolcan.model.brewery.batch.QueryBatchBuilder;
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
 

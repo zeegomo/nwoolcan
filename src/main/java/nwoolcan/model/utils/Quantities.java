@@ -3,7 +3,7 @@ package nwoolcan.model.utils;
 import nwoolcan.utils.Result;
 
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Utils class for operations with quantity objects.
@@ -55,7 +55,7 @@ public final class Quantities {
      * Returns a collection of all possible units of measure that can be associated to a quantity.
      * @return a collection of all possible units of measure that can be associated to a quantity.
      */
-    public static Collection<UnitOfMeasure> getValidUnitsOfMeasure() {
+    public static List<UnitOfMeasure> getValidUnitsOfMeasure() {
         return QuantityChecker.getValidUnitsOfMeasure();
     }
 }

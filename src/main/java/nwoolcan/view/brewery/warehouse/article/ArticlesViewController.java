@@ -119,7 +119,7 @@ public final class ArticlesViewController extends SubViewController implements I
         modal.setResizable(false);
         modal.showAndWait();
 
-        this.substituteView(ViewType.ARTICLES, this.getController().getBreweryController().getWarehouseController().getArticlesViewModel());
+        this.substituteView(ViewType.ARTICLES, this.getController().getWarehouseController().getArticlesViewModel());
     }
 
     /**
@@ -128,7 +128,6 @@ public final class ArticlesViewController extends SubViewController implements I
      */
     public void updateArticlesTable(final QueryArticle queryArticle) {
         final List<AbstractArticleViewModel> articles = this.getController()
-                                                            .getBreweryController()
                                                             .getWarehouseController()
                                                             .getArticles(queryArticle);
         setTable(articles);

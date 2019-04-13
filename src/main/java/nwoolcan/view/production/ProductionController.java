@@ -153,15 +153,14 @@ public final class ProductionController
         modal.initModality(Modality.WINDOW_MODAL);
 
         final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_BATCH_MODAL,
-            this.getController().getNewBatchViewModel()).orElse(new AnchorPane()),
-            600, 400);
+            this.getController().getNewBatchViewModel()).orElse(new AnchorPane()));
 
         modal.setScene(scene);
-        modal.setX(window.getX() + window.getWidth() / 2 - scene.getWidth() / 2);
-        modal.setY(window.getY() + window.getHeight() / 2 - scene.getHeight() / 2);
-        modal.setResizable(false);
+        modal.centerOnScreen();
         modal.showAndWait();
 
-        this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
+        if (modal.getUserData() != null) {
+            this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
+        }
     }
 }

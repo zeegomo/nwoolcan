@@ -26,7 +26,7 @@ public class WarehouseImplTest {
     private static final int TEN = 10;
     private static final String NAME = "DummyName";
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
-    private static final UnitOfMeasure UOM1 = UnitOfMeasure.MILLILITER;
+    private static final UnitOfMeasure UOM1 = UnitOfMeasure.LITER;
     private final Warehouse warehouse = new WarehouseImpl();
     private final Article article = warehouse.createMiscArticle(NAME, UOM);
     private final Quantity quantity = Quantity.of(ONE, UOM).getValue();

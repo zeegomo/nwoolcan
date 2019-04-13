@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
-import nwoolcan.controller.brewery.warehouse.WarehouseController;
+import nwoolcan.controller.warehouse.WarehouseController;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
 import nwoolcan.model.utils.UnitOfMeasure;
@@ -67,7 +67,7 @@ public final class NewArticleModalController extends AbstractViewController {
      * @param event the occurred event.
      */
     public void createArticleClick(final ActionEvent event) {
-        final WarehouseController warehouseController = getController().getBreweryController().getWarehouseController();
+        final WarehouseController warehouseController = getController().getWarehouseController();
 
         switch (newArticleType.getValue()) {
             case FINISHED_BEER:

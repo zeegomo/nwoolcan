@@ -3,7 +3,6 @@ package nwoolcan.view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import nwoolcan.controller.Controller;
-import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.subview.SubView;
 
 /**
@@ -45,7 +44,7 @@ public final class DashboardController extends SubViewController {
      * @param event The occurred event
      */
     public void btnToWarehouseClicked(final ActionEvent event) {
-        this.substituteView(ViewType.WAREHOUSE, new WarehouseViewModel("Samir"));
+        this.substituteView(ViewType.WAREHOUSE, getController().getWarehouseController().getWarehouseViewModel());
     }
 
     @Override
