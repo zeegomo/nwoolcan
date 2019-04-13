@@ -1,7 +1,7 @@
 package nwoolcan.viewmodel.brewery.production.batch;
 
-import nwoolcan.model.brewery.production.batch.BatchMethod;
-import nwoolcan.model.brewery.production.batch.misc.WaterMeasurement;
+import nwoolcan.model.brewery.batch.BatchMethod;
+import nwoolcan.model.brewery.batch.misc.WaterMeasurement;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 

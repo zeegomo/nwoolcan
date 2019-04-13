@@ -3,8 +3,8 @@ package nwoolcan.application;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import nwoolcan.controller.BreweryController;
 import nwoolcan.controller.Controller;
-import nwoolcan.controller.ControllerImpl;
 import nwoolcan.model.brewery.Brewery;
 import nwoolcan.model.brewery.BreweryImpl;
 import nwoolcan.view.ViewManager;
@@ -41,7 +41,7 @@ public final class Main extends Application {
         //TODO
 
         //Now we have the brewery to inject into the controller
-        final Controller controller = new ControllerImpl(brewery);
+        final Controller controller = new BreweryController(brewery);
         //Creates the view manager
         final ViewManager vm = new ViewManagerImpl(controller);
 

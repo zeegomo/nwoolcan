@@ -4,8 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import nwoolcan.controller.Controller;
-import nwoolcan.controller.viewmodel.StockViewModel;
 import nwoolcan.view.subview.SubView;
+import nwoolcan.viewmodel.brewery.warehouse.stock.StockViewModel;
 
 /**
  * Controller for the Stock detail view.
@@ -32,7 +32,7 @@ public final class StockDetailController extends SubViewController implements In
 
     @Override
     public void initData(final StockViewModel data) {
-        lblName.setText(data.getName());
+        lblName.setText("DummyStock");
         lblId.setText(Integer.toString(data.getId()));
     }
 
