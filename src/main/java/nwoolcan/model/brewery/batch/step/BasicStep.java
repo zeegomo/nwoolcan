@@ -11,7 +11,8 @@ import java.util.Set;
 
 /**
  * Basic implementation of {@link Step} interface.
- * Package-private. Create instances using static factory {@link Steps}.
+ * Package-private.
+ * Create instances of this class using the factory {@link BasicStepFactory}.
  */
 final class BasicStep extends AbstractStep {
 
@@ -29,7 +30,7 @@ final class BasicStep extends AbstractStep {
 
     /**
      * Basic constructor with step type and start date of the step.
-     * Package-protected, to create a Step use utils class Steps.
+     * Package-protected, to create a Step use use the factory {@link BasicStepFactory}.
      * @param stepType step's type.
      * @param startDate step's start date.
      */
@@ -39,7 +40,7 @@ final class BasicStep extends AbstractStep {
 
     /**
      * Constructor only with step type and setting step's start date with date now.
-     * Package-protected, to create a Step use utils class Steps.
+     * Package-protected, to create a Step use the factory {@link BasicStepFactory}.
      * @param stepType step's type.
      */
     BasicStep(final StepType stepType) {
