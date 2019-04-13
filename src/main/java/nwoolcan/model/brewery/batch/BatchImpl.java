@@ -157,6 +157,7 @@ final class BatchImpl implements Batch {
     @Override
     public Result<Empty> stockBatchInto(final Stock stock) {
         return Result.of(stock)
+                     .require(this::isEnded)
                      .require(() -> !this.isStocked(), new IllegalStateException())
                      .flatMap(s -> s.addRecord(new Record(this.getCurrentSize(), new Date(), Record.Action.ADDING)))
                      .toEmpty();
