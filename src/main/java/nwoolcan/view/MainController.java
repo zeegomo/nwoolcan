@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import nwoolcan.controller.Controller;
-import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.subview.SubViewContainer;
 
 /**
@@ -38,7 +37,9 @@ public final class MainController extends AbstractViewController {
      * @param event The occurred event
      */
     public void menuViewWarehouseClick(final ActionEvent event) {
-        this.getViewManager().getView(ViewType.WAREHOUSE, new WarehouseViewModel("ciccio")).peek(view -> this.contentPane.substitute(view));
+        getController().getBreweryController().setBreweryName("ciccio");
+        getController().getBreweryController().setOwnerName("ciccia");
+        this.getViewManager().getView(ViewType.WAREHOUSE, getController().getBreweryController().getWarehouseController().getWarehouseViewModel()).peek(view -> this.contentPane.substitute(view));
     }
 
     /**
