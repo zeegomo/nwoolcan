@@ -32,7 +32,7 @@ public final class DatabaseJsonImpl implements Database {
      */
     public DatabaseJsonImpl(final File filePath) {
         this.gson = new GsonBuilder()
-            .registerTypeAdapterFactory(new InterfaceAdapterFactory())
+            .registerTypeAdapterFactory(new TypeWrapperAdapterFactory())
             .setPrettyPrinting()
             .create();
 
