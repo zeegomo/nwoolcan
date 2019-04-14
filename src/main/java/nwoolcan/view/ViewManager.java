@@ -2,6 +2,7 @@ package nwoolcan.view;
 
 import javafx.scene.Parent;
 import nwoolcan.utils.Result;
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Interfaces representing a view manager.
@@ -21,4 +22,15 @@ public interface ViewManager {
      * @return The loaded views
      */
     <T> Result<Parent> getView(ViewType type, T viewModel);
+
+    /**
+     *
+     * @param type
+     * @param viewModel
+     * @param cl
+     * @param <T>
+     * @param <U>
+     * @return
+     */
+    public <T, U> Result<Pair<Parent, U>> getView(ViewType type, T viewModel, Class<U> cl);
 }

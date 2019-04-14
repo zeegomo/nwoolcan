@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import nwoolcan.controller.Controller;
 import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.lang.reflect.Constructor;
 import java.util.logging.Logger;
@@ -83,6 +84,16 @@ public final class ViewManagerImpl implements ViewManager {
             final Parent parent = loader.load();
             loader.<InitializableController<T>>getController().initData(viewModel);
             return parent;
+        }).peekError(err -> Logger.getGlobal().severe(err.toString() + "\n" + err.getCause()));
+    }
+    @Override
+    public <T, U> Result<Pair<Parent, U>> getView(final ViewType type, final T viewModel, final Class<U> cl) {
+        final FXMLLoader loader = new FXMLLoader(ViewType.class.getResource(type.getResourceName()));
+        return Results.ofChecked(() -> {
+            this.injectIntoController(loader);
+            final Parent parent = loader.load();
+            loader.<InitializableController<T>>getController().initData(viewModel);
+            return Pair.of(parent, loader.<U>getController());
         }).peekError(err -> Logger.getGlobal().severe(err.toString() + "\n" + err.getCause()));
     }
 }
