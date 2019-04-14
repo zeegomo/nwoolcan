@@ -20,7 +20,7 @@ import nwoolcan.view.mastertable.ColumnDescriptor;
 import nwoolcan.view.mastertable.MasterTableViewModel;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
-import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesInfoViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 
 import java.util.Arrays;
@@ -30,7 +30,7 @@ import java.util.List;
  * Controller class for articles view.
  */
 @SuppressWarnings("NullAway")
-public final class ArticlesViewController extends SubViewController implements InitializableController<ArticlesViewModel> {
+public final class ArticlesViewController extends SubViewController implements InitializableController<ArticlesInfoViewModel> {
 
     @FXML
     private Label lblTotalNumberArticles;
@@ -60,7 +60,7 @@ public final class ArticlesViewController extends SubViewController implements I
     }
 
     @Override
-    public void initData(final ArticlesViewModel data) {
+    public void initData(final ArticlesInfoViewModel data) {
         lblTotalNumberArticles.setText(Long.toString(data.getArticles().size()));
         lblNumberBeerArticles.setText(Long.toString(data.getnBeerArticles()));
         lblNumberMiscArticles.setText(Long.toString(data.getnMiscArticles()));

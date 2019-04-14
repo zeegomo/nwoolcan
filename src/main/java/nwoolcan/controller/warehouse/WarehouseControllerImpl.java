@@ -8,7 +8,7 @@ import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
-import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesInfoViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
@@ -38,8 +38,8 @@ public final class WarehouseControllerImpl implements WarehouseController {
     }
 
     @Override
-    public ArticlesViewModel getArticlesViewModel() {
-        return new ArticlesViewModel(warehouse);
+    public ArticlesInfoViewModel getArticlesViewModel() {
+        return new ArticlesInfoViewModel(warehouse);
     }
 
     @Override

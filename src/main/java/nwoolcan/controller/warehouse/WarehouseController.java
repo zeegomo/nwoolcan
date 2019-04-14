@@ -5,7 +5,7 @@ import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
-import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesInfoViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
@@ -23,10 +23,10 @@ import java.util.List;
 public interface WarehouseController {
 
     /**
-     * Return an {@link ArticlesViewModel} which gives general info about all the {@link nwoolcan.model.brewery.warehouse.article.Article}.
-     * @return an {@link ArticlesViewModel} which gives general info about all the {@link nwoolcan.model.brewery.warehouse.article.Article}.
+     * Return an {@link ArticlesInfoViewModel} which gives general info about all the {@link nwoolcan.model.brewery.warehouse.article.Article}.
+     * @return an {@link ArticlesInfoViewModel} which gives general info about all the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
-    ArticlesViewModel getArticlesViewModel();
+    ArticlesInfoViewModel getArticlesViewModel();
     /**
      * Creates a {@link List} of {@link AbstractArticleViewModel} accordingly to the query.
      * @param queryArticle describes the nature of the query.
