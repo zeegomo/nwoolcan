@@ -17,6 +17,7 @@ public final class DetailBatchViewModel {
     private final int id;
     private final BatchInfoViewModel batchInfo;
     private final List<MasterStepViewModel> steps;
+    private final boolean ended;
 
     @Nullable
     private final BatchEvaluationViewModel review;
@@ -30,6 +31,7 @@ public final class DetailBatchViewModel {
         this.batchInfo = new BatchInfoViewModel(); //TODO change to correct implementation when done
         this.steps = batch.getSteps().stream().map(MasterStepViewModel::new).collect(Collectors.toList());
         this.review = batch.getEvaluation().map(BatchEvaluationViewModel::new).orElse(null);
+        this.ended = batch.isEnded();
     }
 
     /**
@@ -63,5 +65,13 @@ public final class DetailBatchViewModel {
     @Nullable
     public BatchEvaluationViewModel getReview() {
         return this.review;
+    }
+
+    /**
+     * Returns true it the batch is in ended state, so it cannot move to another step.
+     * @return true it the batch is in ended state, false otherwise.
+     */
+    public boolean isEnded() {
+        return this.ended;
     }
 }
