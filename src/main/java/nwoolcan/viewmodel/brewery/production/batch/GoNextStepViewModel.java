@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * View model representing the view for going to next step in a batch.
  */
-public class GoNextStepViewModel {
+public final class GoNextStepViewModel {
 
     private final int batchId;
     private final Set<StepType> nextPossibleStepTypes;

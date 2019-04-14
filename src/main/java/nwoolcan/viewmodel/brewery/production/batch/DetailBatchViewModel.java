@@ -2,13 +2,11 @@ package nwoolcan.viewmodel.brewery.production.batch;
 
 
 import nwoolcan.model.brewery.batch.Batch;
-import nwoolcan.model.brewery.batch.step.StepType;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationViewModel;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
