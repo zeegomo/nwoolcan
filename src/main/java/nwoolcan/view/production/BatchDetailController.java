@@ -26,6 +26,11 @@ public final class BatchDetailController
     implements InitializableController<DetailBatchViewModel> {
 
     @FXML
+    private Button goToNextStepButton;
+    @FXML
+    private Button stockBatchButton;
+
+    @FXML
     private SubViewContainer masterTableContainer;
     @FXML
     private Button goBackButton;
