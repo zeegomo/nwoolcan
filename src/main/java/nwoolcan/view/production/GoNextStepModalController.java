@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.step.StepType;
 import nwoolcan.model.utils.UnitOfMeasure;
@@ -26,6 +27,8 @@ public final class GoNextStepModalController
     extends AbstractViewController
     implements InitializableController<GoNextStepViewModel> {
 
+    @FXML
+    private TitledPane finalizeStepTitlePane;
     @FXML
     private TextArea notesTextArea;
 
@@ -56,5 +59,9 @@ public final class GoNextStepModalController
         this.nextStepTypesComboBox.setItems(FXCollections.observableList(
             new ArrayList<>(data.getNextPossibleStepTypes())
         ));
+
+        this.finalizeStepTitlePane.disableProperty().bind(
+            this.chooseFinalizeNextStepCheckBox.selectedProperty().not()
+        );
     }
 }

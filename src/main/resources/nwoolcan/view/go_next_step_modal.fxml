@@ -42,7 +42,7 @@
                     <HBox>
                         <CheckBox fx:id="chooseFinalizeNextStepCheckBox" text="Finalize current step?" />
                     </HBox>
-                    <TitledPane text="Finalize step" disable="true" >
+                    <TitledPane fx:id="finalizeStepTitlePane" text="Finalize step" disable="true" >
                         <VBox>
                             <VBox>
                                 <Label text="Notes" />
