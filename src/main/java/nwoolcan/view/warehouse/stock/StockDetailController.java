@@ -9,13 +9,12 @@ import nwoolcan.view.SubViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
-import nwoolcan.viewmodel.brewery.warehouse.stock.PlainStockViewModel;
-
+import nwoolcan.viewmodel.brewery.warehouse.stock.DetailStockViewModel;
 /**
  * Controller for the Stock detail view.
  */
 @SuppressWarnings("NullAway")
-public final class StockDetailController extends SubViewController implements InitializableController<PlainStockViewModel> {
+public final class StockDetailController extends SubViewController implements InitializableController<DetailStockViewModel> {
 
     @FXML
     private Label lblArticle;
@@ -50,7 +49,7 @@ public final class StockDetailController extends SubViewController implements In
     }
 
     @Override
-    public void initData(final PlainStockViewModel data) {
+    public void initData(final DetailStockViewModel data) {
         lblName.setText("DummyStock");
         lblId.setText(Integer.toString(data.getId()));
     }
