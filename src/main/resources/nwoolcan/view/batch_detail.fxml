@@ -3,11 +3,39 @@
 <?import nwoolcan.view.subview.SubView?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import nwoolcan.view.subview.SubViewContainer?>
+<?import javafx.scene.control.Button?>
 <SubView xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          fx:controller="nwoolcan.view.production.BatchDetailController"
          fx:id="batchDetailSubView">
-
-    <Label fx:id="batchIdLabel" />
-
+    <BorderPane>
+        <top>
+            <BorderPane BorderPane.alignment="CENTER">
+                <center>
+                    <Label text="Batch detail">
+                        <font>
+                            <Font size="28.0" />
+                        </font>
+                    </Label>
+                </center>
+                <right>
+                    <Button fx:id="goBackButton" text="Back" onAction="#goBackButtonClicked"/>
+                </right>
+            </BorderPane>
+        </top>
+        <center>
+            <VBox>
+                <TitledPane text="Batch informations">
+                    <SubViewContainer>
+                        <!-- TODO fill with batch info sub view -->
+                    </SubViewContainer>
+                </TitledPane>
+            </VBox>
+        </center>
+    </BorderPane>
 </SubView>
