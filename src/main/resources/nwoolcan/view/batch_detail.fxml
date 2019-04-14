@@ -36,7 +36,7 @@
                         </center>
                         <right>
                             <VBox BorderPane.alignment="CENTER_RIGHT">
-                                <Button fx:id="goToNextStepButton" text="Go to next step" />
+                                <Button fx:id="goToNextStepButton" text="Go to next step" onAction="#goToNextStepButtonClicked" />
                                 <Button fx:id="stockBatchButton" text="Stock batch" disable="true" />
                             </VBox>
                          </right>
