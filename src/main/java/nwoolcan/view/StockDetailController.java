@@ -5,13 +5,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.subview.SubView;
-import nwoolcan.viewmodel.brewery.warehouse.stock.StockViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.stock.PlainStockViewModel;
 
 /**
  * Controller for the Stock detail view.
  */
 @SuppressWarnings("NullAway")
-public final class StockDetailController extends SubViewController implements InitializableController<StockViewModel> {
+public final class StockDetailController extends SubViewController implements InitializableController<PlainStockViewModel> {
     @FXML
     private Label lblName;
 
@@ -31,7 +31,7 @@ public final class StockDetailController extends SubViewController implements In
     }
 
     @Override
-    public void initData(final StockViewModel data) {
+    public void initData(final PlainStockViewModel data) {
         lblName.setText("DummyStock");
         lblId.setText(Integer.toString(data.getId()));
     }

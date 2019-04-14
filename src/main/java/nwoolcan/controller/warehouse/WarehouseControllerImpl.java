@@ -8,14 +8,14 @@ import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
-import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesInfoViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.MiscArticleViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.stock.AbstractStockViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.stock.StockViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.stock.MasterStockViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.stock.PlainStockViewModel;
 
 import java.util.Date;
 import java.util.List;
@@ -38,8 +38,8 @@ public final class WarehouseControllerImpl implements WarehouseController {
     }
 
     @Override
-    public ArticlesViewModel getArticlesViewModel() {
-        return new ArticlesViewModel(warehouse);
+    public ArticlesInfoViewModel getArticlesViewModel() {
+        return new ArticlesInfoViewModel(warehouse);
     }
 
     @Override
@@ -51,10 +51,10 @@ public final class WarehouseControllerImpl implements WarehouseController {
     }
 
     @Override
-    public List<AbstractStockViewModel> getStocks(final QueryStock queryStock) {
+    public List<MasterStockViewModel> getStocks(final QueryStock queryStock) {
         return warehouse.getStocks(queryStock)
                         .stream()
-                        .map(AbstractStockViewModel::getViewStock)
+                        .map(MasterStockViewModel::getMasterViewStock)
                         .collect(Collectors.toList());
     }
 
@@ -83,19 +83,19 @@ public final class WarehouseControllerImpl implements WarehouseController {
     }
 
     @Override
-    public Result<StockViewModel> createStock(final int articleId, final Date expirationDate) {
+    public Result<PlainStockViewModel> createStock(final int articleId, final Date expirationDate) {
         return Result.of(articleId)
                      .flatMap(this::getArticleById)
                      .flatMap(article -> warehouse.createStock(article, expirationDate))
-                     .map(StockViewModel::new);
+                     .map(PlainStockViewModel::new);
     }
 
     @Override
-    public Result<StockViewModel> createStock(final int articleId) {
+    public Result<PlainStockViewModel> createStock(final int articleId) {
         return Result.of(articleId)
                      .flatMap(this::getArticleById)
                      .flatMap(warehouse::createStock)
-                     .map(StockViewModel::new);
+                     .map(PlainStockViewModel::new);
     }
 
     private Result<Article> getArticleById(final int articleId) {
