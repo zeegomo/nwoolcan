@@ -2,8 +2,11 @@ package nwoolcan.viewmodel.brewery.production.batch;
 
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.batch.step.StepType;
+import nwoolcan.model.utils.Quantities;
+import nwoolcan.model.utils.UnitOfMeasure;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -13,6 +16,7 @@ public final class GoNextStepViewModel {
 
     private final int batchId;
     private final Set<StepType> nextPossibleStepTypes;
+    private final List<UnitOfMeasure> possibleUnitsOfMeasure;
 
     /**
      * Basic constructor with decorator-like pattern.
@@ -21,6 +25,7 @@ public final class GoNextStepViewModel {
     public GoNextStepViewModel(final Batch batch) {
         this.batchId = batch.getId();
         this.nextPossibleStepTypes = Collections.unmodifiableSet(batch.getCurrentStep().getNextStepTypes());
+        this.possibleUnitsOfMeasure = Quantities.getValidUnitsOfMeasure();
     }
 
     /**
@@ -37,5 +42,13 @@ public final class GoNextStepViewModel {
      */
     public Set<StepType> getNextPossibleStepTypes() {
         return this.nextPossibleStepTypes;
+    }
+
+    /**
+     * Returns a list of all possible units of measure to use as end step size.
+     * @return a list of all possible units of measure to use as end step size.
+     */
+    public List<UnitOfMeasure> getPossibleUnitsOfMeasure() {
+        return possibleUnitsOfMeasure;
     }
 }
