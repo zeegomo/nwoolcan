@@ -1,7 +1,9 @@
 package nwoolcan.controller.batch;
 
+import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.GoNextStepDTO;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 
 /**
@@ -23,4 +25,12 @@ public interface BatchController {
      * @return a {@link Result} bearing the informations to choose choose the next step to go.
      */
     Result<GoNextStepViewModel> getGoNextStepViewModel(int batchId);
+
+    /**
+     * Goes to the next step of the batch with passed id with informations specified in the dto
+     * @param batchId the batch id.
+     * @param dto the dto specifying infos to go to next step.
+     * @return a {@link Result} bearing an error if operation went wrong.
+     */
+    Result<Empty> goToNextStep(int batchId, GoNextStepDTO dto);
 }

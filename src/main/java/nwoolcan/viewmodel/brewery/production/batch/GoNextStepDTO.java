@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 public class GoNextStepDTO {
 
     private final StepType nextStepType;
+    private final boolean finalizeBeforeGoingToNext;
     private final String notes;
 
     @Nullable
@@ -22,8 +23,12 @@ public class GoNextStepDTO {
      * @param notes possible notes.
      * @param endSize possible end size.
      */
-    public GoNextStepDTO(final StepType nextStepType, final String notes, @Nullable final Quantity endSize) {
+    public GoNextStepDTO(final StepType nextStepType,
+                         final boolean finalizeBeforeGoingToNext,
+                         final String notes,
+                         @Nullable final Quantity endSize) {
         this.nextStepType = nextStepType;
+        this.finalizeBeforeGoingToNext = finalizeBeforeGoingToNext;
         this.notes = notes;
         this.endSize = endSize;
     }
@@ -34,6 +39,14 @@ public class GoNextStepDTO {
      */
     public StepType getNextStepType() {
         return nextStepType;
+    }
+
+    /**
+     * Returns true if it is requested to finalize before going to next step.
+     * @return true if it is requested to finalize, false otherwise.
+     */
+    public boolean finalizeBeforeGoingToNext() {
+        return this.finalizeBeforeGoingToNext;
     }
 
     /**
