@@ -17,24 +17,33 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractStockViewModel {
 
+    private final int id;
+
     private final AbstractArticleViewModel article;
     private final Quantity remainingQuantity;
     private final Quantity usedQuantity;
     private final StockState stockState;
     private final Optional<Date> expirationDate;
     private final List<RecordViewModel> records;
-
     /**
      * Constructor of the abstract view version of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      * @param stock the {@link Stock} to be converted in {@link AbstractStockViewModel}.
      */
     public AbstractStockViewModel(final Stock stock) {
+        this.id = stock.getId();
         this.article = AbstractArticleViewModel.getViewArticle(stock.getArticle());
         this.remainingQuantity = stock.getRemainingQuantity();
         this.usedQuantity = stock.getUsedQuantity();
         this.stockState = stock.getState();
         this.expirationDate = stock.getExpirationDate();
         this.records = stock.getRecords().stream().map(RecordViewModel::new).collect(Collectors.toList());
+    }
+    /**
+     * Return the id of the {@link Stock}.
+     * @return the id of the {@link Stock}.
+     */
+    public int getId() {
+        return id;
     }
     /**
      * Return the name of the {@link nwoolcan.model.brewery.warehouse.article.Article}.

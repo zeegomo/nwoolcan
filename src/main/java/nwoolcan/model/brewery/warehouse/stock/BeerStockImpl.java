@@ -1,6 +1,6 @@
 package nwoolcan.model.brewery.warehouse.stock;
 
-import nwoolcan.model.brewery.production.batch.Batch;
+import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 
 import javax.annotation.Nullable;

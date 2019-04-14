@@ -1,9 +1,9 @@
 package nwoolcan.model.brewery;
 
-import nwoolcan.model.brewery.production.batch.Batch;
-import nwoolcan.model.brewery.production.batch.BatchBuilder;
-import nwoolcan.model.brewery.production.batch.QueryBatch;
-import nwoolcan.model.brewery.production.batch.step.StepTypeEnum;
+import nwoolcan.model.brewery.batch.Batch;
+import nwoolcan.model.brewery.batch.BatchBuilder;
+import nwoolcan.model.brewery.batch.QueryBatch;
+import nwoolcan.model.brewery.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.WarehouseImpl;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;

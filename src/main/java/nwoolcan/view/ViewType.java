@@ -21,6 +21,7 @@ public enum ViewType {
      */
     WAREHOUSE,
     /**
+<<<<<<< HEAD
      * The review view.
      */
     BATCHEVALUATION,
@@ -38,12 +39,25 @@ public enum ViewType {
     EVALUATION_TYPE,
     /**
      *
+     * The main production view.
+     */
+    PRODUCTION,
+    /**
+     * The master table view.
      */
     MASTER_TABLE,
     /**
      * Detail view to show a {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      */
-    STOCK_DETAIL;
+    STOCK_DETAIL,
+    /**
+     * Detail view to show a batch.
+     */
+    BATCH_DETAIL,
+    /**
+     * Modal for creating a new batch.
+     */
+    NEW_BATCH_MODAL;
     /**
      * Name of the FXML files associated with this type of view.
      * @return The resource name, relative to this package.

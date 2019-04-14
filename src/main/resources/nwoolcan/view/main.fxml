@@ -5,6 +5,10 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
 <?import nwoolcan.view.subview.SubViewContainer?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.MainController">
@@ -19,9 +23,11 @@
                 </Menu>
                 <Menu text="View">
                     <items>
-                        <MenuItem onAction="#menuViewDashboardClick" text="Dashboard" />
-                        <MenuItem onAction="#menuViewWarehouseClick" text="Warehouse" />
-                        <MenuItem onAction="#menuViewEvaluationClick" text="Review"  />
+                        <MenuItem text="Review"  onAction="#menuViewEvaluationClick"/>
+                        <MenuItem text="Dashboard" onAction="#menuViewDashboardClick" />
+                        <MenuItem text="Warehouse" onAction="#menuViewWarehouseClick" />
+                        <MenuItem text="Production" onAction="#menuViewProductionClick" />
+
                     </items>
                 </Menu>
             </menus>

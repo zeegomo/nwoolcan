@@ -11,7 +11,12 @@ public abstract class AbstractViewController {
     private final Controller controller;
     private final ViewManager viewManager;
 
-    protected AbstractViewController(final Controller controller, final ViewManager viewManager) {
+    /**
+     * Creates itself and inject the controller and the view manager.
+     * @param controller injected controller.
+     * @param viewManager injected view manager.
+     */
+    public AbstractViewController(final Controller controller, final ViewManager viewManager) {
         this.controller = controller;
         this.viewManager = viewManager;
     }

@@ -1,7 +1,7 @@
 package nwoolcan.viewmodel.brewery.production;
 
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
-import nwoolcan.model.brewery.production.batch.Batch;
+import nwoolcan.model.brewery.batch.Batch;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -41,6 +41,16 @@ public class ProductionViewModel {
     public Map<String, Long> getStylesFrequency() {
         return this.batches.stream()
                            .map(b -> b.getBatchInfo().getBeerDescription().getStyle())
+                           .collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+    }
+
+    /**
+     * Returns a map containing, for each style, how many batches have that style.
+     * @return a map containing, for each style, how many batches have that style.
+     */
+    public Map<String, Long> getMethodsFrequency() {
+        return this.batches.stream()
+                           .map(b -> b.getBatchInfo().getMethod().getName())
                            .collect(Collectors.groupingBy(s -> s, Collectors.counting()));
     }
 

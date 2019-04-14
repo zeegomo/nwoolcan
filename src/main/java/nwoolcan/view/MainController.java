@@ -11,7 +11,6 @@ import nwoolcan.model.brewery.production.batch.review.EvaluationFactory;
 import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.utils.Result;
 import nwoolcan.controller.Controller;
-import nwoolcan.controller.viewmodel.WarehouseViewModel;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
 
@@ -74,7 +73,17 @@ public final class MainController extends AbstractViewController {
      * @param event The occurred event
      */
     public void menuViewWarehouseClick(final ActionEvent event) {
-        this.getViewManager().getView(ViewType.WAREHOUSE, new WarehouseViewModel("ciccio")).peek(view -> this.contentPane.substitute(view));
+        getController().setBreweryName("ciccio");
+        getController().setOwnerName("ciccia");
+        this.getViewManager().getView(ViewType.WAREHOUSE, getController().getWarehouseController().getWarehouseViewModel()).peek(view -> this.contentPane.substitute(view));
+    }
+
+    /**
+     * Shows the Production view.
+     * @param event The occurred event
+     */
+    public void menuViewProductionClick(final ActionEvent event) {
+        this.getViewManager().getView(ViewType.PRODUCTION, this.getController().getProductionViewModel()).peek(view -> this.contentPane.substitute(view));
     }
     /**
      * Shows the Warehouse view.
