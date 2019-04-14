@@ -8,6 +8,7 @@ import nwoolcan.view.InitializableController;
 import nwoolcan.view.SubViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.subview.SubView;
+import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.warehouse.stock.PlainStockViewModel;
 
 /**
@@ -15,14 +16,29 @@ import nwoolcan.viewmodel.brewery.warehouse.stock.PlainStockViewModel;
  */
 @SuppressWarnings("NullAway")
 public final class StockDetailController extends SubViewController implements InitializableController<PlainStockViewModel> {
+
+    @FXML
+    private Label lblArticle;
+    @FXML
+    private Label lblAvailableQt;
+    @FXML
+    private Label lblCreationDate;
+    @FXML
+    private Label lblLastModified;
+    @FXML
+    private Label lblExpiresIn;
+    @FXML
+    private Label lblUsedQt;
+    @FXML
+    private SubViewContainer masterTableContainer;
+    @FXML
+    private SubView stockDetailSubView;
+
     @FXML
     private Label lblName;
 
     @FXML
     private Label lblId;
-
-    @FXML
-    private SubView subView;
 
     /**
      * Creates itself and gets injected.
@@ -46,6 +62,13 @@ public final class StockDetailController extends SubViewController implements In
 
     @Override
     protected SubView getSubView() {
-        return this.subView;
+        return this.stockDetailSubView;
+    }
+
+    /**
+     * Creates an overlay and loads the article page.
+     * @param actionEvent that occurred.
+     */
+    public void goToAricleButtonClick(final ActionEvent actionEvent) {
     }
 }

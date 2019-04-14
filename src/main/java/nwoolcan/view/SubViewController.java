@@ -77,9 +77,10 @@ public abstract class SubViewController extends AbstractViewController {
      * Pops the current overlay and show the previous one.
      */
     protected final void previousView() {
-        this.getSubView().getContainer()
-               .ifPresent(c -> c.previous()
-                                .peekError(err -> new Alert(Alert.AlertType.WARNING, "No previous found").showAndWait()));
+        this.getSubView()
+            .getContainer()
+            .ifPresent(c -> c.previous()
+            .peekError(err -> new Alert(Alert.AlertType.WARNING, "No previous found").showAndWait()));
     }
 
     /**
