@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
  */
 public final class DetailBatchViewModel {
 
+    private final int id;
     private final BatchInfoViewModel batchInfo;
     private final List<MasterStepViewModel> steps;
 
@@ -25,9 +26,18 @@ public final class DetailBatchViewModel {
      * @param batch the batch to get the data from.
      */
     public DetailBatchViewModel(final Batch batch) {
+        this.id = batch.getId();
         this.batchInfo = new BatchInfoViewModel(); //TODO change to correct implementation when done
         this.steps = batch.getSteps().stream().map(MasterStepViewModel::new).collect(Collectors.toList());
         this.review = batch.getEvaluation().map(EvaluationViewModel::new).orElse(null);
+    }
+
+    /**
+     * Returns the batch id.
+     * @return the batch id.
+     */
+    public int getId() {
+        return this.id;
     }
 
     /**
