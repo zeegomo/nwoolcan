@@ -3,13 +3,19 @@ package nwoolcan.view.production;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.SubViewController;
 import nwoolcan.view.ViewManager;
+import nwoolcan.view.ViewType;
+import nwoolcan.view.mastertable.ColumnDescriptor;
+import nwoolcan.view.mastertable.MasterTableViewModel;
 import nwoolcan.view.subview.SubView;
+import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.MasterStepViewModel;
+
+import java.util.Arrays;
 
 /**
  * View controller for the batch detail view.
@@ -19,6 +25,8 @@ public final class BatchDetailController
     extends SubViewController
     implements InitializableController<DetailBatchViewModel> {
 
+    @FXML
+    private SubViewContainer masterTableContainer;
     @FXML
     private Button goBackButton;
 
@@ -37,7 +45,26 @@ public final class BatchDetailController
 
     @Override
     public void initData(final DetailBatchViewModel data) {
+        //TODO init batch info sub view
 
+        final MasterTableViewModel<MasterStepViewModel, Object> masterViewModel = new MasterTableViewModel<>(
+            Arrays.asList(
+                new ColumnDescriptor("Step name", "type"),
+                new ColumnDescriptor("Start date", "startDate"),
+                new ColumnDescriptor("End date", "endDate"),
+                new ColumnDescriptor("End size", "endSize"),
+                new ColumnDescriptor("Finalized", "finalized")
+            ),
+            data.getSteps(),
+            ViewType.STEP_DETAIL,
+            mbvm -> null //TODO convert into step detail view model
+        );
+
+        this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
+
+//        if (data.getReview() != null) {
+//            //TODO init review sub view
+//        }
     }
 
     @Override

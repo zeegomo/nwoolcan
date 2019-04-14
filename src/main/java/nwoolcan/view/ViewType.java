@@ -47,6 +47,10 @@ public enum ViewType {
      */
     BATCH_DETAIL,
     /**
+     * Detail view to show a step.
+     */
+    STEP_DETAIL,
+    /**
      * Modal for creating a new batch.
      */
     NEW_BATCH_MODAL;

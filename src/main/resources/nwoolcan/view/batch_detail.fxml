@@ -35,6 +35,9 @@
                         <!-- TODO fill with batch info sub view -->
                     </SubViewContainer>
                 </TitledPane>
+                <TitledPane text="Steps" >
+                    <SubViewContainer fx:id="masterTableContainer" parent="$batchDetailSubView" />
+                </TitledPane>
             </VBox>
         </center>
     </BorderPane>
