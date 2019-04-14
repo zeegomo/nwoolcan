@@ -11,8 +11,8 @@ import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.MiscArticleViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.stock.AbstractStockViewModel;
-import nwoolcan.viewmodel.brewery.warehouse.stock.StockViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.stock.MasterStockViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.stock.PlainStockViewModel;
 
 import java.util.Date;
 import java.util.List;
@@ -34,11 +34,11 @@ public interface WarehouseController {
      */
     List<AbstractArticleViewModel> getArticles(QueryArticle queryArticle);
     /**
-     * Creates a {@link List} of {@link AbstractStockViewModel} accordingly to the query.
+     * Creates a {@link List} of {@link MasterStockViewModel} accordingly to the query.
      * @param queryStock describes the nature of the query.
-     * @return a {@link List} of {@link AbstractStockViewModel} accordingly to the query.
+     * @return a {@link List} of {@link MasterStockViewModel} accordingly to the query.
      */
-    List<AbstractStockViewModel> getStocks(QueryStock queryStock);
+    List<MasterStockViewModel> getStocks(QueryStock queryStock);
     /**
      * Return an updated instance of the {@link WarehouseViewModel}.
      * @return an updated instance of the {@link WarehouseViewModel}.
@@ -69,18 +69,18 @@ public interface WarehouseController {
                                                        UnitOfMeasure unitOfMeasure,
                                                        IngredientType ingredientType);
     /**
-     * Create a {@link nwoolcan.model.brewery.warehouse.stock.Stock} and return its {@link StockViewModel}.
+     * Create a {@link nwoolcan.model.brewery.warehouse.stock.Stock} and return its {@link PlainStockViewModel}.
      * @param articleId the id of the article linked to the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      * @param expirationDate the {@link Date} in which this {@link nwoolcan.model.brewery.warehouse.stock.Stock} will expire.
-     * @return the {@link StockViewModel} of the new {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
+     * @return the {@link PlainStockViewModel} of the new {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      */
-    Result<StockViewModel> createStock(int articleId, Date expirationDate);
+    Result<PlainStockViewModel> createStock(int articleId, Date expirationDate);
     /**
-     * Create a {@link nwoolcan.model.brewery.warehouse.stock.Stock} and return its {@link StockViewModel}.
+     * Create a {@link nwoolcan.model.brewery.warehouse.stock.Stock} and return its {@link PlainStockViewModel}.
      * @param articleId the id of the article linked to the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
-     * @return the {@link StockViewModel} of the new {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
+     * @return the {@link PlainStockViewModel} of the new {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      */
-    Result<StockViewModel> createStock(int articleId);
+    Result<PlainStockViewModel> createStock(int articleId);
     /**
      * Set a new name of an existing {@link nwoolcan.model.brewery.warehouse.article.Article}.
      * @param articleId of the existing {@link nwoolcan.model.brewery.warehouse.article.Article}.
