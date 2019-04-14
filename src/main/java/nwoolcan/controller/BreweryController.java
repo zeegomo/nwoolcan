@@ -1,5 +1,7 @@
 package nwoolcan.controller;
 
+import nwoolcan.controller.batch.BatchController;
+import nwoolcan.controller.batch.BatchControllerImpl;
 import nwoolcan.controller.warehouse.WarehouseController;
 import nwoolcan.controller.warehouse.WarehouseControllerImpl;
 import nwoolcan.model.brewery.Brewery;
@@ -40,8 +42,9 @@ import java.util.stream.Collectors;
  */
 public final class BreweryController implements Controller {
 
-    private final WarehouseController warehouseController;
     private final Brewery brewery;
+    private final BatchController batchController;
+    private final WarehouseController warehouseController;
     private static final String BATCH_NOT_FOUND = "Batch not found.";
     private static final String BEER_ARTICLE_NOT_FOUND = "Beer Article not found.";
 
@@ -52,11 +55,17 @@ public final class BreweryController implements Controller {
     public BreweryController(final Brewery brewery) {
         this.brewery = brewery;
         this.warehouseController = new WarehouseControllerImpl(brewery.getWarehouse());
+        this.batchController = new BatchControllerImpl(brewery);
     }
 
     @Override
     public WarehouseController getWarehouseController() {
         return warehouseController;
+    }
+
+    @Override
+    public BatchController getBatchController() {
+        return this.batchController;
     }
 
     @Override
