@@ -5,8 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
+import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.view.subview.SubViewContainer;
+
+import java.util.Date;
 
 /**
  * Handles the Main view.
@@ -46,7 +49,8 @@ public final class MainController extends AbstractViewController {
         final int id2 = getController().getWarehouseController().createIngredientArticle("ing", UnitOfMeasure.GRAM, IngredientType.FERMENTABLE).getId();
         final int id3 = getController().getWarehouseController().createMiscArticle("misc", UnitOfMeasure.UNIT).getId();
         getController().getWarehouseController().createStock(id2);
-        getController().getWarehouseController().createStock(id3);
+        getController().getWarehouseController().createStock(id3, new Date());
+        getController().getWarehouseController().addRecord(id3, 3.0, Record.Action.ADDING);
         this.getViewManager().getView(ViewType.WAREHOUSE, getController().getWarehouseController().getWarehouseViewModel()).peek(view -> this.contentPane.substitute(view));
     }
 

@@ -74,7 +74,7 @@ public abstract class MasterStockViewModel {
      * @return the expiration {@link java.util.Date}.
      */
     public final String getExpirationDate() {
-        return expirationDate.isPresent() ? DateFormatUtils.format(expirationDate.get(), "dd-MM-yyyy") : "";
+        return expirationDate.isPresent() ? DateFormatUtils.format(new Date(), "dd-MM-yyyy") : "";
     }
 
     /**

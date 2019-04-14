@@ -3,8 +3,6 @@ package nwoolcan.viewmodel.brewery.warehouse.article;
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 
-import java.lang.annotation.Inherited;
-
 /**
  * View-Model representation of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
  */
