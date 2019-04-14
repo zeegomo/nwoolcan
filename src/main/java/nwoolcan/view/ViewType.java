@@ -19,7 +19,6 @@ public enum ViewType {
      */
     WAREHOUSE,
     /**
-<<<<<<< HEAD
      * The review view.
      */
     BATCHEVALUATION,
@@ -35,6 +34,10 @@ public enum ViewType {
      * Insertion for categories.
      */
     EVALUATION_TYPE,
+    /**
+     * Modal for creating a new evaluation.
+     */
+    NEW_BATCH_EVALUATION_MODAL,
     /**
      *
      * The main production view.
