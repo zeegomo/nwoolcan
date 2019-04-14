@@ -78,7 +78,7 @@ public final class DetailStepViewModel {
      */
     @Nullable
     public Date getEndDate() {
-        return Optional.ofNullable(this.endDate).map(d -> new Date(this.endDate.getTime())).orElse(null);
+        return Optional.ofNullable(this.endDate).map(d -> new Date(d.getTime())).orElse(null);
     }
 
     /**
