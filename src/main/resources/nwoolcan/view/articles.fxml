@@ -12,7 +12,10 @@
 <?import nwoolcan.view.subview.SubView?>
 <?import nwoolcan.view.subview.SubViewContainer?>
 
-<SubView fx:id="articlesSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.brewery.warehouse.article.ArticlesViewController">
+<SubView fx:id="articlesSubView"
+         xmlns="http://javafx.com/javafx/8.0.172-ea"
+         xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="nwoolcan.view.warehouse.article.ArticlesInfoViewController">
     <BorderPane>
         <top>
             <Label text="Articles" BorderPane.alignment="CENTER">

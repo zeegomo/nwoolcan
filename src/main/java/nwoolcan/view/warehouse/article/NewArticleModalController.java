@@ -1,4 +1,4 @@
-package nwoolcan.view.brewery.warehouse.article;
+package nwoolcan.view.warehouse.article;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

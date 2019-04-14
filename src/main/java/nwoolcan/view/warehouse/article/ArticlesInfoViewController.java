@@ -1,4 +1,4 @@
-package nwoolcan.view.brewery.warehouse.article;
+package nwoolcan.view.warehouse.article;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -30,7 +30,7 @@ import java.util.List;
  * Controller class for articles view.
  */
 @SuppressWarnings("NullAway")
-public final class ArticlesViewController extends SubViewController implements InitializableController<ArticlesInfoViewModel> {
+public final class ArticlesInfoViewController extends SubViewController implements InitializableController<ArticlesInfoViewModel> {
 
     @FXML
     private Label lblTotalNumberArticles;
@@ -55,7 +55,7 @@ public final class ArticlesViewController extends SubViewController implements I
      * @param controller  injected controller.
      * @param viewManager injected view manager.
      */
-    public ArticlesViewController(final Controller controller, final ViewManager viewManager) {
+    public ArticlesInfoViewController(final Controller controller, final ViewManager viewManager) {
         super(controller, viewManager);
     }
 
