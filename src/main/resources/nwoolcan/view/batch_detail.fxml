@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import nwoolcan.view.subview.SubView?>
+
+<?import javafx.scene.control.Label?>
+<SubView xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:controller="nwoolcan.view.production.BatchDetailController"
+         fx:id="batchDetailSubView">
+
+    <Label fx:id="batchIdLabel" />
+
+</SubView>
