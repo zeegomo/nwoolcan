@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * View model representing a {@link Step} in detail.
+ */
 public final class DetailStepViewModel {
 
     private final String typeName;
@@ -26,6 +29,10 @@ public final class DetailStepViewModel {
 
     private final List<ParameterViewModel> registeredParameters;
 
+    /**
+     * Basic constructor with decorator-like pattern.
+     * @param step the step to get data from.
+     */
     public DetailStepViewModel(final Step step) {
         this.typeName = step.getStepInfo().getType().getName();
         this.notes = step.getStepInfo().getNote().orElse("");
@@ -41,32 +48,60 @@ public final class DetailStepViewModel {
                                         .collect(Collectors.toList());
     }
 
+    /**
+     * Returns the step type name.
+     * @return the step type name.
+     */
     public String getTypeName() {
         return this.typeName;
     }
 
+    /**
+     * Returns the registered notes (string empty if none).
+     * @return the registered notes.
+     */
     public String getNotes() {
         return this.notes;
     }
 
+    /**
+     * Returns the start date of the step.
+     * @return the start date of the step.
+     */
     public Date getStartDate() {
         return new Date(this.startDate.getTime());
     }
 
+    /**
+     * Returns the end date of the step (null if none).
+     * @return the end date of the step.
+     */
     @Nullable
     public Date getEndDate() {
         return Optional.ofNullable(this.endDate).map(d -> new Date(this.endDate.getTime())).orElse(null);
     }
 
+    /**
+     * Returns a {@link QuantityViewModel} representing the end size of the step (null if none).
+     * @return the end size of the step.
+     */
     @Nullable
     public QuantityViewModel getEndSize() {
         return this.endSize;
     }
 
+    /**
+     * Returns true if the step is finalized, false otherwise.
+     * @return true if the step is finalized, false otherwise.
+     */
     public boolean isFinalized() {
         return finalized;
     }
 
+    /**
+     * Returns a list of {@link ParameterViewModel} representing the registered parameters in the step.
+     * @return the registered parameters in the step.
+     */
     public List<ParameterViewModel> getRegisteredParameters() {
         return Collections.unmodifiableList(this.registeredParameters);
     }
