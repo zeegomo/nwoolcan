@@ -66,7 +66,7 @@ public class BatchController {
         return newBatch.getCategories()
                        .stream()
                        .map(cat -> EvaluationFactory.create(cat.getLeft(), cat.getMiddle(), cat.getRight().orElse(null)))
-                       .reduce(
+                       .<Result<Set<Evaluation>>>reduce(
                            Result.of(new HashSet<>()),
                            (res, cat) -> res.require(cat::isPresent, cat.getError())
                                  .peek(list -> list.add(cat.getValue())),
