@@ -11,6 +11,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="nwoolcan.view.production.GoNextStepModalController">
@@ -33,6 +37,25 @@
                         <VBox>
                             <Label text="Next step type" />
                             <ComboBox fx:id="nextStepTypesComboBox" />
+                        </VBox>
+                    </TitledPane>
+                    <HBox>
+                        <CheckBox fx:id="chooseFinalizeNextStepCheckBox" text="Finalize current step?" />
+                    </HBox>
+                    <TitledPane text="Finalize step" disable="true" >
+                        <VBox>
+                            <VBox>
+                                <Label text="Notes" />
+                                <TextArea fx:id="notesTextArea"/>
+                            </VBox>
+                            <VBox>
+                                <Label text="End size" />
+                                <HBox>
+                                    <TextField fx:id="endSizeValueTextField" />
+                                    <Label fx:id="endSizeUnitOfMeasureSymbolLabel" />
+                                    <ComboBox fx:id="endSizeUnitOfMeasureComboBox" />
+                                </HBox>
+                            </VBox>
                         </VBox>
                     </TitledPane>
                 </VBox>

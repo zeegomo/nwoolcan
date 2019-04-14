@@ -2,9 +2,14 @@ package nwoolcan.view.production;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.step.StepType;
+import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.ViewManager;
@@ -21,6 +26,18 @@ public final class GoNextStepModalController
     extends AbstractViewController
     implements InitializableController<GoNextStepViewModel> {
 
+    @FXML
+    private TextArea notesTextArea;
+
+    @FXML
+    private TextField endSizeValueTextField;
+    @FXML
+    private Label endSizeUnitOfMeasureSymbolLabel;
+    @FXML
+    private ComboBox<UnitOfMeasure> endSizeUnitOfMeasureComboBox;
+
+    @FXML
+    private CheckBox chooseFinalizeNextStepCheckBox;
     @FXML
     private ComboBox<StepType> nextStepTypesComboBox;
 
