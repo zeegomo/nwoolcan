@@ -61,7 +61,7 @@
                 </VBox>
             </center>
             <bottom>
-                <Button text="Go" BorderPane.alignment="CENTER" />
+                <Button text="Go" BorderPane.alignment="CENTER" onAction="#goButtonClicked" />
             </bottom>
         </BorderPane>
     </ScrollPane>

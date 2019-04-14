@@ -126,7 +126,7 @@ public final class BatchDetailController
 
         if (modal.getUserData() != null) {
             this.substituteView(ViewType.BATCH_DETAIL,
-                this.getController().getBatchController().getDetailBatchViewModelById(this.data.getId()));
+                this.getController().getBatchController().getDetailBatchViewModelById(this.data.getId()).getValue());
         }
     }
 
