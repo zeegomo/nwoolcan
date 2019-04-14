@@ -52,7 +52,7 @@
                                 <Label text="End size" />
                                 <HBox>
                                     <TextField fx:id="endSizeValueTextField" />
-                                    <Label fx:id="endSizeUnitOfMeasureSymbolLabel" />
+                                    <Label fx:id="endSizeUnitOfMeasureSymbolLabel" text="?" />
                                     <ComboBox fx:id="endSizeUnitOfMeasureComboBox" />
                                 </HBox>
                             </VBox>

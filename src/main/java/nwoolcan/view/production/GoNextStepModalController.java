@@ -63,5 +63,13 @@ public final class GoNextStepModalController
         this.finalizeStepTitlePane.disableProperty().bind(
             this.chooseFinalizeNextStepCheckBox.selectedProperty().not()
         );
+
+        this.endSizeUnitOfMeasureComboBox.setItems(FXCollections.observableList(
+            data.getPossibleUnitsOfMeasure()
+        ));
+
+        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
+            this.endSizeUnitOfMeasureSymbolLabel.setText(newV.getSymbol());
+        });
     }
 }
