@@ -19,7 +19,6 @@ public final class DetailBatchViewModel {
     private final int id;
     private final BatchInfoViewModel batchInfo;
     private final List<MasterStepViewModel> steps;
-    private final Set<StepType> nextStepTypes;
     private final boolean ended;
 
     @Nullable
@@ -33,7 +32,6 @@ public final class DetailBatchViewModel {
         this.id = batch.getId();
         this.batchInfo = new BatchInfoViewModel(); //TODO change to correct implementation when done
         this.steps = batch.getSteps().stream().map(MasterStepViewModel::new).collect(Collectors.toList());
-        this.nextStepTypes = Collections.unmodifiableSet(batch.getCurrentStep().getNextStepTypes());
         this.review = batch.getEvaluation().map(BatchEvaluationViewModel::new).orElse(null);
         this.ended = batch.isEnded();
     }
@@ -60,14 +58,6 @@ public final class DetailBatchViewModel {
      */
     public List<MasterStepViewModel> getSteps() {
         return Collections.unmodifiableList(this.steps);
-    }
-
-    /**
-     * Returns a set describing what steps type can come next of the current step of the batch.
-     * @return a set describing what steps type can come next of the current step of the batch.
-     */
-    public Set<StepType> getNextStepTypes() {
-        return this.nextStepTypes;
     }
 
     /**
