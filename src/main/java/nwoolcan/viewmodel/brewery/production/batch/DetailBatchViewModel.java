@@ -2,7 +2,7 @@ package nwoolcan.viewmodel.brewery.production.batch;
 
 
 import nwoolcan.model.brewery.batch.Batch;
-import nwoolcan.viewmodel.brewery.production.batch.review.EvaluationViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationViewModel;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -19,7 +19,7 @@ public final class DetailBatchViewModel {
     private final List<MasterStepViewModel> steps;
 
     @Nullable
-    private final EvaluationViewModel review;
+    private final BatchEvaluationViewModel review;
 
     /**
      * Basic constructor with decorator-like pattern.
@@ -29,7 +29,7 @@ public final class DetailBatchViewModel {
         this.id = batch.getId();
         this.batchInfo = new BatchInfoViewModel(); //TODO change to correct implementation when done
         this.steps = batch.getSteps().stream().map(MasterStepViewModel::new).collect(Collectors.toList());
-        this.review = batch.getEvaluation().map(EvaluationViewModel::new).orElse(null);
+        this.review = batch.getEvaluation().map(BatchEvaluationViewModel::new).orElse(null);
     }
 
     /**
@@ -61,7 +61,7 @@ public final class DetailBatchViewModel {
      * @return the evaluation view model of the batch representing its review (null if none).
      */
     @Nullable
-    public EvaluationViewModel getReview() {
+    public BatchEvaluationViewModel getReview() {
         return this.review;
     }
 }
