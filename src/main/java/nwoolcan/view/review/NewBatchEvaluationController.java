@@ -18,7 +18,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.review.BatchEvaluationType;
+import nwoolcan.model.brewery.batch.review.Evaluation;
 import nwoolcan.model.brewery.batch.review.EvaluationType;
+import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
@@ -32,6 +34,7 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -104,15 +107,23 @@ public class NewBatchEvaluationController extends SubViewController implements I
      *
      */
     public void createBatchReviewClick() {
-        Set<Triple<EvaluationType,
+        Result<Set<Triple<EvaluationType,
             Integer,
-            Optional<String>>> cat = this.evaluations.entrySet()
-                                                     .stream()
-                                                     .map(entry -> Triple.of(
-                                                         entry.getKey(),
-                                                         Results.ofChecked(() -> Integer.parseInt(entry.getValue().getLeft().getText())).orElse(0),
-                                                         Optional.ofNullable(entry.getValue().getRight().getText())))
-                                                     .collect(Collectors.toSet());
+            Optional<String>>>> cat = this.evaluations.entrySet()
+                                                      .stream()
+                                                      .map(entry -> Triple.of(
+                                                          entry.getKey(),
+                                                          Results.ofChecked(() -> Integer.parseInt(entry.getValue().getLeft().getText())),
+                                                          Optional.ofNullable(entry.getValue().getRight().getText())))
+                                                      .reduce(
+                                                          Result.of(new HashSet<>()),
+                                                          (res, triple) -> res.require(() -> triple.getMiddle().isPresent(), triple.getMiddle().getError())
+                                                                           .peek(list -> list.add(Triple.of(
+                                                                               triple.getLeft(),
+                                                                               triple.getMiddle().getValue(),
+                                                                               triple.getRight()))),
+                                                          (res1, res2) -> res1.require(res1::isPresent, res2.getError())
+                                                                              .peek(list -> list.addAll(res2.orElse(HashSet::new))));
         System.out.println(cat);
     }
 
