@@ -24,10 +24,10 @@
                 <Menu text="View">
                     <items>
                         <MenuItem text="Review"  onAction="#menuViewEvaluationClick"/>
-                        <MenuItem text="New Review"  onAction="#menuViewNewEvaluationClick"/>
                         <MenuItem text="Dashboard" onAction="#menuViewDashboardClick" />
                         <MenuItem text="Warehouse" onAction="#menuViewWarehouseClick" />
                         <MenuItem text="Production" onAction="#menuViewProductionClick" />
+                        <MenuItem text="Articles" onAction="#menuViewArticlesClick" />
 
                     </items>
                 </Menu>

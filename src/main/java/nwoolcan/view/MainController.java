@@ -94,6 +94,19 @@ public final class MainController extends AbstractViewController {
         this.getViewManager().getView(ViewType.BATCHEVALUATIONDETAIL, new BatchEvaluationDetailViewModel(bjcp)).peek(view -> this.contentPane.substitute(view));
     }
     /**
+     * Shows the Articles view.
+     * @param event The occurred event
+     */
+    public void menuViewArticlesClick(final ActionEvent event) {
+        this.getViewManager()
+            .getView(ViewType.ARTICLES,
+                     this.getController()
+                         .getWarehouseController()
+                         .getArticlesViewModel())
+            .peek(view -> this.contentPane.substitute(view));
+    }
+
+    /**
      * Quits the application.
      * @param event The occurred event
      */

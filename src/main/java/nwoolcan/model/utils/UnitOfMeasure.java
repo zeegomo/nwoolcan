@@ -131,7 +131,6 @@ public enum UnitOfMeasure {
     UnitOfMeasure(final String symbol) {
         this.symbol = symbol;
     }
-
     /**
      * Returns the symbol of the unit of measure.
      * @return the symbol of the unit of measure.
@@ -139,7 +138,6 @@ public enum UnitOfMeasure {
     public String getSymbol() {
         return this.symbol;
     }
-
     /**
      * Checks that the value associated with this unit of measure is valid.
      * @param value the value to validate.
