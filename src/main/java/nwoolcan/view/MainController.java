@@ -3,17 +3,18 @@ package nwoolcan.view;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import nwoolcan.model.brewery.production.batch.review.BatchEvaluation;
-import nwoolcan.model.brewery.production.batch.review.BatchEvaluationBuilder;
-import nwoolcan.model.brewery.production.batch.review.BatchEvaluationType;
-import nwoolcan.model.brewery.production.batch.review.Evaluation;
-import nwoolcan.model.brewery.production.batch.review.EvaluationFactory;
-import nwoolcan.model.brewery.production.batch.review.types.BJCPBatchEvaluationType;
+import nwoolcan.model.brewery.batch.review.BatchEvaluation;
+import nwoolcan.model.brewery.batch.review.BatchEvaluationBuilder;
+import nwoolcan.model.brewery.batch.review.BatchEvaluationType;
+import nwoolcan.model.brewery.batch.review.Evaluation;
+import nwoolcan.model.brewery.batch.review.EvaluationFactory;
+import nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.utils.Result;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -44,7 +45,7 @@ public final class MainController extends AbstractViewController {
     BatchEvaluationBuilder builder = new BatchEvaluationBuilder();
 
     BatchEvaluation bjcp = builder.addReviewer("Andrea")
-                                          .addNotes("Very good")
+                                          .addNotes("Very goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery goodVery good")
                                           .build(bjcpType, evals)
                                           .getValue();
 
@@ -91,6 +92,13 @@ public final class MainController extends AbstractViewController {
      */
     public void menuViewEvaluationClick(final ActionEvent event) {
         this.getViewManager().getView(ViewType.BATCHEVALUATIONDETAIL, new BatchEvaluationDetailViewModel(bjcp)).peek(view -> this.contentPane.substitute(view));
+    }
+    /**
+     * Shows the Warehouse view.
+     * @param event The occurred event
+     */
+    public void menuViewNewEvaluationClick(final ActionEvent event) {
+        this.getViewManager().getView(ViewType.NEW_BATCH_EVALUATION_MODAL, new ArrayList<>(BatchEvaluationBuilder.getAvailableBatchEvaluationTypes().getValue())).peek(view -> this.contentPane.substitute(view));
     }
     /**
      * Quits the application.
