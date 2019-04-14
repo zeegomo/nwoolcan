@@ -32,6 +32,7 @@ repositories {
 dependencies {
     testCompile("junit", "junit", "4.12")
     implementation("io.github.classgraph", "classgraph", "4.8.8")
+    implementation("com.google.code.gson", "gson", "2.8.5")
     compileOnly("com.google.code.findbugs", "jsr305", "3.0.2")
     errorprone("com.uber.nullaway", "nullaway", "0.6.6")
     errorprone("com.google.errorprone", "error_prone_core", "2.3.2")
