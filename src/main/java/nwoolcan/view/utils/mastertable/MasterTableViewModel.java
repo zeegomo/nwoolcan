@@ -1,6 +1,6 @@
-package nwoolcan.view.mastertable;
+package nwoolcan.view.utils.mastertable;
 
-import nwoolcan.view.ViewType;
+import nwoolcan.view.utils.ViewType;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,4 +1,4 @@
-package nwoolcan.view;
+package nwoolcan.view.utils;
 
 /**
  * Types of views of the application.

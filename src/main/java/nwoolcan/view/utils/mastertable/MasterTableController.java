@@ -1,4 +1,4 @@
-package nwoolcan.view.mastertable;
+package nwoolcan.view.utils.mastertable;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -10,10 +10,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import nwoolcan.controller.Controller;
-import nwoolcan.view.InitializableController;
-import nwoolcan.view.SubViewController;
-import nwoolcan.view.ViewManager;
-import nwoolcan.view.subview.SubView;
+import nwoolcan.view.utils.InitializableController;
+import nwoolcan.view.utils.SubViewController;
+import nwoolcan.view.utils.ViewManager;
+import nwoolcan.view.utils.subview.SubView;
 
 /**
  * The controller for a master table representing data of type {@link T}.

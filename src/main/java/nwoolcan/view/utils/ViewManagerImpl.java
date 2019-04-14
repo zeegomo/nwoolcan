@@ -1,4 +1,4 @@
-package nwoolcan.view;
+package nwoolcan.view.utils;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

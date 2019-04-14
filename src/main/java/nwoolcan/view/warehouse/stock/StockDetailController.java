@@ -1,10 +1,13 @@
-package nwoolcan.view;
+package nwoolcan.view.warehouse.stock;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import nwoolcan.controller.Controller;
-import nwoolcan.view.subview.SubView;
+import nwoolcan.view.utils.subview.SubView;
+import nwoolcan.view.utils.InitializableController;
+import nwoolcan.view.utils.SubViewController;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.viewmodel.brewery.warehouse.stock.StockViewModel;
 
 /**

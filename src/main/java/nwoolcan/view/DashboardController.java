@@ -3,7 +3,10 @@ package nwoolcan.view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import nwoolcan.controller.Controller;
-import nwoolcan.view.subview.SubView;
+import nwoolcan.view.utils.subview.SubView;
+import nwoolcan.view.utils.SubViewController;
+import nwoolcan.view.utils.ViewManager;
+import nwoolcan.view.utils.ViewType;
 
 /**
  * Handles the Dashboard view.

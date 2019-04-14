@@ -7,9 +7,9 @@ import nwoolcan.controller.BreweryController;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.Brewery;
 import nwoolcan.model.brewery.BreweryImpl;
-import nwoolcan.view.ViewManager;
-import nwoolcan.view.ViewManagerImpl;
-import nwoolcan.view.ViewType;
+import nwoolcan.view.utils.ViewManager;
+import nwoolcan.view.utils.ViewManagerImpl;
+import nwoolcan.view.utils.ViewType;
 
 /**
  * Main class run when the program starts.

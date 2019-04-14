@@ -9,7 +9,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
-<?import nwoolcan.view.subview.SubViewContainer?>
+<?import nwoolcan.view.utils.subview.SubViewContainer?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.MainController">
     <top>

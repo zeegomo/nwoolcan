@@ -4,7 +4,10 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import nwoolcan.controller.Controller;
-import nwoolcan.view.subview.SubViewContainer;
+import nwoolcan.view.utils.subview.SubViewContainer;
+import nwoolcan.view.utils.AbstractViewController;
+import nwoolcan.view.utils.ViewManager;
+import nwoolcan.view.utils.ViewType;
 
 /**
  * Handles the Main view.

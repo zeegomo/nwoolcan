@@ -1,4 +1,4 @@
-package nwoolcan.view;
+package nwoolcan.view.utils;
 
 import nwoolcan.controller.Controller;
 

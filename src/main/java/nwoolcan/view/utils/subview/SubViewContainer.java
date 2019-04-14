@@ -1,4 +1,4 @@
-package nwoolcan.view.subview;
+package nwoolcan.view.utils.subview;
 
 import javafx.beans.NamedArg;
 import javafx.scene.Parent;

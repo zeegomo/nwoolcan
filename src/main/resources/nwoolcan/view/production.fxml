@@ -9,8 +9,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import nwoolcan.view.subview.SubView?>
-<?import nwoolcan.view.subview.SubViewContainer?>
+<?import nwoolcan.view.utils.subview.SubView?>
+<?import nwoolcan.view.utils.subview.SubViewContainer?>
 
 <SubView fx:id="productionSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.production.ProductionController">
     <BorderPane>

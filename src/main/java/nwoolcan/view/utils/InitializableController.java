@@ -1,4 +1,4 @@
-package nwoolcan.view;
+package nwoolcan.view.utils;
 
 /**
  * A controller to which you can inject some data to fill the view.
