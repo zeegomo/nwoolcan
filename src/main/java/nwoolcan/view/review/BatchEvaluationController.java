@@ -2,14 +2,15 @@ package nwoolcan.view.review;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.SubViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationViewModel;
+
+import java.util.logging.Logger;
 
 @SuppressWarnings("NullAway")
 /**
@@ -22,7 +23,6 @@ public class BatchEvaluationController
     private static final String UNSPECIFIED_REVIEWER = "Unavailable";
     @FXML
     private SubView batchEvaluationSubView;
-
     @FXML
     private Label lblEvaluationTypeName;
     @FXML
@@ -32,9 +32,7 @@ public class BatchEvaluationController
     @FXML
     private Label lblReviewer;
     @FXML
-    private TextArea lblNotes;
-    @FXML
-    private VBox categories;
+    private Text lblNotes;
 
     /**
      * Creates itself and gets injected.
@@ -54,7 +52,7 @@ public class BatchEvaluationController
         this.lblEvaluationScore.setText(Integer.toString(data.getScore()));
         this.lblReviewer.setText(data.getReviewer().orElse(UNSPECIFIED_REVIEWER));
         this.lblNotes.setText(data.getNotes().orElse(""));
-        this.lblNotes.setEditable(false);
+        //Logger.getGlobal().warning("size" + this.getSubView().getScene().getWindow());
     }
 
     @Override

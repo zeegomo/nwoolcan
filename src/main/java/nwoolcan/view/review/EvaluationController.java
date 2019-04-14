@@ -3,6 +3,7 @@ package nwoolcan.view.review;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.scene.text.Text;
 import nwoolcan.view.InitializableController;
 import nwoolcan.viewmodel.brewery.production.batch.review.EvaluationViewModel;
 
@@ -13,7 +14,7 @@ public final class EvaluationController implements InitializableController<Evalu
     @FXML
     private Label score;
     @FXML
-    private Label notes;
+    private Text notes;
 
     @Override
     public void initData(final EvaluationViewModel data) {
