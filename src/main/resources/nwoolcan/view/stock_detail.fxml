@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <SubView xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
-         fx:controller="nwoolcan.view.StockDetailController"
+         fx:controller="nwoolcan.view.warehouse.stock.StockDetailController"
          fx:id="subView">
     <FlowPane>
         <Button text="Back" onAction="#btnBackClick"/>
