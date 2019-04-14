@@ -2,6 +2,7 @@ package nwoolcan.view.review;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.InitializableController;
@@ -31,7 +32,7 @@ public class BatchEvaluationController
     @FXML
     private Label lblReviewer;
     @FXML
-    private Label lblNotes;
+    private TextArea lblNotes;
     @FXML
     private VBox categories;
 
@@ -53,6 +54,7 @@ public class BatchEvaluationController
         this.lblEvaluationScore.setText(Integer.toString(data.getScore()));
         this.lblReviewer.setText(data.getReviewer().orElse(UNSPECIFIED_REVIEWER));
         this.lblNotes.setText(data.getNotes().orElse(""));
+        this.lblNotes.setEditable(false);
     }
 
     @Override
