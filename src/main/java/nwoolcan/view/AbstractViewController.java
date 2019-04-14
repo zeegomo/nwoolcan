@@ -6,7 +6,7 @@ import nwoolcan.controller.Controller;
  * Abstract class representing a view controller that has been injected with a {@link Controller}
  * and a {@link ViewManager}.
  */
-abstract class AbstractViewController {
+public abstract class AbstractViewController {
 
     private final Controller controller;
     private final ViewManager viewManager;
