@@ -16,6 +16,9 @@
     <BorderPane>
         <top>
             <BorderPane BorderPane.alignment="CENTER">
+                <left>
+                    <Button fx:id="goBackButton" text="Back" onAction="#goBackButtonClicked"/>
+                </left>
                 <center>
                     <Label text="Batch detail">
                         <font>
@@ -23,9 +26,6 @@
                         </font>
                     </Label>
                 </center>
-                <right>
-                    <Button fx:id="goBackButton" text="Back" onAction="#goBackButtonClicked"/>
-                </right>
             </BorderPane>
         </top>
         <center>
@@ -37,6 +37,11 @@
                 </TitledPane>
                 <TitledPane text="Steps" >
                     <SubViewContainer fx:id="masterTableContainer" parent="$batchDetailSubView" />
+                </TitledPane>
+                <TitledPane text="Review">
+                    <SubViewContainer>
+                        <!-- TODO fill with evaluation sub view -->
+                    </SubViewContainer>
                 </TitledPane>
             </VBox>
         </center>
