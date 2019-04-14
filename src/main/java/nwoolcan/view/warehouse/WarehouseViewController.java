@@ -109,6 +109,7 @@ public final class WarehouseViewController extends SubViewController implements 
             new MasterTableViewModel<>(Arrays.asList(
                                            new ColumnDescriptor("ID", "id"),
                                            new ColumnDescriptor("Remaining Quantity", "remainingQuantity"),
+                                           new ColumnDescriptor("Article", "article"),
                                            new ColumnDescriptor("Used Quantity", "usedQuantity"),
                                            new ColumnDescriptor("Stock State", "stockState"),
                                            new ColumnDescriptor("Expiration Date", "expirationDate")

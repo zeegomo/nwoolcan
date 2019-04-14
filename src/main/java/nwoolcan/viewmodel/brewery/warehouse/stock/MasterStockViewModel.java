@@ -4,7 +4,7 @@ import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
-import nwoolcan.model.utils.Quantity;
+import nwoolcan.viewmodel.brewery.utils.QuantityViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
@@ -18,8 +18,8 @@ public abstract class MasterStockViewModel {
 
     private final int id;
     private final AbstractArticleViewModel article;
-    private final Quantity remainingQuantity;
-    private final Quantity usedQuantity;
+    private final QuantityViewModel remainingQuantity;
+    private final QuantityViewModel usedQuantity;
     private final StockState stockState;
     private final Optional<Date> expirationDate;
     /**
@@ -29,8 +29,8 @@ public abstract class MasterStockViewModel {
     public MasterStockViewModel(final Stock stock) {
         this.id = stock.getId();
         this.article = AbstractArticleViewModel.getViewArticle(stock.getArticle());
-        this.remainingQuantity = stock.getRemainingQuantity();
-        this.usedQuantity = stock.getUsedQuantity();
+        this.remainingQuantity = new QuantityViewModel(stock.getRemainingQuantity());
+        this.usedQuantity = new QuantityViewModel(stock.getUsedQuantity());
         this.stockState = stock.getState();
         this.expirationDate = stock.getExpirationDate();
     }
@@ -52,21 +52,21 @@ public abstract class MasterStockViewModel {
      * Return the remaining {@link nwoolcan.model.utils.Quantity}.
      * @return the remaining {@link nwoolcan.model.utils.Quantity}.
      */
-    public final Quantity getRemainingQuantity() {
+    public final QuantityViewModel getRemainingQuantity() {
         return remainingQuantity;
     }
     /**
      * Return the used {@link nwoolcan.model.utils.Quantity}.
      * @return the used {@link nwoolcan.model.utils.Quantity}.
      */
-    public final Quantity getUsedQuantity() {
+    public final QuantityViewModel getUsedQuantity() {
         return usedQuantity;
     }
     /**
      * Return the current {@link nwoolcan.model.brewery.warehouse.stock.StockState}.
      * @return the current {@link nwoolcan.model.brewery.warehouse.stock.StockState}.
      */
-    public final StockState getState() {
+    public final StockState getStockState() {
         return stockState;
     }
     /**
@@ -76,6 +76,7 @@ public abstract class MasterStockViewModel {
     public final String getExpirationDate() {
         return expirationDate.isPresent() ? DateFormatUtils.format(expirationDate.get(), "dd-MM-yyyy") : "";
     }
+
     /**
      * Generated a proper {@link MasterStockViewModel} from a general {@link Stock} accordingly with the {@link ArticleType} of the {@link nwoolcan.model.brewery.warehouse.article.Article} of the {@link Stock}.
      * @param stock to be converted
