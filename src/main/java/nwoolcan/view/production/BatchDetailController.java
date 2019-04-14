@@ -77,6 +77,6 @@ public final class BatchDetailController
      * @param event the occurred event.
      */
     public void goBackButtonClicked(final ActionEvent event) {
-        this.previousView();    //TODO this does not reload the production view
+        this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
     }
 }
