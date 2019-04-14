@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.text.Text?>
 <TitledPane xmlns="http://javafx.com/javafx"
             fx:id="title"
             xmlns:fx="http://javafx.com/fxml"
@@ -15,7 +17,7 @@
         </FlowPane>
         <FlowPane>
             <Label text="Notes: " styleClass="subtitle"/>
-            <Label fx:id="notes"/>
+            <Text fx:id="notes" wrappingWidth="500"/>
         </FlowPane>
     </VBox>
 </TitledPane>

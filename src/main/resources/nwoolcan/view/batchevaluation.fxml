@@ -9,6 +9,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.text.Text?>
 <SubView fx:id="batchEvaluationSubView" xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
          stylesheets="@style.css"
@@ -16,7 +17,7 @@
         <padding><Insets top="10" right="10" left="10" bottom="10"/></padding>
         <BorderPane>
             <top>
-                <Label text="Batch Review" BorderPane.alignment="CENTER" styleClass="title">
+                <Label text="Review" BorderPane.alignment="CENTER" styleClass="title">
                 </Label>
             </top>
             <center>
@@ -33,7 +34,7 @@
                             </FlowPane>
                             <FlowPane>
                                 <Label text="Notes: " styleClass="subtitle"/>
-                                <TextArea fx:id="lblNotes"/>
+                                <Text fx:id="lblNotes" wrappingWidth="500"/>
                             </FlowPane>
                         </VBox>
                     </left>
