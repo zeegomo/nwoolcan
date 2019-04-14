@@ -1,23 +1,41 @@
 package nwoolcan.view.review;
 
+import com.sun.javafx.geom.BaseBounds;
+import com.sun.javafx.geom.transform.BaseTransform;
+import com.sun.javafx.jmx.MXNodeAlgorithm;
+import com.sun.javafx.jmx.MXNodeAlgorithmContext;
+import com.sun.javafx.sg.prism.NGNode;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.batch.review.EvaluationType;
+import nwoolcan.utils.Results;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.SubViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
+import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -31,6 +49,7 @@ public class NewBatchEvaluationController extends SubViewController implements I
     @FXML
     private VBox categories;
 
+    private final Map<EvaluationType, Pair<TextField, TextArea>> evaluations = new HashMap<>();
 
     private static final class BatchEvaluationTypeProperty {
         private final BatchEvaluationType type;
@@ -69,26 +88,38 @@ public class NewBatchEvaluationController extends SubViewController implements I
                                                                     .map(BatchEvaluationTypeProperty::new)
                                                                     .collect(Collectors.toList())));
     }
-
     /**
      *
      */
     public void changeBatchTypeClick() {
         BatchEvaluationType type = this.batchTypeComboBox.getSelectionModel().getSelectedItem().getType();
         this.categories.getChildren().clear();
-        type.getCategories().forEach(cat -> this.categories.getChildren().add(categoryNode(cat)));
+        type.getCategories().forEach(cat -> {
+            Pair<Parent, EvaluationTypeController> res = categoryNode(cat);
+            this.categories.getChildren().add(res.getLeft());
+            this.evaluations.put(cat, Pair.of(res.getRight().getScore(), res.getRight().getNotes()));
+        });
     }
-
-
     /**
      *
      */
     public void createBatchReviewClick() {
+        Set<Triple<EvaluationType,
+            Integer,
+            Optional<String>>> cat = this.evaluations.entrySet()
+                                                     .stream()
+                                                     .map(entry -> Triple.of(
+                                                         entry.getKey(),
+                                                         Results.ofChecked(() -> Integer.parseInt(entry.getValue().getLeft().getText())).orElse(0),
+                                                         Optional.ofNullable(entry.getValue().getRight().getText())))
+                                                     .collect(Collectors.toSet());
+        System.out.println(cat);
     }
 
-    private Node categoryNode(final EvaluationType type) {
-        return this.getViewManager().getView(ViewType.EVALUATION_TYPE, type)
+    private Pair<Parent, EvaluationTypeController> categoryNode(final EvaluationType type) {
+        return this.getViewManager().getView(ViewType.EVALUATION_TYPE, type, EvaluationTypeController.class)
             .peekError(err -> Logger.getGlobal().severe(err.toString() + "\n" + err.getCause()))
-            .orElse(new Label(LOAD_FAILED));
+            .orElse(Pair.of(new Label(LOAD_FAILED), new EvaluationTypeController(this.getController(), this.getViewManager())));
     }
+
 }
