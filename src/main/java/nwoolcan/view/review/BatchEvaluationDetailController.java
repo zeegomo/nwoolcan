@@ -3,9 +3,15 @@ package nwoolcan.view.review;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import nwoolcan.controller.Controller;
+import nwoolcan.model.brewery.batch.review.BatchEvaluationBuilder;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.SubViewController;
@@ -16,6 +22,7 @@ import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.review.EvaluationViewModel;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
@@ -28,7 +35,8 @@ public final class BatchEvaluationDetailController extends SubViewController
     private static final String LOAD_FAILED = "Load failed";
     @FXML
     private SubViewContainer container;
-
+    @FXML
+    private SubView batchEvaluationDetailSubView;
     @FXML
     private VBox categories;
 
@@ -57,8 +65,30 @@ public final class BatchEvaluationDetailController extends SubViewController
                    .orElse(new Label(LOAD_FAILED));
     }
 
+    /**
+     *
+     */
+    public void newEvaluationClick() {
+        final Stage modal =  new Stage();
+        final Window window = this.getSubView().getScene().getWindow();
+
+        modal.initOwner(window);
+        modal.initModality(Modality.WINDOW_MODAL);
+
+        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_BATCH_EVALUATION_MODAL,
+            new ArrayList<>(BatchEvaluationBuilder.getAvailableBatchEvaluationTypes().getValue())).orElse(new AnchorPane()));
+
+        modal.setScene(scene);
+        modal.centerOnScreen();
+        modal.showAndWait();
+
+        if (modal.getUserData() != null) {
+            this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
+        }
+    }
+
     @Override
     protected SubView getSubView() {
-        return null;
+        return this.batchEvaluationDetailSubView;
     }
 }
