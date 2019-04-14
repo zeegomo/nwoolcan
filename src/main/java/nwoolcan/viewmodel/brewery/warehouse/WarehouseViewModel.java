@@ -2,24 +2,20 @@ package nwoolcan.viewmodel.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
-import nwoolcan.model.brewery.warehouse.article.QueryArticle;
-import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
-import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.AbstractStockViewModel;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * ViewWarehouse: general info section.
+ * WarehouseViewModel: general info section.
  */
 public class WarehouseViewModel {
 
     private static final QueryStock GENERAL_QUERY_STOCK = new QueryStockBuilder().build().getValue();
-    private static final QueryArticle GENERAL_QUERY_ARTICLE = new QueryArticleBuilder().build();
     private static final QueryStock BEER_AVAILABLE_QUERY = new QueryStockBuilder().setIncludeOnlyStockState(StockState.AVAILABLE)
                                                                                   .setArticleType(ArticleType.FINISHED_BEER)
                                                                                   .build().getValue();
@@ -57,7 +53,6 @@ public class WarehouseViewModel {
     private final int nMiscUsed;
     private final int nIngredientUsed;
     private final List<AbstractStockViewModel> allStocks;
-    private final List<AbstractArticleViewModel> allArticles;
 
     /**
      * Constructor of the view part of the {@link nwoolcan.model.brewery.warehouse.Warehouse} which specifies the general statistics.
@@ -77,10 +72,6 @@ public class WarehouseViewModel {
                                   .stream()
                                   .map(AbstractStockViewModel::getViewStock)
                                   .collect(Collectors.toList());
-        this.allArticles = warehouse.getArticles(GENERAL_QUERY_ARTICLE)
-                                    .stream()
-                                    .map(AbstractArticleViewModel::getViewArticle)
-                                    .collect(Collectors.toList());
     }
     /**
      * Return the number of available {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
@@ -151,13 +142,6 @@ public class WarehouseViewModel {
      */
     public List<AbstractStockViewModel> getStocks() {
         return allStocks;
-    }
-    /**
-     * Returns a {@link List} of {@link AbstractArticleViewModel}.
-     * @return a {@link List} of {@link AbstractArticleViewModel}.
-     */
-    public List<AbstractArticleViewModel> getArticles() {
-        return allArticles;
     }
 
 }
