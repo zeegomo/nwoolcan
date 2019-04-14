@@ -3,10 +3,13 @@ package nwoolcan.controller.batch;
 import nwoolcan.model.brewery.Brewery;
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.batch.QueryBatchBuilder;
+import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.GoNextStepDTO;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -35,6 +38,26 @@ public final class BatchControllerImpl implements BatchController {
     public Result<GoNextStepViewModel> getGoNextStepViewModel(final int batchId) {
         return this.getBatchById(batchId)
                    .map(GoNextStepViewModel::new);
+    }
+
+    @Override
+    public Result<Empty> goToNextStep(final int batchId, final GoNextStepDTO dto) {
+        Result<Batch> res =  this.getBatchById(batchId);
+
+        if (dto.finalizeBeforeGoingToNext()) {
+            res = res.flatMap(b -> {
+                         //did this for nullaway
+                         if (dto.getEndSize() == null) {
+                             return Result.error(new IllegalArgumentException());
+                         }
+                         return b.getCurrentStep().finalize(
+                             dto.getNotes().isEmpty() ? null : dto.getNotes(),
+                             new Date(),
+                             dto.getEndSize()).map(e -> b);
+                     });
+        }
+
+        return res.flatMap(b -> b.moveToNextStep(dto.getNextStepType()));
     }
 
     private Result<Batch> getBatchById(final int batchId) {
