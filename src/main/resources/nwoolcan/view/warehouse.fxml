@@ -12,13 +12,13 @@
 <?import nwoolcan.view.subview.SubView?>
 <?import nwoolcan.view.subview.SubViewContainer?>
 
-<SubView fx:id="articlesSubView"
+<SubView fx:id="warehouseSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="nwoolcan.view.brewery.warehouse.article.ArticlesViewController">
+         fx:controller="nwoolcan.view.warehouse.WarehouseViewController">
 <BorderPane>
     <top>
-        <Label text="Articles" BorderPane.alignment="CENTER">
+        <Label text="Warehouse" BorderPane.alignment="CENTER">
             <font>
                 <Font size="28.0" />
             </font>
@@ -27,46 +27,77 @@
     <center>
         <VBox>
             <TitledPane text="General information">
-                <BorderPane>
-                    <left>
-                        <VBox spacing="20.0">
-                            <FlowPane>
-                                <Label text="Total number of articles : " />
-                                <Label fx:id="lblTotalNumberArticles" />
-                            </FlowPane>
-                            <FlowPane>
-                                <Label text="Number of Beer Articles: " />
-                                <Label fx:id="lblNumberBeerArticles" />
-                            </FlowPane>
-                            <FlowPane>
-                                <Label text="Number of Misc Articles: " />
-                                <Label fx:id="lblNumberMiscArticles" />
-                            </FlowPane>
-                            <FlowPane>
-                                <Label text="Number of Ingredient Articles: " />
-                                <Label fx:id="lblNumberIngredientArticles" />
-                            </FlowPane>
-                        </VBox>
-                    </left>
-                    <center>
-                        <HBox>
-                            <PieChart fx:id="pieChartArticlesStatus" maxHeight="280.0" maxWidth="300.0" title="Articles">
-                            </PieChart>
-                        </HBox>
-                    </center>
-                    <right>
-                        <BorderPane>
-                            <center>
-                                <VBox alignment="CENTER">
-                                    <Button onAction="#createNewArticleClick" text="Create new article" />
-                                </VBox>
-                            </center>
-                        </BorderPane>
-                    </right>
-                </BorderPane>
+                <HBox>
+                    <VBox>
+                        <FlowPane>
+                            <Label text="Beer">
+                                <font>
+                                    <Font size="20.0" />
+                                </font>
+                            </Label>
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Available: " />
+                            <Label fx:id="lblNumberBeerAvailable" />
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Expired: " />
+                            <Label fx:id="lblNumberBeerExpired" />
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Used up: " />
+                            <Label fx:id="lblNumberBeerUsedUp" />
+                        </FlowPane>
+                    </VBox>
+                    <PieChart fx:id="pieChartBeerStatus" maxHeight="280.0" maxWidth="300.0"/>
+                    <VBox>
+                        <FlowPane>
+                            <Label text="Ingredients">
+                                <font>
+                                    <Font size="20.0" />
+                                </font>
+                            </Label>
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Available: " />
+                            <Label fx:id="lblNumberIngredientAvailable" />
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Expired: " />
+                            <Label fx:id="lblNumberIngredientExpired" />
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Used up: " />
+                            <Label fx:id="lblNumberIngredientUsedUp" />
+                        </FlowPane>
+                    </VBox>
+                    <PieChart fx:id="pieChartIngredientStatus" maxHeight="280.0" maxWidth="300.0"/>
+                    <VBox>
+                        <FlowPane>
+                            <Label text="Misc">
+                                <font>
+                                    <Font size="20.0" />
+                                </font>
+                            </Label>
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Available: " />
+                            <Label fx:id="lblNumberMiscAvailable" />
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Expired: " />
+                            <Label fx:id="lblNumberMiscExpired" />
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Used up: " />
+                            <Label fx:id="lblNumberMiscUsedUp" />
+                        </FlowPane>
+                    </VBox>
+                    <PieChart fx:id="pieChartMiscStatus" maxHeight="280.0" maxWidth="300.0"/>
+                </HBox>
             </TitledPane>
-            <TitledPane text="Articles">
-                <SubViewContainer fx:id="masterTableContainer" parent="$articlesSubView">
+            <TitledPane text="Stocks">
+                <SubViewContainer fx:id="masterTableContainer" parent="$warehouseSubView">
                 </SubViewContainer>
             </TitledPane>
         </VBox>

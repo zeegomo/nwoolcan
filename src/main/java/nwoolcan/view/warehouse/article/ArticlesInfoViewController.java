@@ -65,15 +65,13 @@ public final class ArticlesInfoViewController extends SubViewController implemen
         lblNumberBeerArticles.setText(Long.toString(data.getnBeerArticles()));
         lblNumberMiscArticles.setText(Long.toString(data.getnMiscArticles()));
         lblNumberIngredientArticles.setText(Long.toString(data.getnIngredientArticles()));
-        if (data.getArticles().size() > 0) {
-            pieChartArticlesStatus.setData(
-                FXCollections.observableArrayList(
-                    new PieChart.Data("Beer", data.getnBeerArticles()),
-                    new PieChart.Data("Misc", data.getnMiscArticles()),
-                    new PieChart.Data("Ingredient", data.getnIngredientArticles())
-                )
-            );
-        }
+        pieChartArticlesStatus.setData(
+            FXCollections.observableArrayList(
+                new PieChart.Data("Beer", data.getnBeerArticles()),
+                new PieChart.Data("Misc", data.getnMiscArticles()),
+                new PieChart.Data("Ingredient", data.getnIngredientArticles())
+            )
+        );
 
         setTable(data.getArticles());
     }

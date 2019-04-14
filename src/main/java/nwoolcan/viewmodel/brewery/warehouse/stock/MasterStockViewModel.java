@@ -6,6 +6,7 @@ import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.util.Date;
 import java.util.Optional;
@@ -72,8 +73,8 @@ public abstract class MasterStockViewModel {
      * Return the expiration {@link java.util.Date}.
      * @return the expiration {@link java.util.Date}.
      */
-    public final Optional<Date> getExpirationDate() {
-        return expirationDate;
+    public final String getExpirationDate() {
+        return expirationDate.isPresent() ? DateFormatUtils.format(expirationDate.get(), "dd-MM-yyyy") : "";
     }
     /**
      * Generated a proper {@link MasterStockViewModel} from a general {@link Stock} accordingly with the {@link ArticleType} of the {@link nwoolcan.model.brewery.warehouse.article.Article} of the {@link Stock}.

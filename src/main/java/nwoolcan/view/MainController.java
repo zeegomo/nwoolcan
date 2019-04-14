@@ -39,6 +39,7 @@ public final class MainController extends AbstractViewController {
     public void menuViewWarehouseClick(final ActionEvent event) {
         getController().setBreweryName("ciccio");
         getController().setOwnerName("ciccia");
+
         this.getViewManager().getView(ViewType.WAREHOUSE, getController().getWarehouseController().getWarehouseViewModel()).peek(view -> this.contentPane.substitute(view));
     }
 

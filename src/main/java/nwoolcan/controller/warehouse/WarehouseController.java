@@ -3,7 +3,9 @@ package nwoolcan.controller.warehouse;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
+import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.model.utils.UnitOfMeasure;
+import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesInfoViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
@@ -88,5 +90,21 @@ public interface WarehouseController {
      * @return the new {@link AbstractArticleViewModel} representation of the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     Result<AbstractArticleViewModel> setName(int articleId, String newName);
-
+    /**
+     * Add a record to the stock identified by the id.
+     * @param stockId to identify the stock.
+     * @param amount to be added.
+     * @param action the {@link Record.Action} denoting whether the quantity is going to be added or subtracted.
+     * @param date the {@link Date} associated to the {@link Record}.
+     * @return a {@link Result} denoting possible errors.
+     */
+    Result<Empty> addRecord(int stockId, double amount, Record.Action action, Date date);
+    /**
+     * Add a record to the stock identified by the id.
+     * @param stockId to identify the stock.
+     * @param amount to be added.
+     * @param action the {@link Record.Action} denoting whether the quantity is going to be added or subtracted.
+     * @return a {@link Result} denoting possible errors.
+     */
+    Result<Empty> addRecord(int stockId, double amount, Record.Action action);
 }

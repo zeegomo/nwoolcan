@@ -6,7 +6,12 @@ import nwoolcan.model.brewery.warehouse.article.IngredientType;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
+import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
+import nwoolcan.model.brewery.warehouse.stock.Record;
+import nwoolcan.model.brewery.warehouse.stock.Stock;
+import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
+import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesInfoViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
@@ -28,6 +33,7 @@ public final class WarehouseControllerImpl implements WarehouseController {
 
     private final Warehouse warehouse;
     private static final String ARTICLE_NOT_FOUND = "Article not found.";
+    private static final String STOCK_NOT_FOUND = "Stock not found.";
 
     /**
      * Constructor.
@@ -98,6 +104,27 @@ public final class WarehouseControllerImpl implements WarehouseController {
                      .map(PlainStockViewModel::new);
     }
 
+    @Override
+    public Result<AbstractArticleViewModel> setName(final int articleId, final String newName) {
+        return Result.of(articleId)
+                     .flatMap(this::getArticleById)
+                     .flatMap(article -> warehouse.setName(article, newName))
+                     .map(AbstractArticleViewModel::getViewArticle);
+    }
+
+    @Override
+    public Result<Empty> addRecord(final int stockId, final double amount, final Record.Action action, final Date date) {
+        final Result<Stock> stockResult = getStockById(stockId);
+        return stockResult.flatMap(stock -> Quantity.of(amount, stock.getArticle().getUnitOfMeasure()))
+                          .flatMap(quantity -> stockResult.getValue().addRecord(new Record(quantity, date, action)))
+                          .toEmpty();
+    }
+
+    @Override
+    public Result<Empty> addRecord(final int stockId, final double amount, final Record.Action action) {
+        return addRecord(stockId, amount, action, new Date());
+    }
+
     private Result<Article> getArticleById(final int articleId) {
         final QueryArticle queryArticle = new QueryArticleBuilder().setMinID(articleId).setMaxID(articleId).build();
         return Result.of(warehouse.getArticles(queryArticle))
@@ -105,12 +132,11 @@ public final class WarehouseControllerImpl implements WarehouseController {
                      .map(articles -> articles.get(0));
     }
 
-    @Override
-    public Result<AbstractArticleViewModel> setName(final int articleId, final String newName) {
-        return Result.of(articleId)
-                     .flatMap(this::getArticleById)
-                     .flatMap(article -> warehouse.setName(article, newName))
-                     .map(AbstractArticleViewModel::getViewArticle);
+    private Result<Stock> getStockById(final int stockId) {
+        final QueryStock queryStock = new QueryStockBuilder().setMinId(stockId).setMaxId(stockId).build().getValue();
+        return Result.of(warehouse.getStocks(queryStock))
+                     .require(stocks -> stocks.size() == 1, new IllegalArgumentException(STOCK_NOT_FOUND))
+                     .map(stocks -> stocks.get(0));
     }
 
 }
