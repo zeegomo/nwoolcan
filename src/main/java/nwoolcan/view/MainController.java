@@ -94,13 +94,6 @@ public final class MainController extends AbstractViewController {
         this.getViewManager().getView(ViewType.BATCHEVALUATIONDETAIL, new BatchEvaluationDetailViewModel(bjcp)).peek(view -> this.contentPane.substitute(view));
     }
     /**
-     * Shows the Warehouse view.
-     * @param event The occurred event
-     */
-    public void menuViewNewEvaluationClick(final ActionEvent event) {
-        this.getViewManager().getView(ViewType.NEW_BATCH_EVALUATION_MODAL, new ArrayList<>(BatchEvaluationBuilder.getAvailableBatchEvaluationTypes().getValue())).peek(view -> this.contentPane.substitute(view));
-    }
-    /**
      * Quits the application.
      * @param event The occurred event
      */
