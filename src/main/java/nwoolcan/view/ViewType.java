@@ -33,6 +33,10 @@ public enum ViewType {
      */
     EVALUATION,
     /**
+     * Insertion for categories.
+     */
+    EVALUATION_TYPE,
+    /**
      *
      */
     MASTER_TABLE,
