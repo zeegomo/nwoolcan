@@ -20,6 +20,7 @@ public class GoNextStepDTO {
     /**
      * Basic constructor.
      * @param nextStepType next step type.
+     * @param finalizeBeforeGoingToNext if need to finalize before going to next step.
      * @param notes possible notes.
      * @param endSize possible end size.
      */

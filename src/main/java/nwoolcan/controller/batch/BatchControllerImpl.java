@@ -45,11 +45,16 @@ public final class BatchControllerImpl implements BatchController {
         Result<Batch> res =  this.getBatchById(batchId);
 
         if (dto.finalizeBeforeGoingToNext()) {
-            res = res.require(() -> dto.getEndSize() != null, new IllegalArgumentException())
-                     .flatMap(b -> b.getCurrentStep().finalize(
-                         dto.getNotes().isEmpty() ? null : dto.getNotes(),
-                         new Date(),
-                         dto.getEndSize()).map(e -> b));
+            res = res.flatMap(b -> {
+                         //did this for nullaway
+                         if (dto.getEndSize() == null) {
+                             return Result.error(new IllegalArgumentException());
+                         }
+                         return b.getCurrentStep().finalize(
+                             dto.getNotes().isEmpty() ? null : dto.getNotes(),
+                             new Date(),
+                             dto.getEndSize()).map(e -> b);
+                     });
         }
 
         return res.flatMap(b -> b.moveToNextStep(dto.getNextStepType()));

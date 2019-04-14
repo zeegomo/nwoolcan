@@ -27,7 +27,7 @@ public interface BatchController {
     Result<GoNextStepViewModel> getGoNextStepViewModel(int batchId);
 
     /**
-     * Goes to the next step of the batch with passed id with informations specified in the dto
+     * Goes to the next step of the batch with passed id with informations specified in the dto.
      * @param batchId the batch id.
      * @param dto the dto specifying infos to go to next step.
      * @return a {@link Result} bearing an error if operation went wrong.
