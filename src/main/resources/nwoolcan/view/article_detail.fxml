@@ -16,7 +16,7 @@
 <SubView fx:id="articleDetailSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="nwoolcan.view.brewery.warehouse.article.ArticleDetailViewController">
+         fx:controller="nwoolcan.view.warehouse.article.ArticleDetailViewController">
     <ScrollPane fitToWidth="true"
                 AnchorPane.rightAnchor="0.0"
                 AnchorPane.leftAnchor="0.0"
