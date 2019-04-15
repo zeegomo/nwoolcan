@@ -44,7 +44,7 @@ public class StockImpl implements Stock {
         Date creationMoment = new Date();
         this.id = id;
         this.article = article;
-        this.expirationDate = expirationDate == null ? null : DateUtils.round(expirationDate, Calendar.DATE);
+        this.expirationDate = expirationDate == null ? null : DateUtils.truncate(expirationDate, Calendar.DATE);
         this.creationDate = creationMoment;
         this.lastChangeDate = creationMoment;
         this.remainingQuantity = Quantity.of(EMPTY_VALUE, article.getUnitOfMeasure()).getValue();
@@ -74,7 +74,7 @@ public class StockImpl implements Stock {
     @Override
     public final StockState getState() {
         if (this.remainingQuantity.getValue() > 0) {
-            if (this.expirationDate != null && this.expirationDate.before(new Date())) {
+            if (this.expirationDate != null && this.expirationDate.before(DateUtils.truncate(new Date(), Calendar.DATE))) {
                 return StockState.EXPIRED;
             }
             return StockState.AVAILABLE;
