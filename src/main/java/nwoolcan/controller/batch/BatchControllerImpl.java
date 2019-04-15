@@ -4,6 +4,7 @@ import nwoolcan.controller.ControllerUtils;
 import nwoolcan.model.brewery.Brewery;
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.batch.review.BatchEvaluationBuilder;
+import nwoolcan.model.brewery.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.batch.review.Evaluation;
 import nwoolcan.model.brewery.batch.review.EvaluationFactory;
 import nwoolcan.utils.Empty;
@@ -91,5 +92,10 @@ public final class BatchControllerImpl implements BatchController {
     @Override
     public Result<Optional<BatchEvaluationDetailViewModel>> getBatchEvaluation(final int batchID) {
         return utils.getBatchById(batchID).map(batch -> batch.getEvaluation().map(BatchEvaluationDetailViewModel::new));
+    }
+
+    @Override
+    public Result<Set<BatchEvaluationType>> getAvailableBatchEvaluationTypes() {
+        return BatchEvaluationBuilder.getAvailableBatchEvaluationTypes();
     }
 }
