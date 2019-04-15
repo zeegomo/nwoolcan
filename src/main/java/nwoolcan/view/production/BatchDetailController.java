@@ -24,6 +24,8 @@ import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.MasterStepViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.review.NewBatchEvaluationViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,9 +53,10 @@ public final class BatchDetailController
     private SubViewContainer reviewContainer;
     @FXML
     private SubView batchDetailSubView;
+    @FXML
+    private Button addReviewButton;
 
     private DetailBatchViewModel data;
-
 
 
     /**
@@ -90,30 +93,44 @@ public final class BatchDetailController
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
         if (data.getReview() != null) {
             this.getViewManager().getView(ViewType.BATCHEVALUATION, data.getReview())
-                          .peek(this.reviewContainer::substitute)
-                          .peekError(err -> Logger.getGlobal().severe("Could not load: " + err.getMessage()));
+                .peek(this.reviewContainer::substitute)
+                .peekError(err -> Logger.getGlobal().severe("Could not load: " + err.getMessage()));
         } else {
-            Button b = new Button("add review");
-            b.setOnAction(actionEvent -> {
-                final Stage modal =  new Stage();
-                final Window window = this.getSubView().getScene().getWindow();
-
-                modal.initOwner(window);
-                modal.initModality(Modality.WINDOW_MODAL);
-
-                final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_BATCH_EVALUATION_MODAL,
-                    new ArrayList<>(BatchEvaluationBuilder.getAvailableBatchEvaluationTypes().getValue())).orElse(new AnchorPane()));
-
-                modal.setScene(scene);
-                modal.centerOnScreen();
-                modal.showAndWait();
-
-                if (modal.getUserData() != null) {
-                    this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
-                }
-            });
             this.reviewContainer.substitute(b);
         }
+    }
+
+    /**
+     * Opens a modal that let the user go to the next production step.
+     */
+    public void addReviewClick() {
+        Button b = new Button("add review");
+        b.setOnAction(actionEvent -> {
+            final Stage modal = new Stage();
+            final Window window = this.getSubView().getScene().getWindow();
+
+            modal.initOwner(window);
+            modal.initModality(Modality.WINDOW_MODAL);
+
+            NewBatchEvaluationViewModel data = new BatchEvaluationViewModel(
+                this.getController()
+                    .getBatchController()
+                    .getAvailableBatchEvaluationTypes(),
+                this.data.getId()
+            );
+
+            final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_BATCH_EVALUATION_MODAL,
+                data).orElse(new AnchorPane()));
+
+            modal.setScene(scene);
+            modal.centerOnScreen();
+            modal.showAndWait();
+
+            if (modal.getUserData() != null) {
+                this.substituteView(ViewType.BATCH_DETAIL,
+                    this.getController().getBatchController().getDetailBatchViewModelById(this.data.getId()).getValue());
+            }
+        });
     }
 
     @Override
@@ -123,6 +140,7 @@ public final class BatchDetailController
 
     /**
      * Goes back to the production view.
+     *
      * @param event the occurred event.
      */
     public void goBackButtonClicked(final ActionEvent event) {
@@ -131,10 +149,11 @@ public final class BatchDetailController
 
     /**
      * Opens a modal that let the user go to the next production step.
+     *
      * @param event the occurred event.
      */
     public void goToNextStepButtonClicked(final ActionEvent event) {
-        final Stage modal =  new Stage();
+        final Stage modal = new Stage();
         final Window window = this.getSubView().getScene().getWindow();
 
         modal.initOwner(window);
