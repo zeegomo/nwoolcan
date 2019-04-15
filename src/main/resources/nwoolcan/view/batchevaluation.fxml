@@ -32,10 +32,6 @@
                                 <Label text="Reviewer: " styleClass="subtitle"/>
                                 <Label fx:id="lblReviewer"/>
                             </FlowPane>
-                            <FlowPane>
-                                <Label text="Notes: " styleClass="subtitle"/>
-                                <Text fx:id="lblNotes" wrappingWidth="500"/>
-                            </FlowPane>
                         </VBox>
                     </left>
                     <right>

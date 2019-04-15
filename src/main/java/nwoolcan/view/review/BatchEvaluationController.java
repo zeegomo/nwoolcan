@@ -29,8 +29,6 @@ public final class BatchEvaluationController
     private Label lblEvaluationMaxScore;
     @FXML
     private Label lblReviewer;
-    @FXML
-    private Text lblNotes;
 
     /**
      * Creates itself and gets injected.
@@ -45,13 +43,11 @@ public final class BatchEvaluationController
 
     @Override
     public void initData(final BatchEvaluationViewModel data) {
-        this.lblEvaluationTypeName.setText("andrea");
+        this.lblEvaluationTypeName.setText(data.getType());
         this.lblEvaluationMaxScore.setText(Integer.toString(data.getMaxScore()));
         this.lblEvaluationScore.setText(Integer.toString(data.getScore()));
         this.lblReviewer.setText(data.getReviewer().orElse(UNSPECIFIED_REVIEWER));
-        this.lblNotes.setText(data.getNotes().orElse(""));
-        this.lblNotes.wrappingWidthProperty().bind(this.batchEvaluationSubView.widthProperty().divide(2));
-    }
+     }
 
     @Override
     protected SubView getSubView() {
