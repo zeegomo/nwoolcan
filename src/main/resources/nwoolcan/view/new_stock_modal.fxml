@@ -42,7 +42,7 @@
                     <ComboBox fx:id="comboBoxArticle"/>
                     <CheckBox text="Specify date " fx:id="checkBoxDate" onAction="#specifyDateClick"/>
                     <VBox fx:id="boxDateTimePicker" spacing="5" managed="false" visible="false">
-                        <DatePicker/>
+                        <DatePicker fx:id="datePicker"/>
                         <HBox spacing="5">
                             <VBox>
                                 <Label text="Hour"/>
