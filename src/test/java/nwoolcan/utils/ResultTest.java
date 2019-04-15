@@ -261,18 +261,24 @@ public class ResultTest {
         Collection<Result<Integer>> coll = Arrays.asList(
             Result.of(1),
             Result.of(2),
-            Result.of(3)
+            Result.of(3),
+            Result.of(4),
+            Result.of(1),
+            Result.of(1)
         );
 
         Result<Collection<Integer>> res = Results.reduce(coll);
 
         assertTrue(res.isPresent());
-        assertArrayEquals(new Integer[] {1, 2, 3}, res.getValue().toArray());
+        assertArrayEquals(new Integer[] {1, 2, 3, 4, 1, 1}, res.getValue().toArray());
 
         coll = Arrays.asList(
             Result.of(1),
+            Result.of(2),
             Result.error(new Exception()),
-            Result.of(3)
+            Result.error(new Exception()),
+            Result.of(1),
+            Result.of(1)
         );
 
         res = Results.reduce(coll);

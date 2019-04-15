@@ -3,6 +3,7 @@ package nwoolcan.utils;
 import nwoolcan.utils.function.FallibleFunction;
 import nwoolcan.utils.function.FallibleRunnable;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.function.Supplier;
@@ -71,6 +72,11 @@ public final class Results {
      * @return a reduced collection with errors propagated.
      */
     public static <T> Result<Collection<T>> reduce(final Collection<Result<T>> collection) {
-        return Result.error(new Exception());
+        return collection.stream().reduce(
+            Result.of(new ArrayList<T>()),
+            (acc, r) -> acc.require(r::isPresent, r::getError)
+                           .peek(col -> col.add(r.getValue())),
+            (r1, r2) -> r1.require(r2::isPresent, r2::getError)
+                          .peek(col -> col.addAll(r2.getValue())));
     }
 }
