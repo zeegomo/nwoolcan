@@ -111,4 +111,9 @@ public final class StockDetailController extends SubViewController implements In
              .forEach(tc -> recordTable.getColumns().add(tc));
        recordTable.setItems(FXCollections.observableArrayList(articles));
     }
+
+    @FXML
+    private void backButtonClick(final ActionEvent actionEvent) {
+        this.previousView(); // TODO call reload of the previous view before switching!
+    }
 }
