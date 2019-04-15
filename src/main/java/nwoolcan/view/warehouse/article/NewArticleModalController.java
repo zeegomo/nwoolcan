@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.controller.warehouse.WarehouseController;
@@ -25,7 +26,7 @@ public final class NewArticleModalController extends AbstractViewController {
     @FXML
     private Button createArticleButton;
     @FXML
-    private FlowPane ingredientTypeFlowPane;
+    private VBox ingredientTypeFlowPane;
     @FXML
     private TextField newArticleName;
     @FXML

@@ -36,25 +36,17 @@
                     <BorderPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </BorderPane.margin>
-                    <FlowPane BorderPane.alignment="CENTER">
-                        <Label text="Existing article will not be created again."/>
-                    </FlowPane>
-                    <FlowPane>
-                        <Label text="Name " />
-                        <TextField text="Article Name" fx:id="newArticleName" onKeyReleased="#newNameFieldChanged"/>
-                    </FlowPane>
-                    <FlowPane>
-                        <Label text="Unit of measure " />
-                        <ComboBox fx:id="newArticleUnitOfMeasure"/>
-                    </FlowPane>
-                    <FlowPane>
-                        <Label text="Type " />
-                        <ComboBox fx:id="newArticleType" onAction="#selectArticleTypeClick"/>
-                    </FlowPane>
-                    <FlowPane fx:id="ingredientTypeFlowPane">
+                    <Label text="Existing article will not be created again."/>
+                    <Label text="Name " />
+                    <TextField text="Article Name" fx:id="newArticleName" onKeyReleased="#newNameFieldChanged"/>
+                    <Label text="Unit of measure " />
+                    <ComboBox fx:id="newArticleUnitOfMeasure"/>
+                    <Label text="Type " />
+                    <ComboBox fx:id="newArticleType" onAction="#selectArticleTypeClick"/>
+                    <VBox fx:id="ingredientTypeFlowPane" spacing="5">
                         <Label text="Ingredient Type " />
                         <ComboBox fx:id="newArticleIngredientType"/>
-                    </FlowPane>
+                    </VBox>
                 </VBox>
             </center>
             <bottom>
