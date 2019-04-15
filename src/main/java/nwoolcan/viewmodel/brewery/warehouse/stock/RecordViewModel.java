@@ -2,6 +2,7 @@ package nwoolcan.viewmodel.brewery.warehouse.stock;
 
 import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.viewmodel.brewery.utils.QuantityViewModel;
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.util.Date;
 
@@ -11,7 +12,7 @@ import java.util.Date;
 public final class RecordViewModel {
 
     private final QuantityViewModel quantity;
-    private final boolean isAdding;
+    private final Record.Action action;
     private final Date date;
 
     /**
@@ -20,7 +21,7 @@ public final class RecordViewModel {
      */
     public RecordViewModel(final Record record) {
         this.quantity = new QuantityViewModel(record.getQuantity());
-        this.isAdding = record.getAction() == Record.Action.ADDING;
+        this.action = record.getAction();
         this.date = record.getDate();
     }
     /**
@@ -35,14 +36,18 @@ public final class RecordViewModel {
      * @return a {@link Boolean} which is true if the {@link nwoolcan.model.utils.Quantity} has to be added.
      */
 
-    public boolean isAdding() {
-        return isAdding;
+    public Record.Action getAction() {
+        return action;
     }
     /**
      * Return the {@link Date} in which the {@link nwoolcan.model.brewery.warehouse.stock.Record} has been transferred.
      * @return the {@link Date} in which the {@link nwoolcan.model.brewery.warehouse.stock.Record} has been transferred.
      */
-    public Date getDate() {
-        return new Date(date.getTime());
+    public String getDate() {
+        return dateFormatted(date);
+    }
+
+    static String dateFormatted(final Date date) {
+        return DateFormatUtils.format(date, "dd-MM-yyyy HH:mm");
     }
 }

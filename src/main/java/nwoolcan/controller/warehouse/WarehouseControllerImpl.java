@@ -19,6 +19,7 @@ import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.MiscArticleViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.stock.DetailStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.MasterStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.PlainStockViewModel;
 
@@ -123,6 +124,16 @@ public final class WarehouseControllerImpl implements WarehouseController {
     @Override
     public Result<Empty> addRecord(final int stockId, final double amount, final Record.Action action) {
         return addRecord(stockId, amount, action, new Date());
+    }
+
+    @Override
+    public Result<AbstractArticleViewModel> getViewArticleById(final int articleId) {
+        return getArticleById(articleId).map(AbstractArticleViewModel::getViewArticle);
+    }
+
+    @Override
+    public Result<DetailStockViewModel> getViewStockById(final int stockId) {
+        return getStockById(stockId).map(DetailStockViewModel::getDetailViewStock);
     }
 
     private Result<Article> getArticleById(final int articleId) {

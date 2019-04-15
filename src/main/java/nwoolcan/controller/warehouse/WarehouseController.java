@@ -13,6 +13,7 @@ import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.MiscArticleViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.stock.DetailStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.MasterStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.PlainStockViewModel;
 
@@ -107,4 +108,16 @@ public interface WarehouseController {
      * @return a {@link Result} denoting possible errors.
      */
     Result<Empty> addRecord(int stockId, double amount, Record.Action action);
+    /**
+     * Return the article with the correct id.
+     * @param articleId of the article.
+     * @return the view representation of the article with that id, or an error {@link Result} if the article does not exist.
+     */
+    Result<AbstractArticleViewModel> getViewArticleById(int articleId);
+    /**
+     * Return the article with the correct id.
+     * @param stockId of the article.
+     * @return the view representation of the article with that id, or an error {@link Result} if the article does not exist.
+     */
+    Result<DetailStockViewModel> getViewStockById(int stockId);
 }
