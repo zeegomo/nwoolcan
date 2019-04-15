@@ -55,7 +55,7 @@ public final class BatchDetailController
     @FXML
     private SubView batchDetailSubView;
     @FXML
-    private Button addReviewButton;
+    private Button viewReviewButton;
 
     private DetailBatchViewModel data;
 
@@ -96,17 +96,26 @@ public final class BatchDetailController
             this.getViewManager().getView(ViewType.BATCHEVALUATION, data.getReview())
                 .peek(this.reviewContainer::substitute)
                 .peekError(err -> Logger.getGlobal().severe("Could not load: " + err.getMessage()));
+            this.viewReviewButton.setDisable(false);
         } else {
-            //this.reviewContainer.substitute(b);
+            this.viewReviewButton.setDisable(true);
         }
     }
-
+    /**
+     * Opens review detail view.
+     * @param event the recorded event.
+     */
+    public void viewReviewClick(final ActionEvent event) {
+        this.getController()
+            .getBatchController()
+            .getBatchEvaluation(this.data.getId())
+            .peek(review -> review.ifPresent(val -> this.overlayView(ViewType.BATCHEVALUATIONDETAIL, val)));
+    }
     /**
      * Opens a modal that let the user go to the next production step.
+     * @param event the recorded action.
      */
-    public void addReviewClick() {
-        Button b = new Button("add review");
-        b.setOnAction(actionEvent -> {
+    public void addReviewClick(final ActionEvent event) {
             final Stage modal = new Stage();
             final Window window = this.getSubView().getScene().getWindow();
 
@@ -134,7 +143,6 @@ public final class BatchDetailController
                 this.substituteView(ViewType.BATCH_DETAIL,
                     this.getController().getBatchController().getDetailBatchViewModelById(this.data.getId()).getValue());
             }
-        });
     }
 
     @Override
@@ -144,9 +152,9 @@ public final class BatchDetailController
 
     /**
      * Goes back to the production view.
-     *
-     * @param event the occurred event.
-     */
+        *
+        * @param event the occurred event.
+        */
     public void goBackButtonClicked(final ActionEvent event) {
         this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
     }
