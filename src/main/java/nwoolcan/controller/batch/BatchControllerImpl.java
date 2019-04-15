@@ -1,6 +1,6 @@
 package nwoolcan.controller.batch;
 
-import nwoolcan.controller.Controllers;
+import nwoolcan.controller.ControllerUtils;
 import nwoolcan.model.brewery.Brewery;
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.utils.Empty;
@@ -17,14 +17,14 @@ import java.util.Date;
 public final class BatchControllerImpl implements BatchController {
 
     private static final String BATCH_NOT_FOUND_MESSAGE = "Cannot find the batch with id: ";
-    private final Controllers utils;
+    private final ControllerUtils utils;
 
     /**
      * Basic constructor with reference to the {@link Brewery} model.
      * @param model the model to use as reference.
      */
     public BatchControllerImpl(final Brewery model) {
-        this.utils = new Controllers(model);
+        this.utils = new ControllerUtils(model);
     }
 
     @Override
