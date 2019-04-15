@@ -1,5 +1,6 @@
 package nwoolcan.controller.batch;
 
+import nwoolcan.model.brewery.batch.review.BatchEvaluationType;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
@@ -9,6 +10,7 @@ import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
 
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Interface representing a batch controller.
@@ -43,11 +45,16 @@ public interface BatchController {
      * @return a Result describing the outcome of the operation.
      */
     Result<Empty> addBatchEvaluation(int batchID, BatchEvaluationDTO newBatch);
-
     /**
      * Return the evaluation for specified batch if available.
      * @param batchID the batch.
      * @return the evaluation for specified batch if available.
      */
     Result<Optional<BatchEvaluationDetailViewModel>> getBatchEvaluation(int batchID);
+    /**
+     * Return all available {@link BatchEvaluationType}.
+     * @return all available {@link BatchEvaluationType}.
+     */
+    Result<Set<BatchEvaluationType>> getAvailableBatchEvaluationTypes();
+
 }
