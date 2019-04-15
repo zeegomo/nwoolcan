@@ -10,7 +10,7 @@
 <SubView xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          fx:id="content"
-         fx:controller="nwoolcan.view.DashboardController">
+         fx:controller="nwoolcan.view.dashboard.DashboardController">
     <FlowPane>
         <Label text="This is the dashboard"></Label>
         <Button text="Back" onAction="#btnBackClicked" />
