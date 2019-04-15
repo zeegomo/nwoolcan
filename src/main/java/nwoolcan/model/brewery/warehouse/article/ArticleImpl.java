@@ -84,7 +84,6 @@ public class ArticleImpl extends AbstractArticle {
             && getUnitOfMeasure().equals(other.getUnitOfMeasure())
             && this.getArticleType().equals(other.getArticleType());
     }
-
     /**
      * To override this method add also other elements of the new class.
      * @return a string representation of the class.

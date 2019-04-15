@@ -65,4 +65,15 @@ public abstract class AbstractArticleViewModel {
                 return new MiscArticleViewModel(article);
         }
     }
+
+    /**
+     * Return the article type plus the ingredient type if the article is of type INGREDIENT.
+     * @return the article type plus the ingredient type if the article is of type INGREDIENT.
+     */
+    public String getArticleTypeSummary() {
+        return getArticleType().toString()
+            + (getArticleType() == ArticleType.INGREDIENT
+            ? " [" + ((IngredientArticleViewModel) this).getIngredientType() + "]"
+            : "");
+    }
 }

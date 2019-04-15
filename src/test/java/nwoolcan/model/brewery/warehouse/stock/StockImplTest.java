@@ -84,7 +84,7 @@ public class StockImplTest {
                                               stock2.getRemainingQuantity());
         Assert.assertEquals(record2.getQuantity(), stock2.getUsedQuantity());
         Assert.assertTrue(stock2.getExpirationDate().isPresent());
-        Assert.assertEquals(DateUtils.round(expDate, Calendar.DATE), stock2.getExpirationDate().get());
+        Assert.assertEquals(DateUtils.truncate(expDate, Calendar.DATE), stock2.getExpirationDate().get());
         Assert.assertEquals(StockState.EXPIRED, stock2.getState());
         Assert.assertTrue(stock2.getCreationDate().before(stock.getLastChangeDate()));
         Assert.assertTrue(stock2.getRecords().contains(record1));

@@ -13,7 +13,6 @@ import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.view.ViewManager;
-import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
@@ -75,19 +74,13 @@ public final class ArticleDetailViewController extends SubViewController impleme
         return articleDetailSubView;
     }
 
-    /**
-     * Back button click.
-     * @param actionEvent event occurred.
-     */
-    public void backButtonClick(final ActionEvent actionEvent) {
-        this.substituteView(ViewType.ARTICLES, getController().getWarehouseController().getArticlesViewModel());
+    @FXML
+    private void backButtonClick(final ActionEvent actionEvent) {
+        this.previousView(); // TODO call reload of the previous view before switching!
     }
 
-    /**
-     * Change the name with the name provided in the new name text field.
-     * @param actionEvent that occurred.
-     */
-    public void changeNameClicked(final ActionEvent actionEvent) {
+    @FXML
+    private void changeNameClicked(final ActionEvent actionEvent) {
         if (newNameTextField.getText().isEmpty()) {
             showAlertAndWait(NEW_NAME_EMPTY);
             return;
