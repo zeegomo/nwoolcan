@@ -82,7 +82,7 @@ public final class ArticlesInfoViewController extends SubViewController implemen
                                             new ColumnDescriptor("ID", "id"),
                                             new ColumnDescriptor("Name", "name"),
                                             new ColumnDescriptor("UOM", "unitOfMeasure"),
-                                            new ColumnDescriptor("Article Type", "articleType")
+                                            new ColumnDescriptor("Article Type", "articleTypeSummary")
                                         ),
                                         articles,
                                         ViewType.ARTICLE_DETAIL,
