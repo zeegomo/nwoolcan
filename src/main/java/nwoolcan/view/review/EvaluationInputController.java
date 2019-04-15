@@ -1,19 +1,18 @@
 package nwoolcan.view.review;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.Pane;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.review.EvaluationType;
-import nwoolcan.utils.Result;
-import nwoolcan.utils.Results;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.ViewManager;
+import org.apache.commons.lang3.tuple.Pair;
 
 @SuppressWarnings("NullAway")
 public class EvaluationTypeController extends AbstractViewController implements InitializableController<EvaluationType> {
@@ -25,17 +24,6 @@ public class EvaluationTypeController extends AbstractViewController implements 
     private TextArea notes;
     @FXML
     private TitledPane title;
-
-    private EvaluationType type;
-
-    public class EvaluationTypeControllerProperty {
-        public String getNotes() {
-            return notes.getText();
-        }
-        public Result<Integer> getScore() {
-            return Results.ofChecked(() -> Integer.parseInt(score.getText())).;
-        }
-    }
 
     /**
      * Creates itself and inject the controller and the view manager.
@@ -49,16 +37,16 @@ public class EvaluationTypeController extends AbstractViewController implements 
 
     @Override
     public void initData(final EvaluationType data) {
-        this.type = data;
         this.maxScore.setText(String.valueOf(data.getMaxScore()));
         this.title.setText(data.getName());
+        this.title.setExpanded(false);
     }
 
-    public TextField getScore() {
-        return this.score;
-    }
-
-    public TextArea getNotes() {
-        return this.notes;
+    /**
+     * Returns properties of this controller.
+     * @return properties of this controller.
+     */
+    public ReadOnlyObjectWrapper<Pair<ReadOnlyStringProperty, ReadOnlyStringProperty>> getInputProperty() {
+        return new ReadOnlyObjectWrapper<>(Pair.of(this.score.textProperty(), this.notes.textProperty()));
     }
 }
