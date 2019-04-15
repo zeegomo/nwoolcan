@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import nwoolcan.view.subview.SubViewContainer?>
-<?import nwoolcan.view.subview.SubView?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<SubView xmlns="http://javafx.com/javafx"
-         xmlns:fx="http://javafx.com/fxml"
-         fx:id="batchEvaluationDetailSubView"
+<?import javafx.scene.layout.VBox?>
+<?import nwoolcan.view.subview.SubView?>
+<?import nwoolcan.view.subview.SubViewContainer?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<SubView fx:id="batchEvaluationDetailSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
          fx:controller="nwoolcan.view.review.BatchEvaluationDetailController">
-    <VBox>
-        <padding><Insets top="10" right="10" left="10" bottom="10"/></padding>
-        <SubViewContainer fx:id="container"/>
-        <VBox fx:id="categories" />
-        <Button text="new" onAction="#newEvaluationClick"/>
-    </VBox>
+    <BorderPane>
+        <padding>
+            <Insets bottom="10" left="10" right="10" top="10"/>
+        </padding>
+        <top>
+            <SubViewContainer fx:id="container"/>
+        </top>
+        <center>
+            <VBox>
+                <VBox fx:id="categories"/>
+                <Button onAction="#newEvaluationClick" text="new"/>
+            </VBox>
+        </center>
+    </BorderPane>
 </SubView>
