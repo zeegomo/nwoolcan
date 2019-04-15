@@ -80,8 +80,7 @@ public final class ArticleDetailViewController extends SubViewController impleme
      * @param actionEvent event occurred.
      */
     public void backButtonClick(final ActionEvent actionEvent) {
-        //this.substituteView(ViewType.ARTICLES, getController().getWarehouseController().getArticlesViewModel());
-        this.previousView(); //TODO call reload of the previous view before switching!
+        this.previousView(); // TODO call reload of the previous view before switching!
     }
 
     /**
