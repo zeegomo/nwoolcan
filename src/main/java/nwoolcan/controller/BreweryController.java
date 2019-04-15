@@ -1,5 +1,7 @@
 package nwoolcan.controller;
 
+import nwoolcan.controller.batch.BatchController;
+import nwoolcan.controller.batch.BatchControllerImpl;
 import nwoolcan.controller.warehouse.WarehouseController;
 import nwoolcan.controller.warehouse.WarehouseControllerImpl;
 import nwoolcan.model.brewery.Brewery;
@@ -16,7 +18,6 @@ import nwoolcan.model.brewery.batch.step.parameter.ParameterFactory;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
-import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.utils.Empty;
@@ -33,7 +34,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -41,8 +41,9 @@ import java.util.stream.Collectors;
  */
 public final class BreweryController implements Controller {
 
-    private final WarehouseController warehouseController;
     private final Brewery brewery;
+    private final BatchController batchController;
+    private final WarehouseController warehouseController;
     private static final String BATCH_NOT_FOUND = "Batch not found.";
     private static final String BEER_ARTICLE_NOT_FOUND = "Beer Article not found.";
 
@@ -53,11 +54,17 @@ public final class BreweryController implements Controller {
     public BreweryController(final Brewery brewery) {
         this.brewery = brewery;
         this.warehouseController = new WarehouseControllerImpl(brewery.getWarehouse());
+        this.batchController = new BatchControllerImpl(brewery);
     }
 
     @Override
     public WarehouseController getWarehouseController() {
         return warehouseController;
+    }
+
+    @Override
+    public BatchController getBatchController() {
+        return this.batchController;
     }
 
     @Override
@@ -149,8 +156,9 @@ public final class BreweryController implements Controller {
 
     @Override
     public Result<Empty> stockBatch(final int batchId, final int beerArticleId, final Date expirationDate) {
-        final Result<Batch> batchResult = getBatchById(batchId);
-        final Result<BeerArticle> beerArticleResult = getBeerArticleById(beerArticleId);
+        final ControllerUtils utils = new ControllerUtils(this.brewery);
+        final Result<Batch> batchResult = utils.getBatchById(batchId);
+        final Result<BeerArticle> beerArticleResult = utils.getBeerArticleById(beerArticleId);
 
         if (batchResult.isPresent() && beerArticleResult.isPresent()) {
             return Result.of(this.brewery.stockBatch(
@@ -165,8 +173,9 @@ public final class BreweryController implements Controller {
 
     @Override
     public Result<Empty> stockBatch(final int batchId, final int beerArticleId) {
-        final Result<Batch> batchResult = getBatchById(batchId);
-        final Result<BeerArticle> beerArticleResult = getBeerArticleById(beerArticleId);
+        final ControllerUtils utils = new ControllerUtils(this.brewery);
+        final Result<Batch> batchResult = utils.getBatchById(batchId);
+        final Result<BeerArticle> beerArticleResult = utils.getBeerArticleById(beerArticleId);
 
         if (batchResult.isPresent() && beerArticleResult.isPresent()) {
             return Result.of(this.brewery.stockBatch(
@@ -186,28 +195,5 @@ public final class BreweryController implements Controller {
     @Override
     public void setOwnerName(final String ownerName) {
         brewery.setOwnerName(ownerName);
-    }
-
-    private Result<Batch> getBatchById(final int batchId) {
-        final QueryBatch querySingleBatch = new QueryBatchBuilder().setMinId(batchId)
-                                                                   .setMaxId(batchId)
-                                                                   .build().getValue();
-        return Result.of(brewery.getBatches(querySingleBatch))
-                     .map(batches -> batches.stream().findAny())
-                     .require(Optional::isPresent,
-                              new IllegalArgumentException(BATCH_NOT_FOUND))
-                     .map(Optional::get);
-    }
-
-    private Result<BeerArticle> getBeerArticleById(final int beerArticleId) {
-        final QueryArticle querySingleBeerArticle = new QueryArticleBuilder().setMinID(beerArticleId)
-                                                                             .setMaxID(beerArticleId)
-                                                                             .build();
-        return Result.of(brewery.getWarehouse().getArticles(querySingleBeerArticle))
-                     .require(articles -> articles.size() == 1,
-                              new IllegalArgumentException(BEER_ARTICLE_NOT_FOUND))
-                     .map(articles -> articles.get(0))
-                     .require(article -> article.getArticleType() == ArticleType.FINISHED_BEER)
-                     .map(article -> (BeerArticle) article);
     }
 }

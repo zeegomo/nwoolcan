@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="nwoolcan.view.production.GoNextStepModalController">
+    <ScrollPane fitToWidth="true"
+                AnchorPane.rightAnchor="0.0"
+                AnchorPane.leftAnchor="0.0"
+                AnchorPane.bottomAnchor="0.0"
+                AnchorPane.topAnchor="0.0">
+        <BorderPane>
+            <top>
+                <Label text="Go to next step" BorderPane.alignment="CENTER">
+                    <font>
+                        <Font size="22.0" />
+                    </font>
+                </Label>
+            </top>
+            <center>
+                <VBox BorderPane.alignment="CENTER_LEFT">
+                    <TitledPane text="Choose next step type" >
+                        <VBox>
+                            <Label text="Next step type" />
+                            <ComboBox fx:id="nextStepTypesComboBox" />
+                        </VBox>
+                    </TitledPane>
+                    <HBox>
+                        <CheckBox fx:id="chooseFinalizeNextStepCheckBox" text="Finalize current step?" />
+                    </HBox>
+                    <TitledPane fx:id="finalizeStepTitlePane" text="Finalize step" disable="true" >
+                        <VBox>
+                            <VBox>
+                                <Label text="Notes" />
+                                <TextArea fx:id="notesTextArea"/>
+                            </VBox>
+                            <VBox>
+                                <Label text="End size" />
+                                <HBox>
+                                    <TextField fx:id="endSizeValueTextField" />
+                                    <Label fx:id="endSizeUnitOfMeasureSymbolLabel" text="?" />
+                                    <ComboBox fx:id="endSizeUnitOfMeasureComboBox" />
+                                </HBox>
+                            </VBox>
+                        </VBox>
+                    </TitledPane>
+                </VBox>
+            </center>
+            <bottom>
+                <Button text="Go" BorderPane.alignment="CENTER" onAction="#goButtonClicked" />
+            </bottom>
+        </BorderPane>
+    </ScrollPane>
+</AnchorPane>
