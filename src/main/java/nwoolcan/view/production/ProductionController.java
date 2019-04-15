@@ -76,13 +76,15 @@ public final class ProductionController
         lblNumberStockedBatches.setText(Long.toString(data.getNStockedBatches()));
 
         if (data.getNBatches() > 0) {
-            pieChartBatchesStatus.setData(
-                FXCollections.observableArrayList(
-                    new PieChart.Data("In progress", data.getNInProgressBatches()),
-                    new PieChart.Data("Ended", data.getNEndedNotStockedBatches()),
-                    new PieChart.Data("Stocked", data.getNStockedBatches())
-                )
-            );
+            if (data.getNInProgressBatches() > 0) {
+                pieChartBatchesStatus.getData().add(new PieChart.Data("In progress", data.getNInProgressBatches()));
+            }
+            if (data.getNEndedNotStockedBatches() > 0) {
+                pieChartBatchesStatus.getData().add(new PieChart.Data("Ended not stocked", data.getNEndedNotStockedBatches()));
+            }
+            if (data.getNStockedBatches() > 0) {
+                pieChartBatchesStatus.getData().add(new PieChart.Data("Stocked", data.getNStockedBatches()));
+            }
         }
 
         pieChartBatchesStyleTypes.setData(
