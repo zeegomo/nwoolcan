@@ -7,7 +7,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
