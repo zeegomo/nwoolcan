@@ -13,9 +13,11 @@ import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.ViewManager;
 import org.apache.commons.lang3.tuple.Pair;
-
+/**
+ * Controller for single evaluation input displayed in {@link NewBatchEvaluationController}.
+ */
 @SuppressWarnings("NullAway")
-public class EvaluationTypeController extends AbstractViewController implements InitializableController<EvaluationType> {
+public final class EvaluationInputController extends AbstractViewController implements InitializableController<EvaluationType> {
     @FXML
     private TextField score;
     @FXML
@@ -31,7 +33,7 @@ public class EvaluationTypeController extends AbstractViewController implements 
      * @param controller  injected controller.
      * @param viewManager injected view manager.
      */
-    public EvaluationTypeController(final Controller controller, final ViewManager viewManager) {
+    public EvaluationInputController(final Controller controller, final ViewManager viewManager) {
         super(controller, viewManager);
     }
 
