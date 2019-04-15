@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.subview.SubView;
+import nwoolcan.view.subview.SubViewController;
 import nwoolcan.viewmodel.brewery.warehouse.stock.StockViewModel;
 
 /**
