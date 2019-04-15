@@ -46,7 +46,7 @@
                                     </VBox>
                                     <VBox>
                                         <Label text="Notes: "/>
-                                        <TextArea fx:id="notesTextField"/>
+                                        <TextArea fx:id="notesTextArea"/>
                                     </VBox>
                                 </VBox>
                             </left>
