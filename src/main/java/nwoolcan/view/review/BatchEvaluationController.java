@@ -52,7 +52,7 @@ public class BatchEvaluationController
         this.lblEvaluationScore.setText(Integer.toString(data.getScore()));
         this.lblReviewer.setText(data.getReviewer().orElse(UNSPECIFIED_REVIEWER));
         this.lblNotes.setText(data.getNotes().orElse(""));
-        //Logger.getGlobal().warning("size" + this.getSubView().getScene().getWindow());
+        this.lblNotes.wrappingWidthProperty().bind(this.batchEvaluationSubView.widthProperty().divide(2));
     }
 
     @Override
