@@ -3,12 +3,10 @@ package nwoolcan.model.brewery;
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.batch.BatchBuilder;
 import nwoolcan.model.brewery.batch.QueryBatch;
-import nwoolcan.model.brewery.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.WarehouseImpl;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.stock.BeerStock;
-import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
@@ -23,6 +21,10 @@ import java.util.stream.Collectors;
  * Brewery Implementation.
  */
 public final class BreweryImpl implements Brewery {
+
+    private static final String CANNOT_STOCK_NOT_ENDED_BATCH_MESSGE = "Cannot stock a non ended batch.";
+    private static final String ALREADY_STOCKED_BATCH_MESSAGE = "The batch is already stocked.";
+    private static final String WRONG_ARTICLE_UNIT_OF_MEASURE_MESSAGE = "Article unit of measure and batch current size unit of measure do not match.";
 
     @Nullable private String breweryName;
     @Nullable private String ownerName;
@@ -80,13 +82,15 @@ public final class BreweryImpl implements Brewery {
     @Override
     public synchronized Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle, @Nullable final Date expirationDate) {
         return Result.of(batch)
-                     .require(batch::isEnded)
-                     .peek(b -> b.moveToNextStep(StepTypeEnum.STOCKED))
-                     .map(Batch::getCurrentSize)
-                     .require(q -> q.getUnitOfMeasure().equals(beerArticle.getUnitOfMeasure()))
-                     .map(quantity -> batch)
-                     .flatMap(b -> createBeerStock(beerArticle, expirationDate, batch))
-                     .peek(beerStock -> beerStock.addRecord(new Record(batch.getCurrentSize(), Record.Action.ADDING)))
+                     .flatMap(b -> b.stockBatchInto(beerArticle, () -> {
+                         BeerStock newStock;
+                         if (expirationDate == null) {
+                             newStock = this.warehouse.createBeerStock(beerArticle, batch).getValue();
+                         } else {
+                             newStock = this.warehouse.createBeerStock(beerArticle, expirationDate, batch).getValue();
+                         }
+                         return newStock;
+                     }))
                      .toEmpty();
     }
     @Override
