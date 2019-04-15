@@ -96,12 +96,8 @@ public final class ArticlesInfoViewController extends SubViewController implemen
         return this.articlesSubView;
     }
 
-    /**
-     * Triggered when the button "create new article" is clicked.
-     * Opens a modal to retrieve data about the new article to create.
-     * @param event occurred.
-     */
-    public void createNewArticleClick(final ActionEvent event) {
+    @FXML
+    private void createNewArticleClick(final ActionEvent event) {
         final Stage modal =  new Stage();
         final Window window = this.getSubView().getScene().getWindow();
 
@@ -120,11 +116,7 @@ public final class ArticlesInfoViewController extends SubViewController implemen
         this.substituteView(ViewType.ARTICLES, this.getController().getWarehouseController().getArticlesViewModel());
     }
 
-    /**
-     * Method called to create update the table accordingly with the queryArticle.
-     * @param queryArticle used to update the table.
-     */
-    public void updateArticlesTable(final QueryArticle queryArticle) {
+    private void updateArticlesTable(final QueryArticle queryArticle) {
         final List<AbstractArticleViewModel> articles = this.getController()
                                                             .getWarehouseController()
                                                             .getArticles(queryArticle);

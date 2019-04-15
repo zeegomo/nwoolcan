@@ -82,11 +82,8 @@ public final class StockDetailController extends SubViewController implements In
         return this.stockDetailSubView;
     }
 
-    /**
-     * Creates an overlay and loads the article page.
-     * @param actionEvent that occurred.
-     */
-    public void goToArticleButtonClick(final ActionEvent actionEvent) {
+    @FXML
+    private void goToArticleButtonClick(final ActionEvent actionEvent) {
         final Result<AbstractArticleViewModel> articleResult = getController().getWarehouseController()
                                                                               .getViewArticleById(articleId);
         if (articleResult.isPresent()) {

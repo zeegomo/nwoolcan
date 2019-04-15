@@ -37,7 +37,6 @@ public final class NewArticleModalController extends AbstractViewController {
 
     /**
      * Creates itself and inject the controller and the view manager.
-     *
      * @param controller  injected controller.
      * @param viewManager injected view manager.
      */
@@ -45,11 +44,8 @@ public final class NewArticleModalController extends AbstractViewController {
         super(controller, viewManager);
     }
 
-    /**
-     * Initialize the view create article.
-     */
     @FXML
-    public void initialize() {
+    private void initialize() {
         newArticleUnitOfMeasure.getItems().setAll(UnitOfMeasure.values());
         newArticleUnitOfMeasure.getSelectionModel().selectFirst();
         newArticleType.getItems().setAll(ArticleType.values());
@@ -59,11 +55,8 @@ public final class NewArticleModalController extends AbstractViewController {
         updateClicks();
     }
 
-    /**
-     * Creates or deletes combo boxes in the view accordingly with the currently selected {@link ArticleType}.
-     * @param event the occurred event.
-     */
-    public void selectArticleTypeClick(final ActionEvent event) {
+    @FXML
+    private void selectArticleTypeClick(final ActionEvent event) {
         updateClicks();
     }
 
@@ -73,11 +66,8 @@ public final class NewArticleModalController extends AbstractViewController {
         createArticleButton.setDisable(newArticleName.getText().isEmpty());
     }
 
-    /**
-     * Creates the actual article.
-     * @param event the occurred event.
-     */
-    public void createArticleClick(final ActionEvent event) {
+    @FXML
+    private void createArticleClick(final ActionEvent event) {
         updateClicks();
         if (newArticleName.getText().isEmpty()) {
             return;
@@ -103,11 +93,8 @@ public final class NewArticleModalController extends AbstractViewController {
         ((Stage) this.ingredientTypeFlowPane.getScene().getWindow()).close();
     }
 
-    /**
-     * When name field is empty, disable the create button.
-     * @param keyEvent the event occurred.
-     */
-    public void newNameFieldChanged(final KeyEvent keyEvent) {
+    @FXML
+    private void newNameFieldChanged(final KeyEvent keyEvent) {
         updateClicks();
     }
 }
