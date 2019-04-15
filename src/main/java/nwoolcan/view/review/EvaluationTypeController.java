@@ -9,6 +9,8 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.review.EvaluationType;
+import nwoolcan.utils.Result;
+import nwoolcan.utils.Results;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.ViewManager;
@@ -25,6 +27,15 @@ public class EvaluationTypeController extends AbstractViewController implements 
     private TitledPane title;
 
     private EvaluationType type;
+
+    public class EvaluationTypeControllerProperty {
+        public String getNotes() {
+            return notes.getText();
+        }
+        public Result<Integer> getScore() {
+            return Results.ofChecked(() -> Integer.parseInt(score.getText())).;
+        }
+    }
 
     /**
      * Creates itself and inject the controller and the view manager.
