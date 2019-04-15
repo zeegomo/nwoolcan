@@ -5,7 +5,7 @@ import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
-import nwoolcan.viewmodel.brewery.warehouse.stock.AbstractStockViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.stock.MasterStockViewModel;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,7 +52,7 @@ public class WarehouseViewModel {
     private final int nBeerUsed;
     private final int nMiscUsed;
     private final int nIngredientUsed;
-    private final List<AbstractStockViewModel> allStocks;
+    private final List<MasterStockViewModel> allStocks;
 
     /**
      * Constructor of the view part of the {@link nwoolcan.model.brewery.warehouse.Warehouse} which specifies the general statistics.
@@ -70,7 +70,7 @@ public class WarehouseViewModel {
         this.nIngredientUsed = warehouse.getStocks(INGREDIENT_USED_QUERY).size();
         this.allStocks = warehouse.getStocks(GENERAL_QUERY_STOCK)
                                   .stream()
-                                  .map(AbstractStockViewModel::getViewStock)
+                                  .map(MasterStockViewModel::getMasterViewStock)
                                   .collect(Collectors.toList());
     }
     /**
@@ -137,10 +137,10 @@ public class WarehouseViewModel {
         return nIngredientUsed;
     }
     /**
-     * Returns the list of all {@link AbstractStockViewModel}.
-     * @return a list of {@link AbstractStockViewModel}.
+     * Returns the list of all {@link MasterStockViewModel}.
+     * @return a list of {@link MasterStockViewModel}.
      */
-    public List<AbstractStockViewModel> getStocks() {
+    public List<MasterStockViewModel> getStocks() {
         return allStocks;
     }
 

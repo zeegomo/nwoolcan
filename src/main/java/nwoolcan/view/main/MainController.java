@@ -1,9 +1,12 @@
-package nwoolcan.view;
+package nwoolcan.view.main;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import nwoolcan.controller.Controller;
+import nwoolcan.view.AbstractViewController;
+import nwoolcan.view.ViewManager;
+import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubViewContainer;
 
 /**

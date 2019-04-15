@@ -1,5 +1,6 @@
 package nwoolcan.controller;
 
+import nwoolcan.controller.batch.BatchController;
 import nwoolcan.controller.warehouse.WarehouseController;
 import nwoolcan.model.brewery.batch.QueryBatch;
 import nwoolcan.utils.Empty;
@@ -22,6 +23,11 @@ public interface Controller {
      * @return the {@link WarehouseController}.
      */
     WarehouseController getWarehouseController();
+    /**
+     * Returns the {@link BatchController}.
+     * @return the {@link BatchController}.
+     */
+    BatchController getBatchController();
     /**
      * Returns the built view model for the view.
      * @return the built view model for the view.

@@ -31,4 +31,9 @@ public final class IngredientArticleViewModel extends AbstractArticleViewModel {
     public ArticleType getArticleType() {
         return ArticleType.INGREDIENT;
     }
+
+    @Override
+    public String toString() {
+        return "(" + getId() + ") " + getName() + " [IngredientArticle, " + getIngredientType().toString().toLowerCase() + "]";
+    }
 }

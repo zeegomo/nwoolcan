@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.controller.warehouse.WarehouseController;
@@ -20,12 +20,12 @@ import nwoolcan.view.ViewManager;
  * View controller for new article modal.
  */
 @SuppressWarnings("NullAway")
-public final class NewArticleModalController extends AbstractViewController {
+public final class NewArticleModalViewController extends AbstractViewController {
 
     @FXML
     private Button createArticleButton;
     @FXML
-    private FlowPane ingredientTypeFlowPane;
+    private VBox ingredientTypeFlowPane;
     @FXML
     private TextField newArticleName;
     @FXML
@@ -37,33 +37,26 @@ public final class NewArticleModalController extends AbstractViewController {
 
     /**
      * Creates itself and inject the controller and the view manager.
-     *
      * @param controller  injected controller.
      * @param viewManager injected view manager.
      */
-    public NewArticleModalController(final Controller controller, final ViewManager viewManager) {
+    public NewArticleModalViewController(final Controller controller, final ViewManager viewManager) {
         super(controller, viewManager);
     }
 
-    /**
-     * Initialize the view create article.
-     */
     @FXML
-    public void initialize() {
+    private void initialize() {
         newArticleUnitOfMeasure.getItems().setAll(UnitOfMeasure.values());
         newArticleUnitOfMeasure.getSelectionModel().selectFirst();
-        newArticleType.getItems().setAll(ArticleType.values());
+        newArticleType.getItems().addAll(ArticleType.values());
         newArticleType.getSelectionModel().selectFirst();
         newArticleIngredientType.getItems().setAll(IngredientType.values());
         newArticleIngredientType.getSelectionModel().selectFirst();
         updateClicks();
     }
 
-    /**
-     * Creates or deletes combo boxes in the view accordingly with the currently selected {@link ArticleType}.
-     * @param event the occurred event.
-     */
-    public void selectArticleTypeClick(final ActionEvent event) {
+    @FXML
+    private void selectArticleTypeClick(final ActionEvent event) {
         updateClicks();
     }
 
@@ -73,11 +66,8 @@ public final class NewArticleModalController extends AbstractViewController {
         createArticleButton.setDisable(newArticleName.getText().isEmpty());
     }
 
-    /**
-     * Creates the actual article.
-     * @param event the occurred event.
-     */
-    public void createArticleClick(final ActionEvent event) {
+    @FXML
+    private void createArticleClick(final ActionEvent event) {
         updateClicks();
         if (newArticleName.getText().isEmpty()) {
             return;
@@ -103,11 +93,8 @@ public final class NewArticleModalController extends AbstractViewController {
         ((Stage) this.ingredientTypeFlowPane.getScene().getWindow()).close();
     }
 
-    /**
-     * When name field is empty, disable the create button.
-     * @param keyEvent the event occurred.
-     */
-    public void newNameFieldChanged(final KeyEvent keyEvent) {
+    @FXML
+    private void newNameFieldChanged(final KeyEvent keyEvent) {
         updateClicks();
     }
 }
