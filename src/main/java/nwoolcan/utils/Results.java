@@ -3,6 +3,7 @@ package nwoolcan.utils;
 import nwoolcan.utils.function.FallibleFunction;
 import nwoolcan.utils.function.FallibleRunnable;
 
+import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
@@ -61,5 +62,15 @@ public final class Results {
         } catch (Exception e) {
             return Result.error(e);
         }
+    }
+    /**
+     * Returns a {@link Result} of a collection reduced propagating the errors of
+     * every result in the passed collection.
+     * @param collection the collection to reduce.
+     * @param <T> the type of elements inside the collection of results.
+     * @return a reduced collection with errors propagated.
+     */
+    public static <T> Result<Collection<T>> reduce(final Collection<Result<T>> collection) {
+        return Result.error(new Exception());
     }
 }
