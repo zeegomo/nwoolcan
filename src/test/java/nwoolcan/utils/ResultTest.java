@@ -206,5 +206,49 @@ public class ResultTest {
         r2.peekError(IllegalArgumentException.class, e -> c.add(1));
         assertEquals(2, c.size());
     }
+    /**
+     * Tests test Map error.
+     */
+    @Test
+    public void testMapError() {
+        Result<Integer> r2 = Results.ofChecked(() -> {
+            throw new IllegalAccessException("Illegal test");
+        });
+        Result<Integer> r3 = r2.mapError(err -> new IllegalArgumentException("ciao"));
+        assertTrue(r3.isError());
+        assertEquals(r3.getError().getMessage(), "ciao");
+        Result<Integer> r = Result.of(2);
+        Collection<Integer> c = new ArrayList<>();
+        r.mapError(err -> {
+            c.add(2);
+            return new IllegalArgumentException();
+        });
+        assertEquals(c.size(), 0);
+        r3.mapError(IllegalArgumentException.class, err ->  {
+            c.add(2);
+            return new IllegalArgumentException();
+        });
+        assertEquals(c.size(), 1);
+        r3.mapError(NullPointerException.class, err ->  {
+            c.add(2);
+            return new IllegalArgumentException();
+        });
+        assertEquals(c.size(), 1);
+    }
+
+    /**
+     * Test lazy require.
+     */
+    @Test
+    public void testRequireLazy() {
+        Result<Integer> r2 = Result.of(2);
+        r2.require(r2::isPresent, r2::getError);
+        Result<Integer> r1 = Results.ofChecked(() -> {
+            throw new IllegalAccessException("Illegal test");
+        });
+        assertTrue(r2.require(r1::isPresent, r1::getError).isError());
+        assertEquals("Illegal test", r1.require(r2::isPresent, r2::getError).getError().getMessage());
+
+    }
 }
 
