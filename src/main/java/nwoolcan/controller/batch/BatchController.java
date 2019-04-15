@@ -5,6 +5,10 @@ import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepDTO;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
+import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
+
+import java.util.Optional;
 
 /**
  * Interface representing a batch controller.
@@ -25,7 +29,6 @@ public interface BatchController {
      * @return a {@link Result} bearing the informations to choose choose the next step to go.
      */
     Result<GoNextStepViewModel> getGoNextStepViewModel(int batchId);
-
     /**
      * Goes to the next step of the batch with passed id with informations specified in the dto.
      * @param batchId the batch id.
@@ -33,4 +36,18 @@ public interface BatchController {
      * @return a {@link Result} bearing an error if operation went wrong.
      */
     Result<Empty> goToNextStep(int batchId, GoNextStepDTO dto);
+    /**
+     * Register an evaluation for the specified batch.
+     * @param batchID the id of the batch.
+     * @param newBatch the new evaluation.
+     * @return a Result describing the outcome of the operation.
+     */
+    Result<Empty> addBatchEvaluation(int batchID, BatchEvaluationDTO newBatch);
+
+    /**
+     * Return the evaluation for specified batch if available.
+     * @param batchID the batch.
+     * @return the evaluation for specified batch if available.
+     */
+    Result<Optional<BatchEvaluationDetailViewModel>> getBatchEvaluation(int batchID);
 }
