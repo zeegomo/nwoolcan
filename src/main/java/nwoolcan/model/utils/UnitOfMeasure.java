@@ -25,7 +25,7 @@ public enum UnitOfMeasure {
     /**
      * Basic units.
      */
-    UNIT("no") {
+    UNIT("u") {
         @Override
         public boolean validateValue(final Number value) {
             return validateWhenInteger(value);

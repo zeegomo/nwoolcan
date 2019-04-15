@@ -6,7 +6,7 @@ import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
 /**
  * View model version of the {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
  */
-public class BeerStockViewModel extends AbstractStockViewModel {
+public class BeerStockViewModel extends DetailStockViewModel {
 
     private final MasterBatchViewModel batch;
 
