@@ -29,6 +29,7 @@ import nwoolcan.viewmodel.brewery.production.batch.review.NewBatchEvaluationView
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -39,7 +40,7 @@ import java.util.logging.Logger;
 public final class BatchDetailController
     extends SubViewController
     implements InitializableController<DetailBatchViewModel> {
-
+    private static final String TYPES_LOAD_FAILED = "Could not load types";
     @FXML
     private Button goToNextStepButton;
     @FXML
@@ -96,7 +97,7 @@ public final class BatchDetailController
                 .peek(this.reviewContainer::substitute)
                 .peekError(err -> Logger.getGlobal().severe("Could not load: " + err.getMessage()));
         } else {
-            this.reviewContainer.substitute(b);
+            //this.reviewContainer.substitute(b);
         }
     }
 
@@ -112,10 +113,13 @@ public final class BatchDetailController
             modal.initOwner(window);
             modal.initModality(Modality.WINDOW_MODAL);
 
-            NewBatchEvaluationViewModel data = new BatchEvaluationViewModel(
+            NewBatchEvaluationViewModel data = new NewBatchEvaluationViewModel(
                 this.getController()
                     .getBatchController()
-                    .getAvailableBatchEvaluationTypes(),
+                    .getAvailableBatchEvaluationTypes()
+                    .peekError(err -> this.showAlertAndWait(TYPES_LOAD_FAILED + ": " + err.getMessage()))
+                    .peekError(err -> Logger.getGlobal().severe(TYPES_LOAD_FAILED + ": " + err.getMessage()))
+                    .orElse(HashSet::new),
                 this.data.getId()
             );
 
