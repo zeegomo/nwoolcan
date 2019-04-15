@@ -44,13 +44,6 @@ public final class MainController extends AbstractViewController {
     public void menuViewWarehouseClick(final ActionEvent event) {
         getController().setBreweryName("ciccio");
         getController().setOwnerName("ciccia");
-
-        //final int id1 = getController().getWarehouseController().createBeerArticle("beer", UnitOfMeasure.BOTTLE_33_CL).getId();
-        final int id2 = getController().getWarehouseController().createIngredientArticle("ing", UnitOfMeasure.GRAM, IngredientType.FERMENTABLE).getId();
-        final int id3 = getController().getWarehouseController().createMiscArticle("misc", UnitOfMeasure.UNIT).getId();
-        getController().getWarehouseController().createStock(id2);
-        getController().getWarehouseController().createStock(id3, new Date());
-        getController().getWarehouseController().addRecord(id3, 3.0, Record.Action.ADDING);
         this.getViewManager().getView(ViewType.WAREHOUSE, getController().getWarehouseController().getWarehouseViewModel()).peek(view -> this.contentPane.substitute(view));
     }
 
