@@ -12,9 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.batch.review.EvaluationType;
+import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 import nwoolcan.view.InitializableController;
@@ -26,6 +28,7 @@ import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
 import nwoolcan.viewmodel.brewery.production.batch.review.NewBatchEvaluationViewModel;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +37,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
 /**
  * Controller for new Batch Evaluation modal.
  */
@@ -113,6 +117,7 @@ public final class NewBatchEvaluationController extends SubViewController
             );
         });
     }
+
     /**
      * Create new batch.
      */
@@ -148,8 +153,13 @@ public final class NewBatchEvaluationController extends SubViewController
                                   (res1, res2) -> res1.require(res2::isPresent, res2::getError)
                                                       .peek(col -> col.addAll(res2.getValue())));
         cat.map(eval -> new BatchEvaluationDTO(type, eval, this.notesTextArea.getText(), this.reviewerTextField.getText()))
-           .map(dto -> this.getController().getBatchController().addBatchEvaluation(this.id, dto))
-           .peekError(err -> this.showAlertAndWait(err.getMessage()));
+                              .flatMap(dto -> this.getController().getBatchController().addBatchEvaluation(this.id, dto))
+                              .peekError(err -> this.showAlertAndWait(err.getMessage())).peek(res -> {
+                final Stage stage = ((Stage) this.reviewerTextField.getScene().getWindow());
+                //just for saying that i added review to the caller
+                stage.setUserData(new Object());
+                stage.close();
+            });
         System.out.println(cat);
     }
 
