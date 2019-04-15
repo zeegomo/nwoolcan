@@ -9,7 +9,7 @@
 <TitledPane xmlns="http://javafx.com/javafx"
             fx:id="title"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nwoolcan.view.review.EvaluationTypeController">
+            fx:controller="nwoolcan.view.review.EvaluationInputController">
     <VBox stylesheets="@style.css">
         <FlowPane>
             <Label text="Score: " styleClass="subtitle"/>
