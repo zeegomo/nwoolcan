@@ -7,6 +7,8 @@ import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 
 import java.lang.reflect.Constructor;
+import java.text.MessageFormat;
+import java.util.logging.Logger;
 
 /**
  * View manager impl that can inject a controller and itself to the view controllers constructors.
@@ -17,6 +19,7 @@ public final class ViewManagerImpl implements ViewManager {
     private static final String NO_DESIGNATED_CONSTRUCTOR_FOUND_MESSAGE = "No designated constructor found for view controller.";
 
     private final Controller controller;
+    private final Logger logger;
 
     /**
      * Creates a view manager that injects the passed {@link Controller}.
@@ -24,6 +27,7 @@ public final class ViewManagerImpl implements ViewManager {
      */
     public ViewManagerImpl(final Controller controller) {
         this.controller = controller;
+        this.logger = Logger.getLogger(this.getClass().getName());
     }
 
     private void injectIntoController(final FXMLLoader loader) {
@@ -60,11 +64,11 @@ public final class ViewManagerImpl implements ViewManager {
      */
     @Override
     public Result<Parent> getView(final ViewType type) {
-        return Results.ofChecked(() -> {
+        return Results.<Parent>ofChecked(() -> {
             final FXMLLoader loader = new FXMLLoader(ViewType.class.getResource(type.getResourceName()));
             this.injectIntoController(loader);
             return loader.load();
-        });
+        }).peekError(err -> this.logger.warning(MessageFormat.format("Unable to load ''{0}'' view: {1}", type, err.getMessage())));
     }
 
     /**
@@ -82,6 +86,6 @@ public final class ViewManagerImpl implements ViewManager {
             final Parent parent = loader.load();
             loader.<InitializableController<T>>getController().initData(viewModel);
             return parent;
-        });
+        }).peekError(err -> this.logger.warning(MessageFormat.format("Unable to load ''{0}'' view with ViewModel of type {1}: {2}", type, viewModel.getClass().getName(), err.getMessage())));
     }
 }

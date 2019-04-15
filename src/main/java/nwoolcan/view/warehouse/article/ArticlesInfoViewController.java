@@ -13,7 +13,7 @@ import javafx.stage.Window;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.SubViewController;
+import nwoolcan.view.subview.SubViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.mastertable.ColumnDescriptor;

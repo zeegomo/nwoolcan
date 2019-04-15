@@ -1,10 +1,11 @@
-package nwoolcan.view;
+package nwoolcan.view.subview;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import nwoolcan.controller.Controller;
-import nwoolcan.view.subview.SubView;
-import nwoolcan.view.subview.SubViewContainer;
+import nwoolcan.view.AbstractViewController;
+import nwoolcan.view.ViewManager;
+import nwoolcan.view.ViewType;
 
 import javax.annotation.Nullable;
 import java.util.function.BiConsumer;
