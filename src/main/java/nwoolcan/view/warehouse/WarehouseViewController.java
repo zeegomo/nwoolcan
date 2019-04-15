@@ -1,6 +1,7 @@
 package nwoolcan.view.warehouse;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
@@ -124,5 +125,10 @@ public final class WarehouseViewController extends SubViewController implements 
     @Override
     protected SubView getSubView() {
         return this.warehouseSubView;
+    }
+
+    @FXML
+    private void backButtonClick(final ActionEvent actionEvent) {
+        this.previousView();
     }
 }

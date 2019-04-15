@@ -122,4 +122,9 @@ public final class ArticlesInfoViewController extends SubViewController implemen
                                                             .getArticles(queryArticle);
         setTable(articles);
     }
+
+    @FXML
+    private void backButtonClick(final ActionEvent actionEvent) {
+        this.previousView();
+    }
 }

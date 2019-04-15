@@ -26,6 +26,7 @@
         </top>
         <center>
             <VBox>
+                <Button text="Back" onAction="#backButtonClick"/>
                 <TitledPane text="General information">
                     <BorderPane>
                         <left>
