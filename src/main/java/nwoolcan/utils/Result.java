@@ -199,7 +199,8 @@ public final class Result<T> {
     /**
      * Apply the provided function to the exception, if any and the exception matches the provided one.
      * @param mapper the function to apply to the exception
-     * @param exc the type of exception.
+     * @param exc the exception class.
+     * @param <E> the type of the exception.
      * @return this
      */
     @SuppressWarnings("unchecked")
