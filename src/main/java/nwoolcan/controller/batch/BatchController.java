@@ -49,5 +49,5 @@ public interface BatchController {
      * @param batchID the batch.
      * @return the evaluation for specified batch if available.
      */
-    Result<Optional<BatchEvaluationDetailViewModel>> getBatchEvaluation(final int batchID);
+    Result<Optional<BatchEvaluationDetailViewModel>> getBatchEvaluation(int batchID);
 }

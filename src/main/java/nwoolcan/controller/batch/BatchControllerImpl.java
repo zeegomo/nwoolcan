@@ -87,6 +87,7 @@ public final class BatchControllerImpl implements BatchController {
             })
             .toEmpty();
     }
+
     @Override
     public Result<Optional<BatchEvaluationDetailViewModel>> getBatchEvaluation(final int batchID) {
         return utils.getBatchById(batchID).map(batch -> batch.getEvaluation().map(BatchEvaluationDetailViewModel::new));
