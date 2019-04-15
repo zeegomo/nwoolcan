@@ -26,7 +26,10 @@
         </top>
         <center>
             <VBox>
-                <Button text="Back" onAction="#backButtonClick"/>
+                <HBox>
+                    <Button text="Back" onAction="#backButtonClick"/>
+                    <Button onAction="#createNewArticleClick" text="Create new article" />
+                </HBox>
                 <TitledPane text="General information">
                     <BorderPane>
                         <left>
@@ -55,15 +58,6 @@
                                 </PieChart>
                             </HBox>
                         </center>
-                        <right>
-                            <BorderPane>
-                                <center>
-                                    <VBox alignment="CENTER">
-                                        <Button onAction="#createNewArticleClick" text="Create new article" />
-                                    </VBox>
-                                </center>
-                            </BorderPane>
-                        </right>
                     </BorderPane>
                 </TitledPane>
                 <TitledPane text="Articles">

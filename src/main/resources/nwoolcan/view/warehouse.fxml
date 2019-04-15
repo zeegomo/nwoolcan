@@ -26,7 +26,10 @@
     </top>
     <center>
         <VBox>
-            <Button text="Back" onAction="#backButtonClick"/>
+            <HBox>
+                <Button text="Back" onAction="#backButtonClick"/>
+                <Button text="Create Stock" onAction="#createNewStockButtonClick"/>
+            </HBox>
             <TitledPane text="General information">
                 <HBox>
                     <VBox>
@@ -95,7 +98,6 @@
                         </FlowPane>
                         <PieChart fx:id="pieChartMiscStatus" maxHeight="280.0" maxWidth="300.0"/>
                     </VBox>
-                    <Button text="Create Stock" onAction="#createNewStockButtonClick"/>
                 </HBox>
             </TitledPane>
             <TitledPane text="Stocks">
