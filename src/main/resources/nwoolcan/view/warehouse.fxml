@@ -49,8 +49,8 @@
                             <Label text="Used up: " />
                             <Label fx:id="lblNumberBeerUsedUp" />
                         </FlowPane>
+                        <PieChart fx:id="pieChartBeerStatus" maxHeight="280.0" maxWidth="300.0"/>
                     </VBox>
-                    <PieChart fx:id="pieChartBeerStatus" maxHeight="280.0" maxWidth="300.0"/>
                     <VBox>
                         <FlowPane>
                             <Label text="Ingredients">
@@ -71,10 +71,10 @@
                             <Label text="Used up: " />
                             <Label fx:id="lblNumberIngredientUsedUp" />
                         </FlowPane>
+                        <PieChart fx:id="pieChartIngredientStatus" maxHeight="280.0" maxWidth="300.0"/>
                     </VBox>
-                    <PieChart fx:id="pieChartIngredientStatus" maxHeight="280.0" maxWidth="300.0"/>
                     <VBox>
-                        <FlowPane>
+                    <FlowPane>
                             <Label text="Misc">
                                 <font>
                                     <Font size="20.0" />
@@ -93,8 +93,9 @@
                             <Label text="Used up: " />
                             <Label fx:id="lblNumberMiscUsedUp" />
                         </FlowPane>
+                        <PieChart fx:id="pieChartMiscStatus" maxHeight="280.0" maxWidth="300.0"/>
                     </VBox>
-                    <PieChart fx:id="pieChartMiscStatus" maxHeight="280.0" maxWidth="300.0"/>
+                    <Button text="Create Stock" onAction="#createNewStockButtonClick"/>
                 </HBox>
             </TitledPane>
             <TitledPane text="Stocks">

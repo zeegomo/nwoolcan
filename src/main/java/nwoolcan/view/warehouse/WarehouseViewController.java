@@ -3,8 +3,16 @@ package nwoolcan.view.warehouse;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.SubViewController;
@@ -130,5 +138,36 @@ public final class WarehouseViewController extends SubViewController implements 
     @FXML
     private void backButtonClick(final ActionEvent actionEvent) {
         this.previousView();
+    }
+
+    @FXML
+    private void createNewStockButtonClick(final ActionEvent actionEvent) {
+        if (getController().getWarehouseController().getArticlesViewModel().getnMiscArticles() <= 0
+            && getController().getWarehouseController().getArticlesViewModel().getnIngredientArticles() <= 0) {
+            new Alert(
+                        Alert.AlertType.ERROR,
+                        "There are no articles or only beer articles. Create a misc or ingredient article first",
+                        ButtonType.OK
+                     ).showAndWait();
+            return;
+        }
+
+        final Stage modal =  new Stage();
+        final Window window = this.getSubView().getScene().getWindow();
+
+        modal.initOwner(window);
+        modal.initModality(Modality.WINDOW_MODAL);
+
+        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_STOCK_MODAL).orElse(new AnchorPane()),
+            600, 400);
+
+        modal.setScene(scene);
+        modal.setResizable(false);
+        modal.setX(window.getX() + window.getWidth() / 2 - scene.getWidth() / 2);
+        modal.setY(window.getY() + window.getHeight() / 2 - scene.getHeight() / 2);
+        modal.showAndWait();
+
+        this.substituteView(ViewType.WAREHOUSE, this.getController().getWarehouseController().getWarehouseViewModel());
+
     }
 }

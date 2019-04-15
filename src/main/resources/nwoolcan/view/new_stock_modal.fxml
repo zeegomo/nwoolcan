@@ -40,27 +40,14 @@
                     <Label text="Existing stock will not be created again."/>
                     <Label text="Article" />
                     <ComboBox fx:id="comboBoxArticle"/>
-                    <CheckBox text="Specify date " fx:id="checkBoxDate" onAction="#specifyDateClick"/>
-                    <VBox fx:id="boxDateTimePicker" spacing="5" managed="false" visible="false">
-                        <DatePicker fx:id="datePicker"/>
-                        <HBox spacing="5">
-                            <VBox>
-                                <Label text="Hour"/>
-                                <ComboBox fx:id="comboHourSelection"/>
-                            </VBox>
-                            <VBox>
-                                <Label text="Minute"/>
-                                <ComboBox fx:id="comboMinuteSelection"/>
-                            </VBox>
-                        </HBox>
-                    </VBox>
+                    <CheckBox text="Specify expiration date " fx:id="checkBoxDate" onAction="#specifyDateClick"/>
+                    <DatePicker fx:id="datePicker" managed="false" visible="false"/>
                 </VBox>
             </center>
             <bottom>
                 <Button text="Create"
                         BorderPane.alignment="CENTER"
-                        onAction="#createStockClick"
-                        fx:id="createStockButton">
+                        onAction="#createStockClick">
                     <BorderPane.margin>
                         <Insets bottom="10.0" />
                     </BorderPane.margin>
