@@ -7,6 +7,7 @@ import nwoolcan.model.brewery.batch.review.BatchEvaluationBuilder;
 import nwoolcan.model.brewery.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.batch.review.Evaluation;
 import nwoolcan.model.brewery.batch.review.EvaluationFactory;
+import nwoolcan.model.brewery.batch.review.EvaluationType;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
@@ -14,6 +15,7 @@ import nwoolcan.viewmodel.brewery.production.batch.GoNextStepDTO;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
+import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -83,10 +85,15 @@ public final class BatchControllerImpl implements BatchController {
                 BatchEvaluationBuilder builder = new BatchEvaluationBuilder();
                 newBatch.getNotes().ifPresent(builder::addNotes);
                 newBatch.getReviewer().ifPresent(builder::addReviewer);
-                return new BatchEvaluationBuilder().build(newBatch.getBatchEvaluationType(), cat)
-                                                   .map(eval -> utils.getBatchById(batchID).map(b -> b.setEvaluation(eval)));
+                return builder.build(newBatch.getBatchEvaluationType(), cat);
             })
-            .toEmpty();
+            .flatMap(eval -> utils.getBatchById(batchID).flatMap(b -> b.setEvaluation(eval)));
+    }
+
+    @Override
+    public Result<Empty> checkEvaluation(final Triple<EvaluationType, Integer, Optional<String>> data) {
+        return EvaluationFactory.create(data.getLeft(), data.getMiddle(), data.getRight().orElse(null))
+                                .toEmpty();
     }
 
     @Override
