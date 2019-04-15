@@ -48,7 +48,7 @@ public final class NewArticleModalViewController extends AbstractViewController 
     private void initialize() {
         newArticleUnitOfMeasure.getItems().setAll(UnitOfMeasure.values());
         newArticleUnitOfMeasure.getSelectionModel().selectFirst();
-        newArticleType.getItems().setAll(ArticleType.values());
+        newArticleType.getItems().addAll(ArticleType.values());
         newArticleType.getSelectionModel().selectFirst();
         newArticleIngredientType.getItems().setAll(IngredientType.values());
         newArticleIngredientType.getSelectionModel().selectFirst();
