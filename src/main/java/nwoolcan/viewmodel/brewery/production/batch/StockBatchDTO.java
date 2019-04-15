@@ -50,6 +50,6 @@ public final class StockBatchDTO {
      */
     @Nullable
     public Date getExpirationDate() {
-        return this.expirationDate;
+        return this.expirationDate == null ? null : new Date(this.expirationDate.getTime());
     }
 }
