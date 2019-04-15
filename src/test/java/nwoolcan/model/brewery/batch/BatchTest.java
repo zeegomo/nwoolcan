@@ -289,7 +289,7 @@ public class BatchTest {
         //Stock again
         final Result<Empty> again = batchAlfredo.stockBatchInto(article, () -> warehouse.createBeerStock(article, batchAlfredo).getValue());
         Assert.assertTrue(again.isError());
-        Assert.assertEquals(1, warehouse.getStocks(new QueryStockBuilder().build().getValue()).size());
+        Assert.assertEquals(1, warehouse.getStocks(new QueryStockBuilder().setArticle(article).build().getValue()).size());
 
         //Go to wrong step type.
         batchAlfredo.moveToNextStep(StepTypeEnum.MASHING).peek(e -> Assert.fail());
