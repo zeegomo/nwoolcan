@@ -75,6 +75,13 @@ public final class BatchControllerImpl implements BatchController {
         List<BeerArticleViewModel> beerArticles = this.model.getWarehouse().getArticles(new QueryArticleBuilder().setIncludeArticleType(ArticleType.FINISHED_BEER)
                                                                                                                  .build())
                                                             .stream()
+                                                            .filter(a -> {
+                                                                if (res.isPresent()) {
+                                                                    return res.getValue().getCurrentSize().getUnitOfMeasure()
+                                                                        .equals(a.getUnitOfMeasure());
+                                                                }
+                                                                return false;
+                                                            })
                                                             .map(a -> a.toBeerArticle().getValue())
                                                             .map(BeerArticleViewModel::new)
                                                             .collect(Collectors.toList());
