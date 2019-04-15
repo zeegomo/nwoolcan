@@ -68,9 +68,9 @@ public class BatchController {
                        .map(cat -> EvaluationFactory.create(cat.getLeft(), cat.getMiddle(), cat.getRight().orElse(null)))
                        .<Result<Set<Evaluation>>>reduce(
                            Result.of(new HashSet<>()),
-                           (res, cat) -> res.require(cat::isPresent, cat.getError())
+                           (res, cat) -> res.require(cat::isPresent, cat::getError)
                                  .peek(list -> list.add(cat.getValue())),
-                           (res1, res2) -> res1.require(res2::isPresent, res2.getError())
+                           (res1, res2) -> res1.require(res2::isPresent, res2::getError)
                                     .peek(list -> list.addAll(res2.orElse(HashSet::new))))
                        .flatMap(cat -> {
                            BatchEvaluationBuilder builder = new BatchEvaluationBuilder();
