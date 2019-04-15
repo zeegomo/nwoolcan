@@ -86,6 +86,6 @@ public final class BatchControllerImpl implements BatchController {
                                                             .map(BeerArticleViewModel::new)
                                                             .collect(Collectors.toList());
 
-        return res.map(b -> new StockBatchViewModel(batchId, beerArticles));
+        return res.map(b -> new StockBatchViewModel(batchId, b.getCurrentSize().getUnitOfMeasure(), beerArticles));
     }
 }
