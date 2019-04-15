@@ -29,6 +29,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * View controller of stock new batch modal view.
+ */
 @SuppressWarnings("NullAway")
 public final class StockBatchModalController
     extends AbstractViewController
@@ -97,6 +100,10 @@ public final class StockBatchModalController
         );
     }
 
+    /**
+     * Stock the batch with beer article and possible expiration date.
+     * @param event the occurred event.
+     */
     public void stockBatchButtonClicked(final ActionEvent event) {
         int articleId;
 

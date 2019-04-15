@@ -137,6 +137,10 @@ public final class BatchDetailController
         a.showAndWait();
     }
 
+    /**
+     * Opens the modal for stocking a batch.
+     * @param event the occurred event.
+     */
     public void stockBatchButtonClicked(final ActionEvent event) {
         final Stage modal =  new Stage();
         final Window window = this.getSubView().getScene().getWindow();
