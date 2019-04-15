@@ -189,6 +189,27 @@ public final class Result<T> {
         return this;
     }
     /**
+     * Apply the provided function to the exception, if any.
+     * @param mapper the function to apply to the exception
+     * @return this
+     */
+    public Result<T> mapError(final Function<Exception, ? extends Exception> mapper) {
+        return this.isError() ? Result.error(mapper.apply(this.exception.get())) : this;
+    }
+    /**
+     * Apply the provided function to the exception, if any and the exception matches the provided one.
+     * @param mapper the function to apply to the exception
+     * @param exc the type of exception.
+     * @return this
+     */
+    @SuppressWarnings("unchecked")
+    public <E extends Exception> Result<T> mapError(final Class<E> exc, final Function<E, ? extends Exception> mapper) {
+        if (this.isError() && this.getError().getClass().equals(exc)) {
+            return Result.error(mapper.apply((E) this.exception.get()));
+        }
+        return this;
+    }
+    /**
      * If the value is not present or the value is present and the predicate is true, return this.
      * Otherwise return a {@link Result} holding the specified exception.
      * @param supplier a supplier of a boolean condition
@@ -198,6 +219,20 @@ public final class Result<T> {
     public Result<T> require(final Supplier<Boolean> supplier, final Exception exception) {
         if (this.isPresent()) {
             return supplier.get() ? this : Result.error(exception);
+        } else {
+            return this;
+        }
+    }
+    /**
+     * If the value is not present or the value is present and the predicate is true, return this.
+     * Otherwise return a {@link Result} holding the specified exception.
+     * @param supplier a supplier of a boolean condition
+     * @param exception a supplier of the exception to be hold in the resulting {@link Result} if the value does not match the predicate
+     * @return a {@link Result} describing the value of this {@link Result} if a value is present and the condition is true
+     */
+    public Result<T> require(final Supplier<Boolean> supplier, final Supplier<Exception> exception) {
+        if (this.isPresent()) {
+            return supplier.get() ? this : Result.error(exception.get());
         } else {
             return this;
         }
