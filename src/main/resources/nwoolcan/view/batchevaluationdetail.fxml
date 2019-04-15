@@ -6,16 +6,41 @@
 <?import nwoolcan.view.subview.SubView?>
 <?import nwoolcan.view.subview.SubViewContainer?>
 
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.ScrollPane?>
 <SubView fx:id="batchEvaluationDetailSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
          fx:controller="nwoolcan.view.review.BatchEvaluationDetailController">
-    <VBox>
+    <BorderPane>
         <padding>
             <Insets bottom="10" left="10" right="10" top="10"/>
         </padding>
+        <top>
             <SubViewContainer fx:id="container"/>
-            <VBox>
-                <VBox fx:id="categories"/>
-                <Button onAction="#newEvaluationClick" text="new"/>
-            </VBox>
-    </VBox>
+        </top>
+        <center>
+            <BorderPane>
+                <padding>
+                <Insets bottom="10" left="10" right="10" top="10"/>
+                </padding>
+                <right>
+                    <ScrollPane fx:id="categoriesScrollPane">
+                    <VBox>
+                        <VBox fx:id="categories"/>
+                        <Button onAction="#newEvaluationClick" text="new"/>
+                    </VBox>
+                    </ScrollPane>
+                </right>
+                <left>
+                    <FlowPane>
+                    <Text text="Notes:"/>
+                    <Text fx:id="notes"/>
+                    </FlowPane>
+                </left>
+            </BorderPane>
+
+        </center>
+    </BorderPane>
 </SubView>
