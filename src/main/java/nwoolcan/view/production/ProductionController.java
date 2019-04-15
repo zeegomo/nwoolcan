@@ -5,12 +5,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
+import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.SubViewController;
 import nwoolcan.view.ViewManager;
@@ -112,7 +115,15 @@ public final class ProductionController
             ),
             data.getBatches(),
             ViewType.BATCH_DETAIL,
-            mbvm -> null //TODO this.getController().getBatchController().getDetailBatchViewModel(mbvm.getId())
+            mbvm -> {
+                Result<DetailBatchViewModel> res = this.getController().getBatchController().getDetailBatchViewModelById(mbvm.getId());
+                if (res.isPresent()) {
+                    return res.getValue();
+                }
+
+                this.showAlertAndWait("Batch id not found!");
+                return null; //TODO fix with unified error management in master table
+            }
         );
 
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
@@ -162,5 +173,10 @@ public final class ProductionController
         if (modal.getUserData() != null) {
             this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
         }
+    }
+
+    private void showAlertAndWait(final String message) {
+        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while loading the batch detail.\n" + message, ButtonType.CLOSE);
+        a.showAndWait();
     }
 }
