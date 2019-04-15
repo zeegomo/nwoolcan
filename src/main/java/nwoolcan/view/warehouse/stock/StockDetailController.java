@@ -41,7 +41,6 @@ public final class StockDetailController extends SubViewController implements In
     private SubView stockDetailSubView;
     @FXML
     private TableView<RecordViewModel> recordTable;
-
     @FXML
     private Label lblId;
 
