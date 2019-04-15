@@ -48,6 +48,7 @@
                 <TitledPane text="Review">
                     <SubViewContainer fx:id="reviewContainer">
                     </SubViewContainer>
+                    <Button fx:id="addReviewButton" onAction="addReviewClick"/>
                 </TitledPane>
             </VBox>
         </center>
