@@ -47,9 +47,17 @@ public enum ViewType {
      */
     BATCH_DETAIL,
     /**
+     * Detail view to show a step.
+     */
+    STEP_DETAIL,
+    /**
      * Modal for creating a new batch.
      */
-    NEW_BATCH_MODAL;
+    NEW_BATCH_MODAL,
+    /**
+     * Modal for going to the next step in a batch in production.
+     */
+    GO_NEXT_STEP_MODAL;
 
     /**
      * Name of the FXML files associated with this type of view.
