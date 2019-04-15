@@ -15,7 +15,7 @@ import java.util.Optional;
 /**
  * Utils class for controllers.
  */
-public final class Controllers {
+public final class ControllerUtils {
     private static final String BATCH_NOT_FOUND = "Batch not found.";
     private static final String BEER_ARTICLE_NOT_FOUND = "Beer Article not found.";
 
@@ -25,7 +25,7 @@ public final class Controllers {
      * Basic constructor.
      * @param brewery the brewery to use as model.
      */
-    public Controllers(final Brewery brewery) {
+    public ControllerUtils(final Brewery brewery) {
         this.brewery = brewery;
     }
 

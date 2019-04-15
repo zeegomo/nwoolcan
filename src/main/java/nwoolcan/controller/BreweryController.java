@@ -156,7 +156,7 @@ public final class BreweryController implements Controller {
 
     @Override
     public Result<Empty> stockBatch(final int batchId, final int beerArticleId, final Date expirationDate) {
-        final Controllers utils = new Controllers(this.brewery);
+        final ControllerUtils utils = new ControllerUtils(this.brewery);
         final Result<Batch> batchResult = utils.getBatchById(batchId);
         final Result<BeerArticle> beerArticleResult = utils.getBeerArticleById(beerArticleId);
 
@@ -173,7 +173,7 @@ public final class BreweryController implements Controller {
 
     @Override
     public Result<Empty> stockBatch(final int batchId, final int beerArticleId) {
-        final Controllers utils = new Controllers(this.brewery);
+        final ControllerUtils utils = new ControllerUtils(this.brewery);
         final Result<Batch> batchResult = utils.getBatchById(batchId);
         final Result<BeerArticle> beerArticleResult = utils.getBeerArticleById(beerArticleId);
 
