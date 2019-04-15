@@ -33,6 +33,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -150,23 +151,31 @@ public final class BreweryController implements Controller {
     public Result<Empty> stockBatch(final int batchId, final int beerArticleId, final Date expirationDate) {
         final Result<Batch> batchResult = getBatchById(batchId);
         final Result<BeerArticle> beerArticleResult = getBeerArticleById(beerArticleId);
-        return Result.ofEmpty()
-                     .require(batchResult::isPresent, batchResult.getError())
-                     .require(beerArticleResult::isPresent, beerArticleResult.getError())
-                     .flatMap(() -> brewery.stockBatch(batchResult.getValue(),
-                                                       beerArticleResult.getValue(),
-                                                       expirationDate));
+
+        if (batchResult.isPresent() && beerArticleResult.isPresent()) {
+            return Result.of(this.brewery.stockBatch(
+                batchResult.getValue(),
+                beerArticleResult.getValue(),
+                expirationDate
+            )).toEmpty();
+        }
+
+        return batchResult.flatMap(b -> beerArticleResult).toEmpty();
     }
 
     @Override
     public Result<Empty> stockBatch(final int batchId, final int beerArticleId) {
         final Result<Batch> batchResult = getBatchById(batchId);
         final Result<BeerArticle> beerArticleResult = getBeerArticleById(beerArticleId);
-        return Result.ofEmpty()
-                     .require(batchResult::isPresent, batchResult.getError())
-                     .require(beerArticleResult::isPresent, beerArticleResult.getError())
-                     .flatMap(() -> brewery.stockBatch(batchResult.getValue(),
-                                                       beerArticleResult.getValue()));
+
+        if (batchResult.isPresent() && beerArticleResult.isPresent()) {
+            return Result.of(this.brewery.stockBatch(
+                batchResult.getValue(),
+                beerArticleResult.getValue()
+            )).toEmpty();
+        }
+
+        return batchResult.flatMap(b -> beerArticleResult).toEmpty();
     }
 
     @Override
@@ -184,9 +193,10 @@ public final class BreweryController implements Controller {
                                                                    .setMaxId(batchId)
                                                                    .build().getValue();
         return Result.of(brewery.getBatches(querySingleBatch))
-                     .require(batches -> batches.size() == 1,
+                     .map(batches -> batches.stream().findAny())
+                     .require(Optional::isPresent,
                               new IllegalArgumentException(BATCH_NOT_FOUND))
-                     .map(batches -> batches.iterator().next());
+                     .map(Optional::get);
     }
 
     private Result<BeerArticle> getBeerArticleById(final int beerArticleId) {
