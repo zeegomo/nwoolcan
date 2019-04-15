@@ -3,10 +3,12 @@ package nwoolcan.utils;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
@@ -249,6 +251,33 @@ public class ResultTest {
         assertTrue(r2.require(r1::isPresent, r1::getError).isError());
         assertEquals("Illegal test", r1.require(r2::isPresent, r2::getError).getError().getMessage());
 
+    }
+
+    /**
+     * Test reduce utils in Results.
+     */
+    @Test
+    public void testReduce() {
+        Collection<Result<Integer>> coll = Arrays.asList(
+            Result.of(1),
+            Result.of(2),
+            Result.of(3)
+        );
+
+        Result<Collection<Integer>> res = Results.reduce(coll);
+
+        assertTrue(res.isPresent());
+        assertArrayEquals(new Integer[] {1, 2, 3}, res.getValue().toArray());
+
+        coll = Arrays.asList(
+            Result.of(1),
+            Result.error(new Exception()),
+            Result.of(3)
+        );
+
+        res = Results.reduce(coll);
+
+        assertTrue(res.isError());
     }
 }
 
