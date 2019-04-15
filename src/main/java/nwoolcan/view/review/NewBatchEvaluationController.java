@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -45,12 +47,17 @@ import java.util.stream.Collectors;
 @SuppressWarnings("NullAway")
 public class NewBatchEvaluationController extends SubViewController implements InitializableController<List<BatchEvaluationType>> {
     private static final String LOAD_FAILED = "Load failed";
+    private static final String PARSE_FAILED = "Parse failed";
     @FXML
     private SubView modalSubView;
     @FXML
     private ComboBox<BatchEvaluationTypeProperty> batchTypeComboBox;
     @FXML
     private VBox categories;
+    @FXML
+    private TextArea notesTextArea;
+    @FXML
+    private TextField reviewerTextField;
 
     private final Map<EvaluationType, Pair<TextField, TextArea>> evaluations = new HashMap<>();
 
@@ -107,6 +114,7 @@ public class NewBatchEvaluationController extends SubViewController implements I
      *
      */
     public void createBatchReviewClick() {
+        BatchEvaluationType type = this.batchTypeComboBox.getSelectionModel().getSelectedItem().getType();
         Result<Set<Triple<EvaluationType,
             Integer,
             Optional<String>>>> cat = this.evaluations.entrySet()
@@ -117,13 +125,16 @@ public class NewBatchEvaluationController extends SubViewController implements I
                                                           Optional.ofNullable(entry.getValue().getRight().getText())))
                                                       .reduce(
                                                           Result.of(new HashSet<>()),
-                                                          (res, triple) -> res.require(() -> triple.getMiddle().isPresent(), triple.getMiddle().getError())
-                                                                           .peek(list -> list.add(Triple.of(
-                                                                               triple.getLeft(),
-                                                                               triple.getMiddle().getValue(),
-                                                                               triple.getRight()))),
-                                                          (res1, res2) -> res1.require(res1::isPresent, res2.getError())
-                                                                              .peek(list -> list.addAll(res2.orElse(HashSet::new))));
+                                                          (res, triple) -> res.flatMap(r -> triple.getMiddle().map(rr -> {
+                                                              r.add(Triple.of(
+                                                                  triple.getLeft(),
+                                                                  rr,
+                                                                  triple.getRight()));
+                                                              return r;
+                                                          })),
+                                                          (res1, res2) -> res1.flatMap(r1 -> res2.peek(r2 -> r2.addAll(r1))));
+        cat.map(eval -> new BatchEvaluationDTO(type, eval, this.notesTextArea.getText(), this.reviewerTextField.getText()))
+           .peekError(err -> this.showAlertAndWait(err.getMessage()));
         System.out.println(cat);
     }
 
@@ -133,4 +144,8 @@ public class NewBatchEvaluationController extends SubViewController implements I
             .orElse(Pair.of(new Label(LOAD_FAILED), new EvaluationTypeController(this.getController(), this.getViewManager())));
     }
 
+    private void showAlertAndWait(final String message) {
+        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while creating the batch.\n" + message, ButtonType.CLOSE);
+        a.showAndWait();
+    }
 }
