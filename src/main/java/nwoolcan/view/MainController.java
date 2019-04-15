@@ -4,12 +4,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import nwoolcan.controller.Controller;
-import nwoolcan.model.brewery.warehouse.article.IngredientType;
-import nwoolcan.model.brewery.warehouse.stock.Record;
-import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.view.subview.SubViewContainer;
-
-import java.util.Date;
 
 /**
  * Handles the Main view.
