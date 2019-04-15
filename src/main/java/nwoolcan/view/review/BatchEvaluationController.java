@@ -10,13 +10,11 @@ import nwoolcan.view.ViewManager;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationViewModel;
 
-import java.util.logging.Logger;
-
-@SuppressWarnings("NullAway")
 /**
  * Controller for BatchEvaluation.
  */
-public class BatchEvaluationController
+@SuppressWarnings("NullAway")
+public final class BatchEvaluationController
     extends SubViewController
     implements InitializableController<BatchEvaluationViewModel> {
 

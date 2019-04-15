@@ -6,7 +6,9 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.text.Text;
 import nwoolcan.view.InitializableController;
 import nwoolcan.viewmodel.brewery.production.batch.review.EvaluationViewModel;
-
+/**
+ * Controller for single evaluation displayed in {@link BatchEvaluationDetailController}.
+ */
 @SuppressWarnings("NullAway")
 public final class EvaluationController implements InitializableController<EvaluationViewModel> {
     @FXML
