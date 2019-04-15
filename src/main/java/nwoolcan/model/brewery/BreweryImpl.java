@@ -7,7 +7,6 @@ import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.WarehouseImpl;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.stock.BeerStock;
-import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
@@ -83,15 +82,16 @@ public final class BreweryImpl implements Brewery {
     @Override
     public synchronized Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle, @Nullable final Date expirationDate) {
         return Result.of(batch)
-                     .require(Batch::isEnded, new IllegalStateException(CANNOT_STOCK_NOT_ENDED_BATCH_MESSGE))
-                     .require(b -> !b.isStocked(), new IllegalStateException(ALREADY_STOCKED_BATCH_MESSAGE))
-                     .require(b -> b.getCurrentSize().getUnitOfMeasure().equals(beerArticle.getUnitOfMeasure()), new IllegalArgumentException(WRONG_ARTICLE_UNIT_OF_MEASURE_MESSAGE))
-                     .flatMap(b -> createBeerStock(beerArticle, expirationDate, b))
-                     .flatMap(s -> {
-                         return s.addRecord(new Record(batch.getCurrentSize(), Record.Action.ADDING))
-                                 .map(e -> s);
-                     })
-                     .flatMap(batch::stockBatchInto);
+                     .flatMap(b -> b.stockBatchInto(beerArticle, () -> {
+                         BeerStock newStock;
+                         if (expirationDate == null) {
+                             newStock = this.warehouse.createBeerStock(beerArticle, batch).getValue();
+                         } else {
+                             newStock = this.warehouse.createBeerStock(beerArticle, expirationDate, batch).getValue();
+                         }
+                         return newStock;
+                     }))
+                     .toEmpty();
     }
     @Override
     public synchronized void setBreweryName(final String breweryName) {

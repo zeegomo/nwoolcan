@@ -7,8 +7,10 @@ import nwoolcan.model.brewery.batch.review.BatchEvaluation;
 import nwoolcan.model.brewery.batch.step.Step;
 import nwoolcan.model.brewery.batch.step.StepFactory;
 import nwoolcan.model.brewery.batch.step.StepType;
+import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
-import nwoolcan.model.brewery.warehouse.stock.Stock;
+import nwoolcan.model.brewery.warehouse.stock.BeerStock;
+import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 
@@ -24,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
+import java.util.function.Supplier;
 
 /**
  * Basic batch implementation.
@@ -32,8 +35,10 @@ final class BatchImpl implements Batch {
 
     private static final String CANNOT_CREATE_STEP_EXCEPTION = "Cannot create a step with the given type: ";
     private static final String CANNOT_FINALIZE_CURRENT_STEP = "Cannot finalize current step.";
-    private static final Object CANNOT_GO_TO_STEP_MESSAGE = "From this step, cannot go to step: ";
+    private static final String CANNOT_GO_TO_STEP_MESSAGE = "From this step, cannot go to step: ";
     private static final String BATCH_NOT_ENDED_MESSAGE = "Cannot perform operation because batch is not in ended state.";
+    private static final String BATCH_ALREADY_STOCKED_MESSAGE = "Cannot stock an already stocked batch.";
+    private static final String INVALID_ARTICLE_UNIT_OF_MEASURE_MESSAGE = "Invalid article unit of measure when stocking.";
 
     private final int id;
     private final ModifiableBatchInfo batchInfo;
@@ -43,7 +48,7 @@ final class BatchImpl implements Batch {
     @Nullable
     private BatchEvaluation batchEvaluation;
     @Nullable
-    private Stock stockReference;
+    private BeerStock stockReference;
 
     /**
      * Creates a new {@link Batch} in production.
@@ -153,22 +158,30 @@ final class BatchImpl implements Batch {
         return this.stockReference != null;
     }
 
-    private void setStockReference(final Stock stock) {
+    @Override
+    public Result<Empty> stockBatchInto(final BeerArticle article, final Supplier<BeerStock> supplier) {
+        return Result.of(article)
+                     .require(this::isEnded, new IllegalStateException(BATCH_NOT_ENDED_MESSAGE))
+                     .require(() -> !this.isStocked(), new IllegalStateException(BATCH_ALREADY_STOCKED_MESSAGE))
+                     .require(a -> a.getUnitOfMeasure().equals(this.getCurrentSize().getUnitOfMeasure()),
+                         new IllegalArgumentException(INVALID_ARTICLE_UNIT_OF_MEASURE_MESSAGE))
+                     .peek(a -> {
+                         final BeerStock stock = supplier.get();
+                         stock.addRecord(new Record(
+                             this.getCurrentSize(),
+                             new Date(),
+                             Record.Action.ADDING
+                         ));
+                         this.setStockReference(stock);
+                     }).toEmpty();
+    }
+
+    private void setStockReference(final BeerStock stock) {
         this.stockReference = stock;
     }
 
     @Override
-    public Result<Empty> stockBatchInto(final Stock stock) {
-        return Result.of(stock)
-                     .require(this::isEnded)
-                     .require(() -> !this.isStocked(), new IllegalStateException())
-                     .require(s -> s.getArticle().getUnitOfMeasure().equals(this.getCurrentSize().getUnitOfMeasure()))
-                     .peek(this::setStockReference)
-                     .toEmpty();
-    }
-
-    @Override
-    public Optional<Stock> getStockReference() {
+    public Optional<BeerStock> getStockReference() {
         return Optional.ofNullable(this.stockReference);
     }
 
