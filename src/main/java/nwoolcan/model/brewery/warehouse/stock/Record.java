@@ -33,7 +33,7 @@ public final class Record {
      */
     public Record(final Quantity quantity, final Date date, final Action action) {
         this.quantity = quantity;
-        this.date = DateUtils.round(date, Calendar.SECOND);
+        this.date = DateUtils.truncate(date, Calendar.SECOND);
         this.action = action;
     }
     /**

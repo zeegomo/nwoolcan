@@ -1,7 +1,8 @@
 package nwoolcan.viewmodel.brewery.warehouse.stock;
 
 import nwoolcan.model.brewery.warehouse.stock.Record;
-import nwoolcan.model.utils.Quantity;
+import nwoolcan.viewmodel.brewery.utils.QuantityViewModel;
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.util.Date;
 
@@ -10,8 +11,8 @@ import java.util.Date;
  */
 public final class RecordViewModel {
 
-    private final Quantity quantity;
-    private final boolean isAdding;
+    private final QuantityViewModel quantity;
+    private final Record.Action action;
     private final Date date;
 
     /**
@@ -19,30 +20,34 @@ public final class RecordViewModel {
      * @param record to be converted in {@link RecordViewModel}
      */
     public RecordViewModel(final Record record) {
-        this.quantity = record.getQuantity();
-        this.isAdding = record.getAction() == Record.Action.ADDING;
+        this.quantity = new QuantityViewModel(record.getQuantity());
+        this.action = record.getAction();
         this.date = record.getDate();
     }
     /**
      * Return the amount of the transfer in or out the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
      * @return the amount of the transfer in or out the {@link nwoolcan.model.brewery.warehouse.Warehouse}.
      */
-    public Quantity getQuantity() {
+    public QuantityViewModel getQuantity() {
         return quantity;
     }
     /**
-     * Return a {@link Boolean} which is true if the {@link Quantity} has to be added.
-     * @return a {@link Boolean} which is true if the {@link Quantity} has to be added.
+     * Return a {@link Boolean} which is true if the {@link nwoolcan.model.utils.Quantity} has to be added.
+     * @return a {@link Boolean} which is true if the {@link nwoolcan.model.utils.Quantity} has to be added.
      */
 
-    public boolean isAdding() {
-        return isAdding;
+    public Record.Action getAction() {
+        return action;
     }
     /**
      * Return the {@link Date} in which the {@link nwoolcan.model.brewery.warehouse.stock.Record} has been transferred.
      * @return the {@link Date} in which the {@link nwoolcan.model.brewery.warehouse.stock.Record} has been transferred.
      */
-    public Date getDate() {
-        return new Date(date.getTime());
+    public String getDate() {
+        return dateFormatted(date);
+    }
+
+    static String dateFormatted(final Date date) {
+        return DateFormatUtils.format(date, "dd-MM-yyyy HH:mm");
     }
 }

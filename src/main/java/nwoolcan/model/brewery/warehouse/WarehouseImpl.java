@@ -32,6 +32,14 @@ public final class WarehouseImpl implements Warehouse {
     public List<Stock> getStocks(final QueryStock queryStock) {
         final Set<Stock> stocks = STOCK_MANAGER.getStocks();
         return stocks.stream()
+                     // remove those stocks where query stock specifies a min ID and
+                     // where the id of the stock is less than it.
+                     .filter(stock -> !(queryStock.getMinId().isPresent()
+                         && stock.getId() < queryStock.getMinId().get()))
+                     // remove those stocks where query stock specifies a max ID and
+                     // where the id of the stock is greater than it.
+                     .filter(stock -> !(queryStock.getMaxId().isPresent()
+                         && stock.getId() > queryStock.getMaxId().get()))
                      // remove when article is present in queryStock but the article of
                      // the current stock is different from the one of the query.
                      .filter(stock -> !(queryStock.getArticle().isPresent()
