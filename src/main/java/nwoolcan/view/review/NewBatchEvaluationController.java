@@ -23,6 +23,7 @@ import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
+import nwoolcan.viewmodel.brewery.production.batch.review.NewBatchEvaluationViewModel;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import java.util.HashMap;
@@ -37,7 +38,8 @@ import java.util.stream.Collectors;
  * Controller for new Batch Evaluation modal.
  */
 @SuppressWarnings("NullAway")
-public final class NewBatchEvaluationController extends SubViewController implements InitializableController<List<BatchEvaluationType>> {
+public final class NewBatchEvaluationController extends SubViewController
+    implements InitializableController<NewBatchEvaluationViewModel> {
     private static final String LOAD_FAILED = "Load failed";
     private static final String SCORE_PARSE_FAILED = "Invalid score";
     @FXML
@@ -52,6 +54,7 @@ public final class NewBatchEvaluationController extends SubViewController implem
     private TextField reviewerTextField;
 
     private final Map<EvaluationType, Pair<ReadOnlyStringProperty, ReadOnlyStringProperty>> evaluations = new HashMap<>();
+    private int id;
 
     private static final class BatchEvaluationTypeProperty {
         private final BatchEvaluationType type;
@@ -86,10 +89,11 @@ public final class NewBatchEvaluationController extends SubViewController implem
     }
 
     @Override
-    public void initData(final List<BatchEvaluationType> data) {
-        batchTypeComboBox.setItems(FXCollections.observableList(data.stream()
+    public void initData(final NewBatchEvaluationViewModel data) {
+        batchTypeComboBox.setItems(FXCollections.observableList(data.getTypes().stream()
                                                                     .map(BatchEvaluationTypeProperty::new)
                                                                     .collect(Collectors.toList())));
+        this.id = data.getID();
         batchTypeComboBox.getSelectionModel().selectFirst();
         changeBatchTypeClick();
     }
@@ -144,6 +148,7 @@ public final class NewBatchEvaluationController extends SubViewController implem
                                   (res1, res2) -> res1.require(res2::isPresent, res2::getError)
                                                       .peek(col -> col.addAll(res2.getValue())));
         cat.map(eval -> new BatchEvaluationDTO(type, eval, this.notesTextArea.getText(), this.reviewerTextField.getText()))
+           .map(dto -> this.getController().getBatchController().addBatchEvaluation(this.id, dto))
            .peekError(err -> this.showAlertAndWait(err.getMessage()));
         System.out.println(cat);
     }
