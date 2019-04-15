@@ -9,6 +9,10 @@ import javafx.scene.layout.VBox;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.ViewManager;
+
+/**
+ * Modal of the new stock view used to create a stock.
+ */
 @SuppressWarnings("NullAway")
 public final class NewStockModalViewController extends AbstractViewController {
 
@@ -35,10 +39,10 @@ public final class NewStockModalViewController extends AbstractViewController {
     }
 
     @FXML
-    private void specifyDateClick(ActionEvent actionEvent) {
+    private void specifyDateClick(final ActionEvent actionEvent) {
     }
 
     @FXML
-    private void createStockClick(ActionEvent actionEvent) {
+    private void createStockClick(final ActionEvent actionEvent) {
     }
 }
