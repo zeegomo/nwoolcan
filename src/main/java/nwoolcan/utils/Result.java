@@ -192,11 +192,7 @@ public final class Result<T> {
      * @return a {@link Result} describing the value of this {@link Result} if a value is present and the condition is true
      */
     public Result<T> require(final Supplier<Boolean> supplier, final Supplier<Exception> exception) {
-        if (this.isPresent()) {
-            return supplier.get() ? this : Result.error(exception.get());
-        } else {
-            return this;
-        }
+        return this.require(e -> supplier.get(), exception);
     }
     /**
      * Apply the provided function to the exception, if any and the exception type matches
