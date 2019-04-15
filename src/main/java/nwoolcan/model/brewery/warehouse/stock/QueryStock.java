@@ -40,6 +40,10 @@ public final class QueryStock {
         USED_QUANTITY;
     }
     @Nullable
+    private final Integer minId;
+    @Nullable
+    private final Integer maxId;
+    @Nullable
     private final Article article;
     @Nullable
     private final ArticleType articleType;
@@ -63,7 +67,9 @@ public final class QueryStock {
     private final boolean sortDescending;
     // Package private
 
-    QueryStock(@Nullable final Article article,
+    QueryStock(@Nullable final Integer minId,
+               @Nullable final Integer maxId,
+               @Nullable final Article article,
                @Nullable final ArticleType articleType,
                @Nullable final Date expiresBefore,
                @Nullable final Date expiresAfter,
@@ -75,6 +81,8 @@ public final class QueryStock {
                @Nullable final StockState stockStateExcluded,
                final SortParameter sortParameter,
                final boolean sortDescending) {
+        this.minId = minId;
+        this.maxId = maxId;
         this.article = article;
         this.articleType = articleType;
         this.expiresBefore = expiresBefore;
@@ -87,6 +95,20 @@ public final class QueryStock {
         this.stockStateExcluded = stockStateExcluded;
         this.sortParameter = sortParameter;
         this.sortDescending = sortDescending;
+    }
+    /**
+     * Return the min id.
+     * @return the min id.
+     */
+    public Optional<Integer> getMinId() {
+        return Optional.ofNullable(minId);
+    }
+    /**
+     * Return the max id.
+     * @return the max id.
+     */
+    public Optional<Integer> getMaxId() {
+        return Optional.ofNullable(maxId);
     }
     /**
      * Return the specific {@link Article} required by the query.
@@ -175,7 +197,7 @@ public final class QueryStock {
 
     @Override
     public String toString() {
-        return "QueryStock{"
+        return "[QueryStock]{"
             +  "article=" + article
             + ", expiresBefore=" + expiresBefore
             + ", expiresAfter=" + expiresAfter
