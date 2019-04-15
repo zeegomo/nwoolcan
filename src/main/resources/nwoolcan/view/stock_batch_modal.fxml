@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="nwoolcan.view.production.StockBatchModalController">
+    <ScrollPane fitToWidth="true"
+                AnchorPane.rightAnchor="0.0"
+                AnchorPane.leftAnchor="0.0"
+                AnchorPane.bottomAnchor="0.0"
+                AnchorPane.topAnchor="0.0">
+        <BorderPane>
+            <top>
+                <Label text="New Batch" BorderPane.alignment="CENTER">
+                    <font>
+                        <Font size="22.0" />
+                    </font>
+                </Label>
+            </top>
+            <center>
+                <VBox BorderPane.alignment="CENTER_LEFT">
+                </VBox>
+            </center>
+        </BorderPane>
+    </ScrollPane>
+
+</AnchorPane>
