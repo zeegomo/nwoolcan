@@ -72,11 +72,6 @@ public final class StockDetailController extends SubViewController implements In
         setTable(data.getRecords());
     }
 
-    @FXML
-    private void btnBackClick(final ActionEvent event) {
-        this.previousView();
-    }
-
     @Override
     protected SubView getSubView() {
         return this.stockDetailSubView;

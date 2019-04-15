@@ -27,33 +27,33 @@
         <center>
             <VBox>
                 <Button text="Back" onAction="#backButtonClick"/>
-                <TitledPane text="General informations">
+                <TitledPane text="General information">
                     <HBox>
                         <VBox>
-                            <FlowPane>
+                            <HBox>
                                 <Label text="Id: "/>
                                 <Label fx:id="lblId"/>
-                            </FlowPane>
-                            <FlowPane>
+                            </HBox>
+                            <HBox>
                                 <Label text="Article: "/>
                                 <Label fx:id="lblArticle"/>
-                            </FlowPane>
-                            <FlowPane>
+                            </HBox>
+                            <HBox>
                                 <Label text="Available: "/>
                                 <Label fx:id="lblAvailableQt"/>
-                            </FlowPane>
-                            <FlowPane>
+                            </HBox>
+                            <HBox>
                                 <Label text="Used: "/>
                                 <Label fx:id="lblUsedQt"/>
-                            </FlowPane>
-                            <FlowPane>
+                            </HBox>
+                            <HBox>
                                 <Label text="Last modified: "/>
                                 <Label fx:id="lblLastModified"/>
-                            </FlowPane>
-                            <FlowPane>
+                            </HBox>
+                            <HBox>
                                 <Label text="Creation date: "/>
                                 <Label fx:id="lblCreationDate"/>
-                            </FlowPane>
+                            </HBox>
                         </VBox>
                         <Button text="Go to article" onAction="#goToArticleButtonClick"/>
                     </HBox>
