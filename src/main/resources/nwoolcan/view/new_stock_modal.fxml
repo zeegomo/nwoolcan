@@ -1,13 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.DatePicker?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="nwoolcan.view.warehouse.stock.NewStockModalViewController">
-
+    <ScrollPane fitToWidth="true"
+                AnchorPane.rightAnchor="0.0"
+                AnchorPane.leftAnchor="0.0"
+                AnchorPane.bottomAnchor="0.0"
+                AnchorPane.topAnchor="0.0">
+        <BorderPane>
+            <top>
+                <Label text="New Stock" BorderPane.alignment="CENTER">
+                    <BorderPane.margin>
+                        <Insets top="10.0" />
+                    </BorderPane.margin>
+                    <font>
+                        <Font size="22.0" />
+                    </font>
+                </Label>
+            </top>
+            <center>
+                <VBox spacing="5">
+                    <BorderPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </BorderPane.margin>
+                    <Label text="Existing stock will not be created again."/>
+                    <Label text="Article" />
+                    <ComboBox fx:id="comboBoxArticle"/>
+                    <CheckBox text="Specify date " fx:id="checkBoxDate" onAction="#specifyDateClick"/>
+                    <VBox fx:id="boxDateTimePicker" spacing="5" managed="false" visible="false">
+                        <DatePicker/>
+                        <HBox spacing="5">
+                            <VBox>
+                                <Label text="Hour"/>
+                                <ComboBox fx:id="comboHourSelection"/>
+                            </VBox>
+                            <VBox>
+                                <Label text="Minute"/>
+                                <ComboBox fx:id="comboMinuteSelection"/>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </center>
+            <bottom>
+                <Button text="Create"
+                        BorderPane.alignment="CENTER"
+                        onAction="#createStockClick"
+                        fx:id="createStockButton">
+                    <BorderPane.margin>
+                        <Insets bottom="10.0" />
+                    </BorderPane.margin>
+                </Button>
+            </bottom>
+        </BorderPane>
+    </ScrollPane>
 </AnchorPane>
