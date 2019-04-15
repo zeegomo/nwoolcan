@@ -11,6 +11,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
+import nwoolcan.model.brewery.batch.review.BatchEvaluationBuilder;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.SubViewController;
@@ -24,7 +25,10 @@ import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.MasterStepViewModel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * View controller for the batch detail view.
@@ -43,11 +47,14 @@ public final class BatchDetailController
     private SubViewContainer masterTableContainer;
     @FXML
     private Button goBackButton;
-
+    @FXML
+    private SubViewContainer reviewContainer;
     @FXML
     private SubView batchDetailSubView;
 
     private DetailBatchViewModel data;
+
+
 
     /**
      * Creates itself and gets injected.
@@ -81,10 +88,32 @@ public final class BatchDetailController
         );
 
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
+        if (data.getReview() != null) {
+            this.getViewManager().getView(ViewType.BATCHEVALUATION, data.getReview())
+                          .peek(this.reviewContainer::substitute)
+                          .peekError(err -> Logger.getGlobal().severe("Could not load: " + err.getMessage()));
+        } else {
+            Button b = new Button("add review");
+            b.setOnAction(actionEvent -> {
+                final Stage modal =  new Stage();
+                final Window window = this.getSubView().getScene().getWindow();
 
-//        if (data.getReview() != null) {
-//            //TODO init review sub view
-//        }
+                modal.initOwner(window);
+                modal.initModality(Modality.WINDOW_MODAL);
+
+                final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_BATCH_EVALUATION_MODAL,
+                    new ArrayList<>(BatchEvaluationBuilder.getAvailableBatchEvaluationTypes().getValue())).orElse(new AnchorPane()));
+
+                modal.setScene(scene);
+                modal.centerOnScreen();
+                modal.showAndWait();
+
+                if (modal.getUserData() != null) {
+                    this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
+                }
+            });
+            this.reviewContainer.substitute(b);
+        }
     }
 
     @Override

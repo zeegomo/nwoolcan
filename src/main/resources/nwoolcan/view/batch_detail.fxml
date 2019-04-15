@@ -46,8 +46,7 @@
                     <SubViewContainer fx:id="masterTableContainer" parent="$batchDetailSubView" />
                 </TitledPane>
                 <TitledPane text="Review">
-                    <SubViewContainer>
-                        <!-- TODO fill with evaluation sub view -->
+                    <SubViewContainer fx:id="reviewContainer">
                     </SubViewContainer>
                 </TitledPane>
             </VBox>
