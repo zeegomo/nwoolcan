@@ -1,24 +1,45 @@
 package nwoolcan.view.warehouse.stock;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import nwoolcan.controller.Controller;
+import nwoolcan.view.AbstractViewController;
+import nwoolcan.view.ViewManager;
+import nwoolcan.view.subview.SubView;
 
-public class NewStockModalViewController {
-    public ComboBox comboBoxArticle;
-    public CheckBox checkBoxDate;
-    public ComboBox comboMinuteSelection;
-    public ComboBox comboHourSelection;
-    public VBox boxDateTimePicker;
-    public Button createStockButton;
+public final class NewStockModalViewController extends AbstractViewController {
 
-    public void specifyDateClick(ActionEvent actionEvent) {
+    @FXML
+    private ComboBox comboBoxArticle;
+    @FXML
+    private CheckBox checkBoxDate;
+    @FXML
+    private ComboBox comboMinuteSelection;
+    @FXML
+    private ComboBox comboHourSelection;
+    @FXML
+    private VBox boxDateTimePicker;
+    @FXML
+    private Button createStockButton;
+
+    /**
+     * Creates itself and inject the controller and the view manager.
+     * @param controller  injected controller.
+     * @param viewManager injected view manager.
+     */
+    public NewStockModalViewController(final Controller controller, final ViewManager viewManager) {
+        super(controller, viewManager);
     }
 
-    public void createStockClick(ActionEvent actionEvent) {
+    @FXML
+    private void specifyDateClick(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void createStockClick(ActionEvent actionEvent) {
     }
 }

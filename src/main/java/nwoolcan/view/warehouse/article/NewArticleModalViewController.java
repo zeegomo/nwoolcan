@@ -21,7 +21,7 @@ import nwoolcan.view.ViewManager;
  * View controller for new article modal.
  */
 @SuppressWarnings("NullAway")
-public final class NewArticleModalController extends AbstractViewController {
+public final class NewArticleModalViewController extends AbstractViewController {
 
     @FXML
     private Button createArticleButton;
@@ -41,7 +41,7 @@ public final class NewArticleModalController extends AbstractViewController {
      * @param controller  injected controller.
      * @param viewManager injected view manager.
      */
-    public NewArticleModalController(final Controller controller, final ViewManager viewManager) {
+    public NewArticleModalViewController(final Controller controller, final ViewManager viewManager) {
         super(controller, viewManager);
     }
 

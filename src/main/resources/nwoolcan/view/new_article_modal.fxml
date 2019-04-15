@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nwoolcan.view.warehouse.article.NewArticleModalController">
+            fx:controller="nwoolcan.view.warehouse.article.NewArticleModalViewController">
     <ScrollPane fitToWidth="true"
                 AnchorPane.rightAnchor="0.0"
                 AnchorPane.leftAnchor="0.0"
