@@ -1,5 +1,6 @@
 package nwoolcan.view.review;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -74,9 +75,17 @@ public final class BatchEvaluationDetailController extends SubViewController
                    .peekError(err -> Logger.getGlobal().severe(err.toString() + "\n" + err.getCause()))
                    .orElse(new Label(LOAD_FAILED));
     }
-    
+
     @Override
     protected SubView getSubView() {
         return this.batchEvaluationDetailSubView;
+    }
+    /**
+     * Go back to the previous view.
+     * @param event the recorded event.
+     */
+    public void goBackButtonClicked(final ActionEvent event) {
+        //this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
+        this.previousView();
     }
 }

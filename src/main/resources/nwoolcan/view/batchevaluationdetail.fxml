@@ -18,9 +18,11 @@
             <Insets bottom="10" left="10" right="10" top="10"/>
         </padding>
         <top>
-            <SubViewContainer fx:id="container"/>
+            <Button onAction="#goBackButtonClicked" text="Back" />
         </top>
         <center>
+            <VBox>
+                <SubViewContainer fx:id="container"/>
             <BorderPane>
                 <padding>
                 <Insets bottom="10" left="10" right="10" top="10"/>
@@ -29,7 +31,6 @@
                     <ScrollPane fx:id="categoriesScrollPane">
                     <VBox>
                         <VBox fx:id="categories"/>
-                        <Button onAction="#newEvaluationClick" text="new"/>
                     </VBox>
                     </ScrollPane>
                 </right>
@@ -40,7 +41,7 @@
                     </FlowPane>
                 </left>
             </BorderPane>
-
+            </VBox>
         </center>
     </BorderPane>
 </SubView>
