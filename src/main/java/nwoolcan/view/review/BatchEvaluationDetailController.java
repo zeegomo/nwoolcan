@@ -35,7 +35,7 @@ public final class BatchEvaluationDetailController extends SubViewController
     implements InitializableController<BatchEvaluationDetailViewModel> {
 
     private static final String LOAD_FAILED = "Load failed";
-    private static final Double wrap = 1.50;
+    private static final Double WRAP = 1.50;
     @FXML
     private SubViewContainer container;
     @FXML
@@ -66,7 +66,7 @@ public final class BatchEvaluationDetailController extends SubViewController
             .forEach(cat -> categories.getChildren().add(evaluationNode(cat)));
         this.notes.setText(data.getInfo().getNotes().orElse(""));
         this.notes.wrappingWidthProperty().bind(this.batchEvaluationDetailSubView.widthProperty().divide(2));
-        this.categoriesScrollPane.prefHeightProperty().bind(this.batchEvaluationDetailSubView.heightProperty().divide(wrap));
+        this.categoriesScrollPane.prefHeightProperty().bind(this.batchEvaluationDetailSubView.heightProperty().divide(WRAP));
     }
 
     private Node evaluationNode(final EvaluationViewModel data) {
