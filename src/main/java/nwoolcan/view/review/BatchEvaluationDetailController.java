@@ -74,29 +74,7 @@ public final class BatchEvaluationDetailController extends SubViewController
                    .peekError(err -> Logger.getGlobal().severe(err.toString() + "\n" + err.getCause()))
                    .orElse(new Label(LOAD_FAILED));
     }
-
-    /**
-     *
-     */
-    public void newEvaluationClick() {
-        final Stage modal =  new Stage();
-        final Window window = this.getSubView().getScene().getWindow();
-
-        modal.initOwner(window);
-        modal.initModality(Modality.WINDOW_MODAL);
-
-        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_BATCH_EVALUATION_MODAL,
-            new ArrayList<>(BatchEvaluationBuilder.getAvailableBatchEvaluationTypes().getValue())).orElse(new AnchorPane()));
-
-        modal.setScene(scene);
-        modal.centerOnScreen();
-        modal.showAndWait();
-
-        if (modal.getUserData() != null) {
-            this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
-        }
-    }
-
+    
     @Override
     protected SubView getSubView() {
         return this.batchEvaluationDetailSubView;
