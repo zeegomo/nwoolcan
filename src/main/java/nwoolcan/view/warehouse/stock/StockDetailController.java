@@ -10,6 +10,7 @@ import nwoolcan.view.ViewManager;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.warehouse.stock.DetailStockViewModel;
+
 /**
  * Controller for the Stock detail view.
  */
@@ -25,16 +26,11 @@ public final class StockDetailController extends SubViewController implements In
     @FXML
     private Label lblLastModified;
     @FXML
-    private Label lblExpiresIn;
-    @FXML
     private Label lblUsedQt;
     @FXML
     private SubViewContainer masterTableContainer;
     @FXML
     private SubView stockDetailSubView;
-
-    @FXML
-    private Label lblName;
 
     @FXML
     private Label lblId;
@@ -50,7 +46,11 @@ public final class StockDetailController extends SubViewController implements In
 
     @Override
     public void initData(final DetailStockViewModel data) {
-        lblName.setText("DummyStock");
+        lblArticle.setText(data.getArticle().toString());
+        lblAvailableQt.setText(data.getRemainingQuantity().toString());
+        lblCreationDate.setText(data.getCreationDate());
+        lblLastModified.setText(data.getLastModified());
+        lblUsedQt.setText(data.getUsedQuantity().toString());
         lblId.setText(Integer.toString(data.getId()));
     }
 

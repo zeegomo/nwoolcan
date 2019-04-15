@@ -4,6 +4,7 @@ import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.model.brewery.warehouse.stock.Stock;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,8 @@ import java.util.stream.Collectors;
 public abstract class DetailStockViewModel extends MasterStockViewModel {
 
     private final List<RecordViewModel> records;
+    private final Date creationDate;
+    private final Date lastModified;
     /**
      * Constructor of the abstract view version of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      * @param stock the {@link Stock} to be converted in {@link DetailStockViewModel}.
@@ -20,6 +23,8 @@ public abstract class DetailStockViewModel extends MasterStockViewModel {
     public DetailStockViewModel(final Stock stock) {
         super(stock);
         this.records = stock.getRecords().stream().map(RecordViewModel::new).collect(Collectors.toList());
+        this.creationDate = stock.getCreationDate();
+        this.lastModified = stock.getLastChangeDate();
     }
     /**
      * Return the {@link List} of {@link RecordViewModel}.
@@ -39,4 +44,20 @@ public abstract class DetailStockViewModel extends MasterStockViewModel {
         }
         return new PlainStockViewModel(stock);
     }
+    /**
+     * Return the string representation of the creation date.
+     * @return the string representation of the creation date.
+     */
+    public final String getCreationDate() {
+        return dateFormatted(creationDate);
+    }
+
+    /**
+     * Return the string representation of the last modified date.
+     * @return the string representation of the last modified date.
+     */
+    public final String getLastModified() {
+        return dateFormatted(lastModified);
+    }
+
 }

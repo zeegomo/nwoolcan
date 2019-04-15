@@ -46,10 +46,6 @@
                                 <Label fx:id="lblUsedQt"/>
                             </FlowPane>
                             <FlowPane>
-                                <Label text="Expires in: "/>
-                                <Label fx:id="lblExpiresIn"/>
-                            </FlowPane>
-                            <FlowPane>
                                 <Label text="Last modified: "/>
                                 <Label fx:id="lblLastModified"/>
                             </FlowPane>
@@ -62,7 +58,7 @@
                     </HBox>
                 </TitledPane>
                 <TitledPane text="Articles">
-                    <SubViewContainer fx:id="masterTableContainer" parent="$subView">
+                    <SubViewContainer fx:id="masterTableContainer" parent="$stockDetailSubView">
                     </SubViewContainer>
                 </TitledPane>
             </VBox>

@@ -74,9 +74,8 @@ public abstract class MasterStockViewModel {
      * @return the expiration {@link java.util.Date}.
      */
     public final String getExpirationDate() {
-        return expirationDate.isPresent() ? DateFormatUtils.format(new Date(), "dd-MM-yyyy") : "";
+        return expirationDate.isPresent() ? dateFormatted(expirationDate.get()) : "";
     }
-
     /**
      * Generated a proper {@link MasterStockViewModel} from a general {@link Stock} accordingly with the {@link ArticleType} of the {@link nwoolcan.model.brewery.warehouse.article.Article} of the {@link Stock}.
      * @param stock to be converted
@@ -87,5 +86,9 @@ public abstract class MasterStockViewModel {
             return new BeerStockViewModel((BeerStock) stock);
         }
         return new PlainStockViewModel(stock);
+    }
+
+    static String dateFormatted(final Date date) {
+        return DateFormatUtils.format(date, "dd-MM-yyyy");
     }
 }
