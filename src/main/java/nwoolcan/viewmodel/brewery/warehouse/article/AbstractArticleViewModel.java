@@ -73,7 +73,7 @@ public abstract class AbstractArticleViewModel {
     public String getArticleTypeSummary() {
         return getArticleType().toString()
             + (getArticleType() == ArticleType.INGREDIENT
-            ? " [" + ((IngredientArticleViewModel)this).getIngredientType() + "]"
+            ? " [" + ((IngredientArticleViewModel) this).getIngredientType() + "]"
             : "");
     }
 }
