@@ -9,8 +9,7 @@ import javafx.scene.layout.VBox;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.ViewManager;
-import nwoolcan.view.subview.SubView;
-
+@SuppressWarnings("NullAway")
 public final class NewStockModalViewController extends AbstractViewController {
 
     @FXML
