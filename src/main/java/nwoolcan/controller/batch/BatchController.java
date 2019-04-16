@@ -12,6 +12,12 @@ import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 public interface BatchController {
 
     /**
+     * Returns the step controller for the steps in the batch.
+     * @return the step controller for the steps in the batch.
+     */
+    StepController getStepController();
+
+    /**
      * Returns a {@link DetailBatchViewModel} representation of the batch of id passed by parameter, if any.
      * @param batchId the batch id.
      * @return a {@link Result} bearing the representation of the batch or with an error if no batch with this id is found.

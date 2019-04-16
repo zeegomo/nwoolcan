@@ -18,13 +18,20 @@ public final class BatchControllerImpl implements BatchController {
 
     private static final String BATCH_NOT_FOUND_MESSAGE = "Cannot find the batch with id: ";
     private final ControllerUtils utils;
+    private final Brewery model;
 
     /**
      * Basic constructor with reference to the {@link Brewery} model.
      * @param model the model to use as reference.
      */
     public BatchControllerImpl(final Brewery model) {
+        this.model = model;
         this.utils = new ControllerUtils(model);
+    }
+
+    @Override
+    public StepController getStepController() {
+        return new StepControllerImpl(this.model);
     }
 
     @Override
