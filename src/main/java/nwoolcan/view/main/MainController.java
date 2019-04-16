@@ -27,6 +27,11 @@ public final class MainController extends AbstractViewController {
         super(controller, viewManager);
     }
 
+    @FXML
+    private void initialize() {
+        this.getViewManager().getView(ViewType.WELCOME).peek(view -> this.contentPane.substitute(view));
+    }
+
     /**
      * Shows the Dashboard.
      * @param event The occurred event
