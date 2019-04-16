@@ -20,6 +20,8 @@ import nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
+import nwoolcan.model.database.Database;
+import nwoolcan.model.database.DatabaseJsonImpl;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
@@ -30,6 +32,7 @@ import nwoolcan.viewmodel.brewery.production.batch.NewBatchViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -199,5 +202,17 @@ public final class BreweryController implements Controller {
     @Override
     public void initializeNewBrewery() {
         this.brewery = new BreweryImpl();
+    }
+
+    @Override
+    public Result<Empty> saveTo(final File filename) {
+        final Database db = new DatabaseJsonImpl(filename);
+        return db.save(this.brewery);
+    }
+
+    @Override
+    public Result<Empty> loadFrom(final File filename) {
+        final Database db = new DatabaseJsonImpl(filename);
+        return db.load().peek(b -> this.brewery = b).toEmpty();
     }
 }
