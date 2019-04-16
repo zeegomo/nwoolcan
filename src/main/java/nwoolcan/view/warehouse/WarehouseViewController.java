@@ -13,7 +13,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
-import nwoolcan.view.InitializableController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.mastertable.ColumnDescriptor;
@@ -33,7 +32,7 @@ import java.util.List;
  * Handles the Warehouse view.
  */
 @SuppressWarnings("NullAway")
-public final class WarehouseViewController extends SubViewController implements InitializableController<WarehouseViewModel> {
+public final class WarehouseViewController extends SubViewController {
 
     @FXML
     private Label lblNumberBeerAvailable;
@@ -73,9 +72,9 @@ public final class WarehouseViewController extends SubViewController implements 
         super(controller, viewManager);
     }
 
-    @Override
-    public void initData(final WarehouseViewModel data) {
-
+    @FXML
+    private void initialize() {
+        final WarehouseViewModel data = getController().getWarehouseController().getWarehouseViewModel();
         // Beer data load
         this.lblNumberBeerAvailable.setText(Integer.toString(data.getnBeerAvailable()));
         this.lblNumberBeerExpired.setText(Integer.toString(data.getnBeerExpired()));
@@ -125,13 +124,10 @@ public final class WarehouseViewController extends SubViewController implements 
                                        ),
                                        stocks,
                                        ViewType.STOCK_DETAIL,
-                                       masterStockViewModel -> (Pair.of(((DetailStockViewModel) masterStockViewModel), this.getLoader()))
+                                       masterStockViewModel -> (Pair.of(((DetailStockViewModel) masterStockViewModel),
+                                                                this::initialize))
             );
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(masterTableContainer::substitute);
-    }
-
-    private Runnable getLoader() {
-        return () -> this.initData(getController().getWarehouseController().getWarehouseViewModel());
     }
 
     @Override
@@ -171,7 +167,7 @@ public final class WarehouseViewController extends SubViewController implements 
         modal.setY(window.getY() + window.getHeight() / 2 - scene.getHeight() / 2);
         modal.showAndWait();
 
-        this.substituteView(ViewType.WAREHOUSE, this.getController().getWarehouseController().getWarehouseViewModel());
+        this.substituteView(ViewType.WAREHOUSE);
 
     }
 }
