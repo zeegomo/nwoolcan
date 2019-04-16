@@ -4,6 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -12,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.util.StringConverter;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterType;
@@ -21,10 +25,13 @@ import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.viewmodel.brewery.production.step.DetailStepViewModel;
+import nwoolcan.viewmodel.brewery.production.step.ParameterViewModel;
 import nwoolcan.viewmodel.brewery.production.step.RegisterParameterDTO;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * View controller for step detail view.
@@ -99,37 +106,72 @@ public final class StepDetailController
         );
         this.parameterTypesComboBox.getSelectionModel().selectFirst();
 
-        data.getMapTypeToRegistrations().forEach((paramName, params) -> {
+        data.getMapTypeToRegistrations().forEach((paramType, params) -> {
             final BorderPane pane = new BorderPane();
             this.parametersGraphicsVBox.getChildren().add(pane);
 
-            final Label title = new Label(paramName);
+            final Label title = new Label(paramType.getName());
             BorderPane.setAlignment(title, Pos.CENTER);
             pane.setTop(title);
 
             final VBox generalInfoVBox = new VBox();
 
+            ParameterViewModel initial = params.get(params.size() - 1);
+            ParameterViewModel current = params.get(0);
+
             final VBox initialValueVBox = new VBox();
             initialValueVBox.getChildren().add(new Label("Initial value: "));
-            initialValueVBox.getChildren().add(new Label(params.get(params.size() - 1).getValue().toString()));
+            initialValueVBox.getChildren().add(new Label(initial.getValueRepresentation()));
 
             final VBox currentValueVBox = new VBox();
             currentValueVBox.getChildren().add(new Label("Current value : "));
-            currentValueVBox.getChildren().add(new Label(params.get(0).getValue().toString()));
+            currentValueVBox.getChildren().add(new Label(current.getValueRepresentation()));
+
+            double medium = params.stream()
+                                  .mapToDouble(p -> p.getValue()
+                                                     .doubleValue())
+                                  .average().orElse(0);
+
 
             final VBox mediumValueVBox = new VBox();
             mediumValueVBox.getChildren().add(new Label("Medium value: "));
-            mediumValueVBox.getChildren().add(new Label(String.format("%.2f", params.stream()
-                                                                             .mapToDouble(p -> p.getValue()
-                                                                                                .doubleValue())
-                                                                             .average()
-                                                                             .getAsDouble())));
+            mediumValueVBox.getChildren().add(new Label(String.format("%.2f %s", medium, initial.getUnitOfMeasure().getSymbol())));
 
             generalInfoVBox.getChildren().add(initialValueVBox);
             generalInfoVBox.getChildren().add(currentValueVBox);
             generalInfoVBox.getChildren().add(mediumValueVBox);
 
             pane.setLeft(generalInfoVBox);
+
+            XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>(paramType.getName(),
+                FXCollections.observableList(params.stream()
+                                                   .map(p -> new XYChart.Data<Number, Number>(p.getRegistrationDate().getTime(), p.getValue()))
+                                                   .collect(Collectors.toList())
+            ));
+
+            NumberAxis dateAxis = new NumberAxis(
+                initial.getRegistrationDate().getTime() - (current.getRegistrationDate().getTime() - initial.getRegistrationDate().getTime()) / 16.0,
+                current.getRegistrationDate().getTime() + (current.getRegistrationDate().getTime() - initial.getRegistrationDate().getTime()) / 16.0,
+                 (current.getRegistrationDate().getTime() - initial.getRegistrationDate().getTime()) / 8.0);
+            dateAxis.setTickLabelRotation(90);
+            dateAxis.setTickLabelFont(new Font(10));
+            dateAxis.setTickLabelFormatter(new StringConverter<Number>() {
+                @Override
+                public String toString(final Number object) {
+                    return new Date(object.longValue()).toString();
+                }
+
+                @Override
+                public Number fromString(final String string) {
+                    return null;
+                }
+            });
+
+            LineChart<Number, Number> chart = new LineChart<Number, Number>(dateAxis, new NumberAxis(),
+                FXCollections.observableList(Collections.singletonList(series))
+            );
+
+            pane.setCenter(chart);
         });
     }
 
@@ -167,16 +209,19 @@ public final class StepDetailController
                 value,
                 this.parameterTypesComboBox.getSelectionModel().getSelectedItem(),
                 new Date())
-        );
+        ).peek(e -> {
+            this.substituteView(ViewType.STEP_DETAIL,
+                this.getController().getBatchController().getStepController().getDetailStepViewModel(
+                    data.getBatchId(),
+                    data.getTypeName()
+                ).getValue());
+        }).peekError(e -> {
+            this.showAlertAndWait(e.getMessage());
+        });
 
-        this.substituteView(ViewType.STEP_DETAIL,
-            this.getController().getBatchController().getStepController().getDetailStepViewModel(
-                data.getBatchId(),
-                data.getTypeName()
-            ).getValue());
     }
 
-    /* Utils function from stackoverflow.
+    /* Utils function from stack overflow.
        https://stackoverflow.com/questions/625433/how-to-convert-milliseconds-to-x-mins-x-seconds-in-java
      */
     private String getDurationBreakdown(final long millis) {

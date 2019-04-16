@@ -31,7 +31,7 @@ public final class DetailStepViewModel {
     private final boolean finalized;
 
     private final List<ParameterViewModel> registeredParameters;
-    private final Map<String, List<ParameterViewModel>> mapTypeToRegistrations;
+    private final Map<ParameterType, List<ParameterViewModel>> mapTypeToRegistrations;
     private final List<ParameterType> possibleParametersToRegister;
 
     /**
@@ -53,8 +53,8 @@ public final class DetailStepViewModel {
                                         .stream()
                                         .map(ParameterViewModel::new)
                                         .collect(Collectors.toList());
-        this.mapTypeToRegistrations = this.registeredParameters.stream().collect(
-            Collectors.groupingBy(ParameterViewModel::getName));
+        this.mapTypeToRegistrations = this.registeredParameters.stream()
+                                                               .collect(Collectors.groupingBy(ParameterViewModel::getType));
         this.possibleParametersToRegister = new ArrayList<>(step.getParameterTypes());
     }
 
@@ -136,7 +136,7 @@ public final class DetailStepViewModel {
      * Returns a map from parameter name to list of parameters.
      * @return a map from parameter name to list of parameters.
      */
-    public Map<String, List<ParameterViewModel>> getMapTypeToRegistrations() {
+    public Map<ParameterType, List<ParameterViewModel>> getMapTypeToRegistrations() {
         return mapTypeToRegistrations;
     }
 }
