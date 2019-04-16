@@ -3,11 +3,16 @@ package nwoolcan.view.warehouse.stock;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import nwoolcan.controller.Controller;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
@@ -18,6 +23,7 @@ import nwoolcan.view.subview.SubViewController;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.DetailStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.RecordViewModel;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
@@ -25,7 +31,7 @@ import java.util.List;
  * Controller for the Stock detail view.
  */
 @SuppressWarnings("NullAway")
-public final class StockDetailController extends SubViewController implements InitializableController<DetailStockViewModel> {
+public final class StockDetailController extends SubViewController implements InitializableController<Pair<Integer, Runnable>> {
 
     @FXML
     private Label lblArticle;
@@ -45,6 +51,8 @@ public final class StockDetailController extends SubViewController implements In
     private Label lblId;
 
     private int articleId;
+    private int stockId;
+    private Runnable updateFather;
 
     /**
      * Creates itself and gets injected.
@@ -56,7 +64,15 @@ public final class StockDetailController extends SubViewController implements In
     }
 
     @Override
-    public void initData(final DetailStockViewModel data) {
+    public void initData(final Pair<Integer, Runnable> dataAndRunner) {
+        stockId = dataAndRunner.getLeft();
+        loadData();
+        updateFather = dataAndRunner.getRight();
+    }
+
+    private void loadData() {
+        final DetailStockViewModel data = getController().getWarehouseController().getViewStockById(stockId).getValue();
+        stockId = data.getId();
         articleId = data.getArticle().getId();
         lblArticle.setText(data.getArticle().toString());
         lblAvailableQt.setText(data.getRemainingQuantity().toString());
@@ -78,7 +94,7 @@ public final class StockDetailController extends SubViewController implements In
         final Result<AbstractArticleViewModel> articleResult = getController().getWarehouseController()
                                                                               .getViewArticleById(articleId);
         if (articleResult.isPresent()) {
-            overlayView(ViewType.ARTICLE_DETAIL, articleResult.getValue());
+            overlayView(ViewType.ARTICLE_DETAIL, Pair.<AbstractArticleViewModel, Runnable>of(articleResult.getValue(), this::loadData));
         } else {
             new Alert(
                         Alert.AlertType.ERROR,
@@ -94,6 +110,29 @@ public final class StockDetailController extends SubViewController implements In
 
     @FXML
     private void backButtonClick(final ActionEvent actionEvent) {
-        this.previousView(); // TODO call reload of the previous view before switching!
+        updateFather.run();
+        this.previousView();
+    }
+
+    @FXML
+    private void addRecordButtonClick(final ActionEvent actionEvent) {
+        //overlayView(ViewType.NEW_RECORD_MODAL, stockId);
+        final Stage modal =  new Stage();
+        final Window window = this.getSubView().getScene().getWindow();
+
+        modal.initOwner(window);
+        modal.initModality(Modality.WINDOW_MODAL);
+
+        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_RECORD_MODAL, stockId).orElse(new AnchorPane()),
+            600, 400);
+
+        modal.setResizable(false);
+        modal.setScene(scene);
+        modal.setY(window.getY() + window.getHeight() / 2 - scene.getHeight() / 2);
+        modal.setX(window.getX() + window.getWidth() / 2 - scene.getWidth() / 2);
+        modal.showAndWait();
+
+        this.loadData();
+
     }
 }

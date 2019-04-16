@@ -21,34 +21,27 @@ import java.util.Set;
  */
 public final class StockManager {
 
-    @Nullable private static StockManager instance;
     private static final String STOCK_WITH_FINISHED_BEER = "You can not create a stock of finished"
                                                          + "beer. Create a BeerStock instead.";
     private final ArticleManager articleManager;
     private final Map<Stock, Stock> stockToStock;
     private int nextAvailableId;
 
-    private StockManager() {
-        articleManager = ArticleManager.getInstance();
+    /**
+     * It is built by the {@link nwoolcan.model.brewery.warehouse.Warehouse} in order to manage all its {@link Stock}.
+     * @param articleManager to be used to create {@link Stock}.
+     */
+    public StockManager(final ArticleManager articleManager) {
+        this.articleManager = articleManager;
         nextAvailableId = 1;
         stockToStock = new HashMap<>();
-    }
-    /**
-     * Returns the only instance of the {@link StockManager} using a singleton pattern.
-     * @return the only instance of the {@link StockManager} using a singleton pattern.
-     */
-    public static synchronized StockManager getInstance() {
-        if (instance == null) {
-            instance = new StockManager();
-        }
-        return instance;
     }
     /**
      * Checks the consistency of the {@link Stock}.
      * @param stock to be checked.
      * @return a boolean denoting whether the id is correct or not.
      */
-    public synchronized boolean checkId(final Stock stock) {
+    public boolean checkId(final Stock stock) {
         return stockToStock.containsKey(stock) && stock.getId() == stockToStock.get(stock).getId();
     }
     /**
@@ -57,7 +50,7 @@ public final class StockManager {
      * @param expirationDate linked to the {@link Stock}.
      * @return a {@link Result} indicating errors.
      */
-    public synchronized Result<Stock> createStock(final Article article,
+    public Result<Stock> createStock(final Article article,
                                      @Nullable final Date expirationDate) {
           return Result.of(article)
                        .require(articleManager::checkId)
@@ -72,7 +65,7 @@ public final class StockManager {
      * @param batch linked to this {@link BeerStock}.
      * @return a {@link Result} indicating errors.
      */
-    public synchronized Result<BeerStock> createBeerStock(final BeerArticle beerArticle,
+    public Result<BeerStock> createBeerStock(final BeerArticle beerArticle,
                                   @Nullable final Date expirationDate,
                                   final Batch batch) {
         return Result.of(beerArticle)
@@ -103,7 +96,7 @@ public final class StockManager {
      * @param stock to be checked.
      * @return the parameter if it is not in the map. Otherwise the corresponding into the map.
      */
-    public synchronized Stock getStock(final Stock stock) {
+    private Stock getStock(final Stock stock) {
         if (!stockToStock.containsKey(stock)) {
             nextAvailableId++;
             stockToStock.put(stock, stock);

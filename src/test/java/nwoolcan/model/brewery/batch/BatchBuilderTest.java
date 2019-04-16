@@ -19,6 +19,7 @@ import org.junit.Test;
  */
 public class BatchBuilderTest {
 
+    private final ArticleManager articleManager = new ArticleManager();
     private static final int TEN_THOUSAND = 10000;
     private static final BeerDescription BD = new BeerDescriptionImpl("test description", "test style", "test category");
     private static final BatchMethod BM = BatchMethod.ALL_GRAIN;
@@ -78,7 +79,7 @@ public class BatchBuilderTest {
      */
     @Test
     public void testSameIngredientTwice() {
-        final IngredientArticle ing = ArticleManager.getInstance().createIngredientArticle("test", UnitOfMeasure.GRAM, IngredientType.OTHER);
+        final IngredientArticle ing = articleManager.createIngredientArticle("test", UnitOfMeasure.GRAM, IngredientType.OTHER);
 
         Result<Batch> res = builder.addIngredient(ing, 1)
                                    .addIngredient(ing, 2).build(

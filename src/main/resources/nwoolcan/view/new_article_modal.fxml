@@ -42,7 +42,7 @@
                     <ComboBox fx:id="newArticleUnitOfMeasure"/>
                     <Label text="Type" />
                     <ComboBox fx:id="newArticleType" onAction="#selectArticleTypeClick"/>
-                    <VBox fx:id="ingredientTypeFlowPane" spacing="5">
+                    <VBox fx:id="ingredientTypeVBox" spacing="5">
                         <Label text="Ingredient Type" />
                         <ComboBox fx:id="newArticleIngredientType"/>
                     </VBox>
