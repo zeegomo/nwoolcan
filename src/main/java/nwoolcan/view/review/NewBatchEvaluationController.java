@@ -182,7 +182,7 @@ public final class NewBatchEvaluationController extends SubViewController
 
     private Pair<Parent, EvaluationInputController> categoryNode(final EvaluationType type) {
         return this.getViewManager()
-            .<EvaluationType, EvaluationInputController>getViewAndController(ViewType.EVALUATION_TYPE, type)
+            .<EvaluationType, EvaluationInputController>getViewAndController(ViewType.EVALUATION_INPUT, type)
             .peekError(err -> logger.warning(err.toString() + "\n" + err.getCause()))
             .orElse(Pair.of(new Label(LOAD_FAILED),
                 new EvaluationInputController(this.getController(), this.getViewManager())));

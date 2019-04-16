@@ -6,39 +6,36 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
 <SubView fx:id="batchEvaluationSubView" xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
-         stylesheets="@style.css"
          fx:controller="nwoolcan.view.review.BatchEvaluationController">
         <padding><Insets top="10" right="10" left="10" bottom="10"/></padding>
         <BorderPane>
-            <top>
-                <Label text="Review" BorderPane.alignment="CENTER" styleClass="title">
-                </Label>
-            </top>
             <center>
                 <BorderPane>
                     <left>
                         <VBox>
                             <FlowPane>
-                                <Label text="Scoresheet: " styleClass="subtitle"/>
+                                <Label text="Scoresheet: "/>
                                 <Label fx:id="lblEvaluationTypeName"/>
                             </FlowPane>
                             <FlowPane>
-                                <Label text="Reviewer: " styleClass="subtitle"/>
+                                <Label text="Reviewer: "/>
                                 <Label fx:id="lblReviewer"/>
                             </FlowPane>
                         </VBox>
                     </left>
                     <right>
                         <HBox>
-                            <Label fx:id="lblEvaluationScore" styleClass="score"/>
+                            <Label fx:id="lblEvaluationScore">
+                                <font>
+                                    <Font size="40" />
+                                </font>
+                            </Label>
                             <Label text="/"/>
-                            <Label fx:id="lblEvaluationMaxScore"/>
+                            <Label fx:id="lblEvaluationMaxScore" />
                         </HBox>
                     </right>
                 </BorderPane>

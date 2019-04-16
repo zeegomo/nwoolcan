@@ -54,7 +54,7 @@ public final class BatchEvaluationDetailController extends SubViewController
 
     @Override
     public void initData(final BatchEvaluationDetailViewModel data) {
-        Result<Parent> view = this.getViewManager().getView(ViewType.BATCHEVALUATION, data.getInfo());
+        Result<Parent> view = this.getViewManager().getView(ViewType.BATCH_EVALUATION, data.getInfo());
         view.peek(container::substitute)
             .peekError(err -> Logger.getGlobal().severe(err::toString));
         data.getCategories()

@@ -4,19 +4,18 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.text.Text?>
 <TitledPane xmlns="http://javafx.com/javafx"
             fx:id="title"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="nwoolcan.view.review.EvaluationController">
-    <VBox stylesheets="@style.css">
+    <VBox>
         <FlowPane>
-            <Label text="Score: " styleClass="subtitle"/>
+            <Label text="Score: "/>
             <Label fx:id="score"/>
         </FlowPane>
         <FlowPane>
-            <Label text="Notes: " styleClass="subtitle"/>
+            <Label text="Notes: "/>
             <Text fx:id="notes" wrappingWidth="500"/>
         </FlowPane>
     </VBox>

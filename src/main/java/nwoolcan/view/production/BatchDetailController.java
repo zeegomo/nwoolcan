@@ -11,7 +11,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
-import nwoolcan.model.brewery.batch.review.BatchEvaluationBuilder;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.subview.SubViewController;
@@ -24,13 +23,9 @@ import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.MasterStepViewModel;
-import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.review.NewBatchEvaluationViewModel;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
@@ -95,7 +90,7 @@ public final class BatchDetailController
 
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
         if (data.getReview() != null) {
-            this.getViewManager().getView(ViewType.BATCHEVALUATION, data.getReview())
+            this.getViewManager().getView(ViewType.BATCH_EVALUATION, data.getReview())
                 .peek(this.reviewContainer::substitute)
                 .peekError(err -> Logger.getGlobal().severe("Could not load: " + err.getMessage()));
             this.viewReviewButton.setDisable(false);
@@ -117,7 +112,7 @@ public final class BatchDetailController
         this.getController()
             .getBatchController()
             .getBatchEvaluation(this.data.getId())
-            .peek(review -> review.ifPresent(val -> this.overlayView(ViewType.BATCHEVALUATIONDETAIL, val)));
+            .peek(review -> review.ifPresent(val -> this.overlayView(ViewType.BATCH_EVALUATION_DETAIL, val)));
     }
     /**
      * Opens a modal that let the user go to the next production step.
