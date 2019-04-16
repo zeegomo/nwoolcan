@@ -5,6 +5,7 @@ import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepDTO;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.StockBatchViewModel;
 
 /**
  * Interface representing a batch controller.
@@ -39,4 +40,11 @@ public interface BatchController {
      * @return a {@link Result} bearing an error if operation went wrong.
      */
     Result<Empty> goToNextStep(int batchId, GoNextStepDTO dto);
+
+    /**
+     * Returns the {@link StockBatchViewModel} with the necessary info to decide how to stock a batch.
+     * @param batchId the batch id to request the view model from.
+     * @return a {@link Result} bearing the view model or an error occurs.
+     */
+    Result<StockBatchViewModel> getStockBatchViewModel(int batchId);
 }

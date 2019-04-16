@@ -3,11 +3,16 @@ package nwoolcan.view.warehouse.stock;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import nwoolcan.controller.Controller;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
@@ -45,6 +50,7 @@ public final class StockDetailController extends SubViewController implements In
     private Label lblId;
 
     private int articleId;
+    private int stockId;
 
     /**
      * Creates itself and gets injected.
@@ -57,6 +63,7 @@ public final class StockDetailController extends SubViewController implements In
 
     @Override
     public void initData(final DetailStockViewModel data) {
+        stockId = data.getId();
         articleId = data.getArticle().getId();
         lblArticle.setText(data.getArticle().toString());
         lblAvailableQt.setText(data.getRemainingQuantity().toString());
@@ -95,5 +102,27 @@ public final class StockDetailController extends SubViewController implements In
     @FXML
     private void backButtonClick(final ActionEvent actionEvent) {
         this.previousView(); // TODO call reload of the previous view before switching!
+    }
+
+    @FXML
+    private void addRecordButtonClick(final ActionEvent actionEvent) {
+        //overlayView(ViewType.NEW_RECORD_MODAL, stockId);
+        final Stage modal =  new Stage();
+        final Window window = this.getSubView().getScene().getWindow();
+
+        modal.initOwner(window);
+        modal.initModality(Modality.WINDOW_MODAL);
+
+        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_RECORD_MODAL, stockId).orElse(new AnchorPane()),
+            600, 400);
+
+        modal.setResizable(false);
+        modal.setScene(scene);
+        modal.setY(window.getY() + window.getHeight() / 2 - scene.getHeight() / 2);
+        modal.setX(window.getX() + window.getWidth() / 2 - scene.getWidth() / 2);
+        modal.showAndWait();
+
+        this.initData(getController().getWarehouseController().getViewStockById(stockId).getValue());
+
     }
 }
