@@ -2,9 +2,12 @@ package nwoolcan.view.production;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nwoolcan.controller.Controller;
@@ -13,6 +16,7 @@ import nwoolcan.view.ViewManager;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.viewmodel.brewery.production.step.DetailStepViewModel;
+import nwoolcan.viewmodel.brewery.production.step.ParameterViewModel;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +26,7 @@ public class StepDetailController
     implements InitializableController<DetailStepViewModel> {
 
     @FXML
-    private VBox parametersGraficsVBox;
+    private VBox parametersGraphicsVBox;
     @FXML
     private Label durationLabel;
     @FXML
@@ -59,6 +63,37 @@ public class StepDetailController
         final long durationMillis = data.getEndDate() == null ? 0 : data.getEndDate().getTime() - data.getStartDate().getTime();
         this.durationLabel.setText(durationMillis == 0 ? "" : this.getDurationBreakdown(durationMillis));
         this.finalizedLabel.setText(data.isFinalized() ? "Yes" : "No");
+
+        data.getMapTypeToRegistrations().forEach((paramName, params) -> {
+            final BorderPane pane = new BorderPane();
+            this.parametersGraphicsVBox.getChildren().add(pane);
+
+            final Label title = new Label(paramName);
+            BorderPane.setAlignment(title, Pos.CENTER);
+            pane.setTop(title);
+
+            final VBox generalInfoVBox = new VBox();
+
+            final VBox initialValueVBox = new VBox();
+            initialValueVBox.getChildren().add(new Label("Initial value: "));
+            initialValueVBox.getChildren().add(new Label(params.get(0).getValue().toString()));
+
+            final VBox currentValueVBox = new VBox();
+            currentValueVBox.getChildren().add(new Label("Current value : "));
+            currentValueVBox.getChildren().add(new Label(params.get(params.size() - 1).getValue().toString()));
+
+            final VBox mediumValueVBox = new VBox();
+            mediumValueVBox.getChildren().add(new Label("Medium value: "));
+            mediumValueVBox.getChildren().add(new Label(params.stream()
+                                                              .mapToDouble(p -> p.getValue().doubleValue())
+                                                              .average().toString()));
+
+            generalInfoVBox.getChildren().add(initialValueVBox);
+            generalInfoVBox.getChildren().add(currentValueVBox);
+            generalInfoVBox.getChildren().add(mediumValueVBox);
+
+            pane.setRight(generalInfoVBox);
+        });
     }
 
     @Override
@@ -74,7 +109,7 @@ public class StepDetailController
 
     }
 
-    /* Utils function from stackoverflow
+    /* Utils function from stackoverflow.
        https://stackoverflow.com/questions/625433/how-to-convert-milliseconds-to-x-mins-x-seconds-in-java
      */
     private String getDurationBreakdown(final long millis) {

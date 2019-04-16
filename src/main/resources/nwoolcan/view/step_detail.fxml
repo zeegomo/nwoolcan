@@ -65,7 +65,7 @@
                     </BorderPane>
                 </TitledPane>
                 <TitledPane text="Registered parameters grafics">
-                    <VBox fx:id="parametersGraficsVBox">
+                    <VBox fx:id="parametersGraphicsVBox">
 
                     </VBox>
                 </TitledPane>
