@@ -21,19 +21,19 @@ public enum ViewType {
     /**
      * The review view.
      */
-    BATCHEVALUATION,
+    BATCH_EVALUATION,
     /**
-     * The review view.
+     * The detailed review view.
      */
-    BATCHEVALUATIONDETAIL,
+    BATCH_EVALUATION_DETAIL,
     /**
-     * eval.
+     * View to represent single category in batch evaluation.
      */
     EVALUATION,
     /**
-     * Insertion for categories.
+     * View to represent single category input.
      */
-    EVALUATION_TYPE,
+    EVALUATION_INPUT,
     /**
      * Modal for creating a new evaluation.
      */

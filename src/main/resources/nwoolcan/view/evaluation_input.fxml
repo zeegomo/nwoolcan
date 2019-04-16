@@ -2,8 +2,11 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
-    <TitledPane fx:id="title">
+
+<TitledPane fx:id="title"
+            xmlns="http://javafx.com/javafx/8.0.172-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="nwoolcan.view.review.EvaluationInputController">
         <VBox stylesheets="@style.css">
             <FlowPane>
                 <Label text="Score: " styleClass="subtitle"/>
@@ -16,5 +19,4 @@
                 <TextArea fx:id="notes"/>
             </FlowPane>
         </VBox>
-    </TitledPane>
-</fx:root>
+</TitledPane>
