@@ -22,6 +22,7 @@ import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesInfoViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
 import java.util.List;
@@ -77,7 +78,7 @@ public final class ArticlesInfoViewController extends SubViewController implemen
     }
 
     private void setTable(final List<AbstractArticleViewModel> articles) {
-        final MasterTableViewModel<AbstractArticleViewModel, AbstractArticleViewModel> masterViewModel =
+        final MasterTableViewModel<AbstractArticleViewModel, Pair<AbstractArticleViewModel, Runnable>> masterViewModel =
             new MasterTableViewModel<>(Arrays.asList(
                                             new ColumnDescriptor("ID", "id"),
                                             new ColumnDescriptor("Name", "name"),
@@ -86,9 +87,13 @@ public final class ArticlesInfoViewController extends SubViewController implemen
                                         ),
                                         articles,
                                         ViewType.ARTICLE_DETAIL,
-                                        article -> article
+                                        article -> Pair.of(article, this.getLoader())
             );
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(masterTableContainer::substitute);
+    }
+
+    private Runnable getLoader() {
+        return () -> this.initData(getController().getWarehouseController().getArticlesViewModel());
     }
 
     @Override

@@ -23,6 +23,7 @@ import nwoolcan.view.subview.SubViewController;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.DetailStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.RecordViewModel;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
@@ -85,7 +86,7 @@ public final class StockDetailController extends SubViewController implements In
         final Result<AbstractArticleViewModel> articleResult = getController().getWarehouseController()
                                                                               .getViewArticleById(articleId);
         if (articleResult.isPresent()) {
-            overlayView(ViewType.ARTICLE_DETAIL, articleResult.getValue());
+            overlayView(ViewType.ARTICLE_DETAIL, Pair.<AbstractArticleViewModel, Runnable>of(articleResult.getValue(), this.getLoader()));
         } else {
             new Alert(
                         Alert.AlertType.ERROR,
@@ -93,6 +94,10 @@ public final class StockDetailController extends SubViewController implements In
                         ButtonType.CLOSE
                      ).showAndWait();
         }
+    }
+
+    private Runnable getLoader() {
+        return () -> this.initData(getController().getWarehouseController().getViewStockById(stockId).getValue());
     }
 
     private void setTable(final List<RecordViewModel> articles) {
