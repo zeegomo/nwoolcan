@@ -59,10 +59,7 @@ public final class MainController extends AbstractViewController {
      */
     public void menuViewArticlesClick(final ActionEvent event) {
         this.getViewManager()
-            .getView(ViewType.ARTICLES,
-                     this.getController()
-                         .getWarehouseController()
-                         .getArticlesViewModel())
+            .getView(ViewType.ARTICLES)
             .peek(view -> this.contentPane.substitute(view));
     }
 
