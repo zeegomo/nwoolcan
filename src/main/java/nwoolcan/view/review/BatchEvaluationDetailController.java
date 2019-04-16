@@ -4,28 +4,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import nwoolcan.controller.Controller;
-import nwoolcan.model.brewery.batch.review.BatchEvaluationBuilder;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.SubViewController;
+import nwoolcan.view.subview.SubViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.review.EvaluationViewModel;
-
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
@@ -48,6 +40,7 @@ public final class BatchEvaluationDetailController extends SubViewController
     @FXML
     private Text notes;
 
+    private final Logger logger;
     /**
      * Creates itself and gets injected.
      *
@@ -56,6 +49,7 @@ public final class BatchEvaluationDetailController extends SubViewController
      */
     public BatchEvaluationDetailController(final Controller controller, final ViewManager viewManager) {
         super(controller, viewManager);
+        this.logger = Logger.getLogger(this.getClass().getName());
     }
 
     @Override
@@ -72,7 +66,7 @@ public final class BatchEvaluationDetailController extends SubViewController
 
     private Node evaluationNode(final EvaluationViewModel data) {
         return this.getViewManager().getView(ViewType.EVALUATION, data)
-                   .peekError(err -> Logger.getGlobal().severe(err.toString() + "\n" + err.getCause()))
+                   .peekError(err -> logger.warning(err.toString() + "\n" + err.getCause()))
                    .orElse(new Label(LOAD_FAILED));
     }
 
@@ -85,7 +79,6 @@ public final class BatchEvaluationDetailController extends SubViewController
      * @param event the recorded event.
      */
     public void goBackButtonClicked(final ActionEvent event) {
-        //this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
         this.previousView();
     }
 }
