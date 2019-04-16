@@ -122,7 +122,7 @@ public final class StockDetailController extends SubViewController implements In
         modal.setX(window.getX() + window.getWidth() / 2 - scene.getWidth() / 2);
         modal.showAndWait();
 
-        this.substituteView(ViewType.STOCK_DETAIL, this.getController().getWarehouseController().getViewStockById(stockId).getValue());
+        this.initData(getController().getWarehouseController().getViewStockById(stockId).getValue());
 
     }
 }
