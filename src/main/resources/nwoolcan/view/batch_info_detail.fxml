@@ -35,7 +35,6 @@
                     </TitledPane>
                 </bottom>
             </BorderPane>
-
         </top>
         <center>
             <VBox>
@@ -52,7 +51,7 @@
                         <columnConstraints>
                             <ColumnConstraints percentWidth="50"/>
                         </columnConstraints>
-                        <PieChart fx:id="ingredientsTypeChart" title="Ingredient Types" GridPane.columnIndex="1"/>
+                        <PieChart fx:id="ingredientsTypeChart" title="Ingredients" GridPane.columnIndex="1"/>
                     </GridPane>
                 </TitledPane>
                 <TitledPane text="Water Measurements" GridPane.columnIndex="1">

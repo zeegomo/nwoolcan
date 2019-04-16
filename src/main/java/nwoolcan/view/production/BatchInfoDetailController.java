@@ -24,6 +24,7 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 /**
  * Controller for Batch Info detail view.
@@ -95,6 +96,11 @@ public final class BatchInfoDetailController extends SubViewController implement
         data.getWaterMeasurements().ifPresent(waterMeasurements ->
             this.waterMeasurements.setItems(FXCollections.observableList(waterMeasurements))
         );
+
+        this.ingredientsTypeChart.setData(FXCollections.observableList(data.getIngredients()
+                                                            .stream()
+                                                            .map(p -> new PieChart.Data(p.getLeft().getName(), p.getRight()))
+                                                            .collect(Collectors.toList())));
     }
     /**
      * Return to previous view.
