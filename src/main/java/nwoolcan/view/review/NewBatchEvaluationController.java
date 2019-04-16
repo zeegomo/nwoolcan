@@ -5,7 +5,6 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -14,8 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -23,11 +20,10 @@ import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.batch.review.EvaluationType;
-import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.SubViewController;
+import nwoolcan.view.subview.SubViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
@@ -40,7 +36,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -71,6 +66,7 @@ public final class NewBatchEvaluationController extends SubViewController
     private final Map<EvaluationType, Pair<ReadOnlyStringProperty, ReadOnlyStringProperty>> evaluations = new HashMap<>();
     private final Collection<ReadOnlyBooleanProperty> inputs = new ArrayList<>();
     private int id;
+    private final Logger logger;
 
     private static final class BatchEvaluationTypeProperty {
         private final BatchEvaluationType type;
@@ -97,6 +93,7 @@ public final class NewBatchEvaluationController extends SubViewController
      */
     public NewBatchEvaluationController(final Controller controller, final ViewManager viewManager) {
         super(controller, viewManager);
+        this.logger = Logger.getLogger(this.getClass().getName());
     }
 
     @Override
@@ -113,6 +110,7 @@ public final class NewBatchEvaluationController extends SubViewController
         batchTypeComboBox.getSelectionModel().selectFirst();
         changeBatchTypeClick();
     }
+
     /**
      * Change categories based on review type.
      */
@@ -122,21 +120,22 @@ public final class NewBatchEvaluationController extends SubViewController
         Collection<ReadOnlyBooleanProperty> nodes = type.getCategories()
                                                         .stream()
                                                         .map(cat -> {
-                                                            EvaluationInputController res = catNode(cat);
-                                                            this.categories.getChildren().add(res);
+                                                            Pair<Parent, EvaluationInputController> res = categoryNode(cat);
+                                                            this.categories.getChildren().add(res.getLeft());
                                                             this.evaluations.put(cat, Pair.of(
-                                                                res.getInputProperty().get().getLeft(),
-                                                                res.getInputProperty().get().getRight())
+                                                                res.getRight().getInputProperty().get().getLeft(),
+                                                                res.getRight().getInputProperty().get().getRight())
                                                             );
-                                                            return res.getInputValidityProperty();
+                                                            return res.getRight().getInputValidityProperty();
                                                         })
                                                         .collect(Collectors.toList());
         BooleanBinding inputValidityBinding = Bindings.createBooleanBinding(() ->
-            nodes.stream().allMatch(ReadOnlyBooleanProperty::get),
+                nodes.stream().allMatch(ReadOnlyBooleanProperty::get),
             nodes.stream().toArray(Observable[]::new)
         );
         this.createButton.disableProperty().bind(inputValidityBinding.not());
     }
+
     /**
      * Create new batch.
      */
@@ -175,23 +174,20 @@ public final class NewBatchEvaluationController extends SubViewController
            .flatMap(dto -> this.getController().getBatchController().addBatchEvaluation(this.id, dto))
            .peekError(err -> this.showAlertAndWait(err.getMessage())).peek(res -> {
             final Stage stage = ((Stage) this.reviewerTextField.getScene().getWindow());
-            //just for saying that i added review to the caller
+            //just for saying that I added review to the caller
             stage.setUserData(new Object());
             stage.close();
         });
     }
 
     private Pair<Parent, EvaluationInputController> categoryNode(final EvaluationType type) {
-        return this.getViewManager().getView(ViewType.EVALUATION_TYPE, type, EvaluationInputController.class)
-                   .peekError(err -> Logger.getGlobal().severe(err.toString() + "\n" + err.getCause()))
-                   .orElse(Pair.of(new Label(LOAD_FAILED), new EvaluationInputController(this.getController(), this.getViewManager())));
+        return this.getViewManager()
+            .<EvaluationType, EvaluationInputController>getViewAndController(ViewType.EVALUATION_TYPE, type)
+            .peekError(err -> logger.warning(err.toString() + "\n" + err.getCause()))
+            .orElse(Pair.of(new Label(LOAD_FAILED),
+                new EvaluationInputController(this.getController(), this.getViewManager())));
     }
 
-    private EvaluationInputController catNode(final EvaluationType type) {
-        EvaluationInputController controller = new EvaluationInputController(this.getController(), this.getViewManager());
-        controller.initData(type);
-        return controller;
-    }
 
     private void showAlertAndWait(final String message) {
         Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while creating the review.\n" + message, ButtonType.CLOSE);
