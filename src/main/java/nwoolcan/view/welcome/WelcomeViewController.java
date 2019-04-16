@@ -1,6 +1,7 @@
 package nwoolcan.view.welcome;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -37,12 +38,11 @@ public final class WelcomeViewController extends SubViewController {
         modal.initOwner(window);
         modal.initModality(Modality.WINDOW_MODAL);
 
-        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_BREWERY_MODAL).orElse(new AnchorPane()), 600, 400);
+        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_BREWERY_MODAL).orElse(new AnchorPane()));
 
         modal.setScene(scene);
-        modal.setY(window.getY() + window.getHeight() / 2 - scene.getHeight() / 2);
-        modal.setX(window.getX() + window.getWidth() / 2 - scene.getWidth() / 2);
         modal.setResizable(false);
+        modal.setOnCloseRequest(Event::consume); // To prevent closing from the outside
         modal.showAndWait();
     }
 

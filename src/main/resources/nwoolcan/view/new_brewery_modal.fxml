@@ -5,19 +5,20 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:id="parent"
             fx:controller="nwoolcan.view.welcome.NewBreweryModalViewController">
-    <VBox alignment="CENTER">
-        <HBox>
-            <Label>Brewery name:</Label>
-            <TextField fx:id="txtBreweryName"/>
-        </HBox>
-        <HBox>
-            <Label>Brewery owner name:</Label>
-            <TextField fx:id="txtBreweryOwnerName"/>
-        </HBox>
-        <Button onAction="#createClicked">Create</Button>
-    </VBox>
+    <GridPane hgap="20" vgap="20">
+        <padding><Insets top="25" right="25" bottom="25"  left="25"/></padding>
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="0">Brewery name:</Label>
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="txtBreweryName"/>
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="1">Brewery owner name:</Label>
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="txtBreweryOwnerName"/>
+        <FlowPane  GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2" alignment="CENTER_RIGHT" hgap="20">
+            <Button onAction="#cancelClicked">Cancel</Button>
+            <Button onAction="#createClicked">Create</Button>
+        </FlowPane>
+    </GridPane>
 </AnchorPane>

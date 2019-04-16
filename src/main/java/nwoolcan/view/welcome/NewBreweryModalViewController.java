@@ -2,6 +2,7 @@ package nwoolcan.view.welcome;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -28,16 +29,29 @@ public final class NewBreweryModalViewController extends AbstractViewController 
         super(controller, viewManager);
     }
 
+    private void close() {
+        ((Stage) this.parent.getScene().getWindow()).close();
+    }
+
     @FXML
     private void createClicked(final ActionEvent event) {
-        this.getController().initializeNewBrewery();
-        if (!this.txtBreweryName.getText().isEmpty()) {
-            this.getController().setBreweryName(this.txtBreweryName.getText());
+        if (this.txtBreweryName.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("The brewery name is mandatory!");
+            alert.showAndWait();
+            return;
         }
+        this.getController().initializeNewBrewery();
+        this.getController().setBreweryName(this.txtBreweryName.getText());
         if (!this.txtBreweryOwnerName.getText().isEmpty()) {
             this.getController().setOwnerName(this.txtBreweryOwnerName.getText());
         }
-        ((Stage) this.parent.getScene().getWindow()).close();
+        this.close();
+    }
 
+    @FXML
+    private void cancelClicked(final ActionEvent event) {
+        this.close();
     }
 }
