@@ -5,13 +5,13 @@ import nwoolcan.model.brewery.warehouse.stock.Stock;
 /**
  * View model version of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
  */
-public class StockViewModel extends AbstractStockViewModel {
+public class PlainStockViewModel extends DetailStockViewModel {
 
     /**
      * Constructor with the elements of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
-     * @param stock the {@link Stock} to be converted in {@link StockViewModel}.
+     * @param stock the {@link Stock} to be converted in {@link PlainStockViewModel}.
      */
-    public StockViewModel(final Stock stock) {
+    public PlainStockViewModel(final Stock stock) {
         super(stock);
     }
 }

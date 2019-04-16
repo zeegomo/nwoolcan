@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * ArticlesViewModel: general info section.
+ * ArticlesInfoViewModel: general info section.
  */
-public final class ArticlesViewModel {
+public final class ArticlesInfoViewModel {
 
     private static final QueryArticle GENERAL_QUERY_ARTICLE = new QueryArticleBuilder().build();
     private static final QueryArticle QUERY_BEER_ARTICLE = new QueryArticleBuilder().setIncludeArticleType(ArticleType.FINISHED_BEER)
@@ -26,10 +26,10 @@ public final class ArticlesViewModel {
     private final List<AbstractArticleViewModel> allArticles;
 
     /**
-     * Constructor of the {@link ArticlesViewModel}.
+     * Constructor of the {@link ArticlesInfoViewModel}.
      * @param warehouse needed to collect information about the {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
-    public ArticlesViewModel(final Warehouse warehouse) {
+    public ArticlesInfoViewModel(final Warehouse warehouse) {
         this.nBeerArticles = warehouse.getArticles(QUERY_BEER_ARTICLE).size();
         this.nMiscArticles = warehouse.getArticles(QUERY_MISC_ARTICLE).size();
         this.nIngredientArticles = warehouse.getArticles(QUERY_INGREDIENT_ARTICLE).size();

@@ -38,6 +38,10 @@ public class BreweryImplTest {
                                        .build(beerDescription, batchMethod, initialSize, initialStep)
                                        .getValue();
 
+    private final Batch notEndedBatch = brewery.getBatchBuilder()
+                                               .build(beerDescription, batchMethod, initialSize, StepTypeEnum.BOILING)
+                                               .getValue();
+
     /**
      * Test the getter of the name of the {@link Brewery}.
      */
@@ -77,11 +81,24 @@ public class BreweryImplTest {
         final BeerArticle beerArticle = brewery.getWarehouse()
                                                .createBeerArticle("SUPERSBORNARTICLE",
                                                                   UnitOfMeasure.BOTTLE_33_CL);
+        final BeerArticle wrongBeerArticle = brewery.getWarehouse()
+                                                    .createBeerArticle("WRONG",
+                                                                  UnitOfMeasure.UNIT);
+
+        final Result<Empty> wrongArticle = brewery.stockBatch(batch, wrongBeerArticle);
+        Assert.assertTrue(wrongArticle.isError());
+        final Result<Empty> notEnded = brewery.stockBatch(notEndedBatch, beerArticle);
+        Assert.assertTrue(notEnded.isError());
+
         final Result<Empty> stockBatchRes = brewery.stockBatch(batch, beerArticle);
         Assert.assertTrue(stockBatchRes.isPresent());
         final Result<QueryStock> queryStockRes = new QueryStockBuilder().setArticle(beerArticle).build();
         Assert.assertTrue(queryStockRes.isPresent());
         List<Stock> stocks = brewery.getWarehouse().getStocks(queryStockRes.getValue());
-        Assert.assertFalse(stocks.isEmpty());
+        Assert.assertEquals(1, stocks.size());
+        Assert.assertEquals(batch.getCurrentSize(), stocks.get(0).getRemainingQuantity());
+
+        final Result<Empty> stockAgain = brewery.stockBatch(batch, beerArticle);
+        Assert.assertTrue(stockAgain.isError());
     }
 }

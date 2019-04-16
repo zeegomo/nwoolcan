@@ -13,14 +13,14 @@ import javafx.stage.Window;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.SubViewController;
+import nwoolcan.view.subview.SubViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.mastertable.ColumnDescriptor;
 import nwoolcan.view.mastertable.MasterTableViewModel;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
-import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesInfoViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 
 import java.util.Arrays;
@@ -30,7 +30,7 @@ import java.util.List;
  * Controller class for articles view.
  */
 @SuppressWarnings("NullAway")
-public final class ArticlesInfoViewController extends SubViewController implements InitializableController<ArticlesViewModel> {
+public final class ArticlesInfoViewController extends SubViewController implements InitializableController<ArticlesInfoViewModel> {
 
     @FXML
     private Label lblTotalNumberArticles;
@@ -60,20 +60,18 @@ public final class ArticlesInfoViewController extends SubViewController implemen
     }
 
     @Override
-    public void initData(final ArticlesViewModel data) {
+    public void initData(final ArticlesInfoViewModel data) {
         lblTotalNumberArticles.setText(Long.toString(data.getArticles().size()));
         lblNumberBeerArticles.setText(Long.toString(data.getnBeerArticles()));
         lblNumberMiscArticles.setText(Long.toString(data.getnMiscArticles()));
         lblNumberIngredientArticles.setText(Long.toString(data.getnIngredientArticles()));
-        if (data.getArticles().size() > 0) {
-            pieChartArticlesStatus.setData(
-                FXCollections.observableArrayList(
-                    new PieChart.Data("Beer", data.getnBeerArticles()),
-                    new PieChart.Data("Misc", data.getnMiscArticles()),
-                    new PieChart.Data("Ingredient", data.getnIngredientArticles())
-                )
-            );
-        }
+        pieChartArticlesStatus.setData(
+            FXCollections.observableArrayList(
+                new PieChart.Data("Beer", data.getnBeerArticles()),
+                new PieChart.Data("Misc", data.getnMiscArticles()),
+                new PieChart.Data("Ingredient", data.getnIngredientArticles())
+            )
+        );
 
         setTable(data.getArticles());
     }
@@ -84,7 +82,7 @@ public final class ArticlesInfoViewController extends SubViewController implemen
                                             new ColumnDescriptor("ID", "id"),
                                             new ColumnDescriptor("Name", "name"),
                                             new ColumnDescriptor("UOM", "unitOfMeasure"),
-                                            new ColumnDescriptor("Article Type", "articleType")
+                                            new ColumnDescriptor("Article Type", "articleTypeSummary")
                                         ),
                                         articles,
                                         ViewType.ARTICLE_DETAIL,
@@ -98,12 +96,8 @@ public final class ArticlesInfoViewController extends SubViewController implemen
         return this.articlesSubView;
     }
 
-    /**
-     * Triggered when the button "create new article" is clicked.
-     * Opens a modal to retrieve data about the new article to create.
-     * @param event occurred.
-     */
-    public void createNewArticleClick(final ActionEvent event) {
+    @FXML
+    private void createNewArticleClick(final ActionEvent event) {
         final Stage modal =  new Stage();
         final Window window = this.getSubView().getScene().getWindow();
 
@@ -122,14 +116,15 @@ public final class ArticlesInfoViewController extends SubViewController implemen
         this.substituteView(ViewType.ARTICLES, this.getController().getWarehouseController().getArticlesViewModel());
     }
 
-    /**
-     * Method called to create update the table accordingly with the queryArticle.
-     * @param queryArticle used to update the table.
-     */
-    public void updateArticlesTable(final QueryArticle queryArticle) {
+    private void updateArticlesTable(final QueryArticle queryArticle) {
         final List<AbstractArticleViewModel> articles = this.getController()
                                                             .getWarehouseController()
                                                             .getArticles(queryArticle);
         setTable(articles);
+    }
+
+    @FXML
+    private void backButtonClick(final ActionEvent actionEvent) {
+        this.previousView();
     }
 }
