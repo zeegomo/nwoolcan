@@ -75,4 +75,8 @@ public interface Controller {
      * @param ownerName the name of the owner.
      */
     void setOwnerName(String ownerName);
+    /**
+     * Substitutes the current brewery with a new empty one.
+     */
+    void initializeNewBrewery();
 }

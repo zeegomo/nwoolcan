@@ -5,6 +5,7 @@ import nwoolcan.controller.batch.BatchControllerImpl;
 import nwoolcan.controller.warehouse.WarehouseController;
 import nwoolcan.controller.warehouse.WarehouseControllerImpl;
 import nwoolcan.model.brewery.Brewery;
+import nwoolcan.model.brewery.BreweryImpl;
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.batch.BatchBuilder;
 import nwoolcan.model.brewery.batch.BatchMethod;
@@ -41,7 +42,7 @@ import java.util.stream.Collectors;
  */
 public final class BreweryController implements Controller {
 
-    private final Brewery brewery;
+    private Brewery brewery = new BreweryImpl();
     private final BatchController batchController;
     private final WarehouseController warehouseController;
     private static final String BATCH_NOT_FOUND = "Batch not found.";
@@ -49,10 +50,8 @@ public final class BreweryController implements Controller {
 
     /**
      * Constructor which creates the {@link WarehouseController}.
-     * @param brewery the brewery to be controlled.
      */
-    public BreweryController(final Brewery brewery) {
-        this.brewery = brewery;
+    public BreweryController() {
         this.warehouseController = new WarehouseControllerImpl(brewery.getWarehouse());
         this.batchController = new BatchControllerImpl(brewery);
     }
@@ -195,5 +194,10 @@ public final class BreweryController implements Controller {
     @Override
     public void setOwnerName(final String ownerName) {
         brewery.setOwnerName(ownerName);
+    }
+
+    @Override
+    public void initializeNewBrewery() {
+        this.brewery = new BreweryImpl();
     }
 }
