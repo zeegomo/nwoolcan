@@ -17,6 +17,7 @@
             <menus>
                 <Menu text="File">
                     <items>
+                        <MenuItem onAction="#menuFileSaveClick" text="Save" />
                         <MenuItem onAction="#menuFileQuitClick" text="Quit" />
                         <MenuItem onAction="#menuFileCountOverlaysClick" text="Count Overlays" />
                     </items>

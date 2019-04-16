@@ -3,11 +3,16 @@ package nwoolcan.view.main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.stage.FileChooser;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubViewContainer;
+
+import java.io.File;
+import java.util.logging.Logger;
 
 /**
  * Handles the Main view.
@@ -87,5 +92,25 @@ public final class MainController extends AbstractViewController {
     @FXML
     private void menuViewWelcomeClick(final ActionEvent event) {
         this.getViewManager().getView(ViewType.WELCOME).peek(view -> this.contentPane.substitute(view));
+    }
+
+    @FXML
+    private void menuFileSaveClick(final ActionEvent event) {
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
+        final File target = fileChooser.showSaveDialog(this.contentPane.getScene().getWindow());
+        if (target != null) {
+            this.getController().saveTo(target)
+                .peek(e -> {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Saving completed");
+                    alert.showAndWait();
+                }).peekError(err -> {
+                    Logger.getLogger(this.getClass().getName()).severe(err.toString());
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("There was an error!");
+                    alert.showAndWait();
+                });
+        }
     }
 }
