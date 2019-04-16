@@ -40,8 +40,6 @@ public final class EvaluationInputController extends AbstractViewController impl
     private TextArea notes;
     @FXML
     private TitledPane title;
-    private final SimpleBooleanProperty valididtyProperty = new SimpleBooleanProperty(false);
-
     /**
      * Creates itself and inject the controller and the view manager.
      *
