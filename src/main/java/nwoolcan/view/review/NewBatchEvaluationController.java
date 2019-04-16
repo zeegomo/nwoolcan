@@ -1,10 +1,16 @@
 package nwoolcan.view.review;
 
+import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -29,6 +35,8 @@ import nwoolcan.viewmodel.brewery.production.batch.review.NewBatchEvaluationView
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -56,8 +64,11 @@ public final class NewBatchEvaluationController extends SubViewController
     private TextArea notesTextArea;
     @FXML
     private TextField reviewerTextField;
+    @FXML
+    private Button createButton;
 
     private final Map<EvaluationType, Pair<ReadOnlyStringProperty, ReadOnlyStringProperty>> evaluations = new HashMap<>();
+    private final Collection<ReadOnlyBooleanProperty> inputs = new ArrayList<>();
     private int id;
 
     private static final class BatchEvaluationTypeProperty {
@@ -101,23 +112,30 @@ public final class NewBatchEvaluationController extends SubViewController
         batchTypeComboBox.getSelectionModel().selectFirst();
         changeBatchTypeClick();
     }
-
     /**
      * Change categories based on review type.
      */
     public void changeBatchTypeClick() {
         BatchEvaluationType type = this.batchTypeComboBox.getSelectionModel().getSelectedItem().getType();
         this.categories.getChildren().clear();
-        type.getCategories().forEach(cat -> {
-            Pair<Parent, EvaluationInputController> res = categoryNode(cat);
-            this.categories.getChildren().add(res.getLeft());
-            this.evaluations.put(cat, Pair.of(
-                res.getRight().getInputProperty().get().getLeft(),
-                res.getRight().getInputProperty().get().getRight())
-            );
-        });
+        Collection<ReadOnlyBooleanProperty> nodes = type.getCategories()
+                                                        .stream()
+                                                        .map(cat -> {
+                                                            Pair<Parent, EvaluationInputController> res = categoryNode(cat);
+                                                            this.categories.getChildren().add(res.getLeft());
+                                                            this.evaluations.put(cat, Pair.of(
+                                                                res.getRight().getInputProperty().get().getLeft(),
+                                                                res.getRight().getInputProperty().get().getRight())
+                                                            );
+                                                            return res.getRight().getInputValidityProperty();
+                                                        })
+                                                        .collect(Collectors.toList());
+        BooleanBinding inputValidityBinding = Bindings.createBooleanBinding(() ->
+            nodes.stream().allMatch(ReadOnlyBooleanProperty::get),
+            nodes.stream().toArray(Observable[]::new)
+        );
+        this.createButton.disableProperty().bind(inputValidityBinding.not());
     }
-
     /**
      * Create new batch.
      */
@@ -153,14 +171,13 @@ public final class NewBatchEvaluationController extends SubViewController
                                   (res1, res2) -> res1.require(res2::isPresent, res2::getError)
                                                       .peek(col -> col.addAll(res2.getValue())));
         cat.map(eval -> new BatchEvaluationDTO(type, eval, this.notesTextArea.getText(), this.reviewerTextField.getText()))
-                              .flatMap(dto -> this.getController().getBatchController().addBatchEvaluation(this.id, dto))
-                              .peekError(err -> this.showAlertAndWait(err.getMessage())).peek(res -> {
-                final Stage stage = ((Stage) this.reviewerTextField.getScene().getWindow());
-                //just for saying that i added review to the caller
-                stage.setUserData(new Object());
-                stage.close();
-            });
-        System.out.println(cat);
+           .flatMap(dto -> this.getController().getBatchController().addBatchEvaluation(this.id, dto))
+           .peekError(err -> this.showAlertAndWait(err.getMessage())).peek(res -> {
+            final Stage stage = ((Stage) this.reviewerTextField.getScene().getWindow());
+            //just for saying that i added review to the caller
+            stage.setUserData(new Object());
+            stage.close();
+        });
     }
 
     private Pair<Parent, EvaluationInputController> categoryNode(final EvaluationType type) {
