@@ -42,7 +42,7 @@ public final class MainController extends AbstractViewController {
     public void menuViewWarehouseClick(final ActionEvent event) {
         getController().setBreweryName("ciccio");
         getController().setOwnerName("ciccia");
-        this.getViewManager().getView(ViewType.WAREHOUSE).peek(view -> this.contentPane.substitute(view));
+        this.getViewManager().getView(ViewType.WAREHOUSE, getController().getWarehouseController().getWarehouseViewModel()).peek(view -> this.contentPane.substitute(view));
     }
 
     /**
@@ -59,7 +59,10 @@ public final class MainController extends AbstractViewController {
      */
     public void menuViewArticlesClick(final ActionEvent event) {
         this.getViewManager()
-            .getView(ViewType.ARTICLES)
+            .getView(ViewType.ARTICLES,
+                     this.getController()
+                         .getWarehouseController()
+                         .getArticlesViewModel())
             .peek(view -> this.contentPane.substitute(view));
     }
 

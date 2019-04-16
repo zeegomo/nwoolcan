@@ -16,13 +16,12 @@ import nwoolcan.view.ViewManager;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
-import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Controller class for article detail view.
  */
 @SuppressWarnings("NullAway")
-public final class ArticleDetailViewController extends SubViewController implements InitializableController<Pair<AbstractArticleViewModel, Runnable>> {
+public final class ArticleDetailViewController extends SubViewController implements InitializableController<AbstractArticleViewModel> {
 
     private static final String NEW_NAME_EMPTY = "The name can not be empty.";
     @FXML
@@ -43,7 +42,6 @@ public final class ArticleDetailViewController extends SubViewController impleme
     private SubView articleDetailSubView;
 
     private int articleIdInt;
-    private Runnable updateFather;
 
     /**
      * Creates itself and gets injected.
@@ -56,12 +54,7 @@ public final class ArticleDetailViewController extends SubViewController impleme
     }
 
     @Override
-    public void initData(final Pair<AbstractArticleViewModel, Runnable> dataAndRunner) {
-        this.updateFather = dataAndRunner.getRight();
-        loadData(dataAndRunner.getLeft());
-    }
-
-    private void loadData(final AbstractArticleViewModel data) {
+    public void initData(final AbstractArticleViewModel data) {
         articleIdInt = data.getId();
         articleId.setText(Integer.toString(data.getId()));
         articleName.setText(data.getName());
@@ -83,8 +76,7 @@ public final class ArticleDetailViewController extends SubViewController impleme
 
     @FXML
     private void backButtonClick(final ActionEvent actionEvent) {
-        updateFather.run();
-        this.previousView();
+        this.previousView(); // TODO call reload of the previous view before switching!
     }
 
     @FXML
@@ -99,7 +91,7 @@ public final class ArticleDetailViewController extends SubViewController impleme
             showAlertAndWait(changeNameResult.getError().getMessage());
             return;
         }
-        this.loadData(changeNameResult.getValue());
+        this.initData(changeNameResult.getValue());
         this.newNameTextField.clear();
     }
 

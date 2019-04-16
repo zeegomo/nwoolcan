@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
+import nwoolcan.view.InitializableController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.mastertable.ColumnDescriptor;
@@ -21,8 +22,8 @@ import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.stock.DetailStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.MasterStockViewModel;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +32,7 @@ import java.util.List;
  * Handles the Warehouse view.
  */
 @SuppressWarnings("NullAway")
-public final class WarehouseViewController extends SubViewController {
+public final class WarehouseViewController extends SubViewController implements InitializableController<WarehouseViewModel> {
 
     @FXML
     private Label lblNumberBeerAvailable;
@@ -71,9 +72,9 @@ public final class WarehouseViewController extends SubViewController {
         super(controller, viewManager);
     }
 
-    @FXML
-    private void initialize() {
-        final WarehouseViewModel data = getController().getWarehouseController().getWarehouseViewModel();
+    @Override
+    public void initData(final WarehouseViewModel data) {
+
         // Beer data load
         this.lblNumberBeerAvailable.setText(Integer.toString(data.getnBeerAvailable()));
         this.lblNumberBeerExpired.setText(Integer.toString(data.getnBeerExpired()));
@@ -112,7 +113,7 @@ public final class WarehouseViewController extends SubViewController {
     }
 
     private void setTable(final List<MasterStockViewModel> stocks) {
-        final MasterTableViewModel<MasterStockViewModel, Pair<Integer, Runnable>> masterViewModel =
+        final MasterTableViewModel<MasterStockViewModel, DetailStockViewModel> masterViewModel =
             new MasterTableViewModel<>(Arrays.asList(
                                            new ColumnDescriptor("ID", "id"),
                                            new ColumnDescriptor("Remaining Quantity", "remainingQuantity"),
@@ -123,7 +124,7 @@ public final class WarehouseViewController extends SubViewController {
                                        ),
                                        stocks,
                                        ViewType.STOCK_DETAIL,
-                                       masterStockViewModel -> Pair.of(masterStockViewModel.getId(), this::initialize)
+                                       masterStockViewModel -> ((DetailStockViewModel) masterStockViewModel)
             );
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(masterTableContainer::substitute);
     }
@@ -165,7 +166,7 @@ public final class WarehouseViewController extends SubViewController {
         modal.setY(window.getY() + window.getHeight() / 2 - scene.getHeight() / 2);
         modal.showAndWait();
 
-        this.substituteView(ViewType.WAREHOUSE);
+        this.substituteView(ViewType.WAREHOUSE, this.getController().getWarehouseController().getWarehouseViewModel());
 
     }
 }

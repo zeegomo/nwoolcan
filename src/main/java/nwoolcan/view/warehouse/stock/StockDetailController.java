@@ -23,7 +23,6 @@ import nwoolcan.view.subview.SubViewController;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.DetailStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.RecordViewModel;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
@@ -31,7 +30,7 @@ import java.util.List;
  * Controller for the Stock detail view.
  */
 @SuppressWarnings("NullAway")
-public final class StockDetailController extends SubViewController implements InitializableController<Pair<Integer, Runnable>> {
+public final class StockDetailController extends SubViewController implements InitializableController<DetailStockViewModel> {
 
     @FXML
     private Label lblArticle;
@@ -52,7 +51,6 @@ public final class StockDetailController extends SubViewController implements In
 
     private int articleId;
     private int stockId;
-    private Runnable updateFather;
 
     /**
      * Creates itself and gets injected.
@@ -64,14 +62,7 @@ public final class StockDetailController extends SubViewController implements In
     }
 
     @Override
-    public void initData(final Pair<Integer, Runnable> dataAndRunner) {
-        stockId = dataAndRunner.getLeft();
-        loadData();
-        updateFather = dataAndRunner.getRight();
-    }
-
-    private void loadData() {
-        final DetailStockViewModel data = getController().getWarehouseController().getViewStockById(stockId).getValue();
+    public void initData(final DetailStockViewModel data) {
         stockId = data.getId();
         articleId = data.getArticle().getId();
         lblArticle.setText(data.getArticle().toString());
@@ -94,7 +85,7 @@ public final class StockDetailController extends SubViewController implements In
         final Result<AbstractArticleViewModel> articleResult = getController().getWarehouseController()
                                                                               .getViewArticleById(articleId);
         if (articleResult.isPresent()) {
-            overlayView(ViewType.ARTICLE_DETAIL, Pair.<AbstractArticleViewModel, Runnable>of(articleResult.getValue(), this::loadData));
+            overlayView(ViewType.ARTICLE_DETAIL, articleResult.getValue());
         } else {
             new Alert(
                         Alert.AlertType.ERROR,
@@ -110,8 +101,7 @@ public final class StockDetailController extends SubViewController implements In
 
     @FXML
     private void backButtonClick(final ActionEvent actionEvent) {
-        updateFather.run();
-        this.previousView();
+        this.previousView(); // TODO call reload of the previous view before switching!
     }
 
     @FXML
@@ -132,7 +122,7 @@ public final class StockDetailController extends SubViewController implements In
         modal.setX(window.getX() + window.getWidth() / 2 - scene.getWidth() / 2);
         modal.showAndWait();
 
-        this.loadData();
+        this.initData(getController().getWarehouseController().getViewStockById(stockId).getValue());
 
     }
 }

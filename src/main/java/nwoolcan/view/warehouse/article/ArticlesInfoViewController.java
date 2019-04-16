@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
+import nwoolcan.view.InitializableController;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
@@ -21,7 +22,6 @@ import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesInfoViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +30,7 @@ import java.util.List;
  * Controller class for articles view.
  */
 @SuppressWarnings("NullAway")
-public final class ArticlesInfoViewController extends SubViewController {
+public final class ArticlesInfoViewController extends SubViewController implements InitializableController<ArticlesInfoViewModel> {
 
     @FXML
     private Label lblTotalNumberArticles;
@@ -59,9 +59,8 @@ public final class ArticlesInfoViewController extends SubViewController {
         super(controller, viewManager);
     }
 
-    @FXML
-    private void initialize() {
-        final ArticlesInfoViewModel data = getController().getWarehouseController().getArticlesViewModel();
+    @Override
+    public void initData(final ArticlesInfoViewModel data) {
         lblTotalNumberArticles.setText(Long.toString(data.getArticles().size()));
         lblNumberBeerArticles.setText(Long.toString(data.getnBeerArticles()));
         lblNumberMiscArticles.setText(Long.toString(data.getnMiscArticles()));
@@ -78,7 +77,7 @@ public final class ArticlesInfoViewController extends SubViewController {
     }
 
     private void setTable(final List<AbstractArticleViewModel> articles) {
-        final MasterTableViewModel<AbstractArticleViewModel, Pair<AbstractArticleViewModel, Runnable>> masterViewModel =
+        final MasterTableViewModel<AbstractArticleViewModel, AbstractArticleViewModel> masterViewModel =
             new MasterTableViewModel<>(Arrays.asList(
                                             new ColumnDescriptor("ID", "id"),
                                             new ColumnDescriptor("Name", "name"),
@@ -87,7 +86,7 @@ public final class ArticlesInfoViewController extends SubViewController {
                                         ),
                                         articles,
                                         ViewType.ARTICLE_DETAIL,
-                                        article -> Pair.of(article, this::initialize)
+                                        article -> article
             );
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(masterTableContainer::substitute);
     }
@@ -114,7 +113,7 @@ public final class ArticlesInfoViewController extends SubViewController {
         modal.setResizable(false);
         modal.showAndWait();
 
-        this.substituteView(ViewType.ARTICLES);
+        this.substituteView(ViewType.ARTICLES, this.getController().getWarehouseController().getArticlesViewModel());
     }
 
     private void updateArticlesTable(final QueryArticle queryArticle) {

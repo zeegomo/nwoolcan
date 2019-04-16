@@ -47,7 +47,7 @@ public final class DashboardController extends SubViewController {
      * @param event The occurred event
      */
     public void btnToWarehouseClicked(final ActionEvent event) {
-        this.substituteView(ViewType.WAREHOUSE);
+        this.substituteView(ViewType.WAREHOUSE, getController().getWarehouseController().getWarehouseViewModel());
     }
 
     @Override
