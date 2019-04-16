@@ -56,6 +56,8 @@ public final class BatchDetailController
     private SubView batchDetailSubView;
     @FXML
     private Button viewReviewButton;
+    @FXML
+    private Button addReviewButton;
 
     private DetailBatchViewModel data;
 
@@ -99,6 +101,12 @@ public final class BatchDetailController
             this.viewReviewButton.setDisable(false);
         } else {
             this.viewReviewButton.setDisable(true);
+        }
+
+        if (data.isEnded()) {
+            this.addReviewButton.setDisable(false);
+        } else {
+            this.addReviewButton.setDisable(true);
         }
     }
     /**
