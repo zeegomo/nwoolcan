@@ -59,17 +59,6 @@ public final class ArticlesInfoViewController extends SubViewController implemen
         super(controller, viewManager);
     }
 
-    /*
-    @FXML
-    private void initialize() {
-        articlesSubView.getContainer().ifPresent(subViewContainer -> subViewContainer.viewChanged().addListener(newView -> {
-            if (newView == this.articlesSubView) {
-                this.reload();
-            }
-        }));
-    }
-    */
-
     @Override
     public void initData(final ArticlesInfoViewModel data) {
         lblTotalNumberArticles.setText(Long.toString(data.getArticles().size()));
