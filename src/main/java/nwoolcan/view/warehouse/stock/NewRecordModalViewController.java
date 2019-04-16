@@ -73,15 +73,15 @@ public final class NewRecordModalViewController extends AbstractViewController i
         try {
             recordDoubleAmount = Double.parseDouble(recordAmount.getText());
         } catch (final NumberFormatException ex) {
-            new Alert(Alert.AlertType.ERROR, "The amount must be a double number.", ButtonType.CLOSE).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "The amount must be a number.", ButtonType.CLOSE).showAndWait();
             return;
         }
         final Result<Empty> addRecordResult;
         if (checkSelectDate.isSelected()) {
-            final Date date =  Date.from(recordDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            DateUtils.truncate(date, Calendar.DATE);
-            DateUtils.setHours(date, recordHour.getValue());
-            DateUtils.setMinutes(date, recordMinute.getValue());
+            Date date =  Date.from(recordDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            date = DateUtils.truncate(date, Calendar.DATE);
+            date = DateUtils.setHours(date, recordHour.getValue());
+            date = DateUtils.setMinutes(date, recordMinute.getValue());
             addRecordResult = getController().getWarehouseController().addRecord(stockId, recordDoubleAmount, recordAction.getValue(), date);
         } else {
             addRecordResult = getController().getWarehouseController().addRecord(stockId, recordDoubleAmount, recordAction.getValue());
