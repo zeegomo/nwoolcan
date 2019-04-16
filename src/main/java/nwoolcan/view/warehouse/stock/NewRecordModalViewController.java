@@ -89,7 +89,7 @@ public final class NewRecordModalViewController extends AbstractViewController i
         if (addRecordResult.isError()) {
             new Alert(
                 Alert.AlertType.ERROR,
-                "Internal Error: " + addRecordResult.getError().getMessage(),
+                "Error: " + addRecordResult.getError().getMessage(),
                 ButtonType.CLOSE
             ).showAndWait();
         } else {
@@ -100,6 +100,8 @@ public final class NewRecordModalViewController extends AbstractViewController i
     @Override
     public void initData(final Integer stockId) {
         this.stockId = stockId;
+        recordAction.getItems().setAll(Record.Action.values());
+        recordAction.getSelectionModel().selectLast();
         recordHour.getItems().setAll(IntStream.rangeClosed(FIRST_HOUR, LAST_HOUR)
                                               .boxed()
                                               .collect(Collectors.toList()));

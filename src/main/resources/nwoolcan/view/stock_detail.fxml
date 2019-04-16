@@ -27,7 +27,11 @@
         </top>
         <center>
             <VBox>
-                <Button text="Back" onAction="#backButtonClick"/>
+                <HBox spacing="5">
+                    <Button text="Back" onAction="#backButtonClick"/>
+                    <Button text="Go to article" onAction="#goToArticleButtonClick"/>
+                    <Button text="Add Record" onAction="#addRecordButtonClick"/>
+                </HBox>
                 <TitledPane text="General information">
                     <HBox>
                         <VBox>
@@ -56,11 +60,10 @@
                                 <Label fx:id="lblCreationDate"/>
                             </HBox>
                         </VBox>
-                        <Button text="Go to article" onAction="#goToArticleButtonClick"/>
                     </HBox>
                 </TitledPane>
                 <TitledPane text="Records">
-                    <TableView fx:id="recordTable" maxHeight="150">
+                    <TableView fx:id="recordTable">
                         <columnResizePolicy>
                             <TableView fx:constant = "CONSTRAINED_RESIZE_POLICY" />
                         </columnResizePolicy>
