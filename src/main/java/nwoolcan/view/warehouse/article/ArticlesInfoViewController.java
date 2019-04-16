@@ -87,13 +87,13 @@ public final class ArticlesInfoViewController extends SubViewController implemen
                                         ),
                                         articles,
                                         ViewType.ARTICLE_DETAIL,
-                                        article -> Pair.of(article, this.getLoader())
+                                        article -> Pair.of(article, this::reload)
             );
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(masterTableContainer::substitute);
     }
 
-    private Runnable getLoader() {
-        return () -> this.initData(getController().getWarehouseController().getArticlesViewModel());
+    private void reload() {
+        this.initData(getController().getWarehouseController().getArticlesViewModel());
     }
 
     @Override

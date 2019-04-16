@@ -24,6 +24,7 @@ import nwoolcan.view.subview.SubViewController;
 import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.DetailStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.MasterStockViewModel;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
 import java.util.List;
@@ -113,7 +114,7 @@ public final class WarehouseViewController extends SubViewController implements 
     }
 
     private void setTable(final List<MasterStockViewModel> stocks) {
-        final MasterTableViewModel<MasterStockViewModel, DetailStockViewModel> masterViewModel =
+        final MasterTableViewModel<MasterStockViewModel, Pair<DetailStockViewModel, Runnable>> masterViewModel =
             new MasterTableViewModel<>(Arrays.asList(
                                            new ColumnDescriptor("ID", "id"),
                                            new ColumnDescriptor("Remaining Quantity", "remainingQuantity"),
@@ -124,9 +125,13 @@ public final class WarehouseViewController extends SubViewController implements 
                                        ),
                                        stocks,
                                        ViewType.STOCK_DETAIL,
-                                       masterStockViewModel -> ((DetailStockViewModel) masterStockViewModel)
+                                       masterStockViewModel -> (Pair.of(((DetailStockViewModel) masterStockViewModel), this.getLoader()))
             );
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(masterTableContainer::substitute);
+    }
+
+    private Runnable getLoader() {
+        return () -> this.initData(getController().getWarehouseController().getWarehouseViewModel());
     }
 
     @Override
