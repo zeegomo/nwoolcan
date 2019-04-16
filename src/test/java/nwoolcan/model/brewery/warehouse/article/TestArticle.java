@@ -9,6 +9,7 @@ import org.junit.Test;
  */
 public class TestArticle {
 
+    private final ArticleManager articleManager = new ArticleManager();
     private static final String NAME = "DummyName";
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.UNIT;
@@ -18,14 +19,14 @@ public class TestArticle {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorWithEmptyName() {
-        ArticleManager.getInstance().createMiscArticle("", UOM);
+        articleManager.createMiscArticle("", UOM);
     }
     /**
      * Method that tests the getters and relative errors.
      */
     @Test
     public void testGetters() {
-        final Article article = ArticleManager.getInstance().createMiscArticle(NAME, UOM);
+        final Article article = articleManager.createMiscArticle(NAME, UOM);
         Assert.assertEquals(NAME, article.getName());
         Assert.assertEquals(ArticleType.MISC, article.getArticleType());
         Assert.assertTrue(article.toIngredientArticle().isError());
@@ -42,9 +43,9 @@ public class TestArticle {
      */
     @Test
     public void testEquals() {
-        final Article art1 = ArticleManager.getInstance().createMiscArticle(NAME, UOM);
-        final Article art2 = ArticleManager.getInstance().createMiscArticle(NAME, UOM);
-        final Article art4 = ArticleManager.getInstance().createMiscArticle(NAME, UOM1);
+        final Article art1 = articleManager.createMiscArticle(NAME, UOM);
+        final Article art2 = articleManager.createMiscArticle(NAME, UOM);
+        final Article art4 = articleManager.createMiscArticle(NAME, UOM1);
         Assert.assertEquals(art1, art2);
         Assert.assertEquals(art1, art1);
         Assert.assertNotEquals(art1, art4);

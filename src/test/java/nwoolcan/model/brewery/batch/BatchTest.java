@@ -53,7 +53,7 @@ public class BatchTest {
     private static final int N6 = 70;
     private static final Quantity Q1 = Quantity.of(TEN_THOUSAND, UnitOfMeasure.LITER).getValue();
     private static final Quantity Q2 = Quantity.of(TEN_THOUSAND - 1, UnitOfMeasure.LITER).getValue();
-    private static final ArticleManager ARTICLE_MANAGER = ArticleManager.getInstance();
+    private final ArticleManager articleManager = new ArticleManager();
     private final BatchEvaluationType bjcpType = BatchEvaluationBuilder.getAvailableBatchEvaluationTypes()
                                                                        .getValue()
                                                                        .stream()
@@ -64,16 +64,16 @@ public class BatchTest {
     private Batch batchAlfredo, batchRossina, batchBiondina;
 
     private List<Pair<IngredientArticle, Integer>> alfredoIngredients = Arrays.asList(
-        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Luppolo alfredo", UnitOfMeasure.GRAM, IngredientType.HOPS), N1),
-        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Pepe gigio", UnitOfMeasure.GRAM, IngredientType.OTHER), N2)
+        Pair.of(articleManager.createIngredientArticle("Luppolo alfredo", UnitOfMeasure.GRAM, IngredientType.HOPS), N1),
+        Pair.of(articleManager.createIngredientArticle("Pepe gigio", UnitOfMeasure.GRAM, IngredientType.OTHER), N2)
     );
     private List<Pair<IngredientArticle, Integer>> rossinaIngredients = Arrays.asList(
-        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Luppolo rossino", UnitOfMeasure.GRAM, IngredientType.HOPS), N3),
-        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Pepe faggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N4)
+        Pair.of(articleManager.createIngredientArticle("Luppolo rossino", UnitOfMeasure.GRAM, IngredientType.HOPS), N3),
+        Pair.of(articleManager.createIngredientArticle("Pepe faggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N4)
     );
     private List<Pair<IngredientArticle, Integer>> biondinaIngredients = Arrays.asList(
-        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Luppolo biondino", UnitOfMeasure.GRAM, IngredientType.HOPS), N5),
-        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Pepe daggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N6)
+        Pair.of(articleManager.createIngredientArticle("Luppolo biondino", UnitOfMeasure.GRAM, IngredientType.HOPS), N5),
+        Pair.of(articleManager.createIngredientArticle("Pepe daggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N6)
     );
 
     /**
@@ -280,7 +280,7 @@ public class BatchTest {
         Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
 
         //Stock batch
-        final Warehouse warehouse = new WarehouseImpl();
+        final Warehouse warehouse = new WarehouseImpl(articleManager);
         final BeerArticle article = warehouse.createBeerArticle("Test 75cl", UnitOfMeasure.BOTTLE_75_CL);
         final Result<Empty> res = batchAlfredo.stockBatchInto(article, () -> warehouse.createBeerStock(article, batchAlfredo).getValue());
         Assert.assertFalse(res.isError());
@@ -325,7 +325,7 @@ public class BatchTest {
      */
     @Test
     public void testWrongStocking() {
-        final Warehouse warehouse = new WarehouseImpl();
+        final Warehouse warehouse = new WarehouseImpl(articleManager);
         final BeerArticle article = warehouse.createBeerArticle("Test 50cl", UnitOfMeasure.BOTTLE_50_CL);
 
         //Stocking not ended batch
