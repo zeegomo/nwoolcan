@@ -23,7 +23,6 @@
                 </Menu>
                 <Menu text="View">
                     <items>
-                        <MenuItem text="Review"  onAction="#menuViewEvaluationClick"/>
                         <MenuItem text="Dashboard" onAction="#menuViewDashboardClick" />
                         <MenuItem text="Warehouse" onAction="#menuViewWarehouseClick" />
                         <MenuItem text="Production" onAction="#menuViewProductionClick" />
