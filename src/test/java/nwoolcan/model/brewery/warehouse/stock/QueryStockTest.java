@@ -1,7 +1,8 @@
 package nwoolcan.model.brewery.warehouse.stock;
 
+import nwoolcan.model.brewery.Brewery;
+import nwoolcan.model.brewery.BreweryImpl;
 import nwoolcan.model.brewery.warehouse.article.Article;
-import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
@@ -14,12 +15,12 @@ import java.util.Date;
  * Test class for {@link QueryStock}.
  */
 public final class QueryStockTest {
-
+    private static final Brewery BREWERY = new BreweryImpl();
     private static final int TWO = 2;
     private static final String ARTICLE_NAME = "ArticleName";
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.UNIT;
-    private static final Article ARTICLE = ArticleManager.getInstance().createMiscArticle(ARTICLE_NAME, UOM);
+    private static final Article ARTICLE = BREWERY.getWarehouse().createMiscArticle(ARTICLE_NAME, UOM);
     private static final Date DATE = new Date();
     private static final Quantity QUANTITY = Quantity.of(TWO, UOM).getValue();
     private static final Quantity QUANTITY_WRONG = Quantity.of(TWO, UOM1).getValue();
