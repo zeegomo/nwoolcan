@@ -2,7 +2,9 @@ package nwoolcan.view.production;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,7 +43,9 @@ public final class BatchInfoDetailController extends SubViewController implement
     @FXML
     private TableView<Pair<IngredientArticleViewModel, Double>> ingredients;
     @FXML
-    private TableView<ParameterViewModel> waterMeasurements;
+    private TableView<Pair<ParameterViewModel, String>> waterMeasurements;
+    @FXML
+    private PieChart ingredientsTypeChart;
 
     /**
      * Creates itself and gets injected.
@@ -71,17 +75,17 @@ public final class BatchInfoDetailController extends SubViewController implement
         );
         this.ingredients.getColumns().add(ingredientQuantityCol);
 
-        TableColumn<ParameterViewModel, String> parameterNameCol = new TableColumn<>(PARAMETER_NAME_COLUMN);
-        parameterNameCol.setCellValueFactory(parameter -> new SimpleStringProperty(parameter.getValue().getName()));
+        TableColumn<Pair<ParameterViewModel, String>, String> parameterNameCol = new TableColumn<>(PARAMETER_NAME_COLUMN);
+        parameterNameCol.setCellValueFactory(parameter -> new SimpleStringProperty(parameter.getValue().getRight()));
 
-        TableColumn<ParameterViewModel, String> parameterValueCol = new TableColumn<>(PARAMETER_VALUE_COLUMN);
+        TableColumn<Pair<ParameterViewModel, String>, String> parameterValueCol = new TableColumn<>(PARAMETER_VALUE_COLUMN);
         parameterValueCol.setCellValueFactory(parameter ->
-            new SimpleStringProperty(parameter.getValue().getValueRepresentation())
+            new SimpleStringProperty(parameter.getValue().getLeft().getValueRepresentation())
         );
 
-        TableColumn<ParameterViewModel, String> parameterDateCol = new TableColumn<>(PARAMETER_DATE_COLUMN);
+        TableColumn<Pair<ParameterViewModel, String>, String> parameterDateCol = new TableColumn<>(PARAMETER_DATE_COLUMN);
         parameterDateCol.setCellValueFactory(parameter ->
-            new SimpleStringProperty(parameter.getValue().getRegistrationDate().toString())
+            new SimpleStringProperty(parameter.getValue().getLeft().getRegistrationDate().toString())
         );
 
         this.waterMeasurements.getColumns().add(parameterNameCol);
@@ -92,7 +96,13 @@ public final class BatchInfoDetailController extends SubViewController implement
             this.waterMeasurements.setItems(FXCollections.observableList(waterMeasurements))
         );
     }
-
+    /**
+     * Return to previous view.
+     * @param event the recorded event.
+     */
+    public void goBackButtonClicked(final ActionEvent event) {
+        this.previousView();
+    }
     @Override
     protected SubView getSubView() {
         return this.batchInfoDetailSubview;
