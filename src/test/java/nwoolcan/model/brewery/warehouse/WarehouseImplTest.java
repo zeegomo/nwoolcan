@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
+import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
@@ -27,7 +28,8 @@ public class WarehouseImplTest {
     private static final String NAME = "DummyName";
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.LITER;
-    private final Warehouse warehouse = new WarehouseImpl();
+    private final ArticleManager articleManager = new ArticleManager();
+    private final Warehouse warehouse = new WarehouseImpl(articleManager);
     private final Article article = warehouse.createMiscArticle(NAME, UOM);
     private final Quantity quantity = Quantity.of(ONE, UOM).getValue();
     private final Quantity quantity1 = Quantity.of(ONE, UOM1).getValue();
