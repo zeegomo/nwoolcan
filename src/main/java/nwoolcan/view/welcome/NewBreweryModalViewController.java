@@ -10,8 +10,12 @@ import nwoolcan.controller.Controller;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.ViewManager;
 
+/**
+ * Controller for the modal to create a new Brewery.
+ */
 @SuppressWarnings("NullAway")
 public final class NewBreweryModalViewController extends AbstractViewController {
+    private boolean exitState = false;
     @FXML
     private AnchorPane parent;
     @FXML
@@ -27,6 +31,14 @@ public final class NewBreweryModalViewController extends AbstractViewController 
      */
     public NewBreweryModalViewController(final Controller controller, final ViewManager viewManager) {
         super(controller, viewManager);
+    }
+
+    /**
+     * Return the exit state of this modal.
+     * @return false if canceled
+     */
+    public boolean getExitState() {
+        return this.exitState;
     }
 
     private void close() {
@@ -47,6 +59,7 @@ public final class NewBreweryModalViewController extends AbstractViewController 
         if (!this.txtBreweryOwnerName.getText().isEmpty()) {
             this.getController().setOwnerName(this.txtBreweryOwnerName.getText());
         }
+        this.exitState = true;
         this.close();
     }
 

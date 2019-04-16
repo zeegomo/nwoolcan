@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -14,6 +13,9 @@ import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
 
+/**
+ * Controller for the first view visible at start.
+ */
 @SuppressWarnings("NullAway")
 public final class WelcomeViewController extends SubViewController {
 
@@ -38,12 +40,18 @@ public final class WelcomeViewController extends SubViewController {
         modal.initOwner(window);
         modal.initModality(Modality.WINDOW_MODAL);
 
-        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_BREWERY_MODAL).orElse(new AnchorPane()));
+        this.getViewManager().<NewBreweryModalViewController>getViewAndController(ViewType.NEW_BREWERY_MODAL)
+            .peek(p -> {
+                final Scene scene = new Scene(p.getLeft());
 
-        modal.setScene(scene);
-        modal.setResizable(false);
-        modal.setOnCloseRequest(Event::consume); // To prevent closing from the outside
-        modal.showAndWait();
+                modal.setScene(scene);
+                modal.setResizable(false);
+                modal.setOnCloseRequest(Event::consume); // To prevent closing from the outside
+                modal.showAndWait();
+                if (p.getRight().getExitState()) {
+                    this.substituteView(ViewType.DASHBOARD);
+                }
+            });
     }
 
     @Override

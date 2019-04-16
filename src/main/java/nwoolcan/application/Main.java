@@ -5,8 +5,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nwoolcan.controller.BreweryController;
 import nwoolcan.controller.Controller;
-import nwoolcan.model.brewery.Brewery;
-import nwoolcan.model.brewery.BreweryImpl;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewManagerImpl;
 import nwoolcan.view.ViewType;
