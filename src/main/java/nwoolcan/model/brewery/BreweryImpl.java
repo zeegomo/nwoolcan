@@ -22,10 +22,6 @@ import java.util.stream.Collectors;
  */
 public final class BreweryImpl implements Brewery {
 
-    private static final String CANNOT_STOCK_NOT_ENDED_BATCH_MESSGE = "Cannot stock a non ended batch.";
-    private static final String ALREADY_STOCKED_BATCH_MESSAGE = "The batch is already stocked.";
-    private static final String WRONG_ARTICLE_UNIT_OF_MEASURE_MESSAGE = "Article unit of measure and batch current size unit of measure do not match.";
-
     @Nullable private String breweryName;
     @Nullable private String ownerName;
     private final Warehouse warehouse = new WarehouseImpl();
