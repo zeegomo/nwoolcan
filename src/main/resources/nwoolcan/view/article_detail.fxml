@@ -24,7 +24,7 @@
                 AnchorPane.topAnchor="0.0">
         <BorderPane>
             <top>
-                <Label text="New Article" BorderPane.alignment="CENTER">
+                <Label text="Article Detail" BorderPane.alignment="CENTER">
                     <BorderPane.margin>
                         <Insets top="10.0" />
                     </BorderPane.margin>
