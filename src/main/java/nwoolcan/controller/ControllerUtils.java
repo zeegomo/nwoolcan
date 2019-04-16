@@ -4,6 +4,7 @@ import nwoolcan.model.brewery.Brewery;
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.batch.QueryBatch;
 import nwoolcan.model.brewery.batch.QueryBatchBuilder;
+import nwoolcan.model.brewery.batch.step.Step;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
@@ -18,6 +19,7 @@ import java.util.Optional;
 public final class ControllerUtils {
     private static final String BATCH_NOT_FOUND = "Batch not found.";
     private static final String BEER_ARTICLE_NOT_FOUND = "Beer Article not found.";
+    private static final String NO_STEP_FOUND_MESSAGE = "Cannot find step with type name: ";
 
     private final Brewery brewery;
 
@@ -60,5 +62,21 @@ public final class ControllerUtils {
                      .map(articles -> articles.get(0))
                      .require(article -> article.getArticleType() == ArticleType.FINISHED_BEER)
                      .map(article -> (BeerArticle) article);
+    }
+
+    /**
+     * Returns a step identified by its batch id and step type name.
+     * @param batchId the batch id.
+     * @param stepTypeName the step type name.
+     * @return a possible step found.
+     */
+    public Result<Step> getStepByBatchIdAndStepTypeName(final int batchId, final String stepTypeName) {
+        return this.getBatchById(batchId)
+                   .map(b -> b.getSteps()
+                              .stream()
+                              .filter(s -> s.getStepInfo().getType().getName().equals(stepTypeName))
+                              .findAny())
+                   .require(Optional::isPresent, new IllegalStateException(NO_STEP_FOUND_MESSAGE + stepTypeName))
+                   .map(Optional::get);
     }
 }
