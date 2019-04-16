@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -12,6 +14,9 @@ import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
+
+import java.io.File;
+import java.util.logging.Logger;
 
 /**
  * Controller for the first view visible at start.
@@ -52,6 +57,22 @@ public final class WelcomeViewController extends SubViewController {
                     this.substituteView(ViewType.DASHBOARD);
                 }
             });
+    }
+
+    @FXML
+    private void loadFileClicked(final ActionEvent event) {
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
+        final File target = fileChooser.showOpenDialog(this.welcomeSubView.getScene().getWindow());
+        if (target != null) {
+            this.getController().loadFrom(target)
+                .peek(e -> this.substituteView(ViewType.DASHBOARD)).peekError(err -> {
+                    Logger.getLogger(this.getClass().getName()).severe(err.toString());
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("There was an error!");
+                    alert.showAndWait();
+                });
+        }
     }
 
     @Override

@@ -16,6 +16,6 @@
             Welcome to nWoolcan
         </Label>
         <Button maxWidth="Infinity" onAction="#createNewBreweryClicked">Create new Brewery</Button>
-        <Button maxWidth="Infinity">Load an existing Brewery</Button>
+        <Button maxWidth="Infinity" onAction="#loadFileClicked">Load an existing Brewery</Button>
     </TilePane>
 </SubView>
