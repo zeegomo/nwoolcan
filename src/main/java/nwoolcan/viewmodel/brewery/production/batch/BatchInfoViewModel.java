@@ -108,27 +108,45 @@ public class BatchInfoViewModel {
     public String getBeerStyle() {
         return this.beerStyle;
     }
-
+    /**
+     * Returns the original gravity of this beer.
+     * @return the original gravity of this beer.
+     */
     public Optional<ParameterViewModel> getOg() {
         return Optional.ofNullable(og);
     }
-
+    /**
+     * Returns the final gravity of this beer.
+     * @return the final gravity of this beer.
+     */
     public Optional<ParameterViewModel> getFg() {
         return Optional.ofNullable(fg);
     }
-
+    /**
+     * Returns the color of this beer.
+     * @return the color of this beer.
+     */
     public Optional<ParameterViewModel> getEbc() {
         return Optional.ofNullable(ebc);
     }
-
+    /**
+     * Returns the alcohol of this beer.
+     * @return the alcohol of this beer.
+     */
     public Optional<ParameterViewModel> getAbv() {
         return Optional.ofNullable(abv);
     }
-
+    /**
+     * Returns the bitterness of this beer.
+     * @return the bitterness of this beer.
+     */
     public Optional<ParameterViewModel> getIbu() {
         return Optional.ofNullable(ibu);
     }
-
+    /**
+     * Returns the water measurements of this beer.
+     * @return the water measurements of this beer.
+     */
     public Optional<List<ParameterViewModel>> getWaterMeasurements() {
         return Optional.ofNullable(waterMeasurements);
     }
