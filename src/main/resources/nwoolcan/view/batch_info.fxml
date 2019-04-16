@@ -1,62 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import nwoolcan.view.subview.SubView?>
-<SubView xmlns="http://javafx.com/javafx"
-         xmlns:fx="http://javafx.com/fxml"
+
+<SubView fx:id="batchInfoSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
          fx:controller="nwoolcan.view.production.BatchInfoController">
     <BorderPane>
         <left>
             <VBox>
                 <FlowPane>
-                    <Label text="Name:"/>
+                    <Label text="Name: "/>
                     <Label fx:id="nameLabel"/>
                 </FlowPane>
                 <FlowPane>
-                    <Label text="Style:"/>
+                    <Label text="Style: "/>
                     <Label fx:id="styleLabel"/>
                 </FlowPane>
                 <FlowPane>
-                    <Label text="Style category:"/>
+                    <Label text="Style category: "/>
                     <Label fx:id="styleCategoryLabel"/>
+                </FlowPane>
+                <FlowPane>
+                    <Label text="Batch initial size: "/>
+                    <Label fx:id="batchSizeLabel"/>
                 </FlowPane>
             </VBox>
         </left>
         <center>
-            <HBox>
-                <FlowPane>
-                    <Label text="OG:"/>
-                    <Label fx:id="ogLabel"/>
-                </FlowPane>
-                <FlowPane>
-                    <Label text="FG:"/>
-                    <Label fx:id="fgLabel"/>
-                </FlowPane>
-                <FlowPane>
-                    <Label text="ABV:"/>
-                    <Label fx:id="abvLabel"/>
-                </FlowPane>
-                <FlowPane>
-                    <Label text="IBU:"/>
-                    <Label fx:id="ibuLabel"/>
-                </FlowPane>
-                <FlowPane>
-                    <Label text="EBC:"/>
-                    <Label fx:id="ebcLabel"/>
-                </FlowPane>
-            </HBox>
+            <GridPane fx:id="statsGridPane" alignment="CENTER">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="20"/>
+                </columnConstraints>
+                <VBox alignment="CENTER" GridPane.columnIndex="0">
+                    <Label alignment="CENTER" text="OG:"/>
+                    <Label fx:id="ogLabel" alignment="CENTER">
+                        <font>
+                            <Font size="22.0"/>
+                        </font>
+                    </Label>
+                </VBox>
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="20"/>
+                </columnConstraints>
+                <VBox alignment="CENTER" GridPane.columnIndex="1">
+                    <Label alignment="CENTER" text="FG:"/>
+                    <Label fx:id="fgLabel" alignment="CENTER">
+                        <font>
+                            <Font size="22.0"/>
+                        </font>
+                    </Label>
+                </VBox>
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="20"/>
+                </columnConstraints>
+                <VBox alignment="CENTER" GridPane.columnIndex="2">
+                    <Label alignment="CENTER" text="ABV: "/>
+                    <Label fx:id="abvLabel" alignment="CENTER">
+                        <font>
+                            <Font size="22.0"/>
+                        </font>
+                    </Label>
+                </VBox>
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="20"/>
+                </columnConstraints>
+
+                <VBox alignment="CENTER" GridPane.columnIndex="3">
+                    <Label alignment="CENTER" text="IBU: "/>
+                    <Label fx:id="ibuLabel" alignment="CENTER">
+                        <font>
+                            <Font size="22.0"/>
+                        </font>
+                    </Label>
+                </VBox>
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="20"/>
+                </columnConstraints>
+                <VBox alignment="CENTER" GridPane.columnIndex="4">
+                    <Label alignment="CENTER" text="EBC: "/>
+                    <Label fx:id="ebcLabel" alignment="CENTER">
+                        <font>
+                            <Font size="22.0"/>
+                        </font>
+                    </Label>
+                </VBox>
+            </GridPane>
         </center>
-        <right>
-            <FlowPane>
-                <Label text="Batch initial size:"/>
-                <Label fx:id="batchSizeLabel"/>
-            </FlowPane>
-        </right>
     </BorderPane>
 
 </SubView>
