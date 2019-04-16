@@ -21,7 +21,8 @@ import java.util.Date;
  */
 public class StockImplTest {
 
-    private static final StockManager STOCK_MANAGER = StockManager.getInstance();
+    private final ArticleManager articleManager = new ArticleManager();
+    private final StockManager stockManager = new StockManager(articleManager);
     private Stock stock;
     private Stock stock1;
     private Stock stock2;
@@ -42,8 +43,8 @@ public class StockImplTest {
 
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.LITER;
-    private static final Article ARTICLE = ArticleManager.getInstance().createMiscArticle(NAME, UOM);
-    private static final Article ARTICLE1 = ArticleManager.getInstance().createMiscArticle(NAME, UOM1);
+    private final Article article = articleManager.createMiscArticle(NAME, UOM);
+    private final Article article1 = articleManager.createMiscArticle(NAME, UOM1);
 
     /**
      * Initialize structures.
@@ -52,18 +53,18 @@ public class StockImplTest {
     public void init() {
         expDate = DateUtils.addDays(new Date(), -1); // YESTERDAY
 
-        Result<Stock> stockResult = STOCK_MANAGER.createStock(ARTICLE, expDate);
+        Result<Stock> stockResult = stockManager.createStock(article, expDate);
         Assert.assertTrue(stockResult.isPresent());
         stock = stockResult.getValue();
-        Result<Stock> stockResult1 = STOCK_MANAGER.createStock(ARTICLE, null);
+        Result<Stock> stockResult1 = stockManager.createStock(article, null);
         Assert.assertTrue(stockResult1.isPresent());
         stock1 = stockResult1.getValue();
         Results.ofChecked(() -> Thread.sleep(TEN));
-        Result<Stock> stockResult2 = STOCK_MANAGER.createStock(ARTICLE1, expDate);
+        Result<Stock> stockResult2 = stockManager.createStock(article1, expDate);
         Assert.assertTrue(stockResult2.isPresent());
         stock2 = stockResult2.getValue();
         Results.ofChecked(() -> Thread.sleep(TEN));
-        Result<Stock> stockResult3 = STOCK_MANAGER.createStock(ARTICLE1, null);
+        Result<Stock> stockResult3 = stockManager.createStock(article1, null);
         Assert.assertTrue(stockResult3.isPresent());
         stock3 = stockResult3.getValue();
     }
@@ -76,7 +77,7 @@ public class StockImplTest {
         stock2.addRecord(record2);
         stock3.addRecord(record1);
         stock3.addRecord(record2);
-        Assert.assertEquals(ARTICLE, stock.getArticle());
+        Assert.assertEquals(article, stock.getArticle());
         Assert.assertTrue(Quantities.remove(record1.getQuantity(),
                                             record2.getQuantity()).isPresent());
         Assert.assertEquals(Quantities.remove(record1.getQuantity(),
@@ -86,7 +87,6 @@ public class StockImplTest {
         Assert.assertTrue(stock2.getExpirationDate().isPresent());
         Assert.assertEquals(DateUtils.truncate(expDate, Calendar.DATE), stock2.getExpirationDate().get());
         Assert.assertEquals(StockState.EXPIRED, stock2.getState());
-        Assert.assertTrue(stock2.getCreationDate().before(stock.getLastChangeDate()));
         Assert.assertTrue(stock2.getRecords().contains(record1));
         Assert.assertTrue(stock2.getRecords().contains(record2));
         Assert.assertFalse(stock3.getExpirationDate().isPresent());

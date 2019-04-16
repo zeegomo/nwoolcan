@@ -5,6 +5,7 @@ import nwoolcan.model.brewery.batch.BatchBuilder;
 import nwoolcan.model.brewery.batch.QueryBatch;
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.WarehouseImpl;
+import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.utils.Empty;
@@ -24,7 +25,8 @@ public final class BreweryImpl implements Brewery {
 
     @Nullable private String breweryName;
     @Nullable private String ownerName;
-    private final Warehouse warehouse = new WarehouseImpl();
+    private final ArticleManager articleManager = new ArticleManager();
+    private final Warehouse warehouse = new WarehouseImpl(articleManager);
     private final Collection<Batch> batches = new ArrayList<>();
     private final IdGenerator batchIdGenerator = new BatchIdGenerator(0);
 
