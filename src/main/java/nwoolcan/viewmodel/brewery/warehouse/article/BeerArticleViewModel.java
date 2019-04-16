@@ -20,4 +20,9 @@ public final class BeerArticleViewModel extends AbstractArticleViewModel {
     public ArticleType getArticleType() {
         return ArticleType.FINISHED_BEER;
     }
+
+    @Override
+    public String toString() {
+        return "(" + getId() + ") " + getName() + " [BeerArticle]";
+    }
 }

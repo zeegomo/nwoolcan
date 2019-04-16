@@ -15,9 +15,13 @@ import nwoolcan.model.brewery.batch.step.Step;
 import nwoolcan.model.brewery.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterFactory;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum;
+import nwoolcan.model.brewery.warehouse.Warehouse;
+import nwoolcan.model.brewery.warehouse.WarehouseImpl;
 import nwoolcan.model.brewery.warehouse.article.ArticleManager;
+import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
+import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
@@ -49,7 +53,7 @@ public class BatchTest {
     private static final int N6 = 70;
     private static final Quantity Q1 = Quantity.of(TEN_THOUSAND, UnitOfMeasure.LITER).getValue();
     private static final Quantity Q2 = Quantity.of(TEN_THOUSAND - 1, UnitOfMeasure.LITER).getValue();
-    private static final ArticleManager ARTICLE_MANAGER = ArticleManager.getInstance();
+    private final ArticleManager articleManager = new ArticleManager();
     private final BatchEvaluationType bjcpType = BatchEvaluationBuilder.getAvailableBatchEvaluationTypes()
                                                                        .getValue()
                                                                        .stream()
@@ -60,16 +64,16 @@ public class BatchTest {
     private Batch batchAlfredo, batchRossina, batchBiondina;
 
     private List<Pair<IngredientArticle, Integer>> alfredoIngredients = Arrays.asList(
-        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Luppolo alfredo", UnitOfMeasure.GRAM, IngredientType.HOPS), N1),
-        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Pepe gigio", UnitOfMeasure.GRAM, IngredientType.OTHER), N2)
+        Pair.of(articleManager.createIngredientArticle("Luppolo alfredo", UnitOfMeasure.GRAM, IngredientType.HOPS), N1),
+        Pair.of(articleManager.createIngredientArticle("Pepe gigio", UnitOfMeasure.GRAM, IngredientType.OTHER), N2)
     );
     private List<Pair<IngredientArticle, Integer>> rossinaIngredients = Arrays.asList(
-        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Luppolo rossino", UnitOfMeasure.GRAM, IngredientType.HOPS), N3),
-        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Pepe faggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N4)
+        Pair.of(articleManager.createIngredientArticle("Luppolo rossino", UnitOfMeasure.GRAM, IngredientType.HOPS), N3),
+        Pair.of(articleManager.createIngredientArticle("Pepe faggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N4)
     );
     private List<Pair<IngredientArticle, Integer>> biondinaIngredients = Arrays.asList(
-        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Luppolo biondino", UnitOfMeasure.GRAM, IngredientType.HOPS), N5),
-        Pair.of(ARTICLE_MANAGER.createIngredientArticle("Pepe daggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N6)
+        Pair.of(articleManager.createIngredientArticle("Luppolo biondino", UnitOfMeasure.GRAM, IngredientType.HOPS), N5),
+        Pair.of(articleManager.createIngredientArticle("Pepe daggio", UnitOfMeasure.GRAM, IngredientType.OTHER), N6)
     );
 
     /**
@@ -275,9 +279,17 @@ public class BatchTest {
         //Check all steps are registered.
         Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
 
-        //Stock this batch.
-        batchAlfredo.moveToNextStep(StepTypeEnum.STOCKED).peekError(e -> Assert.fail(e.getMessage()));
-        Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
+        //Stock batch
+        final Warehouse warehouse = new WarehouseImpl(articleManager);
+        final BeerArticle article = warehouse.createBeerArticle("Test 75cl", UnitOfMeasure.BOTTLE_75_CL);
+        final Result<Empty> res = batchAlfredo.stockBatchInto(article, () -> warehouse.createBeerStock(article, batchAlfredo).getValue());
+        Assert.assertFalse(res.isError());
+        Assert.assertEquals(batchAlfredo.getId(), batchAlfredo.getStockReference().get().getBatch().getId());
+
+        //Stock again
+        final Result<Empty> again = batchAlfredo.stockBatchInto(article, () -> warehouse.createBeerStock(article, batchAlfredo).getValue());
+        Assert.assertTrue(again.isError());
+        Assert.assertEquals(1, warehouse.getStocks(new QueryStockBuilder().setArticle(article).build().getValue()).size());
 
         //Go to wrong step type.
         batchAlfredo.moveToNextStep(StepTypeEnum.MASHING).peek(e -> Assert.fail());
@@ -306,5 +318,31 @@ public class BatchTest {
         //Check changed.
         Assert.assertNotEquals(batchBiondina.getSteps().get(1).getStepInfo().getEndStepSize().get(),
             batchBiondina.getBatchInfo().getBatchSize());
+    }
+
+    /**
+     * Method that test wrong stocking of batch.
+     */
+    @Test
+    public void testWrongStocking() {
+        final Warehouse warehouse = new WarehouseImpl(articleManager);
+        final BeerArticle article = warehouse.createBeerArticle("Test 50cl", UnitOfMeasure.BOTTLE_50_CL);
+
+        //Stocking not ended batch
+        final Result<Empty> notEnded = batchAlfredo.stockBatchInto(article, () -> warehouse.createBeerStock(article, batchAlfredo).getValue());
+        Assert.assertTrue(notEnded.isError());
+        Assert.assertEquals(0, warehouse.getStocks(new QueryStockBuilder().setArticle(article).build().getValue()).size());
+
+        final Batch fin = brewery.getBatchBuilder().build(
+            new BeerDescriptionImpl("name", "style"),
+            BatchMethod.ALL_GRAIN,
+            Quantity.of(100, UnitOfMeasure.LITER).getValue(),
+            StepTypeEnum.FINALIZED
+        ).getValue();
+
+        //Not matching units of measure
+        final Result<Empty> noMatch = fin.stockBatchInto(article, () -> warehouse.createBeerStock(article, batchAlfredo).getValue());
+        Assert.assertTrue(noMatch.isError());
+        Assert.assertEquals(0, warehouse.getStocks(new QueryStockBuilder().setArticle(article).build().getValue()).size());
     }
 }

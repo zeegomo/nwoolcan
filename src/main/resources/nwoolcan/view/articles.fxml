@@ -26,6 +26,10 @@
         </top>
         <center>
             <VBox>
+                <HBox>
+                    <Button text="Back" onAction="#backButtonClick"/>
+                    <Button onAction="#createNewArticleClick" text="Create new article" />
+                </HBox>
                 <TitledPane text="General information">
                     <BorderPane>
                         <left>
@@ -49,20 +53,8 @@
                             </VBox>
                         </left>
                         <center>
-                            <HBox>
-                                <PieChart fx:id="pieChartArticlesStatus" maxHeight="280.0" maxWidth="300.0" title="Articles">
-                                </PieChart>
-                            </HBox>
+                            <PieChart fx:id="pieChartArticlesStatus" maxHeight="280.0" maxWidth="300.0" title="Articles"/>
                         </center>
-                        <right>
-                            <BorderPane>
-                                <center>
-                                    <VBox alignment="CENTER">
-                                        <Button onAction="#createNewArticleClick" text="Create new article" />
-                                    </VBox>
-                                </center>
-                            </BorderPane>
-                        </right>
                     </BorderPane>
                 </TitledPane>
                 <TitledPane text="Articles">

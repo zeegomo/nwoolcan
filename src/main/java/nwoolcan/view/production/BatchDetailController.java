@@ -14,7 +14,7 @@ import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.review.BatchEvaluationBuilder;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.SubViewController;
+import nwoolcan.view.subview.SubViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.mastertable.ColumnDescriptor;

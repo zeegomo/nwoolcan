@@ -2,21 +2,92 @@
 
 <?import nwoolcan.view.subview.SubView?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.HBox?>
+
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <SubView xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
-         fx:controller="nwoolcan.view.StockDetailController"
-         fx:id="subView">
-    <FlowPane>
-        <Button text="Back" onAction="#btnBackClick"/>
-        <GridPane>
-            <Label text="Name: " GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <Label fx:id="lblName" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-            <Label text="Id: " GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <Label fx:id="lblId" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-        </GridPane>
-    </FlowPane>
+         fx:controller="nwoolcan.view.warehouse.stock.StockDetailController"
+         fx:id="stockDetailSubView">
+    <BorderPane>
+        <top>
+            <Label text="Stock Detail" BorderPane.alignment="CENTER">
+                <font>
+                    <Font size="28.0" />
+                </font>
+            </Label>
+        </top>
+        <center>
+            <VBox>
+                <HBox spacing="5">
+                    <Button text="Back" onAction="#backButtonClick"/>
+                    <Button text="Go to article" onAction="#goToArticleButtonClick"/>
+                    <Button text="Add Record" onAction="#addRecordButtonClick"/>
+                </HBox>
+                <TitledPane text="General information">
+                    <HBox>
+                        <VBox>
+                            <HBox>
+                                <Label text="Id: "/>
+                                <Label fx:id="lblId"/>
+                            </HBox>
+                            <HBox>
+                                <Label text="Article: "/>
+                                <Label fx:id="lblArticle"/>
+                            </HBox>
+                            <HBox>
+                                <Label text="Available: "/>
+                                <Label fx:id="lblAvailableQt"/>
+                            </HBox>
+                            <HBox>
+                                <Label text="Used: "/>
+                                <Label fx:id="lblUsedQt"/>
+                            </HBox>
+                            <HBox>
+                                <Label text="Last modified: "/>
+                                <Label fx:id="lblLastModified"/>
+                            </HBox>
+                            <HBox>
+                                <Label text="Creation date: "/>
+                                <Label fx:id="lblCreationDate"/>
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                </TitledPane>
+                <TitledPane text="Records">
+                    <TableView fx:id="recordTable">
+                        <columnResizePolicy>
+                            <TableView fx:constant = "CONSTRAINED_RESIZE_POLICY" />
+                        </columnResizePolicy>
+                        <columns>
+                            <TableColumn text="Date">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="date"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="Action">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="action"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="Quantity">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="quantity"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                        </columns>
+                    </TableView>
+                </TitledPane>
+            </VBox>
+        </center>
+    </BorderPane>
 
 </SubView>

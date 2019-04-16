@@ -1,19 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.*?>
-
-<?import nwoolcan.view.subview.SubViewContainer?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import nwoolcan.view.subview.SubView?>
+<?import nwoolcan.view.subview.SubViewContainer?>
 
-<SubView xmlns="http://javafx.com/javafx"
-         xmlns:fx="http://javafx.com/fxml"
-         fx:controller="nwoolcan.view.warehouse.WarehouseController"
-         fx:id="warehouseSubView" >
-
-    <FlowPane>
-        <Label text="This is the warehouse. Name is: " />
-        <Label fx:id="lblName" />
-        <SubViewContainer fx:id="stockTable" parent="$warehouseSubView" />
-    </FlowPane>
+<SubView fx:id="warehouseSubView"
+         xmlns="http://javafx.com/javafx/8.0.172-ea"
+         xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="nwoolcan.view.warehouse.WarehouseViewController">
+<BorderPane>
+    <top>
+        <Label text="Warehouse" BorderPane.alignment="CENTER">
+            <font>
+                <Font size="28.0" />
+            </font>
+        </Label>
+    </top>
+    <center>
+        <VBox>
+            <HBox>
+                <Button text="Back" onAction="#backButtonClick"/>
+                <Button text="Create Stock" onAction="#createNewStockButtonClick"/>
+            </HBox>
+            <TitledPane text="General information">
+                <HBox>
+                    <VBox>
+                        <FlowPane>
+                            <Label text="Beer">
+                                <font>
+                                    <Font size="20.0" />
+                                </font>
+                            </Label>
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Available: " />
+                            <Label fx:id="lblNumberBeerAvailable" />
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Expired: " />
+                            <Label fx:id="lblNumberBeerExpired" />
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Used up: " />
+                            <Label fx:id="lblNumberBeerUsedUp" />
+                        </FlowPane>
+                        <PieChart fx:id="pieChartBeerStatus" maxHeight="280.0" maxWidth="300.0"/>
+                    </VBox>
+                    <VBox>
+                        <FlowPane>
+                            <Label text="Ingredients">
+                                <font>
+                                    <Font size="20.0" />
+                                </font>
+                            </Label>
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Available: " />
+                            <Label fx:id="lblNumberIngredientAvailable" />
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Expired: " />
+                            <Label fx:id="lblNumberIngredientExpired" />
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Used up: " />
+                            <Label fx:id="lblNumberIngredientUsedUp" />
+                        </FlowPane>
+                        <PieChart fx:id="pieChartIngredientStatus" maxHeight="280.0" maxWidth="300.0"/>
+                    </VBox>
+                    <VBox>
+                    <FlowPane>
+                            <Label text="Misc">
+                                <font>
+                                    <Font size="20.0" />
+                                </font>
+                            </Label>
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Available: " />
+                            <Label fx:id="lblNumberMiscAvailable" />
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Expired: " />
+                            <Label fx:id="lblNumberMiscExpired" />
+                        </FlowPane>
+                        <FlowPane>
+                            <Label text="Used up: " />
+                            <Label fx:id="lblNumberMiscUsedUp" />
+                        </FlowPane>
+                        <PieChart fx:id="pieChartMiscStatus" maxHeight="280.0" maxWidth="300.0"/>
+                    </VBox>
+                </HBox>
+            </TitledPane>
+            <TitledPane text="Stocks">
+                <SubViewContainer fx:id="masterTableContainer" parent="$warehouseSubView">
+                </SubViewContainer>
+            </TitledPane>
+        </VBox>
+    </center>
+</BorderPane>
 </SubView>

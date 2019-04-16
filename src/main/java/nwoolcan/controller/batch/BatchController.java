@@ -7,12 +7,16 @@ import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepDTO;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
+<<<<<<< HEAD
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.Optional;
 import java.util.Set;
+=======
+import nwoolcan.viewmodel.brewery.production.batch.StockBatchViewModel;
+>>>>>>> 71d28ecaa0bff213d524454799bf25138b59241e
 
 /**
  * Interface representing a batch controller.
@@ -64,5 +68,10 @@ public interface BatchController {
      * @return all available {@link BatchEvaluationType}.
      */
     Result<Set<BatchEvaluationType>> getAvailableBatchEvaluationTypes();
-
+    /**
+     * Returns the {@link StockBatchViewModel} with the necessary info to decide how to stock a batch.
+     * @param batchId the batch id to request the view model from.
+     * @return a {@link Result} bearing the view model or an error occurs.
+     */
+    Result<StockBatchViewModel> getStockBatchViewModel(int batchId);
 }

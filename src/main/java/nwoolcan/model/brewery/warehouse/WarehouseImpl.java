@@ -25,13 +25,30 @@ import java.util.stream.Collectors;
  */
 public final class WarehouseImpl implements Warehouse {
 
-    private static final ArticleManager ARTICLE_MANAGER = ArticleManager.getInstance();
-    private static final StockManager STOCK_MANAGER = StockManager.getInstance();
+    private final ArticleManager articleManager;
+    private final StockManager stockManager;
+
+    /**
+     * Creates a {@link Warehouse} which uses the {@link ArticleManager} of the {@link nwoolcan.model.brewery.Brewery} which builds it.
+     * @param articleManager to be used.
+     */
+    public WarehouseImpl(final ArticleManager articleManager) {
+        this.articleManager = articleManager;
+        this.stockManager = new StockManager(articleManager);
+    }
 
     @Override
     public List<Stock> getStocks(final QueryStock queryStock) {
-        final Set<Stock> stocks = STOCK_MANAGER.getStocks();
+        final Set<Stock> stocks = stockManager.getStocks();
         return stocks.stream()
+                     // remove those stocks where query stock specifies a min ID and
+                     // where the id of the stock is less than it.
+                     .filter(stock -> !(queryStock.getMinId().isPresent()
+                         && stock.getId() < queryStock.getMinId().get()))
+                     // remove those stocks where query stock specifies a max ID and
+                     // where the id of the stock is greater than it.
+                     .filter(stock -> !(queryStock.getMaxId().isPresent()
+                         && stock.getId() > queryStock.getMaxId().get()))
                      // remove when article is present in queryStock but the article of
                      // the current stock is different from the one of the query.
                      .filter(stock -> !(queryStock.getArticle().isPresent()
@@ -98,7 +115,7 @@ public final class WarehouseImpl implements Warehouse {
 
     @Override
     public List<Article> getArticles(final QueryArticle queryArticle) {
-        final Set<Article> articles = ARTICLE_MANAGER.getArticles();
+        final Set<Article> articles = articleManager.getArticles();
         return articles.stream()
                        // remove those article where query article specifies a min ID and
                        // where the id of the article is less than it.
@@ -137,46 +154,46 @@ public final class WarehouseImpl implements Warehouse {
 
     @Override
     public Article createMiscArticle(final String name, final UnitOfMeasure unitOfMeasure) {
-        return ARTICLE_MANAGER.createMiscArticle(name, unitOfMeasure);
+        return articleManager.createMiscArticle(name, unitOfMeasure);
     }
 
     @Override
     public BeerArticle createBeerArticle(final String name, final UnitOfMeasure unitOfMeasure) {
-        return ARTICLE_MANAGER.createBeerArticle(name, unitOfMeasure);
+        return articleManager.createBeerArticle(name, unitOfMeasure);
     }
 
     @Override
     public IngredientArticle createIngredientArticle(final String name,
                                                      final UnitOfMeasure unitOfMeasure,
                                                      final IngredientType ingredientType) {
-        return ARTICLE_MANAGER.createIngredientArticle(name, unitOfMeasure, ingredientType);
+        return articleManager.createIngredientArticle(name, unitOfMeasure, ingredientType);
     }
 
     @Override
     public Result<Stock> createStock(final Article article, final Date expirationDate) {
-        return STOCK_MANAGER.createStock(article, expirationDate);
+        return stockManager.createStock(article, expirationDate);
     }
 
     @Override
     public Result<Stock> createStock(final Article article) {
-        return STOCK_MANAGER.createStock(article, null);
+        return stockManager.createStock(article, null);
     }
 
     @Override
     public Result<BeerStock> createBeerStock(final BeerArticle beerArticle,
                                              final Date expirationDate,
                                              final Batch batch) {
-        return STOCK_MANAGER.createBeerStock(beerArticle, expirationDate, batch);
+        return stockManager.createBeerStock(beerArticle, expirationDate, batch);
     }
 
     @Override
     public Result<BeerStock> createBeerStock(final BeerArticle beerArticle, final Batch batch) {
-        return STOCK_MANAGER.createBeerStock(beerArticle, null, batch);
+        return stockManager.createBeerStock(beerArticle, null, batch);
     }
 
     @Override
     public Result<Article> setName(final Article article, final String newName) {
-        return ARTICLE_MANAGER.setName(article, newName);
+        return articleManager.setName(article, newName);
     }
     /**
      * Comparator which selects the correct comparator accordingly with the

@@ -21,4 +21,9 @@ public final class MiscArticleViewModel extends AbstractArticleViewModel {
         return ArticleType.MISC;
     }
 
+    @Override
+    public String toString() {
+        return "(" + getId() + ") " + getName() + " [MiscArticle]";
+    }
+
 }

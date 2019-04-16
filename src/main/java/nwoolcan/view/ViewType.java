@@ -44,11 +44,19 @@ public enum ViewType {
      */
     STOCK_DETAIL,
     /**
+     * Modal to create a new {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
+     */
+    NEW_STOCK_MODAL,
+    /**
+     * Modal to create a new {@link nwoolcan.model.brewery.warehouse.stock.Record}.
+     */
+    NEW_RECORD_MODAL,
+    /**
      * Detail view to show a {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     ARTICLE_DETAIL,
     /**
-     * Detail view to show a {@link nwoolcan.model.brewery.warehouse.article.Article}.
+     * Modal for creating a new {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     NEW_ARTICLE_MODAL,
     /**

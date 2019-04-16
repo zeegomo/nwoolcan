@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public class ArticleManagerTest {
 
-    private final ArticleManager articleManager = ArticleManager.getInstance();
+    private final ArticleManager articleManager = new ArticleManager();
     private static final String NAME = "Dummy Name";
     private static final String NEW_NAME = "New Dummy Name";
     private static final String SBORN_NEW_NAME = "New Sborning Dummy Name";
@@ -23,13 +23,6 @@ public class ArticleManagerTest {
     private final BeerArticle beerArticle = articleManager.createBeerArticle(NAME, UOM);
     private final IngredientArticle ingredientArticle = articleManager.createIngredientArticle(NAME, UOM, IngredientType.HOPS);
 
-    /**
-     * Test for getInstance.
-     */
-    @Test
-    public void getInstance() {
-        Assert.assertSame(ArticleManager.getInstance(), articleManager);
-    }
     /**
      * Test for checkId.
      */

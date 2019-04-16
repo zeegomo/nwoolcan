@@ -8,6 +8,8 @@ import nwoolcan.model.brewery.batch.review.BatchEvaluationType;
 import nwoolcan.model.brewery.batch.review.Evaluation;
 import nwoolcan.model.brewery.batch.review.EvaluationFactory;
 import nwoolcan.model.brewery.batch.review.EvaluationType;
+import nwoolcan.model.brewery.warehouse.article.ArticleType;
+import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
@@ -16,11 +18,14 @@ import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
 import org.apache.commons.lang3.tuple.Triple;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import nwoolcan.viewmodel.brewery.production.batch.StockBatchViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Basic implementation of {@link BatchController} interface.
@@ -28,6 +33,8 @@ import java.util.Set;
 public final class BatchControllerImpl implements BatchController {
 
     private static final String BATCH_NOT_FOUND_MESSAGE = "Cannot find the batch with id: ";
+
+    private final Brewery model;
     private final ControllerUtils utils;
 
     /**
@@ -35,6 +42,7 @@ public final class BatchControllerImpl implements BatchController {
      * @param model the model to use as reference.
      */
     public BatchControllerImpl(final Brewery model) {
+        this.model = model;
         this.utils = new ControllerUtils(model);
     }
 
@@ -52,7 +60,7 @@ public final class BatchControllerImpl implements BatchController {
 
     @Override
     public Result<Empty> goToNextStep(final int batchId, final GoNextStepDTO dto) {
-        Result<Batch> res =  this.utils.getBatchById(batchId);
+        Result<Batch> res = this.utils.getBatchById(batchId);
 
         if (dto.finalizeBeforeGoingToNext()) {
             res = res.flatMap(b -> {
@@ -104,5 +112,25 @@ public final class BatchControllerImpl implements BatchController {
     @Override
     public Result<Set<BatchEvaluationType>> getAvailableBatchEvaluationTypes() {
         return BatchEvaluationBuilder.getAvailableBatchEvaluationTypes();
+    }
+
+    public Result<StockBatchViewModel> getStockBatchViewModel(final int batchId) {
+        Result<Batch> res = this.utils.getBatchById(batchId);
+
+        List<BeerArticleViewModel> beerArticles = this.model.getWarehouse().getArticles(new QueryArticleBuilder().setIncludeArticleType(ArticleType.FINISHED_BEER)
+                                                                                                                 .build())
+                                                            .stream()
+                                                            .filter(a -> {
+                                                                if (res.isPresent()) {
+                                                                    return res.getValue().getCurrentSize().getUnitOfMeasure()
+                                                                        .equals(a.getUnitOfMeasure());
+                                                                }
+                                                                return false;
+                                                            })
+                                                            .map(a -> a.toBeerArticle().getValue())
+                                                            .map(BeerArticleViewModel::new)
+                                                            .collect(Collectors.toList());
+
+        return res.map(b -> new StockBatchViewModel(batchId, b.getCurrentSize().getUnitOfMeasure(), beerArticles));
     }
 }

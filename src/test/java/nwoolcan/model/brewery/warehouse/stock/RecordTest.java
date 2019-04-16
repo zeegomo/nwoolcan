@@ -26,7 +26,7 @@ public class RecordTest {
         final Record record = new Record(quantity, date, action);
         final Record record1 = new Record(quantity, action);
         Assert.assertEquals(quantity, record.getQuantity());
-        Assert.assertEquals(DateUtils.round(date, Calendar.SECOND), record.getDate());
+        Assert.assertEquals(DateUtils.truncate(date, Calendar.SECOND), record.getDate());
         Assert.assertEquals(action, record.getAction());
         Assert.assertEquals(quantity, record1.getQuantity());
         Assert.assertEquals(action, record1.getAction());

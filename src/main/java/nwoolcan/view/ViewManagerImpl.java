@@ -8,6 +8,7 @@ import nwoolcan.utils.Results;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.lang.reflect.Constructor;
+import java.text.MessageFormat;
 import java.util.logging.Logger;
 
 /**
@@ -19,6 +20,7 @@ public final class ViewManagerImpl implements ViewManager {
     private static final String NO_DESIGNATED_CONSTRUCTOR_FOUND_MESSAGE = "No designated constructor found for view controller.";
 
     private final Controller controller;
+    private final Logger logger;
 
     /**
      * Creates a view manager that injects the passed {@link Controller}.
@@ -26,6 +28,7 @@ public final class ViewManagerImpl implements ViewManager {
      */
     public ViewManagerImpl(final Controller controller) {
         this.controller = controller;
+        this.logger = Logger.getLogger(this.getClass().getName());
     }
 
     private void injectIntoController(final FXMLLoader loader) {
@@ -62,11 +65,7 @@ public final class ViewManagerImpl implements ViewManager {
      */
     @Override
     public Result<Parent> getView(final ViewType type) {
-        return Results.ofChecked(() -> {
-            final FXMLLoader loader = new FXMLLoader(ViewType.class.getResource(type.getResourceName()));
-            this.injectIntoController(loader);
-            return loader.load();
-        });
+        return this.getViewAndController(type).map(Pair::getLeft);
     }
 
     /**
@@ -78,22 +77,29 @@ public final class ViewManagerImpl implements ViewManager {
      */
     @Override
     public <T> Result<Parent> getView(final ViewType type, final T viewModel) {
-        final FXMLLoader loader = new FXMLLoader(ViewType.class.getResource(type.getResourceName()));
-        return Results.ofChecked(() -> {
-            this.injectIntoController(loader);
-            final Parent parent = loader.load();
-            loader.<InitializableController<T>>getController().initData(viewModel);
-            return parent;
-        }).peekError(err -> Logger.getGlobal().severe(err.toString() + "\n" + err.getCause()));
+        return this.getViewAndController(type, viewModel).map(Pair::getLeft);
     }
+
     @Override
-    public <T, U> Result<Pair<Parent, U>> getView(final ViewType type, final T viewModel, final Class<U> cl) {
+    public <U> Result<Pair<Parent, U>> getViewAndController(final ViewType type) {
+        return Results.ofChecked(() -> {
+            final FXMLLoader loader = new FXMLLoader(ViewType.class.getResource(type.getResourceName()));
+            this.injectIntoController(loader);
+            final Parent parent = loader.load();
+            final U controller = loader.getController();
+            return Pair.of(parent, controller);
+        }).peekError(err -> this.logger.warning(MessageFormat.format("Unable to load ''{0}'' view: {1}", type, err.getMessage())));
+    }
+
+    @Override
+    public <T, U> Result<Pair<Parent, U>> getViewAndController(final ViewType type, final T viewModel) {
         final FXMLLoader loader = new FXMLLoader(ViewType.class.getResource(type.getResourceName()));
         return Results.ofChecked(() -> {
             this.injectIntoController(loader);
             final Parent parent = loader.load();
             loader.<InitializableController<T>>getController().initData(viewModel);
-            return Pair.of(parent, loader.<U>getController());
-        }).peekError(err -> Logger.getGlobal().severe(err.toString() + "\n" + err.getCause()));
+            final U controller = loader.getController();
+            return Pair.of(parent, controller);
+        }).peekError(err -> this.logger.warning(MessageFormat.format("Unable to load ''{0}'' view with ViewModel of type {1}: {2}", type, viewModel.getClass().getName(), err.getMessage())));
     }
 }
