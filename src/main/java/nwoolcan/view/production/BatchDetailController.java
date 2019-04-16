@@ -109,7 +109,7 @@ public final class BatchDetailController
      * @param event the occurred event.
      */
     public void viewInfoDetailClicked(final ActionEvent event) {
-        this.substituteView(ViewType.BATCH_INFO_DETAIL, this.data.getBatchInfo());
+        this.overlayView(ViewType.BATCH_INFO_DETAIL, this.data.getBatchInfo());
     }
 
     /**
