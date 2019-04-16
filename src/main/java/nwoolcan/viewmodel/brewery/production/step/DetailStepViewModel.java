@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
  */
 public final class DetailStepViewModel {
 
+    private final int batchId;
     private final String typeName;
     private final String notes;
     private final Date startDate;
@@ -31,9 +32,11 @@ public final class DetailStepViewModel {
 
     /**
      * Basic constructor with decorator-like pattern.
+     * @param batchId the step's batch id.
      * @param step the step to get data from.
      */
-    public DetailStepViewModel(final Step step) {
+    public DetailStepViewModel(final int batchId, final Step step) {
+        this.batchId = batchId;
         this.typeName = step.getStepInfo().getType().getName();
         this.notes = step.getStepInfo().getNote().orElse("");
         this.startDate = new Date(step.getStepInfo().getStartDate().getTime());
@@ -46,6 +49,14 @@ public final class DetailStepViewModel {
                                         .stream()
                                         .map(ParameterViewModel::new)
                                         .collect(Collectors.toList());
+    }
+
+    /**
+     * Returns this step's batch id.
+     * @return this step's batch id.
+     */
+    public int getBatchId() {
+        return this.batchId;
     }
 
     /**
