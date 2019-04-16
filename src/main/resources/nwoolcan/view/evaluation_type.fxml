@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<TitledPane xmlns="http://javafx.com/javafx"
-            fx:id="title"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nwoolcan.view.review.EvaluationInputController">
-    <VBox stylesheets="@style.css">
-        <FlowPane>
-            <Label text="Score: " styleClass="subtitle"/>
-            <TextField fx:id="score"/>
-            <Label text="/"/>
-            <Label fx:id="maxScore"/>
-        </FlowPane>
-        <FlowPane>
-            <Label text="Notes: " styleClass="subtitle"/>
-            <TextArea fx:id="notes"/>
-        </FlowPane>
-    </VBox>
-</TitledPane>
+<fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
+    <TitledPane fx:id="title">
+        <VBox stylesheets="@style.css">
+            <FlowPane>
+                <Label text="Score: " styleClass="subtitle"/>
+                <TextField fx:id="score"/>
+                <Label text="/"/>
+                <Label fx:id="maxScore"/>
+            </FlowPane>
+            <FlowPane>
+                <Label text="Notes: " styleClass="subtitle"/>
+                <TextArea fx:id="notes"/>
+            </FlowPane>
+        </VBox>
+    </TitledPane>
+</fx:root>

@@ -15,6 +15,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -121,13 +122,13 @@ public final class NewBatchEvaluationController extends SubViewController
         Collection<ReadOnlyBooleanProperty> nodes = type.getCategories()
                                                         .stream()
                                                         .map(cat -> {
-                                                            Pair<Parent, EvaluationInputController> res = categoryNode(cat);
-                                                            this.categories.getChildren().add(res.getLeft());
+                                                            EvaluationInputController res = catNode(cat);
+                                                            this.categories.getChildren().add(res);
                                                             this.evaluations.put(cat, Pair.of(
-                                                                res.getRight().getInputProperty().get().getLeft(),
-                                                                res.getRight().getInputProperty().get().getRight())
+                                                                res.getInputProperty().get().getLeft(),
+                                                                res.getInputProperty().get().getRight())
                                                             );
-                                                            return res.getRight().getInputValidityProperty();
+                                                            return res.getInputValidityProperty();
                                                         })
                                                         .collect(Collectors.toList());
         BooleanBinding inputValidityBinding = Bindings.createBooleanBinding(() ->
@@ -184,6 +185,12 @@ public final class NewBatchEvaluationController extends SubViewController
         return this.getViewManager().getView(ViewType.EVALUATION_TYPE, type, EvaluationInputController.class)
                    .peekError(err -> Logger.getGlobal().severe(err.toString() + "\n" + err.getCause()))
                    .orElse(Pair.of(new Label(LOAD_FAILED), new EvaluationInputController(this.getController(), this.getViewManager())));
+    }
+
+    private EvaluationInputController catNode(final EvaluationType type) {
+        EvaluationInputController controller = new EvaluationInputController(this.getController(), this.getViewManager());
+        controller.initData(type);
+        return controller;
     }
 
     private void showAlertAndWait(final String message) {

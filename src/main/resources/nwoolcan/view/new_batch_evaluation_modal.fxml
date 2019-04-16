@@ -9,7 +9,6 @@
 <?import javafx.scene.control.TextField?>
 
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Button?>
 
@@ -17,15 +16,17 @@
 
 <?import javafx.scene.control.TextArea?>
 <?import nwoolcan.view.subview.SubView?>
+<?import javafx.geometry.Insets?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="nwoolcan.view.review.NewBatchEvaluationController">
+
     <SubView fitToWidth="true"
              fx:id="modalSubView"
-             AnchorPane.rightAnchor="0.0"
-             AnchorPane.leftAnchor="0.0"
-             AnchorPane.bottomAnchor="0.0"
-             AnchorPane.topAnchor="0.0">
+             >
+        <padding>
+            <Insets top="5" bottom="5" right="5" left="5"/>
+        </padding>
         <BorderPane>
             <top>
                 <Label text="New Review" BorderPane.alignment="CENTER">
@@ -50,12 +51,12 @@
                                     </VBox>
                                 </VBox>
                             </left>
-                            <right>
+                            <top>
                                     <VBox>
                                         <Label text="Batch review type"/>
                                         <ComboBox fx:id="batchTypeComboBox" onAction="#changeBatchTypeClick"/>
                                     </VBox>
-                            </right>
+                            </top>
                         </BorderPane>
                     </TitledPane>
                     <VBox fx:id="categories">
