@@ -61,7 +61,15 @@ public enum ViewType {
     /**
      * Modal for going to the next step in a batch in production.
      */
-    GO_NEXT_STEP_MODAL;
+    GO_NEXT_STEP_MODAL,
+    /**
+     * View visible at the start.
+     */
+    WELCOME,
+    /**
+     * Modal to create a new brewery.
+     */
+    NEW_BREWERY_MODAL;
 
     /**
      * Name of the FXML files associated with this type of view.

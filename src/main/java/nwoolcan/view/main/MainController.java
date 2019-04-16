@@ -81,4 +81,9 @@ public final class MainController extends AbstractViewController {
     public void menuFileCountOverlaysClick(final ActionEvent event) {
         System.out.println(contentPane.getOverlaysCount());
     }
+
+    @FXML
+    private void menuViewWelcomeClick(final ActionEvent event) {
+        this.getViewManager().getView(ViewType.WELCOME).peek(view -> this.contentPane.substitute(view));
+    }
 }
