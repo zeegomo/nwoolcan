@@ -5,11 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import nwoolcan.controller.Controller;
-import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
@@ -20,10 +18,6 @@ import nwoolcan.viewmodel.brewery.production.batch.BatchInfoViewModel;
 import nwoolcan.viewmodel.brewery.production.step.ParameterViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.stream.Collectors;
 
 /**

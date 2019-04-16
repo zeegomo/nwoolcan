@@ -2,23 +2,18 @@ package nwoolcan.view.production;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.viewmodel.brewery.production.batch.BatchInfoViewModel;
-import nwoolcan.viewmodel.brewery.production.step.ParameterViewModel;
 
 /**
  * Controller for Batch Info view.
  */
 @SuppressWarnings("NullAway")
-public class BatchInfoController extends SubViewController implements InitializableController<BatchInfoViewModel> {
-    private static final double WRAP = 1.2;
-    private static final int DATA_NUMBER = 6;
+public final class BatchInfoController extends SubViewController implements InitializableController<BatchInfoViewModel> {
     @FXML
     private SubView batchInfoSubView;
     @FXML
@@ -39,8 +34,6 @@ public class BatchInfoController extends SubViewController implements Initializa
     private Label ibuLabel;
     @FXML
     private Label batchSizeLabel;
-    @FXML
-    private GridPane statsGridPane;
     /**
      * Creates itself and gets injected.
      *
@@ -61,11 +54,6 @@ public class BatchInfoController extends SubViewController implements Initializa
         data.getAbv().ifPresent(val -> this.abvLabel.setText(val.getValueRepresentation()));
         data.getEbc().ifPresent(val -> this.ebcLabel.setText(val.getValueRepresentation()));
         data.getIbu().ifPresent(val -> this.ibuLabel.setText(val.getValueRepresentation()));
-        this.fgLabel.setText("1.020");
-        this.ogLabel.setText("1.080");
-        this.abvLabel.setText("11%");
-        this.ebcLabel.setText("23");
-        this.ibuLabel.setText("11");
         this.batchSizeLabel.setText(data.getBatchSize().toString());
     }
 
