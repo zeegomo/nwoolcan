@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.InitializableController;
@@ -20,6 +21,8 @@ public class StepDetailController
     extends SubViewController
     implements InitializableController<DetailStepViewModel> {
 
+    @FXML
+    private VBox parametersGraficsVBox;
     @FXML
     private Label durationLabel;
     @FXML

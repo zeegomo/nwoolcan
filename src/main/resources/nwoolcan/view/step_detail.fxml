@@ -65,9 +65,12 @@
                     </BorderPane>
                 </TitledPane>
                 <TitledPane text="Registered parameters grafics">
+                    <VBox fx:id="parametersGraficsVBox">
+
+                    </VBox>
                 </TitledPane>
-                <TitledPane text="Registered parameter table">
-                </TitledPane>
+<!--                <TitledPane text="Registered parameter table">-->
+<!--                </TitledPane>-->
             </VBox>
         </center>
     </BorderPane>
