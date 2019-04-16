@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import nwoolcan.view.subview.SubView?>
+<SubView xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:controller="nwoolcan.view.production.BatchInfoController">
+    <BorderPane>
+        <left>
+            <VBox>
+                <FlowPane>
+                    <Label text="Name:"/>
+                    <Label fx:id="nameLabel"/>
+                </FlowPane>
+                <FlowPane>
+                    <Label text="Style:"/>
+                    <Label fx:id="styleLabel"/>
+                </FlowPane>
+                <FlowPane>
+                    <Label text="Style category:"/>
+                    <Label fx:id="styleCategoryLabel"/>
+                </FlowPane>
+            </VBox>
+        </left>
+        <center>
+            <HBox>
+                <FlowPane>
+                    <Label text="OG:"/>
+                    <Label fx:id="ogLabel"/>
+                </FlowPane>
+                <FlowPane>
+                    <Label text="FG:"/>
+                    <Label fx:id="fgLabel"/>
+                </FlowPane>
+                <FlowPane>
+                    <Label text="ABV:"/>
+                    <Label fx:id="abvLabel"/>
+                </FlowPane>
+                <FlowPane>
+                    <Label text="IBU:"/>
+                    <Label fx:id="ibuLabel"/>
+                </FlowPane>
+                <FlowPane>
+                    <Label text="EBC:"/>
+                    <Label fx:id="ebcLabel"/>
+                </FlowPane>
+            </HBox>
+        </center>
+        <right>
+            <FlowPane>
+                <Label text="Batch initial size:"/>
+                <Label fx:id="batchSizeLabel"/>
+            </FlowPane>
+        </right>
+    </BorderPane>
+
+</SubView>
