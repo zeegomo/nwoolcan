@@ -1,30 +1,45 @@
 package nwoolcan.view.production;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import javafx.util.StringConverter;
 import nwoolcan.controller.Controller;
+import nwoolcan.model.brewery.batch.step.parameter.ParameterType;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.ViewManager;
+import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.viewmodel.brewery.production.step.DetailStepViewModel;
-import nwoolcan.viewmodel.brewery.production.step.ParameterViewModel;
+import nwoolcan.viewmodel.brewery.production.step.RegisterParameterDTO;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * View controller for step detail view.
+ */
 @SuppressWarnings("NullAway")
-public class StepDetailController
+public final class StepDetailController
     extends SubViewController
     implements InitializableController<DetailStepViewModel> {
 
+    @FXML
+    private Label unitOfMeasureSymbolLabel;
+    @FXML
+    private ComboBox<ParameterType> parameterTypesComboBox;
+    @FXML
+    private TextField newParameterValueTextField;
     @FXML
     private VBox parametersGraphicsVBox;
     @FXML
@@ -42,6 +57,8 @@ public class StepDetailController
     @FXML
     private SubView stepDetailSubView;
 
+    private DetailStepViewModel data;
+
     /**
      * Creates itself and gets injected.
      *
@@ -54,7 +71,8 @@ public class StepDetailController
 
     @Override
     public void initData(final DetailStepViewModel data) {
-        this.registerParameterButton.setDisable(data.isFinalized());
+        this.data = data;
+        this.registerParameterButton.setDisable(data.isFinalized() || data.getPossibleParametersToRegister().size() == 0);
 
         this.stepTypeNameLabel.setText(data.getTypeName());
         this.initialDateLabel.setText(data.getStartDate().toString());
@@ -63,6 +81,23 @@ public class StepDetailController
         final long durationMillis = data.getEndDate() == null ? 0 : data.getEndDate().getTime() - data.getStartDate().getTime();
         this.durationLabel.setText(durationMillis == 0 ? "" : this.getDurationBreakdown(durationMillis));
         this.finalizedLabel.setText(data.isFinalized() ? "Yes" : "No");
+
+        this.parameterTypesComboBox.setItems(FXCollections.observableList(data.getPossibleParametersToRegister()));
+        this.parameterTypesComboBox.setConverter(new StringConverter<ParameterType>() {
+            @Override
+            public String toString(final ParameterType object) {
+                return object.getName();
+            }
+
+            @Override
+            public ParameterType fromString(final String string) {
+                return null;
+            }
+        });
+        this.parameterTypesComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) ->
+            this.unitOfMeasureSymbolLabel.setText(newV.getUnitOfMeasure().getSymbol())
+        );
+        this.parameterTypesComboBox.getSelectionModel().selectFirst();
 
         data.getMapTypeToRegistrations().forEach((paramName, params) -> {
             final BorderPane pane = new BorderPane();
@@ -76,23 +111,25 @@ public class StepDetailController
 
             final VBox initialValueVBox = new VBox();
             initialValueVBox.getChildren().add(new Label("Initial value: "));
-            initialValueVBox.getChildren().add(new Label(params.get(0).getValue().toString()));
+            initialValueVBox.getChildren().add(new Label(params.get(params.size() - 1).getValue().toString()));
 
             final VBox currentValueVBox = new VBox();
             currentValueVBox.getChildren().add(new Label("Current value : "));
-            currentValueVBox.getChildren().add(new Label(params.get(params.size() - 1).getValue().toString()));
+            currentValueVBox.getChildren().add(new Label(params.get(0).getValue().toString()));
 
             final VBox mediumValueVBox = new VBox();
             mediumValueVBox.getChildren().add(new Label("Medium value: "));
-            mediumValueVBox.getChildren().add(new Label(params.stream()
-                                                              .mapToDouble(p -> p.getValue().doubleValue())
-                                                              .average().toString()));
+            mediumValueVBox.getChildren().add(new Label(String.format("%.2f", params.stream()
+                                                                             .mapToDouble(p -> p.getValue()
+                                                                                                .doubleValue())
+                                                                             .average()
+                                                                             .getAsDouble())));
 
             generalInfoVBox.getChildren().add(initialValueVBox);
             generalInfoVBox.getChildren().add(currentValueVBox);
             generalInfoVBox.getChildren().add(mediumValueVBox);
 
-            pane.setRight(generalInfoVBox);
+            pane.setLeft(generalInfoVBox);
         });
     }
 
@@ -101,12 +138,42 @@ public class StepDetailController
         return this.stepDetailSubView;
     }
 
+    /**
+     * Goes back to batch detail.
+     * @param event the occurred event.
+     */
     public void goBackButtonClicked(final ActionEvent event) {
-        this.previousView(); //TODO refactor with reload
+        //TODO refactor with reload
+        this.substituteView(ViewType.BATCH_DETAIL,
+            this.getController().getBatchController().getDetailBatchViewModelById(data.getBatchId()).getValue());
     }
 
+    /**
+     * Registers a parameter in this step.
+     * @param event the occurred event.
+     */
     public void registerParameterButtonClicked(final ActionEvent event) {
+        double value;
+        try {
+            value = Double.parseDouble(this.newParameterValueTextField.getText());
+        } catch (NumberFormatException ex) {
+            this.showAlertAndWait("Parameter value must be a number!");
+            return;
+        }
 
+        this.getController().getBatchController().getStepController().registerParameter(
+            new RegisterParameterDTO(
+                data.getBatchId(),
+                value,
+                this.parameterTypesComboBox.getSelectionModel().getSelectedItem(),
+                new Date())
+        );
+
+        this.substituteView(ViewType.STEP_DETAIL,
+            this.getController().getBatchController().getStepController().getDetailStepViewModel(
+                data.getBatchId(),
+                data.getTypeName()
+            ).getValue());
     }
 
     /* Utils function from stackoverflow.
@@ -133,5 +200,10 @@ public class StepDetailController
         sb.append(" Seconds");
 
         return sb.toString();
+    }
+
+    private void showAlertAndWait(final String message) {
+        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while registering the parameter.\n" + message, ButtonType.CLOSE);
+        a.showAndWait();
     }
 }

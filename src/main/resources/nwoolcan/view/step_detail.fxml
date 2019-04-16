@@ -10,7 +10,8 @@
 <?import javafx.scene.text.Font?>
 <?import nwoolcan.view.subview.SubView?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+
 <SubView fx:id="stepDetailSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.production.StepDetailController">
     <BorderPane>
         <top>
@@ -58,8 +59,20 @@
                             </VBox>
                         </center>
                         <right>
-                            <VBox alignment="CENTER">
-                                <Button fx:id="registerParameterButton" disable="true" onAction="#registerParameterButtonClicked" text="Register parameter" />
+                            <VBox BorderPane.alignment="CENTER" alignment="CENTER_LEFT">
+                                <Label text="Register new parameter" />
+                                <VBox>
+                                    <Label text="Value" />
+                                    <HBox>
+                                        <TextField fx:id="newParameterValueTextField" />
+                                        <Label fx:id="unitOfMeasureSymbolLabel" prefWidth="50" />
+                                    </HBox>
+                                </VBox>
+                                <VBox>
+                                    <Label text="Parameter type" />
+                                    <ComboBox fx:id="parameterTypesComboBox" />
+                                </VBox>
+                                <Button fx:id="registerParameterButton" disable="true" onAction="#registerParameterButtonClicked" text="Register" />
                             </VBox>
                         </right>
                     </BorderPane>
