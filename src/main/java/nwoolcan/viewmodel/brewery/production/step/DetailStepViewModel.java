@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,7 @@ public final class DetailStepViewModel {
     private final boolean finalized;
 
     private final List<ParameterViewModel> registeredParameters;
+    private final Map<String, List<ParameterViewModel>> mapTypeToRegistrations;
     private final List<ParameterType> possibleParametersToRegister;
 
     /**
@@ -51,6 +53,8 @@ public final class DetailStepViewModel {
                                         .stream()
                                         .map(ParameterViewModel::new)
                                         .collect(Collectors.toList());
+        this.mapTypeToRegistrations = this.registeredParameters.stream().collect(
+            Collectors.groupingBy(ParameterViewModel::getName));
         this.possibleParametersToRegister = new ArrayList<>(step.getParameterTypes());
     }
 
@@ -126,5 +130,13 @@ public final class DetailStepViewModel {
      */
     public List<ParameterType> getPossibleParametersToRegister() {
         return possibleParametersToRegister;
+    }
+
+    /**
+     * Returns a map from parameter name to list of parameters.
+     * @return a map from parameter name to list of parameters.
+     */
+    public Map<String, List<ParameterViewModel>> getMapTypeToRegistrations() {
+        return mapTypeToRegistrations;
     }
 }
