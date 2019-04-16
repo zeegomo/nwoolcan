@@ -8,9 +8,7 @@ import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,6 +39,10 @@ public class BatchInfoViewModel {
 
     private final List<Pair<IngredientArticleViewModel, Double>> ingredients;
 
+    /**
+     * Construct a new {@link BatchInfoViewModel}.
+     * @param data the batch info source.
+     */
     public BatchInfoViewModel(final BatchInfo data) {
         this.beerStyle = data.getBeerDescription().getStyle();
         this.beerName = data.getBeerDescription().getName();
@@ -64,7 +66,6 @@ public class BatchInfoViewModel {
         this.fg = data.getFg().map(ParameterViewModel::new).orElse(null);
         this.og = data.getOg().map(ParameterViewModel::new).orElse(null);
     }
-
     /**
      * Returns beer name.
      * @return beer name.
