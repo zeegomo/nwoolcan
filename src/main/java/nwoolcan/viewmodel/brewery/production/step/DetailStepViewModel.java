@@ -1,11 +1,12 @@
 package nwoolcan.viewmodel.brewery.production.step;
 
 import nwoolcan.model.brewery.batch.step.Step;
+import nwoolcan.model.brewery.batch.step.parameter.ParameterType;
 import nwoolcan.model.brewery.batch.step.parameter.QueryParameterBuilder;
 import nwoolcan.viewmodel.brewery.utils.QuantityViewModel;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,7 @@ public final class DetailStepViewModel {
     private final boolean finalized;
 
     private final List<ParameterViewModel> registeredParameters;
+    private final List<ParameterType> possibleParametersToRegister;
 
     /**
      * Basic constructor with decorator-like pattern.
@@ -49,6 +51,7 @@ public final class DetailStepViewModel {
                                         .stream()
                                         .map(ParameterViewModel::new)
                                         .collect(Collectors.toList());
+        this.possibleParametersToRegister = new ArrayList<>(step.getParameterTypes());
     }
 
     /**
@@ -114,6 +117,14 @@ public final class DetailStepViewModel {
      * @return the registered parameters in the step.
      */
     public List<ParameterViewModel> getRegisteredParameters() {
-        return Collections.unmodifiableList(this.registeredParameters);
+        return this.registeredParameters;
+    }
+
+    /**
+     * Returns all the possible parameters type that can be registered in this step.
+     * @return all the possible parameters type that can be registered in this step.
+     */
+    public List<ParameterType> getPossibleParametersToRegister() {
+        return possibleParametersToRegister;
     }
 }
