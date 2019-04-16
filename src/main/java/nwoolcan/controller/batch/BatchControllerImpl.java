@@ -26,7 +26,6 @@ public final class BatchControllerImpl implements BatchController {
 
     private final Brewery model;
     private final ControllerUtils utils;
-    private final Brewery model;
 
     /**
      * Basic constructor with reference to the {@link Brewery} model.
