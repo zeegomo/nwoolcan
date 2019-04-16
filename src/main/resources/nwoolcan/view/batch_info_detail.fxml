@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import nwoolcan.view.subview.SubView?>
+<?import nwoolcan.view.subview.SubViewContainer?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<SubView xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:id="batchInfoDetailSubview"
+         fx:controller="nwoolcan.view.production.BatchInfoDetailController">
+    <BorderPane>
+        <top>
+            <BorderPane>
+                <center>
+                    <Label text="Batch info detail" alignment="CENTER">
+                        <font>
+                            <Font size="28.0"/>
+                        </font>
+                    </Label>
+                </center>
+                <bottom>
+                    <TitledPane text="Batch information">
+                        <SubViewContainer fx:id="batchInfoContainer"/>
+                    </TitledPane>
+                </bottom>
+            </BorderPane>
+
+        </top>
+        <center>
+            <GridPane>
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+                <TableView fx:id="ingredients" GridPane.columnIndex="0">
+                    <columnResizePolicy>
+                        <TableView fx:constant = "CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+                <TableView fx:id="waterMeasurements" GridPane.columnIndex="1">
+                    <columnResizePolicy>
+                        <TableView fx:constant = "CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </GridPane>
+        </center>
+    </BorderPane>
+</SubView>
