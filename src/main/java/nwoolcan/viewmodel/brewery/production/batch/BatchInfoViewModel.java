@@ -108,4 +108,28 @@ public class BatchInfoViewModel {
     public String getBeerStyle() {
         return this.beerStyle;
     }
+
+    public Optional<ParameterViewModel> getOg() {
+        return Optional.ofNullable(og);
+    }
+
+    public Optional<ParameterViewModel> getFg() {
+        return Optional.ofNullable(fg);
+    }
+
+    public Optional<ParameterViewModel> getEbc() {
+        return Optional.ofNullable(ebc);
+    }
+
+    public Optional<ParameterViewModel> getAbv() {
+        return Optional.ofNullable(abv);
+    }
+
+    public Optional<ParameterViewModel> getIbu() {
+        return Optional.ofNullable(ibu);
+    }
+
+    public Optional<List<ParameterViewModel>> getWaterMeasurements() {
+        return Optional.ofNullable(waterMeasurements);
+    }
 }
