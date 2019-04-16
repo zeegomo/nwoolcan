@@ -31,7 +31,7 @@ import java.util.List;
  * Controller for the Stock detail view.
  */
 @SuppressWarnings("NullAway")
-public final class StockDetailController extends SubViewController implements InitializableController<Pair<DetailStockViewModel, Runnable>> {
+public final class StockDetailController extends SubViewController implements InitializableController<Pair<Integer, Runnable>> {
 
     @FXML
     private Label lblArticle;
@@ -64,12 +64,14 @@ public final class StockDetailController extends SubViewController implements In
     }
 
     @Override
-    public void initData(final Pair<DetailStockViewModel, Runnable> dataAndRunner) {
+    public void initData(final Pair<Integer, Runnable> dataAndRunner) {
+        stockId = dataAndRunner.getLeft();
+        loadData();
         updateFather = dataAndRunner.getRight();
-        loadData(dataAndRunner.getLeft());
     }
 
-    private void loadData(final DetailStockViewModel data) {
+    private void loadData() {
+        final DetailStockViewModel data = getController().getWarehouseController().getViewStockById(stockId).getValue();
         stockId = data.getId();
         articleId = data.getArticle().getId();
         lblArticle.setText(data.getArticle().toString());
@@ -92,7 +94,7 @@ public final class StockDetailController extends SubViewController implements In
         final Result<AbstractArticleViewModel> articleResult = getController().getWarehouseController()
                                                                               .getViewArticleById(articleId);
         if (articleResult.isPresent()) {
-            overlayView(ViewType.ARTICLE_DETAIL, Pair.of(articleResult.getValue(), this.getLoader()));
+            overlayView(ViewType.ARTICLE_DETAIL, Pair.<AbstractArticleViewModel, Runnable>of(articleResult.getValue(), this::loadData));
         } else {
             new Alert(
                         Alert.AlertType.ERROR,
@@ -100,10 +102,6 @@ public final class StockDetailController extends SubViewController implements In
                         ButtonType.CLOSE
                      ).showAndWait();
         }
-    }
-
-    private Runnable getLoader() {
-        return () -> this.loadData(getController().getWarehouseController().getViewStockById(stockId).getValue());
     }
 
     private void setTable(final List<RecordViewModel> articles) {
@@ -134,7 +132,7 @@ public final class StockDetailController extends SubViewController implements In
         modal.setX(window.getX() + window.getWidth() / 2 - scene.getWidth() / 2);
         modal.showAndWait();
 
-        this.loadData(getController().getWarehouseController().getViewStockById(stockId).getValue());
+        this.loadData();
 
     }
 }
