@@ -46,17 +46,21 @@ import java.util.stream.Collectors;
 public final class BreweryController implements Controller {
 
     private Brewery brewery = new BreweryImpl();
-    private final BatchController batchController;
-    private final WarehouseController warehouseController;
+    private BatchController batchController;
+    private WarehouseController warehouseController;
     private static final String BATCH_NOT_FOUND = "Batch not found.";
     private static final String BEER_ARTICLE_NOT_FOUND = "Beer Article not found.";
+
+    private void initilizeSubControllers() {
+        this.warehouseController = new WarehouseControllerImpl(brewery.getWarehouse());
+        this.batchController = new BatchControllerImpl(brewery);
+    }
 
     /**
      * Constructor which creates the {@link WarehouseController}.
      */
     public BreweryController() {
-        this.warehouseController = new WarehouseControllerImpl(brewery.getWarehouse());
-        this.batchController = new BatchControllerImpl(brewery);
+        this.initilizeSubControllers();
     }
 
     @Override
@@ -202,6 +206,7 @@ public final class BreweryController implements Controller {
     @Override
     public void initializeNewBrewery() {
         this.brewery = new BreweryImpl();
+        this.initilizeSubControllers();
     }
 
     @Override
