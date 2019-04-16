@@ -55,6 +55,10 @@ public enum ViewType {
      */
     BATCH_DETAIL,
     /**
+     * Info view for batch.
+     */
+    BATCH_INFO,
+    /**
      * Detail view to show a step.
      */
     STEP_DETAIL,
