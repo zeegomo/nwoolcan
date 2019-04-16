@@ -114,6 +114,7 @@ public final class BatchControllerImpl implements BatchController {
         return BatchEvaluationBuilder.getAvailableBatchEvaluationTypes();
     }
 
+    @Override
     public Result<StockBatchViewModel> getStockBatchViewModel(final int batchId) {
         Result<Batch> res = this.utils.getBatchById(batchId);
 
