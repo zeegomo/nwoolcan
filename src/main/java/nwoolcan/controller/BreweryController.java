@@ -44,8 +44,6 @@ public final class BreweryController implements Controller {
     private final Brewery brewery;
     private final BatchController batchController;
     private final WarehouseController warehouseController;
-    private static final String BATCH_NOT_FOUND = "Batch not found.";
-    private static final String BEER_ARTICLE_NOT_FOUND = "Beer Article not found.";
 
     /**
      * Constructor which creates the {@link WarehouseController}.
@@ -156,8 +154,7 @@ public final class BreweryController implements Controller {
 
     @Override
     public Result<Empty> stockBatch(final int batchId, final int beerArticleId, final Date expirationDate) {
-        final ControllerUtils utils = new ControllerUtils(this.brewery);
-        final Result<Batch> batchResult = utils.getBatchById(batchId);
+        final Result<Batch> batchResult = brewery.getBatchById(batchId);
         final Result<BeerArticle> beerArticleResult = brewery.getWarehouse()
                                                              .getArticleById(ArticleType.FINISHED_BEER, beerArticleId)
                                                              .map(article -> (BeerArticle) article);
@@ -175,8 +172,7 @@ public final class BreweryController implements Controller {
 
     @Override
     public Result<Empty> stockBatch(final int batchId, final int beerArticleId) {
-        final ControllerUtils utils = new ControllerUtils(this.brewery);
-        final Result<Batch> batchResult = utils.getBatchById(batchId);
+        final Result<Batch> batchResult = brewery.getBatchById(batchId);
         final Result<BeerArticle> beerArticleResult = brewery.getWarehouse()
                                                              .getArticleById(beerArticleId)
                                                              .map(article -> (BeerArticle) article);
