@@ -23,7 +23,6 @@ import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
-import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.BeerStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.DetailStockViewModel;
