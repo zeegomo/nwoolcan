@@ -1,6 +1,7 @@
 package nwoolcan.viewmodel.brewery.production.step;
 
 import nwoolcan.model.brewery.batch.step.parameter.Parameter;
+import nwoolcan.model.brewery.batch.step.parameter.ParameterType;
 import nwoolcan.model.utils.UnitOfMeasure;
 
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.Date;
  */
 public class ParameterViewModel {
 
-    private final String name;
+    private final ParameterType type;
     private final Number value;
     private final UnitOfMeasure unitOfMeasure;
     private final Date registrationDate;
@@ -20,7 +21,7 @@ public class ParameterViewModel {
      * @param parameter the parameter to get data from.
      */
     public ParameterViewModel(final Parameter parameter) {
-        this.name = parameter.getType().getName();
+        this.type = parameter.getType();
         this.value = parameter.getRegistrationValue();
         this.unitOfMeasure = parameter.getType().getUnitOfMeasure();
         this.registrationDate = new Date(parameter.getRegistrationDate().getTime());
@@ -30,8 +31,8 @@ public class ParameterViewModel {
      * Returns the name of the parameter type.
      * @return the name of the parameter type.
      */
-    public String getName() {
-        return this.name;
+    public ParameterType getType() {
+        return this.type;
     }
 
     /**

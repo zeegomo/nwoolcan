@@ -35,6 +35,7 @@ public final class BatchControllerImpl implements BatchController {
 
     private final Brewery model;
     private final ControllerUtils utils;
+    private final StepController stepController;
 
     /**
      * Basic constructor with reference to the {@link Brewery} model.
@@ -43,6 +44,12 @@ public final class BatchControllerImpl implements BatchController {
     public BatchControllerImpl(final Brewery model) {
         this.model = model;
         this.utils = new ControllerUtils(model);
+        this.stepController = new StepControllerImpl(this.model);
+    }
+
+    @Override
+    public StepController getStepController() {
+        return this.stepController;
     }
 
     @Override
