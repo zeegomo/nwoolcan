@@ -17,7 +17,6 @@ import nwoolcan.viewmodel.brewery.production.batch.GoNextStepDTO;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
-import org.apache.commons.lang3.tuple.Triple;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
@@ -106,9 +105,8 @@ public final class BatchControllerImpl implements BatchController {
     }
 
     @Override
-    public Result<Empty> checkEvaluation(final Triple<EvaluationType, Integer, Optional<String>> data) {
-        return EvaluationFactory.create(data.getLeft(), data.getMiddle(), data.getRight().orElse(null))
-                                .toEmpty();
+    public Result<Empty> checkEvaluation(final EvaluationType type, final int score, final Optional<String> notes) {
+        return EvaluationFactory.create(type, score, notes.orElse(null)).toEmpty();
     }
 
     @Override

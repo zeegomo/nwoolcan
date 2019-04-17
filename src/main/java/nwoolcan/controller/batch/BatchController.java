@@ -9,7 +9,6 @@ import nwoolcan.viewmodel.brewery.production.batch.GoNextStepDTO;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
-import org.apache.commons.lang3.tuple.Triple;
 import java.util.Optional;
 import java.util.Set;
 import nwoolcan.viewmodel.brewery.production.batch.StockBatchViewModel;
@@ -55,10 +54,12 @@ public interface BatchController {
     Result<Empty> addBatchEvaluation(int batchID, BatchEvaluationDTO newBatch);
     /**
      * Check evaluation data validity.
-     * @param data the evaluation data
+     * @param type the type of evaluation.
+     * @param score the score.
+     * @param notes Optional notes for this evaluation
      * @return a Result describing the outcome of the operation.
      */
-    Result<Empty> checkEvaluation(Triple<EvaluationType, Integer, Optional<String>> data);
+    Result<Empty> checkEvaluation(EvaluationType type, int score, Optional<String> notes);
     /**
      * Return the evaluation for specified batch if available.
      * @param batchID the batch.
