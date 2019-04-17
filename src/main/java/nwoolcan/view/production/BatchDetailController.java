@@ -24,6 +24,7 @@ import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.MasterStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.review.NewBatchEvaluationViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.StockBatchViewModel;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.logging.Logger;
@@ -74,6 +75,7 @@ public final class BatchDetailController
         //TODO init batch info sub view
 
         this.goToNextStepButton.setDisable(data.isEnded());
+        this.stockBatchButton.setDisable(!data.isEnded() || data.isStocked());
 
         final MasterTableViewModel<MasterStepViewModel, Object> masterViewModel = new MasterTableViewModel<>(
             Arrays.asList(
@@ -196,5 +198,35 @@ public final class BatchDetailController
     private void showAlertAndWait(final String message) {
         Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while loading the next step modal.\n" + message, ButtonType.CLOSE);
         a.showAndWait();
+    }
+
+    /**
+     * Opens the modal for stocking a batch.
+     * @param event the occurred event.
+     */
+    public void stockBatchButtonClicked(final ActionEvent event) {
+        final Stage modal =  new Stage();
+        final Window window = this.getSubView().getScene().getWindow();
+
+        modal.initOwner(window);
+        modal.initModality(Modality.WINDOW_MODAL);
+
+        Result<StockBatchViewModel> res = this.getController().getBatchController().getStockBatchViewModel(this.data.getId());
+
+        if (res.isError()) {
+            this.showAlertAndWait(res.getError().getMessage());
+            return;
+        }
+
+        final Scene scene = new Scene(this.getViewManager().getView(ViewType.STOCK_BATCH_MODAL, res.getValue()).orElse(new AnchorPane()));
+
+        modal.setScene(scene);
+        modal.centerOnScreen();
+        modal.showAndWait();
+
+        if (modal.getUserData() != null) {
+            this.substituteView(ViewType.BATCH_DETAIL,
+                this.getController().getBatchController().getDetailBatchViewModelById(this.data.getId()).getValue());
+        }
     }
 }

@@ -38,8 +38,8 @@
                         </center>
                         <right>
                             <VBox BorderPane.alignment="CENTER_RIGHT">
-                                <Button fx:id="goToNextStepButton" onAction="#goToNextStepButtonClicked" text="Go to next step" />
-                                <Button fx:id="stockBatchButton" disable="true" text="Stock batch" />
+                                <Button fx:id="goToNextStepButton" text="Go to next step" onAction="#goToNextStepButtonClicked" />
+                                <Button fx:id="stockBatchButton" text="Stock batch" onAction="#stockBatchButtonClicked" />
                             </VBox>
                         </right>
                     </BorderPane>
