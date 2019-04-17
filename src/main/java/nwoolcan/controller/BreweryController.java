@@ -157,7 +157,7 @@ public final class BreweryController implements Controller {
     public Result<Empty> stockBatch(final int batchId, final int beerArticleId, final Date expirationDate) {
         final Result<Batch> batchResult = brewery.getBatchById(batchId);
         final Result<BeerArticle> beerArticleResult = brewery.getWarehouse()
-                                                             .getArticleById(ArticleType.FINISHED_BEER, beerArticleId)
+                                                             .getArticleById(beerArticleId)
                                                              .flatMap(Article::toBeerArticle);
 
         if (batchResult.isPresent() && beerArticleResult.isPresent()) {
