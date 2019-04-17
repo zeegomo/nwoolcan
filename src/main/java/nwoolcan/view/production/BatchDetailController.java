@@ -172,7 +172,7 @@ public final class BatchDetailController
         */
     public void goBackButtonClicked(final ActionEvent event) {
         updateFather.run();
-        this.substituteView(ViewType.PRODUCTION);
+        this.previousView();
     }
 
     /**
