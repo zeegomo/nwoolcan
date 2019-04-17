@@ -7,8 +7,6 @@ import javax.annotation.Nullable;
  */
 public final class QueryArticleBuilder {
 
-    @Nullable private Integer minID;
-    @Nullable private Integer maxID;
     @Nullable private String minName;
     @Nullable private String maxName;
     @Nullable private ArticleType includeArticleType;
@@ -16,24 +14,6 @@ public final class QueryArticleBuilder {
     private QueryArticle.SortParameter sortParameter = QueryArticle.SortParameter.NONE;
     private Boolean sortDescending = false;
 
-    /**
-     * Setter of the min ID.
-     * @param id the min ID included in the query.
-     * @return this for fluency.
-     */
-    public QueryArticleBuilder setMinID(final int id) {
-        this.minID = id;
-        return this;
-    }
-    /**
-     * Setter of the max ID.
-     * @param id the max ID included in the query.
-     * @return this for fluency.
-     */
-    public QueryArticleBuilder setMaxID(final int id) {
-        this.maxID = id;
-        return this;
-    }
     /**
      * Set the min name.
      * @param name the first lexicographical string which can be included in the query.
@@ -94,8 +74,7 @@ public final class QueryArticleBuilder {
      */
     // It does not return a Result because it has no reasons to fail.
     public QueryArticle build() {
-        return new QueryArticle(minID, maxID,
-                                minName, maxName,
+        return new QueryArticle(minName, maxName,
                                 includeArticleType, excludeArticleType,
                                 sortParameter, sortDescending);
     }

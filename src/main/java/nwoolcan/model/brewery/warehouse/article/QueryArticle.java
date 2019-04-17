@@ -25,8 +25,6 @@ public final class QueryArticle {
          */
         NAME
     }
-    @Nullable private final Integer minID;
-    @Nullable private final Integer maxID;
     @Nullable private final String minName;
     @Nullable private final String maxName;
     @Nullable private final ArticleType includeArticleType;
@@ -35,36 +33,18 @@ public final class QueryArticle {
     private final Boolean sortDescending;
 
     // Package private
-    QueryArticle(@Nullable final Integer minID,
-                 @Nullable final Integer maxID,
-                 @Nullable final String minName,
+    QueryArticle(@Nullable final String minName,
                  @Nullable final String maxName,
                  @Nullable final ArticleType includeArticleType,
                  @Nullable final ArticleType excludeArticleType,
                  final SortParameter sortParameter,
                  final Boolean sortDescending) {
-        this.minID = minID;
-        this.maxID = maxID;
         this.minName = minName;
         this.maxName = maxName;
         this.includeArticleType = includeArticleType;
         this.excludeArticleType = excludeArticleType;
         this.sortParameter = sortParameter;
         this.sortDescending = sortDescending;
-    }
-    /**
-     * Getter for minID.
-     * @return minID.
-     */
-    public Optional<Integer> getMinID() {
-        return Optional.ofNullable(minID);
-    }
-    /**
-     * Getter for maxID.
-     * @return maxID.
-     */
-    public Optional<Integer> getMaxID() {
-        return Optional.ofNullable(maxID);
     }
     /**
      * Getter of minName.
