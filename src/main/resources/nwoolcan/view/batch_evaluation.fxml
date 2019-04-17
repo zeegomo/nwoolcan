@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import nwoolcan.view.subview.SubView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<SubView fx:id="batchEvaluationSubView" xmlns="http://javafx.com/javafx/8.0.172-ea"
+         xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="nwoolcan.view.review.BatchEvaluationController">
+        <padding><Insets top="10" right="10" left="10" bottom="10"/></padding>
+        <BorderPane>
+            <center>
+                <BorderPane>
+                    <left>
+                        <VBox>
+                            <FlowPane>
+                                <Label text="Scoresheet: "/>
+                                <Label fx:id="lblEvaluationTypeName"/>
+                            </FlowPane>
+                            <FlowPane>
+                                <Label text="Reviewer: "/>
+                                <Label fx:id="lblReviewer"/>
+                            </FlowPane>
+                        </VBox>
+                    </left>
+                    <right>
+                        <HBox>
+                            <Label fx:id="lblEvaluationScore">
+                                <font>
+                                    <Font size="40" />
+                                </font>
+                            </Label>
+                            <Label text="/"/>
+                            <Label fx:id="lblEvaluationMaxScore" />
+                        </HBox>
+                    </right>
+                </BorderPane>
+            </center>
+        </BorderPane>
+</SubView>

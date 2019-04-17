@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import nwoolcan.view.subview.SubView?>
+<?import nwoolcan.view.subview.SubViewContainer?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
+<SubView fx:id="batchEvaluationDetailSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="nwoolcan.view.review.BatchEvaluationDetailController">
+    <BorderPane>
+        <padding>
+            <Insets bottom="10" left="10" right="10" top="10"/>
+        </padding>
+        <top>
+            <BorderPane>
+                <left>
+                    <Button onAction="#goBackButtonClicked" text="Back"/>
+                </left>
+                <center>
+                    <Label text="Review">
+                        <font>
+                            <Font size="28.0" />
+                        </font>
+                    </Label>
+                </center>
+            </BorderPane>
+        </top>
+        <center>
+            <VBox>
+                <SubViewContainer fx:id="container"/>
+                <BorderPane>
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10"/>
+                    </padding>
+                    <right>
+                        <ScrollPane fx:id="categoriesScrollPane">
+                            <VBox>
+                                <VBox fx:id="categories"/>
+                            </VBox>
+                        </ScrollPane>
+                    </right>
+                    <left>
+                        <FlowPane>
+                            <Text text="Notes:"/>
+                            <Text fx:id="notes"/>
+                        </FlowPane>
+                    </left>
+                </BorderPane>
+            </VBox>
+        </center>
+    </BorderPane>
+</SubView>
