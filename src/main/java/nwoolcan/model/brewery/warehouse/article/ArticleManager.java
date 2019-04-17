@@ -54,7 +54,7 @@ public final class ArticleManager {
     public BeerArticle createBeerArticle(final String name,
                                                       final UnitOfMeasure unitOfMeasure) {
         BeerArticle beerArticle = new BeerArticleImpl(nextAvailableId, name, unitOfMeasure);
-        return (BeerArticle) getArticle(beerArticle);
+        return getArticle(beerArticle).toBeerArticle().getValue();
     }
     /**
      * Creates a {@link IngredientArticle} and insert it into the {@link ArticleManager}. If it already exists, it will be returned.

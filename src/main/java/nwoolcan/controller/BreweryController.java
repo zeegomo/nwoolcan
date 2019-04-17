@@ -176,7 +176,7 @@ public final class BreweryController implements Controller {
         final Result<Batch> batchResult = brewery.getBatchById(batchId);
         final Result<BeerArticle> beerArticleResult = brewery.getWarehouse()
                                                              .getArticleById(beerArticleId)
-                                                             .map(article -> (BeerArticle) article);
+                                                             .flatMap(Article::toBeerArticle);
 
         if (batchResult.isPresent() && beerArticleResult.isPresent()) {
             return Result.of(this.brewery.stockBatch(
