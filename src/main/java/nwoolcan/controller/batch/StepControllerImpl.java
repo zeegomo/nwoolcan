@@ -54,13 +54,7 @@ public final class StepControllerImpl implements StepController {
                                                     .flatMap(p -> b.getCurrentStep().addParameter(p)));
     }
 
-    /**
-     * Returns a step identified by its batch id and step type name.
-     * @param batchId the batch id.
-     * @param stepTypeName the step type name.
-     * @return a possible step found.
-     */
-    public Result<Step> getStepByBatchIdAndStepTypeName(final int batchId, final String stepTypeName) {
+    private Result<Step> getStepByBatchIdAndStepTypeName(final int batchId, final String stepTypeName) {
         return brewery.getBatchById(batchId).map(b -> b.getSteps()
                                                .stream()
                                                .filter(s -> s.getStepInfo().getType().getName().equals(stepTypeName))
