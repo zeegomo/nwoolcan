@@ -29,6 +29,7 @@
                         <MenuItem text="Warehouse" onAction="#menuViewWarehouseClick" />
                         <MenuItem text="Production" onAction="#menuViewProductionClick" />
                         <MenuItem text="Articles" onAction="#menuViewArticlesClick" />
+
                     </items>
                 </Menu>
             </menus>

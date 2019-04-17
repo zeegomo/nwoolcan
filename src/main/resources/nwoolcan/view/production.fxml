@@ -39,6 +39,10 @@
                                     <Label text="Number of ended batches : " />
                                     <Label fx:id="lblNumberEndedBatches" />
                                 </FlowPane>
+                                <FlowPane>
+                                    <Label text="Number of stocked batches : " />
+                                    <Label fx:id="lblNumberStockedBatches" />
+                                </FlowPane>
                             </VBox>
                         </left>
                         <center>

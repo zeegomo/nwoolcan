@@ -17,6 +17,7 @@ import nwoolcan.model.brewery.batch.misc.WaterMeasurementFactory;
 import nwoolcan.model.brewery.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterFactory;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum;
+import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
@@ -48,8 +49,6 @@ public final class BreweryController implements Controller {
     private Brewery brewery = new BreweryImpl();
     private BatchController batchController;
     private WarehouseController warehouseController;
-    private static final String BATCH_NOT_FOUND = "Batch not found.";
-    private static final String BEER_ARTICLE_NOT_FOUND = "Beer Article not found.";
 
     private void initilizeSubControllers() {
         this.warehouseController = new WarehouseControllerImpl(brewery.getWarehouse());
@@ -162,9 +161,10 @@ public final class BreweryController implements Controller {
 
     @Override
     public Result<Empty> stockBatch(final int batchId, final int beerArticleId, final Date expirationDate) {
-        final ControllerUtils utils = new ControllerUtils(this.brewery);
-        final Result<Batch> batchResult = utils.getBatchById(batchId);
-        final Result<BeerArticle> beerArticleResult = utils.getBeerArticleById(beerArticleId);
+        final Result<Batch> batchResult = brewery.getBatchById(batchId);
+        final Result<BeerArticle> beerArticleResult = brewery.getWarehouse()
+                                                             .getArticleById(beerArticleId)
+                                                             .flatMap(Article::toBeerArticle);
 
         if (batchResult.isPresent() && beerArticleResult.isPresent()) {
             return Result.of(this.brewery.stockBatch(
@@ -179,9 +179,10 @@ public final class BreweryController implements Controller {
 
     @Override
     public Result<Empty> stockBatch(final int batchId, final int beerArticleId) {
-        final ControllerUtils utils = new ControllerUtils(this.brewery);
-        final Result<Batch> batchResult = utils.getBatchById(batchId);
-        final Result<BeerArticle> beerArticleResult = utils.getBeerArticleById(beerArticleId);
+        final Result<Batch> batchResult = brewery.getBatchById(batchId);
+        final Result<BeerArticle> beerArticleResult = brewery.getWarehouse()
+                                                             .getArticleById(beerArticleId)
+                                                             .flatMap(Article::toBeerArticle);
 
         if (batchResult.isPresent() && beerArticleResult.isPresent()) {
             return Result.of(this.brewery.stockBatch(

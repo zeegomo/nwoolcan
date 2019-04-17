@@ -19,6 +19,7 @@ public class MasterBatchViewModel {
     private final QuantityViewModel initialBatchSize;
     private final QuantityViewModel currentBatchSize;
     private final boolean isEnded;
+    private final boolean isStocked;
 
     /**
      * Constructor with decorator.
@@ -34,6 +35,7 @@ public class MasterBatchViewModel {
         this.initialBatchSize = new QuantityViewModel(batch.getBatchInfo().getBatchSize());
         this.currentBatchSize = new QuantityViewModel(batch.getCurrentSize());
         this.isEnded = batch.isEnded();
+        this.isStocked = batch.isStocked();
     }
 
     /**
@@ -104,7 +106,15 @@ public class MasterBatchViewModel {
      * Returns true if the batch is in ended state, false otherwise.
      * @return true if the batch is in ended state, false otherwise.
      */
-    public boolean getIsEnded() {
+    public boolean isEnded() {
         return this.isEnded;
+    }
+
+    /**
+     * Returns true is the batch is stocked, false otherwise.
+     * @return true is the batch is stocked, false otherwise.
+     */
+    public boolean isStocked() {
+        return isStocked;
     }
 }

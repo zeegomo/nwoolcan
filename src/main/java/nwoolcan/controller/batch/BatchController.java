@@ -1,16 +1,28 @@
 package nwoolcan.controller.batch;
 
+import nwoolcan.model.brewery.batch.review.BatchEvaluationType;
+import nwoolcan.model.brewery.batch.review.EvaluationType;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepDTO;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
+import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
+import java.util.Optional;
+import java.util.Set;
 import nwoolcan.viewmodel.brewery.production.batch.StockBatchViewModel;
 
 /**
  * Interface representing a batch controller.
  */
 public interface BatchController {
+
+    /**
+     * Returns the step controller for the steps in the batch.
+     * @return the step controller for the steps in the batch.
+     */
+    StepController getStepController();
 
     /**
      * Returns a {@link DetailBatchViewModel} representation of the batch of id passed by parameter, if any.
@@ -26,7 +38,6 @@ public interface BatchController {
      * @return a {@link Result} bearing the informations to choose choose the next step to go.
      */
     Result<GoNextStepViewModel> getGoNextStepViewModel(int batchId);
-
     /**
      * Goes to the next step of the batch with passed id with informations specified in the dto.
      * @param batchId the batch id.
@@ -34,7 +45,32 @@ public interface BatchController {
      * @return a {@link Result} bearing an error if operation went wrong.
      */
     Result<Empty> goToNextStep(int batchId, GoNextStepDTO dto);
-
+    /**
+     * Register an evaluation for the specified batch.
+     * @param batchID the id of the batch.
+     * @param newBatch the new evaluation.
+     * @return a Result describing the outcome of the operation.
+     */
+    Result<Empty> addBatchEvaluation(int batchID, BatchEvaluationDTO newBatch);
+    /**
+     * Check evaluation data validity.
+     * @param type the type of evaluation.
+     * @param score the score.
+     * @param notes Optional notes for this evaluation
+     * @return a Result describing the outcome of the operation.
+     */
+    Result<Empty> checkEvaluation(EvaluationType type, int score, Optional<String> notes);
+    /**
+     * Return the evaluation for specified batch if available.
+     * @param batchID the batch.
+     * @return the evaluation for specified batch if available.
+     */
+    Result<Optional<BatchEvaluationDetailViewModel>> getBatchEvaluation(int batchID);
+    /**
+     * Return all available {@link BatchEvaluationType}.
+     * @return all available {@link BatchEvaluationType}.
+     */
+    Result<Set<BatchEvaluationType>> getAvailableBatchEvaluationTypes();
     /**
      * Returns the {@link StockBatchViewModel} with the necessary info to decide how to stock a batch.
      * @param batchId the batch id to request the view model from.
