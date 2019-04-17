@@ -218,6 +218,9 @@ public final class BreweryController implements Controller {
     @Override
     public Result<Empty> loadFrom(final File filename) {
         final Database db = new DatabaseJsonImpl(filename);
-        return db.load().peek(b -> this.brewery = b).toEmpty();
+        return db.load().peek(b -> {
+            this.brewery = b;
+            this.initilizeSubControllers();
+        }).toEmpty();
     }
 }
