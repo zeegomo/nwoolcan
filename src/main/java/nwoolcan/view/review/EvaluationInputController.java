@@ -19,7 +19,6 @@ import nwoolcan.view.ViewManager;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
 import java.util.Optional;
 
 /**
@@ -60,7 +59,7 @@ public final class EvaluationInputController extends SubViewController implement
                        .flatMap(parsedScore ->
                            this.getController()
                                .getBatchController()
-                               .checkEvaluation(Triple.of(data, parsedScore, Optional.of(this.notes.textProperty().get())))
+                               .checkEvaluation(data, parsedScore, Optional.of(this.notes.textProperty().get()))
                        )
                        .peek(good -> {
                            this.score.setStyle(DEFAULT_TEXT);
