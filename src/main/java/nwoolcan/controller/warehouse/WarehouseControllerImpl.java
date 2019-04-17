@@ -1,12 +1,9 @@
 package nwoolcan.controller.warehouse;
 
 import nwoolcan.model.brewery.warehouse.Warehouse;
-import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
-import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
-import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
 import nwoolcan.model.brewery.warehouse.stock.Record;
 import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.utils.Quantity;
@@ -33,8 +30,6 @@ import java.util.stream.Collectors;
 public final class WarehouseControllerImpl implements WarehouseController {
 
     private final Warehouse warehouse;
-    private static final String ARTICLE_NOT_FOUND = "Article not found.";
-    private static final String STOCK_NOT_FOUND = "Stock not found.";
 
     /**
      * Constructor.
@@ -92,7 +87,7 @@ public final class WarehouseControllerImpl implements WarehouseController {
     @Override
     public Result<PlainStockViewModel> createStock(final int articleId, final Date expirationDate) {
         return Result.of(articleId)
-                     .flatMap(this::getArticleById)
+                     .flatMap(warehouse::getArticleById)
                      .flatMap(article -> warehouse.createStock(article, expirationDate))
                      .map(PlainStockViewModel::new);
     }
@@ -100,7 +95,7 @@ public final class WarehouseControllerImpl implements WarehouseController {
     @Override
     public Result<PlainStockViewModel> createStock(final int articleId) {
         return Result.of(articleId)
-                     .flatMap(this::getArticleById)
+                     .flatMap(warehouse::getArticleById)
                      .flatMap(warehouse::createStock)
                      .map(PlainStockViewModel::new);
     }
@@ -108,14 +103,14 @@ public final class WarehouseControllerImpl implements WarehouseController {
     @Override
     public Result<AbstractArticleViewModel> setName(final int articleId, final String newName) {
         return Result.of(articleId)
-                     .flatMap(this::getArticleById)
+                     .flatMap(warehouse::getArticleById)
                      .flatMap(article -> warehouse.setName(article, newName))
                      .map(AbstractArticleViewModel::getViewArticle);
     }
 
     @Override
     public Result<Empty> addRecord(final int stockId, final double amount, final Record.Action action, final Date date) {
-        final Result<Stock> stockResult = getStockById(stockId);
+        final Result<Stock> stockResult = warehouse.getStockById(stockId);
         return stockResult.flatMap(stock -> Quantity.of(amount, stock.getArticle().getUnitOfMeasure()))
                           .flatMap(quantity -> stockResult.getValue().addRecord(new Record(quantity, date, action)))
                           .toEmpty();
@@ -128,26 +123,12 @@ public final class WarehouseControllerImpl implements WarehouseController {
 
     @Override
     public Result<AbstractArticleViewModel> getViewArticleById(final int articleId) {
-        return getArticleById(articleId).map(AbstractArticleViewModel::getViewArticle);
+        return warehouse.getArticleById(articleId).map(AbstractArticleViewModel::getViewArticle);
     }
 
     @Override
     public Result<DetailStockViewModel> getViewStockById(final int stockId) {
-        return getStockById(stockId).map(DetailStockViewModel::getDetailViewStock);
-    }
-
-    private Result<Article> getArticleById(final int articleId) {
-        final QueryArticle queryArticle = new QueryArticleBuilder().setMinID(articleId).setMaxID(articleId).build();
-        return Result.of(warehouse.getArticles(queryArticle))
-                     .require(articles -> articles.size() == 1, new IllegalArgumentException(ARTICLE_NOT_FOUND))
-                     .map(articles -> articles.get(0));
-    }
-
-    private Result<Stock> getStockById(final int stockId) {
-        final QueryStock queryStock = new QueryStockBuilder().setMinId(stockId).setMaxId(stockId).build().getValue();
-        return Result.of(warehouse.getStocks(queryStock))
-                     .require(stocks -> stocks.size() == 1, new IllegalArgumentException(STOCK_NOT_FOUND))
-                     .map(stocks -> stocks.get(0));
+        return warehouse.getStockById(stockId).map(DetailStockViewModel::getDetailViewStock);
     }
 
 }
