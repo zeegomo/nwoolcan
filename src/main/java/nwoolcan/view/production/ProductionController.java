@@ -25,6 +25,7 @@ import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.ProductionViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("NullAway")
 public final class ProductionController
     extends SubViewController
-    implements InitializableController<ProductionViewModel> {
+    implements InitializableController<ProductionViewModel> { //TODO remove initializable controller. it is not that actually
 
     @FXML
     private Label lblNumberStockedBatches;
@@ -70,6 +71,11 @@ public final class ProductionController
 
     @Override
     public void initData(final ProductionViewModel data) {
+        loadData();
+    }
+
+    private void loadData() {
+        final ProductionViewModel data = getController().getProductionViewModel();
         lblTotalNumberBatches.setText(Long.toString(data.getNBatches()));
         lblNumberProductionBatches.setText(Long.toString(data.getNInProgressBatches()));
         lblNumberEndedBatches.setText(Long.toString(data.getNEndedBatches()));
@@ -107,7 +113,7 @@ public final class ProductionController
             )
         );
 
-        final MasterTableViewModel<MasterBatchViewModel, DetailBatchViewModel> masterViewModel = new MasterTableViewModel<>(
+        final MasterTableViewModel<MasterBatchViewModel, Pair<Integer, Runnable>> masterViewModel = new MasterTableViewModel<>(
             Arrays.asList(
                 new ColumnDescriptor("ID", "id"),
                 new ColumnDescriptor("Beer name", "beerDescriptionName"),
@@ -125,7 +131,7 @@ public final class ProductionController
             mbvm -> {
                 Result<DetailBatchViewModel> res = this.getController().getBatchController().getDetailBatchViewModelById(mbvm.getId());
                 if (res.isPresent()) {
-                    return res.getValue();
+                    return Pair.of(res.getValue().getId(), this::loadData);
                 }
 
                 this.showAlertAndWait("Batch id not found!");

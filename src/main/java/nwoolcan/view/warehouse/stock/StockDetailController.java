@@ -151,7 +151,7 @@ public final class StockDetailController extends SubViewController implements In
     private void goToBatchButtonClick(final ActionEvent actionEvent) {
         final Result<DetailBatchViewModel> batchResult = getController().getBatchController().getDetailBatchViewModelById(batchId);
         if (batchResult.isPresent()) {
-            overlayView(ViewType.BATCH_DETAIL, batchResult.getValue());
+            overlayView(ViewType.BATCH_DETAIL, Pair.<Integer, Runnable>of(batchResult.getValue().getId(), this::loadData));
         } else {
             new Alert(
                 Alert.AlertType.ERROR,
