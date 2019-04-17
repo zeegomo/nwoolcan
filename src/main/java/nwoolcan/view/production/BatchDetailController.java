@@ -25,6 +25,8 @@ import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.MasterStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.review.NewBatchEvaluationViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.StockBatchViewModel;
+import nwoolcan.viewmodel.brewery.production.step.DetailStepViewModel;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.logging.Logger;
@@ -81,7 +83,7 @@ public final class BatchDetailController
         this.goToNextStepButton.setDisable(data.isEnded());
         this.stockBatchButton.setDisable(!data.isEnded() || data.isStocked());
 
-        final MasterTableViewModel<MasterStepViewModel, Object> masterViewModel = new MasterTableViewModel<>(
+        final MasterTableViewModel<MasterStepViewModel, DetailStepViewModel> masterViewModel = new MasterTableViewModel<>(
             Arrays.asList(
                 new ColumnDescriptor("Step name", "type"),
                 new ColumnDescriptor("Start date", "startDate"),
@@ -91,10 +93,14 @@ public final class BatchDetailController
             ),
             data.getSteps(),
             ViewType.STEP_DETAIL,
-            mbvm -> null //TODO convert into step detail view model
+            stepMaster -> this.getController().getBatchController().getStepController().getDetailStepViewModel(
+                data.getId(),
+                stepMaster.getType().getName()
+            ).getValue() //TODO can be an error, check needed
         );
 
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
+
         if (data.getReview() != null) {
             this.getViewManager().getView(ViewType.BATCH_EVALUATION, data.getReview())
                 .peek(this.reviewContainer::substitute)
@@ -161,9 +167,8 @@ public final class BatchDetailController
 
     /**
      * Goes back to the production view.
-        *
-        * @param event the occurred event.
-        */
+     * @param event the occurred event.
+     */
     public void goBackButtonClicked(final ActionEvent event) {
         this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
     }
@@ -178,7 +183,6 @@ public final class BatchDetailController
 
     /**
      * Opens a modal that let the user go to the next production step.
-     *
      * @param event the occurred event.
      */
     public void goToNextStepButtonClicked(final ActionEvent event) {
