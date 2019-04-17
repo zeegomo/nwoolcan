@@ -18,7 +18,6 @@ import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.subview.SubView;
-import nwoolcan.view.subview.SubViewController;
 import org.apache.commons.lang3.tuple.Pair;
 import java.util.Optional;
 
