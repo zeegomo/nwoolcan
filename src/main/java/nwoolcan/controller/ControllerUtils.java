@@ -4,10 +4,6 @@ import nwoolcan.model.brewery.Brewery;
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.batch.QueryBatch;
 import nwoolcan.model.brewery.batch.QueryBatchBuilder;
-import nwoolcan.model.brewery.warehouse.article.ArticleType;
-import nwoolcan.model.brewery.warehouse.article.BeerArticle;
-import nwoolcan.model.brewery.warehouse.article.QueryArticle;
-import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.utils.Result;
 
 import java.util.Optional;
@@ -43,22 +39,5 @@ public final class ControllerUtils {
                      .require(Optional::isPresent,
                          new IllegalArgumentException(BATCH_NOT_FOUND))
                      .map(Optional::get);
-    }
-
-    /**
-     * Returns a {@link BeerArticle} with the specified id.
-     * @param beerArticleId the beer article id.
-     * @return a {@link Result} bearing the found beer article or an error if no beer article is found.
-     */
-    public Result<BeerArticle> getBeerArticleById(final int beerArticleId) {
-        final QueryArticle querySingleBeerArticle = new QueryArticleBuilder().setMinID(beerArticleId)
-                                                                             .setMaxID(beerArticleId)
-                                                                             .build();
-        return Result.of(brewery.getWarehouse().getArticles(querySingleBeerArticle))
-                     .require(articles -> articles.size() == 1,
-                         new IllegalArgumentException(BEER_ARTICLE_NOT_FOUND))
-                     .map(articles -> articles.get(0))
-                     .require(article -> article.getArticleType() == ArticleType.FINISHED_BEER)
-                     .map(article -> (BeerArticle) article);
     }
 }

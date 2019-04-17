@@ -158,7 +158,9 @@ public final class BreweryController implements Controller {
     public Result<Empty> stockBatch(final int batchId, final int beerArticleId, final Date expirationDate) {
         final ControllerUtils utils = new ControllerUtils(this.brewery);
         final Result<Batch> batchResult = utils.getBatchById(batchId);
-        final Result<BeerArticle> beerArticleResult = utils.getBeerArticleById(beerArticleId);
+        final Result<BeerArticle> beerArticleResult = brewery.getWarehouse()
+                                                             .getArticleById(ArticleType.FINISHED_BEER, beerArticleId)
+                                                             .map(article -> (BeerArticle) article);
 
         if (batchResult.isPresent() && beerArticleResult.isPresent()) {
             return Result.of(this.brewery.stockBatch(
@@ -175,7 +177,9 @@ public final class BreweryController implements Controller {
     public Result<Empty> stockBatch(final int batchId, final int beerArticleId) {
         final ControllerUtils utils = new ControllerUtils(this.brewery);
         final Result<Batch> batchResult = utils.getBatchById(batchId);
-        final Result<BeerArticle> beerArticleResult = utils.getBeerArticleById(beerArticleId);
+        final Result<BeerArticle> beerArticleResult = brewery.getWarehouse()
+                                                             .getArticleById(beerArticleId)
+                                                             .map(article -> (BeerArticle) article);
 
         if (batchResult.isPresent() && beerArticleResult.isPresent()) {
             return Result.of(this.brewery.stockBatch(

@@ -3,6 +3,7 @@ package nwoolcan.model.brewery.warehouse;
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleManager;
+import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
@@ -16,6 +17,7 @@ import nwoolcan.utils.Result;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,6 +26,9 @@ import java.util.stream.Collectors;
  * Warehouse implementation.
  */
 public final class WarehouseImpl implements Warehouse {
+
+    private static final String ARTICLE_NOT_FOUND = "Article not found.";
+    private static final String STOCK_NOT_FOUND = "Stock not found.";
 
     private final ArticleManager articleManager;
     private final StockManager stockManager;
@@ -41,14 +46,6 @@ public final class WarehouseImpl implements Warehouse {
     public List<Stock> getStocks(final QueryStock queryStock) {
         final Set<Stock> stocks = stockManager.getStocks();
         return stocks.stream()
-                     // remove those stocks where query stock specifies a min ID and
-                     // where the id of the stock is less than it.
-                     .filter(stock -> !(queryStock.getMinId().isPresent()
-                         && stock.getId() < queryStock.getMinId().get()))
-                     // remove those stocks where query stock specifies a max ID and
-                     // where the id of the stock is greater than it.
-                     .filter(stock -> !(queryStock.getMaxId().isPresent()
-                         && stock.getId() > queryStock.getMaxId().get()))
                      // remove when article is present in queryStock but the article of
                      // the current stock is different from the one of the query.
                      .filter(stock -> !(queryStock.getArticle().isPresent()
@@ -117,14 +114,6 @@ public final class WarehouseImpl implements Warehouse {
     public List<Article> getArticles(final QueryArticle queryArticle) {
         final Set<Article> articles = articleManager.getArticles();
         return articles.stream()
-                       // remove those article where query article specifies a min ID and
-                       // where the id of the article is less than it.
-                       .filter(article -> !(queryArticle.getMinID().isPresent()
-                            && article.getId() < queryArticle.getMinID().get()))
-                       // remove those article where query article specifies a max ID and
-                       // where the id of the article is greater than it.
-                       .filter(article -> !(queryArticle.getMaxID().isPresent()
-                            && article.getId() > queryArticle.getMaxID().get()))
                        // remove those article where query article specifies the first
                        // lexicographical name and where the name of the article is
                        // lexicographically before it.
@@ -195,6 +184,39 @@ public final class WarehouseImpl implements Warehouse {
     public Result<Article> setName(final Article article, final String newName) {
         return articleManager.setName(article, newName);
     }
+
+    @Override
+    public Result<Article> getArticleById(final int id) {
+        return Result.of(articleManager.getArticles()
+                                     .stream()
+                                     .filter(article -> article.getId() == id).findFirst())
+                     .require(Optional::isPresent, new IllegalArgumentException(ARTICLE_NOT_FOUND))
+                     .map(Optional::get);
+    }
+
+    @Override
+    public Result<Article> getArticleById(final ArticleType articleType, final int id) {
+        return getArticleById(id).require(
+                                            article -> article.getArticleType() == articleType,
+                                            new IllegalArgumentException(ARTICLE_NOT_FOUND)
+                                         );
+    }
+
+    @Override
+    public Result<Stock> getStockById(final int id) {
+        return Result.of(stockManager.getStocks()
+                                       .stream()
+                                       .filter(stock -> stock.getId() == id).findFirst())
+                     .require(Optional::isPresent, new IllegalArgumentException(STOCK_NOT_FOUND))
+                     .map(Optional::get);
+    }
+
+    @Override
+    public Result<BeerStock> getBeerStockById(final int id) {
+        return getStockById(id).require(stock -> stock instanceof BeerStock, new IllegalArgumentException(STOCK_NOT_FOUND))
+                               .map(stock -> (BeerStock) stock);
+    }
+
     /**
      * Comparator which selects the correct comparator accordingly with the
      * {@link QueryStock.SortParameter} and returns its return value.
@@ -248,9 +270,9 @@ public final class WarehouseImpl implements Warehouse {
      * greater than 0 if the first element is greater than the second.
      */
     private int compareBy(final Article a1,
-                              final Article a2,
-                              final QueryArticle.SortParameter by,
-                              final boolean descending) {
+                          final Article a2,
+                          final QueryArticle.SortParameter by,
+                          final boolean descending) {
         final int des = descending ? -1 : 1;
         switch (by) {
             case NAME:

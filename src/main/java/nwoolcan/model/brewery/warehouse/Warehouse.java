@@ -2,6 +2,7 @@ package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.warehouse.article.Article;
+import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
@@ -94,5 +95,30 @@ public interface Warehouse {
      * @return a {@link Result} of {@link Article} for fluency.
      */
     Result<Article> setName(Article article, String newName);
+    /**
+     * Getter of a single {@link Article} based on its id.
+     * @param id to search the {@link Article}.
+     * @return the {@link Article} requested or an error if it does not exist.
+     */
+    Result<Article> getArticleById(int id);
+    /**
+     * Getter of a single {@link Article} based on its id and on its type.
+     * @param id to search the {@link Article}.
+     * @param articleType the type of the article.
+     * @return the {@link Article} requested or an error if it does not exist.
+     */
+    Result<Article> getArticleById(ArticleType articleType, int id);
+    /**
+     * Getter of a single {@link Stock} based on its id.
+     * @param id to search the {@link Stock}.
+     * @return the {@link Stock} requested or an error if it does not exist.
+     */
+    Result<Stock> getStockById(int id);
+    /**
+     * Getter of a single {@link BeerStock} based on its id.
+     * @param id to search the {@link BeerStock}.
+     * @return the {@link BeerStock} requested or an error if it does not exist.
+     */
+    Result<BeerStock> getBeerStockById(int id);
 
 }
