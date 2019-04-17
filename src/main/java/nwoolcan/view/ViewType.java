@@ -65,7 +65,11 @@ public enum ViewType {
     /**
      * Modal for going to the next step in a batch in production.
      */
-    GO_NEXT_STEP_MODAL;
+    GO_NEXT_STEP_MODAL,
+    /**
+     * Modal for stocking a batch.
+     */
+    STOCK_BATCH_MODAL;
 
     /**
      * Name of the FXML files associated with this type of view.
