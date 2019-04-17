@@ -69,6 +69,7 @@ public final class GoNextStepModalController
         this.nextStepTypesComboBox.setItems(FXCollections.observableList(
             new ArrayList<>(data.getNextPossibleStepTypes())
         ));
+        this.nextStepTypesComboBox.getSelectionModel().selectFirst();
 
         this.finalizeStepTitlePane.disableProperty().bind(
             this.chooseFinalizeNextStepCheckBox.selectedProperty().not()
@@ -77,6 +78,7 @@ public final class GoNextStepModalController
         this.endSizeUnitOfMeasureComboBox.setItems(FXCollections.observableList(
             data.getPossibleUnitsOfMeasure()
         ));
+        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectFirst();
 
         this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) ->
             this.endSizeUnitOfMeasureSymbolLabel.setText(newV.getSymbol()));
