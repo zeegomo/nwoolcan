@@ -4,11 +4,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import nwoolcan.view.subview.SubView?>
 <?import nwoolcan.view.subview.SubViewContainer?>
 
+<?import javafx.scene.layout.HBox?>
 <SubView fx:id="batchDetailSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.production.BatchDetailController">
     <BorderPane>
         <top>
@@ -51,9 +53,17 @@
                     </BorderPane>
                 </TitledPane>
                 <TitledPane text="Review">
-                    <SubViewContainer>
-                        <!-- TODO fill with evaluation sub view -->
-                    </SubViewContainer>
+                    <BorderPane>
+                        <center>
+                            <SubViewContainer fx:id="reviewContainer" />
+                        </center>
+                        <bottom>
+                            <HBox BorderPane.alignment="BOTTOM_CENTER"  alignment="CENTER">
+                                <Button fx:id="addReviewButton" onAction="#addReviewClick" text="Add review" />
+                                <Button fx:id="viewReviewButton" onAction="#viewReviewClick" text="View" />
+                            </HBox>
+                        </bottom>
+                    </BorderPane>
                 </TitledPane>
             </VBox>
         </center>
