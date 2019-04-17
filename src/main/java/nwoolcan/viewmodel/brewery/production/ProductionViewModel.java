@@ -81,4 +81,24 @@ public class ProductionViewModel {
                            .filter(Batch::isEnded)
                            .count();
     }
+
+    /**
+     * Returns the number of ended batches, but not stocked.
+     * @return the number of ended batches, but not stocked.
+     */
+    public long getNEndedNotStockedBatches() {
+        return this.batches.stream()
+                           .filter(b -> b.isEnded() && !b.isStocked())
+                           .count();
+    }
+
+    /**
+     * Returns the number of stocked batches.
+     * @return the number of stocked batches.
+     */
+    public long getNStockedBatches() {
+        return this.batches.stream()
+                           .filter(Batch::isStocked)
+                           .count();
+    }
 }
