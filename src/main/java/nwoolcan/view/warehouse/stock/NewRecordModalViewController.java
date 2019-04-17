@@ -66,6 +66,28 @@ public final class NewRecordModalViewController extends AbstractViewController i
         super(controller, viewManager);
     }
 
+    @Override
+    public void initData(final Integer stockId) {
+        this.stockId = stockId;
+        recordAction.getItems().setAll(Record.Action.values());
+        recordAction.getSelectionModel().selectLast();
+        recordHour.getItems().setAll(IntStream.rangeClosed(FIRST_HOUR, LAST_HOUR)
+                                              .boxed()
+                                              .collect(Collectors.toList()));
+        recordHour.getSelectionModel().select(MIDDLE_HOUR_INDEX);
+        recordMinute.getItems().setAll(IntStream.rangeClosed(FIRST_MINUTE, LAST_MINUTE)
+                                                .boxed()
+                                                .collect(Collectors.toList()));
+        recordMinute.getSelectionModel().select(MIDDLE_MINUTE_INDEX);
+        checkSelectDate.setSelected(false);
+    }
+
+    @FXML
+    private void specifyDateClick(final ActionEvent actionEvent) {
+        dateVBox.setManaged(checkSelectDate.isSelected());
+        dateVBox.setVisible(checkSelectDate.isSelected());
+        recordDatePicker.setValue(LocalDate.now());
+    }
 
     @FXML
     private void addRecordClick(final ActionEvent actionEvent) {
@@ -95,28 +117,5 @@ public final class NewRecordModalViewController extends AbstractViewController i
         } else {
             ((Stage) this.recordDatePicker.getScene().getWindow()).close();
         }
-    }
-
-    @Override
-    public void initData(final Integer stockId) {
-        this.stockId = stockId;
-        recordAction.getItems().setAll(Record.Action.values());
-        recordAction.getSelectionModel().selectLast();
-        recordHour.getItems().setAll(IntStream.rangeClosed(FIRST_HOUR, LAST_HOUR)
-                                              .boxed()
-                                              .collect(Collectors.toList()));
-        recordHour.getSelectionModel().select(MIDDLE_HOUR_INDEX);
-        recordMinute.getItems().setAll(IntStream.rangeClosed(FIRST_MINUTE, LAST_MINUTE)
-                                                .boxed()
-                                                .collect(Collectors.toList()));
-        recordMinute.getSelectionModel().select(MIDDLE_MINUTE_INDEX);
-        checkSelectDate.setSelected(false);
-    }
-
-    @FXML
-    private void specifyDateClick(final ActionEvent actionEvent) {
-        dateVBox.setManaged(checkSelectDate.isSelected());
-        dateVBox.setVisible(checkSelectDate.isSelected());
-        recordDatePicker.setValue(LocalDate.now());
     }
 }
