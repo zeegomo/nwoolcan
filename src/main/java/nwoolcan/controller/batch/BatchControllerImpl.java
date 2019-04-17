@@ -18,14 +18,12 @@ import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
 import org.apache.commons.lang3.tuple.Triple;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import nwoolcan.viewmodel.brewery.production.batch.StockBatchViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -123,13 +121,10 @@ public final class BatchControllerImpl implements BatchController {
         List<BeerArticleViewModel> beerArticles = this.model.getWarehouse().getArticles(new QueryArticleBuilder().setIncludeArticleType(ArticleType.FINISHED_BEER)
                                                                                                                  .build())
                                                             .stream()
-                                                            .filter(a -> {
-                                                                if (res.isPresent()) {
-                                                                    return res.getValue().getCurrentSize().getUnitOfMeasure()
-                                                                        .equals(a.getUnitOfMeasure());
-                                                                }
-                                                                return false;
-                                                            })
+                                                            .filter(a -> res.map(b -> b.getCurrentSize()
+                                                                                       .getUnitOfMeasure()
+                                                                                       .equals(a.getUnitOfMeasure()))
+                                                                            .orElse(false))
                                                             .map(a -> a.toBeerArticle().getValue())
                                                             .map(BeerArticleViewModel::new)
                                                             .collect(Collectors.toList());

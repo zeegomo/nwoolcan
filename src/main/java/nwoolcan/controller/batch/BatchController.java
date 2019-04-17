@@ -10,7 +10,6 @@ import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
 import org.apache.commons.lang3.tuple.Triple;
-
 import java.util.Optional;
 import java.util.Set;
 import nwoolcan.viewmodel.brewery.production.batch.StockBatchViewModel;

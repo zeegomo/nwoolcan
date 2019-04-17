@@ -38,6 +38,8 @@ public final class ProductionController
     implements InitializableController<ProductionViewModel> {
 
     @FXML
+    private Label lblNumberStockedBatches;
+    @FXML
     private Label lblTotalNumberBatches;
     @FXML
     private Label lblNumberEndedBatches;
@@ -71,14 +73,18 @@ public final class ProductionController
         lblTotalNumberBatches.setText(Long.toString(data.getNBatches()));
         lblNumberProductionBatches.setText(Long.toString(data.getNInProgressBatches()));
         lblNumberEndedBatches.setText(Long.toString(data.getNEndedBatches()));
+        lblNumberStockedBatches.setText(Long.toString(data.getNStockedBatches()));
 
         if (data.getNBatches() > 0) {
-            pieChartBatchesStatus.setData(
-                FXCollections.observableArrayList(
-                    new PieChart.Data("Progress", data.getNInProgressBatches()),
-                    new PieChart.Data("Ended", data.getNEndedBatches())
-                )
-            );
+            if (data.getNInProgressBatches() > 0) {
+                pieChartBatchesStatus.getData().add(new PieChart.Data("In progress", data.getNInProgressBatches()));
+            }
+            if (data.getNEndedNotStockedBatches() > 0) {
+                pieChartBatchesStatus.getData().add(new PieChart.Data("Ended not stocked", data.getNEndedNotStockedBatches()));
+            }
+            if (data.getNStockedBatches() > 0) {
+                pieChartBatchesStatus.getData().add(new PieChart.Data("Stocked", data.getNStockedBatches()));
+            }
         }
 
         pieChartBatchesStyleTypes.setData(
@@ -111,7 +117,8 @@ public final class ProductionController
                 new ColumnDescriptor("Start date", "startDate"),
                 new ColumnDescriptor("Initial size", "initialBatchSize"),
                 new ColumnDescriptor("Current size", "currentBatchSize"),
-                new ColumnDescriptor("Ended", "isEnded")
+                new ColumnDescriptor("Ended", "ended"),
+                new ColumnDescriptor("Stocked", "stocked")
             ),
             data.getBatches(),
             ViewType.BATCH_DETAIL,
