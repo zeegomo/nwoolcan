@@ -140,6 +140,9 @@ public class DatabaseJsonImplTest {
         Assert.assertEquals(resQuantErrorDeserialized.getError().getClass(), resQuantError.getError().getClass());
     }
 
+    /**
+     * Test serialization of hash maps.
+     */
     @Test
     public void hashMap() {
         final Map<Quantity, Quantity> map = new HashMap<>();
