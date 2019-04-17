@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -14,13 +15,17 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
+import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
+import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.stock.BeerStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.DetailStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.RecordViewModel;
 import org.apache.commons.lang3.tuple.Pair;
@@ -33,6 +38,8 @@ import java.util.List;
 @SuppressWarnings("NullAway")
 public final class StockDetailController extends SubViewController implements InitializableController<Pair<Integer, Runnable>> {
 
+    @FXML
+    private Button buttonGoToBatch;
     @FXML
     private Label lblArticle;
     @FXML
@@ -52,6 +59,7 @@ public final class StockDetailController extends SubViewController implements In
 
     private int articleId;
     private int stockId;
+    private int batchId;
     private Runnable updateFather;
 
     /**
@@ -80,6 +88,11 @@ public final class StockDetailController extends SubViewController implements In
         lblLastModified.setText(data.getLastModified());
         lblUsedQt.setText(data.getUsedQuantity().toString());
         lblId.setText(Integer.toString(data.getId()));
+        if (data.getArticle().getArticleType() == ArticleType.FINISHED_BEER) {
+            this.batchId = ((BeerStockViewModel) data).getBatchId();
+            this.buttonGoToBatch.setVisible(true);
+            this.buttonGoToBatch.setManaged(true);
+        }
 
         setTable(data.getRecords());
     }
@@ -137,6 +150,15 @@ public final class StockDetailController extends SubViewController implements In
     }
     @FXML
     private void goToBatchButtonClick(final ActionEvent actionEvent) {
-
+        final Result<DetailBatchViewModel> batchResult = getController().getBatchController().getDetailBatchViewModelById(batchId);
+        if (batchResult.isPresent()) {
+            overlayView(ViewType.BATCH_DETAIL, batchResult.getValue());
+        } else {
+            new Alert(
+                Alert.AlertType.ERROR,
+                "Internal Error: " + batchResult.getError().getMessage(),
+                ButtonType.CLOSE
+            ).showAndWait();
+        }
     }
 }

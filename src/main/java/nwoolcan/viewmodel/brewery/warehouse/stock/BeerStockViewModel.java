@@ -21,7 +21,7 @@ public class BeerStockViewModel extends DetailStockViewModel {
      * Return the id of the {@link nwoolcan.model.brewery.batch.Batch} related to this {@link BeerStockViewModel}.
      * @return the id of the {@link nwoolcan.model.brewery.batch.Batch} related to this {@link BeerStockViewModel}.
      */
-    public final Integer getBatchViewModel() {
+    public final Integer getBatchId() {
         return batchId;
     }
 }

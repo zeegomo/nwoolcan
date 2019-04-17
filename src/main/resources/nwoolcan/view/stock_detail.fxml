@@ -31,7 +31,7 @@
                     <Button text="Back" onAction="#backButtonClick"/>
                     <Button text="Add Record" onAction="#addRecordButtonClick"/>
                     <Button text="Go to article" onAction="#goToArticleButtonClick"/>
-                    <Button text="Go to batch" onAction="#goToBatchButtonClick"/>
+                    <Button fx:id="buttonGoToBatch" text="Go to batch" onAction="#goToBatchButtonClick" visible="false" managed="false"/>
                 </HBox>
                 <TitledPane text="General information">
                     <HBox>
