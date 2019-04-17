@@ -67,7 +67,7 @@ public final class ArticleManager {
                                                                   final UnitOfMeasure unitOfMeasure,
                                                                   final IngredientType ingredientType) {
         IngredientArticle ingredientArticle = new IngredientArticleImpl(nextAvailableId, name, unitOfMeasure, ingredientType);
-        return (IngredientArticle) getArticle(ingredientArticle);
+        return getArticle(ingredientArticle).toIngredientArticle().getValue();
     }
     /**
      * Return a {@link Set} of all the managed {@link Article}.
