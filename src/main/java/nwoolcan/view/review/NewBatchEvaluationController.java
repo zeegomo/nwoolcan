@@ -127,6 +127,7 @@ public final class NewBatchEvaluationController extends SubViewController
                 .collect(Collectors.toList());
 
         //Build list of observable properties from controller
+        this.evaluations.clear();
         nodes.forEach(cat -> this.evaluations.put(cat.getLeft(), Pair.of(
             cat.getRight().getInputProperty().get().getLeft(),
             cat.getRight().getInputProperty().get().getRight()
