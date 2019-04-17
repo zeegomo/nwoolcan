@@ -188,25 +188,17 @@ public final class WarehouseImpl implements Warehouse {
     @Override
     public Result<Article> getArticleById(final int id) {
         return Result.of(articleManager.getArticles()
-                                     .stream()
-                                     .filter(article -> article.getId() == id).findFirst())
+                                       .stream()
+                                       .filter(article -> article.getId() == id).findFirst())
                      .require(Optional::isPresent, new IllegalArgumentException(ARTICLE_NOT_FOUND))
                      .map(Optional::get);
     }
 
     @Override
-    public Result<Article> getArticleById(final ArticleType articleType, final int id) {
-        return getArticleById(id).require(
-                                            article -> article.getArticleType() == articleType,
-                                            new IllegalArgumentException(ARTICLE_NOT_FOUND)
-                                         );
-    }
-
-    @Override
     public Result<Stock> getStockById(final int id) {
         return Result.of(stockManager.getStocks()
-                                       .stream()
-                                       .filter(stock -> stock.getId() == id).findFirst())
+                                     .stream()
+                                     .filter(stock -> stock.getId() == id).findFirst())
                      .require(Optional::isPresent, new IllegalArgumentException(STOCK_NOT_FOUND))
                      .map(Optional::get);
     }
