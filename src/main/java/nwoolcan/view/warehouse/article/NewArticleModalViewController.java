@@ -12,6 +12,7 @@ import nwoolcan.controller.Controller;
 import nwoolcan.controller.warehouse.WarehouseController;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
+import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.ViewManager;
@@ -46,7 +47,7 @@ public final class NewArticleModalViewController extends AbstractViewController 
 
     @FXML
     private void initialize() {
-        newArticleUnitOfMeasure.getItems().setAll(UnitOfMeasure.values());
+        newArticleUnitOfMeasure.getItems().setAll(Quantities.getValidUnitsOfMeasure());
         newArticleUnitOfMeasure.getSelectionModel().selectFirst();
         newArticleType.getItems().addAll(ArticleType.values());
         newArticleType.getSelectionModel().selectFirst();
