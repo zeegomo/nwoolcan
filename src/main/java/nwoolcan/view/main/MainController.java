@@ -8,7 +8,6 @@ import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubViewContainer;
-
 /**
  * Handles the Main view.
  */

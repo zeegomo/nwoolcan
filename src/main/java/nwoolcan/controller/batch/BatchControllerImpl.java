@@ -18,14 +18,12 @@ import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDTO;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
 import org.apache.commons.lang3.tuple.Triple;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import nwoolcan.viewmodel.brewery.production.batch.StockBatchViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +36,7 @@ public final class BatchControllerImpl implements BatchController {
 
     private final Brewery model;
     private final ControllerUtils utils;
+    private final StepController stepController;
 
     /**
      * Basic constructor with reference to the {@link Brewery} model.
@@ -46,11 +45,12 @@ public final class BatchControllerImpl implements BatchController {
     public BatchControllerImpl(final Brewery model) {
         this.model = model;
         this.utils = new ControllerUtils(model);
+        this.stepController = new StepControllerImpl(this.model);
     }
 
     @Override
     public StepController getStepController() {
-        return new StepControllerImpl(this.model);
+        return this.stepController;
     }
 
     @Override

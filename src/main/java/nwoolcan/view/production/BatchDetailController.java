@@ -23,10 +23,13 @@ import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.MasterStepViewModel;
+import nwoolcan.viewmodel.brewery.production.batch.review.NewBatchEvaluationViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.StockBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.step.DetailStepViewModel;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.logging.Logger;
 
 /**
  * View controller for the batch detail view.
@@ -35,7 +38,7 @@ import java.util.Arrays;
 public final class BatchDetailController
     extends SubViewController
     implements InitializableController<DetailBatchViewModel> {
-
+    private static final String TYPES_LOAD_FAILED = "Could not load types";
     @FXML
     private Button goToNextStepButton;
     @FXML
@@ -45,15 +48,21 @@ public final class BatchDetailController
     private SubViewContainer masterTableContainer;
     @FXML
     private Button goBackButton;
-
+    @FXML
+    private SubViewContainer reviewContainer;
     @FXML
     private SubView batchDetailSubView;
     @FXML
     private SubViewContainer batchInfoContainer;
     @FXML
     private Button viewInfoDetailButton;
+    @FXML
+    private Button viewReviewButton;
+    @FXML
+    private Button addReviewButton;
 
     private DetailBatchViewModel data;
+
 
     /**
      * Creates itself and gets injected.
@@ -92,9 +101,63 @@ public final class BatchDetailController
 
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
 
-//        if (data.getReview() != null) {
-//            //TODO init review sub view
-//        }
+        if (data.getReview() != null) {
+            this.getViewManager().getView(ViewType.BATCH_EVALUATION, data.getReview())
+                .peek(this.reviewContainer::substitute)
+                .peekError(err -> Logger.getGlobal().severe("Could not load: " + err.getMessage()));
+            this.viewReviewButton.setDisable(false);
+        } else {
+            this.viewReviewButton.setDisable(true);
+        }
+
+        if (data.isEnded()) {
+            this.addReviewButton.setDisable(false);
+        } else {
+            this.addReviewButton.setDisable(true);
+        }
+    }
+    /**
+     * Opens review detail view.
+     * @param event the recorded event.
+     */
+    public void viewReviewClick(final ActionEvent event) {
+        this.getController()
+            .getBatchController()
+            .getBatchEvaluation(this.data.getId())
+            .peek(review -> review.ifPresent(val -> this.overlayView(ViewType.BATCH_EVALUATION_DETAIL, val)));
+    }
+    /**
+     * Opens a modal that let the user go to the next production step.
+     * @param event the recorded action.
+     */
+    public void addReviewClick(final ActionEvent event) {
+            final Stage modal = new Stage();
+            final Window window = this.getSubView().getScene().getWindow();
+
+            modal.initOwner(window);
+            modal.initModality(Modality.WINDOW_MODAL);
+
+            NewBatchEvaluationViewModel data = new NewBatchEvaluationViewModel(
+                this.getController()
+                    .getBatchController()
+                    .getAvailableBatchEvaluationTypes()
+                    .peekError(err -> this.showAlertAndWait(TYPES_LOAD_FAILED + ": " + err.getMessage()))
+                    .peekError(err -> Logger.getGlobal().severe(TYPES_LOAD_FAILED + ": " + err.getMessage()))
+                    .orElse(HashSet::new),
+                this.data.getId()
+            );
+
+            final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_BATCH_EVALUATION_MODAL,
+                data).orElse(new AnchorPane()));
+
+            modal.setScene(scene);
+            modal.centerOnScreen();
+            modal.showAndWait();
+
+            if (modal.getUserData() != null) {
+                this.substituteView(ViewType.BATCH_DETAIL,
+                    this.getController().getBatchController().getDetailBatchViewModelById(this.data.getId()).getValue());
+            }
     }
 
     @Override
@@ -123,7 +186,7 @@ public final class BatchDetailController
      * @param event the occurred event.
      */
     public void goToNextStepButtonClicked(final ActionEvent event) {
-        final Stage modal =  new Stage();
+        final Stage modal = new Stage();
         final Window window = this.getSubView().getScene().getWindow();
 
         modal.initOwner(window);
