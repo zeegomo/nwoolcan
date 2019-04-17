@@ -16,6 +16,7 @@ import nwoolcan.model.brewery.batch.misc.WaterMeasurementFactory;
 import nwoolcan.model.brewery.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterFactory;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum;
+import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
@@ -157,7 +158,7 @@ public final class BreweryController implements Controller {
         final Result<Batch> batchResult = brewery.getBatchById(batchId);
         final Result<BeerArticle> beerArticleResult = brewery.getWarehouse()
                                                              .getArticleById(ArticleType.FINISHED_BEER, beerArticleId)
-                                                             .map(article -> (BeerArticle) article);
+                                                             .flatMap(Article::toBeerArticle);
 
         if (batchResult.isPresent() && beerArticleResult.isPresent()) {
             return Result.of(this.brewery.stockBatch(
