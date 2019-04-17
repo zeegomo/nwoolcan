@@ -25,7 +25,7 @@ public final class NewArticleModalViewController extends AbstractViewController 
     @FXML
     private Button createArticleButton;
     @FXML
-    private VBox ingredientTypeFlowPane;
+    private VBox ingredientTypeVBox;
     @FXML
     private TextField newArticleName;
     @FXML
@@ -61,8 +61,8 @@ public final class NewArticleModalViewController extends AbstractViewController 
     }
 
     private void updateClicks() {
-        ingredientTypeFlowPane.setVisible(newArticleType.getValue() == ArticleType.INGREDIENT);
-        ingredientTypeFlowPane.setManaged(newArticleType.getValue() == ArticleType.INGREDIENT);
+        ingredientTypeVBox.setVisible(newArticleType.getValue() == ArticleType.INGREDIENT);
+        ingredientTypeVBox.setManaged(newArticleType.getValue() == ArticleType.INGREDIENT);
         createArticleButton.setDisable(newArticleName.getText().isEmpty());
     }
 
@@ -90,7 +90,7 @@ public final class NewArticleModalViewController extends AbstractViewController 
                 break;
         }
 
-        ((Stage) this.ingredientTypeFlowPane.getScene().getWindow()).close();
+        ((Stage) this.ingredientTypeVBox.getScene().getWindow()).close();
     }
 
     @FXML

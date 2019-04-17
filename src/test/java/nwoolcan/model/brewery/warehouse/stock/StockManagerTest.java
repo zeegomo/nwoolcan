@@ -26,20 +26,13 @@ import java.util.Set;
  */
 public class StockManagerTest {
 
-    private final StockManager stockInstance = StockManager.getInstance();
-    private final ArticleManager articInstance = ArticleManager.getInstance();
+    private final ArticleManager articleManager = new ArticleManager();
+    private final StockManager stockManager = new StockManager(articleManager);
     private static final String GIAMPIERO = "Giampiero Dummy Name";
     private static final UnitOfMeasure UOM = UnitOfMeasure.UNIT;
-    private final Article giampiArtic = articInstance.createMiscArticle(GIAMPIERO, UOM);
+    private final Article giampiArtic = articleManager.createMiscArticle(GIAMPIERO, UOM);
     private static final Integer WRONG_ID = -1;
 
-    /**
-     * Test getInstance returns exactly the same instance.
-     */
-    @Test
-    public void getInstance() {
-        Assert.assertSame(StockManager.getInstance(), stockInstance);
-    }
     /**
      * Check id. Id has to be the same if stock is the same. Id should not get verified if the
      * stock is not built by the stock manager.
@@ -47,11 +40,11 @@ public class StockManagerTest {
     @Test
     public void checkId() {
         final Stock wrongStock = new StockImpl(WRONG_ID, giampiArtic, null);
-        final Result<Stock> testStockCorrectResult = stockInstance.createStock(giampiArtic, null);
+        final Result<Stock> testStockCorrectResult = stockManager.createStock(giampiArtic, null);
         Assert.assertTrue(testStockCorrectResult.isPresent());
         Stock testStockCorrect = testStockCorrectResult.getValue();
-        Assert.assertTrue(stockInstance.checkId(testStockCorrect));
-        Assert.assertFalse(stockInstance.checkId(wrongStock));
+        Assert.assertTrue(stockManager.checkId(testStockCorrect));
+        Assert.assertFalse(stockManager.checkId(wrongStock));
     }
     /**
      * Test create a stock should return the same stock if built with same parameters.
@@ -59,8 +52,8 @@ public class StockManagerTest {
     @Test
     public void createStock() {
         final Date date = new Date();
-        final Result<Stock> resStock1 = stockInstance.createStock(giampiArtic, date);
-        final Result<Stock> resStock2 = stockInstance.createStock(giampiArtic, date);
+        final Result<Stock> resStock1 = stockManager.createStock(giampiArtic, date);
+        final Result<Stock> resStock2 = stockManager.createStock(giampiArtic, date);
         Assert.assertTrue(resStock1.isPresent());
         Assert.assertTrue(resStock2.isPresent());
         Assert.assertEquals(resStock1.getValue(), resStock2.getValue());
@@ -85,22 +78,22 @@ public class StockManagerTest {
             }
         ).build(beerDescription, batchMethod, initialSize, initialStep).getValue();
         final Date date = new Date();
-        final BeerArticle beerArticle = articInstance.createBeerArticle(GIAMPIERO, UnitOfMeasure.BOTTLE_33_CL);
-        final Result<BeerStock> beerStockResult = stockInstance.createBeerStock(beerArticle, date, batch);
-        final Result<BeerStock> beerStockResult1 = stockInstance.createBeerStock(beerArticle, date, batch);
+        final BeerArticle beerArticle = articleManager.createBeerArticle(GIAMPIERO, UnitOfMeasure.BOTTLE_33_CL);
+        final Result<BeerStock> beerStockResult = stockManager.createBeerStock(beerArticle, date, batch);
+        final Result<BeerStock> beerStockResult1 = stockManager.createBeerStock(beerArticle, date, batch);
         Assert.assertTrue(beerStockResult.isPresent());
         Assert.assertTrue(beerStockResult1.isPresent());
         final BeerStock beerStock = beerStockResult.getValue();
         final BeerStock beerStock1 = beerStockResult1.getValue();
         Assert.assertSame(beerStock.getId(), beerStock1.getId());
-        Assert.assertFalse(stockInstance.getStocks().isEmpty());
+        Assert.assertFalse(stockManager.getStocks().isEmpty());
     }
     /**
      * Test get stock. It should return all the stock registered.
      */
     @Test
     public void getStocks() {
-        final Set<Stock> stocks = stockInstance.getStocks();
+        final Set<Stock> stocks = stockManager.getStocks();
         final Set<Integer> stocksIds = new HashSet<>();
         for (final Stock s : stocks) {
             Assert.assertFalse(stocksIds.contains(s.getId()));

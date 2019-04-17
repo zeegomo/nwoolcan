@@ -27,6 +27,10 @@ public enum ViewType {
      */
     NEW_STOCK_MODAL,
     /**
+     * Modal to create a new {@link nwoolcan.model.brewery.warehouse.stock.Record}.
+     */
+    NEW_RECORD_MODAL,
+    /**
      * Detail view to show a {@link nwoolcan.model.brewery.warehouse.article.Article}.
      */
     ARTICLE_DETAIL,
@@ -61,7 +65,11 @@ public enum ViewType {
     /**
      * Modal for going to the next step in a batch in production.
      */
-    GO_NEXT_STEP_MODAL;
+    GO_NEXT_STEP_MODAL,
+    /**
+     * Modal for stocking a batch.
+     */
+    STOCK_BATCH_MODAL;
 
     /**
      * Name of the FXML files associated with this type of view.

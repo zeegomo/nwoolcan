@@ -3,7 +3,6 @@ package nwoolcan.model.brewery.warehouse.article;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -16,32 +15,23 @@ import java.util.Set;
  */
 public final class ArticleManager {
 
-    @Nullable private static ArticleManager instance;
     private static final String ARTICLE_NOT_REGISTERED = "The article was not registered. You can not change its name.";
     private static final String ARTICLE_WITH_NEW_NAME_ALREADY_REGISTERED = "Changing the name to this article would produce an article which already exists.";
     private int nextAvailableId;
-    private Map<Article, Article> articleToArticle;
+    private final Map<Article, Article> articleToArticle = new HashMap<>();
 
-    private ArticleManager() {
-        nextAvailableId = 1;
-        articleToArticle = new HashMap<>();
-    }
     /**
-     * Returns the only instance of the {@link ArticleManager} using a singleton pattern.
-     * @return the only instance of the {@link ArticleManager} using a singleton pattern.
+     * It is built by the {@link nwoolcan.model.brewery.Brewery} in order to manage all its {@link Article}.
      */
-    public static synchronized ArticleManager getInstance() {
-        if (instance == null) {
-            instance = new ArticleManager();
-        }
-        return instance;
+    public ArticleManager() {
+        nextAvailableId = 1;
     }
     /**
      * Checks the consistency of the article.
      * @param article to be checked.
      * @return a boolean denoting whether the id is correct or not.
      */
-    public synchronized boolean checkId(final Article article) {
+    public boolean checkId(final Article article) {
         return articleToArticle.containsKey(article) && article.getId() == articleToArticle.get(article).getId();
     }
     /**
@@ -50,7 +40,7 @@ public final class ArticleManager {
      * @param unitOfMeasure the {@link UnitOfMeasure} of the {@link Article}.
      * @return a new {@link Article} if it does not exist in the {@link ArticleManager}, otherwise the existing one.
      */
-    public synchronized Article createMiscArticle(final String name,
+    public Article createMiscArticle(final String name,
                                               final UnitOfMeasure unitOfMeasure) {
         Article article = new ArticleImpl(nextAvailableId, name, unitOfMeasure);
         return getArticle(article);
@@ -61,7 +51,7 @@ public final class ArticleManager {
      * @param unitOfMeasure the {@link UnitOfMeasure} of the {@link BeerArticle}.
      * @return a new {@link BeerArticle} if it does not exist in the {@link ArticleManager}, otherwise the existing one.
      */
-    public synchronized BeerArticle createBeerArticle(final String name,
+    public BeerArticle createBeerArticle(final String name,
                                                       final UnitOfMeasure unitOfMeasure) {
         BeerArticle beerArticle = new BeerArticleImpl(nextAvailableId, name, unitOfMeasure);
         return (BeerArticle) getArticle(beerArticle);
@@ -73,7 +63,7 @@ public final class ArticleManager {
      * @param ingredientType the {@link IngredientType} of the {@link IngredientArticle}.
      * @return a new {@link IngredientArticle} if it does not exist in the {@link ArticleManager}, otherwise the existing one.
      */
-    public synchronized IngredientArticle createIngredientArticle(final String name,
+    public IngredientArticle createIngredientArticle(final String name,
                                                                   final UnitOfMeasure unitOfMeasure,
                                                                   final IngredientType ingredientType) {
         IngredientArticle ingredientArticle = new IngredientArticleImpl(nextAvailableId, name, unitOfMeasure, ingredientType);
@@ -92,7 +82,7 @@ public final class ArticleManager {
      * @param newName the new name to be assigned to the {@link Article}.
      * @return a {@link Result} of {@link Article} for fluency.
      */
-    public synchronized Result<Article> setName(final Article article, final String newName) {
+    public Result<Article> setName(final Article article, final String newName) {
         if (!checkId(article)) {
             return Result.error(new IllegalArgumentException(ARTICLE_NOT_REGISTERED));
         }
@@ -113,7 +103,7 @@ public final class ArticleManager {
      * @param article to be checked.
      * @return the parameter if it is not in the map. Otherwise the corresponding into the map.
      */
-    private synchronized Article getArticle(final Article article) {
+    private Article getArticle(final Article article) {
         if (!articleToArticle.containsKey(article)) {
             nextAvailableId++;
             articleToArticle.put(article, article);
