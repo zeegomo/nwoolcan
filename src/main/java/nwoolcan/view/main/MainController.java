@@ -49,7 +49,7 @@ public final class MainController extends AbstractViewController {
      * @param event The occurred event
      */
     public void menuViewProductionClick(final ActionEvent event) {
-        this.getViewManager().getView(ViewType.PRODUCTION, this.getController().getProductionViewModel()).peek(view -> this.contentPane.substitute(view));
+        this.getViewManager().getView(ViewType.PRODUCTION).peek(view -> this.contentPane.substitute(view));
     }
 
     /**

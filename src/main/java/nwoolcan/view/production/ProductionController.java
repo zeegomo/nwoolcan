@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
 import nwoolcan.utils.Result;
-import nwoolcan.view.InitializableController;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.view.ViewManager;
 import nwoolcan.view.ViewType;
@@ -35,8 +34,7 @@ import java.util.stream.Collectors;
  */
 @SuppressWarnings("NullAway")
 public final class ProductionController
-    extends SubViewController
-    implements InitializableController<ProductionViewModel> { //TODO remove initializable controller. it is not that actually
+    extends SubViewController {
 
     @FXML
     private Label lblNumberStockedBatches;
@@ -69,8 +67,8 @@ public final class ProductionController
         super(controller, viewManager);
     }
 
-    @Override
-    public void initData(final ProductionViewModel data) {
+    @FXML
+    private void initialize() {
         loadData();
     }
 
@@ -184,7 +182,7 @@ public final class ProductionController
         modal.showAndWait();
 
         if (modal.getUserData() != null) {
-            this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
+            this.substituteView(ViewType.PRODUCTION);
         }
     }
 
