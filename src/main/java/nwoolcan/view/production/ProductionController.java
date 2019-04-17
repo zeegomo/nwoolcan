@@ -69,10 +69,6 @@ public final class ProductionController
 
     @FXML
     private void initialize() {
-        loadData();
-    }
-
-    private void loadData() {
         final ProductionViewModel data = getController().getProductionViewModel();
         lblTotalNumberBatches.setText(Long.toString(data.getNBatches()));
         lblNumberProductionBatches.setText(Long.toString(data.getNInProgressBatches()));
@@ -80,6 +76,7 @@ public final class ProductionController
         lblNumberStockedBatches.setText(Long.toString(data.getNStockedBatches()));
 
         if (data.getNBatches() > 0) {
+            pieChartBatchesStatus.getData().clear();
             if (data.getNInProgressBatches() > 0) {
                 pieChartBatchesStatus.getData().add(new PieChart.Data("In progress", data.getNInProgressBatches()));
             }
@@ -129,7 +126,7 @@ public final class ProductionController
             mbvm -> {
                 Result<DetailBatchViewModel> res = this.getController().getBatchController().getDetailBatchViewModelById(mbvm.getId());
                 if (res.isPresent()) {
-                    return Pair.of(res.getValue().getId(), this::loadData);
+                    return Pair.of(res.getValue().getId(), this::initialize);
                 }
 
                 this.showAlertAndWait("Batch id not found!");
