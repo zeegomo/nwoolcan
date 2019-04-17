@@ -19,7 +19,7 @@
          fx:id="stockDetailSubView">
     <BorderPane>
         <top>
-            <Label text="Stock Detail" BorderPane.alignment="CENTER">
+            <Label fx:id="lblTitleId" text="Stock Detail" BorderPane.alignment="CENTER">
                 <font>
                     <Font size="28.0" />
                 </font>
@@ -29,8 +29,9 @@
             <VBox>
                 <HBox spacing="5">
                     <Button text="Back" onAction="#backButtonClick"/>
-                    <Button text="Go to article" onAction="#goToArticleButtonClick"/>
                     <Button text="Add Record" onAction="#addRecordButtonClick"/>
+                    <Button text="Go to article" onAction="#goToArticleButtonClick"/>
+                    <Button text="Go to batch" onAction="#goToBatchButtonClick"/>
                 </HBox>
                 <TitledPane text="General information">
                     <HBox>

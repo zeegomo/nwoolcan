@@ -135,4 +135,8 @@ public final class StockDetailController extends SubViewController implements In
         this.loadData();
 
     }
+    @FXML
+    private void goToBatchButtonClick(final ActionEvent actionEvent) {
+
+    }
 }
