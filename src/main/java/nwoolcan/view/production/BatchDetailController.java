@@ -48,6 +48,10 @@ public final class BatchDetailController
 
     @FXML
     private SubView batchDetailSubView;
+    @FXML
+    private SubViewContainer batchInfoContainer;
+    @FXML
+    private Button viewInfoDetailButton;
 
     private DetailBatchViewModel data;
 
@@ -65,7 +69,7 @@ public final class BatchDetailController
     public void initData(final DetailBatchViewModel data) {
         this.data = data;
 
-        //TODO init batch info sub view
+        this.getViewManager().getView(ViewType.BATCH_INFO, data.getBatchInfo()).peek(p -> batchInfoContainer.substitute(p));
 
         this.goToNextStepButton.setDisable(data.isEnded());
         this.stockBatchButton.setDisable(!data.isEnded() || data.isStocked());
@@ -104,6 +108,14 @@ public final class BatchDetailController
      */
     public void goBackButtonClicked(final ActionEvent event) {
         this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
+    }
+
+    /**
+     * Goes back to the production view.
+     * @param event the occurred event.
+     */
+    public void viewInfoDetailClicked(final ActionEvent event) {
+        this.overlayView(ViewType.BATCH_INFO_DETAIL, this.data.getBatchInfo());
     }
 
     /**

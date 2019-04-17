@@ -29,7 +29,7 @@ public final class DetailBatchViewModel {
      */
     public DetailBatchViewModel(final Batch batch) {
         this.id = batch.getId();
-        this.batchInfo = new BatchInfoViewModel(); //TODO change to correct implementation when done
+        this.batchInfo = new BatchInfoViewModel(batch.getBatchInfo());
         this.steps = batch.getSteps().stream().map(MasterStepViewModel::new).collect(Collectors.toList());
         this.review = batch.getEvaluation().map(BatchEvaluationViewModel::new).orElse(null);
         this.ended = batch.isEnded();

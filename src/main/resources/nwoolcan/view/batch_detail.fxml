@@ -30,20 +30,25 @@
                 <TitledPane text="Batch informations">
                     <BorderPane>
                         <center>
-                            <SubViewContainer>
-                                <!-- TODO fill with batch info sub view -->
-                            </SubViewContainer>
+                            <SubViewContainer fx:id="batchInfoContainer" />
                         </center>
                         <right>
                             <VBox BorderPane.alignment="CENTER_RIGHT">
-                                <Button fx:id="goToNextStepButton" text="Go to next step" onAction="#goToNextStepButtonClicked" />
-                                <Button fx:id="stockBatchButton" text="Stock batch" onAction="#stockBatchButtonClicked" />
+                                <Button fx:id="stockBatchButton" alignment="TOP_RIGHT" contentDisplay="RIGHT" disable="true" text="Stock batch" />
+                                <Button fx:id="viewInfoDetailButton" onAction="#viewInfoDetailClicked" text="View Info" />
                             </VBox>
-                         </right>
+                        </right>
                     </BorderPane>
                 </TitledPane>
                 <TitledPane text="Steps">
-                    <SubViewContainer fx:id="masterTableContainer" parent="$batchDetailSubView" />
+                    <BorderPane>
+                        <center>
+                            <SubViewContainer fx:id="masterTableContainer" parent="$batchDetailSubView" />
+                        </center>
+                        <top>
+                            <Button fx:id="goToNextStepButton" onAction="#goToNextStepButtonClicked" text="Go to next step" />
+                        </top>
+                    </BorderPane>
                 </TitledPane>
                 <TitledPane text="Review">
                     <SubViewContainer>
