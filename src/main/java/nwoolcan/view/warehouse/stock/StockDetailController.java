@@ -151,10 +151,7 @@ public final class StockDetailController extends SubViewController implements In
 
         modal.setResizable(false);
         modal.setScene(scene);
-        modal.setY(window.getY() + window.getHeight() / 2 - scene.getHeight() / 2);
-        modal.setX(window.getX() + window.getWidth() / 2 - scene.getWidth() / 2);
         modal.showAndWait();
-
         this.loadData();
 
     }
