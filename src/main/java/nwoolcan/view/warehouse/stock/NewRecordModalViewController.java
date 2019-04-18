@@ -38,9 +38,7 @@ public final class NewRecordModalViewController extends AbstractViewController i
     private static final int FIRST_MINUTE = 0;
     private static final int MIDDLE_MINUTE_INDEX = 30;
     private static final int LAST_MINUTE = 60;
-
     private int stockId;
-
 
     @FXML
     private ComboBox<Integer> recordMinute;
