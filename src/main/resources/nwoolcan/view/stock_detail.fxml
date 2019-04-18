@@ -19,7 +19,7 @@
          fx:id="stockDetailSubView">
     <BorderPane>
         <top>
-            <Label fx:id="lblTitleId" text="Stock Detail" BorderPane.alignment="CENTER">
+            <Label text="Stock Detail" BorderPane.alignment="CENTER">
                 <font>
                     <Font size="28.0" />
                 </font>
