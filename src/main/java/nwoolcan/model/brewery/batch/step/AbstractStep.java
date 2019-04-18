@@ -49,6 +49,24 @@ abstract class AbstractStep implements Step {
         return this.stepInfo;
     }
 
+    /**
+     * Performs a check to know if this step can be finalized with this data.
+     * Returns a {@link Result} with en error if this step cannot be finalized with this finalization data.
+     * @param note the finalization note.
+     * @param endDate the finalization end date.
+     * @param remainingSize the finalization remaining size.
+     * @return a {@link Result} with errors if this step cannot be finalized with this finalization data.
+     */
+    protected abstract Result<Empty> checkFinalizationData(@Nullable String note, Date endDate, Quantity remainingSize);
+
+    /**
+     * Performs a check to know if this parameter can be registered in this step.
+     * Returns a {@link Result} with en error if if this parameter cannot be registered in this step.
+     * @param parameter the registering parameter
+     * @return a {@link Result} with en error if if this parameter cannot be registered in this step.
+     */
+    protected abstract Result<Empty> checkRegisteringParameter(Parameter parameter);
+
     @Override
     public final StepInfo getStepInfo() {
         return new StepInfoImpl(this.stepInfo);
@@ -61,14 +79,14 @@ abstract class AbstractStep implements Step {
 
     @Override
     public final Result<Empty> finalize(@Nullable final String note, final Date endDate, final Quantity remainingSize) {
-        return Result.ofEmpty()
-                     .require(() -> !this.isFinalized(), new IllegalStateException(ALREADY_FINALIZED_MESSAGE))
-                     .flatMap(() -> this.stepInfo.setEndDate(endDate))
-                     .peek(e -> {
-                         this.stepInfo.setNote(note);
-                         this.stepInfo.setEndStepSize(remainingSize);
-                         this.finalized = true;
-                     });
+        return this.checkFinalizationData(note, endDate, remainingSize)
+                   .require(() -> !this.isFinalized(), new IllegalStateException(ALREADY_FINALIZED_MESSAGE))
+                   .flatMap(() -> this.stepInfo.setEndDate(endDate))
+                   .peek(e -> {
+                       this.stepInfo.setNote(note);
+                       this.stepInfo.setEndStepSize(remainingSize);
+                       this.finalized = true;
+                   });
     }
 
     @Override
@@ -99,13 +117,14 @@ abstract class AbstractStep implements Step {
     }
 
     @Override
-    public final Result<Empty> addParameter(final Parameter parameter) {
-        return Result.of(parameter)
-                     .require(() -> !this.isFinalized(), new IllegalStateException(CANNOT_REGISTER_PARAMETER_MESSAGE))
-                     .require(p -> getParameterTypes().contains(p.getType()), new IllegalArgumentException(INVALID_PARAMETER_MESSAGE))
-                     .peek(this.parameters::add)
-                     .peek(p -> this.observers.forEach(o -> o.update(p)))
-                     .toEmpty();
+    public final Result<Empty> registerParameter(final Parameter parameter) {
+        return this.checkRegisteringParameter(parameter)
+                   .map(e -> parameter)
+                   .require(() -> !this.isFinalized(), new IllegalStateException(CANNOT_REGISTER_PARAMETER_MESSAGE))
+                   .require(p -> getParameterTypes().contains(p.getType()), new IllegalArgumentException(INVALID_PARAMETER_MESSAGE))
+                   .peek(this.parameters::add)
+                   .peek(p -> this.observers.forEach(o -> o.update(p)))
+                   .toEmpty();
     }
 
     @Override

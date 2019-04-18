@@ -100,10 +100,10 @@ public class StepTest {
         Result<Empty> res = Result.ofEmpty();
 
         for (Parameter p : MASHING_PARAMS) {
-            res = res.flatMap(() -> this.mashing.addParameter(p));
+            res = res.flatMap(() -> this.mashing.registerParameter(p));
         }
         for (Parameter p : BOILING_PARAMS) {
-            res = res.flatMap(() -> this.boiling.addParameter(p));
+            res = res.flatMap(() -> this.boiling.registerParameter(p));
         }
 
         return res;
@@ -126,7 +126,7 @@ public class StepTest {
      */
     @Test
     public void testWrongParametersAddition() {
-        Result<Empty> res = this.packaging.addParameter(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, 1).getValue());
+        Result<Empty> res = this.packaging.registerParameter(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, 1).getValue());
         Assert.assertTrue(res.isError());
         Assert.assertSame(IllegalArgumentException.class, res.getError().getClass());
     }
@@ -138,14 +138,14 @@ public class StepTest {
     public void testAddingParametersWhenFinalized() {
         this.boiling.finalize(null, new Date(), Q1);
         Assert.assertTrue(this.boiling.isFinalized());
-        Result<Empty> res = this.boiling.addParameter(ParameterFactory.create(
+        Result<Empty> res = this.boiling.registerParameter(ParameterFactory.create(
             ParameterTypeEnum.TEMPERATURE, 10
         ).getValue());
 
         Assert.assertTrue(res.isError());
         Assert.assertSame(IllegalStateException.class, res.getError().getClass());
 
-        res = this.finalized.addParameter(ParameterFactory.create(
+        res = this.finalized.registerParameter(ParameterFactory.create(
             ParameterTypeEnum.TEMPERATURE, 10
         ).getValue());
         Assert.assertTrue(res.isError());

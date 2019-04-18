@@ -1,8 +1,13 @@
 package nwoolcan.model.brewery.batch.step;
 
+import nwoolcan.model.brewery.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterType;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum;
+import nwoolcan.model.utils.Quantity;
+import nwoolcan.utils.Empty;
+import nwoolcan.utils.Result;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -81,6 +86,16 @@ final class BasicStep extends AbstractStep {
             return AGING_PARAMETER_TYPES;
         }
         return Collections.emptySet();
+    }
+
+    @Override
+    protected Result<Empty> checkFinalizationData(@Nullable final String note, final Date endDate, final Quantity remainingSize) {
+        return Result.ofEmpty();
+    }
+
+    @Override
+    protected Result<Empty> checkRegisteringParameter(final Parameter parameter) {
+        return Result.ofEmpty();
     }
 
     @Override
