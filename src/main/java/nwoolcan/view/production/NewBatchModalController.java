@@ -17,6 +17,7 @@ import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.BatchMethod;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.batch.step.StepTypeEnum;
+import nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
@@ -56,7 +57,7 @@ public final class NewBatchModalController
     @FXML
     private TextField registrationValueTextField;
     @FXML
-    private TableView<Pair<Number, WaterMeasurement.Element>> elementsTableView;
+    private TableView<Pair<NumberUnitOfMeasureProperty, WaterMeasurement.Element>> elementsTableView;
     @FXML
     private ComboBox<WaterMeasurement.Element> elementsComboBox;
 
@@ -65,7 +66,7 @@ public final class NewBatchModalController
     @FXML
     private TextField quantityIngredientTextField;
     @FXML
-    private TableView<Pair<Number, IngredientArticleViewModel>> ingredientsTableView;
+    private TableView<Pair<NumberUnitOfMeasureProperty, IngredientArticleViewModel>> ingredientsTableView;
     @FXML
     private ComboBox<IngredientArticleViewModel> ingredientsComboBox;
 
@@ -83,6 +84,25 @@ public final class NewBatchModalController
         @Override
         public String toString() {
             return this.method.getName();
+        }
+    }
+
+    private static final class NumberUnitOfMeasureProperty {
+        private final Number value;
+        private final UnitOfMeasure um;
+
+        private NumberUnitOfMeasureProperty(final Number value, final UnitOfMeasure um) {
+            this.value = value;
+            this.um = um;
+        }
+
+        private Number getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("%.2f %s", this.value.doubleValue(), this.um.getSymbol());
         }
     }
 
@@ -106,15 +126,18 @@ public final class NewBatchModalController
 
         this.initialSizeUnitOfMeasureLabel.setText(UnitOfMeasure.LITER.getSymbol());
 
-        final TableColumn<Pair<Number, WaterMeasurement.Element>, Button> removeElementColumn = new TableColumn<>();
+        final TableColumn<Pair<NumberUnitOfMeasureProperty, WaterMeasurement.Element>, Button> removeElementColumn = new TableColumn<>();
+        removeElementColumn.setStyle("-fx-alignment: CENTER");
         removeElementColumn.setCellValueFactory(obj -> {
             final Button btn = new Button("Remove");
-            btn.setOnAction(event -> this.elementsTableView.getItems().removeIf(p -> p.getRight().equals(obj.getValue().getRight())));
+            btn.setOnAction(event -> this.elementsTableView.getItems().removeIf(p ->
+                p.getRight().equals(obj.getValue().getRight())));
             return new SimpleObjectProperty<>(btn);
         });
         this.elementsTableView.getColumns().add(removeElementColumn);
 
-        final TableColumn<Pair<Number, IngredientArticleViewModel>, Button> removeIngredientColumn = new TableColumn<>();
+        final TableColumn<Pair<NumberUnitOfMeasureProperty, IngredientArticleViewModel>, Button> removeIngredientColumn = new TableColumn<>();
+        removeIngredientColumn.setStyle("-fx-alignment: CENTER");
         removeIngredientColumn.setCellValueFactory(obj -> {
             final Button btn = new Button("Remove");
             btn.setOnAction(event -> this.ingredientsTableView.getItems().removeIf(p ->
@@ -156,7 +179,9 @@ public final class NewBatchModalController
         }
 
         this.elementsTableView.getItems().removeIf(p -> p.getRight().equals(selectedElement));
-        this.elementsTableView.getItems().add(Pair.of(registrationValue, selectedElement));
+        this.elementsTableView.getItems().add(Pair.of(new NumberUnitOfMeasureProperty(
+            registrationValue, ParameterTypeEnum.WATER_MEASUREMENT.getUnitOfMeasure()
+        ), selectedElement));
     }
 
     /**
@@ -179,7 +204,9 @@ public final class NewBatchModalController
         }
 
         this.ingredientsTableView.getItems().removeIf(p -> p.getRight().getId() == selectedElement.getId());
-        this.ingredientsTableView.getItems().add(Pair.of(quantity, selectedElement));
+        this.ingredientsTableView.getItems().add(Pair.of(new NumberUnitOfMeasureProperty(
+            quantity, selectedElement.getUnitOfMeasure()
+        ), selectedElement));
     }
 
     /**
@@ -236,11 +263,11 @@ public final class NewBatchModalController
             StepTypeEnum.MASHING,
             this.ingredientsTableView.getItems()
                                      .stream()
-                                     .map(p -> Pair.of(p.getRight().getId(), p.getLeft().doubleValue()))
+                                     .map(p -> Pair.of(p.getRight().getId(), p.getLeft().getValue().doubleValue()))
                                      .collect(Collectors.toList()),
             this.elementsTableView.getItems()
                                   .stream()
-                                  .map(p -> Triple.of(p.getRight(), p.getLeft().doubleValue(), new Date()))
+                                  .map(p -> Triple.of(p.getRight(), p.getLeft().getValue().doubleValue(), new Date()))
                                   .collect(Collectors.toList())))
             .peekError(e -> this.showAlertAndWait(e.getMessage()))
             .peek(e -> {
