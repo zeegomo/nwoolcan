@@ -84,7 +84,7 @@ public final class BatchDetailController
         this.goToNextStepButton.setDisable(data.isEnded());
         this.stockBatchButton.setDisable(!data.isEnded() || data.isStocked());
 
-        final MasterTableViewModel<MasterStepViewModel, DetailStepViewModel> masterViewModel = new MasterTableViewModel<>(
+        final MasterTableViewModel<MasterStepViewModel, ViewModelCallback<DetailStepViewModel>> masterViewModel = new MasterTableViewModel<>(
             Arrays.asList(
                 new ColumnDescriptor("Step name", "type"),
                 new ColumnDescriptor("Start date", "startDate"),
@@ -94,10 +94,11 @@ public final class BatchDetailController
             ),
             data.getSteps(),
             ViewType.STEP_DETAIL,
-            stepMaster -> this.getController().getBatchController().getStepController().getDetailStepViewModel(
-                data.getId(),
-                stepMaster.getType().getName()
-            ).getValue() //TODO can be an error, check needed
+            stepMaster -> new ViewModelCallback<>(this.getController().getBatchController().getStepController().getDetailStepViewModel(
+                    data.getId(),
+                    stepMaster.getType().getName()
+                ).getValue(), //TODO can be an error, check needed
+                () ->  this.getController().getBatchController().getDetailBatchViewModelById(data.getId()).peek(this::setData))
         );
 
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
