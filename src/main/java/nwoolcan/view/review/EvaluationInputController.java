@@ -15,7 +15,7 @@ import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.review.EvaluationType;
 import nwoolcan.utils.Results;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
 import org.apache.commons.lang3.tuple.Pair;

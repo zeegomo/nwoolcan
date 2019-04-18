@@ -19,7 +19,7 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.StockBatchViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
