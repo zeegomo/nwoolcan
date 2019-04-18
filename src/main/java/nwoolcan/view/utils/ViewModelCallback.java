@@ -3,6 +3,7 @@ package nwoolcan.view.utils;
 /**
  * This class contains both a ViewModel (anything you want) and a callback.
  * The callback can be used by the child controller (usually detail) to say stuff to parent controller (usually master).
+ * @param <T> The type of view model.
  */
 public final class ViewModelCallback<T> {
     private final T viewModel;
