@@ -15,6 +15,8 @@ import nwoolcan.view.ViewType;
 public final class Main extends Application {
     private static final String TITLE = "nWoolcan";
     private static final ViewType MAIN_VIEW_TYPE = ViewType.MAIN;
+    private static final int MIN_WIDTH = 600;
+    private static final int MIN_HEIGHT = 400;
 
     /**
      * The start point of the program.
@@ -37,8 +39,8 @@ public final class Main extends Application {
         final ViewManager vm = new ViewManagerImpl(controller);
 
         primaryStage.setTitle(TITLE);
-        primaryStage.setMinHeight(400);
-        primaryStage.setMinWidth(600);
+        primaryStage.setMinHeight(MIN_HEIGHT);
+        primaryStage.setMinWidth(MIN_WIDTH);
         primaryStage.setScene(new Scene(vm.getView(MAIN_VIEW_TYPE).getValue()));
         primaryStage.setMaximized(true);
         primaryStage.show();
