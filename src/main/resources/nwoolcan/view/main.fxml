@@ -17,12 +17,14 @@
             <menus>
                 <Menu text="File">
                     <items>
+                        <MenuItem onAction="#menuFileSaveClick" text="Save" />
                         <MenuItem onAction="#menuFileQuitClick" text="Quit" />
                         <MenuItem onAction="#menuFileCountOverlaysClick" text="Count Overlays" />
                     </items>
                 </Menu>
                 <Menu text="View">
                     <items>
+                        <MenuItem text="Welcome" onAction="#menuViewWelcomeClick" />
                         <MenuItem text="Dashboard" onAction="#menuViewDashboardClick" />
                         <MenuItem text="Warehouse" onAction="#menuViewWarehouseClick" />
                         <MenuItem text="Production" onAction="#menuViewProductionClick" />
