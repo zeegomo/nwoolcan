@@ -37,6 +37,8 @@ public final class Main extends Application {
         final ViewManager vm = new ViewManagerImpl(controller);
 
         primaryStage.setTitle(TITLE);
+        primaryStage.setMinHeight(400);
+        primaryStage.setMinWidth(600);
         primaryStage.setScene(new Scene(vm.getView(MAIN_VIEW_TYPE).getValue()));
         primaryStage.setMaximized(true);
         primaryStage.show();
