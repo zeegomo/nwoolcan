@@ -77,13 +77,17 @@
                         <BorderPane>
                             <top>
                                 <VBox>
-                                    <Label text="Quantity value" />
-                                    <HBox>
-                                        <TextField fx:id="quantityIngredientTextField" />
-                                        <Label fx:id="ingredientUnitOfMeasureLabel" text="?" />
-                                        <ComboBox fx:id="ingredientsComboBox" />
-                                        <Button text="Add" onAction="#addIngredientClick" />
-                                    </HBox>
+                                    <GridPane hgap="5" vgap="5">
+                                        <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="Ingredient" />
+                                        <Label GridPane.rowIndex="0" GridPane.columnIndex="1" text="Quantity" />
+
+                                        <ComboBox GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="ingredientsComboBox" promptText="Select an ingredient" />
+                                        <GridPane GridPane.rowIndex="1" GridPane.columnIndex="1" hgap="5" vgap="5">
+                                            <TextField GridPane.columnIndex="0" fx:id="quantityIngredientTextField" />
+                                            <Label GridPane.columnIndex="1" fx:id="ingredientUnitOfMeasureLabel" text="?" />
+                                        </GridPane>
+                                        <Button GridPane.rowIndex="1" GridPane.columnIndex="2" text="Add" onAction="#addIngredientClick" />
+                                    </GridPane>
                                 </VBox>
                             </top>
                             <center>
