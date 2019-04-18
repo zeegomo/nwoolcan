@@ -20,6 +20,7 @@ import nwoolcan.view.mastertable.ColumnDescriptor;
 import nwoolcan.view.mastertable.MasterTableViewModel;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
+import nwoolcan.view.utils.ViewModelCallback;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.MasterStepViewModel;
@@ -37,8 +38,11 @@ import java.util.logging.Logger;
 @SuppressWarnings("NullAway")
 public final class BatchDetailController
     extends SubViewController
-    implements InitializableController<DetailBatchViewModel> {
+    implements InitializableController<ViewModelCallback<DetailBatchViewModel>> {
     private static final String TYPES_LOAD_FAILED = "Could not load types";
+
+    private Runnable updateFather = () -> { };
+
     @FXML
     private Button goToNextStepButton;
     @FXML
@@ -74,10 +78,7 @@ public final class BatchDetailController
         super(controller, viewManager);
     }
 
-    @Override
-    public void initData(final DetailBatchViewModel data) {
-        this.data = data;
-
+    private void setData(final DetailBatchViewModel data) {
         this.getViewManager().getView(ViewType.BATCH_INFO, data.getBatchInfo()).peek(p -> batchInfoContainer.substitute(p));
 
         this.goToNextStepButton.setDisable(data.isEnded());
@@ -115,6 +116,14 @@ public final class BatchDetailController
         } else {
             this.addReviewButton.setDisable(true);
         }
+    }
+
+    @Override
+    public void initData(final ViewModelCallback<DetailBatchViewModel> dataCallback) {
+        this.updateFather = dataCallback.getCallback();
+        this.data = dataCallback.getViewModel();
+
+        this.setData(this.data);
     }
     /**
      * Opens review detail view.
@@ -155,8 +164,7 @@ public final class BatchDetailController
             modal.showAndWait();
 
             if (modal.getUserData() != null) {
-                this.substituteView(ViewType.BATCH_DETAIL,
-                    this.getController().getBatchController().getDetailBatchViewModelById(this.data.getId()).getValue());
+                this.setData(this.getController().getBatchController().getDetailBatchViewModelById(this.data.getId()).getValue());
             }
     }
 
@@ -170,7 +178,8 @@ public final class BatchDetailController
      * @param event the occurred event.
      */
     public void goBackButtonClicked(final ActionEvent event) {
-        this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
+        this.updateFather.run();
+        this.previousView();
     }
 
     /**
@@ -206,8 +215,7 @@ public final class BatchDetailController
         modal.showAndWait();
 
         if (modal.getUserData() != null) {
-            this.substituteView(ViewType.BATCH_DETAIL,
-                this.getController().getBatchController().getDetailBatchViewModelById(this.data.getId()).getValue());
+            this.setData(this.getController().getBatchController().getDetailBatchViewModelById(this.data.getId()).getValue());
         }
     }
 
@@ -241,8 +249,7 @@ public final class BatchDetailController
         modal.showAndWait();
 
         if (modal.getUserData() != null) {
-            this.substituteView(ViewType.BATCH_DETAIL,
-                this.getController().getBatchController().getDetailBatchViewModelById(this.data.getId()).getValue());
+            this.setData(this.getController().getBatchController().getDetailBatchViewModelById(this.data.getId()).getValue());
         }
     }
 }

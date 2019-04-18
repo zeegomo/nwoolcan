@@ -22,6 +22,7 @@ import nwoolcan.view.mastertable.ColumnDescriptor;
 import nwoolcan.view.mastertable.MasterTableViewModel;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
+import nwoolcan.view.utils.ViewModelCallback;
 import nwoolcan.viewmodel.brewery.production.ProductionViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
@@ -76,6 +77,7 @@ public final class ProductionController
         lblNumberStockedBatches.setText(Long.toString(data.getNStockedBatches()));
 
         if (data.getNBatches() > 0) {
+            pieChartBatchesStatus.getData().clear();
             if (data.getNInProgressBatches() > 0) {
                 pieChartBatchesStatus.getData().add(new PieChart.Data("In progress", data.getNInProgressBatches()));
             }
@@ -107,7 +109,7 @@ public final class ProductionController
             )
         );
 
-        final MasterTableViewModel<MasterBatchViewModel, DetailBatchViewModel> masterViewModel = new MasterTableViewModel<>(
+        final MasterTableViewModel<MasterBatchViewModel, ViewModelCallback<DetailBatchViewModel>> masterViewModel = new MasterTableViewModel<>(
             Arrays.asList(
                 new ColumnDescriptor("ID", "id"),
                 new ColumnDescriptor("Beer name", "beerDescriptionName"),
@@ -125,7 +127,7 @@ public final class ProductionController
             mbvm -> {
                 Result<DetailBatchViewModel> res = this.getController().getBatchController().getDetailBatchViewModelById(mbvm.getId());
                 if (res.isPresent()) {
-                    return res.getValue();
+                    return new ViewModelCallback<>(res.getValue(), () -> this.initData(this.getController().getProductionViewModel()));
                 }
 
                 this.showAlertAndWait("Batch id not found!");
@@ -178,7 +180,7 @@ public final class ProductionController
         modal.showAndWait();
 
         if (modal.getUserData() != null) {
-            this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
+            this.initData(this.getController().getProductionViewModel());
         }
     }
 
