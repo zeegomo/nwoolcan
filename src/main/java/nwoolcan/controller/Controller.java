@@ -10,6 +10,7 @@ import nwoolcan.viewmodel.brewery.production.batch.CreateBatchDTO;
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.NewBatchViewModel;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -75,4 +76,20 @@ public interface Controller {
      * @param ownerName the name of the owner.
      */
     void setOwnerName(String ownerName);
+    /**
+     * Substitutes the current brewery with a new empty one.
+     */
+    void initializeNewBrewery();
+    /**
+     * Saves the current state of the Brewery to a file with the given name.
+     * @param filename the name of the file to be saved.
+     * @return a {@link Result} describing the operation's outcome.
+     */
+    Result<Empty> saveTo(File filename);
+    /**
+     * Loads the state of the Brewery from the file with the given name.
+     * @param filename the name of the file to load.
+     * @return a {@link Result} describing the operation's outcome.
+     */
+    Result<Empty> loadFrom(File filename);
 }

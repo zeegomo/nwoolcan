@@ -1,10 +1,12 @@
-package nwoolcan.view;
+package nwoolcan.view.utils;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import nwoolcan.controller.Controller;
 import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
+import nwoolcan.view.InitializableController;
+import nwoolcan.view.ViewType;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.lang.reflect.Constructor;

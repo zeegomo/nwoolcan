@@ -59,7 +59,7 @@
                         </center>
                         <bottom>
                             <HBox BorderPane.alignment="BOTTOM_CENTER"  alignment="CENTER">
-                                <Button fx:id="addReviewButton" onAction="#addReviewClick" text="Add review" />
+                                <Button fx:id="addReviewButton" onAction="#addReviewClick" text="New review" />
                                 <Button fx:id="viewReviewButton" onAction="#viewReviewClick" text="View" />
                             </HBox>
                         </bottom>

@@ -4,7 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.AbstractViewController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 
 import javax.annotation.Nullable;

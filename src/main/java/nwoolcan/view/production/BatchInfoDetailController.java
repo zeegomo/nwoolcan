@@ -9,7 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
