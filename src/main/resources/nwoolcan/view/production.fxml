@@ -12,7 +12,12 @@
 <?import nwoolcan.view.subview.SubView?>
 <?import nwoolcan.view.subview.SubViewContainer?>
 
-<SubView fx:id="productionSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.production.ProductionController">
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+<SubView fx:id="productionSubView"
+         xmlns="http://javafx.com/javafx/8.0.172-ea"
+         xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="nwoolcan.view.production.ProductionController">
     <BorderPane>
         <top>
             <Label text="Production" BorderPane.alignment="CENTER">
@@ -23,6 +28,14 @@
         </top>
         <center>
             <VBox>
+                <GridPane alignment="CENTER_RIGHT" hgap="10" >
+                    <padding>
+                        <Insets top="5" bottom="5" left="5" right="5" />
+                    </padding>
+                    <Button GridPane.columnIndex="0" GridPane.rowIndex="0"
+                            onAction="#createNewBatchClick"
+                            text="Create new batch" />
+                </GridPane>
                 <TitledPane text="General information">
                     <BorderPane>
                         <left>
@@ -55,15 +68,6 @@
                                 </PieChart>
                             </HBox>
                         </center>
-                        <right>
-                            <BorderPane>
-                                <center>
-                                    <VBox alignment="CENTER">
-                                        <Button onAction="#createNewBatchClick" text="Create new batch" />
-                                    </VBox>
-                                </center>
-                            </BorderPane>
-                        </right>
                     </BorderPane>
                 </TitledPane>
                 <TitledPane text="Batches">

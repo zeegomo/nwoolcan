@@ -12,11 +12,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.BatchMethod;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.batch.step.StepTypeEnum;
+import nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
@@ -41,6 +43,10 @@ public final class NewBatchModalController
     extends AbstractViewController implements InitializableController<NewBatchViewModel> {
 
     @FXML
+    private Button addIngredientButton;
+    @FXML
+    private Label elementUnitOfMeasureSymbolLabel;
+    @FXML
     private TextField beerNameTextField;
     @FXML
     private TextField beerStyleTextField;
@@ -56,7 +62,7 @@ public final class NewBatchModalController
     @FXML
     private TextField registrationValueTextField;
     @FXML
-    private TableView<Pair<Number, WaterMeasurement.Element>> elementsTableView;
+    private TableView<Pair<NumberUnitOfMeasureProperty, WaterMeasurement.Element>> elementsTableView;
     @FXML
     private ComboBox<WaterMeasurement.Element> elementsComboBox;
 
@@ -65,26 +71,9 @@ public final class NewBatchModalController
     @FXML
     private TextField quantityIngredientTextField;
     @FXML
-    private TableView<Pair<Number, IngredientArticleProperty>> ingredientsTableView;
+    private TableView<Pair<NumberUnitOfMeasureProperty, IngredientArticleViewModel>> ingredientsTableView;
     @FXML
-    private ComboBox<IngredientArticleProperty> ingredientsComboBox;
-
-    private static final class IngredientArticleProperty {
-        private final IngredientArticleViewModel article;
-
-        private IngredientArticleProperty(final IngredientArticleViewModel article) {
-            this.article = article;
-        }
-
-        private IngredientArticleViewModel getArticle() {
-            return this.article;
-        }
-
-        @Override
-        public String toString() {
-            return this.article.getName();
-        }
-    }
+    private ComboBox<IngredientArticleViewModel> ingredientsComboBox;
 
     private static final class BatchMethodProperty {
         private final BatchMethod method;
@@ -100,6 +89,25 @@ public final class NewBatchModalController
         @Override
         public String toString() {
             return this.method.getName();
+        }
+    }
+
+    private static final class NumberUnitOfMeasureProperty {
+        private final Number value;
+        private final UnitOfMeasure um;
+
+        private NumberUnitOfMeasureProperty(final Number value, final UnitOfMeasure um) {
+            this.value = value;
+            this.um = um;
+        }
+
+        private Number getValue() {
+            return this.value;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("%.2f %s", this.value.doubleValue(), this.um.getSymbol());
         }
     }
 
@@ -123,19 +131,25 @@ public final class NewBatchModalController
 
         this.initialSizeUnitOfMeasureLabel.setText(UnitOfMeasure.LITER.getSymbol());
 
-        final TableColumn<Pair<Number, WaterMeasurement.Element>, Button> removeElementColumn = new TableColumn<>();
+        this.ingredientUnitOfMeasureLabel.setMinWidth(Region.USE_PREF_SIZE);
+        this.addIngredientButton.setMinWidth(Region.USE_PREF_SIZE);
+
+        final TableColumn<Pair<NumberUnitOfMeasureProperty, WaterMeasurement.Element>, Button> removeElementColumn = new TableColumn<>();
+        removeElementColumn.setStyle("-fx-alignment: CENTER");
         removeElementColumn.setCellValueFactory(obj -> {
             final Button btn = new Button("Remove");
-            btn.setOnAction(event -> this.elementsTableView.getItems().removeIf(p -> p.getRight().equals(obj.getValue().getRight())));
+            btn.setOnAction(event -> this.elementsTableView.getItems().removeIf(p ->
+                p.getRight().equals(obj.getValue().getRight())));
             return new SimpleObjectProperty<>(btn);
         });
         this.elementsTableView.getColumns().add(removeElementColumn);
 
-        final TableColumn<Pair<Number, IngredientArticleProperty>, Button> removeIngredientColumn = new TableColumn<>();
+        final TableColumn<Pair<NumberUnitOfMeasureProperty, IngredientArticleViewModel>, Button> removeIngredientColumn = new TableColumn<>();
+        removeIngredientColumn.setStyle("-fx-alignment: CENTER");
         removeIngredientColumn.setCellValueFactory(obj -> {
             final Button btn = new Button("Remove");
             btn.setOnAction(event -> this.ingredientsTableView.getItems().removeIf(p ->
-                p.getRight().getArticle().getId() == obj.getValue().getRight().getArticle().getId()));
+                p.getRight().getId() == obj.getValue().getRight().getId()));
             return new SimpleObjectProperty<>(btn);
         });
         this.ingredientsTableView.getColumns().add(removeIngredientColumn);
@@ -145,15 +159,14 @@ public final class NewBatchModalController
         ));
 
         this.ingredientsComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) ->
-            this.ingredientUnitOfMeasureLabel.setText(newV.getArticle().getUnitOfMeasure().getSymbol())
+            this.ingredientUnitOfMeasureLabel.setText(newV.getUnitOfMeasure().getSymbol())
         );
 
         this.ingredientsComboBox.setItems(FXCollections.observableList(
-            data.getIngredients()
-                .stream()
-                .map(IngredientArticleProperty::new)
-                .collect(Collectors.toList()))
+            new ArrayList<>(data.getIngredients()))
         );
+
+        this.elementUnitOfMeasureSymbolLabel.setText(ParameterTypeEnum.WATER_MEASUREMENT.getUnitOfMeasure().getSymbol());
     }
 
     /**
@@ -176,7 +189,9 @@ public final class NewBatchModalController
         }
 
         this.elementsTableView.getItems().removeIf(p -> p.getRight().equals(selectedElement));
-        this.elementsTableView.getItems().add(Pair.of(registrationValue, selectedElement));
+        this.elementsTableView.getItems().add(Pair.of(new NumberUnitOfMeasureProperty(
+            registrationValue, ParameterTypeEnum.WATER_MEASUREMENT.getUnitOfMeasure()
+        ), selectedElement));
     }
 
     /**
@@ -184,7 +199,7 @@ public final class NewBatchModalController
      * @param event the occurred event.
      */
     public void addIngredientClick(final ActionEvent event) {
-        final IngredientArticleProperty selectedElement = this.ingredientsComboBox.getSelectionModel().getSelectedItem();
+        final IngredientArticleViewModel selectedElement = this.ingredientsComboBox.getSelectionModel().getSelectedItem();
         if (selectedElement == null) {
             this.showAlertAndWait("Must select an ingredient!");
             return;
@@ -198,8 +213,10 @@ public final class NewBatchModalController
             return;
         }
 
-        this.ingredientsTableView.getItems().removeIf(p -> p.getRight().getArticle().getId() == selectedElement.getArticle().getId());
-        this.ingredientsTableView.getItems().add(Pair.of(quantity, selectedElement));
+        this.ingredientsTableView.getItems().removeIf(p -> p.getRight().getId() == selectedElement.getId());
+        this.ingredientsTableView.getItems().add(Pair.of(new NumberUnitOfMeasureProperty(
+            quantity, selectedElement.getUnitOfMeasure()
+        ), selectedElement));
     }
 
     /**
@@ -256,11 +273,11 @@ public final class NewBatchModalController
             StepTypeEnum.MASHING,
             this.ingredientsTableView.getItems()
                                      .stream()
-                                     .map(p -> Pair.of(p.getRight().getArticle().getId(), p.getLeft().doubleValue()))
+                                     .map(p -> Pair.of(p.getRight().getId(), p.getLeft().getValue().doubleValue()))
                                      .collect(Collectors.toList()),
             this.elementsTableView.getItems()
                                   .stream()
-                                  .map(p -> Triple.of(p.getRight(), p.getLeft().doubleValue(), new Date()))
+                                  .map(p -> Triple.of(p.getRight(), p.getLeft().getValue().doubleValue(), new Date()))
                                   .collect(Collectors.toList())))
             .peekError(e -> this.showAlertAndWait(e.getMessage()))
             .peek(e -> {
