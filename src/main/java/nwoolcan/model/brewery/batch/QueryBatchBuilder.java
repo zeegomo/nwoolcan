@@ -11,8 +11,6 @@ import javax.annotation.Nullable;
  */
 public class QueryBatchBuilder {
 
-    @Nullable private Integer minId;
-    @Nullable private Integer maxId;
     @Nullable private BatchMethod batchMethod;
     @Nullable private Quantity minBatchSize;
     @Nullable private Quantity maxBatchSize;
@@ -21,24 +19,6 @@ public class QueryBatchBuilder {
      * Constructor to initialize the queryBuilder.
      */
     public QueryBatchBuilder() { }
-    /**
-     * Setter of the min id.
-     * @param id the min id.
-     * @return this.
-     */
-    public QueryBatchBuilder setMinId(final Integer id) {
-        minId = id;
-        return this;
-    }
-    /**
-     * Setter of the max id.
-     * @param id the max id.
-     * @return this.
-     */
-    public QueryBatchBuilder setMaxId(final Integer id) {
-        maxId = id;
-        return this;
-    }
     /**
      * Setter of the {@link BatchMethod}.
      * @param method the {@link BatchMethod}.
@@ -71,7 +51,7 @@ public class QueryBatchBuilder {
      * @return the built {@link QueryBatch}.
      */
     public Result<QueryBatch> build() {
-        return Result.of(new QueryBatch(minId, maxId, batchMethod, minBatchSize, maxBatchSize))
+        return Result.of(new QueryBatch(batchMethod, minBatchSize, maxBatchSize))
                      .require(this::checkBatchSize);
     }
     /**

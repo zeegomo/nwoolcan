@@ -29,30 +29,27 @@ public final class BreweryImpl implements Brewery {
     private final Warehouse warehouse = new WarehouseImpl(articleManager);
     private final Collection<Batch> batches = new ArrayList<>();
     private final IdGenerator batchIdGenerator = new BatchIdGenerator(0);
+    private static final String BATCH_NOT_FOUND = "Batch not found.";
 
     @Override
-    public synchronized Optional<String> getBreweryName() {
+    public Optional<String> getBreweryName() {
         return Optional.ofNullable(breweryName);
     }
 
     @Override
-    public synchronized Optional<String> getOwnerName() {
+    public Optional<String> getOwnerName() {
         return Optional.ofNullable(ownerName);
     }
 
     @Override
-    public synchronized Warehouse getWarehouse() {
+    public Warehouse getWarehouse() {
         return warehouse;
     }
 
     @Override
-    public synchronized Collection<Batch> getBatches(final QueryBatch queryBatch) {
+    public Collection<Batch> getBatches(final QueryBatch queryBatch) {
         final Collection<Batch> retBatches = new ArrayList<>(batches);
         return retBatches.stream()
-                         .filter(batch -> !(queryBatch.getMinId().isPresent()
-                             && batch.getId() < queryBatch.getMinId().get()))
-                         .filter(batch -> !(queryBatch.getMaxId().isPresent()
-                              && batch.getId() > queryBatch.getMaxId().get()))
                          .filter(batch -> !(queryBatch.getBatchMethod().isPresent()
                                          && batch.getBatchInfo().getMethod()
                                          != queryBatch.getBatchMethod().get()))
@@ -68,7 +65,20 @@ public final class BreweryImpl implements Brewery {
     }
 
     @Override
-    public synchronized void addBatch(final Batch newBatch) {
+    public Collection<Batch> getBatches() {
+        return new ArrayList<>(batches);
+    }
+
+    @Override
+    public Result<Batch> getBatchById(final int batchId) {
+        return Result.of(batches.stream().filter(batch -> batch.getId() == batchId).findFirst())
+                     .require(Optional::isPresent,
+                         new IllegalArgumentException(BATCH_NOT_FOUND))
+                     .map(Optional::get);
+    }
+
+    @Override
+    public void addBatch(final Batch newBatch) {
         batches.add(newBatch);
     }
 
@@ -78,7 +88,7 @@ public final class BreweryImpl implements Brewery {
     }
 
     @Override
-    public synchronized Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle, @Nullable final Date expirationDate) {
+    public Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle, @Nullable final Date expirationDate) {
         return Result.of(batch)
                      .flatMap(b -> b.stockBatchInto(beerArticle, () -> {
                          BeerStock newStock;
@@ -92,19 +102,19 @@ public final class BreweryImpl implements Brewery {
                      .toEmpty();
     }
     @Override
-    public synchronized void setBreweryName(final String breweryName) {
+    public void setBreweryName(final String breweryName) {
         this.breweryName = breweryName;
     }
     @Override
-    public synchronized void setOwnerName(final String ownerName) {
+    public void setOwnerName(final String ownerName) {
         this.ownerName = ownerName;
     }
     @Override
-    public synchronized Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle) {
+    public Result<Empty> stockBatch(final Batch batch, final BeerArticle beerArticle) {
         return stockBatch(batch, beerArticle, null);
     }
 
-    private synchronized Result<BeerStock> createBeerStock(final BeerArticle beerArticle,
+    private Result<BeerStock> createBeerStock(final BeerArticle beerArticle,
                                               @Nullable final Date expirationDate,
                                               final Batch batch) {
         if (expirationDate == null) {

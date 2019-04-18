@@ -94,5 +94,23 @@ public interface Warehouse {
      * @return a {@link Result} of {@link Article} for fluency.
      */
     Result<Article> setName(Article article, String newName);
+    /**
+     * Getter of a single {@link Article} based on its id.
+     * @param id to search the {@link Article}.
+     * @return the {@link Article} requested or an error if it does not exist.
+     */
+    Result<Article> getArticleById(int id);
+    /**
+     * Getter of a single {@link Stock} based on its id.
+     * @param id to search the {@link Stock}.
+     * @return the {@link Stock} requested or an error if it does not exist.
+     */
+    Result<Stock> getStockById(int id);
+    /**
+     * Getter of a single {@link BeerStock} based on its id.
+     * @param id to search the {@link BeerStock}.
+     * @return the {@link BeerStock} requested or an error if it does not exist.
+     */
+    Result<BeerStock> getBeerStockById(int id);
 
 }

@@ -16,6 +16,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -136,5 +138,16 @@ public class DatabaseJsonImplTest {
         final Result<Quantity> resQuantErrorDeserialized = this.reserialize(resQuantError, new TypeToken<Result<Quantity>>() { });
         Assert.assertEquals(resQuantErrorDeserialized.isError(), resQuantError.isError());
         Assert.assertEquals(resQuantErrorDeserialized.getError().getClass(), resQuantError.getError().getClass());
+    }
+
+    /**
+     * Test serialization of hash maps.
+     */
+    @Test
+    public void hashMap() {
+        final Map<Quantity, Quantity> map = new HashMap<>();
+        map.put(this.quantity, this.quantity);
+
+        Assert.assertEquals(this.reserialize(map, new TypeToken<Map<Quantity, Quantity>>() { }), map);
     }
 }

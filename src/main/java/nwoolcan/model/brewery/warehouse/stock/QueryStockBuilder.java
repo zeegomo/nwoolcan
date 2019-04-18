@@ -18,10 +18,6 @@ public final class QueryStockBuilder {
                                           + "select an article when selecting a quantity filter"
                                           + " and to select the same unit of measure.";
     @Nullable
-    private Integer minId;
-    @Nullable
-    private Integer maxId;
-    @Nullable
     private Article article;
     @Nullable
     private ArticleType articleType;
@@ -48,24 +44,6 @@ public final class QueryStockBuilder {
      * Creates an empty builder.
      */
     public QueryStockBuilder() { }
-    /**
-     * Set the min Id to be displayed.
-     * @param minId the min Id.
-     * @return this.
-     */
-    public QueryStockBuilder setMinId(final int minId) {
-        this.minId = minId;
-        return this;
-    }
-    /**
-     * Set the min Id to be displayed.
-     * @param maxId the min Id.
-     * @return this.
-     */
-    public QueryStockBuilder setMaxId(final int maxId) {
-        this.maxId = maxId;
-        return this;
-    }
     /**
      * Sets the article required by the query.
      * @param article to filter the query.
@@ -181,9 +159,7 @@ public final class QueryStockBuilder {
      * @return a {@link Result} of {@link QueryStock} if there are not inconsistencies in the query.
      */
     public Result<QueryStock> build() {
-        return Result.of(new QueryStock(minId,
-                                        maxId,
-                                        article,
+        return Result.of(new QueryStock(article,
                                         articleType,
                                         expiresBefore,
                                         expiresAfter,

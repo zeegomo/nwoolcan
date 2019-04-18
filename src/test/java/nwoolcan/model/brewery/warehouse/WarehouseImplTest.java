@@ -37,8 +37,6 @@ public class WarehouseImplTest {
     private final Record record = new Record(quantity, Record.Action.ADDING);
     private final Record record1 = new Record(quantity, new Date(), Record.Action.ADDING);
     private final Record record2 = new Record(quantity1, Record.Action.ADDING);
-    private static final int MIN_ID = 1;
-    private static final int MAX_ID = 1;
     private static final String MIN_NAME = "DummyName";
     private static final String MAX_NAME = "DummyName2";
     private Date date1 = new Date();
@@ -155,20 +153,6 @@ public class WarehouseImplTest {
                                  .before(date2));
         }
 
-    }
-    /**
-     * Test getArticles with filter by id.
-     */
-    @Test
-    public void testGetArticlesFilterById() {
-        final QueryArticle queryArticle = new QueryArticleBuilder().setMinID(MIN_ID)
-                                                                   .setMaxID(MAX_ID)
-                                                                   .build();
-        final List<Article> lisArticle = warehouse.getArticles(queryArticle);
-        for (final Article a : lisArticle) {
-            Assert.assertTrue(a.getId() >= MIN_ID);
-            Assert.assertTrue(a.getId() <= MAX_ID);
-        }
     }
     /**
      * Test getArticles with filter by name.

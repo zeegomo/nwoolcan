@@ -5,10 +5,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nwoolcan.controller.BreweryController;
 import nwoolcan.controller.Controller;
-import nwoolcan.model.brewery.Brewery;
-import nwoolcan.model.brewery.BreweryImpl;
-import nwoolcan.view.ViewManager;
-import nwoolcan.view.ViewManagerImpl;
+import nwoolcan.view.utils.ViewManager;
+import nwoolcan.view.utils.ViewManagerImpl;
 import nwoolcan.view.ViewType;
 
 /**
@@ -33,15 +31,8 @@ public final class Main extends Application {
         //TODO
         //selectStartData.showAndWait();
 
-        //Supposing a new brewery is created, creates the brewery
-        final Brewery brewery = new BreweryImpl();
-        brewery.setBreweryName("Test brewery");
-        brewery.setOwnerName("Giasamuglio");
-        //Or maybe load it from the selected file
-        //TODO
-
         //Now we have the brewery to inject into the controller
-        final Controller controller = new BreweryController(brewery);
+        final Controller controller = new BreweryController();
         //Creates the view manager
         final ViewManager vm = new ViewManagerImpl(controller);
 

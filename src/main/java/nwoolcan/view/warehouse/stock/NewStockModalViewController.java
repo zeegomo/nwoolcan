@@ -14,7 +14,7 @@ import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.utils.Result;
 import nwoolcan.view.AbstractViewController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.PlainStockViewModel;
 
