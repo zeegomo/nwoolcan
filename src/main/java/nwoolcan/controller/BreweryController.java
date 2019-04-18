@@ -5,6 +5,7 @@ import nwoolcan.controller.batch.BatchControllerImpl;
 import nwoolcan.controller.warehouse.WarehouseController;
 import nwoolcan.controller.warehouse.WarehouseControllerImpl;
 import nwoolcan.model.brewery.Brewery;
+import nwoolcan.model.brewery.BreweryImpl;
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.batch.BatchBuilder;
 import nwoolcan.model.brewery.batch.BatchMethod;
@@ -20,6 +21,8 @@ import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
+import nwoolcan.model.database.Database;
+import nwoolcan.model.database.DatabaseJsonImpl;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
@@ -30,6 +33,7 @@ import nwoolcan.viewmodel.brewery.production.batch.NewBatchViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -42,18 +46,20 @@ import java.util.stream.Collectors;
  */
 public final class BreweryController implements Controller {
 
-    private final Brewery brewery;
-    private final BatchController batchController;
-    private final WarehouseController warehouseController;
+    private Brewery brewery = new BreweryImpl();
+    private BatchController batchController;
+    private WarehouseController warehouseController;
+
+    private void initilizeSubControllers() {
+        this.warehouseController = new WarehouseControllerImpl(brewery.getWarehouse());
+        this.batchController = new BatchControllerImpl(brewery);
+    }
 
     /**
      * Constructor which creates the {@link WarehouseController}.
-     * @param brewery the brewery to be controlled.
      */
-    public BreweryController(final Brewery brewery) {
-        this.brewery = brewery;
-        this.warehouseController = new WarehouseControllerImpl(brewery.getWarehouse());
-        this.batchController = new BatchControllerImpl(brewery);
+    public BreweryController() {
+        this.initilizeSubControllers();
     }
 
     @Override
@@ -196,5 +202,26 @@ public final class BreweryController implements Controller {
     @Override
     public void setOwnerName(final String ownerName) {
         brewery.setOwnerName(ownerName);
+    }
+
+    @Override
+    public void initializeNewBrewery() {
+        this.brewery = new BreweryImpl();
+        this.initilizeSubControllers();
+    }
+
+    @Override
+    public Result<Empty> saveTo(final File filename) {
+        final Database db = new DatabaseJsonImpl(filename);
+        return db.save(this.brewery);
+    }
+
+    @Override
+    public Result<Empty> loadFrom(final File filename) {
+        final Database db = new DatabaseJsonImpl(filename);
+        return db.load().peek(b -> {
+            this.brewery = b;
+            this.initilizeSubControllers();
+        }).toEmpty();
     }
 }

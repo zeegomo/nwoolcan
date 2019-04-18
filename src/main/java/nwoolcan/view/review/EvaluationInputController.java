@@ -14,10 +14,10 @@ import javafx.scene.control.TitledPane;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.review.EvaluationType;
 import nwoolcan.utils.Results;
+import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.subview.SubView;
-import nwoolcan.view.subview.SubViewController;
 import org.apache.commons.lang3.tuple.Pair;
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ import java.util.Optional;
  * Controller for single evaluation input displayed in {@link NewBatchEvaluationController}.
  */
 @SuppressWarnings("NullAway")
-public final class EvaluationInputController extends SubViewController implements InitializableController<EvaluationType> {
+public final class EvaluationInputController extends AbstractViewController implements InitializableController<EvaluationType> {
     private static final String DEFAULT_TEXT = "-fx-text-fill: black;";
     private static final String ERROR_TEXT = "-fx-text-fill: red;";
     @FXML
@@ -72,8 +72,6 @@ public final class EvaluationInputController extends SubViewController implement
             }
         });
         this.score.alignmentProperty().setValue(Pos.BASELINE_RIGHT);
-        this.title.setText(data.getName());
-        this.title.setExpanded(false);
     }
 
     /**
@@ -90,10 +88,5 @@ public final class EvaluationInputController extends SubViewController implement
      */
     public ReadOnlyBooleanProperty getInputValidityProperty() {
         return ReadOnlyBooleanProperty.readOnlyBooleanProperty(validityProperty);
-    }
-
-    @Override
-    protected SubView getSubView() {
-        return this.evaluationInputSubView;
     }
 }
