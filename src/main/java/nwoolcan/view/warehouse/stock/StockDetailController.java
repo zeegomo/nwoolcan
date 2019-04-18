@@ -19,16 +19,16 @@ import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
+import nwoolcan.view.utils.ViewModelCallback;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.BeerStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.DetailStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.RecordViewModel;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ import java.util.List;
  * Controller for the Stock detail view.
  */
 @SuppressWarnings("NullAway")
-public final class StockDetailController extends SubViewController implements InitializableController<Pair<Integer, Runnable>> {
+public final class StockDetailController extends SubViewController implements InitializableController<ViewModelCallback<Integer>> {
 
     @FXML
     private HBox expDateBox;
@@ -78,10 +78,10 @@ public final class StockDetailController extends SubViewController implements In
     }
 
     @Override
-    public void initData(final Pair<Integer, Runnable> dataAndRunner) {
-        stockId = dataAndRunner.getLeft();
+    public void initData(final ViewModelCallback<Integer> dataAndRunner) {
+        stockId = dataAndRunner.getViewModel();
         loadData();
-        updateFather = dataAndRunner.getRight();
+        updateFather = dataAndRunner.getCallback();
     }
 
     private void loadData() {
@@ -119,7 +119,7 @@ public final class StockDetailController extends SubViewController implements In
         final Result<AbstractArticleViewModel> articleResult = getController().getWarehouseController()
                                                                               .getViewArticleById(articleId);
         if (articleResult.isPresent()) {
-            overlayView(ViewType.ARTICLE_DETAIL, Pair.<AbstractArticleViewModel, Runnable>of(articleResult.getValue(), this::loadData));
+            overlayView(ViewType.ARTICLE_DETAIL, new ViewModelCallback<>(articleResult.getValue(), this::loadData));
         } else {
             new Alert(
                         Alert.AlertType.ERROR,

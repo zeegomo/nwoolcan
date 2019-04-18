@@ -1,6 +1,7 @@
 package nwoolcan.view;
 
 import nwoolcan.controller.Controller;
+import nwoolcan.view.utils.ViewManager;
 
 /**
  * Abstract class representing a view controller that has been injected with a {@link Controller}

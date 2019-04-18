@@ -13,15 +13,15 @@ import javafx.stage.Window;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.view.subview.SubViewController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.mastertable.ColumnDescriptor;
 import nwoolcan.view.mastertable.MasterTableViewModel;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
+import nwoolcan.view.utils.ViewModelCallback;
 import nwoolcan.viewmodel.brewery.warehouse.article.ArticlesInfoViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
 import java.util.List;
@@ -78,7 +78,7 @@ public final class ArticlesInfoViewController extends SubViewController {
     }
 
     private void setTable(final List<AbstractArticleViewModel> articles) {
-        final MasterTableViewModel<AbstractArticleViewModel, Pair<AbstractArticleViewModel, Runnable>> masterViewModel =
+        final MasterTableViewModel<AbstractArticleViewModel, ViewModelCallback<AbstractArticleViewModel>> masterViewModel =
             new MasterTableViewModel<>(Arrays.asList(
                                             new ColumnDescriptor("ID", "id"),
                                             new ColumnDescriptor("Name", "name"),
@@ -87,7 +87,7 @@ public final class ArticlesInfoViewController extends SubViewController {
                                         ),
                                         articles,
                                         ViewType.ARTICLE_DETAIL,
-                                        article -> Pair.of(article, this::initialize)
+                                        article -> new ViewModelCallback<>(article, this::initialize)
             );
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(masterTableContainer::substitute);
     }
@@ -105,13 +105,10 @@ public final class ArticlesInfoViewController extends SubViewController {
         modal.initOwner(window);
         modal.initModality(Modality.WINDOW_MODAL);
 
-        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_ARTICLE_MODAL).orElse(new AnchorPane()),
-            600, 400);
+        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_ARTICLE_MODAL).orElse(new AnchorPane()));
 
         modal.setScene(scene);
-        modal.setY(window.getY() + window.getHeight() / 2 - scene.getHeight() / 2);
-        modal.setX(window.getX() + window.getWidth() / 2 - scene.getWidth() / 2);
-        modal.setResizable(false);
+        modal.centerOnScreen();
         modal.showAndWait();
 
         this.substituteView(ViewType.ARTICLES);

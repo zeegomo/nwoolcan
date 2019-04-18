@@ -1,7 +1,8 @@
-package nwoolcan.view;
+package nwoolcan.view.utils;
 
 import javafx.scene.Parent;
 import nwoolcan.utils.Result;
+import nwoolcan.view.ViewType;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**

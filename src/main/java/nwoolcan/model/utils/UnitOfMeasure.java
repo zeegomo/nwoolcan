@@ -1,5 +1,7 @@
 package nwoolcan.model.utils;
 
+import nwoolcan.utils.StringUtils;
+
 /**
  * Enum used to identify the various unit of measures.
  */
@@ -147,5 +149,10 @@ public enum UnitOfMeasure {
 
     private static boolean validateWhenInteger(final Number value) {
         return value.doubleValue() == value.intValue();
+    }
+
+    @Override
+    public String toString() {
+        return StringUtils.underscoreSeparatedToHuman(super.toString());
     }
 }
