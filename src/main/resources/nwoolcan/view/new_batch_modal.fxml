@@ -37,7 +37,7 @@
             </top>
             <center>
                 <VBox BorderPane.alignment="CENTER_LEFT">
-                    <TitledPane text="General info">
+                    <TitledPane text="General info" collapsible="false">
                         <BorderPane>
                             <left>
                                 <VBox>
@@ -72,7 +72,7 @@
                             </right>
                         </BorderPane>
                     </TitledPane>
-                    <TitledPane text="Ingredients">
+                    <TitledPane text="Ingredients" collapsible="false">
                         <BorderPane>
                             <top>
                                 <GridPane hgap="5" vgap="5">
@@ -108,7 +108,7 @@
                             </center>
                         </BorderPane>
                     </TitledPane>
-                    <TitledPane text="Water measurement">
+                    <TitledPane text="Water measurements" collapsible="false">
                         <BorderPane>
                             <top>
                                 <GridPane hgap="5" vgap="5">
@@ -122,14 +122,6 @@
                                     </GridPane>
                                     <Button GridPane.rowIndex="1" GridPane.columnIndex="2" text="Add" onAction="#addElementRegistrationClick" />
                                 </GridPane>
-<!--                                <VBox>-->
-<!--                                    <Label text="Registration value" />-->
-<!--                                    <HBox>-->
-<!--                                        <TextField fx:id="registrationValueTextField" />-->
-<!--                                        <ComboBox fx:id="elementsComboBox" />-->
-<!--                                        <Button text="Add" onAction="#addElementRegistrationClick" />-->
-<!--                                    </HBox>-->
-<!--                                </VBox>-->
                             </top>
                             <center>
                                 <TableView fx:id="elementsTableView" maxHeight="150">
@@ -155,7 +147,7 @@
                 </VBox>
             </center>
             <bottom>
-                <Button text="Create" BorderPane.alignment="CENTER" onAction="#createBatchClick" />
+                <Button text="Create" defaultButton="true" BorderPane.alignment="CENTER" onAction="#createBatchClick" />
             </bottom>
         </BorderPane>
     </ScrollPane>
