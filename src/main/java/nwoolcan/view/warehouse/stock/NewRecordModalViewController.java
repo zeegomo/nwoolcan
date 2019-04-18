@@ -7,6 +7,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -54,6 +55,8 @@ public final class NewRecordModalViewController extends AbstractViewController i
     private ComboBox<Record.Action> recordAction;
     @FXML
     private TextField recordAmount;
+    @FXML
+    private Label lblUom;
 
     /**
      * Creates itself and inject the controller and the view manager.
@@ -78,6 +81,12 @@ public final class NewRecordModalViewController extends AbstractViewController i
                                                 .collect(Collectors.toList()));
         recordMinute.getSelectionModel().select(MIDDLE_MINUTE_INDEX);
         checkSelectDate.setSelected(false);
+        lblUom.setText(getController().getWarehouseController()
+                                      .getViewStockById(stockId)
+                                      .getValue()
+                                      .getArticle()
+                                      .getUnitOfMeasure()
+                                      .getSymbol());
     }
 
     @FXML
