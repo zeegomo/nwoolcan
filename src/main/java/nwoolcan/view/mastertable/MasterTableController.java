@@ -12,7 +12,7 @@ import javafx.scene.layout.FlowPane;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.subview.SubViewController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.subview.SubView;
 
 /**

@@ -16,7 +16,7 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.time.LocalDate;
