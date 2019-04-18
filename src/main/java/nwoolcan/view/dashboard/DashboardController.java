@@ -2,17 +2,38 @@ package nwoolcan.view.dashboard;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.Label;
 import nwoolcan.controller.Controller;
-import nwoolcan.view.subview.SubViewController;
-import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
+import nwoolcan.view.subview.SubViewController;
+import nwoolcan.view.utils.ViewManager;
+import nwoolcan.viewmodel.brewery.DashboardViewModel;
 
 /**
  * Handles the Dashboard view.
  */
 @SuppressWarnings("NullAway")
 public final class DashboardController extends SubViewController {
+
+    @FXML
+    private Label lblTotalNumberBatches;
+
+    @FXML
+    private Label lblNumberProductionBatches;
+
+    @FXML
+    private Label lblNumberEndedBatches;
+
+    @FXML
+    private Label lblNumberStockedBatches;
+
+    @FXML
+    private PieChart pieChartBatchesStatus;
+
+    @FXML
+    private Label lblTitle;
 
     @FXML
     private SubView content;
@@ -26,28 +47,36 @@ public final class DashboardController extends SubViewController {
         super(controller, viewManager);
     }
 
-    /**
-     * Removes this Dashboard view.
-     * @param event The occurred event
-     */
-    public void btnBackClicked(final ActionEvent event) {
-        this.previousView();
+    @FXML
+    private void initialize() {
+        final DashboardViewModel data = this.getController().getDashboardViewModel();
+        this.lblTitle.setText(data.getBreweryName());
+
+        this.lblTotalNumberBatches.setText(Long.toString(data.getProduction().getNBatches()));
+        this.lblNumberProductionBatches.setText(Long.toString(data.getProduction().getNInProgressBatches()));
+        this.lblNumberEndedBatches.setText(Long.toString(data.getProduction().getNEndedBatches()));
+        this.lblNumberStockedBatches.setText(Long.toString(data.getProduction().getNStockedBatches()));
+
+        if (data.getProduction().getNBatches() > 0) {
+            this.pieChartBatchesStatus.setVisible(true);
+            pieChartBatchesStatus.getData().clear();
+            if (data.getProduction().getNInProgressBatches() > 0) {
+                pieChartBatchesStatus.getData().add(new PieChart.Data("In progress", data.getProduction().getNInProgressBatches()));
+            }
+            if (data.getProduction().getNEndedNotStockedBatches() > 0) {
+                pieChartBatchesStatus.getData().add(new PieChart.Data("Ended not stocked", data.getProduction().getNEndedNotStockedBatches()));
+            }
+            if (data.getProduction().getNStockedBatches() > 0) {
+                pieChartBatchesStatus.getData().add(new PieChart.Data("Stocked", data.getProduction().getNStockedBatches()));
+            }
+        } else {
+            this.pieChartBatchesStatus.setVisible(false);
+        }
     }
 
-    /**
-     * Overlay another Dashboard over this one.
-     * @param event The occurred event
-     */
-    public void btnNewClicked(final ActionEvent event) {
-        this.overlayView(ViewType.DASHBOARD);
-    }
-
-    /**
-     * Substitute this view with Warehouse.
-     * @param event The occurred event
-     */
-    public void btnToWarehouseClicked(final ActionEvent event) {
-        this.substituteView(ViewType.WAREHOUSE);
+    @FXML
+    private void toProductionClicked(final ActionEvent event) {
+        this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
     }
 
     @Override

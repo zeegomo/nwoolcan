@@ -1,21 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.FlowPane?>
-
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import nwoolcan.view.subview.SubView?>
 
-<SubView xmlns="http://javafx.com/javafx"
-         xmlns:fx="http://javafx.com/fxml"
-         fx:id="content"
-         fx:controller="nwoolcan.view.dashboard.DashboardController">
-    <FlowPane>
-        <Label text="This is the dashboard"></Label>
-        <Button text="Back" onAction="#btnBackClicked" />
-        <Button text="New" onAction="#btnNewClicked" />
-        <Button text="To warehouse" onAction="#btnToWarehouseClicked" />
-        <TextField />
-    </FlowPane>
+<?import javafx.scene.control.Button?>
+<SubView fx:id="content" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.dashboard.DashboardController">
+    <BorderPane>
+        <top>
+            <Label fx:id="lblTitle" BorderPane.alignment="CENTER">
+                <font>
+                    <Font size="28" />
+                </font>
+            </Label>
+        </top>
+        <center>
+            <VBox>
+                <TitledPane collapsible="false" text="Production">
+                    <HBox spacing="20">
+                        <PieChart fx:id="pieChartBatchesStatus" title="Batches" managed="${pieChartBatchesStatus.visible}"/>
+                        <GridPane minWidth="-Infinity" vgap="20" HBox.hgrow="ALWAYS">
+                            <Label text="Total number of batches : " GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <Label fx:id="lblTotalNumberBatches" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <Label text="Number of batches in production : " GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <Label fx:id="lblNumberProductionBatches" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <Label text="Number of ended batches : " GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                            <Label fx:id="lblNumberEndedBatches" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <Label text="Number of stocked batches : " GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                            <Label fx:id="lblNumberStockedBatches" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                            <Button GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" onAction="#toProductionClicked">Go to Production</Button>
+                        </GridPane>
+                    </HBox>
+                </TitledPane>
+            </VBox>
+        </center>
+    </BorderPane>
 </SubView>

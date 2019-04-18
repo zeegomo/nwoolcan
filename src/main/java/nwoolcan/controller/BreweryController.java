@@ -26,6 +26,7 @@ import nwoolcan.model.database.DatabaseJsonImpl;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
+import nwoolcan.viewmodel.brewery.DashboardViewModel;
 import nwoolcan.viewmodel.brewery.production.ProductionViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.CreateBatchDTO;
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
@@ -223,5 +224,13 @@ public final class BreweryController implements Controller {
             this.brewery = b;
             this.initilizeSubControllers();
         }).toEmpty();
+    }
+
+    @Override
+    public DashboardViewModel getDashboardViewModel() {
+        return new DashboardViewModel(
+            this.getProductionViewModel(),
+            this.brewery.getBreweryName().orElse("")
+        );
     }
 }
