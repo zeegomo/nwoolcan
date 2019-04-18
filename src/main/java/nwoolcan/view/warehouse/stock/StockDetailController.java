@@ -18,7 +18,7 @@ import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
