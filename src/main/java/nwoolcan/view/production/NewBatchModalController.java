@@ -42,6 +42,8 @@ public final class NewBatchModalController
     extends AbstractViewController implements InitializableController<NewBatchViewModel> {
 
     @FXML
+    private Label elementUnitOfMeasureSymbolLabel;
+    @FXML
     private TextField beerNameTextField;
     @FXML
     private TextField beerStyleTextField;
@@ -157,6 +159,8 @@ public final class NewBatchModalController
         this.ingredientsComboBox.setItems(FXCollections.observableList(
             new ArrayList<>(data.getIngredients()))
         );
+
+        this.elementUnitOfMeasureSymbolLabel.setText(ParameterTypeEnum.WATER_MEASUREMENT.getUnitOfMeasure().getSymbol());
     }
 
     /**
