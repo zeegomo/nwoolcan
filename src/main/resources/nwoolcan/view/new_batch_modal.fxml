@@ -19,6 +19,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.GridPane?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="nwoolcan.view.production.NewBatchModalController">
@@ -59,14 +60,14 @@
                                 <VBox>
                                     <VBox>
                                         <Label text="Batch method" />
-                                        <ComboBox fx:id="batchMethodsComboBox" />
+                                        <ComboBox fx:id="batchMethodsComboBox" promptText="Select a batch method" />
                                     </VBox>
                                     <VBox>
                                         <Label text="Inital size" />
-                                        <HBox>
-                                            <TextField fx:id="initialSizeTextField" />
-                                            <Label fx:id="initialSizeUnitOfMeasureLabel" text="?" />
-                                        </HBox>
+                                        <GridPane hgap="10">
+                                            <TextField GridPane.columnIndex="0" fx:id="initialSizeTextField" />
+                                            <Label GridPane.columnIndex="1" fx:id="initialSizeUnitOfMeasureLabel" text="?" />
+                                        </GridPane>
                                     </VBox>
                                 </VBox>
                             </right>
