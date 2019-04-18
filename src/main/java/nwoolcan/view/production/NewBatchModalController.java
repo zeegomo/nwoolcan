@@ -65,26 +65,9 @@ public final class NewBatchModalController
     @FXML
     private TextField quantityIngredientTextField;
     @FXML
-    private TableView<Pair<Number, IngredientArticleProperty>> ingredientsTableView;
+    private TableView<Pair<Number, IngredientArticleViewModel>> ingredientsTableView;
     @FXML
-    private ComboBox<IngredientArticleProperty> ingredientsComboBox;
-
-    private static final class IngredientArticleProperty {
-        private final IngredientArticleViewModel article;
-
-        private IngredientArticleProperty(final IngredientArticleViewModel article) {
-            this.article = article;
-        }
-
-        private IngredientArticleViewModel getArticle() {
-            return this.article;
-        }
-
-        @Override
-        public String toString() {
-            return this.article.getName();
-        }
-    }
+    private ComboBox<IngredientArticleViewModel> ingredientsComboBox;
 
     private static final class BatchMethodProperty {
         private final BatchMethod method;
@@ -131,11 +114,11 @@ public final class NewBatchModalController
         });
         this.elementsTableView.getColumns().add(removeElementColumn);
 
-        final TableColumn<Pair<Number, IngredientArticleProperty>, Button> removeIngredientColumn = new TableColumn<>();
+        final TableColumn<Pair<Number, IngredientArticleViewModel>, Button> removeIngredientColumn = new TableColumn<>();
         removeIngredientColumn.setCellValueFactory(obj -> {
             final Button btn = new Button("Remove");
             btn.setOnAction(event -> this.ingredientsTableView.getItems().removeIf(p ->
-                p.getRight().getArticle().getId() == obj.getValue().getRight().getArticle().getId()));
+                p.getRight().getId() == obj.getValue().getRight().getId()));
             return new SimpleObjectProperty<>(btn);
         });
         this.ingredientsTableView.getColumns().add(removeIngredientColumn);
@@ -145,14 +128,11 @@ public final class NewBatchModalController
         ));
 
         this.ingredientsComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) ->
-            this.ingredientUnitOfMeasureLabel.setText(newV.getArticle().getUnitOfMeasure().getSymbol())
+            this.ingredientUnitOfMeasureLabel.setText(newV.getUnitOfMeasure().getSymbol())
         );
 
         this.ingredientsComboBox.setItems(FXCollections.observableList(
-            data.getIngredients()
-                .stream()
-                .map(IngredientArticleProperty::new)
-                .collect(Collectors.toList()))
+            new ArrayList<>(data.getIngredients()))
         );
     }
 
@@ -184,7 +164,7 @@ public final class NewBatchModalController
      * @param event the occurred event.
      */
     public void addIngredientClick(final ActionEvent event) {
-        final IngredientArticleProperty selectedElement = this.ingredientsComboBox.getSelectionModel().getSelectedItem();
+        final IngredientArticleViewModel selectedElement = this.ingredientsComboBox.getSelectionModel().getSelectedItem();
         if (selectedElement == null) {
             this.showAlertAndWait("Must select an ingredient!");
             return;
@@ -198,7 +178,7 @@ public final class NewBatchModalController
             return;
         }
 
-        this.ingredientsTableView.getItems().removeIf(p -> p.getRight().getArticle().getId() == selectedElement.getArticle().getId());
+        this.ingredientsTableView.getItems().removeIf(p -> p.getRight().getId() == selectedElement.getId());
         this.ingredientsTableView.getItems().add(Pair.of(quantity, selectedElement));
     }
 
@@ -256,7 +236,7 @@ public final class NewBatchModalController
             StepTypeEnum.MASHING,
             this.ingredientsTableView.getItems()
                                      .stream()
-                                     .map(p -> Pair.of(p.getRight().getArticle().getId(), p.getLeft().doubleValue()))
+                                     .map(p -> Pair.of(p.getRight().getId(), p.getLeft().doubleValue()))
                                      .collect(Collectors.toList()),
             this.elementsTableView.getItems()
                                   .stream()
