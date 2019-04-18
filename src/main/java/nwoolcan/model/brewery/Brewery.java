@@ -38,6 +38,17 @@ public interface Brewery {
      */
     Collection<Batch> getBatches(QueryBatch queryBatch);
     /**
+     * Getter of the {@link Collection} of {@link Batch} in the warehouse.
+     * @return a {@link Collection} of all the {@link Batch} in the warehouse.
+     */
+    Collection<Batch> getBatches();
+    /**
+     * Returns a {@link Batch} with the specified id.
+     * @param batchId the batch id.
+     * @return a {@link Result} bearing the found batch or an error if no batch is found.
+     */
+    Result<Batch> getBatchById(int batchId);
+    /**
      * Adds a {@link Batch} to the brewery.
      * @param batch to be added
      */
