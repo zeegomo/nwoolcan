@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -27,6 +28,8 @@ import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.BeerStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.DetailStockViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.RecordViewModel;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
@@ -37,6 +40,12 @@ import java.util.List;
 @SuppressWarnings("NullAway")
 public final class StockDetailController extends SubViewController implements InitializableController<Pair<Integer, Runnable>> {
 
+    @FXML
+    private HBox expDateBox;
+    @FXML
+    private Label lblExpirationDate;
+    @FXML
+    private Label lblState;
     @FXML
     private Button buttonGoToBatch;
     @FXML
@@ -87,10 +96,16 @@ public final class StockDetailController extends SubViewController implements In
         lblLastModified.setText(data.getLastModified());
         lblUsedQt.setText(data.getUsedQuantity().toString());
         lblId.setText(Integer.toString(data.getId()));
+        lblState.setText(data.getStockState().toString());
+        lblExpirationDate.setText(data.getExpirationDate());
         if (data.getArticle().getArticleType() == ArticleType.FINISHED_BEER) {
             this.batchId = ((BeerStockViewModel) data).getBatchId();
             this.buttonGoToBatch.setVisible(true);
             this.buttonGoToBatch.setManaged(true);
+        }
+        if (data.getExpirationDate().isEmpty()) {
+            expDateBox.setManaged(false);
+            expDateBox.setVisible(false);
         }
 
         setTable(data.getRecords());
@@ -128,15 +143,13 @@ public final class StockDetailController extends SubViewController implements In
 
     @FXML
     private void addRecordButtonClick(final ActionEvent actionEvent) {
-        //overlayView(ViewType.NEW_RECORD_MODAL, stockId);
         final Stage modal =  new Stage();
         final Window window = this.getSubView().getScene().getWindow();
 
         modal.initOwner(window);
         modal.initModality(Modality.WINDOW_MODAL);
 
-        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_RECORD_MODAL, stockId).orElse(new AnchorPane()),
-            600, 400);
+        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_RECORD_MODAL, stockId).orElse(new AnchorPane()));
 
         modal.setResizable(false);
         modal.setScene(scene);
