@@ -53,6 +53,14 @@
                                 <Label fx:id="lblUsedQt"/>
                             </HBox>
                             <HBox>
+                                <Label text="State: "/>
+                                <Label fx:id="lblState"/>
+                            </HBox>
+                            <HBox fx:id="expDateBox">
+                                <Label text="Expiration Date: "/>
+                                <Label fx:id="lblExpirationDate"/>
+                            </HBox>
+                            <HBox>
                                 <Label text="Last modified: "/>
                                 <Label fx:id="lblLastModified"/>
                             </HBox>
