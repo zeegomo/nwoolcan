@@ -57,7 +57,7 @@
                 </HBox>
             </center>
             <bottom>
-                <Button fx:id="stockBatchButton" text="Stock" BorderPane.alignment="CENTER" onAction="#stockBatchButtonClicked" />
+                <Button fx:id="stockBatchButton" text="Stock" BorderPane.alignment="CENTER" onAction="#stockBatchButtonClicked" defaultButton="true" />
             </bottom>
         </BorderPane>
     </ScrollPane>
