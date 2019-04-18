@@ -55,6 +55,7 @@ public final class TypeWrapperAdapterFactory implements TypeAdapterFactory { // 
              * @throws IOException When something goes wrong reading to in.
              */
             @Override
+            @SuppressWarnings("unchecked")
             public T read(final JsonReader in) throws IOException {
                 in.beginObject();
                 final String className = in.nextName();

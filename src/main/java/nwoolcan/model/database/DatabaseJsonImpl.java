@@ -2,6 +2,8 @@ package nwoolcan.model.database;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.internal.ConstructorConstructor;
+import com.google.gson.internal.bind.MapTypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import nwoolcan.model.brewery.Brewery;
 import nwoolcan.utils.Empty;
@@ -14,6 +16,8 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.function.Function;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -32,6 +36,7 @@ public final class DatabaseJsonImpl implements Database {
     public DatabaseJsonImpl(final File filePath) {
         this.gson = new GsonBuilder()
             .registerTypeAdapterFactory(new TypeWrapperAdapterFactory())
+            .registerTypeAdapterFactory(new MapTypeAdapterFactory(new ConstructorConstructor(new HashMap<>()), true))
             .setPrettyPrinting()
             .create();
 
@@ -94,12 +99,14 @@ public final class DatabaseJsonImpl implements Database {
     @Override
     public Result<Empty> save(final Brewery toSave) {
         return Results.ofChecked(() -> Files.newBufferedWriter(this.filePath.toPath(), UTF_8))
-            .flatMap(buf -> this.serialize(toSave, buf));
+            .flatMap(buf -> Results.ofCloseable(() -> buf, writer -> this.serialize(toSave, writer)))
+                      .flatMap(Function.identity());
     }
 
     @Override
     public Result<Brewery> load() {
         return Results.ofChecked(() -> Files.newBufferedReader(this.filePath.toPath(), UTF_8))
-            .flatMap(buf -> this.deserialize(buf, new TypeToken<Brewery>() { }));
+            .flatMap(buf -> Results.ofCloseable(() -> buf, reader -> this.deserialize(reader, new TypeToken<Brewery>() { })))
+            .flatMap(Function.identity());
     }
 }
