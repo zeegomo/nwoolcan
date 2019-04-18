@@ -14,15 +14,15 @@ import nwoolcan.view.InitializableController;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.subview.SubView;
+import nwoolcan.view.utils.ViewModelCallback;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
-import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Controller class for article detail view.
  */
 @SuppressWarnings("NullAway")
-public final class ArticleDetailViewController extends SubViewController implements InitializableController<Pair<AbstractArticleViewModel, Runnable>> {
+public final class ArticleDetailViewController extends SubViewController implements InitializableController<ViewModelCallback<AbstractArticleViewModel>> {
 
     private static final String NEW_NAME_EMPTY = "The name can not be empty.";
     @FXML
@@ -56,9 +56,9 @@ public final class ArticleDetailViewController extends SubViewController impleme
     }
 
     @Override
-    public void initData(final Pair<AbstractArticleViewModel, Runnable> dataAndRunner) {
-        this.updateFather = dataAndRunner.getRight();
-        loadData(dataAndRunner.getLeft());
+    public void initData(final ViewModelCallback<AbstractArticleViewModel> dataAndRunner) {
+        this.updateFather = dataAndRunner.getCallback();
+        loadData(dataAndRunner.getViewModel());
     }
 
     private void loadData(final AbstractArticleViewModel data) {
