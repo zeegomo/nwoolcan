@@ -1,7 +1,9 @@
 package nwoolcan.view.review;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.text.Text;
 import nwoolcan.view.InitializableController;
@@ -11,8 +13,8 @@ import nwoolcan.viewmodel.brewery.production.batch.review.EvaluationViewModel;
  */
 @SuppressWarnings("NullAway")
 public final class EvaluationController implements InitializableController<EvaluationViewModel> {
-    @FXML
-    private TitledPane title;
+    /*@FXML
+    private TitledPane title;*/
     @FXML
     private Label score;
     @FXML
@@ -20,8 +22,8 @@ public final class EvaluationController implements InitializableController<Evalu
 
     @Override
     public void initData(final EvaluationViewModel data) {
-        title.setText(data.getType());
-        title.setCollapsible(false);
+        /*title.setText(data.getType());
+        title.setCollapsible(false);*/
         score.setText(formatScore(data));
         notes.setText(formatNotes(data));
     }
@@ -32,5 +34,9 @@ public final class EvaluationController implements InitializableController<Evalu
 
     private String formatNotes(final EvaluationViewModel data) {
         return data.getNotes().orElse("");
+    }
+
+    public DoubleProperty widthProperty() {
+        return this.notes.wrappingWidthProperty();
     }
 }
