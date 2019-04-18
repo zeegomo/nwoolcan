@@ -82,9 +82,10 @@
                                     <ComboBox GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="ingredientsComboBox" promptText="Select an ingredient" />
                                     <GridPane GridPane.rowIndex="1" GridPane.columnIndex="1" hgap="5" vgap="5">
                                         <TextField GridPane.columnIndex="0" fx:id="quantityIngredientTextField" />
-                                        <Label GridPane.columnIndex="1" fx:id="ingredientUnitOfMeasureLabel" text="?" />
+                                        <Label GridPane.columnIndex="1" fx:id="ingredientUnitOfMeasureLabel" />
                                     </GridPane>
-                                    <Button GridPane.rowIndex="1" GridPane.columnIndex="2" text="Add" onAction="#addIngredientClick" />
+                                    <Button GridPane.rowIndex="1" GridPane.columnIndex="2"
+                                            text="Add" fx:id="addIngredientButton" onAction="#addIngredientClick" />
                                 </GridPane>
                             </top>
                             <center>

@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.BatchMethod;
@@ -41,6 +42,8 @@ import java.util.stream.Collectors;
 public final class NewBatchModalController
     extends AbstractViewController implements InitializableController<NewBatchViewModel> {
 
+    @FXML
+    private Button addIngredientButton;
     @FXML
     private Label elementUnitOfMeasureSymbolLabel;
     @FXML
@@ -127,6 +130,9 @@ public final class NewBatchModalController
                                              .collect(Collectors.toList())));
 
         this.initialSizeUnitOfMeasureLabel.setText(UnitOfMeasure.LITER.getSymbol());
+
+        this.ingredientUnitOfMeasureLabel.setMinWidth(Region.USE_PREF_SIZE);
+        this.addIngredientButton.setMinWidth(Region.USE_PREF_SIZE);
 
         final TableColumn<Pair<NumberUnitOfMeasureProperty, WaterMeasurement.Element>, Button> removeElementColumn = new TableColumn<>();
         removeElementColumn.setStyle("-fx-alignment: CENTER");
