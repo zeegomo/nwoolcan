@@ -10,7 +10,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.step.StepType;
@@ -34,7 +34,7 @@ public final class GoNextStepModalController
     implements InitializableController<GoNextStepViewModel> {
 
     @FXML
-    private TitledPane finalizeStepTitlePane;
+    private VBox notesAndSizeVBox;
     @FXML
     private TextArea notesTextArea;
 
@@ -71,17 +71,18 @@ public final class GoNextStepModalController
         ));
         this.nextStepTypesComboBox.getSelectionModel().selectFirst();
 
-        this.finalizeStepTitlePane.disableProperty().bind(
-            this.chooseFinalizeNextStepCheckBox.selectedProperty().not()
+        this.notesAndSizeVBox.visibleProperty().bind(
+            this.chooseFinalizeNextStepCheckBox.selectedProperty()
         );
 
         this.endSizeUnitOfMeasureComboBox.setItems(FXCollections.observableList(
             data.getPossibleUnitsOfMeasure()
         ));
-        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectFirst();
 
         this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) ->
             this.endSizeUnitOfMeasureSymbolLabel.setText(newV.getSymbol()));
+
+        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectFirst();
     }
 
     /**

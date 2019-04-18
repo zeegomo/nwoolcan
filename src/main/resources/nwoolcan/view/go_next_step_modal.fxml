@@ -33,31 +33,29 @@
             </top>
             <center>
                 <VBox BorderPane.alignment="CENTER_LEFT">
-                    <TitledPane text="Choose next step type" >
+                    <TitledPane text="Choose next step type" collapsible="false">
                         <VBox>
                             <Label text="Next step type" />
                             <ComboBox fx:id="nextStepTypesComboBox" />
                         </VBox>
                     </TitledPane>
                     <HBox>
-                        <CheckBox fx:id="chooseFinalizeNextStepCheckBox" text="Finalize current step?" />
+                        <CheckBox fx:id="chooseFinalizeNextStepCheckBox" text="Add notes or change final step size?" />
                     </HBox>
-                    <TitledPane fx:id="finalizeStepTitlePane" text="Finalize step" disable="true" >
+                    <VBox fx:id="notesAndSizeVBox">
                         <VBox>
-                            <VBox>
-                                <Label text="Notes" />
-                                <TextArea fx:id="notesTextArea"/>
-                            </VBox>
-                            <VBox>
-                                <Label text="End size" />
-                                <HBox>
-                                    <TextField fx:id="endSizeValueTextField" />
-                                    <Label fx:id="endSizeUnitOfMeasureSymbolLabel" text="?" />
-                                    <ComboBox fx:id="endSizeUnitOfMeasureComboBox" />
-                                </HBox>
-                            </VBox>
+                            <Label text="Notes" />
+                            <TextArea fx:id="notesTextArea"/>
                         </VBox>
-                    </TitledPane>
+                        <VBox>
+                            <Label text="End size" />
+                            <HBox>
+                                <TextField fx:id="endSizeValueTextField" />
+                                <Label fx:id="endSizeUnitOfMeasureSymbolLabel" text="?" />
+                                <ComboBox fx:id="endSizeUnitOfMeasureComboBox" />
+                            </HBox>
+                        </VBox>
+                    </VBox>
                 </VBox>
             </center>
             <bottom>
