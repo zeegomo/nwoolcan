@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -38,8 +37,6 @@ import java.util.List;
 @SuppressWarnings("NullAway")
 public final class StockDetailController extends SubViewController implements InitializableController<ViewModelCallback<Integer>> {
 
-    @FXML
-    private HBox expDateBox;
     @FXML
     private Label lblExpirationDate;
     @FXML
@@ -100,10 +97,6 @@ public final class StockDetailController extends SubViewController implements In
             this.batchId = ((BeerStockViewModel) data).getBatchId();
             this.buttonGoToBatch.setVisible(true);
             this.buttonGoToBatch.setManaged(true);
-        }
-        if (data.getExpirationDate().isEmpty()) {
-            expDateBox.setManaged(false);
-            expDateBox.setVisible(false);
         }
 
         setTable(data.getRecords());
