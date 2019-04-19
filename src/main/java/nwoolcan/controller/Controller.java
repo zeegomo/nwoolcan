@@ -5,6 +5,7 @@ import nwoolcan.controller.warehouse.WarehouseController;
 import nwoolcan.model.brewery.batch.QueryBatch;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
+import nwoolcan.viewmodel.brewery.DashboardViewModel;
 import nwoolcan.viewmodel.brewery.production.ProductionViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.CreateBatchDTO;
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
@@ -92,4 +93,10 @@ public interface Controller {
      * @return a {@link Result} describing the operation's outcome.
      */
     Result<Empty> loadFrom(File filename);
+
+    /**
+     * Returns the built view model for the dashboard.
+     * @return the built view model for the dashboard.
+     */
+    DashboardViewModel getDashboardViewModel();
 }

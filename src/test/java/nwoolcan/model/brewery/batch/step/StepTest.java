@@ -50,10 +50,11 @@ public class StepTest {
      */
     @Before
     public void init() {
-        this.boiling = new BasicStep(StepTypeEnum.BOILING);
-        this.mashing = new BasicStep(StepTypeEnum.MASHING);
-        this.packaging = new BasicStep(StepTypeEnum.PACKAGING, new Date());
-        this.finalized = new BasicStep(StepTypeEnum.FINALIZED);
+        final EnumStepFactory factory = new EnumStepFactory();
+        this.boiling = factory.create(StepTypeEnum.BOILING).getValue();
+        this.mashing = factory.create(StepTypeEnum.MASHING).getValue();
+        this.packaging = factory.create(StepTypeEnum.PACKAGING, new Date()).getValue();
+        this.finalized = factory.create(StepTypeEnum.FINALIZED).getValue();
     }
 
     /**
@@ -87,7 +88,11 @@ public class StepTest {
         Assert.assertTrue(this.mashing.getStepInfo().getEndDate().isPresent());
         Assert.assertTrue(this.mashing.getStepInfo().getEndStepSize().isPresent());
 
+        //Cannot package a no bottle quantity
         finRes = this.packaging.finalize("Ciao", new Date(), Q1);
+        Assert.assertTrue(finRes.isError());
+        //now can
+        finRes = this.packaging.finalize("Ciao", new Date(), Quantity.of(1000, UnitOfMeasure.BOTTLE_33_CL).getValue());
         Assert.assertFalse(finRes.isError());
 
         Assert.assertTrue(this.finalized.isFinalized());
@@ -100,10 +105,10 @@ public class StepTest {
         Result<Empty> res = Result.ofEmpty();
 
         for (Parameter p : MASHING_PARAMS) {
-            res = res.flatMap(() -> this.mashing.addParameter(p));
+            res = res.flatMap(() -> this.mashing.registerParameter(p));
         }
         for (Parameter p : BOILING_PARAMS) {
-            res = res.flatMap(() -> this.boiling.addParameter(p));
+            res = res.flatMap(() -> this.boiling.registerParameter(p));
         }
 
         return res;
@@ -126,7 +131,7 @@ public class StepTest {
      */
     @Test
     public void testWrongParametersAddition() {
-        Result<Empty> res = this.packaging.addParameter(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, 1).getValue());
+        Result<Empty> res = this.packaging.registerParameter(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, 1).getValue());
         Assert.assertTrue(res.isError());
         Assert.assertSame(IllegalArgumentException.class, res.getError().getClass());
     }
@@ -138,14 +143,14 @@ public class StepTest {
     public void testAddingParametersWhenFinalized() {
         this.boiling.finalize(null, new Date(), Q1);
         Assert.assertTrue(this.boiling.isFinalized());
-        Result<Empty> res = this.boiling.addParameter(ParameterFactory.create(
+        Result<Empty> res = this.boiling.registerParameter(ParameterFactory.create(
             ParameterTypeEnum.TEMPERATURE, 10
         ).getValue());
 
         Assert.assertTrue(res.isError());
         Assert.assertSame(IllegalStateException.class, res.getError().getClass());
 
-        res = this.finalized.addParameter(ParameterFactory.create(
+        res = this.finalized.registerParameter(ParameterFactory.create(
             ParameterTypeEnum.TEMPERATURE, 10
         ).getValue());
         Assert.assertTrue(res.isError());

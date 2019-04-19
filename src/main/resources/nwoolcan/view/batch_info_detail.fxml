@@ -49,9 +49,13 @@
                             </columnResizePolicy>
                         </TableView>
                         <columnConstraints>
-                            <ColumnConstraints percentWidth="50"/>
+                            <ColumnConstraints percentWidth="25"/>
                         </columnConstraints>
-                        <PieChart fx:id="ingredientsTypeChart" title="Ingredients" GridPane.columnIndex="1"/>
+                        <PieChart fx:id="fermentablesTypeChart" title="Fermentables" GridPane.columnIndex="1"/>
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="25"/>
+                        </columnConstraints>
+                        <PieChart fx:id="hopsTypeChart" title="Hops" GridPane.columnIndex="2"/>
                     </GridPane>
                 </TitledPane>
                 <TitledPane text="Water Measurements" GridPane.columnIndex="1">
