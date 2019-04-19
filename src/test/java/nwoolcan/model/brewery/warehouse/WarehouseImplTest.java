@@ -89,7 +89,7 @@ public class WarehouseImplTest {
         final QueryStock queryStock = resQueryStock.getValue();
         final List<Stock> lisStock = warehouse.getStocks(queryStock);
         for (final Stock s : lisStock) {
-            Assert.assertEquals(article, s.getArticle());
+            Assert.assertEquals(article.getId(), s.getArticleId());
             Assert.assertFalse(s.getRemainingQuantity().lessThan(quantity));
             Assert.assertFalse(s.getRemainingQuantity().moreThan(quantity2));
             System.out.println(s.toString());
@@ -143,7 +143,7 @@ public class WarehouseImplTest {
         final QueryStock queryStock = resQueryStock.getValue();
         final List<Stock> lisStock = warehouse.getStocks(queryStock);
         for (final Stock s : lisStock) {
-            Assert.assertEquals(article, s.getArticle());
+            Assert.assertEquals(article.getId(), s.getArticleId());
             Assert.assertTrue(!s.getExpirationDate()
                                  .isPresent()
                            || !s.getExpirationDate()

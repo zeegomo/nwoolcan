@@ -61,7 +61,6 @@ public final class QueryStockTest {
                                                         .setMaxUsedQuantity(QUANTITY)
                                                         .setIncludeOnlyStockState(StockState.EXPIRED)
                                                         .setExcludeOnlyStockState(StockState.AVAILABLE)
-                                                        .sortBy(QueryStock.SortParameter.ARTICLE_NAME)
                                                         .sortDescending(true)
                                                         .build();
         Assert.assertTrue(res.isPresent());
@@ -88,8 +87,6 @@ public final class QueryStockTest {
         Assert.assertEquals(QUANTITY, query.getMaxUsedQuantity().get());
         Assert.assertEquals(StockState.EXPIRED, query.getIncludeStockState().get());
         Assert.assertEquals(StockState.AVAILABLE, query.getExcludeStockState().get());
-        Assert.assertEquals(QueryStock.SortParameter.ARTICLE_NAME, query.getSortBy());
-
     }
     /**
      * Wrong build test.

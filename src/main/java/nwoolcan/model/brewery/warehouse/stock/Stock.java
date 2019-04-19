@@ -1,6 +1,5 @@
 package nwoolcan.model.brewery.warehouse.stock;
 
-import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;

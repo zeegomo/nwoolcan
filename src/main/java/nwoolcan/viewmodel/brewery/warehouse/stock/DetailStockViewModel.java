@@ -1,6 +1,5 @@
 package nwoolcan.viewmodel.brewery.warehouse.stock;
 
-import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.model.brewery.warehouse.stock.Stock;
 
@@ -34,12 +33,12 @@ public abstract class DetailStockViewModel extends MasterStockViewModel {
         return records;
     }
     /**
-     * Generated a proper {@link DetailStockViewModel} from a general {@link Stock} accordingly with the {@link ArticleType} of the {@link nwoolcan.model.brewery.warehouse.article.Article} of the {@link Stock}.
+     * Generated a proper {@link DetailStockViewModel} from a general {@link Stock} accordingly with the {@link nwoolcan.model.brewery.warehouse.article.ArticleType} of the {@link nwoolcan.model.brewery.warehouse.article.Article} of the {@link Stock}.
      * @param stock to be converted
      * @return the converted {@link DetailStockViewModel}.
      */
     public static DetailStockViewModel getDetailViewStock(final Stock stock) {
-        if (stock.getArticle().getArticleType() == ArticleType.FINISHED_BEER) {
+        if (stock instanceof BeerStock) {
             return new BeerStockViewModel((BeerStock) stock);
         }
         return new PlainStockViewModel(stock);

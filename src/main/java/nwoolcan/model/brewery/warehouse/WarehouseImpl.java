@@ -47,11 +47,11 @@ public final class WarehouseImpl implements Warehouse {
                      // remove when article is present in queryStock but the article of
                      // the current stock is different from the one of the query.
                      .filter(stock -> !(queryStock.getArticle().isPresent()
-                         && !queryStock.getArticle().get().equals(stock.getArticle())))
+                         && !queryStock.getArticle().get().equals(getArticleById(stock.getArticleId()).getValue())))
                      // remove when articletype is present in queryStock but the articletype of
                      // the current stock is different from the one of the query.
                      .filter(stock -> !(queryStock.getArticleType().isPresent()
-                         && !(queryStock.getArticleType().get() == stock.getArticle().getArticleType())))
+                         && !(queryStock.getArticleType().get() == getArticleById(stock.getArticleId()).getValue().getArticleType())))
                      // remove those without expiration date if expiresBefore is present.
                      .filter(stock -> !(queryStock.getExpiresBefore().isPresent()
                          && !stock.getExpirationDate().isPresent()))
@@ -225,11 +225,6 @@ public final class WarehouseImpl implements Warehouse {
                           final boolean descending) {
         final int des = descending ? -1 : 1;
         switch (by) {
-            case ARTICLE_NAME:
-                return compareBy(s1.getArticle(),
-                                 s2.getArticle(),
-                                 QueryArticle.SortParameter.NAME,
-                                 descending);
             case EXPIRATION_DATE:
                 if (!s1.getExpirationDate().isPresent()) {
                     return des; // If the first doesn't have the expiration date,
