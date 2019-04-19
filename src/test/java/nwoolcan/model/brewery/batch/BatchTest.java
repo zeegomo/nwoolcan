@@ -21,6 +21,7 @@ import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
+import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.Quantity;
@@ -284,7 +285,10 @@ public class BatchTest {
         final BeerArticle article = warehouse.createBeerArticle("Test 75cl", UnitOfMeasure.BOTTLE_75_CL);
         final Result<Empty> res = batchAlfredo.stockBatchInto(article, () -> warehouse.createBeerStock(article, batchAlfredo).getValue());
         Assert.assertFalse(res.isError());
-        Assert.assertEquals(batchAlfredo.getId(), batchAlfredo.getStockReference().get().getBatch().getId());
+        final BeerStock s = warehouse.getBeerStockById(batchAlfredo.getStockIdReference()
+                                                                   .get())
+                                     .getValue();
+        Assert.assertEquals(batchAlfredo.getId(), s.getBatch().getId());
 
         //Stock again
         final Result<Empty> again = batchAlfredo.stockBatchInto(article, () -> warehouse.createBeerStock(article, batchAlfredo).getValue());
