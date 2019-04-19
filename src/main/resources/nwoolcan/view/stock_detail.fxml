@@ -19,7 +19,7 @@
          fx:id="stockDetailSubView">
     <BorderPane>
         <top>
-            <Label fx:id="lblTitleId" text="Stock Detail" BorderPane.alignment="CENTER">
+            <Label text="Stock Detail" BorderPane.alignment="CENTER">
                 <font>
                     <Font size="28.0" />
                 </font>
@@ -51,6 +51,14 @@
                             <HBox>
                                 <Label text="Used: "/>
                                 <Label fx:id="lblUsedQt"/>
+                            </HBox>
+                            <HBox>
+                                <Label text="State: "/>
+                                <Label fx:id="lblState"/>
+                            </HBox>
+                            <HBox fx:id="expDateBox">
+                                <Label text="Expiration Date: "/>
+                                <Label fx:id="lblExpirationDate"/>
                             </HBox>
                             <HBox>
                                 <Label text="Last modified: "/>

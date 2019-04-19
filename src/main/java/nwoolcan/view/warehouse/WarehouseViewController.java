@@ -156,13 +156,10 @@ public final class WarehouseViewController extends SubViewController {
         modal.initOwner(window);
         modal.initModality(Modality.WINDOW_MODAL);
 
-        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_STOCK_MODAL).orElse(new AnchorPane()),
-            600, 400);
+        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_STOCK_MODAL).orElse(new AnchorPane()));
 
         modal.setScene(scene);
         modal.setResizable(false);
-        modal.setX(window.getX() + window.getWidth() / 2 - scene.getWidth() / 2);
-        modal.setY(window.getY() + window.getHeight() / 2 - scene.getHeight() / 2);
         modal.showAndWait();
 
         this.substituteView(ViewType.WAREHOUSE);

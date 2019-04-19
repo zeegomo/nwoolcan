@@ -16,9 +16,9 @@
 
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.GridPane?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="nwoolcan.view.production.NewBatchModalController">
@@ -37,7 +37,7 @@
             </top>
             <center>
                 <VBox BorderPane.alignment="CENTER_LEFT">
-                    <TitledPane text="General info">
+                    <TitledPane text="General info" collapsible="false">
                         <BorderPane>
                             <left>
                                 <VBox>
@@ -59,31 +59,34 @@
                                 <VBox>
                                     <VBox>
                                         <Label text="Batch method" />
-                                        <ComboBox fx:id="batchMethodsComboBox" />
+                                        <ComboBox fx:id="batchMethodsComboBox" promptText="Select a batch method" />
                                     </VBox>
                                     <VBox>
                                         <Label text="Inital size" />
-                                        <HBox>
-                                            <TextField fx:id="initialSizeTextField" />
-                                            <Label fx:id="initialSizeUnitOfMeasureLabel" text="?" />
-                                        </HBox>
+                                        <GridPane hgap="10">
+                                            <TextField GridPane.columnIndex="0" fx:id="initialSizeTextField" />
+                                            <Label GridPane.columnIndex="1" fx:id="initialSizeUnitOfMeasureLabel" text="?" />
+                                        </GridPane>
                                     </VBox>
                                 </VBox>
                             </right>
                         </BorderPane>
                     </TitledPane>
-                    <TitledPane text="Ingredients">
+                    <TitledPane text="Ingredients" collapsible="false">
                         <BorderPane>
                             <top>
-                                <VBox>
-                                    <Label text="Quantity value" />
-                                    <HBox>
-                                        <TextField fx:id="quantityIngredientTextField" />
-                                        <Label fx:id="ingredientUnitOfMeasureLabel" text="?" />
-                                        <ComboBox fx:id="ingredientsComboBox" />
-                                        <Button text="Add" onAction="#addIngredientClick" />
-                                    </HBox>
-                                </VBox>
+                                <GridPane hgap="5" vgap="5">
+                                    <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="Ingredient" />
+                                    <Label GridPane.rowIndex="0" GridPane.columnIndex="1" text="Quantity" />
+
+                                    <ComboBox GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="ingredientsComboBox" promptText="Select an ingredient" />
+                                    <GridPane GridPane.rowIndex="1" GridPane.columnIndex="1" hgap="5" vgap="5">
+                                        <TextField GridPane.columnIndex="0" fx:id="quantityIngredientTextField" />
+                                        <Label GridPane.columnIndex="1" fx:id="ingredientUnitOfMeasureLabel" />
+                                    </GridPane>
+                                    <Button GridPane.rowIndex="1" GridPane.columnIndex="2"
+                                            text="Add" fx:id="addIngredientButton" onAction="#addIngredientClick" />
+                                </GridPane>
                             </top>
                             <center>
                                 <TableView fx:id="ingredientsTableView" maxHeight="150">
@@ -91,14 +94,14 @@
                                         <TableView fx:constant = "CONSTRAINED_RESIZE_POLICY" />
                                     </columnResizePolicy>
                                     <columns>
-                                        <TableColumn text="Quantity" >
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="left"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
                                         <TableColumn text="Ingredient" >
                                             <cellValueFactory>
                                                 <PropertyValueFactory property="right"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn text="Quantity" >
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="left"/>
                                             </cellValueFactory>
                                         </TableColumn>
                                     </columns>
@@ -106,17 +109,20 @@
                             </center>
                         </BorderPane>
                     </TitledPane>
-                    <TitledPane text="Water measurement">
+                    <TitledPane text="Water measurements" collapsible="false">
                         <BorderPane>
                             <top>
-                                <VBox>
-                                    <Label text="Registration value" />
-                                    <HBox>
-                                        <TextField fx:id="registrationValueTextField" />
-                                        <ComboBox fx:id="elementsComboBox" />
-                                        <Button text="Add" onAction="#addElementRegistrationClick" />
-                                    </HBox>
-                                </VBox>
+                                <GridPane hgap="5" vgap="5">
+                                    <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="Element" />
+                                    <Label GridPane.rowIndex="0" GridPane.columnIndex="1" text="Registration value" />
+
+                                    <ComboBox GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="elementsComboBox" promptText="Select an element" />
+                                    <GridPane GridPane.rowIndex="1" GridPane.columnIndex="1" hgap="5" vgap="5">
+                                        <TextField GridPane.columnIndex="0" fx:id="registrationValueTextField" />
+                                        <Label GridPane.columnIndex="1" fx:id="elementUnitOfMeasureSymbolLabel" />
+                                    </GridPane>
+                                    <Button GridPane.rowIndex="1" GridPane.columnIndex="2" text="Add" onAction="#addElementRegistrationClick" />
+                                </GridPane>
                             </top>
                             <center>
                                 <TableView fx:id="elementsTableView" maxHeight="150">
@@ -124,14 +130,14 @@
                                         <TableView fx:constant = "CONSTRAINED_RESIZE_POLICY" />
                                     </columnResizePolicy>
                                     <columns>
-                                        <TableColumn text="Registered values" >
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="left"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-                                        <TableColumn text="Elements" >
+                                        <TableColumn text="Element" >
                                             <cellValueFactory>
                                                 <PropertyValueFactory property="right"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn text="Registered value" >
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="left"/>
                                             </cellValueFactory>
                                         </TableColumn>
                                     </columns>
@@ -142,7 +148,7 @@
                 </VBox>
             </center>
             <bottom>
-                <Button text="Create" BorderPane.alignment="CENTER" onAction="#createBatchClick" />
+                <Button text="Create" defaultButton="true" BorderPane.alignment="CENTER" onAction="#createBatchClick" />
             </bottom>
         </BorderPane>
     </ScrollPane>
