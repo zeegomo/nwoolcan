@@ -43,11 +43,14 @@ public final class RecordViewModel {
      * Return the {@link Date} in which the {@link nwoolcan.model.brewery.warehouse.stock.Record} has been transferred.
      * @return the {@link Date} in which the {@link nwoolcan.model.brewery.warehouse.stock.Record} has been transferred.
      */
-    public String getDate() {
-        return dateFormatted(date);
+    public Date getDate() {
+        return new Date(date.getTime());
     }
-
-    static String dateFormatted(final Date date) {
+    /**
+     * Return the string representation of the {@link Date} in which the {@link nwoolcan.model.brewery.warehouse.stock.Record} has been transferred.
+     * @return the string representation of the {@link Date} in which the {@link nwoolcan.model.brewery.warehouse.stock.Record} has been transferred.
+     */
+    public String dateFormatted() {
         return DateFormatUtils.format(date, "dd-MM-yyyy HH:mm");
     }
 }

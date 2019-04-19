@@ -14,6 +14,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.chart.LineChart?>
 <SubView xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          fx:controller="nwoolcan.view.warehouse.stock.StockDetailController"
@@ -35,7 +36,7 @@
                     <Button fx:id="buttonGoToBatch" text="Go to batch" onAction="#goToBatchButtonClick" visible="false" managed="false"/>
                 </HBox>
                 <TitledPane text="General information">
-                    <GridPane>
+                    <GridPane fx:id="mainGridPane">
                         <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="Id: "/>
                         <Label GridPane.rowIndex="0" GridPane.columnIndex="1" fx:id="lblId"/>
                         <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="Article: "/>
@@ -62,7 +63,7 @@
                         <columns>
                             <TableColumn text="Date">
                                 <cellValueFactory>
-                                    <PropertyValueFactory property="date"/>
+                                    <PropertyValueFactory property="dateFormatted"/>
                                 </cellValueFactory>
                             </TableColumn>
                             <TableColumn text="Action">
