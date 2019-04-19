@@ -2,17 +2,54 @@ package nwoolcan.view.dashboard;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Paint;
 import nwoolcan.controller.Controller;
-import nwoolcan.view.subview.SubViewController;
-import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
+import nwoolcan.view.subview.SubViewController;
+import nwoolcan.view.utils.ViewManager;
+import nwoolcan.viewmodel.brewery.DashboardViewModel;
 
 /**
  * Handles the Dashboard view.
  */
 @SuppressWarnings("NullAway")
 public final class DashboardController extends SubViewController {
+
+    @FXML
+    private Label lblNumberExpiring;
+
+    @FXML
+    private PieChart pieChartStockTypes;
+
+    @FXML
+    private Label lblAvailableMisc;
+
+    @FXML
+    private Label lblAvailableIngredient;
+
+    @FXML
+    private Label lblAvailableBeer;
+
+    @FXML
+    private Label lblTotalNumberBatches;
+
+    @FXML
+    private Label lblNumberProductionBatches;
+
+    @FXML
+    private Label lblNumberEndedBatches;
+
+    @FXML
+    private Label lblNumberStockedBatches;
+
+    @FXML
+    private PieChart pieChartBatchesStatus;
+
+    @FXML
+    private Label lblTitle;
 
     @FXML
     private SubView content;
@@ -26,28 +63,65 @@ public final class DashboardController extends SubViewController {
         super(controller, viewManager);
     }
 
-    /**
-     * Removes this Dashboard view.
-     * @param event The occurred event
-     */
-    public void btnBackClicked(final ActionEvent event) {
-        this.previousView();
+    @FXML
+    private void initialize() {
+        final DashboardViewModel data = this.getController().getDashboardViewModel();
+        this.lblTitle.setText(data.getBreweryName());
+
+        // Production
+        this.lblTotalNumberBatches.setText(Long.toString(data.getNBatches()));
+        this.lblNumberProductionBatches.setText(Long.toString(data.getInProgressBatches()));
+        this.lblNumberEndedBatches.setText(Long.toString(data.getEndedBatches()));
+        this.lblNumberStockedBatches.setText(Long.toString(data.getStockedBatches()));
+
+        if (data.getNBatches() > 0) {
+            this.pieChartBatchesStatus.setVisible(true);
+            pieChartBatchesStatus.getData().clear();
+            if (data.getInProgressBatches() > 0) {
+                pieChartBatchesStatus.getData().add(new PieChart.Data("In progress", data.getInProgressBatches()));
+            }
+            if (data.getEndedNotStockedBatches() > 0) {
+                pieChartBatchesStatus.getData().add(new PieChart.Data("Ended not stocked", data.getEndedNotStockedBatches()));
+            }
+            if (data.getStockedBatches() > 0) {
+                pieChartBatchesStatus.getData().add(new PieChart.Data("Stocked", data.getStockedBatches()));
+            }
+        } else {
+            this.pieChartBatchesStatus.setVisible(false);
+        }
+
+        // Warehouse
+        this.lblAvailableBeer.setText(Integer.toString(data.getBeerAvailable()));
+        this.lblAvailableIngredient.setText(Integer.toString(data.getIngredientAvailable()));
+        this.lblAvailableMisc.setText(Integer.toString(data.getMiscAvailable()));
+        this.lblNumberExpiring.setText(Integer.toString(data.getExpiringSoonStocks()));
+        this.lblNumberExpiring.setTextFill(Paint.valueOf(data.getExpiringSoonStocks() > 0 ? "darkred" : "darkgreen"));
+
+        if (data.getTotalAvailable() > 0) {
+            this.pieChartStockTypes.setVisible(true);
+            pieChartStockTypes.getData().clear();
+            if (data.getBeerAvailable() > 0) {
+                pieChartStockTypes.getData().add(new PieChart.Data("Beer", data.getBeerAvailable()));
+            }
+            if (data.getIngredientAvailable() > 0) {
+                pieChartStockTypes.getData().add(new PieChart.Data("Ingredients", data.getIngredientAvailable()));
+            }
+            if (data.getMiscAvailable() > 0) {
+                pieChartStockTypes.getData().add(new PieChart.Data("Misc", data.getMiscAvailable()));
+            }
+        } else {
+            this.pieChartStockTypes.setVisible(false);
+        }
     }
 
-    /**
-     * Overlay another Dashboard over this one.
-     * @param event The occurred event
-     */
-    public void btnNewClicked(final ActionEvent event) {
-        this.overlayView(ViewType.DASHBOARD);
-    }
-
-    /**
-     * Substitute this view with Warehouse.
-     * @param event The occurred event
-     */
-    public void btnToWarehouseClicked(final ActionEvent event) {
+    @FXML
+    private void toWarehouseClicked(final ActionEvent event) {
         this.substituteView(ViewType.WAREHOUSE);
+    }
+
+    @FXML
+    private void toProductionClicked(final ActionEvent event) {
+        this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
     }
 
     @Override
