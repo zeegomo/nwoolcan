@@ -2,8 +2,7 @@ package nwoolcan.view.warehouse.stock;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -72,11 +71,7 @@ public final class NewStockModalViewController extends AbstractViewController {
                                          .createStock(comboBoxArticle.getValue().getId());
         }
         if (stockResult.isError()) {
-            new Alert(
-                Alert.AlertType.ERROR,
-                "Internal Error: " + stockResult.getError().getMessage(),
-                ButtonType.CLOSE
-            ).showAndWait();
+            this.showErrorAndWait("Internal Error: " + stockResult.getError().getMessage(), ((Node) actionEvent.getTarget()).getScene().getWindow());
         } else {
             ((Stage) this.datePicker.getScene().getWindow()).close();
         }
