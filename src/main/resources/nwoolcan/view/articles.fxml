@@ -26,7 +26,7 @@
         </top>
         <center>
             <VBox>
-                <HBox>
+                <HBox spacing="5">
                     <Button text="Back" onAction="#backButtonClick"/>
                     <Button onAction="#createNewArticleClick" text="Create new article" />
                 </HBox>

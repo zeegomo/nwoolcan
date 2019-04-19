@@ -13,15 +13,11 @@
 
 <?import nwoolcan.view.subview.SubView?>
 
+<?import javafx.scene.layout.HBox?>
 <SubView fx:id="articleDetailSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
          fx:controller="nwoolcan.view.warehouse.article.ArticleDetailViewController">
-    <ScrollPane fitToWidth="true"
-                AnchorPane.rightAnchor="0.0"
-                AnchorPane.leftAnchor="0.0"
-                AnchorPane.bottomAnchor="0.0"
-                AnchorPane.topAnchor="0.0">
         <BorderPane>
             <top>
                 <Label text="Article Detail" BorderPane.alignment="CENTER">
@@ -65,11 +61,10 @@
                 </VBox>
             </center>
             <bottom>
-                <FlowPane>
-                <Button text="Back" onAction="#backButtonClick"/>
-                <Button text="Change Name" onAction="#changeNameClicked"/>
-                </FlowPane>
+                <HBox spacing="5">
+                    <Button text="Back" onAction="#backButtonClick"/>
+                    <Button text="Change Name" onAction="#changeNameClicked"/>
+                </HBox>
             </bottom>
         </BorderPane>
-    </ScrollPane>
 </SubView>
