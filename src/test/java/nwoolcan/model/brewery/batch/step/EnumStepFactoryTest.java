@@ -10,9 +10,9 @@ import java.util.Date;
 /**
  * Test class for factory util.
  */
-public class BasicStepFactoryTest {
+public class EnumStepFactoryTest {
 
-    private final StepFactory factory = new BasicStepFactory();
+    private final StepFactory factory = new EnumStepFactory();
 
     /**
      * Test simple step creation.

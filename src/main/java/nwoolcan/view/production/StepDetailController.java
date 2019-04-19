@@ -99,9 +99,6 @@ public final class StepDetailController
                 return null;
             }
         });
-        this.parameterTypesComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) ->
-            this.unitOfMeasureSymbolLabel.setText(newV.getUnitOfMeasure().getSymbol())
-        );
         this.parameterTypesComboBox.getSelectionModel().selectFirst();
 
         this.parametersGraphicsVBox.getChildren().clear();
@@ -178,6 +175,14 @@ public final class StepDetailController
     public void initData(final ViewModelCallback<DetailStepViewModel> dataCallback) {
         this.data = dataCallback.getViewModel();
         this.updateFather = dataCallback.getCallback();
+
+        this.parameterTypesComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) -> {
+                if (newV != null) {
+                    this.unitOfMeasureSymbolLabel.setText(newV.getUnitOfMeasure().getSymbol());
+                }
+            }
+        );
+
         this.setData(this.data);
     }
 

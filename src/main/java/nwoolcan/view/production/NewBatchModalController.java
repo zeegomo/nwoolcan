@@ -156,9 +156,11 @@ public final class NewBatchModalController
             new ArrayList<>(data.getWaterMeasurementElements())
         ));
 
-        this.ingredientsComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) ->
-            this.ingredientUnitOfMeasureLabel.setText(newV.getUnitOfMeasure().getSymbol())
-        );
+        this.ingredientsComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) -> {
+            if (newV != null) {
+                this.ingredientUnitOfMeasureLabel.setText(newV.getUnitOfMeasure().getSymbol());
+            }
+        });
 
         this.ingredientsComboBox.setItems(FXCollections.observableList(
             new ArrayList<>(data.getIngredients()))

@@ -36,7 +36,7 @@ public interface Step {
      * It depends on the current step type and it's implementation.
      * @return a {@link Set} of all possible parameter types that can be registered in this kind of step.
      */
-    Set<ParameterType> getParameterTypes();
+    Set<ParameterType> getRegistrationParameterTypes();
 
     /**
      * Returns true if the step is finalized (so it has finished), false otherwise.
@@ -79,7 +79,7 @@ public interface Step {
      * @param parameter the parameter to be registered.
      * @return a {@link Result} that can contain an error cited before.
      */
-    Result<Empty> addParameter(Parameter parameter);
+    Result<Empty> registerParameter(Parameter parameter);
 
     /**
      * Adds an observer of {@link Parameter}. The observer's update method is called when

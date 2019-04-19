@@ -78,8 +78,11 @@ public final class GoNextStepModalController
         ));
         this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectFirst();
 
-        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) ->
-            this.endSizeUnitOfMeasureSymbolLabel.setText(newV.getSymbol()));
+        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
+            if (newV != null) {
+                this.endSizeUnitOfMeasureSymbolLabel.setText(newV.getSymbol());
+            }
+        });
     }
 
     /**
