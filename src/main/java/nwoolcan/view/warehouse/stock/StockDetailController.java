@@ -96,6 +96,7 @@ public final class StockDetailController extends SubViewController implements In
     private int stockId;
     private int batchId;
     private Runnable updateFather;
+    private LineChart<Number, Number> chart;
 
     /**
      * Creates itself and gets injected.
@@ -166,7 +167,8 @@ public final class StockDetailController extends SubViewController implements In
             }
         });
 
-        LineChart<Number, Number> chart = new LineChart<>(dateAxis, new NumberAxis(),
+        mainGridPane.getChildren().removeAll(chart);
+        chart = new LineChart<>(dateAxis, new NumberAxis(),
             FXCollections.observableList(Collections.singletonList(series))
         );
         mainGridPane.add(chart, 2, 0, 4, 8);
