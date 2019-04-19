@@ -47,7 +47,7 @@ public final class NewBreweryModalViewController extends AbstractViewController 
 
     @FXML
     private void createClicked(final ActionEvent event) {
-        if (this.txtBreweryName.getText().isEmpty()) {
+        if (this.txtBreweryName.getText().trim().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("The brewery name is mandatory!");
@@ -55,9 +55,9 @@ public final class NewBreweryModalViewController extends AbstractViewController 
             return;
         }
         this.getController().initializeNewBrewery();
-        this.getController().setBreweryName(this.txtBreweryName.getText());
-        if (!this.txtBreweryOwnerName.getText().isEmpty()) {
-            this.getController().setOwnerName(this.txtBreweryOwnerName.getText());
+        this.getController().setBreweryName(this.txtBreweryName.getText().trim());
+        if (!this.txtBreweryOwnerName.getText().trim().isEmpty()) {
+            this.getController().setOwnerName(this.txtBreweryOwnerName.getText().trim());
         }
         this.exitState = true;
         this.close();
