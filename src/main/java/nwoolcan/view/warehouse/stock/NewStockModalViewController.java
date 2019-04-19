@@ -55,8 +55,7 @@ public final class NewStockModalViewController extends AbstractViewController {
 
     @FXML
     private void specifyDateClick(final ActionEvent actionEvent) {
-        datePicker.setManaged(checkBoxDate.isSelected());
-        datePicker.setVisible(checkBoxDate.isSelected());
+        datePicker.setDisable(!checkBoxDate.isSelected());
         datePicker.setValue(LocalDate.now());
     }
 
