@@ -23,19 +23,75 @@ public final class DashboardViewModel {
     }
 
     /**
-     * Returns data about the production.
-     * @return the production view model
+     * Returns the total number of batches.
+     * @return the total number of batches.
      */
-    public ProductionViewModel getProduction() {
-        return this.productionViewModel;
+    public long getNBatches() {
+        return this.productionViewModel.getNBatches();
     }
 
     /**
-     * Returns data about the warehouse.
-     * @return the warehouse view model
+     * Returns the number of batches that are still in progress.
+     * @return the number of batches that are still in progress.
      */
-    public WarehouseViewModel getWarehouse() {
-        return this.warehouseViewModel;
+    public long getInProgressBatches() {
+        return this.productionViewModel.getNInProgressBatches();
+    }
+
+    /**
+     * Returns the number of ended batches.
+     * @return the number of ended batches.
+     */
+    public long getEndedBatches() {
+        return this.productionViewModel.getNEndedBatches();
+    }
+
+    /**
+     * Returns the number of stocked batches.
+     * @return the number of stocked batches.
+     */
+    public long getStockedBatches() {
+        return this.productionViewModel.getNStockedBatches();
+    }
+
+    /**
+     * Returns the number of ended batches, but not stocked.
+     * @return the number of ended batches, but not stocked.
+     */
+    public long getEndedNotStockedBatches() {
+        return this.productionViewModel.getNEndedNotStockedBatches();
+    }
+
+    /**
+     * Return the number of available {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
+     * @return the number of available {@link nwoolcan.model.brewery.warehouse.stock.BeerStock}.
+     */
+    public int getBeerAvailable() {
+        return this.warehouseViewModel.getnBeerAvailable();
+    }
+
+    /**
+     * Return the number of used {@link nwoolcan.model.brewery.warehouse.stock.Stock} with an {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
+     * @return the number of used {@link nwoolcan.model.brewery.warehouse.stock.Stock} with an {@link nwoolcan.model.brewery.warehouse.article.IngredientArticle}.
+     */
+    public int getIngredientAvailable() {
+        return this.warehouseViewModel.getnIngredientAvailable();
+    }
+
+    /**
+     * Return the number of available {@link nwoolcan.model.brewery.warehouse.stock.Stock} with a misc {@link nwoolcan.model.brewery.warehouse.article.Article}.
+     * @return the number of available {@link nwoolcan.model.brewery.warehouse.stock.Stock} with a misc {@link nwoolcan.model.brewery.warehouse.article.Article}.
+     */
+    public int getMiscAvailable() {
+        return this.warehouseViewModel.getnMiscAvailable();
+    }
+
+    /**
+     * Return the total number of available stocks.
+     * @return the total number of available stocks.
+     */
+    public int getTotalAvailable() {
+        return this.getBeerAvailable() + this.getIngredientAvailable() + this.getMiscAvailable();
     }
 
     /**
