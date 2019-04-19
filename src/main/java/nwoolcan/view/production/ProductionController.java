@@ -5,8 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -185,7 +183,6 @@ public final class ProductionController
     }
 
     private void showAlertAndWait(final String message) {
-        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while loading the batch detail.\n" + message, ButtonType.CLOSE);
-        a.showAndWait();
+        this.showErrorAndWait("An error occurred while loading the batch detail.\n" + message);
     }
 }
