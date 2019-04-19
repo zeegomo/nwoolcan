@@ -31,7 +31,6 @@ import nwoolcan.viewmodel.brewery.production.step.RegisterParameterDTO;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -254,7 +253,10 @@ public final class StepDetailController
         });
 
     }
-
+    /**
+     * Update graphics based on selected item.
+     * @param event the recorded event.
+     */
     public void graphicsComboBoxClicked(final ActionEvent event) {
         if (this.graphicsComboBox.getItems().size() > 0) {
             this.parametersGraphicsVBox.getChildren().clear();
