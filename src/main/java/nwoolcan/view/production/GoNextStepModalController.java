@@ -3,8 +3,6 @@ package nwoolcan.view.production;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -80,8 +78,11 @@ public final class GoNextStepModalController
         ));
         this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectFirst();
 
-        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) ->
-            this.endSizeUnitOfMeasureSymbolLabel.setText(newV.getSymbol()));
+        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
+            if (newV != null) {
+                this.endSizeUnitOfMeasureSymbolLabel.setText(newV.getSymbol());
+            }
+        });
     }
 
     /**
@@ -136,7 +137,7 @@ public final class GoNextStepModalController
     }
 
     private void showAlertAndWait(final String message) {
-        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while going to the next step.\n" + message, ButtonType.CLOSE);
-        a.showAndWait();
+        this.showErrorAndWait("An error occurred while going to the next step.\n" + message,
+            this.finalizeStepTitlePane.getScene().getWindow()); // You can use any other control
     }
 }
