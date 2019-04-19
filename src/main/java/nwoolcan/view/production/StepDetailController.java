@@ -7,9 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -101,9 +99,6 @@ public final class StepDetailController
                 return null;
             }
         });
-        this.parameterTypesComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) ->
-            this.unitOfMeasureSymbolLabel.setText(newV.getUnitOfMeasure().getSymbol())
-        );
         this.parameterTypesComboBox.getSelectionModel().selectFirst();
 
         this.parametersGraphicsVBox.getChildren().clear();
@@ -180,6 +175,14 @@ public final class StepDetailController
     public void initData(final ViewModelCallback<DetailStepViewModel> dataCallback) {
         this.data = dataCallback.getViewModel();
         this.updateFather = dataCallback.getCallback();
+
+        this.parameterTypesComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) -> {
+                if (newV != null) {
+                    this.unitOfMeasureSymbolLabel.setText(newV.getUnitOfMeasure().getSymbol());
+                }
+            }
+        );
+
         this.setData(this.data);
     }
 
@@ -254,7 +257,6 @@ public final class StepDetailController
     }
 
     private void showAlertAndWait(final String message) {
-        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while registering the parameter.\n" + message, ButtonType.CLOSE);
-        a.showAndWait();
+        this.showErrorAndWait("An error occurred while registering the parameter.\n" + message);
     }
 }

@@ -5,8 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -142,11 +140,7 @@ public final class WarehouseViewController extends SubViewController {
     private void createNewStockButtonClick(final ActionEvent actionEvent) {
         if (getController().getWarehouseController().getArticlesViewModel().getnMiscArticles() <= 0
             && getController().getWarehouseController().getArticlesViewModel().getnIngredientArticles() <= 0) {
-            new Alert(
-                        Alert.AlertType.ERROR,
-                        "There are no articles or only beer articles. Create a misc or ingredient article first",
-                        ButtonType.OK
-                     ).showAndWait();
+            this.showErrorAndWait("There are no articles or only beer articles. Create a misc or ingredient article first");
             return;
         }
 

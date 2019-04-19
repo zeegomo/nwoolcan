@@ -3,7 +3,7 @@ package nwoolcan.view.main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.AbstractViewController;
@@ -101,15 +101,10 @@ public final class MainController extends AbstractViewController {
         final File target = fileChooser.showSaveDialog(this.contentPane.getScene().getWindow());
         if (target != null) {
             this.getController().saveTo(target)
-                .peek(e -> {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setContentText("Saving completed");
-                    alert.showAndWait();
-                }).peekError(err -> {
+                .peek(e -> this.showInfoAndWait("Saving completed", ((MenuItem) event.getTarget()).getParentPopup().getOwnerWindow()))
+                .peekError(err -> {
                     Logger.getLogger(this.getClass().getName()).severe(err.toString());
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("There was an error!");
-                    alert.showAndWait();
+                    this.showErrorAndWait("There was an error!", ((MenuItem) event.getTarget()).getParentPopup().getOwnerWindow());
                 });
         }
     }
