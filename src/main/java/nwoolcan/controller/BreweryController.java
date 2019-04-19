@@ -21,16 +21,20 @@ import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
+import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
+import nwoolcan.model.brewery.warehouse.stock.StockState;
 import nwoolcan.model.database.Database;
 import nwoolcan.model.database.DatabaseJsonImpl;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
+import nwoolcan.viewmodel.brewery.DashboardViewModel;
 import nwoolcan.viewmodel.brewery.production.ProductionViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.CreateBatchDTO;
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.NewBatchViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
@@ -223,5 +227,23 @@ public final class BreweryController implements Controller {
             this.brewery = b;
             this.initilizeSubControllers();
         }).toEmpty();
+    }
+
+    @Override
+    public DashboardViewModel getDashboardViewModel() {
+        final int expiringDays = 14;
+        final int expiringStocks = new QueryStockBuilder()
+            .setIncludeOnlyStockState(StockState.AVAILABLE)
+            .setExpireAfter(new Date())
+            .setExpireBefore(DateUtils.addDays(new Date(), expiringDays))
+            .build()
+            .map(q -> this.getWarehouseController().getStocks(q).size())
+            .orElse(0);
+        return new DashboardViewModel(
+            this.getProductionViewModel(),
+            this.getWarehouseController().getWarehouseViewModel(),
+            expiringStocks,
+            this.brewery.getBreweryName().orElse("Dashboard")
+        );
     }
 }
