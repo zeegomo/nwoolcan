@@ -2,8 +2,6 @@ package nwoolcan.view.warehouse.stock;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -102,7 +100,8 @@ public final class NewRecordModalViewController extends AbstractViewController i
         try {
             recordDoubleAmount = Double.parseDouble(recordAmount.getText());
         } catch (final NumberFormatException ex) {
-            new Alert(Alert.AlertType.ERROR, "The amount must be a number.", ButtonType.CLOSE).showAndWait();
+            this.showErrorAndWait("The amount must be a number.",
+                this.dateVBox.getScene().getWindow()); // You can use any other control
             return;
         }
         final Result<Empty> addRecordResult;
@@ -116,11 +115,8 @@ public final class NewRecordModalViewController extends AbstractViewController i
             addRecordResult = getController().getWarehouseController().addRecord(stockId, recordDoubleAmount, recordAction.getValue());
         }
         if (addRecordResult.isError()) {
-            new Alert(
-                Alert.AlertType.ERROR,
-                "Error: " + addRecordResult.getError().getMessage(),
-                ButtonType.CLOSE
-            ).showAndWait();
+            this.showErrorAndWait("Error: " + addRecordResult.getError().getMessage(),
+                this.dateVBox.getScene().getWindow()); // You can use any other control
         } else {
             ((Stage) this.recordDatePicker.getScene().getWindow()).close();
         }

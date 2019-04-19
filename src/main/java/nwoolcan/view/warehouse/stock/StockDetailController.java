@@ -7,9 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
@@ -200,11 +198,7 @@ public final class StockDetailController extends SubViewController implements In
         if (articleResult.isPresent()) {
             overlayView(ViewType.ARTICLE_DETAIL, new ViewModelCallback<>(articleResult.getValue(), this::loadData));
         } else {
-            new Alert(
-                        Alert.AlertType.ERROR,
-                        "Internal Error: " + articleResult.getError().getMessage(),
-                        ButtonType.CLOSE
-                     ).showAndWait();
+            this.showErrorAndWait("Internal Error: " + articleResult.getError().getMessage());
         }
     }
 
@@ -235,11 +229,7 @@ public final class StockDetailController extends SubViewController implements In
         if (batchResult.isPresent()) {
             overlayView(ViewType.BATCH_DETAIL, batchResult.getValue());
         } else {
-            new Alert(
-                Alert.AlertType.ERROR,
-                "Internal Error: " + batchResult.getError().getMessage(),
-                ButtonType.CLOSE
-            ).showAndWait();
+            this.showErrorAndWait("Internal Error: " + batchResult.getError().getMessage());
         }
     }
 }
