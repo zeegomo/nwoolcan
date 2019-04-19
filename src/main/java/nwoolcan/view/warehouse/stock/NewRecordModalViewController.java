@@ -9,6 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
@@ -41,6 +42,8 @@ public final class NewRecordModalViewController extends AbstractViewController i
     private static final int LAST_MINUTE = 60;
     private int stockId;
 
+    @FXML
+    private AnchorPane mainAnchorPane;
     @FXML
     private ComboBox<Integer> recordMinute;
     @FXML
@@ -81,6 +84,7 @@ public final class NewRecordModalViewController extends AbstractViewController i
                                                 .collect(Collectors.toList()));
         recordMinute.getSelectionModel().select(MIDDLE_MINUTE_INDEX);
         checkSelectDate.setSelected(false);
+        specifyDateClick(new ActionEvent());
         lblUom.setText(getController().getWarehouseController()
                                       .getViewStockById(stockId)
                                       .getValue()
@@ -91,9 +95,9 @@ public final class NewRecordModalViewController extends AbstractViewController i
 
     @FXML
     private void specifyDateClick(final ActionEvent actionEvent) {
-        dateVBox.setManaged(checkSelectDate.isSelected());
-        dateVBox.setVisible(checkSelectDate.isSelected());
+        dateVBox.setDisable(!checkSelectDate.isSelected());
         recordDatePicker.setValue(LocalDate.now());
+        mainAnchorPane.isResizable();
     }
 
     @FXML

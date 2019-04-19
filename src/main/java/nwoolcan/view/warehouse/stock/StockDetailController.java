@@ -224,7 +224,6 @@ public final class StockDetailController extends SubViewController implements In
 
         final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_RECORD_MODAL, stockId).orElse(new AnchorPane()));
 
-        modal.setResizable(false);
         modal.setScene(scene);
         modal.showAndWait();
         this.loadData();
