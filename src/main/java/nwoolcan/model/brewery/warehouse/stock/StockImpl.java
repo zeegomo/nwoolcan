@@ -111,7 +111,9 @@ public class StockImpl implements Stock {
                             .peek(q ->
                                 this.usedQuantity = Quantities.add(this.usedQuantity,
                                                                    record.getQuantity())
-                                                                         .getValue());
+                                                                         .getValue())
+                            .mapError(e -> new IllegalArgumentException("You can not have a stock with negative"
+                                                                      + "available amount."));
         }
         // make the temporary quantity the official one, add the record to the records list
         // and return a Result of Empty.
