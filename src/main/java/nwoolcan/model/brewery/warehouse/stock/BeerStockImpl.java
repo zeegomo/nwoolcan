@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 public final class BeerStockImpl extends StockImpl implements BeerStock {
 
-    private final Batch batch;
+    private final int batchId;
 
     /**
      * Constructor.
@@ -23,17 +23,17 @@ public final class BeerStockImpl extends StockImpl implements BeerStock {
     // Package-Private
     BeerStockImpl(final int id, final BeerArticle beerArticle, @Nullable final Date expirationDate, final Batch batch) {
         super(id, beerArticle, expirationDate);
-        this.batch = batch;
+        this.batchId = batch.getId();
     }
 
     @Override
-    public Batch getBatch() {
-        return batch;
+    public int getBatchId() {
+        return batchId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), batch);
+        return Objects.hash(super.hashCode(), batchId);
     }
 
     @Override
@@ -47,7 +47,7 @@ public final class BeerStockImpl extends StockImpl implements BeerStock {
         }
 
         BeerStock other = (BeerStock) obj;
-        return super.equals(obj) && batch.equals(other.getBatch());
+        return super.equals(obj) && batchId == other.getBatchId();
     }
 
     @Override
@@ -60,7 +60,7 @@ public final class BeerStockImpl extends StockImpl implements BeerStock {
             + ", lastChangeDate=" + getLastChangeDate()
             + ", remainingQuantity=" + getRemainingQuantity()
             + ", usedQuantity=" + getUsedQuantity()
-            + ", batch=" + getBatch()
+            + ", batchId=" + getBatchId()
             + '}';
     }
 }

@@ -10,5 +10,5 @@ public interface BeerStock extends Stock {
      * Return the {@link Batch} related to the {@link BeerStock}.
      * @return the {@link Batch} related to the {@link BeerStock}.
      */
-    Batch getBatch();
+    int getBatchId();
 }
