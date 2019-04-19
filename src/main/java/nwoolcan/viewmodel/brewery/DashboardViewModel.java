@@ -9,16 +9,20 @@ import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
 public final class DashboardViewModel {
     private final ProductionViewModel productionViewModel;
     private final WarehouseViewModel warehouseViewModel;
+    private final int expiringSoon;
     private final String breweryName;
 
     /**
      * Creates this view model.
      * @param productionViewModel the production view model to get data from
+     * @param warehouseViewModel the warehouse view model to get data from
+     * @param expiringSoon number of stocks expiring soon
      * @param breweryName the name of this brewery
      */
-    public DashboardViewModel(final ProductionViewModel productionViewModel, final WarehouseViewModel warehouseViewModel, final String breweryName) {
+    public DashboardViewModel(final ProductionViewModel productionViewModel, final WarehouseViewModel warehouseViewModel, final int expiringSoon, final String breweryName) {
         this.productionViewModel = productionViewModel;
         this.warehouseViewModel = warehouseViewModel;
+        this.expiringSoon = expiringSoon;
         this.breweryName = breweryName;
     }
 
@@ -92,6 +96,14 @@ public final class DashboardViewModel {
      */
     public int getTotalAvailable() {
         return this.getBeerAvailable() + this.getIngredientAvailable() + this.getMiscAvailable();
+    }
+
+    /**
+     * Returns the number of stocks expiring in a short period.
+     * @return the number of stocks expiring in a short period.
+     */
+    public int getExpiringSoonStocks() {
+        return this.expiringSoon;
     }
 
     /**

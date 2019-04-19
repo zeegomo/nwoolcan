@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Paint;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
@@ -16,6 +17,9 @@ import nwoolcan.viewmodel.brewery.DashboardViewModel;
  */
 @SuppressWarnings("NullAway")
 public final class DashboardController extends SubViewController {
+
+    @FXML
+    private Label lblNumberExpiring;
 
     @FXML
     private PieChart pieChartStockTypes;
@@ -90,6 +94,8 @@ public final class DashboardController extends SubViewController {
         this.lblAvailableBeer.setText(Integer.toString(data.getBeerAvailable()));
         this.lblAvailableIngredient.setText(Integer.toString(data.getIngredientAvailable()));
         this.lblAvailableMisc.setText(Integer.toString(data.getMiscAvailable()));
+        this.lblNumberExpiring.setText(Integer.toString(data.getExpiringSoonStocks()));
+        this.lblNumberExpiring.setTextFill(Paint.valueOf(data.getExpiringSoonStocks() > 0 ? "darkred" : "darkgreen"));
 
         if (data.getTotalAvailable() > 0) {
             this.pieChartStockTypes.setVisible(true);

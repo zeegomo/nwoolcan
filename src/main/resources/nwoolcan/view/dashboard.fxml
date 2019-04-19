@@ -48,8 +48,9 @@
                             <Label fx:id="lblAvailableIngredient" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                             <Label text="Other available articles : " GridPane.columnIndex="0" GridPane.rowIndex="2" />
                             <Label fx:id="lblAvailableMisc" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                            <Label text="Expiring in two weeks : " GridPane.columnIndex="0" GridPane.rowIndex="3" managed="${lblNumberExpiring.visible}" visible="${lblNumberExpiring.visible}"/>
-                            <Label fx:id="lblNumberExpiring" GridPane.columnIndex="1" GridPane.rowIndex="3" managed="${lblNumberExpiring.visible}"/>
+                            <Label text="Expiring in two weeks : " GridPane.columnIndex="0" GridPane.rowIndex="3" textFill="${lblNumberExpiring.textFill}"/>
+                            <Label fx:id="lblNumberExpiring" GridPane.columnIndex="1" GridPane.rowIndex="3" textFill="darkgreen">
+                            </Label>
                             <Button GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" onAction="#toWarehouseClicked">Go to Warehouse</Button>
                         </GridPane>
                     </HBox>
