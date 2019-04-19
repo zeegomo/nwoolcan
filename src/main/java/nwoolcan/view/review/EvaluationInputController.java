@@ -10,14 +10,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.review.EvaluationType;
 import nwoolcan.utils.Results;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.utils.ViewManager;
-import nwoolcan.view.subview.SubView;
 import org.apache.commons.lang3.tuple.Pair;
 import java.util.Optional;
 
@@ -34,10 +32,6 @@ public final class EvaluationInputController extends AbstractViewController impl
     private Label maxScore;
     @FXML
     private TextArea notes;
-    @FXML
-    private TitledPane title;
-    @FXML
-    private SubView evaluationInputSubView;
 
     private final BooleanProperty validityProperty = new SimpleBooleanProperty(false);
     /**

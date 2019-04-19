@@ -12,6 +12,10 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.control.TitledPane?>
 <SubView fx:id="batchEvaluationDetailSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
          fx:controller="nwoolcan.view.review.BatchEvaluationDetailController">
     <BorderPane>
@@ -26,7 +30,7 @@
                 <center>
                     <Label text="Review">
                         <font>
-                            <Font size="28.0" />
+                            <Font size="28.0"/>
                         </font>
                     </Label>
                 </center>
@@ -35,24 +39,21 @@
         <center>
             <VBox>
                 <SubViewContainer fx:id="container"/>
-                <BorderPane>
-                    <padding>
-                        <Insets bottom="10" left="10" right="10" top="10"/>
-                    </padding>
-                    <right>
-                        <ScrollPane fx:id="categoriesScrollPane">
-                            <VBox>
-                                <VBox fx:id="categories"/>
-                            </VBox>
-                        </ScrollPane>
-                    </right>
-                    <left>
-                        <FlowPane>
-                            <Text text="Notes:"/>
-                            <Text fx:id="notes"/>
-                        </FlowPane>
-                    </left>
-                </BorderPane>
+                <TitledPane text="Notes and Categories">
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="50"/>
+                    </columnConstraints>
+                    <VBox fx:id="categories" GridPane.columnIndex="1"/>
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="50"/>
+                    </columnConstraints>
+                    <FlowPane GridPane.columnIndex="0">
+                        <Text text="Notes:"/>
+                        <Text fx:id="notes"/>
+                    </FlowPane>
+                </GridPane>
+                </TitledPane>
             </VBox>
         </center>
     </BorderPane>
