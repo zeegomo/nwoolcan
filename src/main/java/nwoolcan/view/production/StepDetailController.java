@@ -30,6 +30,9 @@ import nwoolcan.viewmodel.brewery.production.step.RegisterParameterDTO;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -47,6 +50,8 @@ public final class StepDetailController
     private Label unitOfMeasureSymbolLabel;
     @FXML
     private ComboBox<ParameterType> parameterTypesComboBox;
+    @FXML
+    private ComboBox<ParameterType> graphicsComboBox;
     @FXML
     private TextField newParameterValueTextField;
     @FXML
@@ -67,7 +72,7 @@ public final class StepDetailController
     private SubView stepDetailSubView;
 
     private DetailStepViewModel data;
-
+    private Map<ParameterType, BorderPane> graphics = new HashMap<>();
     /**
      * Creates itself and gets injected.
      *
@@ -89,6 +94,7 @@ public final class StepDetailController
         this.durationLabel.setText(durationMillis == 0 ? "" : this.getDurationBreakdown(durationMillis));
         this.finalizedLabel.setText(data.isFinalized() ? "Yes" : "No");
 
+        ParameterType prevParameter = this.parameterTypesComboBox.getValue();
         this.parameterTypesComboBox.setItems(FXCollections.observableList(data.getPossibleParametersToRegister()));
         this.parameterTypesComboBox.setConverter(new StringConverter<ParameterType>() {
             @Override
@@ -101,12 +107,20 @@ public final class StepDetailController
                 return null;
             }
         });
-        this.parameterTypesComboBox.getSelectionModel().selectFirst();
+        if (prevParameter != null) {
+            this.parameterTypesComboBox.getSelectionModel().select(prevParameter);
+        } else {
+            this.parameterTypesComboBox.getSelectionModel().selectFirst();
+        }
 
-        this.parametersGraphicsVBox.getChildren().clear();
+        ParameterType prev = this.graphicsComboBox.getValue();
+        this.graphics.clear();
+        this.graphicsComboBox.getItems().clear();
         data.getMapTypeToRegistrations().forEach((paramType, params) -> {
             final BorderPane pane = new BorderPane();
-            this.parametersGraphicsVBox.getChildren().add(pane);
+            //this.parametersGraphicsVBox.getChildren().add(pane);
+            this.graphics.put(paramType, pane);
+            this.graphicsComboBox.getItems().add(paramType);
 
             final Label title = new Label(paramType.getName());
             BorderPane.setAlignment(title, Pos.CENTER);
@@ -168,9 +182,18 @@ public final class StepDetailController
             LineChart<Number, Number> chart = new LineChart<Number, Number>(dateAxis, new NumberAxis(),
                 FXCollections.observableList(Collections.singletonList(series))
             );
-
+            chart.setAnimated(false);
             pane.setCenter(chart);
         });
+        if (prev != null) {
+            this.graphicsComboBox.getSelectionModel().select(prev);
+            this.graphicsComboBoxClicked(null);
+        }
+        if (this.graphics.size() > 0) {
+            this.graphicsComboBox.setDisable(false);
+        } else {
+            this.graphicsComboBox.setDisable(true);
+        }
     }
 
     @Override
@@ -232,6 +255,13 @@ public final class StepDetailController
 
     }
 
+    public void graphicsComboBoxClicked(final ActionEvent event) {
+        if (this.graphicsComboBox.getItems().size() > 0) {
+            this.parametersGraphicsVBox.getChildren().clear();
+            this.parametersGraphicsVBox.getChildren()
+                                       .add(this.graphics.get(this.graphicsComboBox.getSelectionModel().getSelectedItem()));
+        }
+    }
     /* Utils function from stack overflow.
        https://stackoverflow.com/questions/625433/how-to-convert-milliseconds-to-x-mins-x-seconds-in-java
      */
