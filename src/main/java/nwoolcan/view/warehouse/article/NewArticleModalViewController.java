@@ -4,9 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.controller.warehouse.WarehouseController;
@@ -24,9 +24,9 @@ import nwoolcan.view.utils.ViewManager;
 public final class NewArticleModalViewController extends AbstractViewController {
 
     @FXML
-    private Button createArticleButton;
+    private Label lblIngType;
     @FXML
-    private VBox ingredientTypeVBox;
+    private Button createArticleButton;
     @FXML
     private TextField newArticleName;
     @FXML
@@ -62,8 +62,8 @@ public final class NewArticleModalViewController extends AbstractViewController 
     }
 
     private void updateClicks() {
-        ingredientTypeVBox.setVisible(newArticleType.getValue() == ArticleType.INGREDIENT);
-        ingredientTypeVBox.setManaged(newArticleType.getValue() == ArticleType.INGREDIENT);
+        lblIngType.setVisible(newArticleType.getValue() == ArticleType.INGREDIENT);
+        newArticleIngredientType.setVisible(newArticleType.getValue() == ArticleType.INGREDIENT);
         createArticleButton.setDisable(newArticleName.getText().isEmpty());
     }
 
@@ -91,7 +91,7 @@ public final class NewArticleModalViewController extends AbstractViewController 
                 break;
         }
 
-        ((Stage) this.ingredientTypeVBox.getScene().getWindow()).close();
+        ((Stage) this.lblIngType.getScene().getWindow()).close();
     }
 
     @FXML
