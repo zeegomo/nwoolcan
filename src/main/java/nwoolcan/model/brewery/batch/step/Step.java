@@ -79,7 +79,7 @@ public interface Step {
      * @param parameter the parameter to be registered.
      * @return a {@link Result} that can contain an error cited before.
      */
-    Result<Empty> addParameter(Parameter parameter);
+    Result<Empty> registerParameter(Parameter parameter);
 
     /**
      * Adds an observer of {@link Parameter}. The observer's update method is called when
