@@ -48,7 +48,7 @@ final class BatchImpl implements Batch {
     @Nullable
     private BatchEvaluation batchEvaluation;
     @Nullable
-    private BeerStock stockReference;
+    private Integer stockIdReference;
 
     /**
      * Creates a new {@link Batch} in production.
@@ -155,7 +155,7 @@ final class BatchImpl implements Batch {
 
     @Override
     public boolean isStocked() {
-        return this.stockReference != null;
+        return this.stockIdReference != null;
     }
 
     @Override
@@ -177,12 +177,12 @@ final class BatchImpl implements Batch {
     }
 
     private void setStockReference(final BeerStock stock) {
-        this.stockReference = stock;
+        this.stockIdReference = stock.getId();
     }
 
     @Override
-    public Optional<BeerStock> getStockReference() {
-        return Optional.ofNullable(this.stockReference);
+    public Optional<Integer> getStockIdReference() {
+        return Optional.ofNullable(this.stockIdReference);
     }
 
     @Override
@@ -192,7 +192,7 @@ final class BatchImpl implements Batch {
             .add("batchInfo=" + this.batchInfo)
             .add("currentStep=" + this.getCurrentStep())
             .add("batchEvaluation=" + this.batchEvaluation)
-            .add("stockReference=" + this.stockReference)
+            .add("stockReference=" + this.stockIdReference)
             .toString();
     }
 }
