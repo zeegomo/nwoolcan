@@ -100,7 +100,7 @@ public final class NewRecordModalViewController extends AbstractViewController i
     private void addRecordClick(final ActionEvent actionEvent) {
         final double recordDoubleAmount;
         try {
-            recordDoubleAmount = Double.parseDouble(recordAmount.getText());
+            recordDoubleAmount = Double.parseDouble(recordAmount.getText().trim());
         } catch (final NumberFormatException ex) {
             new Alert(Alert.AlertType.ERROR, "The amount must be a number.", ButtonType.CLOSE).showAndWait();
             return;

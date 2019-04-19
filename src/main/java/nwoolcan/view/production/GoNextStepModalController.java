@@ -108,7 +108,7 @@ public final class GoNextStepModalController
             double endSizeValue;
 
             try {
-                endSizeValue = Double.parseDouble(this.endSizeValueTextField.getText());
+                endSizeValue = Double.parseDouble(this.endSizeValueTextField.getText().trim());
             } catch (NumberFormatException ex) {
                 this.showAlertAndWait("End size must be a number!");
                 return;
@@ -127,7 +127,7 @@ public final class GoNextStepModalController
         this.getController().getBatchController().goToNextStep(data.getBatchId(), new GoNextStepDTO(
             this.nextStepTypesComboBox.getSelectionModel().getSelectedItem(),
             this.chooseFinalizeNextStepCheckBox.isSelected(),
-            this.notesTextArea.getText(),
+            this.notesTextArea.getText().trim(),
             endSize))
             .peekError(e -> this.showAlertAndWait(e.getMessage()))
             .peek(e -> {

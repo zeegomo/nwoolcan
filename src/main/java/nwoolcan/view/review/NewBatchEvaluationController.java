@@ -183,7 +183,7 @@ public final class NewBatchEvaluationController extends SubViewController
                                                                           })),
                                   (res1, res2) -> res1.require(res2::isPresent, res2::getError)
                                                       .peek(col -> col.addAll(res2.getValue())));
-        cat.map(eval -> new BatchEvaluationDTO(type, eval, this.notesTextArea.getText(), this.reviewerTextField.getText()))
+        cat.map(eval -> new BatchEvaluationDTO(type, eval, this.notesTextArea.getText(), this.reviewerTextField.getText().trim()))
            .flatMap(dto -> this.getController().getBatchController().addBatchEvaluation(this.id, dto))
            .peekError(err -> this.showAlertAndWait(err.getMessage())).peek(res -> {
             final Stage stage = ((Stage) this.reviewerTextField.getScene().getWindow());
