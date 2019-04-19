@@ -6,7 +6,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.utils.Result;
@@ -26,6 +25,8 @@ public final class ArticleDetailViewController extends SubViewController impleme
 
     private static final String NEW_NAME_EMPTY = "The name can not be empty.";
     @FXML
+    private Label lblIngType;
+    @FXML
     private TextField newNameTextField;
     @FXML
     private Label articleId;
@@ -37,8 +38,6 @@ public final class ArticleDetailViewController extends SubViewController impleme
     private Label articleType;
     @FXML
     private Label articleIngredientType;
-    @FXML
-    private FlowPane ingredientTypeFlowPane;
     @FXML
     private SubView articleDetailSubView;
 
@@ -71,8 +70,10 @@ public final class ArticleDetailViewController extends SubViewController impleme
             final IngredientArticleViewModel ingredientArticleViewModel = (IngredientArticleViewModel) data;
             articleIngredientType.setText(ingredientArticleViewModel.getIngredientType().toString());
         } else {
-            ingredientTypeFlowPane.setVisible(false);
-            ingredientTypeFlowPane.setManaged(false);
+            lblIngType.setManaged(false);
+            lblIngType.setVisible(false);
+            articleIngredientType.setManaged(false);
+            articleIngredientType.setVisible(false);
         }
     }
 
