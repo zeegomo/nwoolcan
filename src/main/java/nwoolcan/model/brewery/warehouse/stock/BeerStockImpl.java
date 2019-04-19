@@ -53,7 +53,7 @@ public final class BeerStockImpl extends StockImpl implements BeerStock {
     @Override
     public String toString() {
         return "[BeerStockImpl]{"
-            + "article=" + getArticle()
+            + "articleId=" + getArticleId()
             + ", expirationDate=" + (getExpirationDate().isPresent() ? getExpirationDate().get() : "null")
             + ", records=" + getRecords()
             + ", creationDate=" + getCreationDate()

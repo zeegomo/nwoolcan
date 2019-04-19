@@ -23,7 +23,7 @@ public interface Stock {
      * Returns the article related to the current stock.
      * @return the article related to the current stock.
      */
-    Article getArticle();
+    int getArticleId();
     /**
      * Returns the remaining quantity of the current stock.
      * @return the remaining quantity of the current stock.
