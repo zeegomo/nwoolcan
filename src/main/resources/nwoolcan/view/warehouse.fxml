@@ -5,13 +5,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import nwoolcan.view.subview.SubView?>
 <?import nwoolcan.view.subview.SubViewContainer?>
 
+<?import javafx.scene.layout.GridPane?>
 <SubView fx:id="warehouseSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
@@ -26,78 +26,54 @@
     </top>
     <center>
         <VBox>
-            <HBox>
+            <HBox spacing="5">
                 <Button text="Back" onAction="#backButtonClick"/>
                 <Button text="Create Stock" onAction="#createNewStockButtonClick"/>
             </HBox>
             <TitledPane text="General information">
                 <HBox>
-                    <VBox>
-                        <FlowPane>
-                            <Label text="Beer">
-                                <font>
-                                    <Font size="20.0" />
-                                </font>
-                            </Label>
-                        </FlowPane>
-                        <FlowPane>
-                            <Label text="Available: " />
-                            <Label fx:id="lblNumberBeerAvailable" />
-                        </FlowPane>
-                        <FlowPane>
-                            <Label text="Expired: " />
-                            <Label fx:id="lblNumberBeerExpired" />
-                        </FlowPane>
-                        <FlowPane>
-                            <Label text="Used up: " />
-                            <Label fx:id="lblNumberBeerUsedUp" />
-                        </FlowPane>
-                        <PieChart fx:id="pieChartBeerStatus" maxHeight="280.0" maxWidth="300.0"/>
-                    </VBox>
-                    <VBox>
-                        <FlowPane>
-                            <Label text="Ingredients">
-                                <font>
-                                    <Font size="20.0" />
-                                </font>
-                            </Label>
-                        </FlowPane>
-                        <FlowPane>
-                            <Label text="Available: " />
-                            <Label fx:id="lblNumberIngredientAvailable" />
-                        </FlowPane>
-                        <FlowPane>
-                            <Label text="Expired: " />
-                            <Label fx:id="lblNumberIngredientExpired" />
-                        </FlowPane>
-                        <FlowPane>
-                            <Label text="Used up: " />
-                            <Label fx:id="lblNumberIngredientUsedUp" />
-                        </FlowPane>
-                        <PieChart fx:id="pieChartIngredientStatus" maxHeight="280.0" maxWidth="300.0"/>
-                    </VBox>
-                    <VBox>
-                    <FlowPane>
-                            <Label text="Misc">
-                                <font>
-                                    <Font size="20.0" />
-                                </font>
-                            </Label>
-                        </FlowPane>
-                        <FlowPane>
-                            <Label text="Available: " />
-                            <Label fx:id="lblNumberMiscAvailable" />
-                        </FlowPane>
-                        <FlowPane>
-                            <Label text="Expired: " />
-                            <Label fx:id="lblNumberMiscExpired" />
-                        </FlowPane>
-                        <FlowPane>
-                            <Label text="Used up: " />
-                            <Label fx:id="lblNumberMiscUsedUp" />
-                        </FlowPane>
-                        <PieChart fx:id="pieChartMiscStatus" maxHeight="280.0" maxWidth="300.0"/>
-                    </VBox>
+                    <GridPane vgap="5" hgap="5">
+                        <Label GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" text="Beer">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                        <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="Available: " />
+                        <Label GridPane.rowIndex="1" GridPane.columnIndex="1" fx:id="lblNumberBeerAvailable" />
+                        <Label GridPane.rowIndex="2" GridPane.columnIndex="0" text="Expired: " />
+                        <Label GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="lblNumberBeerExpired" />
+                        <Label GridPane.rowIndex="3" GridPane.columnIndex="0" text="Used up: " />
+                        <Label GridPane.rowIndex="3" GridPane.columnIndex="1" fx:id="lblNumberBeerUsedUp" />
+                        <PieChart GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2" fx:id="pieChartBeerStatus" maxHeight="280.0" maxWidth="300.0"/>
+                    </GridPane>
+                    <GridPane hgap="5" vgap="5">
+                        <Label GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" text="Ingredients" >
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                        <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="Available: " />
+                        <Label GridPane.rowIndex="1" GridPane.columnIndex="1" fx:id="lblNumberIngredientAvailable" />
+                        <Label GridPane.rowIndex="2" GridPane.columnIndex="0" text="Expired: " />
+                        <Label GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="lblNumberIngredientExpired" />
+                        <Label GridPane.rowIndex="3" GridPane.columnIndex="0" text="Used up: " />
+                        <Label GridPane.rowIndex="3" GridPane.columnIndex="1" fx:id="lblNumberIngredientUsedUp" />
+                        <PieChart GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2" fx:id="pieChartIngredientStatus" maxHeight="280.0" maxWidth="300.0"/>
+                    </GridPane>
+                    <GridPane hgap="5" vgap="5">
+                        <Label GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" text="Misc">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                        <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="Available: " />
+                        <Label GridPane.rowIndex="1" GridPane.columnIndex="1" fx:id="lblNumberMiscAvailable" />
+                        <Label GridPane.rowIndex="2" GridPane.columnIndex="0" text="Expired: " />
+                        <Label GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="lblNumberMiscExpired" />
+                        <Label GridPane.rowIndex="3" GridPane.columnIndex="0" text="Used up: " />
+                        <Label GridPane.rowIndex="3" GridPane.columnIndex="1" fx:id="lblNumberMiscUsedUp" />
+                        <PieChart GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2" fx:id="pieChartMiscStatus" maxHeight="280.0" maxWidth="300.0"/>
+                    </GridPane>
                 </HBox>
             </TitledPane>
             <TitledPane text="Stocks">
