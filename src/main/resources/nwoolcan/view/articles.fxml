@@ -12,6 +12,7 @@
 <?import nwoolcan.view.subview.SubView?>
 <?import nwoolcan.view.subview.SubViewContainer?>
 
+<?import javafx.scene.layout.GridPane?>
 <SubView fx:id="articlesSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
@@ -33,24 +34,16 @@
                 <TitledPane text="General information">
                     <BorderPane>
                         <left>
-                            <VBox spacing="20.0">
-                                <FlowPane>
-                                    <Label text="Total number of articles : " />
-                                    <Label fx:id="lblTotalNumberArticles" />
-                                </FlowPane>
-                                <FlowPane>
-                                    <Label text="Number of Beer Articles: " />
-                                    <Label fx:id="lblNumberBeerArticles" />
-                                </FlowPane>
-                                <FlowPane>
-                                    <Label text="Number of Misc Articles: " />
-                                    <Label fx:id="lblNumberMiscArticles" />
-                                </FlowPane>
-                                <FlowPane>
-                                    <Label text="Number of Ingredient Articles: " />
-                                    <Label fx:id="lblNumberIngredientArticles" />
-                                </FlowPane>
-                            </VBox>
+                            <GridPane vgap="5" hgap="5">
+                                <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="Total number of articles : " />
+                                <Label GridPane.rowIndex="0" GridPane.columnIndex="1" fx:id="lblTotalNumberArticles" />
+                                <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="Number of Beer Articles: " />
+                                <Label GridPane.rowIndex="1" GridPane.columnIndex="1" fx:id="lblNumberBeerArticles" />
+                                <Label GridPane.rowIndex="2" GridPane.columnIndex="0" text="Number of Misc Articles: " />
+                                <Label GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="lblNumberMiscArticles" />
+                                <Label GridPane.rowIndex="3" GridPane.columnIndex="0" text="Number of Ingredient Articles: " />
+                                <Label GridPane.rowIndex="3" GridPane.columnIndex="1" fx:id="lblNumberIngredientArticles" />
+                            </GridPane>
                         </left>
                         <center>
                             <PieChart fx:id="pieChartArticlesStatus" maxHeight="280.0" maxWidth="300.0" title="Articles"/>
