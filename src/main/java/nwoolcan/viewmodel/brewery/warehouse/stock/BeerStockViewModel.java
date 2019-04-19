@@ -17,7 +17,7 @@ public class BeerStockViewModel extends DetailStockViewModel {
      */
     public BeerStockViewModel(final BeerStock beerStock, final Article article) {
         super(beerStock, article);
-        this.batchId = beerStock.getBatch().getId();
+        this.batchId = beerStock.getBatchId();
     }
     /**
      * Return the id of the {@link nwoolcan.model.brewery.batch.Batch} related to this {@link BeerStockViewModel}.

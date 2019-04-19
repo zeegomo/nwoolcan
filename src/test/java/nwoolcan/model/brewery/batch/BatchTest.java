@@ -288,7 +288,7 @@ public class BatchTest {
         final BeerStock s = warehouse.getBeerStockById(batchAlfredo.getStockIdReference()
                                                                    .get())
                                      .getValue();
-        Assert.assertEquals(batchAlfredo.getId(), s.getBatch().getId());
+        Assert.assertEquals(batchAlfredo.getId(), s.getBatchId());
 
         //Stock again
         final Result<Empty> again = batchAlfredo.stockBatchInto(article, () -> warehouse.createBeerStock(article, batchAlfredo).getValue());
