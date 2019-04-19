@@ -33,11 +33,10 @@ public final class WarehouseImpl implements Warehouse {
     private final StockManager stockManager;
 
     /**
-     * Creates a {@link Warehouse} which uses the {@link ArticleManager} of the {@link nwoolcan.model.brewery.Brewery} which builds it.
-     * @param articleManager to be used.
+     * Creates a {@link Warehouse}.
      */
-    public WarehouseImpl(final ArticleManager articleManager) {
-        this.articleManager = articleManager;
+    public WarehouseImpl() {
+        this.articleManager = new ArticleManager();
         this.stockManager = new StockManager(articleManager);
     }
 

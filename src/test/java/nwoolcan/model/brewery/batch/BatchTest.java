@@ -281,7 +281,7 @@ public class BatchTest {
         Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
 
         //Stock batch
-        final Warehouse warehouse = new WarehouseImpl(articleManager);
+        final Warehouse warehouse = new WarehouseImpl();
         final BeerArticle article = warehouse.createBeerArticle("Test 75cl", UnitOfMeasure.BOTTLE_75_CL);
         final Result<Empty> res = batchAlfredo.stockBatchInto(article, () -> warehouse.createBeerStock(article, batchAlfredo).getValue());
         Assert.assertFalse(res.isError());
@@ -329,7 +329,7 @@ public class BatchTest {
      */
     @Test
     public void testWrongStocking() {
-        final Warehouse warehouse = new WarehouseImpl(articleManager);
+        final Warehouse warehouse = new WarehouseImpl();
         final BeerArticle article = warehouse.createBeerArticle("Test 50cl", UnitOfMeasure.BOTTLE_50_CL);
 
         //Stocking not ended batch
