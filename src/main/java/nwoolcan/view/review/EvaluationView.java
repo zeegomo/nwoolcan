@@ -222,7 +222,7 @@ public final class EvaluationView extends AbstractViewController implements Init
          * @return {@link Node}
          */
         public Node build(final ViewManager manager) {
-            return manager.getView(ViewType.EVALUATION_INPUT, this).orElse(new Label("Load failed"));
+            return manager.getView(ViewType.EVALUATION, this).orElse(new Label("Load failed"));
         }
     }
 }
