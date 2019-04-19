@@ -30,6 +30,7 @@ public abstract class DecoratorStep extends AbstractStep {
     /**
      * Performs a check to know if this step can be finalized with this data.
      * Returns a {@link Result} with en error if this step cannot be finalized with this finalization data.
+     * To be called in sub-classes to maintain the chain of decorations.
      * @param note the finalization note.
      * @param endDate the finalization end date.
      * @param remainingSize the finalization remaining size.
@@ -43,6 +44,7 @@ public abstract class DecoratorStep extends AbstractStep {
     /**
      * Performs a check to know if this parameter can be registered in this step.
      * Returns a {@link Result} with en error if if this parameter cannot be registered in this step.
+     * To be called in sub-classes to maintain the chain of decorations.
      * @param parameter the registering parameter
      * @return a {@link Result} with en error if if this parameter cannot be registered in this step.
      */

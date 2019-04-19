@@ -35,8 +35,9 @@ public class BottlingStep extends DecoratorStep {
 
     @Override
     protected final Result<Empty> checkFinalizationData(@Nullable final String note, final Date endDate, final Quantity remainingSize) {
-        return Result.of(remainingSize)
-                     .require(s -> BOTTLES.contains(s.getUnitOfMeasure()), new IllegalArgumentException(CANNOT_FINALIZE_WITH_NO_BOTTLE_MESSAGE))
-                     .toEmpty();
+        return super.checkFinalizationData(note, endDate, remainingSize)
+                    .require(s -> BOTTLES.contains(remainingSize.getUnitOfMeasure()),
+                        new IllegalArgumentException(CANNOT_FINALIZE_WITH_NO_BOTTLE_MESSAGE))
+                    .toEmpty();
     }
 }
