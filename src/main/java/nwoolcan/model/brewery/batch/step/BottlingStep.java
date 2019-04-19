@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * Step that can be finalized only if the remaining size has a bottle unit of measure.
  */
-public class BottlingStep extends DecoratorStep {
+final class BottlingStep extends DecoratorStep {
 
     private static final String CANNOT_FINALIZE_WITH_NO_BOTTLE_MESSAGE = "Cannot finalize step because remaining size has no bottle unit of measure.";
 
@@ -27,14 +27,15 @@ public class BottlingStep extends DecoratorStep {
 
     /**
      * Basic decorator constructor.
+     * Package-private.
      * @param decorated the decorated step implementation.
      */
-    public BottlingStep(final AbstractStep decorated) {
+    BottlingStep(final AbstractStep decorated) {
         super(decorated);
     }
 
     @Override
-    protected final Result<Empty> checkFinalizationData(@Nullable final String note, final Date endDate, final Quantity remainingSize) {
+    protected Result<Empty> checkFinalizationData(@Nullable final String note, final Date endDate, final Quantity remainingSize) {
         return super.checkFinalizationData(note, endDate, remainingSize)
                     .require(s -> BOTTLES.contains(remainingSize.getUnitOfMeasure()),
                         new IllegalArgumentException(CANNOT_FINALIZE_WITH_NO_BOTTLE_MESSAGE))

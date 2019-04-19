@@ -11,15 +11,16 @@ import java.util.Date;
 /**
  * Abstract class for decorating a step.
  */
-public abstract class DecoratorStep extends AbstractStep {
+abstract class DecoratorStep extends AbstractStep {
 
     private final AbstractStep decorated;
 
     /**
      * Basic decorator constructor.
+     * Package-private.
      * @param decorated the decorated step implementation.
      */
-    public DecoratorStep(final AbstractStep decorated) {
+    DecoratorStep(final AbstractStep decorated) {
         super(new ModifiableStepInfoImpl(decorated.getStepInfo().getType(),
                 decorated.getStepInfo().getStartDate()),
             decorated.getNextStepTypes(),
