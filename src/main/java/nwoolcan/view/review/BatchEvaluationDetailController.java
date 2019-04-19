@@ -6,8 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
