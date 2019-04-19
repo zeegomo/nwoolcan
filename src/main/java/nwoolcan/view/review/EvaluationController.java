@@ -11,8 +11,6 @@ import nwoolcan.viewmodel.brewery.production.batch.review.EvaluationViewModel;
  */
 @SuppressWarnings("NullAway")
 public final class EvaluationController implements InitializableController<EvaluationViewModel> {
-    /*@FXML
-    private TitledPane title;*/
     @FXML
     private Label score;
     @FXML
@@ -20,8 +18,6 @@ public final class EvaluationController implements InitializableController<Evalu
 
     @Override
     public void initData(final EvaluationViewModel data) {
-        /*title.setText(data.getType());
-        title.setCollapsible(false);*/
         score.setText(formatScore(data));
         notes.setText(formatNotes(data));
     }

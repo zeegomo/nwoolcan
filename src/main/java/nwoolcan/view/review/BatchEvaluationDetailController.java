@@ -63,8 +63,6 @@ public final class BatchEvaluationDetailController extends SubViewController
                                      .stream()
                                      .map(cat -> new TitledPane(cat.getType(), evaluationNode(cat)))
                                      .collect(Collectors.toList());
-        //data.getCategories()
-        //    .forEach(cat -> categories.getChildren().add(evaluationNode(cat)));
 
         Accordion acc = new Accordion(panes.stream().toArray(TitledPane[]::new));
         panes.stream().findFirst().ifPresent(acc::setExpandedPane);
