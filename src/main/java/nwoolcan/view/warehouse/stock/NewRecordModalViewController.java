@@ -43,8 +43,6 @@ public final class NewRecordModalViewController extends AbstractViewController i
     private int stockId;
 
     @FXML
-    private AnchorPane mainAnchorPane;
-    @FXML
     private ComboBox<Integer> recordMinute;
     @FXML
     private ComboBox<Integer> recordHour;
@@ -97,7 +95,6 @@ public final class NewRecordModalViewController extends AbstractViewController i
     private void specifyDateClick(final ActionEvent actionEvent) {
         dateVBox.setDisable(!checkSelectDate.isSelected());
         recordDatePicker.setValue(LocalDate.now());
-        mainAnchorPane.isResizable();
     }
 
     @FXML
