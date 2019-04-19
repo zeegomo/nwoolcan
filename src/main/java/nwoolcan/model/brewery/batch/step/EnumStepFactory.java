@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * Step factory implementation for creating basic steps.
  */
-public final class BasicStepFactory implements StepFactory {
+public final class EnumStepFactory implements StepFactory {
 
     private static final String CANNOT_FIND_STEP_IMPLEMENTATION_MESSAGE = " does not have a configured implementation.";
 

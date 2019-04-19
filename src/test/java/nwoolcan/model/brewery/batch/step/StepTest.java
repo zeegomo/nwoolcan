@@ -50,7 +50,7 @@ public class StepTest {
      */
     @Before
     public void init() {
-        final BasicStepFactory factory = new BasicStepFactory();
+        final EnumStepFactory factory = new EnumStepFactory();
         this.boiling = factory.create(StepTypeEnum.BOILING).getValue();
         this.mashing = factory.create(StepTypeEnum.MASHING).getValue();
         this.packaging = factory.create(StepTypeEnum.PACKAGING, new Date()).getValue();
