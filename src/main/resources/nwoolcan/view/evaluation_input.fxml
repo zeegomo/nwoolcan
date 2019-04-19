@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<VBox xmlns="http://javafx.com/javafx/8.0.172-ea"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="nwoolcan.view.review.EvaluationView">
+
+<VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.review.EvaluationView">
     <FlowPane fx:id="scoreFlowPane">
-        <Label text="Score: "/>
-        <TextField fx:id="scoreTextField"/>
-        <Label fx:id="scoreLabel"/>
-        <Label text="/"/>
-        <Label fx:id="maxScore"/>
+        <Label text="Score: " />
+        <TextField fx:id="scoreTextField" alignment="CENTER_RIGHT"/>
+        <Label fx:id="scoreLabel" />
+        <Label text="/" />
+        <Label fx:id="maxScore" />
     </FlowPane>
     <FlowPane fx:id="notesFlowPane">
-        <Label text="Notes: "/>
-        <TextArea fx:id="notesTextArea"/>
-        <Text fx:id="notesText"/>
+        <Label text="Notes: " />
+        <TextArea fx:id="notesTextArea" />
+        <Text fx:id="notesText" />
     </FlowPane>
 </VBox>
