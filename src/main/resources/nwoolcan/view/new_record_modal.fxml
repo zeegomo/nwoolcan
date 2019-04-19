@@ -41,7 +41,7 @@
                 <Label text="Action" />
                 <ComboBox fx:id="recordAction" />
                 <CheckBox fx:id="checkSelectDate" text="Select date and time" onAction="#specifyDateClick" />
-                <VBox fx:id="dateVBox" spacing="5" managed="false" visible="false">
+                <VBox fx:id="dateVBox" spacing="5" disable="true">
                     <DatePicker fx:id="recordDatePicker" />
                     <HBox spacing="5">
                         <VBox>

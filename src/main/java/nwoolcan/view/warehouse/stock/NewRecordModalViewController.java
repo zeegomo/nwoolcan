@@ -89,8 +89,7 @@ public final class NewRecordModalViewController extends AbstractViewController i
 
     @FXML
     private void specifyDateClick(final ActionEvent actionEvent) {
-        dateVBox.setManaged(checkSelectDate.isSelected());
-        dateVBox.setVisible(checkSelectDate.isSelected());
+        dateVBox.setDisable(!checkSelectDate.isSelected());
         recordDatePicker.setValue(LocalDate.now());
     }
 
