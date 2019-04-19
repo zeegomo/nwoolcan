@@ -7,7 +7,6 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 
@@ -18,32 +17,17 @@ import java.util.Set;
  */
 final class BasicStep extends AbstractStep {
 
-    private final Set<StepType> nextStepTypes;
-    private final Set<ParameterType> parameterTypes;
-
     /**
      * Basic constructor with step type and start date of the step.
-     * Package-protected, to create a Step use use the factory {@link EnumStepFactory}.
+     * Package-protected, to create a Step use the factory {@link EnumStepFactory}.
      * @param stepType step's type.
      * @param startDate step's start date.
      */
     BasicStep(final StepType stepType,
               final Date startDate,
               final Set<StepType> nextStepTypes,
-              final Set<ParameterType> parameterTypes) {
-        super(new ModifiableStepInfoImpl(stepType, startDate));
-        this.nextStepTypes = nextStepTypes;
-        this.parameterTypes = parameterTypes;
-    }
-
-    @Override
-    public Set<StepType> getNextStepTypes() {
-        return Collections.unmodifiableSet(this.nextStepTypes);
-    }
-
-    @Override
-    public Set<ParameterType> getParameterTypes() {
-        return Collections.unmodifiableSet(this.parameterTypes);
+              final Set<ParameterType> registrationParameterTypes) {
+        super(new ModifiableStepInfoImpl(stepType, startDate), nextStepTypes, registrationParameterTypes);
     }
 
     @Override

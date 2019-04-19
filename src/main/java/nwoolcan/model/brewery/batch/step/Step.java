@@ -36,7 +36,7 @@ public interface Step {
      * It depends on the current step type and it's implementation.
      * @return a {@link Set} of all possible parameter types that can be registered in this kind of step.
      */
-    Set<ParameterType> getParameterTypes();
+    Set<ParameterType> getRegistrationParameterTypes();
 
     /**
      * Returns true if the step is finalized (so it has finished), false otherwise.

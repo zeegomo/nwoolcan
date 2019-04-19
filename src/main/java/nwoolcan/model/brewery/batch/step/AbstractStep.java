@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.batch.step;
 
 import nwoolcan.model.brewery.batch.step.parameter.Parameter;
+import nwoolcan.model.brewery.batch.step.parameter.ParameterType;
 import nwoolcan.model.brewery.batch.step.parameter.QueryParameter;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Empty;
@@ -11,9 +12,11 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,15 +30,22 @@ abstract class AbstractStep implements Step {
     private static final String CANNOT_REGISTER_PARAMETER_MESSAGE = "Cannot register parameter if the step is finalized.";
     private static final String INVALID_PARAMETER_MESSAGE = "The parameter type is invalid for this step.";
 
+    private final Set<StepType> nextStepTypes;
+    private final Set<ParameterType> registrationParameterTypes;
+
     private final ModifiableStepInfo stepInfo;
     private boolean finalized;
     private final Collection<Parameter> parameters;
     private final Collection<Observer<Parameter>> observers;
 
     //Package-private constructor only for inheritance.
-    AbstractStep(final ModifiableStepInfo stepInfo) {
+    AbstractStep(final ModifiableStepInfo stepInfo,
+                 final Set<StepType> nextStepTypes,
+                 final Set<ParameterType> registrationParameterTypes) {
         this.stepInfo = stepInfo;
         this.finalized = stepInfo.getType().isEndType();
+        this.nextStepTypes = nextStepTypes;
+        this.registrationParameterTypes = registrationParameterTypes;
         this.parameters = new ArrayList<>();
         this.observers = new ArrayList<>();
     }
@@ -66,6 +76,16 @@ abstract class AbstractStep implements Step {
      * @return a {@link Result} with en error if if this parameter cannot be registered in this step.
      */
     protected abstract Result<Empty> checkRegisteringParameter(Parameter parameter);
+
+    @Override
+    public final Set<StepType> getNextStepTypes() {
+        return Collections.unmodifiableSet(this.nextStepTypes);
+    }
+
+    @Override
+    public final Set<ParameterType> getRegistrationParameterTypes() {
+        return Collections.unmodifiableSet(this.registrationParameterTypes);
+    }
 
     @Override
     public final StepInfo getStepInfo() {
@@ -121,7 +141,7 @@ abstract class AbstractStep implements Step {
         return this.checkRegisteringParameter(parameter)
                    .map(e -> parameter)
                    .require(() -> !this.isFinalized(), new IllegalStateException(CANNOT_REGISTER_PARAMETER_MESSAGE))
-                   .require(p -> getParameterTypes().contains(p.getType()), new IllegalArgumentException(INVALID_PARAMETER_MESSAGE))
+                   .require(p -> this.registrationParameterTypes.contains(p.getType()), new IllegalArgumentException(INVALID_PARAMETER_MESSAGE))
                    .peek(this.parameters::add)
                    .peek(p -> this.observers.forEach(o -> o.update(p)))
                    .toEmpty();
