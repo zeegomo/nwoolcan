@@ -230,7 +230,8 @@ public final class BreweryController implements Controller {
     public DashboardViewModel getDashboardViewModel() {
         return new DashboardViewModel(
             this.getProductionViewModel(),
-            this.brewery.getBreweryName().orElse("")
+            this.getWarehouseController().getWarehouseViewModel(),
+            this.brewery.getBreweryName().orElse("Dashboard")
         );
     }
 }

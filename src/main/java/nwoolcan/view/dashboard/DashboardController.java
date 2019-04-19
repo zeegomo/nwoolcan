@@ -18,6 +18,18 @@ import nwoolcan.viewmodel.brewery.DashboardViewModel;
 public final class DashboardController extends SubViewController {
 
     @FXML
+    private PieChart pieChartStockTypes;
+
+    @FXML
+    private Label lblAvailableMisc;
+
+    @FXML
+    private Label lblAvailableIngredient;
+
+    @FXML
+    private Label lblAvailableBeer;
+
+    @FXML
     private Label lblTotalNumberBatches;
 
     @FXML
@@ -52,6 +64,7 @@ public final class DashboardController extends SubViewController {
         final DashboardViewModel data = this.getController().getDashboardViewModel();
         this.lblTitle.setText(data.getBreweryName());
 
+        // Production
         this.lblTotalNumberBatches.setText(Long.toString(data.getProduction().getNBatches()));
         this.lblNumberProductionBatches.setText(Long.toString(data.getProduction().getNInProgressBatches()));
         this.lblNumberEndedBatches.setText(Long.toString(data.getProduction().getNEndedBatches()));
@@ -72,6 +85,33 @@ public final class DashboardController extends SubViewController {
         } else {
             this.pieChartBatchesStatus.setVisible(false);
         }
+
+        // Warehouse
+        this.lblAvailableBeer.setText(Integer.toString(data.getWarehouse().getnBeerAvailable()));
+        this.lblAvailableIngredient.setText(Integer.toString(data.getWarehouse().getnIngredientAvailable()));
+        this.lblAvailableMisc.setText(Integer.toString(data.getWarehouse().getnMiscAvailable()));
+
+        final int total = data.getWarehouse().getnBeerAvailable() + data.getWarehouse().getnIngredientAvailable() + data.getWarehouse().getnMiscAvailable();
+        if (total > 0) {
+            this.pieChartStockTypes.setVisible(true);
+            pieChartStockTypes.getData().clear();
+            if (data.getWarehouse().getnBeerAvailable() > 0) {
+                pieChartStockTypes.getData().add(new PieChart.Data("Beer", data.getWarehouse().getnBeerAvailable()));
+            }
+            if (data.getWarehouse().getnIngredientAvailable() > 0) {
+                pieChartStockTypes.getData().add(new PieChart.Data("Ingredients", data.getWarehouse().getnIngredientAvailable()));
+            }
+            if (data.getWarehouse().getnMiscAvailable() > 0) {
+                pieChartStockTypes.getData().add(new PieChart.Data("Misc", data.getWarehouse().getnMiscAvailable()));
+            }
+        } else {
+            this.pieChartStockTypes.setVisible(false);
+        }
+    }
+
+    @FXML
+    private void toWarehouseClicked(final ActionEvent event) {
+        this.substituteView(ViewType.WAREHOUSE);
     }
 
     @FXML
