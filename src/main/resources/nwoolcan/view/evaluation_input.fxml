@@ -3,18 +3,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox
-        xmlns="http://javafx.com/javafx/8.0.172-ea"
-        xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="nwoolcan.view.review.EvaluationInputController">
-    <FlowPane>
+<?import javafx.scene.text.Text?>
+<VBox xmlns="http://javafx.com/javafx/8.0.172-ea"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="nwoolcan.view.review.EvaluationView">
+    <FlowPane fx:id="scoreFlowPane">
         <Label text="Score: "/>
-        <TextField fx:id="score"/>
+        <TextField fx:id="scoreTextField"/>
+        <Label fx:id="scoreLabel"/>
         <Label text="/"/>
         <Label fx:id="maxScore"/>
     </FlowPane>
-    <FlowPane>
+    <FlowPane fx:id="notesFlowPane">
         <Label text="Notes: "/>
-        <TextArea fx:id="notes"/>
+        <TextArea fx:id="notesTextArea"/>
+        <Text fx:id="notesText"/>
     </FlowPane>
 </VBox>
