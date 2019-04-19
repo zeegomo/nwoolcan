@@ -13,6 +13,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.GridPane?>
 <SubView xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          fx:controller="nwoolcan.view.warehouse.stock.StockDetailController"
@@ -34,42 +35,24 @@
                     <Button fx:id="buttonGoToBatch" text="Go to batch" onAction="#goToBatchButtonClick" visible="false" managed="false"/>
                 </HBox>
                 <TitledPane text="General information">
-                    <HBox>
-                        <VBox>
-                            <HBox>
-                                <Label text="Id: "/>
-                                <Label fx:id="lblId"/>
-                            </HBox>
-                            <HBox>
-                                <Label text="Article: "/>
-                                <Label fx:id="lblArticle"/>
-                            </HBox>
-                            <HBox>
-                                <Label text="Available: "/>
-                                <Label fx:id="lblAvailableQt"/>
-                            </HBox>
-                            <HBox>
-                                <Label text="Used: "/>
-                                <Label fx:id="lblUsedQt"/>
-                            </HBox>
-                            <HBox>
-                                <Label text="State: "/>
-                                <Label fx:id="lblState"/>
-                            </HBox>
-                            <HBox fx:id="expDateBox">
-                                <Label text="Expiration Date: "/>
-                                <Label fx:id="lblExpirationDate"/>
-                            </HBox>
-                            <HBox>
-                                <Label text="Last modified: "/>
-                                <Label fx:id="lblLastModified"/>
-                            </HBox>
-                            <HBox>
-                                <Label text="Creation date: "/>
-                                <Label fx:id="lblCreationDate"/>
-                            </HBox>
-                        </VBox>
-                    </HBox>
+                    <GridPane vgap="5" hgap="5">
+                        <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="Id: "/>
+                        <Label GridPane.rowIndex="0" GridPane.columnIndex="1" fx:id="lblId"/>
+                        <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="Article: "/>
+                        <Label GridPane.rowIndex="1" GridPane.columnIndex="1" fx:id="lblArticle"/>
+                        <Label GridPane.rowIndex="2" GridPane.columnIndex="0" text="Available: "/>
+                        <Label GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="lblAvailableQt"/>
+                        <Label GridPane.rowIndex="3" GridPane.columnIndex="0" text="Used: "/>
+                        <Label GridPane.rowIndex="3" GridPane.columnIndex="1" fx:id="lblUsedQt"/>
+                        <Label GridPane.rowIndex="4" GridPane.columnIndex="0" text="State: "/>
+                        <Label GridPane.rowIndex="4" GridPane.columnIndex="1" fx:id="lblState"/>
+                        <Label GridPane.rowIndex="5" GridPane.columnIndex="0" text="Last modified: "/>
+                        <Label GridPane.rowIndex="5" GridPane.columnIndex="1" fx:id="lblLastModified"/>
+                        <Label GridPane.rowIndex="6" GridPane.columnIndex="0" text="Creation date: "/>
+                        <Label GridPane.rowIndex="6" GridPane.columnIndex="1" fx:id="lblCreationDate"/>
+                        <Label GridPane.rowIndex="7" GridPane.columnIndex="0" fx:id="lblTextExpDate" text="Expiration Date: "/>
+                        <Label GridPane.rowIndex="7" GridPane.columnIndex="1" fx:id="lblExpirationDate"/>
+                    </GridPane>
                 </TitledPane>
                 <TitledPane text="Records">
                     <TableView fx:id="recordTable">
