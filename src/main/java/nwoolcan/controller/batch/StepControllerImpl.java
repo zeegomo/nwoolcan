@@ -51,7 +51,7 @@ public final class StepControllerImpl implements StepController {
     public Result<Empty> registerParameter(final RegisterParameterDTO data) {
         return brewery.getBatchById(data.getBatchId())
                       .flatMap(b -> ParameterFactory.create(data.getType(), data.getValue(), data.getRegistrationDate())
-                                                    .flatMap(p -> b.getCurrentStep().addParameter(p)));
+                                                    .flatMap(p -> b.getCurrentStep().registerParameter(p)));
     }
 
     private Result<Step> getStepByBatchIdAndStepTypeName(final int batchId, final String stepTypeName) {
