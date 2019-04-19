@@ -88,7 +88,11 @@ public class StepTest {
         Assert.assertTrue(this.mashing.getStepInfo().getEndDate().isPresent());
         Assert.assertTrue(this.mashing.getStepInfo().getEndStepSize().isPresent());
 
+        //Cannot package a no bottle quantity
         finRes = this.packaging.finalize("Ciao", new Date(), Q1);
+        Assert.assertTrue(finRes.isError());
+        //now can
+        finRes = this.packaging.finalize("Ciao", new Date(), Quantity.of(1000, UnitOfMeasure.BOTTLE_33_CL).getValue());
         Assert.assertFalse(finRes.isError());
 
         Assert.assertTrue(this.finalized.isFinalized());

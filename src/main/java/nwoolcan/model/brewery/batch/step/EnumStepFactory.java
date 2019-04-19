@@ -45,7 +45,7 @@ public final class EnumStepFactory implements StepFactory {
                              case AGING:
                                  return new BasicStep(stepType, startDate, AGING_STEP_TYPES, AGING_PARAMETER_TYPES);
                              case PACKAGING:
-                                 return new BasicStep(stepType, startDate, PACKAGING_STEP_TYPES, Collections.emptySet());
+                                 return new BottlingStep(new BasicStep(stepType, startDate, PACKAGING_STEP_TYPES, Collections.emptySet()));
                              default:
                                  return new BasicStep(stepType, startDate, Collections.emptySet(), Collections.emptySet());
                          }
