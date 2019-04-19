@@ -87,8 +87,8 @@ public final class StockDetailController extends SubViewController implements In
     private void loadData() {
         final DetailStockViewModel data = getController().getWarehouseController().getViewStockById(stockId).getValue();
         stockId = data.getId();
-        articleId = data.getArticleId();
-        lblArticle.setText(getController().getWarehouseController().getViewArticleById(data.getArticleId()).getValue().toString());
+        articleId = data.getArticle().getId();
+        lblArticle.setText(data.getArticle().toString());
         lblAvailableQt.setText(data.getRemainingQuantity().toString());
         lblCreationDate.setText(data.getCreationDate());
         lblLastModified.setText(data.getLastModified());
@@ -96,7 +96,7 @@ public final class StockDetailController extends SubViewController implements In
         lblId.setText(Integer.toString(data.getId()));
         lblState.setText(data.getStockState().toString());
         lblExpirationDate.setText(data.getExpirationDate());
-        if (getController().getWarehouseController().getViewArticleById(data.getArticleId()).getValue().getArticleType() == ArticleType.FINISHED_BEER) {
+        if (data.getArticle().getArticleType() == ArticleType.FINISHED_BEER) {
             this.batchId = ((BeerStockViewModel) data).getBatchId();
             this.buttonGoToBatch.setVisible(true);
             this.buttonGoToBatch.setManaged(true);

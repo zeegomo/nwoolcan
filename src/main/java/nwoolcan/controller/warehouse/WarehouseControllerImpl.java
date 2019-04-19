@@ -56,7 +56,7 @@ public final class WarehouseControllerImpl implements WarehouseController {
     public List<MasterStockViewModel> getStocks(final QueryStock queryStock) {
         return warehouse.getStocks(queryStock)
                         .stream()
-                        .map(MasterStockViewModel::getMasterViewStock)
+                        .map(s -> MasterStockViewModel.getMasterViewStock(s, warehouse.getArticleById(s.getArticleId()).getValue()))
                         .collect(Collectors.toList());
     }
 
@@ -89,7 +89,7 @@ public final class WarehouseControllerImpl implements WarehouseController {
         return Result.of(articleId)
                      .flatMap(warehouse::getArticleById)
                      .flatMap(article -> warehouse.createStock(article, expirationDate))
-                     .map(PlainStockViewModel::new);
+                     .map(stock -> new PlainStockViewModel(stock, warehouse.getArticleById(stock.getArticleId()).getValue()));
     }
 
     @Override
@@ -97,7 +97,7 @@ public final class WarehouseControllerImpl implements WarehouseController {
         return Result.of(articleId)
                      .flatMap(warehouse::getArticleById)
                      .flatMap(warehouse::createStock)
-                     .map(PlainStockViewModel::new);
+                     .map(stock -> new PlainStockViewModel(stock, warehouse.getArticleById(stock.getArticleId()).getValue()));
     }
 
     @Override
@@ -130,7 +130,11 @@ public final class WarehouseControllerImpl implements WarehouseController {
 
     @Override
     public Result<DetailStockViewModel> getViewStockById(final int stockId) {
-        return warehouse.getStockById(stockId).map(DetailStockViewModel::getDetailViewStock);
+        return warehouse.getStockById(stockId)
+                        .map(stock ->
+                            DetailStockViewModel.getDetailViewStock(stock,
+                                warehouse.getArticleById(stock.getArticleId())
+                                         .getValue()));
     }
 
 }
