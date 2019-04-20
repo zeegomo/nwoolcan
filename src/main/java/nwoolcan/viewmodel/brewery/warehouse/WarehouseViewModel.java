@@ -70,7 +70,8 @@ public class WarehouseViewModel {
         this.nIngredientUsed = warehouse.getStocks(INGREDIENT_USED_QUERY).size();
         this.allStocks = warehouse.getStocks(GENERAL_QUERY_STOCK)
                                   .stream()
-                                  .map(MasterStockViewModel::getMasterViewStock)
+                                  .map(stock -> MasterStockViewModel.getMasterViewStock(stock,
+                                      warehouse.getArticleById(stock.getArticleId()).getValue()))
                                   .collect(Collectors.toList());
     }
     /**

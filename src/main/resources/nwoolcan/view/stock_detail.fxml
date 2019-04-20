@@ -35,7 +35,8 @@
                     <Button fx:id="buttonGoToBatch" text="Go to batch" onAction="#goToBatchButtonClick" visible="false" managed="false"/>
                 </HBox>
                 <TitledPane text="General information">
-                    <GridPane vgap="5" hgap="5">
+
+                    <GridPane vgap="5" hgap="5" fx:id="mainGridPane">
                         <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="Id: "/>
                         <Label GridPane.rowIndex="0" GridPane.columnIndex="1" fx:id="lblId"/>
                         <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="Article: "/>
@@ -62,7 +63,7 @@
                         <columns>
                             <TableColumn text="Date">
                                 <cellValueFactory>
-                                    <PropertyValueFactory property="date"/>
+                                    <PropertyValueFactory property="dateFormatted"/>
                                 </cellValueFactory>
                             </TableColumn>
                             <TableColumn text="Action">
