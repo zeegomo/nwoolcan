@@ -50,7 +50,10 @@
                             <Label text="Expiring in two weeks : " GridPane.columnIndex="0" GridPane.rowIndex="3" textFill="${lblNumberExpiring.textFill}"/>
                             <Label fx:id="lblNumberExpiring" GridPane.columnIndex="1" GridPane.rowIndex="3" textFill="darkgreen">
                             </Label>
-                            <Button GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" onAction="#toWarehouseClicked">Go to Warehouse</Button>
+                            <VBox spacing="3" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2">
+                                <Button onAction="#toWarehouseClicked">Go to Warehouse</Button>
+                                <Button onAction="#toArticlesClicked">Go to Articles</Button>
+                            </VBox>
                         </GridPane>
                         <PieChart fx:id="pieChartStockTypes" title="Available stocks" managed="${pieChartStockTypes.visible}" labelsVisible="false"/>
                     </HBox>
