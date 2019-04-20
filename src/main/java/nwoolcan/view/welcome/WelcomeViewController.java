@@ -36,6 +36,10 @@ public final class WelcomeViewController extends SubViewController {
         super(controller, viewManager);
     }
 
+    private void close() {
+        ((Stage) this.welcomeSubView.getScene().getWindow()).close();
+    }
+
     @FXML
     private void createNewBreweryClicked(final ActionEvent event) {
         final Stage modal =  new Stage();
@@ -53,7 +57,7 @@ public final class WelcomeViewController extends SubViewController {
                 modal.setOnCloseRequest(Event::consume); // To prevent closing from the outside
                 modal.showAndWait();
                 if (p.getRight().getExitState()) {
-                    this.substituteView(ViewType.DASHBOARD);
+                    this.close();
                 }
             });
     }
@@ -65,7 +69,7 @@ public final class WelcomeViewController extends SubViewController {
         final File target = fileChooser.showOpenDialog(this.welcomeSubView.getScene().getWindow());
         if (target != null) {
             this.getController().loadFrom(target)
-                .peek(e -> this.substituteView(ViewType.DASHBOARD)).peekError(err -> {
+                .peek(e -> this.close()).peekError(err -> {
                     Logger.getLogger(this.getClass().getName()).severe(err.toString());
                     this.showErrorAndWait("There was an error!");
                 });
