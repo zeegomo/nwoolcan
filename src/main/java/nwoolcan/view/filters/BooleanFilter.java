@@ -5,7 +5,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
+/**
+ * Filter with a boolean value.
+ */
 public class BooleanFilter extends HBox {
+    private static final int SPACING = 3;
     private final CheckBox field = new CheckBox();
 
     /**
@@ -13,7 +17,7 @@ public class BooleanFilter extends HBox {
      * @param title the title of the filter.
      */
     public BooleanFilter(@NamedArg("title") final String title) {
-        super(3);
+        super(SPACING);
         this.getChildren().add(field);
         this.getChildren().add(new Label(title));
     }
