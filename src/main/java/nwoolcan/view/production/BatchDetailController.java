@@ -219,7 +219,8 @@ public final class BatchDetailController
     }
 
     private void showAlertAndWait(final String message) {
-        this.showErrorAndWait("An error occurred while loading the next step modal.\n" + message);
+        this.showErrorAndWait("An error occurred while loading the next step modal.\n" + message,
+            this.addReviewButton.getScene().getWindow());
     }
 
     /**
