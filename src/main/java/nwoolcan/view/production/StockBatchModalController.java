@@ -3,9 +3,7 @@ package nwoolcan.view.production;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -27,7 +25,6 @@ import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * View controller of stock new batch modal view.
@@ -52,24 +49,9 @@ public final class StockBatchModalController
     @FXML
     private CheckBox createNewBeerArticleCheckBox;
     @FXML
-    private ComboBox<BeerArticleProprety> possibileBeerArticlesComboBox;
+    private ComboBox<BeerArticleViewModel> possibileBeerArticlesComboBox;
 
     private StockBatchViewModel data;
-
-    private static class BeerArticleProprety {
-        private final int id;
-        private final String name;
-
-        BeerArticleProprety(final int id, final String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        @Override
-        public String toString() {
-            return this.name;
-        }
-    }
 
     /**
      * Creates itself and inject the controller and the view manager.
@@ -90,13 +72,15 @@ public final class StockBatchModalController
             this.useExistentArticleVBox.getChildren().clear();
             this.useExistentArticleVBox.getChildren().add(new Label("No matching beer articles for this batch"));
         } else {
-            this.possibileBeerArticlesComboBox.setItems(FXCollections.observableList(articles.stream()
-                                                                                             .map(a -> new BeerArticleProprety(a.getId(), a.getName()))
-                                                                                             .collect(Collectors.toList())));
+            this.possibileBeerArticlesComboBox.setItems(FXCollections.observableList(articles));
         }
 
-        this.newArticleTitledPane.disableProperty().bind(
-            this.createNewBeerArticleCheckBox.selectedProperty().not()
+        this.newArticleTitledPane.visibleProperty().bind(
+            this.createNewBeerArticleCheckBox.selectedProperty()
+        );
+
+        this.possibileBeerArticlesComboBox.disableProperty().bind(
+            this.createNewBeerArticleCheckBox.selectedProperty()
         );
     }
 
@@ -128,7 +112,7 @@ public final class StockBatchModalController
                 return;
             }
 
-            articleId = this.possibileBeerArticlesComboBox.getSelectionModel().getSelectedItem().id;
+            articleId = this.possibileBeerArticlesComboBox.getSelectionModel().getSelectedItem().getId();
         }
 
         Result<Empty> res;
@@ -151,7 +135,7 @@ public final class StockBatchModalController
     }
 
     private void showAlertAndWait(final String message) {
-        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while stocking the batch.\n" + message, ButtonType.CLOSE);
-        a.showAndWait();
+        this.showErrorAndWait("An error occurred while stocking the batch.\n" + message,
+            this.beerArticlesVBox.getScene().getWindow()); // You can use any other control
     }
 }
