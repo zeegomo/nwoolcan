@@ -80,7 +80,7 @@ public final class BatchDetailController
 
     private void setData(final DetailBatchViewModel data) {
         this.getViewManager().getView(ViewType.BATCH_INFO, data.getBatchInfo()).peek(p -> batchInfoContainer.substitute(p));
-
+        this.data = data;
         this.goToNextStepButton.setDisable(data.isEnded());
         this.stockBatchButton.setDisable(!data.isEnded() || data.isStocked());
 
@@ -223,7 +223,8 @@ public final class BatchDetailController
     }
 
     private void showAlertAndWait(final String message) {
-        this.showErrorAndWait("An error occurred while loading the next step modal.\n" + message);
+        this.showErrorAndWait("An error occurred while loading the next step modal.\n" + message,
+            this.addReviewButton.getScene().getWindow());
     }
 
     /**

@@ -194,6 +194,7 @@ public final class NewBatchEvaluationController extends SubViewController
     }
 
     private void showAlertAndWait(final String message) {
-        this.showErrorAndWait("An error occurred while creating the review.\n" + message);
+        this.showErrorAndWait("An error occurred while creating the review.\n" + message,
+            this.reviewerTextField.getScene().getWindow());
     }
 }
