@@ -24,8 +24,7 @@
             <VBox>
                 <TitledPane collapsible="false" text="Production" minHeight="300">
                     <HBox spacing="20">
-                        <PieChart fx:id="pieChartBatchesStatus" title="Batches" managed="${pieChartBatchesStatus.visible}" labelsVisible="false"/>
-                        <GridPane minWidth="-Infinity" vgap="20" HBox.hgrow="ALWAYS">
+                        <GridPane minWidth="-Infinity" vgap="20">
                             <Label text="Total number of batches : " GridPane.columnIndex="0" GridPane.rowIndex="0" />
                             <Label fx:id="lblTotalNumberBatches" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                             <Label text="Number of batches in production : " GridPane.columnIndex="0" GridPane.rowIndex="1" />
@@ -36,12 +35,12 @@
                             <Label fx:id="lblNumberStockedBatches" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                             <Button GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" onAction="#toProductionClicked">Go to Production</Button>
                         </GridPane>
+                        <PieChart fx:id="pieChartBatchesStatus" title="Batches" managed="${pieChartBatchesStatus.visible}" labelsVisible="false"/>
                     </HBox>
                 </TitledPane>
                 <TitledPane collapsible="false" text="Warehouse" minHeight="300">
                     <HBox spacing="20">
-                        <PieChart fx:id="pieChartStockTypes" title="Available stocks" managed="${pieChartStockTypes.visible}" labelsVisible="false"/>
-                        <GridPane minWidth="-Infinity" vgap="20" HBox.hgrow="ALWAYS">
+                        <GridPane minWidth="-Infinity" vgap="20">
                             <Label text="Available beer articles : " GridPane.columnIndex="0" GridPane.rowIndex="0" />
                             <Label fx:id="lblAvailableBeer" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                             <Label text="Available ingredients : " GridPane.columnIndex="0" GridPane.rowIndex="1" />
@@ -53,6 +52,7 @@
                             </Label>
                             <Button GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" onAction="#toWarehouseClicked">Go to Warehouse</Button>
                         </GridPane>
+                        <PieChart fx:id="pieChartStockTypes" title="Available stocks" managed="${pieChartStockTypes.visible}" labelsVisible="false"/>
                     </HBox>
                 </TitledPane>
             </VBox>
