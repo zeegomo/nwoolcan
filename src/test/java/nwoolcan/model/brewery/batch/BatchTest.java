@@ -143,7 +143,7 @@ public class BatchTest {
         Assert.assertTrue(res.isPresent());
 
         Assert.assertEquals(StepTypeEnum.BOILING, batchAlfredo.getCurrentStep().getStepInfo().getType());
-        Assert.assertEquals(Q1, batchAlfredo.getBatchInfo().getBatchSize());
+        Assert.assertEquals(Q1, batchAlfredo.getBatchInfo().getInitialBatchSize());
 
         Assert.assertEquals(2, batchAlfredo.getSteps().size());
         Step prevStep = batchAlfredo.getSteps().get(0);
@@ -163,7 +163,7 @@ public class BatchTest {
         res = batchRossina.moveToNextStep(StepTypeEnum.BOILING);
         Assert.assertTrue(res.isPresent());
 
-        Assert.assertNotEquals(Q2, batchRossina.getBatchInfo().getBatchSize());
+        Assert.assertNotEquals(Q2, batchRossina.getBatchInfo().getInitialBatchSize());
         Assert.assertEquals(Q2, batchRossina.getCurrentSize());
         Assert.assertEquals(2, batchRossina.getSteps().size());
         prevStep = batchRossina.getSteps().get(0);
@@ -201,7 +201,7 @@ public class BatchTest {
         batchAlfredo.getCurrentStep().registerParameter(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, t2).getValue());
 
         //Finalize and go next.
-        batchAlfredo.getCurrentStep().finalize("Mashing ended.", new Date(), batchAlfredo.getBatchInfo().getBatchSize());
+        batchAlfredo.getCurrentStep().finalize("Mashing ended.", new Date(), batchAlfredo.getBatchInfo().getInitialBatchSize());
         batchAlfredo.moveToNextStep(StepTypeEnum.BOILING).peekError(e -> Assert.fail(e.getMessage()));
 
         Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
@@ -214,7 +214,7 @@ public class BatchTest {
         batchAlfredo.getCurrentStep().registerParameter(ParameterFactory.create(ParameterTypeEnum.TEMPERATURE, t4).getValue());
 
         //Finalize and go next.
-        batchAlfredo.getCurrentStep().finalize("Boiling ended.", new Date(), batchAlfredo.getBatchInfo().getBatchSize());
+        batchAlfredo.getCurrentStep().finalize("Boiling ended.", new Date(), batchAlfredo.getBatchInfo().getInitialBatchSize());
         batchAlfredo.moveToNextStep(StepTypeEnum.FERMENTING).peekError(e -> Assert.fail(e.getMessage()));
 
         Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
@@ -312,7 +312,7 @@ public class BatchTest {
         batchBiondina.moveToNextStep(StepTypeEnum.BOILING).peekError(e -> Assert.fail(e.getMessage()));
 
         //Check same size as started
-        Assert.assertEquals(batchBiondina.getBatchInfo().getBatchSize(),
+        Assert.assertEquals(batchBiondina.getBatchInfo().getInitialBatchSize(),
             batchBiondina.getSteps().get(0).getStepInfo().getEndStepSize().get());
 
         final int evapo = 1000;
@@ -325,7 +325,7 @@ public class BatchTest {
 
         //Check changed.
         Assert.assertNotEquals(batchBiondina.getSteps().get(1).getStepInfo().getEndStepSize().get(),
-            batchBiondina.getBatchInfo().getBatchSize());
+            batchBiondina.getBatchInfo().getInitialBatchSize());
     }
 
     /**

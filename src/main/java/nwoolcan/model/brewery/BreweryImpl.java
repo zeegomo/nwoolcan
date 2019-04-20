@@ -55,11 +55,11 @@ public final class BreweryImpl implements Brewery {
                                          != queryBatch.getBatchMethod().get()))
                          .filter(batch -> !(queryBatch.getMinBatchSize().isPresent()
                               && batch.getBatchInfo()
-                                      .getBatchSize()
+                                      .getInitialBatchSize()
                                       .lessThan(queryBatch.getMinBatchSize().get())))
                          .filter(batch -> !(queryBatch.getMaxBatchSize().isPresent()
                               && batch.getBatchInfo()
-                                      .getBatchSize()
+                                      .getInitialBatchSize()
                                       .moreThan(queryBatch.getMaxBatchSize().get())))
                          .collect(Collectors.toList());
     }

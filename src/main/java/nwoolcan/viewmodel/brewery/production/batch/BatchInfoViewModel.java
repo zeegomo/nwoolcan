@@ -49,7 +49,7 @@ public class BatchInfoViewModel {
         this.beerName = data.getBeerDescription().getName();
         this.beerStyleCategory = data.getBeerDescription().getStyleCategory().orElse(null);
         this.batchMethod = data.getMethod().getName();
-        this.batchSize = new QuantityViewModel(data.getBatchSize());
+        this.batchSize = new QuantityViewModel(data.getInitialBatchSize());
         this.ingredients = data.listIngredients()
                                .stream()
                                .map(pair -> Pair.of(new IngredientArticleViewModel(pair.getLeft()), pair.getRight()))
