@@ -32,7 +32,7 @@ public class MasterBatchViewModel {
         this.batchMethodName = batch.getBatchInfo().getMethod().getName();
         this.currentStepName = batch.getCurrentStep().getStepInfo().getType().getName();
         this.startDate = new Date(batch.getSteps().stream().findFirst().get().getStepInfo().getStartDate().getTime());
-        this.initialBatchSize = new QuantityViewModel(batch.getBatchInfo().getBatchSize());
+        this.initialBatchSize = new QuantityViewModel(batch.getBatchInfo().getInitialBatchSize());
         this.currentBatchSize = new QuantityViewModel(batch.getCurrentSize());
         this.isEnded = batch.isEnded();
         this.isStocked = batch.isStocked();
