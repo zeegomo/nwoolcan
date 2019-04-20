@@ -12,6 +12,16 @@
 <?import nwoolcan.view.subview.SubView?>
 <?import nwoolcan.view.subview.SubViewContainer?>
 
+<?import javafx.scene.layout.AnchorPane?>
+<?import nwoolcan.view.filters.TextFilter?>
+<?import nwoolcan.view.filters.SelectFilter?>
+<?import java.lang.String?>
+<?import nwoolcan.model.brewery.warehouse.article.ArticleType?>
+
+<?import java.util.ArrayList?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.layout.TilePane?>
+<?import nwoolcan.view.filters.FiltersBar?>
 <SubView fx:id="articlesSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
@@ -58,8 +68,42 @@
                     </BorderPane>
                 </TitledPane>
                 <TitledPane text="Articles">
-                    <SubViewContainer fx:id="masterTableContainer" parent="$articlesSubView">
-                    </SubViewContainer>
+                    <VBox spacing="2">
+<!--                        <HBox spacing="10">-->
+<!--                            <fx:define>-->
+<!--                                <FXCollections fx:id="typesList" fx:factory="observableArrayList">-->
+<!--                                    <ArticleType fx:value="FINISHED_BEER" />-->
+<!--                                    <ArticleType fx:value="INGREDIENT" />-->
+<!--                                    <ArticleType fx:value="MISC" />-->
+<!--                                </FXCollections>-->
+<!--                            </fx:define>-->
+<!--                            <VBox spacing="2">-->
+<!--                                <Button>Apply filters</Button>-->
+<!--                                <Button>Reset filters</Button>-->
+<!--                            </VBox>-->
+<!--                            <FlowPane hgap="5" maxWidth="Infinity" HBox.hgrow="SOMETIMES">-->
+<!--                                <TextFilter title="Name" />-->
+<!--                                <SelectFilter title="Only type" placeholder="- Select type -" items="$typesList"/>-->
+<!--                                <SelectFilter title="Exclude type" placeholder="-Select type -" items="$typesList"/>-->
+<!--                            </FlowPane>-->
+<!--                        </HBox>-->
+                        <FiltersBar onAction="#applyFiltersClicked">
+                            <filters>
+                                <fx:define>
+                                    <FXCollections fx:id="typesList" fx:factory="observableArrayList">
+                                        <ArticleType fx:value="FINISHED_BEER" />
+                                        <ArticleType fx:value="INGREDIENT" />
+                                        <ArticleType fx:value="MISC" />
+                                    </FXCollections>
+                                </fx:define>
+                                <TextFilter fx:id="nameFilter" title="Name" />
+                                <SelectFilter fx:id="includeTypeFilter" title="Only type" placeholder="- Select type -" items="$typesList"/>
+                                <SelectFilter fx:id="excludeTypeFilter" title="Exclude type" placeholder="-Select type -" items="$typesList"/>
+                            </filters>
+                        </FiltersBar>
+                        <SubViewContainer fx:id="masterTableContainer" parent="$articlesSubView">
+                        </SubViewContainer>
+                    </VBox>
                 </TitledPane>
             </VBox>
         </center>
