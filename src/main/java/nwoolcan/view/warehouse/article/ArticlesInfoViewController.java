@@ -11,7 +11,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
+import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
+import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
+import nwoolcan.view.filters.SelectFilter;
+import nwoolcan.view.filters.TextFilter;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
@@ -32,6 +36,12 @@ import java.util.List;
 @SuppressWarnings("NullAway")
 public final class ArticlesInfoViewController extends SubViewController {
 
+    @FXML
+    private SelectFilter<ArticleType> excludeTypeFilter;
+    @FXML
+    private SelectFilter<ArticleType> includeTypeFilter;
+    @FXML
+    private TextFilter nameFilter;
     @FXML
     private Label lblTotalNumberArticles;
     @FXML
@@ -124,5 +134,17 @@ public final class ArticlesInfoViewController extends SubViewController {
     @FXML
     private void backButtonClick(final ActionEvent actionEvent) {
         this.previousView();
+    }
+
+    @FXML
+    private void applyFiltersClicked(final ActionEvent event) {
+        final QueryArticleBuilder builder = new QueryArticleBuilder();
+        this.excludeTypeFilter.getValue().ifPresent(builder::setExcludeArticleType);
+        this.includeTypeFilter.getValue().ifPresent(builder::setIncludeArticleType);
+        this.nameFilter.getValue().ifPresent(v -> {
+            builder.setMaxName(v);
+            builder.setMinName(v + "~");
+        });
+        this.setTable(this.getController().getWarehouseController().getArticles(builder.build()));
     }
 }
