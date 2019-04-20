@@ -289,6 +289,7 @@ public final class StepDetailController
     }
 
     private void showAlertAndWait(final String message) {
-        this.showErrorAndWait("An error occurred while registering the parameter.\n" + message);
+        this.showErrorAndWait("An error occurred while registering the parameter.\n" + message,
+            this.endDateLabel.getScene().getWindow());
     }
 }

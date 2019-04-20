@@ -103,6 +103,7 @@ public final class ArticleDetailViewController extends SubViewController impleme
     }
 
     private void showAlertAndWait(final String message) {
-        this.showErrorAndWait("An error occurred while changing the article name.\n" + message);
+        this.showErrorAndWait("An error occurred while changing the article name.\n" + message,
+            this.articleUnitOfMeasure.getScene().getWindow());
     }
 }

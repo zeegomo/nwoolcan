@@ -1,6 +1,7 @@
 package nwoolcan.view;
 
 import javafx.scene.control.Alert;
+import javafx.scene.layout.Region;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.utils.ViewManager;
@@ -46,6 +47,7 @@ public abstract class AbstractViewController {
         alert.setHeaderText(title);
         alert.setContentText(message);
         alert.initOwner(owner);
+        alert.getDialogPane().setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
         alert.showAndWait();
     }
 
