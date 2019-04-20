@@ -90,7 +90,7 @@ public final class WelcomeViewController extends SubViewController {
     @FXML
     private void loadDemoClicked(final ActionEvent event) {
         this.getController().loadFrom(new File(this.getClass().getResource(DEMO_FILE).getFile()))
-            .peek(e -> this.substituteView(ViewType.DASHBOARD)).peekError(err -> {
+            .peek(e -> this.close()).peekError(err -> {
                 Logger.getLogger(this.getClass().getName()).severe(err.toString());
                 this.showErrorAndWait("There was an error!");
             });
