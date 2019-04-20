@@ -2,6 +2,7 @@ package nwoolcan.view.production;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.utils.ViewManager;
@@ -14,6 +15,8 @@ import nwoolcan.viewmodel.brewery.production.batch.BatchInfoViewModel;
  */
 @SuppressWarnings("NullAway")
 public final class BatchInfoController extends SubViewController implements InitializableController<BatchInfoViewModel> {
+    private static final double VIEW_TO_DESC_RATIO = 3;
+
     @FXML
     private SubView batchInfoSubView;
     @FXML
@@ -34,6 +37,8 @@ public final class BatchInfoController extends SubViewController implements Init
     private Label ibuLabel;
     @FXML
     private Label batchSizeLabel;
+    @FXML
+    private VBox descriptionVBox;
     /**
      * Creates itself and gets injected.
      *
@@ -55,6 +60,7 @@ public final class BatchInfoController extends SubViewController implements Init
         data.getEbc().ifPresent(val -> this.ebcLabel.setText(val.getValueRepresentation()));
         data.getIbu().ifPresent(val -> this.ibuLabel.setText(val.getValueRepresentation()));
         this.batchSizeLabel.setText(data.getBatchSize().toString());
+        this.descriptionVBox.maxWidthProperty().bind(this.batchInfoSubView.widthProperty().divide(VIEW_TO_DESC_RATIO));
     }
 
     @Override
