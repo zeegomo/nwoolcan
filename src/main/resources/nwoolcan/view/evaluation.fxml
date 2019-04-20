@@ -9,7 +9,8 @@
 
 <VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.review.EvaluationView">
     <FlowPane fx:id="scoreFlowPane">
-        <Label text="Score: " />
+        <Label text="Score: "/>
+        <Label text="*" fx:id="requiredLabel"/>
         <TextField fx:id="scoreTextField" alignment="CENTER_RIGHT"/>
         <Label fx:id="scoreLabel" />
         <Label text="/" />
