@@ -12,7 +12,7 @@ public enum UnitOfMeasure {
     GRAM("g") {
         @Override
         public boolean validateValue(final Number value) {
-            return true;
+            return isPositive(value);
         }
     },
     /**
@@ -21,7 +21,7 @@ public enum UnitOfMeasure {
     LITER("L") {
         @Override
         public boolean validateValue(final Number value) {
-            return true;
+            return isPositive(value);
         }
     },
     /**
@@ -30,7 +30,7 @@ public enum UnitOfMeasure {
     UNIT("u") {
         @Override
         public boolean validateValue(final Number value) {
-            return validateWhenInteger(value);
+            return validateWhenInteger(value) && isPositive(value);
         }
     },
     /**
@@ -48,7 +48,7 @@ public enum UnitOfMeasure {
     CELSIUS_DEGREE("C") {
         @Override
         public boolean validateValue(final Number value) {
-            return true;
+            return value.doubleValue() >= TEMP_MIN;
         }
     },
     /**
@@ -57,7 +57,7 @@ public enum UnitOfMeasure {
     MILLIGRAMS_PER_LITER("mg/L") {
         @Override
         public boolean validateValue(final Number value) {
-            return true;
+            return isPositive(value);
         }
     },
     /**
@@ -66,7 +66,7 @@ public enum UnitOfMeasure {
     UNITLESS {
         @Override
         public boolean validateValue(final Number value) {
-            return true;
+            return isPositive(value);
         }
     },
     /**
@@ -75,7 +75,7 @@ public enum UnitOfMeasure {
     EBC {
         @Override
         public boolean validateValue(final Number value) {
-            return true;
+            return isPositive(value);
         }
     },
     /**
@@ -84,7 +84,7 @@ public enum UnitOfMeasure {
     IBU {
         @Override
         public boolean validateValue(final Number value) {
-            return true;
+            return isPositive(value);
         }
     },
     /**
@@ -93,7 +93,7 @@ public enum UnitOfMeasure {
     BOTTLE_33_CL("bot 33cl") {
         @Override
         public boolean validateValue(final Number value) {
-            return validateWhenInteger(value);
+            return validateWhenInteger(value) && isPositive(value);
         }
     },
     /**
@@ -102,7 +102,7 @@ public enum UnitOfMeasure {
     BOTTLE_50_CL("bot 50cl") {
         @Override
         public boolean validateValue(final Number value) {
-            return validateWhenInteger(value);
+            return validateWhenInteger(value) && isPositive(value);
         }
     },
     /**
@@ -111,7 +111,7 @@ public enum UnitOfMeasure {
     BOTTLE_75_CL("bot 75cl") {
         @Override
         public boolean validateValue(final Number value) {
-            return validateWhenInteger(value);
+            return validateWhenInteger(value) && isPositive(value);
         }
     },
     /**
@@ -120,11 +120,12 @@ public enum UnitOfMeasure {
     BOTTLE_MAGNUM("bot magnum") {
         @Override
         public boolean validateValue(final Number value) {
-            return validateWhenInteger(value);
+            return validateWhenInteger(value) && isPositive(value);
         }
     };
 
     private final String symbol;
+    private static final Double TEMP_MIN = -273.15;
 
     UnitOfMeasure() {
         this("");
@@ -149,6 +150,9 @@ public enum UnitOfMeasure {
 
     private static boolean validateWhenInteger(final Number value) {
         return value.doubleValue() == value.intValue();
+    }
+    private static boolean isPositive(final Number value) {
+        return value.doubleValue() >= 0;
     }
 
     @Override
