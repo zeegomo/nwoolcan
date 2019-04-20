@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
 import nwoolcan.model.utils.UnitOfMeasure;
@@ -34,6 +35,7 @@ public final class BatchInfoDetailController extends SubViewController implement
     private static final String PARAMETER_NAME_COLUMN = "Name";
     private static final String PARAMETER_VALUE_COLUMN = "Value";
     private static final String PARAMETER_DATE_COLUMN = "Date";
+    private static final String SHOW_ONLY_GRAM = "Only ingredients in grams are displayed";
 
     @FXML
     private SubView batchInfoDetailSubview;
@@ -99,6 +101,7 @@ public final class BatchInfoDetailController extends SubViewController implement
             this.waterMeasurements.setItems(FXCollections.observableList(waterMeasurements))
         );
 
+
         this.fermentablesTypeChart.setData(
             FXCollections.observableList(data.getIngredients()
                                              .stream()
@@ -116,6 +119,10 @@ public final class BatchInfoDetailController extends SubViewController implement
                                              .map(p -> new PieChart.Data(p.getLeft().getName(), p.getRight()))
                                              .collect(Collectors.toList()))
         );
+
+        Tooltip t = new Tooltip(SHOW_ONLY_GRAM);
+        Tooltip.install(fermentablesTypeChart, t);
+        Tooltip.install(hopsTypeChart, t);
     }
 
     /**
