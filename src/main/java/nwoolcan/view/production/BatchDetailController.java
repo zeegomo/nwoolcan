@@ -78,7 +78,7 @@ public final class BatchDetailController
 
     private void setData(final DetailBatchViewModel data) {
         this.getViewManager().getView(ViewType.BATCH_INFO, data.getBatchInfo()).peek(p -> batchInfoContainer.substitute(p));
-
+        this.data = data;
         this.goToNextStepButton.setDisable(data.isEnded());
         this.stockBatchButton.setDisable(!data.isEnded() || data.isStocked());
 
