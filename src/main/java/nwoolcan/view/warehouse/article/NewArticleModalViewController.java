@@ -64,13 +64,13 @@ public final class NewArticleModalViewController extends AbstractViewController 
     private void updateClicks() {
         ingredientTypeVBox.setVisible(newArticleType.getValue() == ArticleType.INGREDIENT);
         ingredientTypeVBox.setManaged(newArticleType.getValue() == ArticleType.INGREDIENT);
-        createArticleButton.setDisable(newArticleName.getText().isEmpty());
+        createArticleButton.setDisable(newArticleName.getText().trim().isEmpty());
     }
 
     @FXML
     private void createArticleClick(final ActionEvent event) {
         updateClicks();
-        if (newArticleName.getText().isEmpty()) {
+        if (newArticleName.getText().trim().isEmpty()) {
             return;
         }
         final WarehouseController warehouseController = getController().getWarehouseController();
