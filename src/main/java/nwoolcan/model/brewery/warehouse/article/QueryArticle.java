@@ -1,5 +1,7 @@
 package nwoolcan.model.brewery.warehouse.article;
 
+import nwoolcan.utils.StringUtils;
+
 import javax.annotation.Nullable;
 import java.util.Optional;
 
@@ -23,7 +25,12 @@ public final class QueryArticle {
         /**
          * Sort accordingly with the name.
          */
-        NAME
+        NAME;
+
+        @Override
+        public String toString() {
+            return StringUtils.underscoreSeparatedToHuman(this.name());
+        }
     }
     @Nullable private final String minName;
     @Nullable private final String maxName;
