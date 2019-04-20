@@ -119,17 +119,18 @@ final class BatchImpl implements Batch {
         return Results.ofChecked(() -> this.getSteps().get(this.getSteps().size() - 2));
     }
 
-    private void checkAndFinalizeStep(final Step step) {
+    private Result<Empty> checkAndFinalizeStep(final Step step) {
         if (!step.isFinalized()) {
-            step.finalize(null, new Date(), this.getCurrentSize());
+            return step.finalize(null, new Date(), this.getCurrentSize());
         }
+        return Result.ofEmpty();
     }
 
     @Override
     public Result<Empty> moveToNextStep(final StepType nextStepType) {
         return Result.of(this.getCurrentStep())
                      .require(p -> p.getNextStepTypes().contains(nextStepType), new IllegalArgumentException(CANNOT_GO_TO_STEP_MESSAGE + nextStepType.toString()))
-                     .peek(this::checkAndFinalizeStep)
+                     .flatMap(this::checkAndFinalizeStep)
                      .flatMap(() -> this.stepFactory.create(nextStepType))
                      .peek(this.steps::add)
                      .peek(p -> p.addParameterObserver(this.batchInfo))

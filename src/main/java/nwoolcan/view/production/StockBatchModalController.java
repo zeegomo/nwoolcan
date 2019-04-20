@@ -92,7 +92,7 @@ public final class StockBatchModalController
         int articleId;
 
         if (this.createNewBeerArticleCheckBox.isSelected()) {
-            if (this.newBeerArticleNameTextField.getText().isEmpty()) {
+            if (this.newBeerArticleNameTextField.getText().trim().isEmpty()) {
                 this.showAlertAndWait("New beer article name cannot be empty!");
                 return;
             }
@@ -104,7 +104,7 @@ public final class StockBatchModalController
                 return;
             }
 
-            articleId = this.getController().getWarehouseController().createBeerArticle(this.newBeerArticleNameTextField.getText(),
+            articleId = this.getController().getWarehouseController().createBeerArticle(this.newBeerArticleNameTextField.getText().trim(),
                 data.getUnitOfMeasure()).getId();
         } else {
             if (this.possibileBeerArticlesComboBox.getSelectionModel().getSelectedItem() == null) {
