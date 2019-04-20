@@ -74,8 +74,11 @@ public final class ProductionController
         lblNumberEndedBatches.setText(Long.toString(data.getNEndedBatches()));
         lblNumberStockedBatches.setText(Long.toString(data.getNStockedBatches()));
 
+        pieChartBatchesStatus.getData().clear();
+        pieChartBatchesStyleTypes.getData().clear();
+        pieChartBatchesMethods.getData().clear();
+
         if (data.getNBatches() > 0) {
-            pieChartBatchesStatus.getData().clear();
             if (data.getNInProgressBatches() > 0) {
                 pieChartBatchesStatus.getData().add(new PieChart.Data("In progress", data.getNInProgressBatches()));
             }
