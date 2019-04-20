@@ -22,6 +22,7 @@ import java.util.logging.Logger;
  */
 @SuppressWarnings("NullAway")
 public final class WelcomeViewController extends SubViewController {
+    private static final String DEMO_FILE = "/nwoolcan/demo.json";
 
     @FXML
     private SubView welcomeSubView;
@@ -70,6 +71,15 @@ public final class WelcomeViewController extends SubViewController {
                     this.showErrorAndWait("There was an error!");
                 });
         }
+    }
+
+    @FXML
+    private void loadDemoClicked(final ActionEvent event) {
+        this.getController().loadFrom(new File(this.getClass().getResource(DEMO_FILE).getFile()))
+            .peek(e -> this.substituteView(ViewType.DASHBOARD)).peekError(err -> {
+                Logger.getLogger(this.getClass().getName()).severe(err.toString());
+                this.showErrorAndWait("There was an error!");
+            });
     }
 
     @Override
