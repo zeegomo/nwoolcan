@@ -41,6 +41,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -84,6 +85,7 @@ public final class BreweryController implements Controller {
     @Override
     public List<MasterBatchViewModel> getBatches(final QueryBatch query) {
         return Collections.unmodifiableList(this.brewery.getBatches(query).stream()
+                                                        .sorted(Comparator.comparing(Batch::getId, (a, b) -> Integer.compare(b, a)))
                                                         .map(MasterBatchViewModel::new)
                                                         .collect(Collectors.toList()));
     }

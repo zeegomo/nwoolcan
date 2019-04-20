@@ -12,17 +12,19 @@
 
 <?import javafx.scene.control.ComboBox?>
 
-<SubView fx:id="stepDetailSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.production.StepDetailController">
+<?import javafx.scene.layout.FlowPane?>
+<SubView fx:id="stepDetailSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="nwoolcan.view.production.StepDetailController">
     <BorderPane>
         <top>
             <BorderPane BorderPane.alignment="CENTER">
                 <left>
-                    <Button onAction="#goBackButtonClicked" text="Back" />
+                    <Button onAction="#goBackButtonClicked" text="Back"/>
                 </left>
                 <center>
                     <Label text="Step detail">
                         <font>
-                            <Font size="28.0" />
+                            <Font size="28.0"/>
                         </font>
                     </Label>
                 </center>
@@ -36,54 +38,65 @@
                             <VBox>
                                 <VBox>
                                     <HBox>
-                                        <Label text="Step type :" />
-                                        <Label fx:id="stepTypeNameLabel" />
+                                        <Label text="Step type :"/>
+                                        <Label fx:id="stepTypeNameLabel"/>
                                     </HBox>
                                     <HBox>
-                                        <Label text="Initial date :" />
-                                        <Label fx:id="initialDateLabel" />
+                                        <Label text="Initial date :"/>
+                                        <Label fx:id="initialDateLabel"/>
                                     </HBox>
                                     <HBox>
-                                        <Label text="End date :" />
-                                        <Label fx:id="endDateLabel" />
+                                        <Label text="End date :"/>
+                                        <Label fx:id="endDateLabel"/>
                                     </HBox>
                                     <HBox>
-                                        <Label text="Duration :" />
-                                        <Label fx:id="durationLabel" />
+                                        <Label text="Duration :"/>
+                                        <Label fx:id="durationLabel"/>
                                     </HBox>
                                     <HBox>
                                         <Label text="Finalized : "/>
-                                        <Label fx:id="finalizedLabel" />
+                                        <Label fx:id="finalizedLabel"/>
                                     </HBox>
                                 </VBox>
                             </VBox>
                         </center>
                         <right>
                             <VBox BorderPane.alignment="CENTER" alignment="CENTER_LEFT">
-                                <Label text="Register new parameter" />
+                                <Label text="Register new parameter"/>
                                 <VBox>
-                                    <Label text="Value" />
+                                    <Label text="Value"/>
                                     <HBox>
-                                        <TextField fx:id="newParameterValueTextField" />
-                                        <Label fx:id="unitOfMeasureSymbolLabel" prefWidth="50" />
+                                        <TextField fx:id="newParameterValueTextField"/>
+                                        <Label fx:id="unitOfMeasureSymbolLabel" prefWidth="50"/>
                                     </HBox>
                                 </VBox>
                                 <VBox>
-                                    <Label text="Parameter type" />
-                                    <ComboBox fx:id="parameterTypesComboBox" />
+                                    <Label text="Parameter type"/>
+                                    <ComboBox fx:id="parameterTypesComboBox"/>
                                 </VBox>
-                                <Button fx:id="registerParameterButton" disable="true" onAction="#registerParameterButtonClicked" text="Register" />
+                                <Button fx:id="registerParameterButton" disable="true"
+                                        onAction="#registerParameterButtonClicked" text="Register"/>
                             </VBox>
                         </right>
                     </BorderPane>
                 </TitledPane>
                 <TitledPane text="Registered parameters grafics">
-                    <VBox fx:id="parametersGraphicsVBox">
+                    <BorderPane>
+                        <center>
+                            <VBox fx:id="parametersGraphicsVBox"/>
+                        </center>
+                        <top>
+                            <BorderPane>
+                                <right>
+                                    <ComboBox fx:id="graphicsComboBox" onAction="#graphicsComboBoxClicked" promptText="Select a parameter"/>
+                                </right>
+                            </BorderPane>
+                        </top>
+                    </BorderPane>
 
-                    </VBox>
                 </TitledPane>
-<!--                <TitledPane text="Registered parameter table">-->
-<!--                </TitledPane>-->
+                <!--                <TitledPane text="Registered parameter table">-->
+                <!--                </TitledPane>-->
             </VBox>
         </center>
     </BorderPane>

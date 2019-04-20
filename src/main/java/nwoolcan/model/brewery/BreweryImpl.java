@@ -48,6 +48,8 @@ public final class BreweryImpl implements Brewery {
     public Collection<Batch> getBatches(final QueryBatch queryBatch) {
         final Collection<Batch> retBatches = new ArrayList<>(batches);
         return retBatches.stream()
+                         .filter(batch -> !(queryBatch.getBatchId().isPresent()
+                                         && batch.getId() != queryBatch.getBatchId().get()))
                          .filter(batch -> !(queryBatch.getBatchMethod().isPresent()
                                          && batch.getBatchInfo().getMethod()
                                          != queryBatch.getBatchMethod().get()))

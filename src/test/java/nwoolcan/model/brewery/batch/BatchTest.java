@@ -245,6 +245,10 @@ public class BatchTest {
         Assert.assertEquals(++nSteps, batchAlfredo.getSteps().size());
 
         final int bottles = 7;
+
+        //Try to finalize PACKAGING without bottles.
+        batchAlfredo.moveToNextStep(StepTypeEnum.FINALIZED).peek(e -> Assert.fail());
+
         //Finalize packaging with bottle um.
         batchAlfredo.getCurrentStep().finalize("Packaged in 75 cl bottles", new Date(), Quantity.of(bottles, UnitOfMeasure.BOTTLE_75_CL).getValue());
 
