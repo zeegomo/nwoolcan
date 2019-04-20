@@ -6,6 +6,9 @@ import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Converter for date pickers to show dates in Italian format.
+ */
 public final class DatePickerItalianConverter extends StringConverter<LocalDate> {
     private static final String FORMAT_PATTERN = "dd/MM/yyyy";
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(FORMAT_PATTERN);
