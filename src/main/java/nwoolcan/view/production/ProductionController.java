@@ -82,7 +82,6 @@ public final class ProductionController
         lblNumberStockedBatches.setText(Long.toString(data.getNStockedBatches()));
 
         pieChartBatchesStatus.getData().clear();
-        pieChartBatchesStyleTypes.getData().clear();
         pieChartBatchesMethods.getData().clear();
 
         if (data.getNBatches() > 0) {
