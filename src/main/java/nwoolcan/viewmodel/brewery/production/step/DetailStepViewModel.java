@@ -55,7 +55,7 @@ public final class DetailStepViewModel {
                                         .collect(Collectors.toList());
         this.mapTypeToRegistrations = this.registeredParameters.stream()
                                                                .collect(Collectors.groupingBy(ParameterViewModel::getType));
-        this.possibleParametersToRegister = new ArrayList<>(step.getParameterTypes());
+        this.possibleParametersToRegister = new ArrayList<>(step.getRegistrationParameterTypes());
     }
 
     /**

@@ -2,8 +2,7 @@ package nwoolcan.view.warehouse.stock;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -14,7 +13,7 @@ import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.utils.Result;
 import nwoolcan.view.AbstractViewController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.PlainStockViewModel;
 
@@ -72,11 +71,7 @@ public final class NewStockModalViewController extends AbstractViewController {
                                          .createStock(comboBoxArticle.getValue().getId());
         }
         if (stockResult.isError()) {
-            new Alert(
-                Alert.AlertType.ERROR,
-                "Internal Error: " + stockResult.getError().getMessage(),
-                ButtonType.CLOSE
-            ).showAndWait();
+            this.showErrorAndWait("Internal Error: " + stockResult.getError().getMessage(), ((Node) actionEvent.getTarget()).getScene().getWindow());
         } else {
             ((Stage) this.datePicker.getScene().getWindow()).close();
         }

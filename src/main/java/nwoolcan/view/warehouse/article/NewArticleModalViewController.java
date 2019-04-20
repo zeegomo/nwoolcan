@@ -15,7 +15,7 @@ import nwoolcan.model.brewery.warehouse.article.IngredientType;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.view.AbstractViewController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 
 /**
  * View controller for new article modal.

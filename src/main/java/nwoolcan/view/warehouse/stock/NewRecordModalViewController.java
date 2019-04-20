@@ -2,11 +2,10 @@ package nwoolcan.view.warehouse.stock;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -16,7 +15,7 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.time.LocalDate;
@@ -38,9 +37,7 @@ public final class NewRecordModalViewController extends AbstractViewController i
     private static final int FIRST_MINUTE = 0;
     private static final int MIDDLE_MINUTE_INDEX = 30;
     private static final int LAST_MINUTE = 60;
-
     private int stockId;
-
 
     @FXML
     private ComboBox<Integer> recordMinute;
@@ -56,6 +53,8 @@ public final class NewRecordModalViewController extends AbstractViewController i
     private ComboBox<Record.Action> recordAction;
     @FXML
     private TextField recordAmount;
+    @FXML
+    private Label lblUom;
 
     /**
      * Creates itself and inject the controller and the view manager.
@@ -80,6 +79,12 @@ public final class NewRecordModalViewController extends AbstractViewController i
                                                 .collect(Collectors.toList()));
         recordMinute.getSelectionModel().select(MIDDLE_MINUTE_INDEX);
         checkSelectDate.setSelected(false);
+        lblUom.setText(getController().getWarehouseController()
+                                      .getViewStockById(stockId)
+                                      .getValue()
+                                      .getArticle()
+                                      .getUnitOfMeasure()
+                                      .getSymbol());
     }
 
     @FXML
@@ -95,7 +100,8 @@ public final class NewRecordModalViewController extends AbstractViewController i
         try {
             recordDoubleAmount = Double.parseDouble(recordAmount.getText());
         } catch (final NumberFormatException ex) {
-            new Alert(Alert.AlertType.ERROR, "The amount must be a number.", ButtonType.CLOSE).showAndWait();
+            this.showErrorAndWait("The amount must be a number.",
+                this.dateVBox.getScene().getWindow()); // You can use any other control
             return;
         }
         final Result<Empty> addRecordResult;
@@ -109,11 +115,8 @@ public final class NewRecordModalViewController extends AbstractViewController i
             addRecordResult = getController().getWarehouseController().addRecord(stockId, recordDoubleAmount, recordAction.getValue());
         }
         if (addRecordResult.isError()) {
-            new Alert(
-                Alert.AlertType.ERROR,
-                "Error: " + addRecordResult.getError().getMessage(),
-                ButtonType.CLOSE
-            ).showAndWait();
+            this.showErrorAndWait("Error: " + addRecordResult.getError().getMessage(),
+                this.dateVBox.getScene().getWindow()); // You can use any other control
         } else {
             ((Stage) this.recordDatePicker.getScene().getWindow()).close();
         }

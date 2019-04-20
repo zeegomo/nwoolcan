@@ -5,24 +5,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.mastertable.ColumnDescriptor;
 import nwoolcan.view.mastertable.MasterTableViewModel;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.view.subview.SubViewController;
+import nwoolcan.view.utils.ViewModelCallback;
 import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.MasterStockViewModel;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
 import java.util.List;
@@ -112,7 +110,7 @@ public final class WarehouseViewController extends SubViewController {
     }
 
     private void setTable(final List<MasterStockViewModel> stocks) {
-        final MasterTableViewModel<MasterStockViewModel, Pair<Integer, Runnable>> masterViewModel =
+        final MasterTableViewModel<MasterStockViewModel, ViewModelCallback<Integer>> masterViewModel =
             new MasterTableViewModel<>(Arrays.asList(
                                            new ColumnDescriptor("ID", "id"),
                                            new ColumnDescriptor("Remaining Quantity", "remainingQuantity"),
@@ -123,7 +121,7 @@ public final class WarehouseViewController extends SubViewController {
                                        ),
                                        stocks,
                                        ViewType.STOCK_DETAIL,
-                                       masterStockViewModel -> Pair.of(masterStockViewModel.getId(), this::initialize)
+                                       masterStockViewModel -> new ViewModelCallback<>(masterStockViewModel.getId(), this::initialize)
             );
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(masterTableContainer::substitute);
     }
@@ -142,11 +140,7 @@ public final class WarehouseViewController extends SubViewController {
     private void createNewStockButtonClick(final ActionEvent actionEvent) {
         if (getController().getWarehouseController().getArticlesViewModel().getnMiscArticles() <= 0
             && getController().getWarehouseController().getArticlesViewModel().getnIngredientArticles() <= 0) {
-            new Alert(
-                        Alert.AlertType.ERROR,
-                        "There are no articles or only beer articles. Create a misc or ingredient article first",
-                        ButtonType.OK
-                     ).showAndWait();
+            this.showErrorAndWait("There are no articles or only beer articles. Create a misc or ingredient article first");
             return;
         }
 
@@ -156,13 +150,10 @@ public final class WarehouseViewController extends SubViewController {
         modal.initOwner(window);
         modal.initModality(Modality.WINDOW_MODAL);
 
-        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_STOCK_MODAL).orElse(new AnchorPane()),
-            600, 400);
+        final Scene scene = new Scene(this.getViewManager().getView(ViewType.NEW_STOCK_MODAL).orElse(new AnchorPane()));
 
         modal.setScene(scene);
         modal.setResizable(false);
-        modal.setX(window.getX() + window.getWidth() / 2 - scene.getWidth() / 2);
-        modal.setY(window.getY() + window.getHeight() / 2 - scene.getHeight() / 2);
         modal.showAndWait();
 
         this.substituteView(ViewType.WAREHOUSE);

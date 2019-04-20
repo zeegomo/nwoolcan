@@ -7,9 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -20,10 +18,10 @@ import javafx.util.StringConverter;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterType;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.ViewManager;
-import nwoolcan.view.ViewType;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
+import nwoolcan.view.utils.ViewModelCallback;
 import nwoolcan.viewmodel.brewery.production.step.DetailStepViewModel;
 import nwoolcan.viewmodel.brewery.production.step.ParameterViewModel;
 import nwoolcan.viewmodel.brewery.production.step.RegisterParameterDTO;
@@ -39,7 +37,9 @@ import java.util.stream.Collectors;
 @SuppressWarnings("NullAway")
 public final class StepDetailController
     extends SubViewController
-    implements InitializableController<DetailStepViewModel> {
+    implements InitializableController<ViewModelCallback<DetailStepViewModel>> {
+
+    private Runnable updateFather = () -> { };
 
     @FXML
     private Label unitOfMeasureSymbolLabel;
@@ -76,9 +76,7 @@ public final class StepDetailController
         super(controller, viewManager);
     }
 
-    @Override
-    public void initData(final DetailStepViewModel data) {
-        this.data = data;
+    private void setData(final DetailStepViewModel data) {
         this.registerParameterButton.setDisable(data.isFinalized() || data.getPossibleParametersToRegister().size() == 0);
 
         this.stepTypeNameLabel.setText(data.getTypeName());
@@ -101,11 +99,9 @@ public final class StepDetailController
                 return null;
             }
         });
-        this.parameterTypesComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) ->
-            this.unitOfMeasureSymbolLabel.setText(newV.getUnitOfMeasure().getSymbol())
-        );
         this.parameterTypesComboBox.getSelectionModel().selectFirst();
 
+        this.parametersGraphicsVBox.getChildren().clear();
         data.getMapTypeToRegistrations().forEach((paramType, params) -> {
             final BorderPane pane = new BorderPane();
             this.parametersGraphicsVBox.getChildren().add(pane);
@@ -176,6 +172,21 @@ public final class StepDetailController
     }
 
     @Override
+    public void initData(final ViewModelCallback<DetailStepViewModel> dataCallback) {
+        this.data = dataCallback.getViewModel();
+        this.updateFather = dataCallback.getCallback();
+
+        this.parameterTypesComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) -> {
+                if (newV != null) {
+                    this.unitOfMeasureSymbolLabel.setText(newV.getUnitOfMeasure().getSymbol());
+                }
+            }
+        );
+
+        this.setData(this.data);
+    }
+
+    @Override
     protected SubView getSubView() {
         return this.stepDetailSubView;
     }
@@ -185,9 +196,8 @@ public final class StepDetailController
      * @param event the occurred event.
      */
     public void goBackButtonClicked(final ActionEvent event) {
-        //TODO refactor with reload
-        this.substituteView(ViewType.BATCH_DETAIL,
-            this.getController().getBatchController().getDetailBatchViewModelById(data.getBatchId()).getValue());
+        this.updateFather.run();
+        this.previousView();
     }
 
     /**
@@ -210,11 +220,10 @@ public final class StepDetailController
                 this.parameterTypesComboBox.getSelectionModel().getSelectedItem(),
                 new Date())
         ).peek(e -> {
-            this.substituteView(ViewType.STEP_DETAIL,
-                this.getController().getBatchController().getStepController().getDetailStepViewModel(
-                    data.getBatchId(),
-                    data.getTypeName()
-                ).getValue());
+            this.getController().getBatchController().getStepController().getDetailStepViewModel(
+                data.getBatchId(),
+                data.getTypeName()
+            ).peek(this::setData);
         }).peekError(e -> {
             this.showAlertAndWait(e.getMessage());
         });
@@ -248,7 +257,6 @@ public final class StepDetailController
     }
 
     private void showAlertAndWait(final String message) {
-        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while registering the parameter.\n" + message, ButtonType.CLOSE);
-        a.showAndWait();
+        this.showErrorAndWait("An error occurred while registering the parameter.\n" + message);
     }
 }
