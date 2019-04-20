@@ -79,18 +79,18 @@ public final class NewRecordModalViewController extends AbstractViewController i
                                                 .collect(Collectors.toList()));
         recordMinute.getSelectionModel().select(MIDDLE_MINUTE_INDEX);
         checkSelectDate.setSelected(false);
+        final int articleId = getController().getWarehouseController().getViewStockById(stockId).getValue().getArticle().getId();
+        specifyDateClick(new ActionEvent());
         lblUom.setText(getController().getWarehouseController()
-                                      .getViewStockById(stockId)
+                                      .getViewArticleById(articleId)
                                       .getValue()
-                                      .getArticle()
                                       .getUnitOfMeasure()
                                       .getSymbol());
     }
 
     @FXML
     private void specifyDateClick(final ActionEvent actionEvent) {
-        dateVBox.setManaged(checkSelectDate.isSelected());
-        dateVBox.setVisible(checkSelectDate.isSelected());
+        dateVBox.setDisable(!checkSelectDate.isSelected());
         recordDatePicker.setValue(LocalDate.now());
     }
 

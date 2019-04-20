@@ -5,7 +5,6 @@ import nwoolcan.model.brewery.batch.BatchBuilder;
 import nwoolcan.model.brewery.batch.QueryBatch;
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.WarehouseImpl;
-import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.utils.Empty;
@@ -25,8 +24,7 @@ public final class BreweryImpl implements Brewery {
 
     @Nullable private String breweryName;
     @Nullable private String ownerName;
-    private final ArticleManager articleManager = new ArticleManager();
-    private final Warehouse warehouse = new WarehouseImpl(articleManager);
+    private final Warehouse warehouse = new WarehouseImpl();
     private final Collection<Batch> batches = new ArrayList<>();
     private final IdGenerator batchIdGenerator = new BatchIdGenerator(0);
     private static final String BATCH_NOT_FOUND = "Batch not found.";
@@ -50,6 +48,8 @@ public final class BreweryImpl implements Brewery {
     public Collection<Batch> getBatches(final QueryBatch queryBatch) {
         final Collection<Batch> retBatches = new ArrayList<>(batches);
         return retBatches.stream()
+                         .filter(batch -> !(queryBatch.getBatchId().isPresent()
+                                         && batch.getId() != queryBatch.getBatchId().get()))
                          .filter(batch -> !(queryBatch.getBatchMethod().isPresent()
                                          && batch.getBatchInfo().getMethod()
                                          != queryBatch.getBatchMethod().get()))
