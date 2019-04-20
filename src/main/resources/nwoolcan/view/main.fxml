@@ -16,6 +16,7 @@
         <MenuBar>
             <Menu text="File">
                 <MenuItem onAction="#menuFileSaveClick" text="Save" />
+                <MenuItem onAction="#menuFileLoadClick" text="Load" />
                 <MenuItem onAction="#menuFileQuitClick" text="Quit" />
             </Menu>
             <Menu text="Go to">

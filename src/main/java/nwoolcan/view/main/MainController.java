@@ -100,4 +100,19 @@ public final class MainController extends AbstractViewController {
                 });
         }
     }
+
+    @FXML
+    private void menuFileLoadClick(final ActionEvent event) {
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
+        final File target = fileChooser.showOpenDialog(this.contentPane.getScene().getWindow());
+        if (target != null) {
+            this.getController().loadFrom(target)
+                .peek(e -> this.getViewManager().getView(ViewType.DASHBOARD).peek(this.contentPane::substitute))
+                .peekError(err -> {
+                    Logger.getLogger(this.getClass().getName()).severe(err.toString());
+                    this.showErrorAndWait("There was an error!", ((MenuItem) event.getTarget()).getParentPopup().getOwnerWindow());
+                });
+        }
+    }
 }
