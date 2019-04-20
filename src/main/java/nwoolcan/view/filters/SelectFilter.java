@@ -6,12 +6,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Filter with a date value.
  * @param <T> the type of the items inside the combobox.
  */
-public class SelectFilter<T> extends VBox {
+public class SelectFilter<T> extends VBox implements GUIFilter<T> {
     private final ComboBox<T> field = new ComboBox<>();
 
     /**
@@ -31,7 +32,8 @@ public class SelectFilter<T> extends VBox {
      * Returns the filter's value.
      * @return the filter's value.
      */
-    public T getValue() {
-        return this.field.getValue();
+    @Override
+    public Optional<T> getValue() {
+        return Optional.ofNullable(this.field.getValue());
     }
 }

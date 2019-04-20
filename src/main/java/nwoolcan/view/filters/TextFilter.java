@@ -5,10 +5,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+import java.util.Optional;
+
 /**
  * Filter with a string value.
  */
-public class TextFilter extends VBox {
+public class TextFilter extends VBox implements GUIFilter<String> {
     private final TextField field = new TextField();
 
     /**
@@ -24,7 +26,10 @@ public class TextFilter extends VBox {
      * Returns the filter's value.
      * @return the filter's value.
      */
-    public String getValue() {
-        return this.field.getText();
+    @Override
+    public Optional<String> getValue() {
+        return Optional.of(this.field.getText())
+                       .map(String::trim)
+                       .filter(v -> !v.isEmpty());
     }
 }

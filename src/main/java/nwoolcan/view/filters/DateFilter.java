@@ -8,11 +8,12 @@ import nwoolcan.view.utils.DatePickerItalianConverter;
 
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * Filter with a date value.
  */
-public class DateFilter extends VBox {
+public class DateFilter extends VBox implements GUIFilter<Date> {
     private final DatePicker field = new DatePicker();
 
     /**
@@ -30,7 +31,8 @@ public class DateFilter extends VBox {
      * Returns the filter's value.
      * @return the filter's value.
      */
-    public Date getValue() {
-        return Date.from(field.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+    @Override
+    public Optional<Date> getValue() {
+        return Optional.ofNullable(field.getValue()).map(v -> Date.from(v.atStartOfDay(ZoneId.systemDefault()).toInstant()));
     }
 }

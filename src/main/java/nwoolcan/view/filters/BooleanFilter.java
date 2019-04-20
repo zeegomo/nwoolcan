@@ -5,10 +5,12 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
+import java.util.Optional;
+
 /**
  * Filter with a boolean value.
  */
-public class BooleanFilter extends HBox {
+public class BooleanFilter extends HBox implements GUIFilter<Boolean> {
     private static final int SPACING = 3;
     private final CheckBox field = new CheckBox();
 
@@ -26,7 +28,8 @@ public class BooleanFilter extends HBox {
      * Returns the filter's value.
      * @return the filter's value.
      */
-    public boolean getValue() {
-        return this.field.isSelected();
+    @Override
+    public Optional<Boolean> getValue() {
+        return Optional.of(this.field.isSelected());
     }
 }
