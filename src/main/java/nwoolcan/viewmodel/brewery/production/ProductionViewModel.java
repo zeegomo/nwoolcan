@@ -5,6 +5,7 @@ import nwoolcan.model.brewery.batch.Batch;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,14 +15,39 @@ import java.util.stream.Collectors;
  */
 public class ProductionViewModel {
 
-    private final Collection<Batch> batches;
+    private final List<MasterBatchViewModel> batches;
+    private final Map<String, Long> methodsFrequency;
+    private final long nBatches;
+    private final long nInProgressBatches;
+    private final long nEndedBatches;
+    private final long nEndedNotStockedBatches;
+    private final long nStockedBatches;
 
     /**
      * Basic constructor with a collection of batches.
      * @param batches the batches to represent in the production view.
      */
     public ProductionViewModel(final Collection<Batch> batches) {
-        this.batches = Collections.unmodifiableCollection(batches);
+        this.batches = batches.stream()
+                              .sorted(Comparator.comparing(Batch::getId, (a, b) -> Integer.compare(b, a)))
+                              .map(MasterBatchViewModel::new)
+                              .collect(Collectors.toList());
+        this.methodsFrequency = batches.stream()
+                                       .map(b -> b.getBatchInfo().getMethod().getName())
+                                       .collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+        this.nBatches = batches.size();
+        this.nInProgressBatches = batches.stream()
+                                         .filter(b -> !b.isEnded())
+                                         .count();
+        this.nEndedBatches = batches.stream()
+                                    .filter(Batch::isEnded)
+                                    .count();
+        this.nEndedNotStockedBatches = batches.stream()
+                                              .filter(b -> b.isEnded() && !b.isStocked())
+                                              .count();
+        this.nStockedBatches = batches.stream()
+                                      .filter(Batch::isStocked)
+                                      .count();
     }
 
     /**
@@ -29,19 +55,7 @@ public class ProductionViewModel {
      * @return a list of all batches in production.
      */
     public List<MasterBatchViewModel> getBatches() {
-        return this.batches.stream()
-                           .map(MasterBatchViewModel::new)
-                           .collect(Collectors.toList());
-    }
-
-    /**
-     * Returns a map containing, for each style, how many batches have that style.
-     * @return a map containing, for each style, how many batches have that style.
-     */
-    public Map<String, Long> getStylesFrequency() {
-        return this.batches.stream()
-                           .map(b -> b.getBatchInfo().getBeerDescription().getStyle())
-                           .collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+        return this.batches;
     }
 
     /**
@@ -49,9 +63,7 @@ public class ProductionViewModel {
      * @return a map containing, for each style, how many batches have that style.
      */
     public Map<String, Long> getMethodsFrequency() {
-        return this.batches.stream()
-                           .map(b -> b.getBatchInfo().getMethod().getName())
-                           .collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+        return Collections.unmodifiableMap(this.methodsFrequency);
     }
 
     /**
@@ -59,7 +71,7 @@ public class ProductionViewModel {
      * @return the total number of batches.
      */
     public long getNBatches() {
-        return this.batches.size();
+        return this.nBatches;
     }
 
     /**
@@ -67,9 +79,7 @@ public class ProductionViewModel {
      * @return the number of batches that are still in progress.
      */
     public long getNInProgressBatches() {
-        return this.batches.stream()
-                           .filter(b -> !b.isEnded())
-                           .count();
+        return this.nInProgressBatches;
     }
 
     /**
@@ -77,9 +87,7 @@ public class ProductionViewModel {
      * @return the number of ended batches.
      */
     public long getNEndedBatches() {
-        return this.batches.stream()
-                           .filter(Batch::isEnded)
-                           .count();
+        return this.nEndedBatches;
     }
 
     /**
@@ -87,9 +95,7 @@ public class ProductionViewModel {
      * @return the number of ended batches, but not stocked.
      */
     public long getNEndedNotStockedBatches() {
-        return this.batches.stream()
-                           .filter(b -> b.isEnded() && !b.isStocked())
-                           .count();
+        return this.nEndedNotStockedBatches;
     }
 
     /**
@@ -97,8 +103,6 @@ public class ProductionViewModel {
      * @return the number of stocked batches.
      */
     public long getNStockedBatches() {
-        return this.batches.stream()
-                           .filter(Batch::isStocked)
-                           .count();
+        return this.nStockedBatches;
     }
 }
