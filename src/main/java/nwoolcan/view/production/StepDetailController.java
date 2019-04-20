@@ -207,7 +207,7 @@ public final class StepDetailController
     public void registerParameterButtonClicked(final ActionEvent event) {
         double value;
         try {
-            value = Double.parseDouble(this.newParameterValueTextField.getText());
+            value = Double.parseDouble(this.newParameterValueTextField.getText().trim());
         } catch (NumberFormatException ex) {
             this.showAlertAndWait("Parameter value must be a number!");
             return;
