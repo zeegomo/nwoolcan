@@ -1,5 +1,7 @@
 package nwoolcan.model.brewery.batch.step;
 
+import nwoolcan.utils.StringUtils;
+
 /**
  * Enum for describing the various steps that a beer has to go through production.
  */
@@ -37,5 +39,10 @@ public enum StepTypeEnum implements StepType {
     @Override
     public boolean isEndType() {
         return equals(StepTypeEnum.FINALIZED);
+    }
+
+    @Override
+    public String toString() {
+        return StringUtils.underscoreSeparatedToHuman(this.name());
     }
 }

@@ -1,5 +1,7 @@
 package nwoolcan.model.brewery.batch;
 
+import nwoolcan.utils.StringUtils;
+
 /**
  * Batch production methods.
  */
@@ -28,5 +30,10 @@ public enum BatchMethod {
      */
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public String toString() {
+        return StringUtils.underscoreSeparatedToHuman(this.name());
     }
 }

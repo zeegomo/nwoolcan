@@ -19,15 +19,26 @@ public final class EnumStepFactory implements StepFactory {
 
     private static final Set<StepType> MASHING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.BOILING));
     private static final Set<StepType> BOILING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.FERMENTING));
-    private static final Set<StepType> FERMENTING_STEP_TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(StepTypeEnum.PACKAGING, StepTypeEnum.AGING)));
+    private static final Set<StepType> FERMENTING_STEP_TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+        StepTypeEnum.PACKAGING,
+        StepTypeEnum.AGING)));
     private static final Set<StepType> AGING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.PACKAGING));
     private static final Set<StepType> PACKAGING_STEP_TYPES = Collections.unmodifiableSet(Collections.singleton(StepTypeEnum.FINALIZED));
 
     private static final Set<ParameterType> MASHING_PARAMETER_TYPES = Collections.unmodifiableSet(Collections.singleton(ParameterTypeEnum.TEMPERATURE));
     private static final Set<ParameterType> BOILING_PARAMETER_TYPES = Collections.unmodifiableSet(Collections.singleton(ParameterTypeEnum.TEMPERATURE));
-    private static final Set<ParameterType> FERMENTING_PARAMETER_TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(ParameterTypeEnum.TEMPERATURE, ParameterTypeEnum.ABV, ParameterTypeEnum.GRAVITY)));
-    private static final Set<ParameterType> AGING_PARAMETER_TYPES = Collections.unmodifiableSet(Collections.singleton(ParameterTypeEnum.TEMPERATURE));
-
+    private static final Set<ParameterType> FERMENTING_PARAMETER_TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+        ParameterTypeEnum.TEMPERATURE,
+        ParameterTypeEnum.ABV,
+        ParameterTypeEnum.GRAVITY,
+        ParameterTypeEnum.EBC,
+        ParameterTypeEnum.IBU)));
+    private static final Set<ParameterType> AGING_PARAMETER_TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+        ParameterTypeEnum.TEMPERATURE,
+        ParameterTypeEnum.ABV,
+        ParameterTypeEnum.GRAVITY,
+        ParameterTypeEnum.EBC,
+        ParameterTypeEnum.IBU)));
 
     @Override
     public Result<Step> create(final StepType stepType, final Date startDate) {

@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.batch.review.types;
 
 import nwoolcan.model.brewery.batch.review.EvaluationType;
+import nwoolcan.utils.StringUtils;
 
 import java.util.HashSet;
 import java.util.Arrays;
@@ -52,6 +53,11 @@ public final class BJCPBatchEvaluationType extends AbstractBatchEvaluationType {
         @Override
         public int getMaxScore() {
             return this.maxScore;
+        }
+
+        @Override
+        public String toString() {
+            return StringUtils.underscoreSeparatedToHuman(this.name());
         }
     }
 
