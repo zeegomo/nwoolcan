@@ -56,7 +56,7 @@ public final class WarehouseControllerImpl implements WarehouseController {
     public List<MasterStockViewModel> getStocks(final QueryStock queryStock) {
         return warehouse.getStocks(queryStock)
                         .stream()
-                        .map(MasterStockViewModel::getMasterViewStock)
+                        .map(s -> MasterStockViewModel.getMasterViewStock(s, warehouse.getArticleById(s.getArticleId()).getValue()))
                         .collect(Collectors.toList());
     }
 
@@ -89,7 +89,7 @@ public final class WarehouseControllerImpl implements WarehouseController {
         return Result.of(articleId)
                      .flatMap(warehouse::getArticleById)
                      .flatMap(article -> warehouse.createStock(article, expirationDate))
-                     .map(PlainStockViewModel::new);
+                     .map(stock -> new PlainStockViewModel(stock, warehouse.getArticleById(stock.getArticleId()).getValue()));
     }
 
     @Override
@@ -97,7 +97,7 @@ public final class WarehouseControllerImpl implements WarehouseController {
         return Result.of(articleId)
                      .flatMap(warehouse::getArticleById)
                      .flatMap(warehouse::createStock)
-                     .map(PlainStockViewModel::new);
+                     .map(stock -> new PlainStockViewModel(stock, warehouse.getArticleById(stock.getArticleId()).getValue()));
     }
 
     @Override
@@ -111,7 +111,9 @@ public final class WarehouseControllerImpl implements WarehouseController {
     @Override
     public Result<Empty> addRecord(final int stockId, final double amount, final Record.Action action, final Date date) {
         final Result<Stock> stockResult = warehouse.getStockById(stockId);
-        return stockResult.flatMap(stock -> Quantity.of(amount, stock.getArticle().getUnitOfMeasure()))
+        return stockResult.flatMap(stock -> Quantity.of(amount, warehouse.getArticleById(stock.getArticleId())
+                                                                         .getValue()
+                                                                         .getUnitOfMeasure()))
                           .flatMap(quantity -> stockResult.getValue().addRecord(new Record(quantity, date, action)))
                           .toEmpty();
     }
@@ -128,7 +130,11 @@ public final class WarehouseControllerImpl implements WarehouseController {
 
     @Override
     public Result<DetailStockViewModel> getViewStockById(final int stockId) {
-        return warehouse.getStockById(stockId).map(DetailStockViewModel::getDetailViewStock);
+        return warehouse.getStockById(stockId)
+                        .map(stock ->
+                            DetailStockViewModel.getDetailViewStock(stock,
+                                warehouse.getArticleById(stock.getArticleId())
+                                         .getValue()));
     }
 
 }

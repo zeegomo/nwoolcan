@@ -1,6 +1,6 @@
 package nwoolcan.viewmodel.brewery.warehouse.stock;
 
-import nwoolcan.model.brewery.warehouse.article.ArticleType;
+import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.stock.BeerStock;
 import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
@@ -25,10 +25,11 @@ public abstract class MasterStockViewModel {
     /**
      * Constructor of the abstract view version of the {@link nwoolcan.model.brewery.warehouse.stock.Stock}.
      * @param stock the {@link Stock} to be converted in {@link MasterStockViewModel}.
+     * @param article related to the stock.
      */
-    public MasterStockViewModel(final Stock stock) {
+    public MasterStockViewModel(final Stock stock, final Article article) {
         this.id = stock.getId();
-        this.article = AbstractArticleViewModel.getViewArticle(stock.getArticle());
+        this.article = AbstractArticleViewModel.getViewArticle(article);
         this.remainingQuantity = new QuantityViewModel(stock.getRemainingQuantity());
         this.usedQuantity = new QuantityViewModel(stock.getUsedQuantity());
         this.stockState = stock.getState();
@@ -77,15 +78,16 @@ public abstract class MasterStockViewModel {
         return expirationDate.isPresent() ? dateFormatted(expirationDate.get()) : "";
     }
     /**
-     * Generated a proper {@link MasterStockViewModel} from a general {@link Stock} accordingly with the {@link ArticleType} of the {@link nwoolcan.model.brewery.warehouse.article.Article} of the {@link Stock}.
-     * @param stock to be converted
+     * Generated a proper {@link MasterStockViewModel} from a general {@link Stock} accordingly with the {@link nwoolcan.model.brewery.warehouse.article.ArticleType} of the {@link nwoolcan.model.brewery.warehouse.article.Article} of the {@link Stock}.
+     * @param stock to be converted.
+     * @param article related to the stock.
      * @return the converted {@link MasterStockViewModel}.
      */
-    public static MasterStockViewModel getMasterViewStock(final Stock stock) {
-        if (stock.getArticle().getArticleType() == ArticleType.FINISHED_BEER) {
-            return new BeerStockViewModel((BeerStock) stock);
+    public static MasterStockViewModel getMasterViewStock(final Stock stock, final Article article) {
+        if (stock instanceof BeerStock) {
+            return new BeerStockViewModel((BeerStock) stock, article);
         }
-        return new PlainStockViewModel(stock);
+        return new PlainStockViewModel(stock, article);
     }
 
     static String dateFormatted(final Date date) {
