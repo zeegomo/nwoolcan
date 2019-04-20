@@ -18,7 +18,7 @@
         <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="txtBreweryOwnerName"/>
         <FlowPane  GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2" alignment="CENTER_RIGHT" hgap="20">
             <Button onAction="#cancelClicked">Cancel</Button>
-            <Button onAction="#createClicked">Create</Button>
+            <Button onAction="#createClicked" defaultButton="true">Create</Button>
         </FlowPane>
     </GridPane>
 </AnchorPane>
