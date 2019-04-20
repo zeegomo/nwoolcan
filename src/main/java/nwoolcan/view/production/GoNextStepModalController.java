@@ -82,6 +82,8 @@ public final class GoNextStepModalController
                 this.endSizeUnitOfMeasureSymbolLabel.setText(newV.getSymbol());
             }
         });
+
+        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectFirst();
     }
 
     /**
