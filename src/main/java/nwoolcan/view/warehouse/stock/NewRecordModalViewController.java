@@ -2,8 +2,6 @@ package nwoolcan.view.warehouse.stock;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -81,18 +79,18 @@ public final class NewRecordModalViewController extends AbstractViewController i
                                                 .collect(Collectors.toList()));
         recordMinute.getSelectionModel().select(MIDDLE_MINUTE_INDEX);
         checkSelectDate.setSelected(false);
+        final int articleId = getController().getWarehouseController().getViewStockById(stockId).getValue().getArticle().getId();
+        specifyDateClick(new ActionEvent());
         lblUom.setText(getController().getWarehouseController()
-                                      .getViewStockById(stockId)
+                                      .getViewArticleById(articleId)
                                       .getValue()
-                                      .getArticle()
                                       .getUnitOfMeasure()
                                       .getSymbol());
     }
 
     @FXML
     private void specifyDateClick(final ActionEvent actionEvent) {
-        dateVBox.setManaged(checkSelectDate.isSelected());
-        dateVBox.setVisible(checkSelectDate.isSelected());
+        dateVBox.setDisable(!checkSelectDate.isSelected());
         recordDatePicker.setValue(LocalDate.now());
     }
 
@@ -100,9 +98,10 @@ public final class NewRecordModalViewController extends AbstractViewController i
     private void addRecordClick(final ActionEvent actionEvent) {
         final double recordDoubleAmount;
         try {
-            recordDoubleAmount = Double.parseDouble(recordAmount.getText());
+            recordDoubleAmount = Double.parseDouble(recordAmount.getText().trim());
         } catch (final NumberFormatException ex) {
-            new Alert(Alert.AlertType.ERROR, "The amount must be a number.", ButtonType.CLOSE).showAndWait();
+            this.showErrorAndWait("The amount must be a number.",
+                this.dateVBox.getScene().getWindow()); // You can use any other control
             return;
         }
         final Result<Empty> addRecordResult;
@@ -116,11 +115,8 @@ public final class NewRecordModalViewController extends AbstractViewController i
             addRecordResult = getController().getWarehouseController().addRecord(stockId, recordDoubleAmount, recordAction.getValue());
         }
         if (addRecordResult.isError()) {
-            new Alert(
-                Alert.AlertType.ERROR,
-                "Error: " + addRecordResult.getError().getMessage(),
-                ButtonType.CLOSE
-            ).showAndWait();
+            this.showErrorAndWait("Error: " + addRecordResult.getError().getMessage(),
+                this.dateVBox.getScene().getWindow()); // You can use any other control
         } else {
             ((Stage) this.recordDatePicker.getScene().getWindow()).close();
         }

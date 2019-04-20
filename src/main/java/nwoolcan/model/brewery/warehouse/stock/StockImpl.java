@@ -25,7 +25,7 @@ public class StockImpl implements Stock {
 
     private static final int EMPTY_VALUE = 0;
 
-    private final Article article;
+    private final int articleId;
     @Nullable private final Date expirationDate;
     private final List<Record> records = new ArrayList<>();
     private final Date creationDate;
@@ -43,7 +43,7 @@ public class StockImpl implements Stock {
     StockImpl(final int id, final Article article, @Nullable final Date expirationDate) {
         Date creationMoment = new Date();
         this.id = id;
-        this.article = article;
+        this.articleId = article.getId();
         this.expirationDate = expirationDate == null ? null : DateUtils.truncate(expirationDate, Calendar.DATE);
         this.creationDate = creationMoment;
         this.lastChangeDate = creationMoment;
@@ -57,8 +57,8 @@ public class StockImpl implements Stock {
     }
 
     @Override
-    public final Article getArticle() {
-        return this.article;
+    public final int getArticleId() {
+        return this.articleId;
     }
 
     @Override
@@ -100,6 +100,12 @@ public class StockImpl implements Stock {
 
     @Override
     public final Result<Empty> addRecord(final Record record) {
+
+        if (!records.isEmpty() && record.getDate().before(records.get(records.size() - 1).getDate())) {
+            return Result.error(new IllegalArgumentException("You can not add a record which date is previous than the"
+                                                           + "last one."));
+        }
+
         final Result<Quantity> res;
         if (record.getAction().equals(Record.Action.ADDING)) {
             // adding the quantity of the record to the temporary current remaining quantity.
@@ -143,7 +149,7 @@ public class StockImpl implements Stock {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.article, this.expirationDate);
+        return Objects.hash(this.articleId, this.expirationDate);
     }
     /**
      * Return a boolean denoting whether the {@link Stock} is the same. To override this method
@@ -161,7 +167,7 @@ public class StockImpl implements Stock {
         }
 
         Stock other = (Stock) obj;
-        return this.article.equals(other.getArticle())
+        return this.articleId == other.getArticleId()
             && Optional.ofNullable(this.expirationDate).equals(other.getExpirationDate());
     }
     /**
@@ -171,7 +177,7 @@ public class StockImpl implements Stock {
     @Override
     public String toString() {
         return "[StockImpl]{"
-            + "article=" + article
+            + "articleId=" + articleId
             + ", expirationDate=" + (getExpirationDate().isPresent() ? getExpirationDate().get() : "null")
             + ", records=" + records
             + ", creationDate=" + creationDate

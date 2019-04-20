@@ -15,6 +15,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
 
+<?import nwoolcan.view.utils.DatePickerItalianConverter?>
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.production.StockBatchModalController">
     <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <BorderPane>
@@ -28,7 +29,7 @@
             <center>
                 <HBox>
                     <VBox BorderPane.alignment="CENTER_LEFT">
-                        <TitledPane text="Use existent article">
+                        <TitledPane text="Use existent article" collapsible="false">
                             <VBox fx:id="useExistentArticleVBox">
                                 <VBox fx:id="beerArticlesVBox">
                                     <Label text="Choose beer article of the new stock" />
@@ -37,7 +38,7 @@
                             </VBox>
                         </TitledPane>
                         <CheckBox fx:id="createNewBeerArticleCheckBox" text="Create a new beer article for this batch?" />
-                        <TitledPane fx:id="newArticleTitledPane" text="New beer article">
+                        <TitledPane fx:id="newArticleTitledPane" text="New beer article" collapsible="false">
                             <VBox>
                                 <VBox>
                                     <Label text="Beer article name" />
@@ -50,14 +51,16 @@
                         <center>
                             <VBox alignment="CENTER">
                                 <Label text="Expiration date of the new stock (optional)" />
-                                <DatePicker fx:id="expirationDatePicker" />
+                                <DatePicker fx:id="expirationDatePicker">
+                                    <converter><DatePickerItalianConverter/></converter>
+                                </DatePicker>
                             </VBox>
                         </center>
                     </BorderPane>
                 </HBox>
             </center>
             <bottom>
-                <Button fx:id="stockBatchButton" text="Stock" BorderPane.alignment="CENTER" onAction="#stockBatchButtonClicked" />
+                <Button fx:id="stockBatchButton" text="Stock" BorderPane.alignment="CENTER" onAction="#stockBatchButtonClicked" defaultButton="true" />
             </bottom>
         </BorderPane>
     </ScrollPane>

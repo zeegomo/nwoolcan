@@ -14,6 +14,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.layout.GridPane?>
+<?import nwoolcan.view.utils.DatePickerItalianConverter?>
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.172-ea"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="nwoolcan.view.warehouse.stock.NewRecordModalViewController">
@@ -31,7 +32,7 @@
         <center>
             <VBox spacing="5">
                 <BorderPane.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    <Insets bottom="10.0" left="10.0" right="25.0" top="10.0" />
                 </BorderPane.margin>
                 <Label text="Amount" />
                 <GridPane hgap="5" vgap="5">
@@ -42,7 +43,9 @@
                 <ComboBox fx:id="recordAction" />
                 <CheckBox fx:id="checkSelectDate" text="Select date and time" onAction="#specifyDateClick" />
                 <VBox fx:id="dateVBox" spacing="5" managed="false" visible="false">
-                    <DatePicker fx:id="recordDatePicker" />
+                    <DatePicker fx:id="recordDatePicker">
+                        <converter><DatePickerItalianConverter/></converter>
+                    </DatePicker>
                     <HBox spacing="5">
                         <VBox>
                             <Label text="Hour" />

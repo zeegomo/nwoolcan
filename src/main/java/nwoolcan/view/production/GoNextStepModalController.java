@@ -3,14 +3,12 @@ package nwoolcan.view.production;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.step.StepType;
@@ -34,7 +32,7 @@ public final class GoNextStepModalController
     implements InitializableController<GoNextStepViewModel> {
 
     @FXML
-    private TitledPane finalizeStepTitlePane;
+    private VBox notesAndSizeVBox;
     @FXML
     private TextArea notesTextArea;
 
@@ -71,17 +69,21 @@ public final class GoNextStepModalController
         ));
         this.nextStepTypesComboBox.getSelectionModel().selectFirst();
 
-        this.finalizeStepTitlePane.disableProperty().bind(
-            this.chooseFinalizeNextStepCheckBox.selectedProperty().not()
+        this.notesAndSizeVBox.visibleProperty().bind(
+            this.chooseFinalizeNextStepCheckBox.selectedProperty()
         );
 
         this.endSizeUnitOfMeasureComboBox.setItems(FXCollections.observableList(
             data.getPossibleUnitsOfMeasure()
         ));
-        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectFirst();
 
-        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) ->
-            this.endSizeUnitOfMeasureSymbolLabel.setText(newV.getSymbol()));
+        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
+            if (newV != null) {
+                this.endSizeUnitOfMeasureSymbolLabel.setText(newV.getSymbol());
+            }
+        });
+
+        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectFirst();
     }
 
     /**
@@ -105,7 +107,7 @@ public final class GoNextStepModalController
             double endSizeValue;
 
             try {
-                endSizeValue = Double.parseDouble(this.endSizeValueTextField.getText());
+                endSizeValue = Double.parseDouble(this.endSizeValueTextField.getText().trim());
             } catch (NumberFormatException ex) {
                 this.showAlertAndWait("End size must be a number!");
                 return;
@@ -124,7 +126,7 @@ public final class GoNextStepModalController
         this.getController().getBatchController().goToNextStep(data.getBatchId(), new GoNextStepDTO(
             this.nextStepTypesComboBox.getSelectionModel().getSelectedItem(),
             this.chooseFinalizeNextStepCheckBox.isSelected(),
-            this.notesTextArea.getText(),
+            this.notesTextArea.getText().trim(),
             endSize))
             .peekError(e -> this.showAlertAndWait(e.getMessage()))
             .peek(e -> {
@@ -136,7 +138,7 @@ public final class GoNextStepModalController
     }
 
     private void showAlertAndWait(final String message) {
-        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while going to the next step.\n" + message, ButtonType.CLOSE);
-        a.showAndWait();
+        this.showErrorAndWait("An error occurred while going to the next step.\n" + message,
+            this.notesAndSizeVBox.getScene().getWindow());
     }
 }

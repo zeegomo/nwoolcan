@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
  */
 public class QueryBatchBuilder {
 
+    @Nullable private Integer batchId;
     @Nullable private BatchMethod batchMethod;
     @Nullable private Quantity minBatchSize;
     @Nullable private Quantity maxBatchSize;
@@ -19,13 +20,23 @@ public class QueryBatchBuilder {
      * Constructor to initialize the queryBuilder.
      */
     public QueryBatchBuilder() { }
+
+    /**
+     * Setter of the batch id.
+     * @param batchId the batch id to filter.
+     * @return this.
+     */
+    public QueryBatchBuilder setBatchId(final int batchId) {
+        this.batchId = batchId;
+        return this;
+    }
     /**
      * Setter of the {@link BatchMethod}.
      * @param method the {@link BatchMethod}.
      * @return this.
      */
     public QueryBatchBuilder setBatchMethod(final BatchMethod method) {
-        batchMethod = method;
+        this.batchMethod = method;
         return this;
     }
     /**
@@ -34,7 +45,7 @@ public class QueryBatchBuilder {
      * @return this.
      */
     public QueryBatchBuilder setMinBatchSize(final Quantity size) {
-        minBatchSize = size;
+        this.minBatchSize = size;
         return this;
     }
     /**
@@ -43,7 +54,7 @@ public class QueryBatchBuilder {
      * @return this.
      */
     public QueryBatchBuilder setMaxBatchSize(final Quantity size) {
-        maxBatchSize = size;
+        this.maxBatchSize = size;
         return this;
     }
     /**
@@ -51,7 +62,7 @@ public class QueryBatchBuilder {
      * @return the built {@link QueryBatch}.
      */
     public Result<QueryBatch> build() {
-        return Result.of(new QueryBatch(batchMethod, minBatchSize, maxBatchSize))
+        return Result.of(new QueryBatch(this.batchId, this.batchMethod, this.minBatchSize, this.maxBatchSize))
                      .require(this::checkBatchSize);
     }
     /**
@@ -59,12 +70,12 @@ public class QueryBatchBuilder {
      * @return a boolean denoting the consistency of the uom used.
      */
     private boolean checkBatchSize() {
-        if (minBatchSize != null
-         && minBatchSize.getUnitOfMeasure() != UnitOfMeasure.LITER) {
+        if (this.minBatchSize != null
+         && this.minBatchSize.getUnitOfMeasure() != UnitOfMeasure.LITER) {
             return false;
         }
-        if (maxBatchSize != null
-         && maxBatchSize.getUnitOfMeasure() != UnitOfMeasure.LITER) {
+        if (this.maxBatchSize != null
+         && this.maxBatchSize.getUnitOfMeasure() != UnitOfMeasure.LITER) {
             return false;
         }
         return true;

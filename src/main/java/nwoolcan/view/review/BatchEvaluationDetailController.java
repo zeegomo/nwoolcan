@@ -4,8 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nwoolcan.controller.Controller;
@@ -18,7 +18,10 @@ import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.viewmodel.brewery.production.batch.review.BatchEvaluationDetailViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.review.EvaluationViewModel;
+
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * Controller for BatchEvaluationDetail.
@@ -28,15 +31,12 @@ public final class BatchEvaluationDetailController extends SubViewController
     implements InitializableController<BatchEvaluationDetailViewModel> {
 
     private static final String LOAD_FAILED = "Load failed";
-    private static final Double WRAP = 1.50;
     @FXML
     private SubViewContainer container;
     @FXML
     private SubView batchEvaluationDetailSubView;
     @FXML
     private VBox categories;
-    @FXML
-    private ScrollPane categoriesScrollPane;
     @FXML
     private Text notes;
 
@@ -57,17 +57,24 @@ public final class BatchEvaluationDetailController extends SubViewController
         Result<Parent> view = this.getViewManager().getView(ViewType.BATCH_EVALUATION, data.getInfo());
         view.peek(container::substitute)
             .peekError(err -> Logger.getGlobal().severe(err::toString));
-        data.getCategories()
-            .forEach(cat -> categories.getChildren().add(evaluationNode(cat)));
+        List<TitledPane> panes = data.getCategories()
+                                     .stream()
+                                     .map(cat -> new TitledPane(cat.getType(), evaluationNode(cat)))
+                                     .collect(Collectors.toList());
+
+        Accordion acc = new Accordion(panes.stream().toArray(TitledPane[]::new));
+        panes.stream().findFirst().ifPresent(acc::setExpandedPane);
+
+        this.categories.getChildren().add(acc);
         this.notes.setText(data.getInfo().getNotes().orElse(""));
-        this.notes.wrappingWidthProperty().bind(this.batchEvaluationDetailSubView.widthProperty().divide(2));
-        this.categoriesScrollPane.prefHeightProperty().bind(this.batchEvaluationDetailSubView.heightProperty().divide(WRAP));
+        this.notes.wrappingWidthProperty().bind(this.batchEvaluationDetailSubView.widthProperty().divide(3));
     }
 
     private Node evaluationNode(final EvaluationViewModel data) {
-        return this.getViewManager().getView(ViewType.EVALUATION, data)
-                   .peekError(err -> logger.warning(err.toString() + "\n" + err.getCause()))
-                   .orElse(new Label(LOAD_FAILED));
+        return EvaluationView.builder().bindWidth(this.batchEvaluationDetailSubView.widthProperty().divide(3))
+                                          .displayValues(data)
+                                          .enableInput(false)
+                                          .build(this.getViewManager());
     }
 
     @Override

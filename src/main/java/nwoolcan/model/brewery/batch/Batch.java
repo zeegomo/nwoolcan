@@ -99,5 +99,5 @@ public interface Batch {
      * an empty optional otherwise.
      * @return an {@link Optional} with the stock if this batch has been stocked.
      */
-    Optional<BeerStock> getStockReference();
+    Optional<Integer> getStockIdReference();
 }

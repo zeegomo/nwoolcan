@@ -2,8 +2,6 @@ package nwoolcan.view.warehouse.article;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
@@ -89,12 +87,12 @@ public final class ArticleDetailViewController extends SubViewController impleme
 
     @FXML
     private void changeNameClicked(final ActionEvent actionEvent) {
-        if (newNameTextField.getText().isEmpty()) {
+        if (newNameTextField.getText().trim().isEmpty()) {
             showAlertAndWait(NEW_NAME_EMPTY);
             return;
         }
         final Result<AbstractArticleViewModel> changeNameResult = getController().getWarehouseController()
-                                                              .setName(articleIdInt, newNameTextField.getText());
+                                                              .setName(articleIdInt, newNameTextField.getText().trim());
         if (changeNameResult.isError()) {
             showAlertAndWait(changeNameResult.getError().getMessage());
             return;
@@ -104,7 +102,6 @@ public final class ArticleDetailViewController extends SubViewController impleme
     }
 
     private void showAlertAndWait(final String message) {
-        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while changing the article name.\n" + message, ButtonType.CLOSE);
-        a.showAndWait();
+        this.showErrorAndWait("An error occurred while changing the article name.\n" + message);
     }
 }

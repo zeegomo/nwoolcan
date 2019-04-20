@@ -4,9 +4,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -158,9 +156,11 @@ public final class NewBatchModalController
             new ArrayList<>(data.getWaterMeasurementElements())
         ));
 
-        this.ingredientsComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) ->
-            this.ingredientUnitOfMeasureLabel.setText(newV.getUnitOfMeasure().getSymbol())
-        );
+        this.ingredientsComboBox.getSelectionModel().selectedItemProperty().addListener((opt, oldV, newV) -> {
+            if (newV != null) {
+                this.ingredientUnitOfMeasureLabel.setText(newV.getUnitOfMeasure().getSymbol());
+            }
+        });
 
         this.ingredientsComboBox.setItems(FXCollections.observableList(
             new ArrayList<>(data.getIngredients()))
@@ -182,7 +182,7 @@ public final class NewBatchModalController
 
         Number registrationValue;
         try {
-            registrationValue = Double.parseDouble(this.registrationValueTextField.getText());
+            registrationValue = Double.parseDouble(this.registrationValueTextField.getText().trim());
         } catch (NumberFormatException ex) {
             this.showAlertAndWait("Registration value must be a number!");
             return;
@@ -207,7 +207,7 @@ public final class NewBatchModalController
 
         Number quantity;
         try {
-            quantity = Double.parseDouble(this.quantityIngredientTextField.getText());
+            quantity = Double.parseDouble(this.quantityIngredientTextField.getText().trim());
         } catch (NumberFormatException ex) {
             this.showAlertAndWait("Ingredient quantity must be a number!");
             return;
@@ -225,12 +225,12 @@ public final class NewBatchModalController
      */
     public void createBatchClick(final ActionEvent event) {
         //all possible checks before calling controller
-        if (this.beerNameTextField.getText().isEmpty()) {
+        if (this.beerNameTextField.getText().trim().isEmpty()) {
             this.showAlertAndWait("There must be a beer name!");
             return;
         }
 
-        if (this.beerStyleTextField.getText().isEmpty()) {
+        if (this.beerStyleTextField.getText().trim().isEmpty()) {
             this.showAlertAndWait("There must be a beer style!");
             return;
         }
@@ -240,14 +240,14 @@ public final class NewBatchModalController
             return;
         }
 
-        if (this.initialSizeTextField.getText().isEmpty()) {
+        if (this.initialSizeTextField.getText().trim().isEmpty()) {
             this.showAlertAndWait("There must be an initial size!");
             return;
         }
 
         final double size;
         try {
-            size = Double.parseDouble(this.initialSizeTextField.getText());
+            size = Double.parseDouble(this.initialSizeTextField.getText().trim());
         } catch (NumberFormatException ex) {
             this.showAlertAndWait("Initial size must be a number!");
             return;
@@ -265,9 +265,9 @@ public final class NewBatchModalController
         }
 
         this.getController().createNewBatch(new CreateBatchDTO(
-            this.beerNameTextField.getText(),
-            this.beerStyleTextField.getText(),
-            this.beerCategoryTextField.getText().isEmpty() ? null : this.beerCategoryTextField.getText(),
+            this.beerNameTextField.getText().trim(),
+            this.beerStyleTextField.getText().trim(),
+            this.beerCategoryTextField.getText().trim().isEmpty() ? null : this.beerCategoryTextField.getText().trim(),
             this.batchMethodsComboBox.getSelectionModel().getSelectedItem().getMethod(),
             initialSize,
             StepTypeEnum.MASHING,
@@ -289,7 +289,7 @@ public final class NewBatchModalController
     }
 
     private void showAlertAndWait(final String message) {
-        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while creating the batch.\n" + message, ButtonType.CLOSE);
-        a.showAndWait();
+        this.showErrorAndWait("An error occurred while creating the batch.\n" + message,
+            this.addIngredientButton.getScene().getWindow()); // You can use any other control
     }
 }

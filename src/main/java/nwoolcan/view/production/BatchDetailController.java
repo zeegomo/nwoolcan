@@ -3,9 +3,7 @@ package nwoolcan.view.production;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -40,6 +38,8 @@ public final class BatchDetailController
     extends SubViewController
     implements InitializableController<ViewModelCallback<DetailBatchViewModel>> {
     private static final String TYPES_LOAD_FAILED = "Could not load types";
+    private static final String ADD_REVIEW = "Add review";
+    private static final String CHANGE_REVIEW = "Change review";
 
     private Runnable updateFather = () -> { };
 
@@ -108,8 +108,10 @@ public final class BatchDetailController
                 .peek(this.reviewContainer::substitute)
                 .peekError(err -> Logger.getGlobal().severe("Could not load: " + err.getMessage()));
             this.viewReviewButton.setDisable(false);
+            this.addReviewButton.setText(CHANGE_REVIEW);
         } else {
             this.viewReviewButton.setDisable(true);
+            this.addReviewButton.setText(ADD_REVIEW);
         }
 
         if (data.isEnded()) {
@@ -221,8 +223,7 @@ public final class BatchDetailController
     }
 
     private void showAlertAndWait(final String message) {
-        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while loading the next step modal.\n" + message, ButtonType.CLOSE);
-        a.showAndWait();
+        this.showErrorAndWait("An error occurred while loading the next step modal.\n" + message);
     }
 
     /**
