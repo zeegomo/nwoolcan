@@ -74,7 +74,7 @@ public final class PersistencyUtils {
     }
 
     /**
-     * Show an error
+     * Show an error.
      */
     public void showErrorAlert() {
         final Alert errorAlert = new Alert(Alert.AlertType.ERROR);

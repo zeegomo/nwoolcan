@@ -2,8 +2,6 @@ package nwoolcan.view.main;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuItem;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.AbstractViewController;
@@ -12,7 +10,6 @@ import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubViewContainer;
 
-import java.io.File;
 import java.util.logging.Logger;
 
 /**
@@ -80,11 +77,6 @@ public final class MainController extends AbstractViewController {
      */
     public void menuFileQuitClick(final ActionEvent event) {
         ((Stage) this.contentPane.getScene().getWindow()).close();
-    }
-
-    @FXML
-    private void menuViewWelcomeClick(final ActionEvent event) {
-        this.getViewManager().getView(ViewType.WELCOME).peek(view -> this.contentPane.substitute(view));
     }
 
     @FXML
