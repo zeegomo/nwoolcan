@@ -11,14 +11,16 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 //Package-protected
 class ModifiableBatchInfoImpl implements ModifiableBatchInfo {
     private final BeerDescription beerDescription;
     private final BatchMethod method;
     private final Quantity size;
-    private final Collection<Pair<IngredientArticle, Double>> ingredients;
+    private final Map<IngredientArticle, Double> ingredients;
     @Nullable
     private final WaterMeasurement measurement;
     @Nullable
@@ -38,7 +40,8 @@ class ModifiableBatchInfoImpl implements ModifiableBatchInfo {
                             final BatchMethod method,
                             final Quantity size,
                             @Nullable final WaterMeasurement measurement) {
-        this.ingredients = ingredients;
+        this.ingredients = ingredients.stream()
+                                      .collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
         this.beerDescription = beerDescription;
         this.method = method;
         this.size = size;
@@ -92,7 +95,10 @@ class ModifiableBatchInfoImpl implements ModifiableBatchInfo {
 
     @Override
     public Collection<Pair<IngredientArticle, Double>> listIngredients() {
-        return this.ingredients;
+        return this.ingredients.entrySet()
+                               .stream()
+                               .map(p -> Pair.of(p.getKey(), p.getValue()))
+                               .collect(Collectors.toList());
     }
 
     @Override
