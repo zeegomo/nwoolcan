@@ -38,6 +38,8 @@ public final class BatchDetailController
     extends SubViewController
     implements InitializableController<ViewModelCallback<DetailBatchViewModel>> {
     private static final String TYPES_LOAD_FAILED = "Could not load types";
+    private static final String ADD_REVIEW = "Add review";
+    private static final String CHANGE_REVIEW = "Change review";
 
     private Runnable updateFather = () -> { };
 
@@ -106,8 +108,10 @@ public final class BatchDetailController
                 .peek(this.reviewContainer::substitute)
                 .peekError(err -> Logger.getGlobal().severe("Could not load: " + err.getMessage()));
             this.viewReviewButton.setDisable(false);
+            this.addReviewButton.setText(CHANGE_REVIEW);
         } else {
             this.viewReviewButton.setDisable(true);
+            this.addReviewButton.setText(ADD_REVIEW);
         }
 
         if (data.isEnded()) {

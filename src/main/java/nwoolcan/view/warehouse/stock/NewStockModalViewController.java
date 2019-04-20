@@ -50,12 +50,12 @@ public final class NewStockModalViewController extends AbstractViewController {
         final List<AbstractArticleViewModel> articles = getController().getWarehouseController().getArticles(queryArticle);
         comboBoxArticle.getItems().setAll(articles);
         comboBoxArticle.getSelectionModel().selectFirst();
+        specifyDateClick(new ActionEvent());
     }
 
     @FXML
     private void specifyDateClick(final ActionEvent actionEvent) {
-        datePicker.setManaged(checkBoxDate.isSelected());
-        datePicker.setVisible(checkBoxDate.isSelected());
+        datePicker.setDisable(!checkBoxDate.isSelected());
         datePicker.setValue(LocalDate.now());
     }
 

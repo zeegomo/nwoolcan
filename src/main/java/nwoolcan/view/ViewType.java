@@ -27,13 +27,9 @@ public enum ViewType {
      */
     BATCH_EVALUATION_DETAIL,
     /**
-     * View to represent single category in batch evaluation.
+     * View to represent single category.
      */
     EVALUATION,
-    /**
-     * View to represent single category input.
-     */
-    EVALUATION_INPUT,
     /**
      * Modal for creating a new evaluation.
      */

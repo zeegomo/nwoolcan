@@ -100,6 +100,12 @@ public class StockImpl implements Stock {
 
     @Override
     public final Result<Empty> addRecord(final Record record) {
+
+        if (!records.isEmpty() && record.getDate().before(records.get(records.size() - 1).getDate())) {
+            return Result.error(new IllegalArgumentException("You can not add a record which date is previous than the"
+                                                           + "last one."));
+        }
+
         final Result<Quantity> res;
         if (record.getAction().equals(Record.Action.ADDING)) {
             // adding the quantity of the record to the temporary current remaining quantity.

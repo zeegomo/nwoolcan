@@ -5,22 +5,18 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import nwoolcan.view.subview.SubView?>
 <?import nwoolcan.view.subview.SubViewContainer?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
 <?import nwoolcan.view.filters.TextFilter?>
 <?import nwoolcan.view.filters.SelectFilter?>
-<?import java.lang.String?>
 <?import nwoolcan.model.brewery.warehouse.article.ArticleType?>
 
-<?import java.util.ArrayList?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.scene.layout.TilePane?>
 <?import nwoolcan.view.filters.FiltersBar?>
 <SubView fx:id="articlesSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
@@ -36,31 +32,23 @@
         </top>
         <center>
             <VBox>
-                <HBox>
+                <HBox spacing="5">
                     <Button text="Back" onAction="#backButtonClick"/>
                     <Button onAction="#createNewArticleClick" text="Create new article" />
                 </HBox>
                 <TitledPane text="General information">
                     <BorderPane>
                         <left>
-                            <VBox spacing="20.0">
-                                <FlowPane>
-                                    <Label text="Total number of articles : " />
-                                    <Label fx:id="lblTotalNumberArticles" />
-                                </FlowPane>
-                                <FlowPane>
-                                    <Label text="Number of Beer Articles: " />
-                                    <Label fx:id="lblNumberBeerArticles" />
-                                </FlowPane>
-                                <FlowPane>
-                                    <Label text="Number of Misc Articles: " />
-                                    <Label fx:id="lblNumberMiscArticles" />
-                                </FlowPane>
-                                <FlowPane>
-                                    <Label text="Number of Ingredient Articles: " />
-                                    <Label fx:id="lblNumberIngredientArticles" />
-                                </FlowPane>
-                            </VBox>
+                            <GridPane vgap="5" hgap="5">
+                                <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="Total number of articles : " />
+                                <Label GridPane.rowIndex="0" GridPane.columnIndex="1" fx:id="lblTotalNumberArticles" />
+                                <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="Number of Beer Articles: " />
+                                <Label GridPane.rowIndex="1" GridPane.columnIndex="1" fx:id="lblNumberBeerArticles" />
+                                <Label GridPane.rowIndex="2" GridPane.columnIndex="0" text="Number of Misc Articles: " />
+                                <Label GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="lblNumberMiscArticles" />
+                                <Label GridPane.rowIndex="3" GridPane.columnIndex="0" text="Number of Ingredient Articles: " />
+                                <Label GridPane.rowIndex="3" GridPane.columnIndex="1" fx:id="lblNumberIngredientArticles" />
+                            </GridPane>
                         </left>
                         <center>
                             <PieChart fx:id="pieChartArticlesStatus" maxHeight="280.0" maxWidth="300.0" title="Articles"/>
@@ -69,24 +57,6 @@
                 </TitledPane>
                 <TitledPane text="Articles">
                     <VBox spacing="2">
-<!--                        <HBox spacing="10">-->
-<!--                            <fx:define>-->
-<!--                                <FXCollections fx:id="typesList" fx:factory="observableArrayList">-->
-<!--                                    <ArticleType fx:value="FINISHED_BEER" />-->
-<!--                                    <ArticleType fx:value="INGREDIENT" />-->
-<!--                                    <ArticleType fx:value="MISC" />-->
-<!--                                </FXCollections>-->
-<!--                            </fx:define>-->
-<!--                            <VBox spacing="2">-->
-<!--                                <Button>Apply filters</Button>-->
-<!--                                <Button>Reset filters</Button>-->
-<!--                            </VBox>-->
-<!--                            <FlowPane hgap="5" maxWidth="Infinity" HBox.hgrow="SOMETIMES">-->
-<!--                                <TextFilter title="Name" />-->
-<!--                                <SelectFilter title="Only type" placeholder="- Select type -" items="$typesList"/>-->
-<!--                                <SelectFilter title="Exclude type" placeholder="-Select type -" items="$typesList"/>-->
-<!--                            </FlowPane>-->
-<!--                        </HBox>-->
                         <FiltersBar onAction="#applyFiltersClicked">
                             <filters>
                                 <fx:define>

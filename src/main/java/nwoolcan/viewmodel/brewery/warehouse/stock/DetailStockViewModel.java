@@ -50,16 +50,29 @@ public abstract class DetailStockViewModel extends MasterStockViewModel {
      * Return the string representation of the creation date.
      * @return the string representation of the creation date.
      */
-    public final String getCreationDate() {
+    public final String getFormattedCreationDate() {
         return dateFormatted(creationDate);
     }
-
+    /**
+     * Return the creation date.
+     * @return the creation date.
+     */
+    public final Date getCreationDate() {
+        return new Date(creationDate.getTime());
+    }
     /**
      * Return the string representation of the last modified date.
      * @return the string representation of the last modified date.
      */
-    public final String getLastModified() {
+    public final String getFormattedLastModified() {
         return dateFormatted(lastModified);
+    }
+    /**
+     * Return the last modified date.
+     * @return the last modified date.
+     */
+    public final Date getLastModified() {
+        return new Date(lastModified.getTime());
     }
 
 }
