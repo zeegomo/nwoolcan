@@ -2,7 +2,6 @@ package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.warehouse.article.Article;
-import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
@@ -29,15 +28,13 @@ public final class WarehouseImpl implements Warehouse {
     private static final String ARTICLE_NOT_FOUND = "Article not found.";
     private static final String STOCK_NOT_FOUND = "Stock not found.";
 
-    private final ArticleManager articleManager;
     private final StockManager stockManager;
 
     /**
      * Creates a {@link Warehouse}.
      */
     public WarehouseImpl() {
-        this.articleManager = new ArticleManager();
-        this.stockManager = new StockManager(articleManager);
+        this.stockManager = new StockManager();
     }
 
     @Override
@@ -110,7 +107,7 @@ public final class WarehouseImpl implements Warehouse {
 
     @Override
     public List<Article> getArticles(final QueryArticle queryArticle) {
-        final Set<Article> articles = articleManager.getArticles();
+        final Set<Article> articles = stockManager.getArticleManager().getArticles();
         return articles.stream()
                        // remove those article where query article specifies the first
                        // lexicographical name and where the name of the article is
@@ -141,19 +138,19 @@ public final class WarehouseImpl implements Warehouse {
 
     @Override
     public Article createMiscArticle(final String name, final UnitOfMeasure unitOfMeasure) {
-        return articleManager.createMiscArticle(name, unitOfMeasure);
+        return stockManager.getArticleManager().createMiscArticle(name, unitOfMeasure);
     }
 
     @Override
     public BeerArticle createBeerArticle(final String name, final UnitOfMeasure unitOfMeasure) {
-        return articleManager.createBeerArticle(name, unitOfMeasure);
+        return stockManager.getArticleManager().createBeerArticle(name, unitOfMeasure);
     }
 
     @Override
     public IngredientArticle createIngredientArticle(final String name,
                                                      final UnitOfMeasure unitOfMeasure,
                                                      final IngredientType ingredientType) {
-        return articleManager.createIngredientArticle(name, unitOfMeasure, ingredientType);
+        return stockManager.getArticleManager().createIngredientArticle(name, unitOfMeasure, ingredientType);
     }
 
     @Override
@@ -180,12 +177,12 @@ public final class WarehouseImpl implements Warehouse {
 
     @Override
     public Result<Article> setName(final Article article, final String newName) {
-        return articleManager.setName(article, newName);
+        return stockManager.getArticleManager().setName(article, newName);
     }
 
     @Override
     public Result<Article> getArticleById(final int id) {
-        return Result.of(articleManager.getArticles()
+        return Result.of(stockManager.getArticleManager().getArticles()
                                        .stream()
                                        .filter(article -> article.getId() == id).findFirst())
                      .require(Optional::isPresent, new IllegalArgumentException(ARTICLE_NOT_FOUND))
