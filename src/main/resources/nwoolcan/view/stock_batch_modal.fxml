@@ -28,7 +28,7 @@
             <center>
                 <HBox>
                     <VBox BorderPane.alignment="CENTER_LEFT">
-                        <TitledPane text="Use existent article">
+                        <TitledPane text="Use existent article" collapsible="false">
                             <VBox fx:id="useExistentArticleVBox">
                                 <VBox fx:id="beerArticlesVBox">
                                     <Label text="Choose beer article of the new stock" />
@@ -37,7 +37,7 @@
                             </VBox>
                         </TitledPane>
                         <CheckBox fx:id="createNewBeerArticleCheckBox" text="Create a new beer article for this batch?" />
-                        <TitledPane fx:id="newArticleTitledPane" text="New beer article">
+                        <TitledPane fx:id="newArticleTitledPane" text="New beer article" collapsible="false">
                             <VBox>
                                 <VBox>
                                     <Label text="Beer article name" />
@@ -57,7 +57,7 @@
                 </HBox>
             </center>
             <bottom>
-                <Button fx:id="stockBatchButton" text="Stock" BorderPane.alignment="CENTER" onAction="#stockBatchButtonClicked" />
+                <Button fx:id="stockBatchButton" text="Stock" BorderPane.alignment="CENTER" onAction="#stockBatchButtonClicked" defaultButton="true" />
             </bottom>
         </BorderPane>
     </ScrollPane>
