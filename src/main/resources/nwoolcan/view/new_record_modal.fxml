@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.GridPane?>
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.172-ea"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="nwoolcan.view.warehouse.stock.NewRecordModalViewController">
@@ -33,12 +34,14 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </BorderPane.margin>
                 <Label text="Amount" />
-                <TextField fx:id="recordAmount" prefHeight="26.0" prefWidth="125.0" />
+                <GridPane hgap="5" vgap="5">
+                    <TextField GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="recordAmount"/>
+                    <Label     GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="lblUom"/>
+                </GridPane>
                 <Label text="Action" />
                 <ComboBox fx:id="recordAction" />
                 <CheckBox fx:id="checkSelectDate" text="Select date and time" onAction="#specifyDateClick" />
                 <VBox fx:id="dateVBox" spacing="5" managed="false" visible="false">
-                    <Label text="Ingredient Type" />
                     <DatePicker fx:id="recordDatePicker" />
                     <HBox spacing="5">
                         <VBox>

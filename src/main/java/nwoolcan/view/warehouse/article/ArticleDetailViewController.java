@@ -2,8 +2,6 @@ package nwoolcan.view.warehouse.article;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
@@ -12,17 +10,17 @@ import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
 import nwoolcan.view.subview.SubViewController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.subview.SubView;
+import nwoolcan.view.utils.ViewModelCallback;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
-import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Controller class for article detail view.
  */
 @SuppressWarnings("NullAway")
-public final class ArticleDetailViewController extends SubViewController implements InitializableController<Pair<AbstractArticleViewModel, Runnable>> {
+public final class ArticleDetailViewController extends SubViewController implements InitializableController<ViewModelCallback<AbstractArticleViewModel>> {
 
     private static final String NEW_NAME_EMPTY = "The name can not be empty.";
     @FXML
@@ -56,9 +54,9 @@ public final class ArticleDetailViewController extends SubViewController impleme
     }
 
     @Override
-    public void initData(final Pair<AbstractArticleViewModel, Runnable> dataAndRunner) {
-        this.updateFather = dataAndRunner.getRight();
-        loadData(dataAndRunner.getLeft());
+    public void initData(final ViewModelCallback<AbstractArticleViewModel> dataAndRunner) {
+        this.updateFather = dataAndRunner.getCallback();
+        loadData(dataAndRunner.getViewModel());
     }
 
     private void loadData(final AbstractArticleViewModel data) {
@@ -104,7 +102,6 @@ public final class ArticleDetailViewController extends SubViewController impleme
     }
 
     private void showAlertAndWait(final String message) {
-        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while changing the article name.\n" + message, ButtonType.CLOSE);
-        a.showAndWait();
+        this.showErrorAndWait("An error occurred while changing the article name.\n" + message);
     }
 }

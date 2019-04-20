@@ -1,10 +1,9 @@
 package nwoolcan.view.subview;
 
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.AbstractViewController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 
 import javax.annotation.Nullable;
@@ -35,7 +34,7 @@ public abstract class SubViewController extends AbstractViewController {
         this.getSubView().getContainer().ifPresent(c ->
                 (viewModel == null ? this.getViewManager().getView(type) : this.getViewManager().getView(type, viewModel))
             .peek(v -> action.accept(c, v))
-            .peekError(err -> new Alert(Alert.AlertType.ERROR, "Error loading " + type.toString()).showAndWait()));
+            .peekError(err -> this.showErrorAndWait("Error loading " + type.toString())));
     }
 
     /**
@@ -81,7 +80,7 @@ public abstract class SubViewController extends AbstractViewController {
         this.getSubView()
             .getContainer()
             .ifPresent(c -> c.previous()
-            .peekError(err -> new Alert(Alert.AlertType.WARNING, "No previous found").showAndWait()));
+            .peekError(err -> this.showWarningAndWait("No previous found")));
     }
 
     /**
@@ -89,4 +88,28 @@ public abstract class SubViewController extends AbstractViewController {
      * @return The main container of the view, a {@link SubView} object
      */
     protected abstract SubView getSubView();
+
+    /**
+     * Shows an error alert.
+     * @param message the message to display
+     */
+    protected final void showErrorAndWait(final String message) {
+        super.showErrorAndWait(message, this.getSubView().getScene().getWindow());
+    }
+
+    /**
+     * Shows a warning alert.
+     * @param message the message to display
+     */
+    protected final void showWarningAndWait(final String message) {
+        super.showWarningAndWait(message, this.getSubView().getScene().getWindow());
+    }
+
+    /**
+     * Shows an information alert.
+     * @param message the message to display
+     */
+    protected final void showInfoAndWait(final String message) {
+        super.showInfoAndWait(message, this.getSubView().getScene().getWindow());
+    }
 }

@@ -2,13 +2,12 @@ package nwoolcan.view.welcome;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.AbstractViewController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 
 /**
  * Controller for the modal to create a new Brewery.
@@ -48,10 +47,7 @@ public final class NewBreweryModalViewController extends AbstractViewController 
     @FXML
     private void createClicked(final ActionEvent event) {
         if (this.txtBreweryName.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("The brewery name is mandatory!");
-            alert.showAndWait();
+            this.showErrorAndWait("The brewery name is mandatory!", this.parent.getScene().getWindow());
             return;
         }
         this.getController().initializeNewBrewery();

@@ -4,13 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
@@ -68,9 +67,7 @@ public final class WelcomeViewController extends SubViewController {
             this.getController().loadFrom(target)
                 .peek(e -> this.substituteView(ViewType.DASHBOARD)).peekError(err -> {
                     Logger.getLogger(this.getClass().getName()).severe(err.toString());
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("There was an error!");
-                    alert.showAndWait();
+                    this.showErrorAndWait("There was an error!");
                 });
         }
     }

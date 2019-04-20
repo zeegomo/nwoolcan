@@ -3,8 +3,6 @@ package nwoolcan.view.production;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -19,7 +17,7 @@ import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepDTO;
 import nwoolcan.viewmodel.brewery.production.batch.GoNextStepViewModel;
 
@@ -79,8 +77,11 @@ public final class GoNextStepModalController
             data.getPossibleUnitsOfMeasure()
         ));
 
-        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) ->
-            this.endSizeUnitOfMeasureSymbolLabel.setText(newV.getSymbol()));
+        this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
+            if (newV != null) {
+                this.endSizeUnitOfMeasureSymbolLabel.setText(newV.getSymbol());
+            }
+        });
 
         this.endSizeUnitOfMeasureComboBox.getSelectionModel().selectFirst();
     }
@@ -137,7 +138,7 @@ public final class GoNextStepModalController
     }
 
     private void showAlertAndWait(final String message) {
-        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while going to the next step.\n" + message, ButtonType.CLOSE);
-        a.showAndWait();
+        this.showErrorAndWait("An error occurred while going to the next step.\n" + message,
+            this.notesAndSizeVBox.getScene().getWindow());
     }
 }

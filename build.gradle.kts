@@ -7,6 +7,7 @@ plugins {
     application
     id("com.github.spotbugs") version "1.7.1"
     id("net.ltgt.errorprone") version "0.6"
+    id("com.github.johnrengelman.shadow") version "5.0.0"
 }
 
 checkstyle {

@@ -3,9 +3,7 @@ package nwoolcan.view.production;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -19,7 +17,7 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.InitializableController;
-import nwoolcan.view.ViewManager;
+import nwoolcan.view.utils.ViewManager;
 import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.StockBatchViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
@@ -137,7 +135,7 @@ public final class StockBatchModalController
     }
 
     private void showAlertAndWait(final String message) {
-        Alert a = new Alert(Alert.AlertType.ERROR, "An error occurred while stocking the batch.\n" + message, ButtonType.CLOSE);
-        a.showAndWait();
+        this.showErrorAndWait("An error occurred while stocking the batch.\n" + message,
+            this.beerArticlesVBox.getScene().getWindow()); // You can use any other control
     }
 }
