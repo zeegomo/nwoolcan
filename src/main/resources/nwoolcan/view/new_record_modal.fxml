@@ -11,29 +11,32 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.layout.GridPane?>
+<?import nwoolcan.view.utils.DatePickerItalianConverter?>
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.172-ea"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="nwoolcan.view.warehouse.stock.NewRecordModalViewController">
-            <GridPane hgap="5" vgap="5" gridLinesVisible="false">
-                <padding>
-                    <Insets bottom="10.0" left="10.0" top="10.0" right="10.0" />
-                </padding>
-                <Label GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2" text="New Record" GridPane.halignment="CENTER">
-                    <font>
-                        <Font size="22.0" />
-                    </font>
-                </Label>
-                <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="Amount" />
-                <TextField GridPane.rowIndex="1" GridPane.columnIndex="1" fx:id="recordAmount" GridPane.fillWidth="5"/>
-                <Label GridPane.rowIndex="1" GridPane.columnIndex="2" fx:id="lblUom" text="N/A"/>
-                <Label GridPane.rowIndex="2" GridPane.columnIndex="0" text="Action" />
-                <ComboBox GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="2" fx:id="recordAction" />
-                <CheckBox GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="3" fx:id="checkSelectDate" text="Select date and time" onAction="#specifyDateClick" />
-                <DatePicker GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="3" fx:id="recordDatePicker" />
-                <Label GridPane.rowIndex="5" GridPane.columnIndex="0" text="Hour" fx:id="lblHour"/>
-                <ComboBox GridPane.rowIndex="6" GridPane.columnIndex="0" fx:id="recordHour" />
-                <Label GridPane.rowIndex="5" GridPane.columnIndex="1" text="Minute" fx:id="lblMinute"/>
-                <ComboBox GridPane.rowIndex="6" GridPane.columnIndex="1" fx:id="recordMinute" />
-                <Button GridPane.rowIndex="6" GridPane.columnIndex="1" GridPane.columnSpan="2" onAction="#addRecordClick" text="Add Record" GridPane.halignment="RIGHT" defaultButton="true"/>
-            </GridPane>
+    <GridPane hgap="5" vgap="5">
+        <padding>
+            <Insets bottom="10.0" left="10.0" top="10.0" right="10.0" />
+        </padding>
+        <Label GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2" text="New Record" GridPane.halignment="CENTER">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </Label>
+        <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="Amount" />
+        <TextField GridPane.rowIndex="1" GridPane.columnIndex="1" fx:id="recordAmount" GridPane.fillWidth="5"/>
+        <Label GridPane.rowIndex="1" GridPane.columnIndex="2" fx:id="lblUom" text="N/A"/>
+        <Label GridPane.rowIndex="2" GridPane.columnIndex="0" text="Action" />
+        <ComboBox GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="2" fx:id="recordAction" />
+        <CheckBox GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="3" fx:id="checkSelectDate" text="Select date and time" onAction="#specifyDateClick" />
+        <DatePicker GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="3" fx:id="recordDatePicker" >
+            <converter><DatePickerItalianConverter/></converter>
+        </DatePicker>
+        <Label GridPane.rowIndex="5" GridPane.columnIndex="0" text="Hour" fx:id="lblHour"/>
+        <ComboBox GridPane.rowIndex="6" GridPane.columnIndex="0" fx:id="recordHour" />
+        <Label GridPane.rowIndex="5" GridPane.columnIndex="1" text="Minute" fx:id="lblMinute"/>
+        <ComboBox GridPane.rowIndex="6" GridPane.columnIndex="1" fx:id="recordMinute" />
+        <Button GridPane.rowIndex="6" GridPane.columnIndex="1" GridPane.columnSpan="2" onAction="#addRecordClick" text="Add Record" GridPane.halignment="RIGHT" defaultButton="true"/>
+    </GridPane>
 </AnchorPane>

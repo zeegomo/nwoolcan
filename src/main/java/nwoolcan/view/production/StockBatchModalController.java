@@ -25,7 +25,6 @@ import nwoolcan.viewmodel.brewery.warehouse.article.BeerArticleViewModel;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * View controller of stock new batch modal view.
@@ -50,24 +49,9 @@ public final class StockBatchModalController
     @FXML
     private CheckBox createNewBeerArticleCheckBox;
     @FXML
-    private ComboBox<BeerArticleProprety> possibileBeerArticlesComboBox;
+    private ComboBox<BeerArticleViewModel> possibileBeerArticlesComboBox;
 
     private StockBatchViewModel data;
-
-    private static class BeerArticleProprety {
-        private final int id;
-        private final String name;
-
-        BeerArticleProprety(final int id, final String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        @Override
-        public String toString() {
-            return this.name;
-        }
-    }
 
     /**
      * Creates itself and inject the controller and the view manager.
@@ -88,13 +72,15 @@ public final class StockBatchModalController
             this.useExistentArticleVBox.getChildren().clear();
             this.useExistentArticleVBox.getChildren().add(new Label("No matching beer articles for this batch"));
         } else {
-            this.possibileBeerArticlesComboBox.setItems(FXCollections.observableList(articles.stream()
-                                                                                             .map(a -> new BeerArticleProprety(a.getId(), a.getName()))
-                                                                                             .collect(Collectors.toList())));
+            this.possibileBeerArticlesComboBox.setItems(FXCollections.observableList(articles));
         }
 
-        this.newArticleTitledPane.disableProperty().bind(
-            this.createNewBeerArticleCheckBox.selectedProperty().not()
+        this.newArticleTitledPane.visibleProperty().bind(
+            this.createNewBeerArticleCheckBox.selectedProperty()
+        );
+
+        this.possibileBeerArticlesComboBox.disableProperty().bind(
+            this.createNewBeerArticleCheckBox.selectedProperty()
         );
     }
 
@@ -106,7 +92,7 @@ public final class StockBatchModalController
         int articleId;
 
         if (this.createNewBeerArticleCheckBox.isSelected()) {
-            if (this.newBeerArticleNameTextField.getText().isEmpty()) {
+            if (this.newBeerArticleNameTextField.getText().trim().isEmpty()) {
                 this.showAlertAndWait("New beer article name cannot be empty!");
                 return;
             }
@@ -118,7 +104,7 @@ public final class StockBatchModalController
                 return;
             }
 
-            articleId = this.getController().getWarehouseController().createBeerArticle(this.newBeerArticleNameTextField.getText(),
+            articleId = this.getController().getWarehouseController().createBeerArticle(this.newBeerArticleNameTextField.getText().trim(),
                 data.getUnitOfMeasure()).getId();
         } else {
             if (this.possibileBeerArticlesComboBox.getSelectionModel().getSelectedItem() == null) {
@@ -126,7 +112,7 @@ public final class StockBatchModalController
                 return;
             }
 
-            articleId = this.possibileBeerArticlesComboBox.getSelectionModel().getSelectedItem().id;
+            articleId = this.possibileBeerArticlesComboBox.getSelectionModel().getSelectedItem().getId();
         }
 
         Result<Empty> res;

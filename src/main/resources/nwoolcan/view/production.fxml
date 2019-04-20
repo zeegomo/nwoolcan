@@ -14,6 +14,11 @@
 
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.geometry.Insets?>
+<?import nwoolcan.view.filters.FiltersBar?>
+<?import nwoolcan.view.filters.TextFilter?>
+<?import nwoolcan.view.filters.SelectFilter?>
+<?import javafx.collections.FXCollections?>
+<?import nwoolcan.model.brewery.batch.BatchMethod?>
 <SubView fx:id="productionSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
@@ -59,20 +64,34 @@
                             </VBox>
                         </left>
                         <center>
-                            <HBox>
-                                <PieChart fx:id="pieChartBatchesStatus" maxHeight="280.0" maxWidth="300.0" title="Batches">
-                                </PieChart>
-                                <PieChart fx:id="pieChartBatchesStyleTypes" maxHeight="280.0" maxWidth="300.0" title="Styles">
-                                </PieChart>
-                                <PieChart fx:id="pieChartBatchesMethods" maxHeight="280.0" maxWidth="300.0" title="Methods">
-                                </PieChart>
-                            </HBox>
+                            <GridPane>
+                                <PieChart fx:id="pieChartBatchesStatus" maxHeight="280.0" maxWidth="300.0" title="Batches"
+                                          GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                <PieChart fx:id="pieChartBatchesMethods" maxHeight="280.0" maxWidth="300.0" title="Methods"
+                                          GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            </GridPane>
                         </center>
                     </BorderPane>
                 </TitledPane>
                 <TitledPane text="Batches">
-                    <SubViewContainer fx:id="masterTableContainer" parent="$productionSubView">
-                    </SubViewContainer>
+                    <VBox spacing="2">
+                        <FiltersBar onAction="#applyBatchesFilters">
+                            <filters>
+                                <fx:define>
+                                    <FXCollections fx:id="batchMethodList" fx:factory="observableArrayList">
+                                        <BatchMethod fx:value="ALL_GRAIN"/>
+                                        <BatchMethod fx:value="PARTIAL_MASH"/>
+                                        <BatchMethod fx:value="EXTRACT"/>
+                                    </FXCollections>
+                                </fx:define>
+                                <TextFilter fx:id="batchIdFilter" title="Batch Id"/>
+                                <SelectFilter fx:id="batchMethodFilter" title="Batch method"
+                                              placeholder="Select a batch method" items="$batchMethodList"/>
+                            </filters>
+                        </FiltersBar>
+                        <SubViewContainer fx:id="masterTableContainer" parent="$productionSubView">
+                        </SubViewContainer>
+                    </VBox>
                 </TitledPane>
             </VBox>
         </center>

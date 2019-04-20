@@ -6,12 +6,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.layout.GridPane?>
+<?import nwoolcan.view.utils.DatePickerItalianConverter?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="nwoolcan.view.warehouse.stock.NewStockModalViewController">
@@ -28,7 +28,9 @@
         <Label GridPane.rowIndex="2" GridPane.columnIndex="0" text="Article" />
         <ComboBox GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" fx:id="comboBoxArticle"/>
         <CheckBox GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Specify expiration date " fx:id="checkBoxDate" onAction="#specifyDateClick"/>
-        <DatePicker GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.columnSpan="1" fx:id="datePicker" GridPane.halignment="LEFT"/>
+        <DatePicker GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.columnSpan="1" fx:id="datePicker" GridPane.halignment="LEFT">
+            <converter><DatePickerItalianConverter/></converter>
+        </DatePicker>
         <Button GridPane.rowIndex="5" GridPane.columnIndex="1"  GridPane.columnSpan="1" GridPane.halignment="RIGHT"
                 text="Create"
                 BorderPane.alignment="CENTER"

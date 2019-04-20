@@ -13,6 +13,12 @@
 <?import nwoolcan.view.subview.SubViewContainer?>
 
 <?import javafx.scene.layout.GridPane?>
+<?import nwoolcan.view.filters.TextFilter?>
+<?import nwoolcan.view.filters.SelectFilter?>
+<?import nwoolcan.model.brewery.warehouse.article.ArticleType?>
+
+<?import javafx.collections.FXCollections?>
+<?import nwoolcan.view.filters.FiltersBar?>
 <SubView fx:id="articlesSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
@@ -51,8 +57,24 @@
                     </BorderPane>
                 </TitledPane>
                 <TitledPane text="Articles">
-                    <SubViewContainer fx:id="masterTableContainer" parent="$articlesSubView">
-                    </SubViewContainer>
+                    <VBox spacing="2">
+                        <FiltersBar onAction="#applyFiltersClicked">
+                            <filters>
+                                <fx:define>
+                                    <FXCollections fx:id="typesList" fx:factory="observableArrayList">
+                                        <ArticleType fx:value="FINISHED_BEER" />
+                                        <ArticleType fx:value="INGREDIENT" />
+                                        <ArticleType fx:value="MISC" />
+                                    </FXCollections>
+                                </fx:define>
+                                <TextFilter fx:id="nameFilter" title="Name" />
+                                <SelectFilter fx:id="includeTypeFilter" title="Only type" placeholder="- Select type -" items="$typesList"/>
+                                <SelectFilter fx:id="excludeTypeFilter" title="Exclude type" placeholder="-Select type -" items="$typesList"/>
+                            </filters>
+                        </FiltersBar>
+                        <SubViewContainer fx:id="masterTableContainer" parent="$articlesSubView">
+                        </SubViewContainer>
+                    </VBox>
                 </TitledPane>
             </VBox>
         </center>
