@@ -1,6 +1,7 @@
 package nwoolcan.utils;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -27,5 +28,9 @@ public final class StringUtils {
      */
     public static String underscoreSeparatedToHuman(final String toConvert) {
         return Arrays.stream(toConvert.split("_")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
+    }
+
+    public static void split() {
+        "".split(":");
     }
 }

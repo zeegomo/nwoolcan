@@ -7,6 +7,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.AbstractViewController;
+import nwoolcan.view.utils.PersistencyUtils;
 import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubViewContainer;
@@ -88,31 +89,27 @@ public final class MainController extends AbstractViewController {
 
     @FXML
     private void menuFileSaveClick(final ActionEvent event) {
-        final FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
-        final File target = fileChooser.showSaveDialog(this.contentPane.getScene().getWindow());
-        if (target != null) {
+        final PersistencyUtils utils = new PersistencyUtils(this.contentPane.getScene().getWindow(), this.getController().getFileController());
+        utils.showSaveFile().ifPresent(target -> {
             this.getController().saveTo(target)
-                .peek(e -> this.showInfoAndWait("Saving completed", ((MenuItem) event.getTarget()).getParentPopup().getOwnerWindow()))
+                .peek(e -> utils.showSaveSuccessAlert())
                 .peekError(err -> {
                     Logger.getLogger(this.getClass().getName()).severe(err.toString());
-                    this.showErrorAndWait("There was an error!", ((MenuItem) event.getTarget()).getParentPopup().getOwnerWindow());
+                    utils.showErrorAlert();
                 });
-        }
+        });
     }
 
     @FXML
     private void menuFileLoadClick(final ActionEvent event) {
-        final FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
-        final File target = fileChooser.showOpenDialog(this.contentPane.getScene().getWindow());
-        if (target != null) {
+        final PersistencyUtils utils = new PersistencyUtils(this.contentPane.getScene().getWindow(), this.getController().getFileController());
+        utils.showOpenFile().ifPresent(target -> {
             this.getController().loadFrom(target)
                 .peek(e -> this.getViewManager().getView(ViewType.DASHBOARD).peek(this.contentPane::substitute))
                 .peekError(err -> {
                     Logger.getLogger(this.getClass().getName()).severe(err.toString());
-                    this.showErrorAndWait("There was an error!", ((MenuItem) event.getTarget()).getParentPopup().getOwnerWindow());
+                    utils.showErrorAlert();
                 });
-        }
+        });
     }
 }
