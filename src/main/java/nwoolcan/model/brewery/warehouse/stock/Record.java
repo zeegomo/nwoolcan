@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.warehouse.stock;
 
 import nwoolcan.model.utils.Quantity;
+import nwoolcan.utils.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Calendar;
@@ -18,7 +19,12 @@ public final class Record {
          * If the record Action is REMOVING the quantity will be subtracted,
          * while it will be added if the Action is ADDING.
          */
-        REMOVING, ADDING
+        REMOVING, ADDING;
+
+        @Override
+        public String toString() {
+            return StringUtils.underscoreSeparatedToHuman(this.name());
+        }
     }
 
     private final Quantity quantity;

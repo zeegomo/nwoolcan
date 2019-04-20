@@ -28,7 +28,7 @@ public interface BatchInfo {
      * Return the size of this batch.
      * @return a {@link Quantity}.
      */
-    Quantity getBatchSize();
+    Quantity getInitialBatchSize();
     /**
      * Return the original gravity for this batch, if available.
      * @return a {@link Quantity}.

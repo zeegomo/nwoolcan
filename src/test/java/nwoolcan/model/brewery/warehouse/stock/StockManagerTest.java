@@ -26,8 +26,8 @@ import java.util.Set;
  */
 public class StockManagerTest {
 
-    private final ArticleManager articleManager = new ArticleManager();
-    private final StockManager stockManager = new StockManager(articleManager);
+    private final StockManager stockManager = new StockManager();
+    private final ArticleManager articleManager = stockManager.getArticleManager();
     private static final String GIAMPIERO = "Giampiero Dummy Name";
     private static final UnitOfMeasure UOM = UnitOfMeasure.UNIT;
     private final Article giampiArtic = articleManager.createMiscArticle(GIAMPIERO, UOM);

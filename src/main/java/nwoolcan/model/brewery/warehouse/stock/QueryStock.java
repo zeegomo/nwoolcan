@@ -3,6 +3,7 @@ package nwoolcan.model.brewery.warehouse.stock;
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.utils.Quantity;
+import nwoolcan.utils.StringUtils;
 
 import javax.annotation.Nullable;
 import java.util.Date;
@@ -34,6 +35,11 @@ public final class QueryStock {
          * Order by the used {@link Quantity} of the {@link Stock}.
          */
         USED_QUANTITY;
+
+        @Override
+        public String toString() {
+            return StringUtils.underscoreSeparatedToHuman(this.name());
+        }
     }
     @Nullable
     private final Article article;
