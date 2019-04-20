@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Filter with a string value.
  */
-public class TextFilter extends VBox implements GUIFilter<String> {
+public final class TextFilter extends GUIFilter<String> {
     private final TextField field = new TextField();
 
     /**
@@ -18,18 +18,21 @@ public class TextFilter extends VBox implements GUIFilter<String> {
      * @param title the title of the filter.
      */
     public TextFilter(@NamedArg("title") final String title) {
-        this.getChildren().add(new Label(title));
-        this.getChildren().add(field);
+        final VBox container = new VBox();
+        this.getChildren().add(container);
+        container.getChildren().add(new Label(title));
+        container.getChildren().add(field);
     }
 
-    /**
-     * Returns the filter's value.
-     * @return the filter's value.
-     */
     @Override
     public Optional<String> getValue() {
         return Optional.of(this.field.getText())
                        .map(String::trim)
                        .filter(v -> !v.isEmpty());
+    }
+
+    @Override
+    void resetValue() {
+        this.field.setText("");
     }
 }

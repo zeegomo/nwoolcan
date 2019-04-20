@@ -12,7 +12,7 @@ import java.util.Optional;
  * Filter with a date value.
  * @param <T> the type of the items inside the combobox.
  */
-public class SelectFilter<T> extends VBox implements GUIFilter<T> {
+public final class SelectFilter<T> extends GUIFilter<T> {
     private final ComboBox<T> field = new ComboBox<>();
 
     /**
@@ -22,18 +22,21 @@ public class SelectFilter<T> extends VBox implements GUIFilter<T> {
      * @param items the items tu put inside the combobox.
      */
     public SelectFilter(@NamedArg("title") final String title, @NamedArg("placeholder") final String placeholder, @NamedArg("items") final List<T> items) {
-        this.getChildren().add(new Label(title));
-        this.getChildren().add(this.field);
+        final VBox container = new VBox();
+        this.getChildren().add(container);
+        container.getChildren().add(new Label(title));
+        container.getChildren().add(this.field);
         this.field.getItems().addAll(items);
         this.field.setPromptText(placeholder);
     }
 
-    /**
-     * Returns the filter's value.
-     * @return the filter's value.
-     */
     @Override
     public Optional<T> getValue() {
         return Optional.ofNullable(this.field.getValue());
+    }
+
+    @Override
+    void resetValue() {
+        this.field.setValue(null);
     }
 }

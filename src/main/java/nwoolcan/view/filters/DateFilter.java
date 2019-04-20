@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * Filter with a date value.
  */
-public class DateFilter extends VBox implements GUIFilter<Date> {
+public final class DateFilter extends GUIFilter<Date> {
     private final DatePicker field = new DatePicker();
 
     /**
@@ -21,18 +21,21 @@ public class DateFilter extends VBox implements GUIFilter<Date> {
      * @param title the title of the filter.
      */
     public DateFilter(@NamedArg("title") final String title) {
-        this.getChildren().add(new Label(title));
-        this.getChildren().add(field);
+        final VBox container = new VBox();
+        container.getChildren().add(new Label(title));
+        container.getChildren().add(field);
+        this.getChildren().add(container);
 
         this.field.setConverter(new DatePickerItalianConverter());
     }
 
-    /**
-     * Returns the filter's value.
-     * @return the filter's value.
-     */
     @Override
     public Optional<Date> getValue() {
         return Optional.ofNullable(field.getValue()).map(v -> Date.from(v.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+    }
+
+    @Override
+    void resetValue() {
+        this.field.setValue(null);
     }
 }
