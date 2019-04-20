@@ -36,8 +36,8 @@ public class BatchInfoTest {
         assertFalse(info.getAbv().isPresent());
         assertFalse(info.getWaterMeasurements().isPresent());
         assertEquals(info.getBeerDescription(), desc);
-        assertEquals(info.getBatchSize(), Quantity.of(TWO_THOUSAND, UnitOfMeasure.LITER).getValue());
-        assertNotEquals(info.getBatchSize(), Quantity.of(2, UnitOfMeasure.UNIT).getValue());
+        assertEquals(info.getInitialBatchSize(), Quantity.of(TWO_THOUSAND, UnitOfMeasure.LITER).getValue());
+        assertNotEquals(info.getInitialBatchSize(), Quantity.of(2, UnitOfMeasure.UNIT).getValue());
     }
     /**
      * Test update.

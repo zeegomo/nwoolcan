@@ -59,7 +59,7 @@ class ModifiableBatchInfoImpl implements ModifiableBatchInfo {
     }
 
     @Override
-    public Quantity getBatchSize() {
+    public Quantity getInitialBatchSize() {
         return this.size;
     }
 

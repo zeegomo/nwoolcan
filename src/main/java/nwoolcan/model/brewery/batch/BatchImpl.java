@@ -107,7 +107,7 @@ final class BatchImpl implements Batch {
         if (prev.isPresent()) {
             return prev.getValue();
         }
-        return this.batchInfo.getBatchSize();
+        return this.batchInfo.getInitialBatchSize();
     }
 
     @Override

@@ -21,8 +21,8 @@ import java.util.Date;
  */
 public class StockImplTest {
 
-    private final ArticleManager articleManager = new ArticleManager();
-    private final StockManager stockManager = new StockManager(articleManager);
+    private final StockManager stockManager = new StockManager();
+    private final ArticleManager articleManager = stockManager.getArticleManager();
     private Stock stock;
     private Stock stock1;
     private Stock stock2;
