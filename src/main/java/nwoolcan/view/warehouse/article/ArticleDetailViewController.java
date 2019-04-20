@@ -87,12 +87,12 @@ public final class ArticleDetailViewController extends SubViewController impleme
 
     @FXML
     private void changeNameClicked(final ActionEvent actionEvent) {
-        if (newNameTextField.getText().isEmpty()) {
+        if (newNameTextField.getText().trim().isEmpty()) {
             showAlertAndWait(NEW_NAME_EMPTY);
             return;
         }
         final Result<AbstractArticleViewModel> changeNameResult = getController().getWarehouseController()
-                                                              .setName(articleIdInt, newNameTextField.getText());
+                                                              .setName(articleIdInt, newNameTextField.getText().trim());
         if (changeNameResult.isError()) {
             showAlertAndWait(changeNameResult.getError().getMessage());
             return;

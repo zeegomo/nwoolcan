@@ -11,11 +11,6 @@
          fx:id="masterTableSubView">
 
     <BorderPane>
-        <top>
-            <FlowPane fx:id="filtersPane">
-                <Button text="Back" onAction="#btnBackClick" />
-            </FlowPane>
-        </top>
         <center>
             <TableView fx:id="masterTable" >
                 <columnResizePolicy>
