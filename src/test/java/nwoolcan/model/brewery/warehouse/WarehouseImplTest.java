@@ -1,7 +1,6 @@
 package nwoolcan.model.brewery.warehouse;
 
 import nwoolcan.model.brewery.warehouse.article.Article;
-import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
@@ -28,8 +27,7 @@ public class WarehouseImplTest {
     private static final String NAME = "DummyName";
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.LITER;
-    private final ArticleManager articleManager = new ArticleManager();
-    private final Warehouse warehouse = new WarehouseImpl(articleManager);
+    private final Warehouse warehouse = new WarehouseImpl();
     private final Article article = warehouse.createMiscArticle(NAME, UOM);
     private final Quantity quantity = Quantity.of(ONE, UOM).getValue();
     private final Quantity quantity1 = Quantity.of(ONE, UOM1).getValue();
@@ -91,7 +89,7 @@ public class WarehouseImplTest {
         final QueryStock queryStock = resQueryStock.getValue();
         final List<Stock> lisStock = warehouse.getStocks(queryStock);
         for (final Stock s : lisStock) {
-            Assert.assertEquals(article, s.getArticle());
+            Assert.assertEquals(article.getId(), s.getArticleId());
             Assert.assertFalse(s.getRemainingQuantity().lessThan(quantity));
             Assert.assertFalse(s.getRemainingQuantity().moreThan(quantity2));
             System.out.println(s.toString());
@@ -145,7 +143,7 @@ public class WarehouseImplTest {
         final QueryStock queryStock = resQueryStock.getValue();
         final List<Stock> lisStock = warehouse.getStocks(queryStock);
         for (final Stock s : lisStock) {
-            Assert.assertEquals(article, s.getArticle());
+            Assert.assertEquals(article.getId(), s.getArticleId());
             Assert.assertTrue(!s.getExpirationDate()
                                  .isPresent()
                            || !s.getExpirationDate()

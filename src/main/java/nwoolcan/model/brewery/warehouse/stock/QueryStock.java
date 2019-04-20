@@ -23,10 +23,6 @@ public final class QueryStock {
          */
         NONE,
         /**
-         * Order by the {@link Article} name.
-         */
-        ARTICLE_NAME,
-        /**
          * Order by the expiration {@link Date} of the {@link Stock}.
          */
         EXPIRATION_DATE,

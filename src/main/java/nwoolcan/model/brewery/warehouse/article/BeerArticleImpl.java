@@ -3,8 +3,6 @@ package nwoolcan.model.brewery.warehouse.article;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 
-import java.util.Objects;
-
 /**
  * Beer article implementation.
  */
@@ -36,7 +34,7 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode());
+        return super.hashCode();
     }
 
     @Override
