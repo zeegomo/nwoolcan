@@ -15,6 +15,8 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="nwoolcan.view.production.GoNextStepModalController">
@@ -33,35 +35,41 @@
             </top>
             <center>
                 <VBox BorderPane.alignment="CENTER_LEFT">
-                    <TitledPane text="Choose next step type" >
+                    <TitledPane text="Choose next step type" collapsible="false">
                         <VBox>
                             <Label text="Next step type" />
                             <ComboBox fx:id="nextStepTypesComboBox" />
                         </VBox>
                     </TitledPane>
                     <HBox>
-                        <CheckBox fx:id="chooseFinalizeNextStepCheckBox" text="Finalize current step?" />
+                        <CheckBox fx:id="chooseFinalizeNextStepCheckBox" text="Add notes or change final step size?" />
                     </HBox>
-                    <TitledPane fx:id="finalizeStepTitlePane" text="Finalize step" disable="true" >
+                    <VBox fx:id="notesAndSizeVBox">
                         <VBox>
-                            <VBox>
-                                <Label text="Notes" />
-                                <TextArea fx:id="notesTextArea"/>
-                            </VBox>
-                            <VBox>
-                                <Label text="End size" />
-                                <HBox>
-                                    <TextField fx:id="endSizeValueTextField" />
-                                    <Label fx:id="endSizeUnitOfMeasureSymbolLabel" text="?" />
-                                    <ComboBox fx:id="endSizeUnitOfMeasureComboBox" />
-                                </HBox>
-                            </VBox>
+                            <Label text="Notes" />
+                            <TextArea fx:id="notesTextArea"/>
                         </VBox>
-                    </TitledPane>
+                        <GridPane hgap="5" vgap="5">
+                            <padding>
+                                <Insets top="5" bottom="5" right="5" left="5"/>
+                            </padding>
+                            <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="Unit of measure"/>
+                            <Label GridPane.rowIndex="0" GridPane.columnIndex="1" text="End size quantity"/>
+
+                            <ComboBox GridPane.rowIndex="1" GridPane.columnIndex="0"
+                                      fx:id="endSizeUnitOfMeasureComboBox"/>
+                            <GridPane GridPane.rowIndex="1" GridPane.columnIndex="1" hgap="5" vgap="5">
+                                <TextField GridPane.columnIndex="0"
+                                           fx:id="endSizeValueTextField"/>
+                                <Label GridPane.columnIndex="1"
+                                       fx:id="endSizeUnitOfMeasureSymbolLabel"/>
+                            </GridPane>
+                        </GridPane>
+                    </VBox>
                 </VBox>
             </center>
             <bottom>
-                <Button text="Go" BorderPane.alignment="CENTER" onAction="#goButtonClicked" />
+                <Button text="Go" BorderPane.alignment="CENTER" onAction="#goButtonClicked" defaultButton="true" />
             </bottom>
         </BorderPane>
     </ScrollPane>
