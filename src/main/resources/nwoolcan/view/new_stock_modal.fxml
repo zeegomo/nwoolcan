@@ -11,41 +11,28 @@
 
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.layout.GridPane?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="nwoolcan.view.warehouse.stock.NewStockModalViewController">
-        <BorderPane>
-            <top>
-                <Label text="New Stock" BorderPane.alignment="CENTER">
-                    <BorderPane.margin>
-                        <Insets top="10.0" />
-                    </BorderPane.margin>
-                    <font>
-                        <Font size="22.0" />
-                    </font>
-                </Label>
-            </top>
-            <center>
-                <VBox spacing="5">
-                    <BorderPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                    </BorderPane.margin>
-                    <Label text="Existing stock will not be created again."/>
-                    <Label text="Article" />
-                    <ComboBox fx:id="comboBoxArticle"/>
-                    <CheckBox text="Specify expiration date " fx:id="checkBoxDate" onAction="#specifyDateClick"/>
-                    <DatePicker fx:id="datePicker" disable="true"/>
-                </VBox>
-            </center>
-            <bottom>
-                <Button text="Create"
-                        BorderPane.alignment="CENTER"
-                        onAction="#createStockClick"
-                        defaultButton="true">
-                    <BorderPane.margin>
-                        <Insets bottom="10.0" />
-                    </BorderPane.margin>
-                </Button>
-            </bottom>
-        </BorderPane>
+    <GridPane vgap="5" hgap="5">
+        <padding>
+            <Insets top="10.0" bottom="10.0" right="10.0" left="10.0"/>
+        </padding>
+        <Label GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2" text="New Stock" GridPane.halignment="CENTER">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </Label>
+        <Label GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Existing stock will not be created again."/>
+        <Label GridPane.rowIndex="2" GridPane.columnIndex="0" text="Article" />
+        <ComboBox GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" fx:id="comboBoxArticle"/>
+        <CheckBox GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Specify expiration date " fx:id="checkBoxDate" onAction="#specifyDateClick"/>
+        <DatePicker GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.columnSpan="1" fx:id="datePicker" GridPane.halignment="LEFT"/>
+        <Button GridPane.rowIndex="5" GridPane.columnIndex="1"  GridPane.columnSpan="1" GridPane.halignment="RIGHT"
+                text="Create"
+                BorderPane.alignment="CENTER"
+                onAction="#createStockClick"
+                defaultButton="true"/>
+    </GridPane>
 </AnchorPane>
