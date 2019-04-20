@@ -50,7 +50,7 @@ public final class RecordViewModel {
      * Return the string representation of the {@link Date} in which the {@link nwoolcan.model.brewery.warehouse.stock.Record} has been transferred.
      * @return the string representation of the {@link Date} in which the {@link nwoolcan.model.brewery.warehouse.stock.Record} has been transferred.
      */
-    public String dateFormatted() {
+    public String getDateFormatted() {
         return DateFormatUtils.format(date, "dd-MM-yyyy HH:mm");
     }
 }
