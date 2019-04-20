@@ -7,7 +7,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.warehouse.stock.Record;
@@ -40,13 +39,15 @@ public final class NewRecordModalViewController extends AbstractViewController i
     private int stockId;
 
     @FXML
+    private Label lblMinute;
+    @FXML
+    private Label lblHour;
+    @FXML
     private ComboBox<Integer> recordMinute;
     @FXML
     private ComboBox<Integer> recordHour;
     @FXML
     private DatePicker recordDatePicker;
-    @FXML
-    private VBox dateVBox;
     @FXML
     private CheckBox checkSelectDate;
     @FXML
@@ -86,11 +87,16 @@ public final class NewRecordModalViewController extends AbstractViewController i
                                       .getValue()
                                       .getUnitOfMeasure()
                                       .getSymbol());
+        specifyDateClick(new ActionEvent());
     }
 
     @FXML
     private void specifyDateClick(final ActionEvent actionEvent) {
-        dateVBox.setDisable(!checkSelectDate.isSelected());
+        recordDatePicker.setDisable(!checkSelectDate.isSelected());
+        recordHour.setDisable(!checkSelectDate.isSelected());
+        recordMinute.setDisable(!checkSelectDate.isSelected());
+        lblMinute.setDisable(!checkSelectDate.isSelected());
+        lblHour.setDisable(!checkSelectDate.isSelected());
         recordDatePicker.setValue(LocalDate.now());
     }
 
@@ -101,7 +107,7 @@ public final class NewRecordModalViewController extends AbstractViewController i
             recordDoubleAmount = Double.parseDouble(recordAmount.getText().trim());
         } catch (final NumberFormatException ex) {
             this.showErrorAndWait("The amount must be a number.",
-                this.dateVBox.getScene().getWindow()); // You can use any other control
+                this.lblUom.getScene().getWindow()); // You can use any other control
             return;
         }
         final Result<Empty> addRecordResult;
@@ -116,7 +122,7 @@ public final class NewRecordModalViewController extends AbstractViewController i
         }
         if (addRecordResult.isError()) {
             this.showErrorAndWait("Error: " + addRecordResult.getError().getMessage(),
-                this.dateVBox.getScene().getWindow()); // You can use any other control
+                this.lblUom.getScene().getWindow()); // You can use any other control
         } else {
             ((Stage) this.recordDatePicker.getScene().getWindow()).close();
         }

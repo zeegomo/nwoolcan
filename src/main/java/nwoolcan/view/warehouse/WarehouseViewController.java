@@ -78,9 +78,9 @@ public final class WarehouseViewController extends SubViewController {
         this.lblNumberBeerUsedUp.setText(Integer.toString(data.getnBeerUsed()));
         pieChartBeerStatus.setData(
             FXCollections.observableArrayList(
-                new PieChart.Data("Available", data.getnBeerAvailable()),
+                new PieChart.Data("Used", data.getnBeerUsed()),
                 new PieChart.Data("Expired", data.getnBeerExpired()),
-                new PieChart.Data("Used", data.getnBeerUsed())
+                new PieChart.Data("Available", data.getnBeerAvailable())
             )
         );
         // Ingredient data load
@@ -89,9 +89,9 @@ public final class WarehouseViewController extends SubViewController {
         this.lblNumberIngredientUsedUp.setText(Integer.toString(data.getnIngredientUsed()));
         pieChartIngredientStatus.setData(
             FXCollections.observableArrayList(
-                new PieChart.Data("Available", data.getnIngredientAvailable()),
+                new PieChart.Data("Used", data.getnIngredientUsed()),
                 new PieChart.Data("Expired", data.getnIngredientExpired()),
-                new PieChart.Data("Used", data.getnIngredientUsed())
+                new PieChart.Data("Available", data.getnIngredientAvailable())
             )
         );
         // Misc data load
@@ -100,9 +100,9 @@ public final class WarehouseViewController extends SubViewController {
         this.lblNumberMiscUsedUp.setText(Integer.toString(data.getnMiscUsed()));
         pieChartMiscStatus.setData(
             FXCollections.observableArrayList(
-                new PieChart.Data("Available", data.getnMiscAvailable()),
+                new PieChart.Data("Used", data.getnMiscUsed()),
                 new PieChart.Data("Expired", data.getnMiscExpired()),
-                new PieChart.Data("Used", data.getnMiscUsed())
+                new PieChart.Data("Available", data.getnMiscAvailable())
             )
         );
 

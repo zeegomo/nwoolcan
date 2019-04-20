@@ -50,6 +50,7 @@ public final class NewStockModalViewController extends AbstractViewController {
         final List<AbstractArticleViewModel> articles = getController().getWarehouseController().getArticles(queryArticle);
         comboBoxArticle.getItems().setAll(articles);
         comboBoxArticle.getSelectionModel().selectFirst();
+        specifyDateClick(new ActionEvent());
     }
 
     @FXML
