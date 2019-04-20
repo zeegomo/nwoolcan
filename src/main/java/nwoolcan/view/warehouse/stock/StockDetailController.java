@@ -66,6 +66,8 @@ public final class StockDetailController extends SubViewController implements In
     }
 
     @FXML
+    private Label lblTextExpDate;
+    @FXML
     private GridPane mainGridPane;
     @FXML
     private Label lblExpirationDate;
@@ -129,13 +131,18 @@ public final class StockDetailController extends SubViewController implements In
             this.buttonGoToBatch.setVisible(true);
             this.buttonGoToBatch.setManaged(true);
         }
+        if (data.getExpirationDate().isEmpty()) {
+            lblExpirationDate.setManaged(false);
+            lblExpirationDate.setVisible(false);
+            lblTextExpDate.setManaged(false);
+            lblTextExpDate.setVisible(false);
+        }
 
         final List<RecordViewModel> records = data.getRecords();
         recordTable.setItems(FXCollections.observableArrayList(records));
         if (records.size() > 0) {
             setChart(records);
         }
-
     }
 
     private void setChart(final List<RecordViewModel> records) {
