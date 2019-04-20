@@ -11,8 +11,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
+import nwoolcan.model.brewery.batch.BatchMethod;
+import nwoolcan.model.brewery.batch.QueryBatchBuilder;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
+import nwoolcan.view.filters.SelectFilter;
+import nwoolcan.view.filters.TextFilter;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
@@ -26,6 +30,7 @@ import nwoolcan.viewmodel.brewery.production.batch.DetailBatchViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.MasterBatchViewModel;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -37,6 +42,10 @@ public final class ProductionController
     implements InitializableController<ProductionViewModel> {
 
     @FXML
+    private SelectFilter<BatchMethod> batchMethodFilter;
+    @FXML
+    private TextFilter batchIdFilter;
+    @FXML
     private Label lblNumberStockedBatches;
     @FXML
     private Label lblTotalNumberBatches;
@@ -47,8 +56,6 @@ public final class ProductionController
 
     @FXML
     private PieChart pieChartBatchesStatus;
-    @FXML
-    private PieChart pieChartBatchesStyleTypes;
     @FXML
     private PieChart pieChartBatchesMethods;
 
@@ -75,7 +82,6 @@ public final class ProductionController
         lblNumberStockedBatches.setText(Long.toString(data.getNStockedBatches()));
 
         pieChartBatchesStatus.getData().clear();
-        pieChartBatchesStyleTypes.getData().clear();
         pieChartBatchesMethods.getData().clear();
 
         if (data.getNBatches() > 0) {
@@ -90,16 +96,6 @@ public final class ProductionController
             }
         }
 
-        pieChartBatchesStyleTypes.setData(
-            FXCollections.observableList(
-                data.getStylesFrequency()
-                    .entrySet()
-                    .stream()
-                    .map(es -> new PieChart.Data(es.getKey(), es.getValue()))
-                    .collect(Collectors.toList())
-            )
-        );
-
         pieChartBatchesMethods.setData(
             FXCollections.observableList(
                 data.getMethodsFrequency()
@@ -110,50 +106,7 @@ public final class ProductionController
             )
         );
 
-        final MasterTableViewModel<MasterBatchViewModel, ViewModelCallback<DetailBatchViewModel>> masterViewModel = new MasterTableViewModel<>(
-            Arrays.asList(
-                new ColumnDescriptor("ID", "id"),
-                new ColumnDescriptor("Beer name", "beerDescriptionName"),
-                new ColumnDescriptor("Style", "beerStyleName"),
-                new ColumnDescriptor("Batch method", "batchMethodName"),
-                new ColumnDescriptor("Current step", "currentStepName"),
-                new ColumnDescriptor("Start date", "startDate"),
-                new ColumnDescriptor("Initial size", "initialBatchSize"),
-                new ColumnDescriptor("Current size", "currentBatchSize"),
-                new ColumnDescriptor("Ended", "ended"),
-                new ColumnDescriptor("Stocked", "stocked")
-            ),
-            data.getBatches(),
-            ViewType.BATCH_DETAIL,
-            mbvm -> {
-                Result<DetailBatchViewModel> res = this.getController().getBatchController().getDetailBatchViewModelById(mbvm.getId());
-                if (res.isPresent()) {
-                    return new ViewModelCallback<>(res.getValue(), () -> this.initData(this.getController().getProductionViewModel()));
-                }
-
-                this.showAlertAndWait("Batch id not found!");
-                return null; //TODO fix with unified error management in master table
-            }
-        );
-
-        this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
-
-        //Experiment with events in pie chart.
-//        final Label tooltipPieChart = new Label("");
-//        tooltipPieChart.setTextFill(Color.WHITE);
-//        tooltipPieChart.setStyle("-fx-font: 24 arial;");
-//
-//        pieChartBatchesStyleTypes.getData().forEach(d -> {
-//            d.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(final MouseEvent event) {
-//                    tooltipPieChart.setTranslateX(event.getSceneX());
-//                    tooltipPieChart.setTranslateY(event.getSceneY());
-//                    tooltipPieChart.setText(String.valueOf(d.getPieValue()));
-//                }
-//            });
-//        });
-
+        this.buildMasterTable(data.getBatches());
     }
 
     @Override
@@ -185,7 +138,60 @@ public final class ProductionController
         }
     }
 
-    private void showAlertAndWait(final String message) {
-        this.showErrorAndWait("An error occurred while loading the batch detail.\n" + message);
+    /**
+     * Click event for the application of filters in the master table.
+     * @param event the occurred event.
+     */
+    public void applyBatchesFilters(final ActionEvent event) {
+        final QueryBatchBuilder builder = new QueryBatchBuilder();
+        if (this.batchIdFilter.getValue().isPresent()) {
+            int batchId;
+            try {
+                batchId = Integer.parseInt(this.batchIdFilter.getValue().get());
+            } catch (NumberFormatException ex) {
+                this.showErrorAndWait("Batch Id filter must be a number!", this.lblNumberProductionBatches.getScene().getWindow());
+                return;
+            }
+            builder.setBatchId(batchId);
+        }
+
+        if (this.batchMethodFilter.getValue().isPresent()) {
+            builder.setBatchMethod(this.batchMethodFilter.getValue().get());
+        }
+
+        builder.build()
+               .peek(qb -> this.buildMasterTable(this.getController().getBatches(qb)))
+               .peekError(e -> this.showErrorAndWait("An error occurred while filtering batches:\n" + e.getMessage(),
+                   this.lblNumberProductionBatches.getScene().getWindow()));
+    }
+
+    private void buildMasterTable(final List<MasterBatchViewModel> batchesToShow) {
+        final MasterTableViewModel<MasterBatchViewModel, ViewModelCallback<DetailBatchViewModel>> masterViewModel = new MasterTableViewModel<>(
+            Arrays.asList(
+                new ColumnDescriptor("ID", "id"),
+                new ColumnDescriptor("Beer name", "beerDescriptionName"),
+                new ColumnDescriptor("Style", "beerStyleName"),
+                new ColumnDescriptor("Batch method", "batchMethodName"),
+                new ColumnDescriptor("Current step", "currentStepName"),
+                new ColumnDescriptor("Start date", "startDate"),
+                new ColumnDescriptor("Initial size", "initialBatchSize"),
+                new ColumnDescriptor("Current size", "currentBatchSize"),
+                new ColumnDescriptor("Ended", "ended"),
+                new ColumnDescriptor("Stocked", "stocked")
+            ),
+            batchesToShow,
+            ViewType.BATCH_DETAIL,
+            mbvm -> {
+                Result<DetailBatchViewModel> res = this.getController().getBatchController().getDetailBatchViewModelById(mbvm.getId());
+                if (res.isPresent()) {
+                    return new ViewModelCallback<>(res.getValue(), () -> this.initData(this.getController().getProductionViewModel()));
+                }
+
+                this.showErrorAndWait("Batch id not found!", this.lblNumberProductionBatches.getScene().getWindow());
+                return null;
+            }
+        );
+
+        this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
     }
 }

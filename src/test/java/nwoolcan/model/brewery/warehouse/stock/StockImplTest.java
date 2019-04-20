@@ -77,7 +77,7 @@ public class StockImplTest {
         stock2.addRecord(record2);
         stock3.addRecord(record1);
         stock3.addRecord(record2);
-        Assert.assertEquals(article, stock.getArticle());
+        Assert.assertEquals(article.getId(), stock.getArticleId());
         Assert.assertTrue(Quantities.remove(record1.getQuantity(),
                                             record2.getQuantity()).isPresent());
         Assert.assertEquals(Quantities.remove(record1.getQuantity(),
