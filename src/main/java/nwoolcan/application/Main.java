@@ -3,6 +3,9 @@ package nwoolcan.application;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -13,6 +16,8 @@ import nwoolcan.view.utils.ViewManagerImpl;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.welcome.WelcomeViewController;
 import org.apache.commons.lang3.tuple.Pair;
+
+import java.io.File;
 
 /**
  * Main class run when the program starts.
@@ -57,6 +62,25 @@ public final class Main extends Application {
             primaryStage.setMinWidth(MIN_WIDTH);
             primaryStage.setScene(new Scene(vm.getView(MAIN_VIEW_TYPE).getValue()));
             primaryStage.setMaximized(true);
+            primaryStage.setOnHiding(event -> {
+                final Alert saveAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                saveAlert.initOwner(primaryStage);
+                saveAlert.setContentText("Do you want to save?");
+                final boolean saveConfirmed = saveAlert.showAndWait().map(buttonType -> buttonType.equals(ButtonType.OK)).orElse(false);
+
+                if (saveConfirmed) {
+                    final FileChooser fileChooser = new FileChooser();
+                    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
+                    final File target = fileChooser.showOpenDialog(primaryStage);
+                    if (target != null) {
+                        controller.saveTo(target);
+                        final Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
+                        confirmAlert.setHeaderText("Saved successfully");
+                        confirmAlert.initOwner(primaryStage);
+                        confirmAlert.showAndWait();
+                    }
+                }
+            });
             primaryStage.show();
         }
     }

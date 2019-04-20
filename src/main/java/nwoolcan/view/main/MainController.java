@@ -1,10 +1,10 @@
 package nwoolcan.view.main;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.utils.ViewManager;
@@ -78,7 +78,7 @@ public final class MainController extends AbstractViewController {
      * @param event The occurred event
      */
     public void menuFileQuitClick(final ActionEvent event) {
-        Platform.exit();
+        ((Stage) this.contentPane.getScene().getWindow()).close();
     }
 
     @FXML
