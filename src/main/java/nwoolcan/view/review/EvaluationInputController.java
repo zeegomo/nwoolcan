@@ -49,7 +49,7 @@ public final class EvaluationInputController extends AbstractViewController impl
         this.maxScore.setText(String.valueOf(data.getMaxScore()));
         this.score.focusedProperty().addListener((obv, unfocus, focus) -> {
             if (unfocus) {
-                Results.ofChecked(() -> Integer.parseInt(this.score.getText()))
+                Results.ofChecked(() -> Integer.parseInt(this.score.getText().trim()))
                        .flatMap(parsedScore ->
                            this.getController()
                                .getBatchController()
