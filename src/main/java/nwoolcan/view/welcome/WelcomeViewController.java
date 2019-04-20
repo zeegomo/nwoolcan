@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 @SuppressWarnings("NullAway")
 public final class WelcomeViewController extends SubViewController {
     private static final String DEMO_FILE = "/nwoolcan/demo.json";
+    private boolean exitOk = false;
 
     @FXML
     private SubView welcomeSubView;
@@ -38,7 +39,16 @@ public final class WelcomeViewController extends SubViewController {
     }
 
     private void close() {
+        this.exitOk = true;
         ((Stage) this.welcomeSubView.getScene().getWindow()).close();
+    }
+
+    /**
+     * Returns if the modal was ok or canceled.
+     * @return if the modal was ok or canceled.
+     */
+    public boolean getExitOk() {
+        return this.exitOk;
     }
 
     @FXML
