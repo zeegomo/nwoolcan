@@ -29,12 +29,19 @@ public final class StockManager {
 
     /**
      * It is built by the {@link nwoolcan.model.brewery.warehouse.Warehouse} in order to manage all its {@link Stock}.
-     * @param articleManager to be used to create {@link Stock}.
      */
-    public StockManager(final ArticleManager articleManager) {
-        this.articleManager = articleManager;
+    public StockManager() {
+        this.articleManager = new ArticleManager();
         nextAvailableId = 1;
         stockToStock = new HashMap<>();
+    }
+
+    /**
+     * Return the {@link ArticleManager}.
+     * @return the {@link ArticleManager}.
+     */
+    public ArticleManager getArticleManager() {
+        return articleManager;
     }
     /**
      * Checks the consistency of the {@link Stock}.
