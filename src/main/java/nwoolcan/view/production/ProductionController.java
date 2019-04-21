@@ -15,6 +15,7 @@ import nwoolcan.model.brewery.batch.BatchMethod;
 import nwoolcan.model.brewery.batch.QueryBatchBuilder;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
+import nwoolcan.view.filters.BooleanFilter;
 import nwoolcan.view.filters.DateFilter;
 import nwoolcan.view.filters.SelectFilter;
 import nwoolcan.view.filters.TextFilter;
@@ -42,6 +43,8 @@ public final class ProductionController
     extends SubViewController
     implements InitializableController<ProductionViewModel> {
 
+    @FXML
+    private BooleanFilter onlyEndedFilter;
     @FXML
     private DateFilter minStartDateFilter;
     @FXML
