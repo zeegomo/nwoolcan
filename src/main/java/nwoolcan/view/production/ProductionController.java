@@ -186,6 +186,7 @@ public final class ProductionController
                 new ColumnDescriptor("Batch method", "batchMethodName"),
                 new ColumnDescriptor("Current step", "currentStepName"),
                 new ColumnDescriptor("Start date", "startDate"),
+                new ColumnDescriptor("End date", "endDate"),
                 new ColumnDescriptor("Initial size", "initialBatchSize"),
                 new ColumnDescriptor("Current size", "currentBatchSize"),
                 new ColumnDescriptor("Ended", "ended"),
