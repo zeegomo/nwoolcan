@@ -2,7 +2,6 @@ package nwoolcan.viewmodel.brewery.production.batch;
 
 import nwoolcan.model.brewery.batch.BatchMethod;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurement;
-import nwoolcan.model.brewery.batch.step.StepType;
 import nwoolcan.model.utils.Quantity;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
