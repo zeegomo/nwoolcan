@@ -71,7 +71,13 @@ public final class BreweryImpl implements Brewery {
         queryBatch.getMaxBatchSize().ifPresent(maxSize -> filters.add(b -> b.getBatchInfo()
                                                                             .getInitialBatchSize()
                                                                             .lessThan(maxSize)));
-
+        queryBatch.getMinStartDate().ifPresent(minStart -> filters.add(b -> b.getSteps()
+                                                                             .stream()
+                                                                             .findAny()
+                                                                             .map(step -> !step.getStepInfo()
+                                                                                               .getStartDate()
+                                                                                               .before(minStart))
+                                                                             .orElse(false)));
         for (final Predicate<Batch> f : filters) {
             s = s.filter(f);
         }

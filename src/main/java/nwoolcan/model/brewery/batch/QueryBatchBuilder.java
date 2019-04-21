@@ -5,6 +5,7 @@ import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
+import java.util.Date;
 
 /**
  * The builder of {@link QueryBatch}.
@@ -17,6 +18,7 @@ public class QueryBatchBuilder {
     @Nullable private BatchMethod batchMethod;
     @Nullable private Quantity minBatchSize;
     @Nullable private Quantity maxBatchSize;
+    @Nullable private Date minStartDate;
 
     /**
      * Constructor to initialize the queryBuilder.
@@ -78,6 +80,15 @@ public class QueryBatchBuilder {
         return this;
     }
     /**
+     * Setter of the lower bound for the batch start date.
+     * @param minStartDate the minimum start date of the filtered batches.
+     * @return this.
+     */
+    public QueryBatchBuilder setMinStartDate(final Date minStartDate) {
+        this.minStartDate = new Date(minStartDate.getTime());
+        return this;
+    }
+    /**
      * Builds the QueryBatch.
      * @return the built {@link QueryBatch}.
      */
@@ -88,7 +99,8 @@ public class QueryBatchBuilder {
             this.beerStyle,
             this.batchMethod,
             this.minBatchSize,
-            this.maxBatchSize))
+            this.maxBatchSize,
+            this.minStartDate))
                      .require(this::checkBatchSize);
     }
     /**

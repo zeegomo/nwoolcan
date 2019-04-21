@@ -3,6 +3,7 @@ package nwoolcan.model.brewery.batch;
 import nwoolcan.model.utils.Quantity;
 
 import javax.annotation.Nullable;
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -17,6 +18,7 @@ public class QueryBatch {
     @Nullable private final BatchMethod batchMethod;
     @Nullable private final Quantity minBatchSize;
     @Nullable private final Quantity maxBatchSize;
+    @Nullable private final Date minStartDate;
 
     /**
      * Constructor of the class.
@@ -26,6 +28,7 @@ public class QueryBatch {
      * @param beerStyle the only beer style to be displayed.
      * @param minBatchSize a {@link Quantity} denoting the minimum size of the {@link Batch}.
      * @param maxBatchSize a {@link Quantity} denoting the maximum size of the {@link Batch}.
+     * @param minStartDate a {@link Date} denoting the lower bound for the batch start date.
      */
     // Package-private
     QueryBatch(@Nullable final Integer batchId,
@@ -33,13 +36,15 @@ public class QueryBatch {
                @Nullable final String beerStyle,
                @Nullable final BatchMethod batchMethod,
                @Nullable final Quantity minBatchSize,
-               @Nullable final Quantity maxBatchSize) {
+               @Nullable final Quantity maxBatchSize,
+               @Nullable final Date minStartDate) {
         this.batchId = batchId;
         this.beerName = beerName;
         this.beerStyle = beerStyle;
         this.batchMethod = batchMethod;
         this.minBatchSize = minBatchSize;
         this.maxBatchSize = maxBatchSize;
+        this.minStartDate = minStartDate == null ? null : new Date(minStartDate.getTime());
     }
     /**
      * Returns the batch id if the batch to be displayed.
@@ -82,5 +87,13 @@ public class QueryBatch {
      */
     public Optional<Quantity> getMaxBatchSize() {
         return Optional.ofNullable(this.maxBatchSize);
+    }
+
+    /**
+     * Returns the lower bound of batch start date.
+     * @return the lower bound of batch start date.
+     */
+    public Optional<Date> getMinStartDate() {
+        return Optional.ofNullable(this.minStartDate == null ? null : new Date(this.minStartDate.getTime()));
     }
 }
