@@ -11,6 +11,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
+import nwoolcan.model.brewery.warehouse.article.ArticleType;
+import nwoolcan.model.brewery.warehouse.stock.QueryStock;
+import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
+import nwoolcan.model.brewery.warehouse.stock.StockState;
+import nwoolcan.model.utils.Quantity;
+import nwoolcan.utils.Result;
+import nwoolcan.view.filters.DateFilter;
+import nwoolcan.view.filters.SelectFilter;
+import nwoolcan.view.filters.TextFilter;
 import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.mastertable.ColumnDescriptor;
@@ -20,6 +29,7 @@ import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.view.utils.ViewModelCallback;
 import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.MasterStockViewModel;
 
 import java.util.Arrays;
@@ -31,6 +41,26 @@ import java.util.List;
 @SuppressWarnings("NullAway")
 public final class WarehouseViewController extends SubViewController {
 
+    @FXML
+    private SelectFilter<AbstractArticleViewModel> articleFilter;
+    @FXML
+    private SelectFilter<ArticleType> articleTypeFilter;
+    @FXML
+    private DateFilter expiresBeforeFilter;
+    @FXML
+    private DateFilter expiresAfterFilter;
+    @FXML
+    private TextFilter minRemainingQuantity;
+    @FXML
+    private TextFilter maxRemainingQuantity;
+    @FXML
+    private TextFilter minUsedQuantity;
+    @FXML
+    private TextFilter maxUsedQuantity;
+    @FXML
+    private SelectFilter<StockState> stockStateInclude;
+    @FXML
+    private SelectFilter<StockState> stockStateExclude;
     @FXML
     private Label lblNumberBeerAvailable;
     @FXML
@@ -105,7 +135,9 @@ public final class WarehouseViewController extends SubViewController {
                 new PieChart.Data("Available", data.getnMiscAvailable())
             )
         );
+        articleFilter.setItems(FXCollections.observableArrayList(getController().getWarehouseController().getArticlesViewModel().getArticles()));
 
+        changeArticleSelection(new ActionEvent());
         setTable(data.getStocks());
     }
 
@@ -158,5 +190,82 @@ public final class WarehouseViewController extends SubViewController {
 
         this.substituteView(ViewType.WAREHOUSE);
 
+    }
+
+    private void updateStocksTable(final QueryStock queryStock) {
+        final List<MasterStockViewModel> stocks = this.getController()
+                                                      .getWarehouseController()
+                                                      .getStocks(queryStock);
+        setTable(stocks);
+    }
+
+    @FXML
+    private void applyFiltersClicked(final ActionEvent event) {
+        final QueryStockBuilder builder = new QueryStockBuilder();
+        this.articleFilter
+            .getValue()
+            .ifPresent(article -> builder.setArticle(getController().getWarehouseController()
+                                                                    .getViewArticleById(article.getId())
+                                                                    .getValue()));
+        this.articleTypeFilter.getValue().ifPresent(builder::setArticleType);
+        this.expiresBeforeFilter.getValue().ifPresent(builder::setExpireBefore);
+        this.expiresAfterFilter.getValue().ifPresent(builder::setExpireAfter);
+        this.minRemainingQuantity.getValue().ifPresent(s -> {
+            final double minRemValue;
+            try {
+                minRemValue = Double.parseDouble(s);
+            } catch (final NumberFormatException ex) {
+                this.showErrorAndWait("The minimum remaining quantity must be a double number.");
+                return;
+            }
+            builder.setMinRemainingQuantity(Quantity.of(minRemValue, articleFilter.getValue().get().getUnitOfMeasure()).getValue());
+        });
+        this.maxRemainingQuantity.getValue().ifPresent(s -> {
+            final double maxRemValue;
+            try {
+                maxRemValue = Double.parseDouble(s);
+            } catch (final NumberFormatException ex) {
+                this.showErrorAndWait("The maximum remaining quantity must be a double number.");
+                return;
+            }
+            builder.setMaxRemainingQuantity(Quantity.of(maxRemValue, articleFilter.getValue().get().getUnitOfMeasure()).getValue());
+        });
+        this.minUsedQuantity.getValue().ifPresent(s -> {
+            final double minUsedValue;
+            try {
+                minUsedValue = Double.parseDouble(s);
+            } catch (final NumberFormatException ex) {
+                this.showErrorAndWait("The minimum used quantity must be a double number.");
+                return;
+            }
+            builder.setMinUsedQuantity(Quantity.of(minUsedValue, articleFilter.getValue().get().getUnitOfMeasure()).getValue());
+        });
+        this.maxUsedQuantity.getValue().ifPresent(s -> {
+            final double maxUsedValue;
+            try {
+                maxUsedValue = Double.parseDouble(s);
+            } catch (final NumberFormatException ex) {
+                this.showErrorAndWait("The maximum used quantity must be a double number.");
+                return;
+            }
+            builder.setMaxUsedQuantity(Quantity.of(maxUsedValue, articleFilter.getValue().get().getUnitOfMeasure()).getValue());
+        });
+        this.stockStateExclude.getValue().ifPresent(builder::setExcludeOnlyStockState);
+        this.stockStateInclude.getValue().ifPresent(builder::setIncludeOnlyStockState);
+
+        final Result<QueryStock> queryStockResult = builder.build();
+        if (queryStockResult.isError()) {
+            this.showErrorAndWait("Internal error: " + queryStockResult.getError().getMessage());
+            return;
+        }
+        this.updateStocksTable(queryStockResult.getValue());
+    }
+
+    @FXML
+    private void changeArticleSelection(final ActionEvent actionEvent) {
+        this.maxUsedQuantity.setDisable(!articleFilter.getValue().isPresent());
+        this.minUsedQuantity.setDisable(!articleFilter.getValue().isPresent());
+        this.maxRemainingQuantity.setDisable(!articleFilter.getValue().isPresent());
+        this.minRemainingQuantity.setDisable(!articleFilter.getValue().isPresent());
     }
 }

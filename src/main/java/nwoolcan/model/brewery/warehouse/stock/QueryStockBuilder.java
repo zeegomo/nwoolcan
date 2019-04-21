@@ -1,10 +1,10 @@
 package nwoolcan.model.brewery.warehouse.stock;
 
-import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
+import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 
 import javax.annotation.Nullable;
 import java.util.Date;
@@ -18,7 +18,7 @@ public final class QueryStockBuilder {
                                           + "select an article when selecting a quantity filter"
                                           + " and to select the same unit of measure.";
     @Nullable
-    private Article article;
+    private AbstractArticleViewModel article;
     @Nullable
     private ArticleType articleType;
     @Nullable
@@ -49,7 +49,7 @@ public final class QueryStockBuilder {
      * @param article to filter the query.
      * @return this.
      */
-    public QueryStockBuilder setArticle(final Article article) {
+    public QueryStockBuilder setArticle(final AbstractArticleViewModel article) {
         this.article = article;
         return this;
     }
@@ -159,7 +159,7 @@ public final class QueryStockBuilder {
      * @return a {@link Result} of {@link QueryStock} if there are not inconsistencies in the query.
      */
     public Result<QueryStock> build() {
-        return Result.of(new QueryStock(article,
+        return Result.of(new QueryStock(article == null ? null : article.getId(),
                                         articleType,
                                         expiresBefore,
                                         expiresAfter,
