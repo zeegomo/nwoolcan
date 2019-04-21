@@ -11,6 +11,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
+import nwoolcan.model.brewery.warehouse.stock.QueryStock;
+import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
+import nwoolcan.utils.Result;
+import nwoolcan.view.filters.DateFilter;
+import nwoolcan.view.filters.SelectFilter;
+import nwoolcan.view.filters.TextFilter;
 import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.mastertable.ColumnDescriptor;
@@ -20,6 +26,7 @@ import nwoolcan.view.subview.SubViewContainer;
 import nwoolcan.view.subview.SubViewController;
 import nwoolcan.view.utils.ViewModelCallback;
 import nwoolcan.viewmodel.brewery.warehouse.WarehouseViewModel;
+import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import nwoolcan.viewmodel.brewery.warehouse.stock.MasterStockViewModel;
 
 import java.util.Arrays;
@@ -31,6 +38,26 @@ import java.util.List;
 @SuppressWarnings("NullAway")
 public final class WarehouseViewController extends SubViewController {
 
+    @FXML
+    private SelectFilter<AbstractArticleViewModel> articleFilter;
+    @FXML
+    private SelectFilter articleTypeFilter;
+    @FXML
+    private DateFilter expiresBeforeFilter;
+    @FXML
+    private DateFilter expiresAfterFilter;
+    @FXML
+    private TextFilter minRemainingQuantity;
+    @FXML
+    private TextFilter maxRemainingQuantity;
+    @FXML
+    private TextFilter minUsedQuantity;
+    @FXML
+    private TextFilter maxUsedQuantity;
+    @FXML
+    private SelectFilter stockStateInclude;
+    @FXML
+    private SelectFilter stockStateExclude;
     @FXML
     private Label lblNumberBeerAvailable;
     @FXML
@@ -159,4 +186,31 @@ public final class WarehouseViewController extends SubViewController {
         this.substituteView(ViewType.WAREHOUSE);
 
     }
+
+    private void updateStocksTable(final QueryStock queryStock) {
+        final List<MasterStockViewModel> stocks = this.getController()
+                                                      .getWarehouseController()
+                                                      .getStocks(queryStock);
+        setTable(stocks);
+    }
+
+    @FXML
+    private void applyFiltersClicked(final ActionEvent event) {
+        final QueryStockBuilder builder = new QueryStockBuilder();
+        //his.articleFilter.getValue().isPresent(article -> builder.set)
+
+//        this.excludeTypeFilter.getValue().ifPresent(builder::setExcludeArticleType);
+//        this.includeTypeFilter.getValue().ifPresent(builder::setIncludeArticleType);
+//        this.nameFilter.getValue().ifPresent(v -> {
+//            builder.setMaxName(v);
+//            builder.setMinName(v + "~");
+//        });
+        final Result<QueryStock> queryStockResult = builder.build();
+        if (queryStockResult.isError()) {
+            this.showErrorAndWait("Internal error: " + queryStockResult.getError().getMessage());
+            return;
+        }
+        this.updateStocksTable(queryStockResult.getValue());
+    }
+
 }

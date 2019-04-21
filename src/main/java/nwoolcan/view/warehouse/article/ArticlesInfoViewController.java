@@ -145,6 +145,6 @@ public final class ArticlesInfoViewController extends SubViewController {
             builder.setMaxName(v);
             builder.setMinName(v + "~");
         });
-        this.setTable(this.getController().getWarehouseController().getArticles(builder.build()));
+        this.updateArticlesTable(builder.build());
     }
 }
