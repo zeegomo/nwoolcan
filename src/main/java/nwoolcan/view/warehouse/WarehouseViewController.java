@@ -1,6 +1,7 @@
 package nwoolcan.view.warehouse;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -41,6 +42,8 @@ import java.util.List;
 @SuppressWarnings("NullAway")
 public final class WarehouseViewController extends SubViewController {
 
+    @FXML
+    private ObservableList<AbstractArticleViewModel> articleList;
     @FXML
     private SelectFilter<AbstractArticleViewModel> articleFilter;
     @FXML
@@ -135,7 +138,9 @@ public final class WarehouseViewController extends SubViewController {
                 new PieChart.Data("Available", data.getnMiscAvailable())
             )
         );
+        articleFilter.setItems(FXCollections.observableArrayList(getController().getWarehouseController().getArticlesViewModel().getArticles()));
 
+        changeArticleSelection(new ActionEvent());
         setTable(data.getStocks());
     }
 
@@ -212,7 +217,7 @@ public final class WarehouseViewController extends SubViewController {
             final double minRemValue;
             try {
                 minRemValue = Double.parseDouble(s);
-            } catch (final NumberFormatException ex){
+            } catch (final NumberFormatException ex) {
                 this.showErrorAndWait("The minimum remaining quantity must be a double number.");
                 return;
             }
@@ -222,7 +227,7 @@ public final class WarehouseViewController extends SubViewController {
             final double maxRemValue;
             try {
                 maxRemValue = Double.parseDouble(s);
-            } catch (final NumberFormatException ex){
+            } catch (final NumberFormatException ex) {
                 this.showErrorAndWait("The maximum remaining quantity must be a double number.");
                 return;
             }
@@ -232,7 +237,7 @@ public final class WarehouseViewController extends SubViewController {
             final double minUsedValue;
             try {
                 minUsedValue = Double.parseDouble(s);
-            } catch (final NumberFormatException ex){
+            } catch (final NumberFormatException ex) {
                 this.showErrorAndWait("The minimum used quantity must be a double number.");
                 return;
             }
@@ -242,7 +247,7 @@ public final class WarehouseViewController extends SubViewController {
             final double maxUsedValue;
             try {
                 maxUsedValue = Double.parseDouble(s);
-            } catch (final NumberFormatException ex){
+            } catch (final NumberFormatException ex) {
                 this.showErrorAndWait("The maximum used quantity must be a double number.");
                 return;
             }
@@ -259,4 +264,11 @@ public final class WarehouseViewController extends SubViewController {
         this.updateStocksTable(queryStockResult.getValue());
     }
 
+    @FXML
+    private void changeArticleSelection(final ActionEvent actionEvent) {
+        this.maxUsedQuantity.setDisable(!articleFilter.getValue().isPresent());
+        this.minUsedQuantity.setDisable(!articleFilter.getValue().isPresent());
+        this.maxRemainingQuantity.setDisable(!articleFilter.getValue().isPresent());
+        this.minRemainingQuantity.setDisable(!articleFilter.getValue().isPresent());
+    }
 }

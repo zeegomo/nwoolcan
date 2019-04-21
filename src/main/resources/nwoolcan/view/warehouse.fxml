@@ -94,9 +94,9 @@
                                     <StockState fx:value="USED_UP" />
                                     <StockState fx:value="EXPIRED" />
                                 </FXCollections>
-                                <FXCollections fx:id="articleList" fx:factory="observableArrayList" /> <!-->added from articles in the controller<-->
+                                <FXCollections fx:id="articleListEmpty" fx:factory="observableArrayList" /> <!-->added from articles in the controller<-->
                             </fx:define>
-                            <SelectFilter fx:id="articleFilter" title="Only Article" placeholder="- Select Article -" items="$articleList"/>
+                            <SelectFilter fx:id="articleFilter" title="Only Article" placeholder="- Select Article -" items="$articleListEmpty" onAction="#changeArticleSelection"/>
                             <SelectFilter fx:id="articleTypeFilter" title="Only article type" placeholder="- Select type -" items="$typesList"/>
                             <SelectFilter fx:id="stockStateInclude" title="Only State" placeholder="- Select State -" items="$stockStates" />
                             <SelectFilter fx:id="stockStateExclude" title="Exclude State" placeholder="- Select State -" items="$stockStates" />

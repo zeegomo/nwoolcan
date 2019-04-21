@@ -2,6 +2,7 @@ package nwoolcan.view.filters;
 
 import javafx.beans.NamedArg;
 import javafx.beans.property.ObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
@@ -66,5 +67,13 @@ public final class SelectFilter<T> extends GUIFilter<T> {
      */
     public EventHandler<ActionEvent> getOnAction() {
         return onActionProperty().get();
+    }
+
+    /**
+     * Adds items to the {@link ComboBox}.
+     * @param items to be added.
+     */
+    public void setItems(final ObservableList<T> items) {
+        this.field.setItems(items);
     }
 }
