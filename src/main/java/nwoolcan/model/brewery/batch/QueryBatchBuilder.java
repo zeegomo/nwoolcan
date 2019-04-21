@@ -48,7 +48,7 @@ public class QueryBatchBuilder {
      * @param beerStyle the beer style to filter.
      * @return this.
      */
-    public QueryBatchBuilder setBatchId(final String beerStyle) {
+    public QueryBatchBuilder setBeerStyle(final String beerStyle) {
         this.beerStyle = beerStyle;
         return this;
     }

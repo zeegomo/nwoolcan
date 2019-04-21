@@ -19,6 +19,7 @@
 <?import nwoolcan.view.filters.SelectFilter?>
 <?import javafx.collections.FXCollections?>
 <?import nwoolcan.model.brewery.batch.BatchMethod?>
+<?import nwoolcan.view.filters.DateFilter?>
 <SubView fx:id="productionSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
@@ -85,8 +86,11 @@
                                     </FXCollections>
                                 </fx:define>
                                 <TextFilter fx:id="batchIdFilter" title="Batch Id"/>
+                                <TextFilter fx:id="beerNameFilter" title="Beer name"/>
+                                <TextFilter fx:id="beerStyleFilter" title="Beer style"/>
                                 <SelectFilter fx:id="batchMethodFilter" title="Batch method"
                                               placeholder="Select a batch method" items="$batchMethodList"/>
+                                <DateFilter fx:id="minStartDateFilter" title="Minimum start date"/>
                             </filters>
                         </FiltersBar>
                         <SubViewContainer fx:id="masterTableContainer" parent="$productionSubView">
