@@ -1,6 +1,7 @@
 package nwoolcan.model.brewery.batch.step.parameter;
 
 import nwoolcan.model.utils.UnitOfMeasure;
+import nwoolcan.utils.StringUtils;
 
 /**
  * Parameter type enum implementation.
@@ -39,11 +40,16 @@ public enum ParameterTypeEnum implements ParameterType {
 
     @Override
     public String getName() {
-        return this.name();
+        return StringUtils.underscoreSeparatedToHuman(this.name());
     }
 
     @Override
     public UnitOfMeasure getUnitOfMeasure() {
         return this.um;
+    }
+
+    @Override
+    public String toString() {
+        return StringUtils.underscoreSeparatedToHuman(this.name());
     }
 }

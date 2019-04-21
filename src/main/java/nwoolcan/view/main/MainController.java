@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 /**
  * Handles the Main view.
  */
-@SuppressWarnings("NullAway") // TODO
+@SuppressWarnings("NullAway")
 public final class MainController extends AbstractViewController {
 
     @FXML
@@ -34,7 +34,7 @@ public final class MainController extends AbstractViewController {
 
     @FXML
     private void initialize() {
-        this.getViewManager().getView(ViewType.WELCOME).peek(view -> this.contentPane.substitute(view));
+        this.getViewManager().getView(ViewType.DASHBOARD).peek(view -> this.contentPane.substitute(view));
     }
 
     /**
@@ -79,14 +79,6 @@ public final class MainController extends AbstractViewController {
      */
     public void menuFileQuitClick(final ActionEvent event) {
         Platform.exit();
-    }
-
-    /**
-     * Print on the stdout the current number of overlays.
-     * @param event The occurred event
-     */
-    public void menuFileCountOverlaysClick(final ActionEvent event) {
-        System.out.println(contentPane.getOverlaysCount());
     }
 
     @FXML

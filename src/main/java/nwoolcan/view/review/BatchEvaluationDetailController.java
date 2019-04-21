@@ -30,6 +30,8 @@ import java.util.stream.Collectors;
 public final class BatchEvaluationDetailController extends SubViewController
     implements InitializableController<BatchEvaluationDetailViewModel> {
 
+    private static final double VIEW_TO_COMPONENTS_RATIO = 3;
+
     private static final String LOAD_FAILED = "Load failed";
     @FXML
     private SubViewContainer container;
@@ -39,8 +41,6 @@ public final class BatchEvaluationDetailController extends SubViewController
     private VBox categories;
     @FXML
     private Text notes;
-
-    private final Logger logger;
     /**
      * Creates itself and gets injected.
      *
@@ -49,7 +49,6 @@ public final class BatchEvaluationDetailController extends SubViewController
      */
     public BatchEvaluationDetailController(final Controller controller, final ViewManager viewManager) {
         super(controller, viewManager);
-        this.logger = Logger.getLogger(this.getClass().getName());
     }
 
     @Override
@@ -67,11 +66,13 @@ public final class BatchEvaluationDetailController extends SubViewController
 
         this.categories.getChildren().add(acc);
         this.notes.setText(data.getInfo().getNotes().orElse(""));
-        this.notes.wrappingWidthProperty().bind(this.batchEvaluationDetailSubView.widthProperty().divide(3));
+        this.notes.wrappingWidthProperty()
+                  .bind(this.batchEvaluationDetailSubView.widthProperty().divide(VIEW_TO_COMPONENTS_RATIO));
     }
 
     private Node evaluationNode(final EvaluationViewModel data) {
-        return EvaluationView.builder().bindWidth(this.batchEvaluationDetailSubView.widthProperty().divide(3))
+        return EvaluationView.builder().bindWidth(this.batchEvaluationDetailSubView.widthProperty()
+                                                                                   .divide(VIEW_TO_COMPONENTS_RATIO))
                                           .displayValues(data)
                                           .enableInput(false)
                                           .build(this.getViewManager());
