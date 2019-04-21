@@ -31,32 +31,32 @@ public interface BatchInfo {
     Quantity getInitialBatchSize();
     /**
      * Return the original gravity for this batch, if available.
-     * @return a {@link Quantity}.
+     * @return a {@link Optional} of {@link Parameter}.
      */
     Optional<Parameter> getOg();
     /**
      * Return the final gravity for this batch, if available.
-     * @return a {@link Quantity}.
+     * @return a {@link Optional} of {@link Parameter}.
      */
     Optional<Parameter> getFg();
     /**
      * Return the color measurements of this batch, if available.
-     * @return a {@link Quantity}.
+     * @return a {@link Optional} of {@link Parameter}.
      */
     Optional<Parameter> getEbc();
     /**
      * Return the alcohol by volume of this batch, if available.
-     * @return a {@link Quantity}.
+     * @return a {@link Optional} of {@link Parameter}.
      */
     Optional<Parameter> getAbv();
     /**
      * Return the bitterness of this batch, if available.
-     * @return a {@link Quantity}.
+     * @return a {@link Optional} of {@link Parameter}.
      */
     Optional<Parameter> getIbu();
     /**
      * Return the water measurements of this batch, if available.
-     * @return a {@link Quantity}.
+     * @return a {@link Optional} of {@link WaterMeasurement}.
      */
     Optional<WaterMeasurement> getWaterMeasurements();
     /**
