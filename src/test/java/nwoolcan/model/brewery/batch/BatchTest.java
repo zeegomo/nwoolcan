@@ -28,6 +28,7 @@ import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
+import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Assert;
 import org.junit.Before;
@@ -297,7 +298,7 @@ public class BatchTest {
         //Stock again
         final Result<Empty> again = batchAlfredo.stockBatchInto(article, () -> warehouse.createBeerStock(article, batchAlfredo).getValue());
         Assert.assertTrue(again.isError());
-        Assert.assertEquals(1, warehouse.getStocks(new QueryStockBuilder().setArticle(article).build().getValue()).size());
+        Assert.assertEquals(1, warehouse.getStocks(new QueryStockBuilder().setArticle(AbstractArticleViewModel.getViewArticle(article)).build().getValue()).size());
 
         //Go to wrong step type.
         batchAlfredo.moveToNextStep(StepTypeEnum.MASHING).peek(e -> Assert.fail());
@@ -339,7 +340,7 @@ public class BatchTest {
         //Stocking not ended batch
         final Result<Empty> notEnded = batchAlfredo.stockBatchInto(article, () -> warehouse.createBeerStock(article, batchAlfredo).getValue());
         Assert.assertTrue(notEnded.isError());
-        Assert.assertEquals(0, warehouse.getStocks(new QueryStockBuilder().setArticle(article).build().getValue()).size());
+        Assert.assertEquals(0, warehouse.getStocks(new QueryStockBuilder().setArticle(AbstractArticleViewModel.getViewArticle(article)).build().getValue()).size());
 
         final Batch fin = brewery.getBatchBuilder().build(
             new BeerDescriptionImpl("name", "style"),
@@ -351,6 +352,6 @@ public class BatchTest {
         //Not matching units of measure
         final Result<Empty> noMatch = fin.stockBatchInto(article, () -> warehouse.createBeerStock(article, batchAlfredo).getValue());
         Assert.assertTrue(noMatch.isError());
-        Assert.assertEquals(0, warehouse.getStocks(new QueryStockBuilder().setArticle(article).build().getValue()).size());
+        Assert.assertEquals(0, warehouse.getStocks(new QueryStockBuilder().setArticle(AbstractArticleViewModel.getViewArticle(article)).build().getValue()).size());
     }
 }

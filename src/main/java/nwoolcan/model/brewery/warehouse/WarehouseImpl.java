@@ -43,8 +43,8 @@ public final class WarehouseImpl implements Warehouse {
         return stocks.stream()
                      // remove when article is present in queryStock but the article of
                      // the current stock is different from the one of the query.
-                     .filter(stock -> !(queryStock.getArticle().isPresent()
-                         && !queryStock.getArticle().get().equals(getArticleById(stock.getArticleId()).getValue())))
+                     .filter(stock -> !(queryStock.getArticleId().isPresent()
+                         && !queryStock.getArticleId().get().equals(stock.getArticleId())))
                      // remove when articletype is present in queryStock but the articletype of
                      // the current stock is different from the one of the query.
                      .filter(stock -> !(queryStock.getArticleType().isPresent()

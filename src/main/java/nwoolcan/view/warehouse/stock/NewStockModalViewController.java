@@ -6,12 +6,16 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.article.QueryArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
+import nwoolcan.model.brewery.warehouse.stock.Record;
+import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
+import nwoolcan.utils.Results;
 import nwoolcan.view.AbstractViewController;
 import nwoolcan.view.utils.ViewManager;
 import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
@@ -28,6 +32,10 @@ import java.util.List;
 @SuppressWarnings("NullAway")
 public final class NewStockModalViewController extends AbstractViewController {
 
+    @FXML
+    private TextField textFieldInitialQuantity;
+    @FXML
+    private CheckBox checkBoxInitialQuantity;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -51,6 +59,7 @@ public final class NewStockModalViewController extends AbstractViewController {
         comboBoxArticle.getItems().setAll(articles);
         comboBoxArticle.getSelectionModel().selectFirst();
         specifyDateClick(new ActionEvent());
+        specifyInitialQuantityClick(new ActionEvent());
     }
 
     @FXML
@@ -71,9 +80,36 @@ public final class NewStockModalViewController extends AbstractViewController {
                                          .createStock(comboBoxArticle.getValue().getId());
         }
         if (stockResult.isError()) {
-            this.showErrorAndWait("Internal Error: " + stockResult.getError().getMessage(), ((Node) actionEvent.getTarget()).getScene().getWindow());
-        } else {
-            ((Stage) this.datePicker.getScene().getWindow()).close();
+            this.showErrorAndWait("Create stock internal error: " + stockResult.getError().getMessage(),
+                                  ((Node) actionEvent.getTarget()).getScene().getWindow());
+            return;
         }
+
+        final int stockId = stockResult.getValue().getId();
+        if (checkBoxInitialQuantity.isSelected()) {
+            final Result<Double> recordDoubleAmountResult = Results.ofChecked(
+                                                        () -> Double.parseDouble(textFieldInitialQuantity.getText().trim()));
+            if (recordDoubleAmountResult.isError()) {
+                this.showErrorAndWait("The amount must be a number.",
+                                      this.textFieldInitialQuantity.getScene().getWindow()); // You can use any other control
+                return;
+            }
+            final double recordDoubleAmount = recordDoubleAmountResult.getValue();
+            final Result<Empty> addRecordResult = getController().getWarehouseController()
+                                                                 .addRecord(stockId,
+                                                                            recordDoubleAmount,
+                                                                            Record.Action.ADDING);
+            if (addRecordResult.isError()) {
+                this.showErrorAndWait("Add Record internal error: " + addRecordResult.getError().getMessage(),
+                    this.textFieldInitialQuantity.getScene().getWindow()); // You can use any other control
+                return;
+            }
+        }
+        ((Stage) this.datePicker.getScene().getWindow()).close();
+    }
+
+    @FXML
+    private void specifyInitialQuantityClick(final ActionEvent actionEvent) {
+        textFieldInitialQuantity.setDisable(!checkBoxInitialQuantity.isSelected());
     }
 }

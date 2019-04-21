@@ -2,6 +2,8 @@ package nwoolcan.controller;
 
 import nwoolcan.controller.batch.BatchController;
 import nwoolcan.controller.batch.BatchControllerImpl;
+import nwoolcan.controller.file.FileController;
+import nwoolcan.controller.file.FileControllerImpl;
 import nwoolcan.controller.warehouse.WarehouseController;
 import nwoolcan.controller.warehouse.WarehouseControllerImpl;
 import nwoolcan.model.brewery.Brewery;
@@ -23,8 +25,6 @@ import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
-import nwoolcan.model.database.Database;
-import nwoolcan.model.database.DatabaseJsonImpl;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
@@ -54,10 +54,12 @@ public final class BreweryController implements Controller {
     private Brewery brewery = new BreweryImpl();
     private BatchController batchController;
     private WarehouseController warehouseController;
+    private FileControllerImpl fileController;
 
     private void initilizeSubControllers() {
         this.warehouseController = new WarehouseControllerImpl(brewery.getWarehouse());
         this.batchController = new BatchControllerImpl(brewery);
+        this.fileController = new FileControllerImpl();
     }
 
     /**
@@ -218,17 +220,20 @@ public final class BreweryController implements Controller {
 
     @Override
     public Result<Empty> saveTo(final File filename) {
-        final Database db = new DatabaseJsonImpl(filename);
-        return db.save(this.brewery);
+        return this.fileController.saveTo(filename, this.brewery);
     }
 
     @Override
     public Result<Empty> loadFrom(final File filename) {
-        final Database db = new DatabaseJsonImpl(filename);
-        return db.load().peek(b -> {
+        return this.fileController.loadFrom(filename).peek(b -> {
             this.brewery = b;
             this.initilizeSubControllers();
         }).toEmpty();
+    }
+
+    @Override
+    public FileController getFileController() {
+        return this.fileController;
     }
 
     @Override
@@ -245,7 +250,8 @@ public final class BreweryController implements Controller {
             this.getProductionViewModel(),
             this.getWarehouseController().getWarehouseViewModel(),
             expiringStocks,
-            this.brewery.getBreweryName().orElse("Dashboard")
+            this.brewery.getBreweryName().orElse("Dashboard"),
+            this.brewery.getOwnerName().orElse("")
         );
     }
 }

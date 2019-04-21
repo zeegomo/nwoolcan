@@ -6,6 +6,7 @@ import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
+import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -35,7 +36,7 @@ public final class QueryStockTest {
 
         final QueryStock query = res.getValue();
 
-        Assert.assertFalse(query.getArticle().isPresent());
+        Assert.assertFalse(query.getArticleId().isPresent());
         Assert.assertFalse(query.getExpiresBefore().isPresent());
         Assert.assertFalse(query.getExpiresAfter().isPresent());
         Assert.assertFalse(query.getMinRemainingQuantity().isPresent());
@@ -52,7 +53,7 @@ public final class QueryStockTest {
      */
     @Test
     public void testCompleteConstruction() {
-        Result<QueryStock> res = new QueryStockBuilder().setArticle(ARTICLE)
+        Result<QueryStock> res = new QueryStockBuilder().setArticle(AbstractArticleViewModel.getViewArticle(ARTICLE))
                                                         .setExpireBefore(DATE)
                                                         .setExpireAfter(DATE)
                                                         .setMinRemainingQuantity(QUANTITY)
@@ -67,7 +68,7 @@ public final class QueryStockTest {
 
         final QueryStock query = res.getValue();
 
-        Assert.assertTrue(query.getArticle().isPresent());
+        Assert.assertTrue(query.getArticleId().isPresent());
         Assert.assertTrue(query.getExpiresBefore().isPresent());
         Assert.assertTrue(query.getExpiresAfter().isPresent());
         Assert.assertTrue(query.getMinRemainingQuantity().isPresent());
@@ -78,7 +79,7 @@ public final class QueryStockTest {
         Assert.assertTrue(query.getExcludeStockState().isPresent());
         Assert.assertTrue(query.isSortDescending());
 
-        Assert.assertEquals(ARTICLE, query.getArticle().get());
+        Assert.assertEquals((long) ARTICLE.getId(), (long) query.getArticleId().get());
         Assert.assertEquals(DATE, query.getExpiresBefore().get());
         Assert.assertEquals(DATE, query.getExpiresAfter().get());
         Assert.assertEquals(QUANTITY, query.getMinRemainingQuantity().get());
@@ -93,7 +94,7 @@ public final class QueryStockTest {
      */
     @Test
     public void testWrongConstruction() {
-        Result<QueryStock> res = new QueryStockBuilder().setArticle(ARTICLE)
+        Result<QueryStock> res = new QueryStockBuilder().setArticle(AbstractArticleViewModel.getViewArticle(ARTICLE))
                                                         .setMinRemainingQuantity(QUANTITY)
                                                         .setMaxRemainingQuantity(QUANTITY_WRONG)
                                                         .build();
