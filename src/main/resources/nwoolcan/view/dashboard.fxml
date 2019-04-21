@@ -14,11 +14,18 @@
 <SubView fx:id="content" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.dashboard.DashboardController" fitToHeight="true">
     <BorderPane>
         <top>
-            <Label fx:id="lblTitle" BorderPane.alignment="CENTER">
-                <font>
-                    <Font size="28" />
-                </font>
-            </Label>
+            <HBox alignment="BASELINE_CENTER" spacing="10">
+                <Label fx:id="lblTitle">
+                    <font>
+                        <Font size="28" />
+                    </font>
+                </Label>
+                <Label fx:id="lblOwner">
+                    <font>
+                        <Font size="17" />
+                    </font>
+                </Label>
+            </HBox>
         </top>
         <center>
             <VBox>

@@ -250,7 +250,8 @@ public final class BreweryController implements Controller {
             this.getProductionViewModel(),
             this.getWarehouseController().getWarehouseViewModel(),
             expiringStocks,
-            this.brewery.getBreweryName().orElse("Dashboard")
+            this.brewery.getBreweryName().orElse("Dashboard"),
+            this.brewery.getOwnerName().orElse("")
         );
     }
 }
