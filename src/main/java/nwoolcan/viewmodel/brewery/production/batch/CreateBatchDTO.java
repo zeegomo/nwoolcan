@@ -23,7 +23,7 @@ public class CreateBatchDTO {
     @Nullable
     private final String category;
     private final BatchMethod method;
-    private final Quantity intialSize;
+    private final Quantity initialSize;
     private final StepType initialStep;
 
     private final List<Pair<Integer, Double>> ingredients;
@@ -35,7 +35,7 @@ public class CreateBatchDTO {
      * @param style style name.
      * @param category category.
      * @param method batch method.
-     * @param intialSize initial size quantity.
+     * @param initialSize initial size quantity.
      * @param initialStep initial step type.
      * @param ingredients list of pair of ingredient article id and double quantity.
      * @param waterMeasurement list of triple of element, double quantity and registration date.
@@ -44,7 +44,7 @@ public class CreateBatchDTO {
                           final String style,
                           @Nullable final String category,
                           final BatchMethod method,
-                          final Quantity intialSize,
+                          final Quantity initialSize,
                           final StepType initialStep,
                           final List<Pair<Integer, Double>> ingredients,
                           final List<Triple<WaterMeasurement.Element, Double, Date>> waterMeasurement) {
@@ -52,7 +52,7 @@ public class CreateBatchDTO {
         this.style = style;
         this.category = category;
         this.method = method;
-        this.intialSize = intialSize;
+        this.initialSize = initialSize;
         this.initialStep = initialStep;
         this.ingredients = Collections.unmodifiableList(ingredients);
         this.waterMeasurement = Collections.unmodifiableList(waterMeasurement);
@@ -94,8 +94,8 @@ public class CreateBatchDTO {
      * Returns the initial quantity size.
      * @return the initial quantity size.
      */
-    public Quantity getIntialSize() {
-        return this.intialSize;
+    public Quantity getInitialSize() {
+        return this.initialSize;
     }
 
     /**
