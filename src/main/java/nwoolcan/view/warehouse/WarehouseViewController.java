@@ -11,8 +11,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
+import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
 import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
+import nwoolcan.model.brewery.warehouse.stock.StockState;
+import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Result;
 import nwoolcan.view.filters.DateFilter;
 import nwoolcan.view.filters.SelectFilter;
@@ -41,7 +44,7 @@ public final class WarehouseViewController extends SubViewController {
     @FXML
     private SelectFilter<AbstractArticleViewModel> articleFilter;
     @FXML
-    private SelectFilter articleTypeFilter;
+    private SelectFilter<ArticleType> articleTypeFilter;
     @FXML
     private DateFilter expiresBeforeFilter;
     @FXML
@@ -55,9 +58,9 @@ public final class WarehouseViewController extends SubViewController {
     @FXML
     private TextFilter maxUsedQuantity;
     @FXML
-    private SelectFilter stockStateInclude;
+    private SelectFilter<StockState> stockStateInclude;
     @FXML
-    private SelectFilter stockStateExclude;
+    private SelectFilter<StockState> stockStateExclude;
     @FXML
     private Label lblNumberBeerAvailable;
     @FXML
@@ -197,14 +200,57 @@ public final class WarehouseViewController extends SubViewController {
     @FXML
     private void applyFiltersClicked(final ActionEvent event) {
         final QueryStockBuilder builder = new QueryStockBuilder();
-        //his.articleFilter.getValue().isPresent(article -> builder.set)
+        this.articleFilter
+            .getValue()
+            .ifPresent(article -> builder.setArticle(getController().getWarehouseController()
+                                                                    .getViewArticleById(article.getId())
+                                                                    .getValue()));
+        this.articleTypeFilter.getValue().ifPresent(builder::setArticleType);
+        this.expiresBeforeFilter.getValue().ifPresent(builder::setExpireBefore);
+        this.expiresAfterFilter.getValue().ifPresent(builder::setExpireAfter);
+        this.minRemainingQuantity.getValue().ifPresent(s -> {
+            final double minRemValue;
+            try {
+                minRemValue = Double.parseDouble(s);
+            } catch (final NumberFormatException ex){
+                this.showErrorAndWait("The minimum remaining quantity must be a double number.");
+                return;
+            }
+            builder.setMinRemainingQuantity(Quantity.of(minRemValue, articleFilter.getValue().get().getUnitOfMeasure()).getValue());
+        });
+        this.maxRemainingQuantity.getValue().ifPresent(s -> {
+            final double maxRemValue;
+            try {
+                maxRemValue = Double.parseDouble(s);
+            } catch (final NumberFormatException ex){
+                this.showErrorAndWait("The maximum remaining quantity must be a double number.");
+                return;
+            }
+            builder.setMaxRemainingQuantity(Quantity.of(maxRemValue, articleFilter.getValue().get().getUnitOfMeasure()).getValue());
+        });
+        this.minUsedQuantity.getValue().ifPresent(s -> {
+            final double minUsedValue;
+            try {
+                minUsedValue = Double.parseDouble(s);
+            } catch (final NumberFormatException ex){
+                this.showErrorAndWait("The minimum used quantity must be a double number.");
+                return;
+            }
+            builder.setMinUsedQuantity(Quantity.of(minUsedValue, articleFilter.getValue().get().getUnitOfMeasure()).getValue());
+        });
+        this.maxUsedQuantity.getValue().ifPresent(s -> {
+            final double maxUsedValue;
+            try {
+                maxUsedValue = Double.parseDouble(s);
+            } catch (final NumberFormatException ex){
+                this.showErrorAndWait("The maximum used quantity must be a double number.");
+                return;
+            }
+            builder.setMaxUsedQuantity(Quantity.of(maxUsedValue, articleFilter.getValue().get().getUnitOfMeasure()).getValue());
+        });
+        this.stockStateExclude.getValue().ifPresent(builder::setExcludeOnlyStockState);
+        this.stockStateInclude.getValue().ifPresent(builder::setIncludeOnlyStockState);
 
-//        this.excludeTypeFilter.getValue().ifPresent(builder::setExcludeArticleType);
-//        this.includeTypeFilter.getValue().ifPresent(builder::setIncludeArticleType);
-//        this.nameFilter.getValue().ifPresent(v -> {
-//            builder.setMaxName(v);
-//            builder.setMinName(v + "~");
-//        });
         final Result<QueryStock> queryStockResult = builder.build();
         if (queryStockResult.isError()) {
             this.showErrorAndWait("Internal error: " + queryStockResult.getError().getMessage());
