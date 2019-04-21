@@ -24,7 +24,6 @@ public class CreateBatchDTO {
     private final String category;
     private final BatchMethod method;
     private final Quantity initialSize;
-    private final StepType initialStep;
 
     private final List<Pair<Integer, Double>> ingredients;
     private final List<Triple<WaterMeasurement.Element, Double, Date>> waterMeasurement;
@@ -36,7 +35,6 @@ public class CreateBatchDTO {
      * @param category category.
      * @param method batch method.
      * @param initialSize initial size quantity.
-     * @param initialStep initial step type.
      * @param ingredients list of pair of ingredient article id and double quantity.
      * @param waterMeasurement list of triple of element, double quantity and registration date.
      */
@@ -45,7 +43,6 @@ public class CreateBatchDTO {
                           @Nullable final String category,
                           final BatchMethod method,
                           final Quantity initialSize,
-                          final StepType initialStep,
                           final List<Pair<Integer, Double>> ingredients,
                           final List<Triple<WaterMeasurement.Element, Double, Date>> waterMeasurement) {
         this.name = name;
@@ -53,7 +50,6 @@ public class CreateBatchDTO {
         this.category = category;
         this.method = method;
         this.initialSize = initialSize;
-        this.initialStep = initialStep;
         this.ingredients = Collections.unmodifiableList(ingredients);
         this.waterMeasurement = Collections.unmodifiableList(waterMeasurement);
     }
@@ -96,14 +92,6 @@ public class CreateBatchDTO {
      */
     public Quantity getInitialSize() {
         return this.initialSize;
-    }
-
-    /**
-     * Returns the initial step type.
-     * @return the initial step type.
-     */
-    public StepType getInitialStep() {
-        return this.initialStep;
     }
 
     /**
