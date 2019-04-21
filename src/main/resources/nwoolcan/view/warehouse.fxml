@@ -12,6 +12,7 @@
 <?import nwoolcan.view.subview.SubViewContainer?>
 
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
 <SubView fx:id="warehouseSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
@@ -27,7 +28,10 @@
     <center>
         <VBox>
             <HBox spacing="5">
-                <Button text="Back" onAction="#backButtonClick"/>
+                <padding>
+                    <Insets top="5" bottom="5" left="5" right="5" />
+                </padding>
+                <Button text="Dashboard" onAction="#gotoDashboardClick"/>
                 <Button text="Create Stock" onAction="#createNewStockButtonClick"/>
             </HBox>
             <TitledPane text="General information">
