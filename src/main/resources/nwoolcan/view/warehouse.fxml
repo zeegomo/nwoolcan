@@ -12,6 +12,14 @@
 <?import nwoolcan.view.subview.SubViewContainer?>
 
 <?import javafx.scene.layout.GridPane?>
+<?import nwoolcan.view.filters.FiltersBar?>
+<?import nwoolcan.view.filters.SelectFilter?>
+<?import javafx.collections.FXCollections?>
+<?import nwoolcan.model.brewery.warehouse.article.ArticleType?>
+<?import nwoolcan.view.filters.TextFilter?>
+<?import nwoolcan.view.filters.DateFilter?>
+<?import nwoolcan.model.brewery.warehouse.stock.StockState?>
+<?import javafx.geometry.Insets?>
 <SubView fx:id="warehouseSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
@@ -27,7 +35,10 @@
     <center>
         <VBox>
             <HBox spacing="5">
-                <Button text="Back" onAction="#backButtonClick"/>
+                <padding>
+                    <Insets top="5" bottom="5" left="5" right="5" />
+                </padding>
+                <Button text="Dashboard" onAction="#gotoDashboardClick"/>
                 <Button text="Create Stock" onAction="#createNewStockButtonClick"/>
             </HBox>
             <TitledPane text="General information">
@@ -73,8 +84,37 @@
                 </GridPane>
             </TitledPane>
             <TitledPane text="Stocks">
-                <SubViewContainer fx:id="masterTableContainer" parent="$warehouseSubView">
-                </SubViewContainer>
+                <VBox spacing="2">
+                    <FiltersBar onAction="#applyFiltersClicked">
+                        <filters>
+                            <fx:define>
+                                <FXCollections fx:id="typesList" fx:factory="observableArrayList">
+                                    <ArticleType fx:value="FINISHED_BEER" />
+                                    <ArticleType fx:value="INGREDIENT" />
+                                    <ArticleType fx:value="MISC" />
+                                </FXCollections>
+                                <FXCollections fx:id="stockStates" fx:factory="observableArrayList">
+                                    <StockState fx:value="AVAILABLE" />
+                                    <StockState fx:value="USED_UP" />
+                                    <StockState fx:value="EXPIRED" />
+                                </FXCollections>
+                                <FXCollections fx:id="articleListEmpty" fx:factory="observableArrayList" /> <!-->added from articles in the controller<-->
+                            </fx:define>
+                            <SelectFilter fx:id="articleFilter" title="Only Article" placeholder="- Select Article -" items="$articleListEmpty" onAction="#changeArticleSelection"/>
+                            <SelectFilter fx:id="articleTypeFilter" title="Only article type" placeholder="- Select type -" items="$typesList"/>
+                            <SelectFilter fx:id="stockStateInclude" title="Only State" placeholder="- Select State -" items="$stockStates" />
+                            <SelectFilter fx:id="stockStateExclude" title="Exclude State" placeholder="- Select State -" items="$stockStates" />
+                            <DateFilter fx:id="expiresBeforeFilter" title="Expires Before" />
+                            <DateFilter fx:id="expiresAfterFilter" title="Expires After" />
+                            <TextFilter fx:id="minRemainingQuantity" title="Min Rem Q" disable="true" />
+                            <TextFilter fx:id="maxRemainingQuantity" title="Max Rem Q" disable="true" />
+                            <TextFilter fx:id="minUsedQuantity" title="Min Used Q" disable="true" />
+                            <TextFilter fx:id="maxUsedQuantity" title="Min Used Q" disable="true" />
+                        </filters>
+                    </FiltersBar>
+                    <SubViewContainer fx:id="masterTableContainer" parent="$warehouseSubView">
+                    </SubViewContainer>
+                </VBox>
             </TitledPane>
         </VBox>
     </center>

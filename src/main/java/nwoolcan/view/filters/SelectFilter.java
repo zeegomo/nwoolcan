@@ -1,6 +1,10 @@
 package nwoolcan.view.filters;
 
 import javafx.beans.NamedArg;
+import javafx.beans.property.ObjectProperty;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -38,5 +42,38 @@ public final class SelectFilter<T> extends GUIFilter<T> {
     @Override
     void resetValue() {
         this.field.setValue(null);
+    }
+
+
+    /**
+     * Event called when the "Apply filters" button is clicked.
+     * @return a property to handle the apply filters event.
+     */
+    public ObjectProperty<EventHandler<ActionEvent>> onActionProperty() {
+        return this.field.onActionProperty();
+    }
+
+    /**
+     * Set apply event handler.
+     * @param handler the handler to handle apply event.
+     */
+    public void setOnAction(final EventHandler<ActionEvent> handler) {
+        this.onActionProperty().set(handler);
+    }
+
+    /**
+     * Returns the apply event handler.
+     * @return the apply event handler.
+     */
+    public EventHandler<ActionEvent> getOnAction() {
+        return onActionProperty().get();
+    }
+
+    /**
+     * Adds items to the {@link ComboBox}.
+     * @param items to be added.
+     */
+    public void setItems(final ObservableList<T> items) {
+        this.field.setItems(items);
     }
 }

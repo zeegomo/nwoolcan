@@ -1,17 +1,15 @@
 package nwoolcan.view.main;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuItem;
-import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.view.AbstractViewController;
+import nwoolcan.view.utils.PersistencyUtils;
 import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubViewContainer;
 
-import java.io.File;
 import java.util.logging.Logger;
 
 /**
@@ -78,26 +76,32 @@ public final class MainController extends AbstractViewController {
      * @param event The occurred event
      */
     public void menuFileQuitClick(final ActionEvent event) {
-        Platform.exit();
-    }
-
-    @FXML
-    private void menuViewWelcomeClick(final ActionEvent event) {
-        this.getViewManager().getView(ViewType.WELCOME).peek(view -> this.contentPane.substitute(view));
+        ((Stage) this.contentPane.getScene().getWindow()).close();
     }
 
     @FXML
     private void menuFileSaveClick(final ActionEvent event) {
-        final FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
-        final File target = fileChooser.showSaveDialog(this.contentPane.getScene().getWindow());
-        if (target != null) {
+        final PersistencyUtils utils = new PersistencyUtils(this.contentPane.getScene().getWindow(), this.getController().getFileController());
+        utils.showSaveFile().ifPresent(target -> {
             this.getController().saveTo(target)
-                .peek(e -> this.showInfoAndWait("Saving completed", ((MenuItem) event.getTarget()).getParentPopup().getOwnerWindow()))
+                .peek(e -> utils.showSaveSuccessAlert())
                 .peekError(err -> {
                     Logger.getLogger(this.getClass().getName()).severe(err.toString());
-                    this.showErrorAndWait("There was an error!", ((MenuItem) event.getTarget()).getParentPopup().getOwnerWindow());
+                    utils.showErrorAlert();
                 });
-        }
+        });
+    }
+
+    @FXML
+    private void menuFileLoadClick(final ActionEvent event) {
+        final PersistencyUtils utils = new PersistencyUtils(this.contentPane.getScene().getWindow(), this.getController().getFileController());
+        utils.showOpenFile().ifPresent(target -> {
+            this.getController().loadFrom(target)
+                .peek(e -> this.getViewManager().getView(ViewType.DASHBOARD).peek(this.contentPane::substitute))
+                .peekError(err -> {
+                    Logger.getLogger(this.getClass().getName()).severe(err.toString());
+                    utils.showErrorAlert();
+                });
+        });
     }
 }

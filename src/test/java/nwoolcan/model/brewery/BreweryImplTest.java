@@ -16,6 +16,7 @@ import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
+import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -92,7 +93,7 @@ public class BreweryImplTest {
 
         final Result<Empty> stockBatchRes = brewery.stockBatch(batch, beerArticle);
         Assert.assertTrue(stockBatchRes.isPresent());
-        final Result<QueryStock> queryStockRes = new QueryStockBuilder().setArticle(beerArticle).build();
+        final Result<QueryStock> queryStockRes = new QueryStockBuilder().setArticle(AbstractArticleViewModel.getViewArticle(beerArticle)).build();
         Assert.assertTrue(queryStockRes.isPresent());
         List<Stock> stocks = brewery.getWarehouse().getStocks(queryStockRes.getValue());
         Assert.assertEquals(1, stocks.size());

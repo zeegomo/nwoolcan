@@ -1,6 +1,5 @@
 package nwoolcan.model.brewery.warehouse.stock;
 
-import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleType;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.StringUtils;
@@ -42,7 +41,7 @@ public final class QueryStock {
         }
     }
     @Nullable
-    private final Article article;
+    private final Integer articleId;
     @Nullable
     private final ArticleType articleType;
     @Nullable
@@ -65,7 +64,7 @@ public final class QueryStock {
     private final boolean sortDescending;
     // Package private
 
-    QueryStock(@Nullable final Article article,
+    QueryStock(@Nullable final Integer articleId,
                @Nullable final ArticleType articleType,
                @Nullable final Date expiresBefore,
                @Nullable final Date expiresAfter,
@@ -77,7 +76,7 @@ public final class QueryStock {
                @Nullable final StockState stockStateExcluded,
                final SortParameter sortParameter,
                final boolean sortDescending) {
-        this.article = article;
+        this.articleId = articleId;
         this.articleType = articleType;
         this.expiresBefore = expiresBefore;
         this.expiresAfter = expiresAfter;
@@ -91,11 +90,11 @@ public final class QueryStock {
         this.sortDescending = sortDescending;
     }
     /**
-     * Return the specific {@link Article} required by the query.
-     * @return the specific {@link Article} required by the query.
+     * Return the specific {@link nwoolcan.model.brewery.warehouse.article.Article} id required by the query.
+     * @return the specific {@link nwoolcan.model.brewery.warehouse.article.Article} id required by the query.
      */
-    public Optional<Article> getArticle() {
-        return Optional.ofNullable(article);
+    public Optional<Integer> getArticleId() {
+        return Optional.ofNullable(articleId);
     }
     /**
      * Return the specific {@link ArticleType} required by the query.
@@ -178,7 +177,7 @@ public final class QueryStock {
     @Override
     public String toString() {
         return "[QueryStock]{"
-            +  "article=" + article
+            +  "articleId=" + articleId
             + ", expiresBefore=" + expiresBefore
             + ", expiresAfter=" + expiresAfter
             + ", minRemainingQuantity=" + minRemainingQuantity

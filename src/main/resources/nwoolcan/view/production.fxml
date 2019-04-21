@@ -33,11 +33,14 @@
         </top>
         <center>
             <VBox>
-                <GridPane alignment="CENTER_RIGHT" hgap="10" >
+                <GridPane alignment="CENTER_LEFT" hgap="5" >
                     <padding>
                         <Insets top="5" bottom="5" left="5" right="5" />
                     </padding>
                     <Button GridPane.columnIndex="0" GridPane.rowIndex="0"
+                            onAction="#gotoDashboardClick"
+                            text="Dashboard"/>
+                    <Button GridPane.columnIndex="1" GridPane.rowIndex="0"
                             onAction="#createNewBatchClick"
                             text="Create new batch" />
                 </GridPane>
