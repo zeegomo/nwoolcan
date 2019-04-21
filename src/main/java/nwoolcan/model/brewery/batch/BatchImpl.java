@@ -56,7 +56,6 @@ final class BatchImpl implements Batch {
      * @param batchMethod the batch's method.
      * @param initialSize the initial size of the batch.
      * @param ingredients the ingredients of the beer made by the batch.
-     * @param initialStep the initial step of the batch.
      * @param waterMeasurement the water measurement of the batch.
      * @throws IllegalArgumentException if the initial step cannot be created.
      */
@@ -64,7 +63,6 @@ final class BatchImpl implements Batch {
               final BatchMethod batchMethod,
               final Quantity initialSize,
               final Collection<Pair<IngredientArticle, Double>> ingredients,
-              final StepType initialStep,
               @Nullable final WaterMeasurement waterMeasurement,
               final IdGenerator generator,
               final StepFactory stepFactory) {
@@ -77,7 +75,7 @@ final class BatchImpl implements Batch {
             this.batchInfo = ModifiableBatchInfoFactory.create(ingredients, beerDescription, batchMethod, initialSize, waterMeasurement);
         }
 
-        final Result<Step> res = this.stepFactory.create(initialStep);
+        final Result<Step> res = this.stepFactory.create(batchMethod.getInitialStep());
         res.peekError(e -> {
             throw new IllegalArgumentException(e);
         }).peek(step -> step.addParameterObserver(batchInfo));
