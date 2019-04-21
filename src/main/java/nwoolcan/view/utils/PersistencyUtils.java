@@ -102,11 +102,10 @@ public final class PersistencyUtils {
      * @return a boolean indicating if the user confirmed.
      */
     public boolean askSaveConfirmation() {
-        final Alert saveAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        final Alert saveAlert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to save?", ButtonType.YES, ButtonType.NO);
         saveAlert.initOwner(this.owner);
         saveAlert.setTitle("Save?");
         saveAlert.setHeaderText("Save?");
-        saveAlert.setContentText("Do you want to save?");
-        return saveAlert.showAndWait().map(buttonType -> buttonType.equals(ButtonType.OK)).orElse(false);
+        return saveAlert.showAndWait().map(buttonType -> buttonType.equals(ButtonType.YES)).orElse(false);
     }
 }
