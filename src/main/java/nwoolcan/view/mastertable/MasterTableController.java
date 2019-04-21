@@ -2,7 +2,6 @@ package nwoolcan.view.mastertable;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -52,7 +51,7 @@ public final class MasterTableController<T, U> extends SubViewController impleme
         // Add "action" column
         final TableColumn<T, Button> actionColumn = new TableColumn<>();
         actionColumn.setCellValueFactory(obj -> {
-            final Button btn = new Button("View");
+            final Button btn = new Button("Detail");
             final U detailViewModel = data.getDetailMapper().apply(obj.getValue());
             btn.setOnAction(event -> this.overlayView(data.getDetailViewType(), detailViewModel));
             return new SimpleObjectProperty<>(btn);
@@ -65,10 +64,5 @@ public final class MasterTableController<T, U> extends SubViewController impleme
     @Override
     protected SubView getSubView() {
         return this.masterTableSubView;
-    }
-
-    @FXML
-    void btnBackClick(final ActionEvent event) {
-        this.previousView();
     }
 }

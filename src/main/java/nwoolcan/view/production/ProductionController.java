@@ -194,4 +194,9 @@ public final class ProductionController
 
         this.getViewManager().getView(ViewType.MASTER_TABLE, masterViewModel).peek(p -> masterTableContainer.substitute(p));
     }
+
+    @FXML
+    private void gotoDashboardClick(final ActionEvent event) {
+        this.substituteView(ViewType.DASHBOARD);
+    }
 }

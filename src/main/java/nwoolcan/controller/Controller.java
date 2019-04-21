@@ -1,6 +1,7 @@
 package nwoolcan.controller;
 
 import nwoolcan.controller.batch.BatchController;
+import nwoolcan.controller.file.FileController;
 import nwoolcan.controller.warehouse.WarehouseController;
 import nwoolcan.model.brewery.batch.QueryBatch;
 import nwoolcan.utils.Empty;
@@ -93,6 +94,11 @@ public interface Controller {
      * @return a {@link Result} describing the operation's outcome.
      */
     Result<Empty> loadFrom(File filename);
+    /**
+     * Returns the file controller.
+     * @return the file controller.
+     */
+    FileController getFileController();
 
     /**
      * Returns the built view model for the dashboard.

@@ -164,8 +164,8 @@ public final class WarehouseViewController extends SubViewController {
     }
 
     @FXML
-    private void backButtonClick(final ActionEvent actionEvent) {
-        this.previousView();
+    private void gotoDashboardClick(final ActionEvent actionEvent) {
+        this.substituteView(ViewType.DASHBOARD);
     }
 
     @FXML
