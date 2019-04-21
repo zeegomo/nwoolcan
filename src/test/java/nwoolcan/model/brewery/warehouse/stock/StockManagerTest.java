@@ -6,8 +6,6 @@ import nwoolcan.model.brewery.batch.BatchBuilder;
 import nwoolcan.model.brewery.batch.BatchMethod;
 import nwoolcan.model.brewery.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.batch.misc.BeerDescriptionImpl;
-import nwoolcan.model.brewery.batch.step.StepType;
-import nwoolcan.model.brewery.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.Article;
 import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
@@ -66,7 +64,6 @@ public class StockManagerTest {
         final BeerDescription beerDescription = new BeerDescriptionImpl(GIAMPIERO, GIAMPIERO);
         final BatchMethod batchMethod = BatchMethod.ALL_GRAIN;
         final Quantity initialSize = Quantity.of(3, UnitOfMeasure.LITER).getValue();
-        final StepType initialStep = StepTypeEnum.PACKAGING;
         final Batch batch = new BatchBuilder(
             new IdGenerator() {
                 private int nextId = 0;
@@ -76,7 +73,7 @@ public class StockManagerTest {
                     return nextId++;
                 }
             }
-        ).build(beerDescription, batchMethod, initialSize, initialStep).getValue();
+        ).build(beerDescription, batchMethod, initialSize).getValue();
         final Date date = new Date();
         final BeerArticle beerArticle = articleManager.createBeerArticle(GIAMPIERO, UnitOfMeasure.BOTTLE_33_CL);
         final Result<BeerStock> beerStockResult = stockManager.createBeerStock(beerArticle, date, batch);

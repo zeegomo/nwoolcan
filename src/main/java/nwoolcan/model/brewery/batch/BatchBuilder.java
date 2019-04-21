@@ -4,7 +4,6 @@ import nwoolcan.model.brewery.IdGenerator;
 import nwoolcan.model.brewery.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.batch.step.EnumStepFactory;
-import nwoolcan.model.brewery.batch.step.StepType;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.utils.Result;
@@ -67,13 +66,11 @@ public class BatchBuilder {
      * @param beerDescription the batch's beer description.
      * @param batchMethod the batch method.
      * @param initialSize the batch's initial size.
-     * @param initialStep the batch's initial step.
      * @return a {@link Result} containing the built {@link Batch}.
      */
     public Result<Batch> build(final BeerDescription beerDescription,
                                final BatchMethod batchMethod,
-                               final Quantity initialSize,
-                               final StepType initialStep) {
+                               final Quantity initialSize) {
         return Result.ofEmpty()
                      .require(() -> this.ingredients.stream().map(Pair::getKey).distinct().count() == this.ingredients.size(),
                          new IllegalStateException(MUST_BE_DISTINCT_INGREDIENTS_MESSAGE))
@@ -82,7 +79,6 @@ public class BatchBuilder {
                          batchMethod,
                          initialSize,
                          this.ingredients,
-                         initialStep,
                          this.waterMeasurement,
                          this.generator,
                          new EnumStepFactory()
