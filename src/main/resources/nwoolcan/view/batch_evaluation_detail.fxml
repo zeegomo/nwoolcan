@@ -49,7 +49,7 @@
                         <ColumnConstraints percentWidth="50"/>
                     </columnConstraints>
                     <FlowPane GridPane.columnIndex="0">
-                        <Text text="Notes:"/>
+                        <Text text="Notes: "/>
                         <Text fx:id="notes"/>
                     </FlowPane>
                 </GridPane>
