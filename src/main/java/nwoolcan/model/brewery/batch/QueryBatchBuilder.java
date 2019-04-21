@@ -19,6 +19,7 @@ public class QueryBatchBuilder {
     @Nullable private Quantity minBatchSize;
     @Nullable private Quantity maxBatchSize;
     @Nullable private Date minStartDate;
+    @Nullable private Boolean onlyEnded;
 
     /**
      * Constructor to initialize the queryBuilder.
@@ -89,6 +90,15 @@ public class QueryBatchBuilder {
         return this;
     }
     /**
+     * Setter of the boolean filter for choosing only ended batches.
+     * @param onlyEnded true to filter only ended batches.
+     * @return this.
+     */
+    public QueryBatchBuilder setOnlyEnded(final boolean onlyEnded) {
+        this.onlyEnded = onlyEnded;
+        return this;
+    }
+    /**
      * Builds the QueryBatch.
      * @return the built {@link QueryBatch}.
      */
@@ -100,7 +110,8 @@ public class QueryBatchBuilder {
             this.batchMethod,
             this.minBatchSize,
             this.maxBatchSize,
-            this.minStartDate))
+            this.minStartDate,
+            this.onlyEnded))
                      .require(this::checkBatchSize);
     }
     /**

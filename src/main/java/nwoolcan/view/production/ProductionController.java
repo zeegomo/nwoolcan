@@ -169,6 +169,7 @@ public final class ProductionController
         this.beerStyleFilter.getValue().ifPresent(builder::setBeerStyle);
         this.batchMethodFilter.getValue().ifPresent(builder::setBatchMethod);
         this.minStartDateFilter.getValue().ifPresent(builder::setMinStartDate);
+        this.onlyEndedFilter.getValue().ifPresent(builder::setOnlyEnded);
 
         builder.build()
                .peek(qb -> this.buildMasterTable(this.getController().getBatches(qb)))

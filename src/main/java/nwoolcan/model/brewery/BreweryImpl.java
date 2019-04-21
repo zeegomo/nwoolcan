@@ -79,6 +79,8 @@ public final class BreweryImpl implements Brewery {
                                                                                                .getStartDate()
                                                                                                .before(minStart))
                                                                              .orElse(false)));
+        queryBatch.getOnlyEnded().ifPresent(oe -> filters.add(b -> !oe || b.isEnded()));
+
         for (final Predicate<Batch> f : filters) {
             s = s.filter(f);
         }
