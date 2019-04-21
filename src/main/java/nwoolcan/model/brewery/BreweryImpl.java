@@ -3,6 +3,7 @@ package nwoolcan.model.brewery;
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.batch.BatchBuilder;
 import nwoolcan.model.brewery.batch.QueryBatch;
+import nwoolcan.model.brewery.batch.QueryBatchBuilder;
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.WarehouseImpl;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
@@ -13,9 +14,13 @@ import nwoolcan.utils.Result;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Brewery Implementation.
@@ -46,27 +51,47 @@ public final class BreweryImpl implements Brewery {
 
     @Override
     public Collection<Batch> getBatches(final QueryBatch queryBatch) {
-        final Collection<Batch> retBatches = new ArrayList<>(batches);
-        return retBatches.stream()
-                         .filter(batch -> !(queryBatch.getBatchId().isPresent()
-                                         && batch.getId() != queryBatch.getBatchId().get()))
-                         .filter(batch -> !(queryBatch.getBatchMethod().isPresent()
-                                         && batch.getBatchInfo().getMethod()
-                                         != queryBatch.getBatchMethod().get()))
-                         .filter(batch -> !(queryBatch.getMinBatchSize().isPresent()
-                              && batch.getBatchInfo()
-                                      .getInitialBatchSize()
-                                      .lessThan(queryBatch.getMinBatchSize().get())))
-                         .filter(batch -> !(queryBatch.getMaxBatchSize().isPresent()
-                              && batch.getBatchInfo()
-                                      .getInitialBatchSize()
-                                      .moreThan(queryBatch.getMaxBatchSize().get())))
-                         .collect(Collectors.toList());
+        Stream<Batch> s = this.batches.stream();
+        final List<Predicate<Batch>> filters = new ArrayList<>();
+
+        queryBatch.getBatchId().ifPresent(id -> filters.add(b -> b.getId() == id));
+        queryBatch.getBeerName().ifPresent(name -> filters.add(b -> b.getBatchInfo()
+                                                                     .getBeerDescription()
+                                                                     .getName()
+                                                                     .toLowerCase()
+                                                                     .contains(name.toLowerCase())));
+        queryBatch.getBeerStyle().ifPresent(style -> filters.add(b -> b.getBatchInfo()
+                                                                       .getBeerDescription()
+                                                                       .getStyle()
+                                                                       .toLowerCase()
+                                                                       .contains(style.toLowerCase())));
+        queryBatch.getBatchMethod().ifPresent(method -> filters.add(b -> b.getBatchInfo().getMethod().equals(method)));
+        queryBatch.getMinBatchSize().ifPresent(minSize -> filters.add(b -> b.getBatchInfo()
+                                                                            .getInitialBatchSize()
+                                                                            .moreThan(minSize)));
+        queryBatch.getMaxBatchSize().ifPresent(maxSize -> filters.add(b -> b.getBatchInfo()
+                                                                            .getInitialBatchSize()
+                                                                            .lessThan(maxSize)));
+        queryBatch.getMinStartDate().ifPresent(minStart -> filters.add(b -> b.getSteps()
+                                                                             .stream()
+                                                                             .findAny()
+                                                                             .map(step -> !step.getStepInfo()
+                                                                                               .getStartDate()
+                                                                                               .before(minStart))
+                                                                             .orElse(false)));
+        queryBatch.getOnlyEnded().ifPresent(oe -> filters.add(b -> !oe || b.isEnded()));
+
+        for (final Predicate<Batch> f : filters) {
+            s = s.filter(f);
+        }
+
+        return s.sorted(Comparator.comparing(Batch::getId, (a, b) -> Integer.compare(b, a)))
+                .collect(Collectors.toList());
     }
 
     @Override
     public Collection<Batch> getBatches() {
-        return new ArrayList<>(batches);
+        return this.getBatches(new QueryBatchBuilder().build().getValue());
     }
 
     @Override

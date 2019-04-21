@@ -11,6 +11,7 @@ public final class DashboardViewModel {
     private final WarehouseViewModel warehouseViewModel;
     private final int expiringSoon;
     private final String breweryName;
+    private final String breweryOwner;
 
     /**
      * Creates this view model.
@@ -18,12 +19,14 @@ public final class DashboardViewModel {
      * @param warehouseViewModel the warehouse view model to get data from
      * @param expiringSoon number of stocks expiring soon
      * @param breweryName the name of this brewery
+     * @param breweryOwner the name of the owner of the brewery
      */
-    public DashboardViewModel(final ProductionViewModel productionViewModel, final WarehouseViewModel warehouseViewModel, final int expiringSoon, final String breweryName) {
+    public DashboardViewModel(final ProductionViewModel productionViewModel, final WarehouseViewModel warehouseViewModel, final int expiringSoon, final String breweryName, final String breweryOwner) {
         this.productionViewModel = productionViewModel;
         this.warehouseViewModel = warehouseViewModel;
         this.expiringSoon = expiringSoon;
         this.breweryName = breweryName;
+        this.breweryOwner = breweryOwner;
     }
 
     /**
@@ -113,4 +116,14 @@ public final class DashboardViewModel {
     public String getBreweryName() {
         return breweryName;
     }
+
+
+    /**
+     * Returns the name of the owner of the brewery.
+     * @return the name of the owner of the brewery.
+     */
+    public String getBreweryOwner() {
+        return breweryOwner;
+    }
+
 }

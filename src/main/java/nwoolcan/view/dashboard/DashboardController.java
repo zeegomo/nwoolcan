@@ -52,6 +52,9 @@ public final class DashboardController extends SubViewController {
     private Label lblTitle;
 
     @FXML
+    private Label lblOwner;
+
+    @FXML
     private SubView content;
 
     /**
@@ -67,6 +70,7 @@ public final class DashboardController extends SubViewController {
     private void initialize() {
         final DashboardViewModel data = this.getController().getDashboardViewModel();
         this.lblTitle.setText(data.getBreweryName());
+        this.lblOwner.setText(data.getBreweryOwner().isEmpty() ? "" : "(" + data.getBreweryOwner() + ")");
 
         // Production
         this.lblTotalNumberBatches.setText(Long.toString(data.getNBatches()));

@@ -3,6 +3,7 @@ package nwoolcan.viewmodel.brewery.production.batch;
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.viewmodel.brewery.utils.QuantityViewModel;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 
 /**
@@ -16,6 +17,8 @@ public class MasterBatchViewModel {
     private final String batchMethodName;
     private final String currentStepName;
     private final Date startDate;
+    @Nullable
+    private final Date endDate;
     private final QuantityViewModel initialBatchSize;
     private final QuantityViewModel currentBatchSize;
     private final boolean isEnded;
@@ -31,7 +34,15 @@ public class MasterBatchViewModel {
         this.beerStyleName = batch.getBatchInfo().getBeerDescription().getStyle();
         this.batchMethodName = batch.getBatchInfo().getMethod().getName();
         this.currentStepName = batch.getCurrentStep().getStepInfo().getType().getName();
-        this.startDate = new Date(batch.getSteps().stream().findFirst().get().getStepInfo().getStartDate().getTime());
+        this.startDate = new Date(batch.getSteps()
+                                       .stream()
+                                       .findFirst()
+                                       .get().getStepInfo().getStartDate().getTime());
+        this.endDate = batch.isEnded() ? new Date(
+            batch.getCurrentStep().getStepInfo().getEndDate().orElse(
+                batch.getCurrentStep().getStepInfo().getStartDate()
+            ).getTime()
+        ) : null;
         this.initialBatchSize = new QuantityViewModel(batch.getBatchInfo().getInitialBatchSize());
         this.currentBatchSize = new QuantityViewModel(batch.getCurrentSize());
         this.isEnded = batch.isEnded();
@@ -79,12 +90,22 @@ public class MasterBatchViewModel {
     }
 
     /**
+     * Returns the batch end date, if the batch is ended, null otherwise.
+     * @return the batch end date, if the batch is ended, null otherwise.
+     */
+    @Nullable
+    public Date getEndDate() {
+        return this.endDate != null ? new Date(this.endDate.getTime()) : null;
+    }
+
+    /**
      * Returns the batch start date.
      * @return the batch start date.
      */
     public Date getStartDate() {
         return new Date(this.startDate.getTime());
     }
+
 
     /**
      * Returns a {@link QuantityViewModel} representing the batch initial size.
