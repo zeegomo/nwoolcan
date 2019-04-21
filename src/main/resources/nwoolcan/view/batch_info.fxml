@@ -13,23 +13,17 @@
          fx:controller="nwoolcan.view.production.BatchInfoController">
     <BorderPane>
         <left>
-            <VBox>
-                <FlowPane>
-                    <Label text="Name: "/>
-                    <Label fx:id="nameLabel"/>
-                </FlowPane>
-                <FlowPane>
-                    <Label text="Style: "/>
-                    <Label fx:id="styleLabel"/>
-                </FlowPane>
-                <FlowPane>
-                    <Label text="Style category: "/>
-                    <Label fx:id="styleCategoryLabel"/>
-                </FlowPane>
-                <FlowPane>
-                    <Label text="Batch initial size: "/>
-                    <Label fx:id="batchSizeLabel"/>
-                </FlowPane>
+            <VBox fx:id="descriptionVBox">
+                <GridPane>
+                    <Label text="Name: " GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Label fx:id="nameLabel" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    <Label text="Style: " GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <Label fx:id="styleLabel" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    <Label text="Style category: " GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <Label fx:id="styleCategoryLabel" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                    <Label text="Batch initial size: " GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <Label fx:id="batchSizeLabel" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                </GridPane>
             </VBox>
         </left>
         <center>
