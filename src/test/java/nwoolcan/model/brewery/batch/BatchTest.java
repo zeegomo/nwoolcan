@@ -93,8 +93,7 @@ public class BatchTest {
         batchAlfredo = b1.build(
             alfredo,
             BatchMethod.ALL_GRAIN,
-            Q1,
-            StepTypeEnum.MASHING
+            Q1
         ).getValue();
 
         final BatchBuilder b2 = brewery.getBatchBuilder();
@@ -105,8 +104,7 @@ public class BatchTest {
         batchRossina = b2.build(
             rossina,
             BatchMethod.PARTIAL_MASH,
-            Q1,
-            StepTypeEnum.MASHING
+            Q1
         ).getValue();
 
         final BatchBuilder b3 = brewery.getBatchBuilder();
@@ -115,8 +113,7 @@ public class BatchTest {
         batchBiondina = b3.build(
             biondina,
             BatchMethod.EXTRACT,
-            Q2,
-            StepTypeEnum.MASHING
+            Q2
         ).getValue();
     }
 
@@ -310,11 +307,6 @@ public class BatchTest {
      */
     @Test
     public void testEndSizeSteps() {
-        batchBiondina.moveToNextStep(StepTypeEnum.BOILING).peekError(e -> Assert.fail(e.getMessage()));
-
-        //Check same size as started
-        Assert.assertEquals(batchBiondina.getBatchInfo().getInitialBatchSize(),
-            batchBiondina.getSteps().get(0).getStepInfo().getEndStepSize().get());
 
         final int evapo = 1000;
         batchBiondina.getCurrentStep().finalize("Evaporated",
@@ -325,7 +317,7 @@ public class BatchTest {
         batchBiondina.moveToNextStep(StepTypeEnum.FERMENTING).peekError(e -> Assert.fail(e.getMessage()));
 
         //Check changed.
-        Assert.assertNotEquals(batchBiondina.getSteps().get(1).getStepInfo().getEndStepSize().get(),
+        Assert.assertNotEquals(batchBiondina.getSteps().get(0).getStepInfo().getEndStepSize().get(),
             batchBiondina.getBatchInfo().getInitialBatchSize());
     }
 
@@ -345,8 +337,7 @@ public class BatchTest {
         final Batch fin = brewery.getBatchBuilder().build(
             new BeerDescriptionImpl("name", "style"),
             BatchMethod.ALL_GRAIN,
-            Quantity.of(100, UnitOfMeasure.LITER).getValue(),
-            StepTypeEnum.FINALIZED
+            Quantity.of(100, UnitOfMeasure.LITER).getValue()
         ).getValue();
 
         //Not matching units of measure

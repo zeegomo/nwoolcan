@@ -2,7 +2,6 @@ package nwoolcan.viewmodel.brewery.production.batch;
 
 import nwoolcan.model.brewery.batch.BatchMethod;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurement;
-import nwoolcan.model.brewery.batch.step.StepType;
 import nwoolcan.model.utils.Quantity;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
@@ -23,8 +22,7 @@ public class CreateBatchDTO {
     @Nullable
     private final String category;
     private final BatchMethod method;
-    private final Quantity intialSize;
-    private final StepType initialStep;
+    private final Quantity initialSize;
 
     private final List<Pair<Integer, Double>> ingredients;
     private final List<Triple<WaterMeasurement.Element, Double, Date>> waterMeasurement;
@@ -35,8 +33,7 @@ public class CreateBatchDTO {
      * @param style style name.
      * @param category category.
      * @param method batch method.
-     * @param intialSize initial size quantity.
-     * @param initialStep initial step type.
+     * @param initialSize initial size quantity.
      * @param ingredients list of pair of ingredient article id and double quantity.
      * @param waterMeasurement list of triple of element, double quantity and registration date.
      */
@@ -44,16 +41,14 @@ public class CreateBatchDTO {
                           final String style,
                           @Nullable final String category,
                           final BatchMethod method,
-                          final Quantity intialSize,
-                          final StepType initialStep,
+                          final Quantity initialSize,
                           final List<Pair<Integer, Double>> ingredients,
                           final List<Triple<WaterMeasurement.Element, Double, Date>> waterMeasurement) {
         this.name = name;
         this.style = style;
         this.category = category;
         this.method = method;
-        this.intialSize = intialSize;
-        this.initialStep = initialStep;
+        this.initialSize = initialSize;
         this.ingredients = Collections.unmodifiableList(ingredients);
         this.waterMeasurement = Collections.unmodifiableList(waterMeasurement);
     }
@@ -94,16 +89,8 @@ public class CreateBatchDTO {
      * Returns the initial quantity size.
      * @return the initial quantity size.
      */
-    public Quantity getIntialSize() {
-        return this.intialSize;
-    }
-
-    /**
-     * Returns the initial step type.
-     * @return the initial step type.
-     */
-    public StepType getInitialStep() {
-        return this.initialStep;
+    public Quantity getInitialSize() {
+        return this.initialSize;
     }
 
     /**
