@@ -3,6 +3,7 @@ package nwoolcan.model.brewery;
 import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.batch.BatchBuilder;
 import nwoolcan.model.brewery.batch.QueryBatch;
+import nwoolcan.model.brewery.batch.QueryBatchBuilder;
 import nwoolcan.model.brewery.warehouse.Warehouse;
 import nwoolcan.model.brewery.warehouse.WarehouseImpl;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
@@ -13,7 +14,7 @@ import nwoolcan.utils.Result;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -82,12 +83,13 @@ public final class BreweryImpl implements Brewery {
             s = s.filter(f);
         }
 
-        return s.collect(Collectors.toList());
+        return s.sorted(Comparator.comparing(Batch::getId, (a, b) -> Integer.compare(b, a)))
+                .collect(Collectors.toList());
     }
 
     @Override
     public Collection<Batch> getBatches() {
-        return Collections.unmodifiableCollection(this.batches);
+        return this.getBatches(new QueryBatchBuilder().build().getValue());
     }
 
     @Override
