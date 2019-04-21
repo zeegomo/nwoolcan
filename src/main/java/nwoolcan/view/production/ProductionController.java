@@ -15,6 +15,8 @@ import nwoolcan.model.brewery.batch.BatchMethod;
 import nwoolcan.model.brewery.batch.QueryBatchBuilder;
 import nwoolcan.utils.Result;
 import nwoolcan.view.InitializableController;
+import nwoolcan.view.filters.BooleanFilter;
+import nwoolcan.view.filters.DateFilter;
 import nwoolcan.view.filters.SelectFilter;
 import nwoolcan.view.filters.TextFilter;
 import nwoolcan.view.subview.SubViewController;
@@ -41,6 +43,14 @@ public final class ProductionController
     extends SubViewController
     implements InitializableController<ProductionViewModel> {
 
+    @FXML
+    private BooleanFilter onlyEndedFilter;
+    @FXML
+    private DateFilter minStartDateFilter;
+    @FXML
+    private TextFilter beerStyleFilter;
+    @FXML
+    private TextFilter beerNameFilter;
     @FXML
     private SelectFilter<BatchMethod> batchMethodFilter;
     @FXML
@@ -144,20 +154,22 @@ public final class ProductionController
      */
     public void applyBatchesFilters(final ActionEvent event) {
         final QueryBatchBuilder builder = new QueryBatchBuilder();
-        if (this.batchIdFilter.getValue().isPresent()) {
+        this.batchIdFilter.getValue().ifPresent(id -> {
             int batchId;
             try {
-                batchId = Integer.parseInt(this.batchIdFilter.getValue().get());
+                batchId = Integer.parseInt(id);
             } catch (NumberFormatException ex) {
                 this.showErrorAndWait("Batch Id filter must be a number!", this.lblNumberProductionBatches.getScene().getWindow());
                 return;
             }
             builder.setBatchId(batchId);
-        }
+        });
 
-        if (this.batchMethodFilter.getValue().isPresent()) {
-            builder.setBatchMethod(this.batchMethodFilter.getValue().get());
-        }
+        this.beerNameFilter.getValue().ifPresent(builder::setBeerName);
+        this.beerStyleFilter.getValue().ifPresent(builder::setBeerStyle);
+        this.batchMethodFilter.getValue().ifPresent(builder::setBatchMethod);
+        this.minStartDateFilter.getValue().ifPresent(builder::setMinStartDate);
+        this.onlyEndedFilter.getValue().ifPresent(builder::setOnlyEnded);
 
         builder.build()
                .peek(qb -> this.buildMasterTable(this.getController().getBatches(qb)))
@@ -174,6 +186,7 @@ public final class ProductionController
                 new ColumnDescriptor("Batch method", "batchMethodName"),
                 new ColumnDescriptor("Current step", "currentStepName"),
                 new ColumnDescriptor("Start date", "startDate"),
+                new ColumnDescriptor("End date", "endDate"),
                 new ColumnDescriptor("Initial size", "initialBatchSize"),
                 new ColumnDescriptor("Current size", "currentBatchSize"),
                 new ColumnDescriptor("Ended", "ended"),

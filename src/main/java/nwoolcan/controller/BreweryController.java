@@ -12,7 +12,6 @@ import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.batch.BatchBuilder;
 import nwoolcan.model.brewery.batch.BatchMethod;
 import nwoolcan.model.brewery.batch.QueryBatch;
-import nwoolcan.model.brewery.batch.QueryBatchBuilder;
 import nwoolcan.model.brewery.batch.misc.BeerDescriptionImpl;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurementFactory;
@@ -41,7 +40,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -81,13 +79,13 @@ public final class BreweryController implements Controller {
 
     @Override
     public ProductionViewModel getProductionViewModel() {
-        return new ProductionViewModel(this.brewery.getBatches(new QueryBatchBuilder().build().getValue()));
+        return new ProductionViewModel(this.brewery.getBatches());
     }
 
     @Override
     public List<MasterBatchViewModel> getBatches(final QueryBatch query) {
-        return Collections.unmodifiableList(this.brewery.getBatches(query).stream()
-                                                        .sorted(Comparator.comparing(Batch::getId, (a, b) -> Integer.compare(b, a)))
+        return Collections.unmodifiableList(this.brewery.getBatches(query)
+                                                        .stream()
                                                         .map(MasterBatchViewModel::new)
                                                         .collect(Collectors.toList()));
     }

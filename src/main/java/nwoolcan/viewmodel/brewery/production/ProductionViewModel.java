@@ -5,7 +5,6 @@ import nwoolcan.model.brewery.batch.Batch;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,7 +28,6 @@ public class ProductionViewModel {
      */
     public ProductionViewModel(final Collection<Batch> batches) {
         this.batches = batches.stream()
-                              .sorted(Comparator.comparing(Batch::getId, (a, b) -> Integer.compare(b, a)))
                               .map(MasterBatchViewModel::new)
                               .collect(Collectors.toList());
         this.methodsFrequency = batches.stream()
