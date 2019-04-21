@@ -1,0 +1,40 @@
+{
+  "nwoolcan.model.brewery.BreweryImpl": {
+    "breweryName": {
+      "java.lang.String": "mario"
+    },
+    "ownerName": {
+      "java.lang.String": "ciccio"
+    },
+    "warehouse": {
+      "nwoolcan.model.brewery.warehouse.WarehouseImpl": {
+        "stockManager": {
+          "nwoolcan.model.brewery.warehouse.stock.StockManager": {
+            "articleManager": {
+              "nwoolcan.model.brewery.warehouse.article.ArticleManager": {
+                "nextAvailableId": {
+                  "java.lang.Integer": 1
+                },
+                "articleToArticle": {}
+              }
+            },
+            "stockToStock": {},
+            "nextAvailableId": {
+              "java.lang.Integer": 1
+            }
+          }
+        }
+      }
+    },
+    "batches": {
+      "java.util.ArrayList": []
+    },
+    "batchIdGenerator": {
+      "nwoolcan.model.brewery.BatchIdGenerator": {
+        "nextId": {
+          "java.lang.Integer": 0
+        }
+      }
+    }
+  }
+}

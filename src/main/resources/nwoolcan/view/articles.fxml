@@ -18,6 +18,7 @@
 
 <?import javafx.collections.FXCollections?>
 <?import nwoolcan.view.filters.FiltersBar?>
+<?import javafx.geometry.Insets?>
 <SubView fx:id="articlesSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
@@ -33,7 +34,10 @@
         <center>
             <VBox>
                 <HBox spacing="5">
-                    <Button text="Back" onAction="#backButtonClick"/>
+                    <padding>
+                        <Insets top="5" bottom="5" left="5" right="5" />
+                    </padding>
+                    <Button text="Dashboard" onAction="#backButtonClick"/>
                     <Button onAction="#createNewArticleClick" text="Create new article" />
                 </HBox>
                 <TitledPane text="General information">

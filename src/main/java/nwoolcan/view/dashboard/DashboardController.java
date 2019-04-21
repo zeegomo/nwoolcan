@@ -124,6 +124,11 @@ public final class DashboardController extends SubViewController {
         this.substituteView(ViewType.PRODUCTION, this.getController().getProductionViewModel());
     }
 
+    @FXML
+    private void toArticlesClicked(final ActionEvent event) {
+        this.substituteView(ViewType.ARTICLES);
+    }
+
     @Override
     protected SubView getSubView() {
         return this.content;
