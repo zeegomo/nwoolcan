@@ -10,6 +10,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -43,6 +44,10 @@ public final class StepDetailController
 
     private Runnable updateFather = () -> { };
 
+    @FXML
+    private VBox notesVBox;
+    @FXML
+    private TextArea notesTextArea;
     @FXML
     private Label unitOfMeasureSymbolLabel;
     @FXML
@@ -90,6 +95,11 @@ public final class StepDetailController
         final long durationMillis = data.getEndDate() == null ? 0 : data.getEndDate().getTime() - data.getStartDate().getTime();
         this.durationLabel.setText(durationMillis == 0 ? "" : this.getDurationBreakdown(durationMillis));
         this.finalizedLabel.setText(data.isFinalized() ? "Yes" : "No");
+
+        this.notesTextArea.setText(data.getNotes());
+        this.notesTextArea.maxWidthProperty().bind(
+            this.notesVBox.widthProperty().divide(3)
+        );
 
         ParameterType prevParameter = this.parameterTypesComboBox.getValue();
         this.parameterTypesComboBox.setItems(FXCollections.observableList(data.getPossibleParametersToRegister()));
