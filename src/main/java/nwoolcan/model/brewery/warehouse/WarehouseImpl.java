@@ -112,13 +112,8 @@ public final class WarehouseImpl implements Warehouse {
                        // remove those article where query article specifies the first
                        // lexicographical name and where the name of the article is
                        // lexicographically before it.
-                       .filter(article -> !(queryArticle.getMinName().isPresent()
-                            && article.getName().compareTo(queryArticle.getMinName().get()) > 0))
-                       // remove those article where query article specifies the last
-                       // lexicographical name and where the name of the article is
-                       // lexicographically after it.
-                       .filter(article -> !(queryArticle.getMaxName().isPresent()
-                            && article.getName().compareTo(queryArticle.getMaxName().get()) < 0))
+                       .filter(article -> !(queryArticle.getFitName().isPresent()
+                            && article.getName().toLowerCase().contains(queryArticle.getFitName().get().toLowerCase())))
                        // remove those article which type is not the one to be included.
                        .filter(article -> !(queryArticle.getIncludeArticleType().isPresent()
                            && !article.getArticleType()
