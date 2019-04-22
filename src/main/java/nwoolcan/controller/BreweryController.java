@@ -53,8 +53,9 @@ public final class BreweryController implements Controller {
     private BatchController batchController;
     private WarehouseController warehouseController;
     private FileControllerImpl fileController;
+    private static final String DASHBOARD_DEFAULT_NAME = "Dashboard";
 
-    private void initilizeSubControllers() {
+    private void initializeSubControllers() {
         this.warehouseController = new WarehouseControllerImpl(brewery.getWarehouse());
         this.batchController = new BatchControllerImpl(brewery);
         this.fileController = new FileControllerImpl();
@@ -64,7 +65,7 @@ public final class BreweryController implements Controller {
      * Constructor which creates the {@link WarehouseController}.
      */
     public BreweryController() {
-        this.initilizeSubControllers();
+        this.initializeSubControllers();
     }
 
     @Override
@@ -213,7 +214,7 @@ public final class BreweryController implements Controller {
     @Override
     public void initializeNewBrewery() {
         this.brewery = new BreweryImpl();
-        this.initilizeSubControllers();
+        this.initializeSubControllers();
     }
 
     @Override
@@ -225,7 +226,7 @@ public final class BreweryController implements Controller {
     public Result<Empty> loadFrom(final File filename) {
         return this.fileController.loadFrom(filename).peek(b -> {
             this.brewery = b;
-            this.initilizeSubControllers();
+            this.initializeSubControllers();
         }).toEmpty();
     }
 
@@ -248,7 +249,7 @@ public final class BreweryController implements Controller {
             this.getProductionViewModel(),
             this.getWarehouseController().getWarehouseViewModel(),
             expiringStocks,
-            this.brewery.getBreweryName().orElse("Dashboard"),
+            this.brewery.getBreweryName().orElse(DASHBOARD_DEFAULT_NAME),
             this.brewery.getOwnerName().orElse("")
         );
     }
