@@ -15,10 +15,6 @@ public final class QueryArticle {
      */
     public enum SortParameter {
         /**
-         * No order.
-         */
-        NONE,
-        /**
          * Sort accordingly with the id.
          */
         ID,

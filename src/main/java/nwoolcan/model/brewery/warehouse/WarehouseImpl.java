@@ -227,7 +227,8 @@ public final class WarehouseImpl implements Warehouse {
                 return des * s1.getRemainingQuantity().compareTo(s2.getRemainingQuantity());
             case USED_QUANTITY:
                 return des * s1.getUsedQuantity().compareTo(s2.getUsedQuantity());
-            case NONE:
+            case ID:
+                return des * Integer.compare(s1.getId(), s2.getId());
             default:
                 return 0;
         }
@@ -254,7 +255,6 @@ public final class WarehouseImpl implements Warehouse {
                 return des * a1.getName().compareTo(a2.getName());
             case ID:
                 return des * Integer.compare(a1.getId(), a2.getId());
-            case NONE:
             default:
                 return 0;
         }

@@ -10,7 +10,7 @@ public final class QueryArticleBuilder {
     @Nullable private String fitName;
     @Nullable private ArticleType includeArticleType;
     @Nullable private ArticleType excludeArticleType;
-    private QueryArticle.SortParameter sortParameter = QueryArticle.SortParameter.NONE;
+    private QueryArticle.SortParameter sortParameter = QueryArticle.SortParameter.ID;
     private Boolean sortDescending = false;
 
     /**
