@@ -11,7 +11,9 @@ import java.util.Objects;
  */
 public class ArticleImpl extends AbstractArticle {
 
-
+    private static final String NAME_CAN_NOT_BE_EMPTY = "Name can not be empty";
+    private static final String NOT_INGREDIENT_ARTICLE = "This is not an Ingredient Article.";
+    private static final String NOT_BEER_ARTICLE = "This is not a Beer Article.";
 
     /**
      * Constructor of the class. Only article of type miscellaneous can be constructed.
@@ -23,7 +25,7 @@ public class ArticleImpl extends AbstractArticle {
     ArticleImpl(final int id, final String name, final UnitOfMeasure unitOfMeasure) {
         super(id, name, unitOfMeasure);
         if (name.isEmpty()) {
-            throw new IllegalArgumentException("Name can not be empty.");
+            throw new IllegalArgumentException(NAME_CAN_NOT_BE_EMPTY);
         }
     }
 
@@ -44,7 +46,7 @@ public class ArticleImpl extends AbstractArticle {
      */
     @Override
     public Result<IngredientArticle> toIngredientArticle() {
-        return Result.error(new IllegalAccessException("This is not Ingredient Article."));
+        return Result.error(new IllegalAccessException(NOT_INGREDIENT_ARTICLE));
     }
     /**
      * To override this method return the linked BeerArticle in case it is an ingredient,
@@ -53,7 +55,7 @@ public class ArticleImpl extends AbstractArticle {
      */
     @Override
     public Result<BeerArticle> toBeerArticle() {
-        return Result.error(new IllegalAccessException("This is not a Beer Article"));
+        return Result.error(new IllegalAccessException(NOT_BEER_ARTICLE));
     }
 
     /**

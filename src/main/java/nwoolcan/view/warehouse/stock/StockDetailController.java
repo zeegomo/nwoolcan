@@ -65,6 +65,9 @@ public final class StockDetailController extends SubViewController implements In
         }
     }
 
+    private static final String AMOUNT = "Amount";
+    private static final String INTERNAL_ERROR = "Internal Error: ";
+    private static final String DATE_PATTERN = "dd-MM-yyyy HH:mm";
     @FXML
     private Label lblTextExpDate;
     @FXML
@@ -147,7 +150,7 @@ public final class StockDetailController extends SubViewController implements In
 
     private void setChart(final List<RecordViewModel> records) {
         final List<ActualAvailability> availabilities = prefixSum(records);
-        final XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>("Amount",
+        final XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>(AMOUNT,
             FXCollections.observableList(availabilities.stream()
                                                 .map(a -> new XYChart.Data<Number, Number>(a.getDate().getTime(), a.getValue()))
                                                 .collect(Collectors.toList())
@@ -168,7 +171,7 @@ public final class StockDetailController extends SubViewController implements In
 
             @Override
             public String toString(final Number object) {
-                return DateFormatUtils.format(new Date(object.longValue()), "dd-MM-yyyy HH:mm");
+                return DateFormatUtils.format(new Date(object.longValue()), DATE_PATTERN);
             }
         });
 
@@ -205,7 +208,7 @@ public final class StockDetailController extends SubViewController implements In
         if (articleResult.isPresent()) {
             overlayView(ViewType.ARTICLE_DETAIL, new ViewModelCallback<>(articleResult.getValue(), this::loadData));
         } else {
-            this.showErrorAndWait("Internal Error: " + articleResult.getError().getMessage());
+            this.showErrorAndWait(INTERNAL_ERROR + articleResult.getError().getMessage());
         }
     }
 
@@ -236,7 +239,7 @@ public final class StockDetailController extends SubViewController implements In
         if (batchResult.isPresent()) {
             overlayView(ViewType.BATCH_DETAIL, new ViewModelCallback<DetailBatchViewModel>(batchResult.getValue(), this::loadData));
         } else {
-            this.showErrorAndWait("Internal Error: " + batchResult.getError().getMessage());
+            this.showErrorAndWait(INTERNAL_ERROR + batchResult.getError().getMessage());
         }
     }
 }

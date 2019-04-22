@@ -45,7 +45,7 @@ public final class QueryStockTest {
         Assert.assertFalse(query.getMaxUsedQuantity().isPresent());
         Assert.assertFalse(query.getIncludeStockState().isPresent());
         Assert.assertFalse(query.getExcludeStockState().isPresent());
-        Assert.assertEquals(QueryStock.SortParameter.NONE, query.getSortBy());
+        Assert.assertEquals(QueryStock.SortParameter.ID, query.getSortBy());
         Assert.assertFalse(query.isSortDescending());
     }
     /**

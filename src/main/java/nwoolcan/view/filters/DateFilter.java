@@ -2,7 +2,6 @@ package nwoolcan.view.filters;
 
 import javafx.beans.NamedArg;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import nwoolcan.view.utils.DatePickerItalianConverter;
 
@@ -22,7 +21,8 @@ public final class DateFilter extends GUIFilter<Date> {
      */
     public DateFilter(@NamedArg("title") final String title) {
         final VBox container = new VBox();
-        container.getChildren().add(new Label(title));
+        this.getLabel().setText(title);
+        container.getChildren().add(this.getLabel());
         container.getChildren().add(field);
         this.getChildren().add(container);
 
