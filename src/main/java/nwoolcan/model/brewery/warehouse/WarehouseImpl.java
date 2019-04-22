@@ -109,11 +109,9 @@ public final class WarehouseImpl implements Warehouse {
     public List<Article> getArticles(final QueryArticle queryArticle) {
         final Set<Article> articles = stockManager.getArticleManager().getArticles();
         return articles.stream()
-                       // remove those article where query article specifies the first
-                       // lexicographical name and where the name of the article is
-                       // lexicographically before it.
+                       // remove those article where query article contains the fit name substring.
                        .filter(article -> !(queryArticle.getFitName().isPresent()
-                            && article.getName().toLowerCase().contains(queryArticle.getFitName().get().toLowerCase())))
+                            && !article.getName().toLowerCase().contains(queryArticle.getFitName().get().toLowerCase())))
                        // remove those article which type is not the one to be included.
                        .filter(article -> !(queryArticle.getIncludeArticleType().isPresent()
                            && !article.getArticleType()
