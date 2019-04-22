@@ -1,7 +1,6 @@
 package nwoolcan.view.filters;
 
 import javafx.beans.NamedArg;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
@@ -20,7 +19,8 @@ public final class TextFilter extends GUIFilter<String> {
     public TextFilter(@NamedArg("title") final String title) {
         final VBox container = new VBox();
         this.getChildren().add(container);
-        container.getChildren().add(new Label(title));
+        this.getLabel().setText(title);
+        container.getChildren().add(this.getLabel());
         container.getChildren().add(field);
     }
 
