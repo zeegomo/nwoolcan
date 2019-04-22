@@ -269,7 +269,7 @@ public final class WarehouseViewController extends SubViewController {
         final String maxUsedQuantityDefaultLabel = "Max Used Q";
         final String uomSymbol;
 
-        if(articleFilter.getValue().isPresent()) {
+        if (articleFilter.getValue().isPresent()) {
             uomSymbol = " (" + articleFilter.getValue().get().getUnitOfMeasure().getSymbol() + ")";
         } else {
             uomSymbol = "";
