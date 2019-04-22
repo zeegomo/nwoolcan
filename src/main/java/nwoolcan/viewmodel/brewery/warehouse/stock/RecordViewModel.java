@@ -11,6 +11,7 @@ import java.util.Date;
  */
 public final class RecordViewModel {
 
+    private static final String DATE_PATTERN = "dd-MM-yyyy HH:mm";
     private final QuantityViewModel quantity;
     private final Record.Action action;
     private final Date date;
@@ -51,6 +52,6 @@ public final class RecordViewModel {
      * @return the string representation of the {@link Date} in which the {@link nwoolcan.model.brewery.warehouse.stock.Record} has been transferred.
      */
     public String getDateFormatted() {
-        return DateFormatUtils.format(date, "dd-MM-yyyy HH:mm");
+        return DateFormatUtils.format(date, DATE_PATTERN);
     }
 }

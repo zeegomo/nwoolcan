@@ -13,6 +13,7 @@
 <?import javafx.scene.control.ComboBox?>
 
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.TextArea?>
 <SubView fx:id="stepDetailSubView" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
          fx:controller="nwoolcan.view.production.StepDetailController">
     <BorderPane>
@@ -57,6 +58,10 @@
                                         <Label text="Finalized : "/>
                                         <Label fx:id="finalizedLabel"/>
                                     </HBox>
+                                    <VBox fx:id="notesVBox">
+                                        <Label text="Notes : "/>
+                                        <TextArea fx:id="notesTextArea" editable="false"/>
+                                    </VBox>
                                 </VBox>
                             </VBox>
                         </center>

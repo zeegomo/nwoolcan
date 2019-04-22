@@ -15,10 +15,6 @@ public final class QueryArticle {
      */
     public enum SortParameter {
         /**
-         * No order.
-         */
-        NONE,
-        /**
          * Sort accordingly with the id.
          */
         ID,
@@ -32,40 +28,30 @@ public final class QueryArticle {
             return StringUtils.underscoreSeparatedToHuman(this.name());
         }
     }
-    @Nullable private final String minName;
-    @Nullable private final String maxName;
+    @Nullable private final String fitName;
     @Nullable private final ArticleType includeArticleType;
     @Nullable private final ArticleType excludeArticleType;
     private final SortParameter sortParameter;
     private final Boolean sortDescending;
 
     // Package private
-    QueryArticle(@Nullable final String minName,
-                 @Nullable final String maxName,
+    QueryArticle(@Nullable final String fitName,
                  @Nullable final ArticleType includeArticleType,
                  @Nullable final ArticleType excludeArticleType,
                  final SortParameter sortParameter,
                  final Boolean sortDescending) {
-        this.minName = minName;
-        this.maxName = maxName;
+        this.fitName = fitName;
         this.includeArticleType = includeArticleType;
         this.excludeArticleType = excludeArticleType;
         this.sortParameter = sortParameter;
         this.sortDescending = sortDescending;
     }
     /**
-     * Getter of minName.
-     * @return minName.
+     * Getter of fitName.
+     * @return fitName.
      */
-    public Optional<String> getMinName() {
-        return Optional.ofNullable(minName);
-    }
-    /**
-     * Getter of maxName.
-     * @return maxName.
-     */
-    public Optional<String> getMaxName() {
-        return Optional.ofNullable(maxName);
+    public Optional<String> getFitName() {
+        return Optional.ofNullable(fitName);
     }
     /**
      * Getter of the only {@link ArticleType} to be included in the elements of the query.

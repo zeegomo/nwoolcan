@@ -2,14 +2,15 @@ package nwoolcan.model.brewery;
 
 final class BatchIdGenerator implements IdGenerator {
 
+    private static final int START_ID = 1;
+
     private int nextId;
 
     /**
      * Creates an id generator for batches.
-     * @param startId start id.
      */
-    BatchIdGenerator(final int startId) {
-        this.nextId = startId;
+    BatchIdGenerator() {
+        this.nextId = START_ID;
     }
     /**
      * Returns the next available id.
