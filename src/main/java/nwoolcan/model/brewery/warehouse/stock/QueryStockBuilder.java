@@ -37,7 +37,7 @@ public final class QueryStockBuilder {
     private StockState stockStateIncluded;
     @Nullable
     private StockState stockStateExcluded;
-    private QueryStock.SortParameter sortParameter = QueryStock.SortParameter.NONE;
+    private QueryStock.SortParameter sortParameter = QueryStock.SortParameter.ID;
     private boolean sortDescending = false;
 
     /**

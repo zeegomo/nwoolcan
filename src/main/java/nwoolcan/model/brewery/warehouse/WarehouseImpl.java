@@ -109,16 +109,9 @@ public final class WarehouseImpl implements Warehouse {
     public List<Article> getArticles(final QueryArticle queryArticle) {
         final Set<Article> articles = stockManager.getArticleManager().getArticles();
         return articles.stream()
-                       // remove those article where query article specifies the first
-                       // lexicographical name and where the name of the article is
-                       // lexicographically before it.
-                       .filter(article -> !(queryArticle.getMinName().isPresent()
-                            && article.getName().compareTo(queryArticle.getMinName().get()) > 0))
-                       // remove those article where query article specifies the last
-                       // lexicographical name and where the name of the article is
-                       // lexicographically after it.
-                       .filter(article -> !(queryArticle.getMaxName().isPresent()
-                            && article.getName().compareTo(queryArticle.getMaxName().get()) < 0))
+                       // remove those article where query article contains the fit name substring.
+                       .filter(article -> !(queryArticle.getFitName().isPresent()
+                            && !article.getName().toLowerCase().contains(queryArticle.getFitName().get().toLowerCase())))
                        // remove those article which type is not the one to be included.
                        .filter(article -> !(queryArticle.getIncludeArticleType().isPresent()
                            && !article.getArticleType()
@@ -234,7 +227,8 @@ public final class WarehouseImpl implements Warehouse {
                 return des * s1.getRemainingQuantity().compareTo(s2.getRemainingQuantity());
             case USED_QUANTITY:
                 return des * s1.getUsedQuantity().compareTo(s2.getUsedQuantity());
-            case NONE:
+            case ID:
+                return des * Integer.compare(s1.getId(), s2.getId());
             default:
                 return 0;
         }
@@ -261,7 +255,6 @@ public final class WarehouseImpl implements Warehouse {
                 return des * a1.getName().compareTo(a2.getName());
             case ID:
                 return des * Integer.compare(a1.getId(), a2.getId());
-            case NONE:
             default:
                 return 0;
         }

@@ -19,9 +19,9 @@ public final class QueryStock {
      */
     public enum SortParameter {
         /**
-         * No order.
+         * Order by id.
          */
-        NONE,
+        ID,
         /**
          * Order by the expiration {@link Date} of the {@link Stock}.
          */
@@ -164,7 +164,7 @@ public final class QueryStock {
      * @return a {@link SortParameter} which denotes the field which has to be used for sorting the query.
      */
     public SortParameter getSortBy() {
-        return sortParameter == null ? SortParameter.NONE : sortParameter;
+        return sortParameter == null ? SortParameter.ID : sortParameter;
     }
     /**
      * Return a boolean denoting whether the sort has to be done in a decreasing order.

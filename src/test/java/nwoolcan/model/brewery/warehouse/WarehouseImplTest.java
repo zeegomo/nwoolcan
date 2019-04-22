@@ -36,8 +36,7 @@ public class WarehouseImplTest {
     private final Record record = new Record(quantity, Record.Action.ADDING);
     private final Record record1 = new Record(quantity, new Date(), Record.Action.ADDING);
     private final Record record2 = new Record(quantity1, Record.Action.ADDING);
-    private static final String MIN_NAME = "DummyName";
-    private static final String MAX_NAME = "DummyName2";
+    private static final String FIT_NAME = "DummyName";
     private Date date1 = new Date();
     private Date date2 = new Date(date1.getTime() + 10L);
     private Date date3 = new Date(date2.getTime() + 10L);
@@ -158,13 +157,11 @@ public class WarehouseImplTest {
      */
     @Test
     public void testGetArticlesFilterByName() {
-        final QueryArticle queryArticle = new QueryArticleBuilder().setMinName(MIN_NAME)
-                                                                   .setMaxName(MAX_NAME)
+        final QueryArticle queryArticle = new QueryArticleBuilder().setFitName(FIT_NAME)
                                                                    .build();
         final List<Article> lisArticle = warehouse.getArticles(queryArticle);
         for (final Article a : lisArticle) {
-            Assert.assertTrue(a.getName().compareTo(MIN_NAME) >= 0);
-            Assert.assertTrue(a.getName().compareTo(MAX_NAME) <= 0);
+            Assert.assertTrue(a.getName().toLowerCase().contains(FIT_NAME.toLowerCase()));
         }
     }
 }

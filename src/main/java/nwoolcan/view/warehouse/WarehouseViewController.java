@@ -289,9 +289,26 @@ public final class WarehouseViewController extends SubViewController {
 
     @FXML
     private void changeArticleSelection(final ActionEvent actionEvent) {
+        final String minRemQuantityDefaultLabel = "Min Remaining Q";
+        final String maxRemQuantityDefaultLabel = "Max Remaining Q";
+        final String minUsedQuantityDefaultLabel = "Min Used Q";
+        final String maxUsedQuantityDefaultLabel = "Max Used Q";
+        final String uomSymbol;
+
+        if (articleFilter.getValue().isPresent()) {
+            uomSymbol = " (" + articleFilter.getValue().get().getUnitOfMeasure().getSymbol() + ")";
+        } else {
+            uomSymbol = "";
+        }
+
         this.maxUsedQuantity.setDisable(!articleFilter.getValue().isPresent());
         this.minUsedQuantity.setDisable(!articleFilter.getValue().isPresent());
         this.maxRemainingQuantity.setDisable(!articleFilter.getValue().isPresent());
         this.minRemainingQuantity.setDisable(!articleFilter.getValue().isPresent());
+
+        this.maxUsedQuantity.getLabel().setText(maxUsedQuantityDefaultLabel + uomSymbol);
+        this.minUsedQuantity.getLabel().setText(minUsedQuantityDefaultLabel + uomSymbol);
+        this.maxRemainingQuantity.getLabel().setText(maxRemQuantityDefaultLabel + uomSymbol);
+        this.minRemainingQuantity.getLabel().setText(minRemQuantityDefaultLabel + uomSymbol);
     }
 }

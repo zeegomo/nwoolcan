@@ -3,7 +3,6 @@ package nwoolcan.view.filters;
 import javafx.beans.NamedArg;
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 import java.util.Optional;
@@ -23,7 +22,8 @@ public final class BooleanFilter extends GUIFilter<Boolean> {
     public BooleanFilter(@NamedArg("title") final String title) {
         final HBox container = new HBox(SPACING);
         container.getChildren().add(field);
-        container.getChildren().add(new Label(title));
+        this.getLabel().setText(title);
+        container.getChildren().add(this.getLabel());
         container.setPadding(new Insets(TOP_PADDING, 0, 0, 0));
         this.getChildren().add(container);
     }

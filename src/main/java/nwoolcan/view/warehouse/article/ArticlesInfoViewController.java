@@ -154,10 +154,7 @@ public final class ArticlesInfoViewController extends SubViewController {
         final QueryArticleBuilder builder = new QueryArticleBuilder();
         this.excludeTypeFilter.getValue().ifPresent(builder::setExcludeArticleType);
         this.includeTypeFilter.getValue().ifPresent(builder::setIncludeArticleType);
-        this.nameFilter.getValue().ifPresent(v -> {
-            builder.setMaxName(v);
-            builder.setMinName(v + "~");
-        });
+        this.nameFilter.getValue().ifPresent(builder::setFitName);
         this.updateArticlesTable(builder.build());
     }
 }

@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
@@ -38,6 +39,8 @@ public final class NewStockModalViewController extends AbstractViewController {
     private static final String AMOUNT_NOT_NUMBER = "The amount must be a number";
 
     @FXML
+    private Label uomInitialQuantity;
+    @FXML
     private TextField textFieldInitialQuantity;
     @FXML
     private CheckBox checkBoxInitialQuantity;
@@ -65,6 +68,7 @@ public final class NewStockModalViewController extends AbstractViewController {
         comboBoxArticle.getSelectionModel().selectFirst();
         specifyDateClick(new ActionEvent());
         specifyInitialQuantityClick(new ActionEvent());
+        setUomInitialQuantity();
     }
 
     @FXML
@@ -116,5 +120,10 @@ public final class NewStockModalViewController extends AbstractViewController {
     @FXML
     private void specifyInitialQuantityClick(final ActionEvent actionEvent) {
         textFieldInitialQuantity.setDisable(!checkBoxInitialQuantity.isSelected());
+    }
+
+    @FXML
+    private void setUomInitialQuantity() {
+        uomInitialQuantity.setText(comboBoxArticle.getValue().getUnitOfMeasure().getSymbol());
     }
 }
