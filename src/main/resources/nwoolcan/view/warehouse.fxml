@@ -105,10 +105,10 @@
                             <SelectFilter fx:id="stockStateExclude" title="Exclude State" placeholder="- Select State -" items="$stockStates" />
                             <DateFilter fx:id="expiresBeforeFilter" title="Expires Before" />
                             <DateFilter fx:id="expiresAfterFilter" title="Expires After" />
-                            <TextFilter fx:id="minRemainingQuantity" title="Min Rem Q" disable="true" />
-                            <TextFilter fx:id="maxRemainingQuantity" title="Max Rem Q" disable="true" />
-                            <TextFilter fx:id="minUsedQuantity" title="Min Used Q" disable="true" />
-                            <TextFilter fx:id="maxUsedQuantity" title="Min Used Q" disable="true" />
+                            <TextFilter fx:id="minRemainingQuantity" title="" disable="true" />
+                            <TextFilter fx:id="maxRemainingQuantity" title="" disable="true" />
+                            <TextFilter fx:id="minUsedQuantity" title="" disable="true" />
+                            <TextFilter fx:id="maxUsedQuantity" title="" disable="true" />
                         </filters>
                     </FiltersBar>
                     <SubViewContainer fx:id="masterTableContainer" parent="$warehouseSubView">

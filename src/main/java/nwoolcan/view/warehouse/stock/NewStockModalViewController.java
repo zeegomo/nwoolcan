@@ -63,6 +63,7 @@ public final class NewStockModalViewController extends AbstractViewController {
         comboBoxArticle.getSelectionModel().selectFirst();
         specifyDateClick(new ActionEvent());
         specifyInitialQuantityClick(new ActionEvent());
+        setUomInitialQuantity();
     }
 
     @FXML
@@ -113,7 +114,6 @@ public final class NewStockModalViewController extends AbstractViewController {
 
     @FXML
     private void specifyInitialQuantityClick(final ActionEvent actionEvent) {
-        setUomInitialQuantity();
         textFieldInitialQuantity.setDisable(!checkBoxInitialQuantity.isSelected());
     }
 

@@ -22,7 +22,7 @@ public abstract class GUIFilter<T> extends AnchorPane {
      * Return the label of the node.
      * @return the label of the node.
      */
-    Label getLabel() {
+    public Label getLabel() {
         return this.label;
     }
 
