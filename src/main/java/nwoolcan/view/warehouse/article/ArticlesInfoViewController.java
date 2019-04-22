@@ -36,6 +36,19 @@ import java.util.List;
 @SuppressWarnings("NullAway")
 public final class ArticlesInfoViewController extends SubViewController {
 
+    private static final String BEER = "Beer";
+    private static final String INGREDIENT = "Ingredient";
+    private static final String MISC = "Misc";
+    private static final String ID_COLUMN_NAME = "ID";
+    private static final String NAME_COLUMN_NAME = "Name";
+    private static final String UOM_COLUMN_NAME = "UOM";
+    private static final String ARTICLE_TYPE_COLUMN_NAME = "Article Type";
+    private static final String ID_FIELD_NAME = "id";
+    private static final String NAME_FIELD_NAME = "name";
+    private static final String UOM_FIELD_NAME = "unitOfMeasure";
+    private static final String ARTICLE_TYPE_FIELD_NAME = "articleTypeSummary";
+
+
     @FXML
     private SelectFilter<ArticleType> excludeTypeFilter;
     @FXML
@@ -78,9 +91,9 @@ public final class ArticlesInfoViewController extends SubViewController {
         lblNumberIngredientArticles.setText(Long.toString(data.getnIngredientArticles()));
         pieChartArticlesStatus.setData(
             FXCollections.observableArrayList(
-                new PieChart.Data("Beer", data.getnBeerArticles()),
-                new PieChart.Data("Misc", data.getnMiscArticles()),
-                new PieChart.Data("Ingredient", data.getnIngredientArticles())
+                new PieChart.Data(BEER, data.getnBeerArticles()),
+                new PieChart.Data(MISC, data.getnMiscArticles()),
+                new PieChart.Data(INGREDIENT, data.getnIngredientArticles())
             )
         );
 
@@ -90,10 +103,10 @@ public final class ArticlesInfoViewController extends SubViewController {
     private void setTable(final List<AbstractArticleViewModel> articles) {
         final MasterTableViewModel<AbstractArticleViewModel, ViewModelCallback<AbstractArticleViewModel>> masterViewModel =
             new MasterTableViewModel<>(Arrays.asList(
-                                            new ColumnDescriptor("ID", "id"),
-                                            new ColumnDescriptor("Name", "name"),
-                                            new ColumnDescriptor("UOM", "unitOfMeasure"),
-                                            new ColumnDescriptor("Article Type", "articleTypeSummary")
+                                            new ColumnDescriptor(ID_COLUMN_NAME, ID_FIELD_NAME),
+                                            new ColumnDescriptor(NAME_COLUMN_NAME, NAME_FIELD_NAME),
+                                            new ColumnDescriptor(UOM_COLUMN_NAME, UOM_FIELD_NAME),
+                                            new ColumnDescriptor(ARTICLE_TYPE_COLUMN_NAME, ARTICLE_TYPE_FIELD_NAME)
                                         ),
                                         articles,
                                         ViewType.ARTICLE_DETAIL,

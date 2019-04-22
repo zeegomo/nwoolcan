@@ -41,6 +41,30 @@ import java.util.List;
 @SuppressWarnings("NullAway")
 public final class WarehouseViewController extends SubViewController {
 
+    private static final String USED = "Used";
+    private static final String AVAILABLE = "Available";
+    private static final String EXPIRED = "Expired";
+    private static final String SUFFIX_QUANTITY_NOT_DOUBLE = " quantity must be a double number.";
+    private static final String MIN_REM_QUANTITY_NOT_DOUBLE = "The minimum remaining" + SUFFIX_QUANTITY_NOT_DOUBLE;
+    private static final String MAX_REM_QUANTITY_NOT_DOUBLE = "The maximum remaining" + SUFFIX_QUANTITY_NOT_DOUBLE;
+    private static final String MIN_USED_QUANTITY_NOT_DOUBLE = "The minimum used" + SUFFIX_QUANTITY_NOT_DOUBLE;
+    private static final String MAX_USED_QUANTITY_NOT_DOUBLE = "The maximum used" + SUFFIX_QUANTITY_NOT_DOUBLE;
+    private static final String INTERNAL_ERROR = "Internal error: ";
+    private static final String NO_ARTICLES_ALERT_MESSAGE = "There are no articles or only beer articles. Create a misc"
+                                                          + "or ingredient article first";
+    private static final String ID_COLUMN_NAME = "ID";
+    private static final String ARTICLE_COLUMN_NAME = "Article";
+    private static final String REM_QUANTITY_COLUMN_NAME = "Remaining Quantity";
+    private static final String USED_QUANTITY_COLUMN_NAME = "Remaining Quantity";
+    private static final String STOCK_STATE_COLUMN_NAME = "Stock State";
+    private static final String EXPIRATION_DATE_COLUMN_NAME = "Expiration Date";
+    private static final String ID_FIELD_NAME = "id";
+    private static final String ARTICLE_FIELD_NAME = "article";
+    private static final String REM_QUANTITY_FIELD_NAME = "remainingQuantity";
+    private static final String USED_QUANTITY_FIELD_NAME = "usedQuantity";
+    private static final String STOCK_STATE_FIELD_NAME = "stockState";
+    private static final String EXPIRATION_DATE_FIELD_NAME = "expirationDate";
+
     @FXML
     private SelectFilter<AbstractArticleViewModel> articleFilter;
     @FXML
@@ -108,9 +132,9 @@ public final class WarehouseViewController extends SubViewController {
         this.lblNumberBeerUsedUp.setText(Integer.toString(data.getnBeerUsed()));
         pieChartBeerStatus.setData(
             FXCollections.observableArrayList(
-                new PieChart.Data("Used", data.getnBeerUsed()),
-                new PieChart.Data("Expired", data.getnBeerExpired()),
-                new PieChart.Data("Available", data.getnBeerAvailable())
+                new PieChart.Data(USED, data.getnBeerUsed()),
+                new PieChart.Data(EXPIRED, data.getnBeerExpired()),
+                new PieChart.Data(AVAILABLE, data.getnBeerAvailable())
             )
         );
         // Ingredient data load
@@ -119,9 +143,9 @@ public final class WarehouseViewController extends SubViewController {
         this.lblNumberIngredientUsedUp.setText(Integer.toString(data.getnIngredientUsed()));
         pieChartIngredientStatus.setData(
             FXCollections.observableArrayList(
-                new PieChart.Data("Used", data.getnIngredientUsed()),
-                new PieChart.Data("Expired", data.getnIngredientExpired()),
-                new PieChart.Data("Available", data.getnIngredientAvailable())
+                new PieChart.Data(USED, data.getnIngredientUsed()),
+                new PieChart.Data(EXPIRED, data.getnIngredientExpired()),
+                new PieChart.Data(AVAILABLE, data.getnIngredientAvailable())
             )
         );
         // Misc data load
@@ -130,9 +154,9 @@ public final class WarehouseViewController extends SubViewController {
         this.lblNumberMiscUsedUp.setText(Integer.toString(data.getnMiscUsed()));
         pieChartMiscStatus.setData(
             FXCollections.observableArrayList(
-                new PieChart.Data("Used", data.getnMiscUsed()),
-                new PieChart.Data("Expired", data.getnMiscExpired()),
-                new PieChart.Data("Available", data.getnMiscAvailable())
+                new PieChart.Data(USED, data.getnMiscUsed()),
+                new PieChart.Data(EXPIRED, data.getnMiscExpired()),
+                new PieChart.Data(AVAILABLE, data.getnMiscAvailable())
             )
         );
         articleFilter.setItems(FXCollections.observableArrayList(getController().getWarehouseController().getArticlesViewModel().getArticles()));
@@ -141,15 +165,17 @@ public final class WarehouseViewController extends SubViewController {
         setTable(data.getStocks());
     }
 
+
+
     private void setTable(final List<MasterStockViewModel> stocks) {
         final MasterTableViewModel<MasterStockViewModel, ViewModelCallback<Integer>> masterViewModel =
             new MasterTableViewModel<>(Arrays.asList(
-                                           new ColumnDescriptor("ID", "id"),
-                                           new ColumnDescriptor("Remaining Quantity", "remainingQuantity"),
-                                           new ColumnDescriptor("Article", "article"),
-                                           new ColumnDescriptor("Used Quantity", "usedQuantity"),
-                                           new ColumnDescriptor("Stock State", "stockState"),
-                                           new ColumnDescriptor("Expiration Date", "expirationDate")
+                                           new ColumnDescriptor(ID_COLUMN_NAME, ID_FIELD_NAME),
+                                           new ColumnDescriptor(ARTICLE_COLUMN_NAME, ARTICLE_FIELD_NAME),
+                                           new ColumnDescriptor(REM_QUANTITY_COLUMN_NAME, REM_QUANTITY_FIELD_NAME),
+                                           new ColumnDescriptor(USED_QUANTITY_COLUMN_NAME, USED_QUANTITY_FIELD_NAME),
+                                           new ColumnDescriptor(STOCK_STATE_COLUMN_NAME, STOCK_STATE_FIELD_NAME),
+                                           new ColumnDescriptor(EXPIRATION_DATE_COLUMN_NAME, EXPIRATION_DATE_FIELD_NAME)
                                        ),
                                        stocks,
                                        ViewType.STOCK_DETAIL,
@@ -172,7 +198,7 @@ public final class WarehouseViewController extends SubViewController {
     private void createNewStockButtonClick(final ActionEvent actionEvent) {
         if (getController().getWarehouseController().getArticlesViewModel().getnMiscArticles() <= 0
             && getController().getWarehouseController().getArticlesViewModel().getnIngredientArticles() <= 0) {
-            this.showErrorAndWait("There are no articles or only beer articles. Create a misc or ingredient article first");
+            this.showErrorAndWait(NO_ARTICLES_ALERT_MESSAGE);
             return;
         }
 
@@ -215,7 +241,7 @@ public final class WarehouseViewController extends SubViewController {
             try {
                 minRemValue = Double.parseDouble(s);
             } catch (final NumberFormatException ex) {
-                this.showErrorAndWait("The minimum remaining quantity must be a double number.");
+                this.showErrorAndWait(MIN_REM_QUANTITY_NOT_DOUBLE);
                 return;
             }
             builder.setMinRemainingQuantity(Quantity.of(minRemValue, articleFilter.getValue().get().getUnitOfMeasure()).getValue());
@@ -225,7 +251,7 @@ public final class WarehouseViewController extends SubViewController {
             try {
                 maxRemValue = Double.parseDouble(s);
             } catch (final NumberFormatException ex) {
-                this.showErrorAndWait("The maximum remaining quantity must be a double number.");
+                this.showErrorAndWait(MAX_REM_QUANTITY_NOT_DOUBLE);
                 return;
             }
             builder.setMaxRemainingQuantity(Quantity.of(maxRemValue, articleFilter.getValue().get().getUnitOfMeasure()).getValue());
@@ -235,7 +261,7 @@ public final class WarehouseViewController extends SubViewController {
             try {
                 minUsedValue = Double.parseDouble(s);
             } catch (final NumberFormatException ex) {
-                this.showErrorAndWait("The minimum used quantity must be a double number.");
+                this.showErrorAndWait(MIN_USED_QUANTITY_NOT_DOUBLE);
                 return;
             }
             builder.setMinUsedQuantity(Quantity.of(minUsedValue, articleFilter.getValue().get().getUnitOfMeasure()).getValue());
@@ -245,7 +271,7 @@ public final class WarehouseViewController extends SubViewController {
             try {
                 maxUsedValue = Double.parseDouble(s);
             } catch (final NumberFormatException ex) {
-                this.showErrorAndWait("The maximum used quantity must be a double number.");
+                this.showErrorAndWait(MAX_USED_QUANTITY_NOT_DOUBLE);
                 return;
             }
             builder.setMaxUsedQuantity(Quantity.of(maxUsedValue, articleFilter.getValue().get().getUnitOfMeasure()).getValue());
@@ -255,7 +281,7 @@ public final class WarehouseViewController extends SubViewController {
 
         final Result<QueryStock> queryStockResult = builder.build();
         if (queryStockResult.isError()) {
-            this.showErrorAndWait("Internal error: " + queryStockResult.getError().getMessage());
+            this.showErrorAndWait(INTERNAL_ERROR + queryStockResult.getError().getMessage());
             return;
         }
         this.updateStocksTable(queryStockResult.getValue());
