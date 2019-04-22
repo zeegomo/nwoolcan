@@ -2,6 +2,8 @@ package nwoolcan.controller;
 
 import nwoolcan.controller.batch.BatchController;
 import nwoolcan.controller.batch.BatchControllerImpl;
+import nwoolcan.controller.file.FileController;
+import nwoolcan.controller.file.FileControllerImpl;
 import nwoolcan.controller.warehouse.WarehouseController;
 import nwoolcan.controller.warehouse.WarehouseControllerImpl;
 import nwoolcan.model.brewery.Brewery;
@@ -10,7 +12,6 @@ import nwoolcan.model.brewery.batch.Batch;
 import nwoolcan.model.brewery.batch.BatchBuilder;
 import nwoolcan.model.brewery.batch.BatchMethod;
 import nwoolcan.model.brewery.batch.QueryBatch;
-import nwoolcan.model.brewery.batch.QueryBatchBuilder;
 import nwoolcan.model.brewery.batch.misc.BeerDescriptionImpl;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurementFactory;
@@ -23,8 +24,6 @@ import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.article.QueryArticleBuilder;
 import nwoolcan.model.brewery.warehouse.stock.QueryStockBuilder;
 import nwoolcan.model.brewery.warehouse.stock.StockState;
-import nwoolcan.model.database.Database;
-import nwoolcan.model.database.DatabaseJsonImpl;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
@@ -41,7 +40,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,10 +52,12 @@ public final class BreweryController implements Controller {
     private Brewery brewery = new BreweryImpl();
     private BatchController batchController;
     private WarehouseController warehouseController;
+    private FileControllerImpl fileController;
 
     private void initilizeSubControllers() {
         this.warehouseController = new WarehouseControllerImpl(brewery.getWarehouse());
         this.batchController = new BatchControllerImpl(brewery);
+        this.fileController = new FileControllerImpl();
     }
 
     /**
@@ -79,13 +79,13 @@ public final class BreweryController implements Controller {
 
     @Override
     public ProductionViewModel getProductionViewModel() {
-        return new ProductionViewModel(this.brewery.getBatches(new QueryBatchBuilder().build().getValue()));
+        return new ProductionViewModel(this.brewery.getBatches());
     }
 
     @Override
     public List<MasterBatchViewModel> getBatches(final QueryBatch query) {
-        return Collections.unmodifiableList(this.brewery.getBatches(query).stream()
-                                                        .sorted(Comparator.comparing(Batch::getId, (a, b) -> Integer.compare(b, a)))
+        return Collections.unmodifiableList(this.brewery.getBatches(query)
+                                                        .stream()
                                                         .map(MasterBatchViewModel::new)
                                                         .collect(Collectors.toList()));
     }
@@ -159,8 +159,7 @@ public final class BreweryController implements Controller {
         return res.flatMap(e -> bBuilder.build(
             new BeerDescriptionImpl(batchDTO.getName(), batchDTO.getStyle(), batchDTO.getCategory().orElse(null)),
             batchDTO.getMethod(),
-            batchDTO.getIntialSize(),
-            batchDTO.getInitialStep()))
+            batchDTO.getInitialSize()))
                   .peek(this.brewery::addBatch)
                   .toEmpty();
     }
@@ -218,17 +217,20 @@ public final class BreweryController implements Controller {
 
     @Override
     public Result<Empty> saveTo(final File filename) {
-        final Database db = new DatabaseJsonImpl(filename);
-        return db.save(this.brewery);
+        return this.fileController.saveTo(filename, this.brewery);
     }
 
     @Override
     public Result<Empty> loadFrom(final File filename) {
-        final Database db = new DatabaseJsonImpl(filename);
-        return db.load().peek(b -> {
+        return this.fileController.loadFrom(filename).peek(b -> {
             this.brewery = b;
             this.initilizeSubControllers();
         }).toEmpty();
+    }
+
+    @Override
+    public FileController getFileController() {
+        return this.fileController;
     }
 
     @Override
@@ -245,7 +247,8 @@ public final class BreweryController implements Controller {
             this.getProductionViewModel(),
             this.getWarehouseController().getWarehouseViewModel(),
             expiringStocks,
-            this.brewery.getBreweryName().orElse("Dashboard")
+            this.brewery.getBreweryName().orElse("Dashboard"),
+            this.brewery.getOwnerName().orElse("")
         );
     }
 }

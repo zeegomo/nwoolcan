@@ -5,6 +5,7 @@ import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
 
 import javax.annotation.Nullable;
+import java.util.Date;
 
 /**
  * The builder of {@link QueryBatch}.
@@ -12,9 +13,13 @@ import javax.annotation.Nullable;
 public class QueryBatchBuilder {
 
     @Nullable private Integer batchId;
+    @Nullable private String beerName;
+    @Nullable private String beerStyle;
     @Nullable private BatchMethod batchMethod;
     @Nullable private Quantity minBatchSize;
     @Nullable private Quantity maxBatchSize;
+    @Nullable private Date minStartDate;
+    @Nullable private Boolean onlyEnded;
 
     /**
      * Constructor to initialize the queryBuilder.
@@ -28,6 +33,24 @@ public class QueryBatchBuilder {
      */
     public QueryBatchBuilder setBatchId(final int batchId) {
         this.batchId = batchId;
+        return this;
+    }
+    /**
+     * Setter of the beer name.
+     * @param beerName the beer name to filter.
+     * @return this.
+     */
+    public QueryBatchBuilder setBeerName(final String beerName) {
+        this.beerName = beerName;
+        return this;
+    }
+    /**
+     * Setter of the beer style id.
+     * @param beerStyle the beer style to filter.
+     * @return this.
+     */
+    public QueryBatchBuilder setBeerStyle(final String beerStyle) {
+        this.beerStyle = beerStyle;
         return this;
     }
     /**
@@ -58,11 +81,37 @@ public class QueryBatchBuilder {
         return this;
     }
     /**
+     * Setter of the lower bound for the batch start date.
+     * @param minStartDate the minimum start date of the filtered batches.
+     * @return this.
+     */
+    public QueryBatchBuilder setMinStartDate(final Date minStartDate) {
+        this.minStartDate = new Date(minStartDate.getTime());
+        return this;
+    }
+    /**
+     * Setter of the boolean filter for choosing only ended batches.
+     * @param onlyEnded true to filter only ended batches.
+     * @return this.
+     */
+    public QueryBatchBuilder setOnlyEnded(final boolean onlyEnded) {
+        this.onlyEnded = onlyEnded;
+        return this;
+    }
+    /**
      * Builds the QueryBatch.
      * @return the built {@link QueryBatch}.
      */
     public Result<QueryBatch> build() {
-        return Result.of(new QueryBatch(this.batchId, this.batchMethod, this.minBatchSize, this.maxBatchSize))
+        return Result.of(new QueryBatch(
+            this.batchId,
+            this.beerName,
+            this.beerStyle,
+            this.batchMethod,
+            this.minBatchSize,
+            this.maxBatchSize,
+            this.minStartDate,
+            this.onlyEnded))
                      .require(this::checkBatchSize);
     }
     /**

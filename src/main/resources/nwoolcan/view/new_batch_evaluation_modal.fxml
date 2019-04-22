@@ -23,7 +23,7 @@
 
     <SubView fitToWidth="true"
              fx:id="modalSubView"
-             >
+    >
         <padding>
             <Insets top="5" bottom="5" right="5" left="5"/>
         </padding>
@@ -52,10 +52,17 @@
                                 </VBox>
                             </left>
                             <top>
-                                    <VBox>
-                                        <Label text="Batch review type"/>
-                                        <ComboBox fx:id="batchTypeComboBox" onAction="#changeBatchTypeClick"/>
-                                    </VBox>
+                                <BorderPane>
+                                    <left>
+                                        <VBox>
+                                            <Label text="Batch review type"/>
+                                            <ComboBox fx:id="batchTypeComboBox" onAction="#changeBatchTypeClick"/>
+                                        </VBox>
+                                    </left>
+                                    <right>
+                                        <Label text="Fields marked with '*' are required" alignment="CENTER"/>
+                                    </right>
+                                </BorderPane>
                             </top>
                         </BorderPane>
                     </TitledPane>

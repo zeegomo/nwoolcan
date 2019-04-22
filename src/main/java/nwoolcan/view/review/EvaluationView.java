@@ -40,6 +40,8 @@ public final class EvaluationView extends AbstractViewController implements Init
         @FXML
         private Label maxScore;
         @FXML
+        private Label requiredLabel;
+        @FXML
         private TextArea notesTextArea;
         @FXML
         private Text notesText;
@@ -90,6 +92,7 @@ public final class EvaluationView extends AbstractViewController implements Init
                 this.scoreFlowPane.getChildren().remove(this.scoreLabel);
             } else {
                 this.notesFlowPane.getChildren().remove(this.notesTextArea);
+                this.scoreFlowPane.getChildren().remove(this.requiredLabel);
                 this.scoreFlowPane.getChildren().remove(this.scoreTextField);
             }
         }

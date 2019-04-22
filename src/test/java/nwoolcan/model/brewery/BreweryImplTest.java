@@ -6,7 +6,6 @@ import nwoolcan.model.brewery.batch.QueryBatch;
 import nwoolcan.model.brewery.batch.QueryBatchBuilder;
 import nwoolcan.model.brewery.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.batch.misc.BeerDescriptionImpl;
-import nwoolcan.model.brewery.batch.step.StepType;
 import nwoolcan.model.brewery.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.BeerArticle;
 import nwoolcan.model.brewery.warehouse.stock.QueryStock;
@@ -16,6 +15,7 @@ import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
+import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -32,14 +32,13 @@ public class BreweryImplTest {
     private final BeerDescription beerDescription = new BeerDescriptionImpl(OWNER_NAME, OWNER_NAME);
     private final BatchMethod batchMethod = BatchMethod.ALL_GRAIN;
     private final Quantity initialSize = Quantity.of(3, UnitOfMeasure.BOTTLE_33_CL).getValue();
-    private final StepType initialStep = StepTypeEnum.FINALIZED;
     private final Brewery brewery = new BreweryImpl();
     private final Batch batch = brewery.getBatchBuilder()
-                                       .build(beerDescription, batchMethod, initialSize, initialStep)
+                                       .build(beerDescription, batchMethod, initialSize)
                                        .getValue();
 
     private final Batch notEndedBatch = brewery.getBatchBuilder()
-                                               .build(beerDescription, batchMethod, initialSize, StepTypeEnum.BOILING)
+                                               .build(beerDescription, batchMethod, initialSize)
                                                .getValue();
 
     /**
@@ -89,10 +88,13 @@ public class BreweryImplTest {
         Assert.assertTrue(wrongArticle.isError());
         final Result<Empty> notEnded = brewery.stockBatch(notEndedBatch, beerArticle);
         Assert.assertTrue(notEnded.isError());
-
+        batch.moveToNextStep(StepTypeEnum.BOILING);
+        batch.moveToNextStep(StepTypeEnum.FERMENTING);
+        batch.moveToNextStep(StepTypeEnum.PACKAGING);
+        batch.moveToNextStep(StepTypeEnum.FINALIZED);
         final Result<Empty> stockBatchRes = brewery.stockBatch(batch, beerArticle);
         Assert.assertTrue(stockBatchRes.isPresent());
-        final Result<QueryStock> queryStockRes = new QueryStockBuilder().setArticle(beerArticle).build();
+        final Result<QueryStock> queryStockRes = new QueryStockBuilder().setArticle(AbstractArticleViewModel.getViewArticle(beerArticle)).build();
         Assert.assertTrue(queryStockRes.isPresent());
         List<Stock> stocks = brewery.getWarehouse().getStocks(queryStockRes.getValue());
         Assert.assertEquals(1, stocks.size());

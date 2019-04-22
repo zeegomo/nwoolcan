@@ -133,7 +133,7 @@ public final class ArticlesInfoViewController extends SubViewController {
 
     @FXML
     private void backButtonClick(final ActionEvent actionEvent) {
-        this.previousView();
+        this.substituteView(ViewType.DASHBOARD);
     }
 
     @FXML
@@ -145,6 +145,6 @@ public final class ArticlesInfoViewController extends SubViewController {
             builder.setMaxName(v);
             builder.setMinName(v + "~");
         });
-        this.setTable(this.getController().getWarehouseController().getArticles(builder.build()));
+        this.updateArticlesTable(builder.build());
     }
 }

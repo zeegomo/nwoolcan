@@ -14,18 +14,24 @@
 <SubView fx:id="content" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nwoolcan.view.dashboard.DashboardController" fitToHeight="true">
     <BorderPane>
         <top>
-            <Label fx:id="lblTitle" BorderPane.alignment="CENTER">
-                <font>
-                    <Font size="28" />
-                </font>
-            </Label>
+            <HBox alignment="BASELINE_CENTER" spacing="10">
+                <Label fx:id="lblTitle">
+                    <font>
+                        <Font size="28" />
+                    </font>
+                </Label>
+                <Label fx:id="lblOwner">
+                    <font>
+                        <Font size="17" />
+                    </font>
+                </Label>
+            </HBox>
         </top>
         <center>
             <VBox>
                 <TitledPane collapsible="false" text="Production" minHeight="300">
                     <HBox spacing="20">
-                        <PieChart fx:id="pieChartBatchesStatus" title="Batches" managed="${pieChartBatchesStatus.visible}" labelsVisible="false"/>
-                        <GridPane minWidth="-Infinity" vgap="20" HBox.hgrow="ALWAYS">
+                        <GridPane minWidth="-Infinity" vgap="20">
                             <Label text="Total number of batches : " GridPane.columnIndex="0" GridPane.rowIndex="0" />
                             <Label fx:id="lblTotalNumberBatches" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                             <Label text="Number of batches in production : " GridPane.columnIndex="0" GridPane.rowIndex="1" />
@@ -36,12 +42,12 @@
                             <Label fx:id="lblNumberStockedBatches" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                             <Button GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" onAction="#toProductionClicked">Go to Production</Button>
                         </GridPane>
+                        <PieChart fx:id="pieChartBatchesStatus" title="Batches" managed="${pieChartBatchesStatus.visible}" labelsVisible="false"/>
                     </HBox>
                 </TitledPane>
                 <TitledPane collapsible="false" text="Warehouse" minHeight="300">
                     <HBox spacing="20">
-                        <PieChart fx:id="pieChartStockTypes" title="Available stocks" managed="${pieChartStockTypes.visible}" labelsVisible="false"/>
-                        <GridPane minWidth="-Infinity" vgap="20" HBox.hgrow="ALWAYS">
+                        <GridPane minWidth="-Infinity" vgap="20">
                             <Label text="Available beer articles : " GridPane.columnIndex="0" GridPane.rowIndex="0" />
                             <Label fx:id="lblAvailableBeer" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                             <Label text="Available ingredients : " GridPane.columnIndex="0" GridPane.rowIndex="1" />
@@ -51,8 +57,12 @@
                             <Label text="Expiring in two weeks : " GridPane.columnIndex="0" GridPane.rowIndex="3" textFill="${lblNumberExpiring.textFill}"/>
                             <Label fx:id="lblNumberExpiring" GridPane.columnIndex="1" GridPane.rowIndex="3" textFill="darkgreen">
                             </Label>
-                            <Button GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" onAction="#toWarehouseClicked">Go to Warehouse</Button>
+                            <VBox spacing="3" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2">
+                                <Button onAction="#toWarehouseClicked">Go to Warehouse</Button>
+                                <Button onAction="#toArticlesClicked">Go to Articles</Button>
+                            </VBox>
                         </GridPane>
+                        <PieChart fx:id="pieChartStockTypes" title="Available stocks" managed="${pieChartStockTypes.visible}" labelsVisible="false"/>
                     </HBox>
                 </TitledPane>
             </VBox>

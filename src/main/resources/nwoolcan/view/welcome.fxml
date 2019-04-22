@@ -17,5 +17,6 @@
         </Label>
         <Button maxWidth="Infinity" onAction="#createNewBreweryClicked">Create new Brewery</Button>
         <Button maxWidth="Infinity" onAction="#loadFileClicked">Load an existing Brewery</Button>
+        <Button maxWidth="Infinity" onAction="#loadDemoClicked">Load a demo Brewery</Button>
     </TilePane>
 </SubView>

@@ -4,11 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
+import nwoolcan.view.utils.PersistencyUtils;
 import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
@@ -22,6 +22,8 @@ import java.util.logging.Logger;
  */
 @SuppressWarnings("NullAway")
 public final class WelcomeViewController extends SubViewController {
+    private static final String DEMO_FILE = "/nwoolcan/demo.nws";
+    private boolean exitOk = false;
 
     @FXML
     private SubView welcomeSubView;
@@ -37,7 +39,16 @@ public final class WelcomeViewController extends SubViewController {
     }
 
     private void close() {
+        this.exitOk = true;
         ((Stage) this.welcomeSubView.getScene().getWindow()).close();
+    }
+
+    /**
+     * Returns if the modal was ok or canceled.
+     * @return if the modal was ok or canceled.
+     */
+    public boolean getExitOk() {
+        return this.exitOk;
     }
 
     @FXML
@@ -64,16 +75,24 @@ public final class WelcomeViewController extends SubViewController {
 
     @FXML
     private void loadFileClicked(final ActionEvent event) {
-        final FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
-        final File target = fileChooser.showOpenDialog(this.welcomeSubView.getScene().getWindow());
-        if (target != null) {
+        final PersistencyUtils utils = new PersistencyUtils(this.getSubView().getScene().getWindow(), this.getController().getFileController());
+        utils.showOpenFile().ifPresent(target -> {
             this.getController().loadFrom(target)
                 .peek(e -> this.close()).peekError(err -> {
                     Logger.getLogger(this.getClass().getName()).severe(err.toString());
                     this.showErrorAndWait("There was an error!");
                 });
-        }
+        });
+    }
+
+    @FXML
+    private void loadDemoClicked(final ActionEvent event) {
+        final PersistencyUtils utils = new PersistencyUtils(this.getSubView().getScene().getWindow(), this.getController().getFileController());
+        this.getController().loadFrom(new File(this.getClass().getResource(DEMO_FILE).getFile()))
+            .peek(e -> this.close()).peekError(err -> {
+                Logger.getLogger(this.getClass().getName()).severe(err.toString());
+                utils.showErrorAlert();
+            });
     }
 
     @Override

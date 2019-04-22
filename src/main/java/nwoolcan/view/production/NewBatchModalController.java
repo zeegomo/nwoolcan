@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
 import nwoolcan.model.brewery.batch.BatchMethod;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurement;
-import nwoolcan.model.brewery.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
@@ -270,7 +269,6 @@ public final class NewBatchModalController
             this.beerCategoryTextField.getText().trim().isEmpty() ? null : this.beerCategoryTextField.getText().trim(),
             this.batchMethodsComboBox.getSelectionModel().getSelectedItem().getMethod(),
             initialSize,
-            StepTypeEnum.MASHING,
             this.ingredientsTableView.getItems()
                                      .stream()
                                      .map(p -> Pair.of(p.getRight().getId(), p.getLeft().getValue().doubleValue()))

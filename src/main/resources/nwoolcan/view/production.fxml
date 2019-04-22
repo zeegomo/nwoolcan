@@ -19,6 +19,8 @@
 <?import nwoolcan.view.filters.SelectFilter?>
 <?import javafx.collections.FXCollections?>
 <?import nwoolcan.model.brewery.batch.BatchMethod?>
+<?import nwoolcan.view.filters.DateFilter?>
+<?import nwoolcan.view.filters.BooleanFilter?>
 <SubView fx:id="productionSubView"
          xmlns="http://javafx.com/javafx/8.0.172-ea"
          xmlns:fx="http://javafx.com/fxml/1"
@@ -33,11 +35,14 @@
         </top>
         <center>
             <VBox>
-                <GridPane alignment="CENTER_RIGHT" hgap="10" >
+                <GridPane alignment="CENTER_LEFT" hgap="5" >
                     <padding>
                         <Insets top="5" bottom="5" left="5" right="5" />
                     </padding>
                     <Button GridPane.columnIndex="0" GridPane.rowIndex="0"
+                            onAction="#gotoDashboardClick"
+                            text="Dashboard"/>
+                    <Button GridPane.columnIndex="1" GridPane.rowIndex="0"
                             onAction="#createNewBatchClick"
                             text="Create new batch" />
                 </GridPane>
@@ -85,8 +90,12 @@
                                     </FXCollections>
                                 </fx:define>
                                 <TextFilter fx:id="batchIdFilter" title="Batch Id"/>
+                                <TextFilter fx:id="beerNameFilter" title="Beer name"/>
+                                <TextFilter fx:id="beerStyleFilter" title="Beer style"/>
                                 <SelectFilter fx:id="batchMethodFilter" title="Batch method"
                                               placeholder="Select a batch method" items="$batchMethodList"/>
+                                <DateFilter fx:id="minStartDateFilter" title="Minimum start date"/>
+                                <BooleanFilter fx:id="onlyEndedFilter" title="Only ended"/>
                             </filters>
                         </FiltersBar>
                         <SubViewContainer fx:id="masterTableContainer" parent="$productionSubView">

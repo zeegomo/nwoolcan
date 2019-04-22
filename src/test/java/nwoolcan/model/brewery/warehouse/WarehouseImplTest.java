@@ -10,6 +10,7 @@ import nwoolcan.model.brewery.warehouse.stock.Stock;
 import nwoolcan.model.utils.Quantity;
 import nwoolcan.model.utils.UnitOfMeasure;
 import nwoolcan.utils.Result;
+import nwoolcan.viewmodel.brewery.warehouse.article.AbstractArticleViewModel;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -81,7 +82,7 @@ public class WarehouseImplTest {
      */
     @Test
     public void testRemainingQuantityWorkingStocksGetter() {
-        final Result<QueryStock> resQueryStock = new QueryStockBuilder().setArticle(article)
+        final Result<QueryStock> resQueryStock = new QueryStockBuilder().setArticle(AbstractArticleViewModel.getViewArticle(article))
                                                                         .setMinRemainingQuantity(quantity)
                                                                         .setMaxRemainingQuantity(quantity2)
                                                                         .build();
@@ -101,7 +102,7 @@ public class WarehouseImplTest {
      */
     @Test
     public void testRemainingQuantityStocksWithNoResultingStockGetter() {
-        final Result<QueryStock> resQueryStock = new QueryStockBuilder().setArticle(article)
+        final Result<QueryStock> resQueryStock = new QueryStockBuilder().setArticle(AbstractArticleViewModel.getViewArticle(article))
                                                                         .setMinRemainingQuantity(quantity2)
                                                                         .setMaxRemainingQuantity(quantity)
                                                                         .build();
@@ -115,7 +116,7 @@ public class WarehouseImplTest {
      */
     @Test
     public void testSortedStocksGetter() {
-        final Result<QueryStock> resQueryStock = new QueryStockBuilder().setArticle(article)
+        final Result<QueryStock> resQueryStock = new QueryStockBuilder().setArticle(AbstractArticleViewModel.getViewArticle(article))
                                                                         .setMinRemainingQuantity(quantity)
                                                                         .setMaxRemainingQuantity(quantity2)
                                                                         .sortBy(QueryStock.SortParameter.REMAINING_QUANTITY)
@@ -136,7 +137,7 @@ public class WarehouseImplTest {
      */
     @Test
     public void testExpirationDatesFilters() {
-        final Result<QueryStock> resQueryStock = new QueryStockBuilder().setArticle(article)
+        final Result<QueryStock> resQueryStock = new QueryStockBuilder().setArticle(AbstractArticleViewModel.getViewArticle(article))
                                                                         .setExpireAfter(date2)
                                                                         .build();
         Assert.assertTrue(resQueryStock.isPresent());
