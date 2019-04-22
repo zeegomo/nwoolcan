@@ -31,7 +31,7 @@ public final class BreweryImpl implements Brewery {
     @Nullable private String ownerName;
     private final Warehouse warehouse = new WarehouseImpl();
     private final Collection<Batch> batches = new ArrayList<>();
-    private final IdGenerator batchIdGenerator = new BatchIdGenerator(0);
+    private final IdGenerator batchIdGenerator = new BatchIdGenerator();
     private static final String BATCH_NOT_FOUND = "Batch not found.";
 
     @Override

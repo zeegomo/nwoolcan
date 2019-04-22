@@ -1,10 +1,10 @@
 {
   "nwoolcan.model.brewery.BreweryImpl": {
     "breweryName": {
-      "java.lang.String": "mario"
+      "java.lang.String": "Birra Birra"
     },
     "ownerName": {
-      "java.lang.String": "ciccio"
+      "java.lang.String": "Alfredo"
     },
     "warehouse": {
       "nwoolcan.model.brewery.warehouse.WarehouseImpl": {
@@ -13,26 +13,4555 @@
             "articleManager": {
               "nwoolcan.model.brewery.warehouse.article.ArticleManager": {
                 "nextAvailableId": {
-                  "java.lang.Integer": 1
+                  "java.lang.Integer": 10
                 },
-                "articleToArticle": {}
+                "articleToArticle": [
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Light Malt Exctract"
+                        },
+                        "id": {
+                          "java.lang.Integer": 3
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Light Malt Exctract"
+                        },
+                        "id": {
+                          "java.lang.Integer": 3
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Caramunich Grains"
+                        },
+                        "id": {
+                          "java.lang.Integer": 5
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Caramunich Grains"
+                        },
+                        "id": {
+                          "java.lang.Integer": 5
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "HOPS"
+                        },
+                        "name": {
+                          "java.lang.String": "Tettnager"
+                        },
+                        "id": {
+                          "java.lang.Integer": 2
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "HOPS"
+                        },
+                        "name": {
+                          "java.lang.String": "Tettnager"
+                        },
+                        "id": {
+                          "java.lang.Integer": 2
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Chocolate Grains"
+                        },
+                        "id": {
+                          "java.lang.Integer": 4
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Chocolate Grains"
+                        },
+                        "id": {
+                          "java.lang.Integer": 4
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "HOPS"
+                        },
+                        "name": {
+                          "java.lang.String": "Hallertau"
+                        },
+                        "id": {
+                          "java.lang.Integer": 1
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "HOPS"
+                        },
+                        "name": {
+                          "java.lang.String": "Hallertau"
+                        },
+                        "id": {
+                          "java.lang.Integer": 1
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Lager Exctract"
+                        },
+                        "id": {
+                          "java.lang.Integer": 7
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Lager Exctract"
+                        },
+                        "id": {
+                          "java.lang.Integer": 7
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.ArticleImpl": {
+                        "name": {
+                          "java.lang.String": "Tappi corona d. 29"
+                        },
+                        "id": {
+                          "java.lang.Integer": 6
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$3": "UNIT"
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.ArticleImpl": {
+                        "name": {
+                          "java.lang.String": "Tappi corona d. 29"
+                        },
+                        "id": {
+                          "java.lang.Integer": 6
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$3": "UNIT"
+                        }
+                      }
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.BeerArticleImpl": {
+                        "name": {
+                          "java.lang.String": "Birra Pronta"
+                        },
+                        "id": {
+                          "java.lang.Integer": 8
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.BeerArticleImpl": {
+                        "name": {
+                          "java.lang.String": "Birra Pronta"
+                        },
+                        "id": {
+                          "java.lang.Integer": 8
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                        }
+                      }
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.BeerArticleImpl": {
+                        "name": {
+                          "java.lang.String": "Giasamuglio"
+                        },
+                        "id": {
+                          "java.lang.Integer": 9
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.BeerArticleImpl": {
+                        "name": {
+                          "java.lang.String": "Giasamuglio"
+                        },
+                        "id": {
+                          "java.lang.Integer": 9
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                        }
+                      }
+                    }
+                  ]
+                ]
               }
             },
-            "stockToStock": {},
+            "stockToStock": [
+              [
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 4
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "Apr 20, 2021 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 1000.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 8:57:07 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 8:57:07 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 8:57:07 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 1000.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 3
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 4
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "Apr 20, 2021 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 1000.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 8:57:07 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 8:57:07 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 8:57:07 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 1000.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 3
+                    }
+                  }
+                }
+              ],
+              [
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 5
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "Apr 20, 2021 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 1000.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 8:56:45 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 8:56:45 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 8:56:45 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 1000.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 2
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 5
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "Apr 20, 2021 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 1000.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 8:56:45 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 8:56:45 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 8:56:45 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 1000.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 2
+                    }
+                  }
+                }
+              ],
+              [
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 6
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 300.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$3": "UNIT"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 8:57:35 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 8:57:35 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 8:57:35 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 300.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$3": "UNIT"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$3": "UNIT"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 4
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 6
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 300.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$3": "UNIT"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 8:57:35 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 8:57:35 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 8:57:35 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 300.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$3": "UNIT"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$3": "UNIT"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 4
+                    }
+                  }
+                }
+              ],
+              [
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 2
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "May 11, 2019 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 20.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:10:01 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:10:01 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 9:10:01 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 20.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 6
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 2
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "May 11, 2019 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 20.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:10:01 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:10:01 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 9:10:01 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 20.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 6
+                    }
+                  }
+                }
+              ],
+              [
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 7
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "Apr 22, 2019 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 1800.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:08:55 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:08:55 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 9:08:55 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 1800.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 5
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 7
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "Apr 22, 2019 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 1800.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:08:55 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 1800.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:38:33 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "REMOVING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:08:55 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 9:38:33 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 1800.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 5
+                    }
+                  }
+                }
+              ],
+              [
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 3
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 15000.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 8:56:25 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 8:56:25 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 8:56:25 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 15000.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 1
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 3
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 15000.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 8:56:25 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 8:56:25 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 8:56:25 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 15000.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 1
+                    }
+                  }
+                }
+              ],
+              [
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 4
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "May 3, 2019 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 10.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:36:58 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:36:58 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 9:36:58 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 10.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 7
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 4
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "May 3, 2019 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 10.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:36:58 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:36:58 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 9:36:58 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 10.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 7
+                    }
+                  }
+                }
+              ],
+              [
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.BeerStockImpl": {
+                    "batchId": {
+                      "java.lang.Integer": 1
+                    },
+                    "articleId": {
+                      "java.lang.Integer": 8
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "Jun 1, 2019 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 28.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:39:24 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 10.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:39:49 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "REMOVING"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 10.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:39:57 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 20.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:40:06 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "REMOVING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:39:24 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 9:40:06 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 8.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 30.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 8
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.BeerStockImpl": {
+                    "batchId": {
+                      "java.lang.Integer": 1
+                    },
+                    "articleId": {
+                      "java.lang.Integer": 8
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "Jun 1, 2019 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 28.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:39:24 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 10.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:39:49 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "REMOVING"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 10.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:39:57 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 20.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:40:06 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "REMOVING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:39:24 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 9:40:06 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 8.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 30.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 8
+                    }
+                  }
+                }
+              ],
+              [
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.BeerStockImpl": {
+                    "batchId": {
+                      "java.lang.Integer": 3
+                    },
+                    "articleId": {
+                      "java.lang.Integer": 9
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 10.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:50:26 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 10.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:50:50 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "REMOVING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:50:26 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 9:50:50 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 10.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 9
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.BeerStockImpl": {
+                    "batchId": {
+                      "java.lang.Integer": 3
+                    },
+                    "articleId": {
+                      "java.lang.Integer": 9
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 10.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:50:26 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 10.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:50:50 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "REMOVING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:50:26 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 9:50:50 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 10.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 9
+                    }
+                  }
+                }
+              ],
+              [
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 3
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "Apr 9, 2019 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 10.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:51:21 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:51:21 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 9:51:21 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 10.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 10
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.warehouse.stock.StockImpl": {
+                    "articleId": {
+                      "java.lang.Integer": 3
+                    },
+                    "expirationDate": {
+                      "java.util.Date": "Apr 9, 2019 12:00:00 AM"
+                    },
+                    "records": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.warehouse.stock.Record": {
+                            "quantity": {
+                              "nwoolcan.model.utils.Quantity": {
+                                "value": {
+                                  "java.lang.Double": 10.0
+                                },
+                                "unitOfMeasure": {
+                                  "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                                }
+                              }
+                            },
+                            "date": {
+                              "java.util.Date": "Apr 22, 2019 9:51:21 AM"
+                            },
+                            "action": {
+                              "nwoolcan.model.brewery.warehouse.stock.Record$Action": "ADDING"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "creationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:51:21 AM"
+                    },
+                    "lastChangeDate": {
+                      "java.util.Date": "Apr 22, 2019 9:51:21 AM"
+                    },
+                    "remainingQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 10.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "usedQuantity": {
+                      "nwoolcan.model.utils.Quantity": {
+                        "value": {
+                          "java.lang.Double": 0.0
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    "id": {
+                      "java.lang.Integer": 10
+                    }
+                  }
+                }
+              ]
+            ],
             "nextAvailableId": {
-              "java.lang.Integer": 1
+              "java.lang.Integer": 11
             }
           }
         }
       }
     },
     "batches": {
-      "java.util.ArrayList": []
+      "java.util.ArrayList": [
+        {
+          "nwoolcan.model.brewery.batch.BatchImpl": {
+            "id": {
+              "java.lang.Integer": 5
+            },
+            "batchInfo": {
+              "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {
+                "beerDescription": {
+                  "nwoolcan.model.brewery.batch.misc.BeerDescriptionImpl": {
+                    "name": {
+                      "java.lang.String": "!Woolcan"
+                    },
+                    "style": {
+                      "java.lang.String": "Doppelbock"
+                    },
+                    "styleCategory": {
+                      "java.lang.String": "Strong European Lager"
+                    }
+                  }
+                },
+                "method": {
+                  "nwoolcan.model.brewery.batch.BatchMethod": "PARTIAL_MASH"
+                },
+                "size": {
+                  "nwoolcan.model.utils.Quantity": {
+                    "value": {
+                      "java.lang.Double": 23.0
+                    },
+                    "unitOfMeasure": {
+                      "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                    }
+                  }
+                },
+                "ingredients": [
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Light Malt Exctract"
+                        },
+                        "id": {
+                          "java.lang.Integer": 3
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "java.lang.Double": 5500.0
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Caramunich Grains"
+                        },
+                        "id": {
+                          "java.lang.Integer": 5
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "java.lang.Double": 200.0
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Chocolate Grains"
+                        },
+                        "id": {
+                          "java.lang.Integer": 4
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "java.lang.Double": 200.0
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "HOPS"
+                        },
+                        "name": {
+                          "java.lang.String": "Hallertau"
+                        },
+                        "id": {
+                          "java.lang.Integer": 1
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "java.lang.Double": 100.0
+                    }
+                  ]
+                ],
+                "measurement": {
+                  "nwoolcan.model.brewery.batch.misc.WaterMeasurementFactory$WaterMeasurementImpl": {
+                    "parameter": [
+                      [
+                        {
+                          "nwoolcan.model.brewery.batch.misc.WaterMeasurement$Element": "CALCIUM"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "WATER_MEASUREMENT"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 125.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:01:12 AM"
+                            }
+                          }
+                        }
+                      ],
+                      [
+                        {
+                          "nwoolcan.model.brewery.batch.misc.WaterMeasurement$Element": "SODIUM"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "WATER_MEASUREMENT"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 41.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:01:12 AM"
+                            }
+                          }
+                        }
+                      ],
+                      [
+                        {
+                          "nwoolcan.model.brewery.batch.misc.WaterMeasurement$Element": "BICARBONATE"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "WATER_MEASUREMENT"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 429.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:01:12 AM"
+                            }
+                          }
+                        }
+                      ],
+                      [
+                        {
+                          "nwoolcan.model.brewery.batch.misc.WaterMeasurement$Element": "MAGNESIUM"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "WATER_MEASUREMENT"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 31.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:01:12 AM"
+                            }
+                          }
+                        }
+                      ],
+                      [
+                        {
+                          "nwoolcan.model.brewery.batch.misc.WaterMeasurement$Element": "CHLORIDE"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "WATER_MEASUREMENT"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 66.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:01:12 AM"
+                            }
+                          }
+                        }
+                      ],
+                      [
+                        {
+                          "nwoolcan.model.brewery.batch.misc.WaterMeasurement$Element": "SULFATE"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "WATER_MEASUREMENT"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 74.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:01:12 AM"
+                            }
+                          }
+                        }
+                      ]
+                    ]
+                  }
+                },
+                "og": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 1.08
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:03:27 AM"
+                    }
+                  }
+                },
+                "fg": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 1.02
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:05:22 AM"
+                    }
+                  }
+                },
+                "ebc": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "EBC"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 20.0
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:04:31 AM"
+                    }
+                  }
+                },
+                "abv": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 6.56
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:05:34 AM"
+                    }
+                  }
+                },
+                "ibu": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "IBU"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 20.0
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:04:02 AM"
+                    }
+                  }
+                }
+              }
+            },
+            "steps": {
+              "java.util.ArrayList": [
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "BOILING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "MASHING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:01:12 AM"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:01:56 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 23.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 73.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:01:26 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 73.5
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:01:34 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 73.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:01:38 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 74.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:01:44 AM"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FERMENTING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "BOILING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:01:56 AM"
+                        },
+                        "note": {
+                          "java.lang.String": "80g of Hallertau after 15 min\n20g after 45"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:02:54 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 23.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 100.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:02:07 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 100.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:02:11 AM"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "PACKAGING"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "AGING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "IBU"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "EBC"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FERMENTING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:02:54 AM"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:06:42 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 28.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 2.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:03:05 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 14.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:03:22 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 1.08
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:03:27 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "IBU"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 20.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:04:02 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "EBC"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 20.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:04:31 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 13.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:04:47 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 12.5
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:04:53 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 1.065
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:05:08 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 1.04
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:05:19 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 1.02
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:05:22 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 5.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:05:29 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 6.56
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:05:34 AM"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "PACKAGING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "IBU"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "EBC"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "AGING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:06:42 AM"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:07:45 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 28.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 10.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:06:53 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 8.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:06:57 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 6.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:07:04 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 4.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:07:08 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 3.5
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:07:11 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 4.3
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:07:14 AM"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BottlingStep": {
+                    "decorated": {
+                      "nwoolcan.model.brewery.batch.step.BasicStep": {
+                        "nextStepTypes": {
+                          "java.util.LinkedHashSet": [
+                            {
+                              "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FINALIZED"
+                            }
+                          ]
+                        },
+                        "registrationParameterTypes": {
+                          "java.util.Collections$EmptySet": []
+                        },
+                        "stepInfo": {
+                          "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                            "stepType": {
+                              "nwoolcan.model.brewery.batch.step.StepTypeEnum": "PACKAGING"
+                            },
+                            "startDate": {
+                              "java.util.Date": "Apr 22, 2019 9:07:45 AM"
+                            }
+                          }
+                        },
+                        "finalized": {
+                          "java.lang.Boolean": false
+                        },
+                        "parameters": {
+                          "java.util.ArrayList": []
+                        },
+                        "observers": {
+                          "java.util.ArrayList": []
+                        }
+                      }
+                    },
+                    "nextStepTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FINALIZED"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.LinkedHashSet": []
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "PACKAGING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:07:45 AM"
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": false
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": []
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "stepFactory": {
+              "nwoolcan.model.brewery.batch.step.EnumStepFactory": {}
+            }
+          }
+        },
+        {
+          "nwoolcan.model.brewery.batch.BatchImpl": {
+            "id": {
+              "java.lang.Integer": 1
+            },
+            "batchInfo": {
+              "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {
+                "beerDescription": {
+                  "nwoolcan.model.brewery.batch.misc.BeerDescriptionImpl": {
+                    "name": {
+                      "java.lang.String": "Birra Pronta"
+                    },
+                    "style": {
+                      "java.lang.String": "Pilsner"
+                    },
+                    "styleCategory": {
+                      "java.lang.String": "European Lager"
+                    }
+                  }
+                },
+                "method": {
+                  "nwoolcan.model.brewery.batch.BatchMethod": "EXTRACT"
+                },
+                "size": {
+                  "nwoolcan.model.utils.Quantity": {
+                    "value": {
+                      "java.lang.Double": 23.0
+                    },
+                    "unitOfMeasure": {
+                      "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                    }
+                  }
+                },
+                "ingredients": [
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Lager Exctract"
+                        },
+                        "id": {
+                          "java.lang.Integer": 7
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "java.lang.Double": 1800.0
+                    }
+                  ]
+                ],
+                "og": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 1.04
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:11:12 AM"
+                    }
+                  }
+                },
+                "fg": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 1.038
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:12:24 AM"
+                    }
+                  }
+                },
+                "ebc": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "EBC"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 5.0
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:11:02 AM"
+                    }
+                  }
+                },
+                "abv": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 2.0
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:10:55 AM"
+                    }
+                  }
+                },
+                "ibu": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "IBU"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 20.0
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:10:59 AM"
+                    }
+                  }
+                }
+              }
+            },
+            "steps": {
+              "java.util.ArrayList": [
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FERMENTING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "BOILING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:10:35 AM"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:10:44 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 23.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": []
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "PACKAGING"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "AGING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "IBU"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "EBC"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FERMENTING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:10:44 AM"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:14:04 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 28.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 28.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:10:49 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 2.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:10:55 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "IBU"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 20.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:10:59 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "EBC"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 5.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:11:02 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 1.04
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:11:12 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 26.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:11:29 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 1.038
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:12:24 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 23.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:12:32 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 21.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:13:49 AM"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BottlingStep": {
+                    "decorated": {
+                      "nwoolcan.model.brewery.batch.step.BasicStep": {
+                        "nextStepTypes": {
+                          "java.util.LinkedHashSet": [
+                            {
+                              "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FINALIZED"
+                            }
+                          ]
+                        },
+                        "registrationParameterTypes": {
+                          "java.util.Collections$EmptySet": []
+                        },
+                        "stepInfo": {
+                          "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                            "stepType": {
+                              "nwoolcan.model.brewery.batch.step.StepTypeEnum": "PACKAGING"
+                            },
+                            "startDate": {
+                              "java.util.Date": "Apr 22, 2019 9:14:04 AM"
+                            }
+                          }
+                        },
+                        "finalized": {
+                          "java.lang.Boolean": false
+                        },
+                        "parameters": {
+                          "java.util.ArrayList": []
+                        },
+                        "observers": {
+                          "java.util.ArrayList": []
+                        }
+                      }
+                    },
+                    "nextStepTypes": {
+                      "java.util.LinkedHashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FINALIZED"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.LinkedHashSet": []
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "PACKAGING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:14:04 AM"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:14:10 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 28.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": []
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.Collections$EmptySet": []
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.Collections$EmptySet": []
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FINALIZED"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:14:10 AM"
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": []
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "stepFactory": {
+              "nwoolcan.model.brewery.batch.step.EnumStepFactory": {}
+            },
+            "batchEvaluation": {
+              "nwoolcan.model.brewery.batch.review.BatchEvaluationBuilder$BatchEvaluationImpl": {
+                "categories": {
+                  "java.util.HashSet": [
+                    {
+                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
+                        "category": {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "OVERALL_IMPRESSION"
+                        },
+                        "score": {
+                          "java.lang.Integer": 7
+                        },
+                        "notes": {
+                          "java.util.Optional": {
+                            "value": {
+                              "java.lang.String": "Non c\u0027è troppa armonia soprattutto tra la parte visiva \nche lascia presupporre una struttura più consistente e la parte gusto \nolfattiva dove invece si riscontra una piacevole facilità di beva\nNel complesso accettabile come primo esperimento"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
+                        "category": {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "APPEARANCE"
+                        },
+                        "score": {
+                          "java.lang.Integer": 3
+                        },
+                        "notes": {
+                          "java.util.Optional": {
+                            "value": {
+                              "java.lang.String": "Davvero molto accattivante alla vista\nBel giallo dorato"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
+                        "category": {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "AROMA"
+                        },
+                        "score": {
+                          "java.lang.Integer": 5
+                        },
+                        "notes": {
+                          "java.util.Optional": {
+                            "value": {
+                              "java.lang.String": "(Code) smell"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
+                        "category": {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "FLAVOR"
+                        },
+                        "score": {
+                          "java.lang.Integer": 15
+                        },
+                        "notes": {
+                          "java.util.Optional": {
+                            "value": {
+                              "java.lang.String": "Non molto intenso o complesso"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
+                        "category": {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
+                        },
+                        "score": {
+                          "java.lang.Integer": 3
+                        },
+                        "notes": {
+                          "java.util.Optional": {
+                            "value": {
+                              "java.lang.String": "Biira leggera ma abbastanza morbida"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "reviewer": {
+                  "java.util.Optional": {
+                    "value": {
+                      "java.lang.String": "Gianfranco"
+                    }
+                  }
+                },
+                "category": {
+                  "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType": {
+                    "name": {
+                      "java.lang.String": "Official BJCP Scoresheet"
+                    },
+                    "categories": {
+                      "java.util.HashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "FLAVOR"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "AROMA"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "OVERALL_IMPRESSION"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "APPEARANCE"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "score": {
+                  "java.lang.Integer": 33
+                },
+                "notes": {
+                  "java.util.Optional": {
+                    "value": {
+                      "java.lang.String": "Abbastanza buona"
+                    }
+                  }
+                }
+              }
+            },
+            "stockIdReference": {
+              "java.lang.Integer": 8
+            }
+          }
+        },
+        {
+          "nwoolcan.model.brewery.batch.BatchImpl": {
+            "id": {
+              "java.lang.Integer": 2
+            },
+            "batchInfo": {
+              "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {
+                "beerDescription": {
+                  "nwoolcan.model.brewery.batch.misc.BeerDescriptionImpl": {
+                    "name": {
+                      "java.lang.String": "Paroni"
+                    },
+                    "style": {
+                      "java.lang.String": "Lager"
+                    },
+                    "styleCategory": {
+                      "java.lang.String": "Birra del popolo"
+                    }
+                  }
+                },
+                "method": {
+                  "nwoolcan.model.brewery.batch.BatchMethod": "ALL_GRAIN"
+                },
+                "size": {
+                  "nwoolcan.model.utils.Quantity": {
+                    "value": {
+                      "java.lang.Double": 100.0
+                    },
+                    "unitOfMeasure": {
+                      "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                    }
+                  }
+                },
+                "ingredients": [
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Light Malt Exctract"
+                        },
+                        "id": {
+                          "java.lang.Integer": 3
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "java.lang.Double": 10000.0
+                    }
+                  ]
+                ],
+                "og": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 1.04
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:43:47 AM"
+                    }
+                  }
+                },
+                "abv": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 4.0
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:43:52 AM"
+                    }
+                  }
+                }
+              }
+            },
+            "steps": {
+              "java.util.ArrayList": [
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "BOILING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "MASHING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:42:46 AM"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:42:56 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 100.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": []
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FERMENTING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "BOILING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:42:56 AM"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:42:59 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 100.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": []
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "AGING"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "PACKAGING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "EBC"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "IBU"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FERMENTING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:42:59 AM"
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": false
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 1.04
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:43:47 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 4.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:43:52 AM"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "stepFactory": {
+              "nwoolcan.model.brewery.batch.step.EnumStepFactory": {}
+            }
+          }
+        },
+        {
+          "nwoolcan.model.brewery.batch.BatchImpl": {
+            "id": {
+              "java.lang.Integer": 3
+            },
+            "batchInfo": {
+              "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {
+                "beerDescription": {
+                  "nwoolcan.model.brewery.batch.misc.BeerDescriptionImpl": {
+                    "name": {
+                      "java.lang.String": "Giasamuglio"
+                    },
+                    "style": {
+                      "java.lang.String": "random"
+                    },
+                    "styleCategory": {
+                      "java.lang.String": "intruglio"
+                    }
+                  }
+                },
+                "method": {
+                  "nwoolcan.model.brewery.batch.BatchMethod": "ALL_GRAIN"
+                },
+                "size": {
+                  "nwoolcan.model.utils.Quantity": {
+                    "value": {
+                      "java.lang.Double": 21.0
+                    },
+                    "unitOfMeasure": {
+                      "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                    }
+                  }
+                },
+                "ingredients": [
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Chocolate Grains"
+                        },
+                        "id": {
+                          "java.lang.Integer": 4
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "java.lang.Double": 100.0
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "HOPS"
+                        },
+                        "name": {
+                          "java.lang.String": "Hallertau"
+                        },
+                        "id": {
+                          "java.lang.Integer": 1
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "java.lang.Double": 1.0
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "HOPS"
+                        },
+                        "name": {
+                          "java.lang.String": "Tettnager"
+                        },
+                        "id": {
+                          "java.lang.Integer": 2
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "java.lang.Double": 1000.0
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Lager Exctract"
+                        },
+                        "id": {
+                          "java.lang.Integer": 7
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "java.lang.Double": 100.0
+                    }
+                  ]
+                ],
+                "measurement": {
+                  "nwoolcan.model.brewery.batch.misc.WaterMeasurementFactory$WaterMeasurementImpl": {
+                    "parameter": [
+                      [
+                        {
+                          "nwoolcan.model.brewery.batch.misc.WaterMeasurement$Element": "SULFATE"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "WATER_MEASUREMENT"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 1000.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:45:47 AM"
+                            }
+                          }
+                        }
+                      ],
+                      [
+                        {
+                          "nwoolcan.model.brewery.batch.misc.WaterMeasurement$Element": "MAGNESIUM"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "WATER_MEASUREMENT"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 1.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:45:47 AM"
+                            }
+                          }
+                        }
+                      ]
+                    ]
+                  }
+                },
+                "og": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 10.0
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:46:15 AM"
+                    }
+                  }
+                },
+                "fg": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 8.0
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:46:31 AM"
+                    }
+                  }
+                },
+                "abv": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 8.0
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:46:33 AM"
+                    }
+                  }
+                },
+                "ibu": {
+                  "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                    "parameterType": {
+                      "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "IBU"
+                    },
+                    "registrationValue": {
+                      "java.lang.Double": 10.0
+                    },
+                    "registrationDate": {
+                      "java.util.Date": "Apr 22, 2019 9:46:11 AM"
+                    }
+                  }
+                }
+              }
+            },
+            "steps": {
+              "java.util.ArrayList": [
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "BOILING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "MASHING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:45:47 AM"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:45:56 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 21.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": []
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FERMENTING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "BOILING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:45:56 AM"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:45:57 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 21.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": []
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "AGING"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "PACKAGING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "EBC"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "IBU"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FERMENTING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:45:57 AM"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:46:21 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 21.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 100.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:46:03 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "IBU"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 10.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:46:11 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 10.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:46:15 AM"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "PACKAGING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "EBC"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "IBU"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "AGING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:46:21 AM"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:46:43 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 21.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 10.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:46:25 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "GRAVITY"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 8.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:46:31 AM"
+                            }
+                          }
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterImpl": {
+                            "parameterType": {
+                              "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "ABV"
+                            },
+                            "registrationValue": {
+                              "java.lang.Double": 8.0
+                            },
+                            "registrationDate": {
+                              "java.util.Date": "Apr 22, 2019 9:46:33 AM"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BottlingStep": {
+                    "decorated": {
+                      "nwoolcan.model.brewery.batch.step.BasicStep": {
+                        "nextStepTypes": {
+                          "java.util.Collections$UnmodifiableSet": [
+                            {
+                              "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FINALIZED"
+                            }
+                          ]
+                        },
+                        "registrationParameterTypes": {
+                          "java.util.Collections$EmptySet": []
+                        },
+                        "stepInfo": {
+                          "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                            "stepType": {
+                              "nwoolcan.model.brewery.batch.step.StepTypeEnum": "PACKAGING"
+                            },
+                            "startDate": {
+                              "java.util.Date": "Apr 22, 2019 9:46:43 AM"
+                            }
+                          }
+                        },
+                        "finalized": {
+                          "java.lang.Boolean": false
+                        },
+                        "parameters": {
+                          "java.util.ArrayList": []
+                        },
+                        "observers": {
+                          "java.util.ArrayList": []
+                        }
+                      }
+                    },
+                    "nextStepTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FINALIZED"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.Collections$UnmodifiableSet": []
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "PACKAGING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:46:43 AM"
+                        },
+                        "endDate": {
+                          "java.util.Date": "Apr 22, 2019 9:46:56 AM"
+                        },
+                        "endSize": {
+                          "nwoolcan.model.utils.Quantity": {
+                            "value": {
+                              "java.lang.Double": 10.0
+                            },
+                            "unitOfMeasure": {
+                              "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": []
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.Collections$EmptySet": []
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.Collections$EmptySet": []
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "FINALIZED"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:46:56 AM"
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": true
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": []
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "stepFactory": {
+              "nwoolcan.model.brewery.batch.step.EnumStepFactory": {}
+            },
+            "batchEvaluation": {
+              "nwoolcan.model.brewery.batch.review.BatchEvaluationBuilder$BatchEvaluationImpl": {
+                "categories": {
+                  "java.util.HashSet": [
+                    {
+                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
+                        "category": {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "OVERALL_IMPRESSION"
+                        },
+                        "score": {
+                          "java.lang.Integer": 10
+                        },
+                        "notes": {
+                          "java.util.Optional": {
+                            "value": {
+                              "java.lang.String": ""
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
+                        "category": {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
+                        },
+                        "score": {
+                          "java.lang.Integer": 5
+                        },
+                        "notes": {
+                          "java.util.Optional": {
+                            "value": {
+                              "java.lang.String": "Ruvidina birichina "
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
+                        "category": {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "FLAVOR"
+                        },
+                        "score": {
+                          "java.lang.Integer": 18
+                        },
+                        "notes": {
+                          "java.util.Optional": {
+                            "value": {
+                              "java.lang.String": "Incredibile amabile passabile"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
+                        "category": {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "APPEARANCE"
+                        },
+                        "score": {
+                          "java.lang.Integer": 1
+                        },
+                        "notes": {
+                          "java.util.Optional": {
+                            "value": {
+                              "java.lang.String": "brutta"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
+                        "category": {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "AROMA"
+                        },
+                        "score": {
+                          "java.lang.Integer": 10
+                        },
+                        "notes": {
+                          "java.util.Optional": {
+                            "value": {
+                              "java.lang.String": "Notevole scorrevole piacevole"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "reviewer": {
+                  "java.util.Optional": {
+                    "value": {
+                      "java.lang.String": "Andrea"
+                    }
+                  }
+                },
+                "category": {
+                  "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType": {
+                    "name": {
+                      "java.lang.String": "Official BJCP Scoresheet"
+                    },
+                    "categories": {
+                      "java.util.HashSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "FLAVOR"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "AROMA"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "OVERALL_IMPRESSION"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "APPEARANCE"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "score": {
+                  "java.lang.Integer": 44
+                },
+                "notes": {
+                  "java.util.Optional": {
+                    "value": {
+                      "java.lang.String": "Giasamuglio\n"
+                    }
+                  }
+                }
+              }
+            },
+            "stockIdReference": {
+              "java.lang.Integer": 9
+            }
+          }
+        },
+        {
+          "nwoolcan.model.brewery.batch.BatchImpl": {
+            "id": {
+              "java.lang.Integer": 4
+            },
+            "batchInfo": {
+              "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {
+                "beerDescription": {
+                  "nwoolcan.model.brewery.batch.misc.BeerDescriptionImpl": {
+                    "name": {
+                      "java.lang.String": "Bucks"
+                    },
+                    "style": {
+                      "java.lang.String": "Lager"
+                    },
+                    "styleCategory": {
+                      "java.lang.String": "Birra di Milwaukee"
+                    }
+                  }
+                },
+                "method": {
+                  "nwoolcan.model.brewery.batch.BatchMethod": "ALL_GRAIN"
+                },
+                "size": {
+                  "nwoolcan.model.utils.Quantity": {
+                    "value": {
+                      "java.lang.Double": 200.0
+                    },
+                    "unitOfMeasure": {
+                      "nwoolcan.model.utils.UnitOfMeasure$2": "LITER"
+                    }
+                  }
+                },
+                "ingredients": [
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Caramunich Grains"
+                        },
+                        "id": {
+                          "java.lang.Integer": 5
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "java.lang.Double": 1000.0
+                    }
+                  ],
+                  [
+                    {
+                      "nwoolcan.model.brewery.warehouse.article.IngredientArticleImpl": {
+                        "ingredientType": {
+                          "nwoolcan.model.brewery.warehouse.article.IngredientType": "FERMENTABLE"
+                        },
+                        "name": {
+                          "java.lang.String": "Lager Exctract"
+                        },
+                        "id": {
+                          "java.lang.Integer": 7
+                        },
+                        "unitOfMeasure": {
+                          "nwoolcan.model.utils.UnitOfMeasure$1": "GRAM"
+                        }
+                      }
+                    },
+                    {
+                      "java.lang.Double": 2000.0
+                    }
+                  ]
+                ]
+              }
+            },
+            "steps": {
+              "java.util.ArrayList": [
+                {
+                  "nwoolcan.model.brewery.batch.step.BasicStep": {
+                    "nextStepTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "BOILING"
+                        }
+                      ]
+                    },
+                    "registrationParameterTypes": {
+                      "java.util.Collections$UnmodifiableSet": [
+                        {
+                          "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
+                        }
+                      ]
+                    },
+                    "stepInfo": {
+                      "nwoolcan.model.brewery.batch.step.ModifiableStepInfoImpl": {
+                        "stepType": {
+                          "nwoolcan.model.brewery.batch.step.StepTypeEnum": "MASHING"
+                        },
+                        "startDate": {
+                          "java.util.Date": "Apr 22, 2019 9:52:49 AM"
+                        }
+                      }
+                    },
+                    "finalized": {
+                      "java.lang.Boolean": false
+                    },
+                    "parameters": {
+                      "java.util.ArrayList": []
+                    },
+                    "observers": {
+                      "java.util.ArrayList": [
+                        {
+                          "nwoolcan.model.brewery.batch.ModifiableBatchInfoImpl": {}
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "stepFactory": {
+              "nwoolcan.model.brewery.batch.step.EnumStepFactory": {}
+            }
+          }
+        }
+      ]
     },
     "batchIdGenerator": {
       "nwoolcan.model.brewery.BatchIdGenerator": {
         "nextId": {
-          "java.lang.Integer": 0
+          "java.lang.Integer": 6
         }
       }
     }
