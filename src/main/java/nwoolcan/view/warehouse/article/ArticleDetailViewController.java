@@ -22,6 +22,7 @@ import nwoolcan.viewmodel.brewery.warehouse.article.IngredientArticleViewModel;
 public final class ArticleDetailViewController extends SubViewController implements InitializableController<ViewModelCallback<AbstractArticleViewModel>> {
 
     private static final String NEW_NAME_EMPTY = "The name can not be empty.";
+    private static final String CHANGE_NAME_ERROR = "Error while changing the article name: ";
     @FXML
     private Label lblIngType;
     @FXML
@@ -103,7 +104,6 @@ public final class ArticleDetailViewController extends SubViewController impleme
     }
 
     private void showAlertAndWait(final String message) {
-        this.showErrorAndWait("An error occurred while changing the article name.\n" + message,
-            this.articleUnitOfMeasure.getScene().getWindow());
+        this.showErrorAndWait(CHANGE_NAME_ERROR + message, this.articleUnitOfMeasure.getScene().getWindow());
     }
 }

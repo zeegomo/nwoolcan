@@ -16,6 +16,9 @@ import java.util.Optional;
  */
 public abstract class MasterStockViewModel {
 
+    private static final String EMPTY = "";
+    private static final String DATE_PATTERN = "dd-MM-yyyy";
+
     private final int id;
     private final AbstractArticleViewModel article;
     private final QuantityViewModel remainingQuantity;
@@ -75,7 +78,7 @@ public abstract class MasterStockViewModel {
      * @return the expiration {@link java.util.Date}.
      */
     public final String getExpirationDate() {
-        return expirationDate.isPresent() ? dateFormatted(expirationDate.get()) : "";
+        return expirationDate.isPresent() ? dateFormatted(expirationDate.get()) : EMPTY;
     }
     /**
      * Generated a proper {@link MasterStockViewModel} from a general {@link Stock} accordingly with the {@link nwoolcan.model.brewery.warehouse.article.ArticleType} of the {@link nwoolcan.model.brewery.warehouse.article.Article} of the {@link Stock}.
@@ -91,6 +94,6 @@ public abstract class MasterStockViewModel {
     }
 
     static String dateFormatted(final Date date) {
-        return DateFormatUtils.format(date, "dd-MM-yyyy");
+        return DateFormatUtils.format(date, DATE_PATTERN);
     }
 }
