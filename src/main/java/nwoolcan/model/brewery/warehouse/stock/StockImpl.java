@@ -24,6 +24,9 @@ import java.util.stream.Collectors;
 public class StockImpl implements Stock {
 
     private static final int EMPTY_VALUE = 0;
+    private static final String RECORD_DATE_PREVIOUS_THAN_LAST = "You can not add a record which date is previous than the"
+                                                               + "last one.";
+    private static final String STOCK_WOULD_HAVE_NEGATIVE_AMOUNT = "You can not have a stock with negative available amount.";
 
     private final int articleId;
     @Nullable private final Date expirationDate;
@@ -102,8 +105,7 @@ public class StockImpl implements Stock {
     public final Result<Empty> addRecord(final Record record) {
 
         if (!records.isEmpty() && record.getDate().before(records.get(records.size() - 1).getDate())) {
-            return Result.error(new IllegalArgumentException("You can not add a record which date is previous than the"
-                                                           + "last one."));
+            return Result.error(new IllegalArgumentException(RECORD_DATE_PREVIOUS_THAN_LAST));
         }
 
         final Result<Quantity> res;
@@ -118,8 +120,7 @@ public class StockImpl implements Stock {
                                 this.usedQuantity = Quantities.add(this.usedQuantity,
                                                                    record.getQuantity())
                                                                          .getValue())
-                            .mapError(e -> new IllegalArgumentException("You can not have a stock with negative"
-                                                                      + "available amount."));
+                            .mapError(e -> new IllegalArgumentException(STOCK_WOULD_HAVE_NEGATIVE_AMOUNT));
         }
         // make the temporary quantity the official one, add the record to the records list
         // and return a Result of Empty.
