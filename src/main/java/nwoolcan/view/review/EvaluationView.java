@@ -32,6 +32,7 @@ import java.util.Optional;
 public final class EvaluationView extends AbstractViewController implements InitializableController<EvaluationView.Builder> {
         private static final String DEFAULT_TEXT = "-fx-text-fill: black;";
         private static final String ERROR_TEXT = "-fx-text-fill: red;";
+        private static final String LOAD_FAILED = "Load failed";
         @FXML
         private TextField scoreTextField;
         @FXML
@@ -225,7 +226,7 @@ public final class EvaluationView extends AbstractViewController implements Init
          * @return {@link Node}
          */
         public Node build(final ViewManager manager) {
-            return manager.getView(ViewType.EVALUATION, this).orElse(new Label("Load failed"));
+            return manager.getView(ViewType.EVALUATION, this).orElse(new Label(LOAD_FAILED));
         }
     }
 }

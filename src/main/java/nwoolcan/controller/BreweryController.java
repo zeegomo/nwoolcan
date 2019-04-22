@@ -160,8 +160,7 @@ public final class BreweryController implements Controller {
         return res.flatMap(e -> bBuilder.build(
             new BeerDescriptionImpl(batchDTO.getName(), batchDTO.getStyle(), batchDTO.getCategory().orElse(null)),
             batchDTO.getMethod(),
-            batchDTO.getIntialSize(),
-            batchDTO.getInitialStep()))
+            batchDTO.getInitialSize()))
                   .peek(this.brewery::addBatch)
                   .toEmpty();
     }

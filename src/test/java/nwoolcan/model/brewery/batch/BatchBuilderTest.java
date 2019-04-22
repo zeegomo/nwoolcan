@@ -3,8 +3,6 @@ package nwoolcan.model.brewery.batch;
 import nwoolcan.model.brewery.IdGenerator;
 import nwoolcan.model.brewery.batch.misc.BeerDescription;
 import nwoolcan.model.brewery.batch.misc.BeerDescriptionImpl;
-import nwoolcan.model.brewery.batch.step.StepType;
-import nwoolcan.model.brewery.batch.step.StepTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.ArticleManager;
 import nwoolcan.model.brewery.warehouse.article.IngredientArticle;
 import nwoolcan.model.brewery.warehouse.article.IngredientType;
@@ -42,37 +40,12 @@ public class BatchBuilderTest {
         Result<Batch> res = builder.build(
             BD,
             BM,
-            INIT_SIZE,
-            StepTypeEnum.MASHING
+            INIT_SIZE
         );
 
         Assert.assertTrue(res.isPresent());
     }
 
-    /**
-     * Test build with wrong initial step type.
-     */
-    @Test
-    public void testWrongInitialStep() {
-        Result<Batch> res = builder.build(
-            BD,
-            BM,
-            INIT_SIZE,
-            new StepType() {
-                @Override
-                public String getName() {
-                    return "oops";
-                }
-
-                @Override
-                public boolean isEndType() {
-                    return false;
-                }
-            }
-        );
-
-        Assert.assertTrue(res.isError());
-    }
 
     /**
      * Test build inserting same ingredient twice.
@@ -85,8 +58,7 @@ public class BatchBuilderTest {
                                    .addIngredient(ing, 2).build(
                 BD,
                 BM,
-                INIT_SIZE,
-                StepTypeEnum.MASHING
+                INIT_SIZE
             );
 
         Assert.assertTrue(res.isError());

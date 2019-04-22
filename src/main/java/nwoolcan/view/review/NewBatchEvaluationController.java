@@ -49,6 +49,7 @@ public final class NewBatchEvaluationController extends SubViewController
     implements InitializableController<NewBatchEvaluationViewModel> {
     private static final String LOAD_FAILED = "Load failed";
     private static final String SCORE_PARSE_FAILED = "Invalid score";
+    private static final String REVIEW_CREATION_FAILED = "An error occurred while creating the review.\n";
     @FXML
     private SubView modalSubView;
     @FXML
@@ -194,7 +195,7 @@ public final class NewBatchEvaluationController extends SubViewController
     }
 
     private void showAlertAndWait(final String message) {
-        this.showErrorAndWait("An error occurred while creating the review.\n" + message,
+        this.showErrorAndWait(REVIEW_CREATION_FAILED + message,
             this.reviewerTextField.getScene().getWindow());
     }
 }
