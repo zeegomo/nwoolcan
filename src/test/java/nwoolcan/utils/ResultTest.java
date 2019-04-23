@@ -19,6 +19,17 @@ import static org.junit.Assert.assertSame;
  * Test Result class.
  */
 public class ResultTest {
+    //Using this because of Ecplise error. Gradle (and IntelliJ) works just fine with the following lamda version:
+    //() -> () -> {
+    // throw new IllegalStateException();
+    //}
+    private static class FallibleAutoCloseable implements AutoCloseable {
+
+        @Override
+        public void close() throws Exception {
+            throw new IllegalStateException();
+        }
+    }
     /**
      * Test Result of Empty.
      */
@@ -163,14 +174,10 @@ public class ResultTest {
      */
     @Test
     public void testOfCloseable() {
-        Result<Integer> r1 = Results.ofCloseable(() -> () -> { }, e -> 3);
+        Result<Integer> r1 = Results.ofCloseable(() -> this.getClass().getResourceAsStream(""), e -> 3);
         assertTrue(r1.getValue() == 3);
-        Result<Integer> r2 = Results.ofCloseable(() -> () -> {
-            throw new IllegalAccessException();
-            }, e -> 3);
+        Result<Integer> r2 = Results.ofCloseable(FallibleAutoCloseable::new, e -> 3);
         assertTrue(r2.isError());
-        r2.getError().printStackTrace();
-        System.out.println(r2.getError().toString());
     }
     /**
      * Tests stream.
