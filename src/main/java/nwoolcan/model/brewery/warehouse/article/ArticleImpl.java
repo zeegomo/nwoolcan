@@ -1,19 +1,12 @@
 package nwoolcan.model.brewery.warehouse.article;
 
 import nwoolcan.model.utils.UnitOfMeasure;
-import nwoolcan.utils.Result;
-
-import java.util.Objects;
 
 /**
  * General implementation of Article. It can contains only article of MISC type.
  * Override your class for a particular Article implementation.
  */
-public class ArticleImpl extends AbstractArticle {
-
-    private static final String NAME_CAN_NOT_BE_EMPTY = "Name can not be empty";
-    private static final String NOT_INGREDIENT_ARTICLE = "This is not an Ingredient Article.";
-    private static final String NOT_BEER_ARTICLE = "This is not a Beer Article.";
+public final class ArticleImpl extends AbstractArticle {
 
     /**
      * Constructor of the class. Only article of type miscellaneous can be constructed.
@@ -24,72 +17,23 @@ public class ArticleImpl extends AbstractArticle {
     // Package-private
     ArticleImpl(final int id, final String name, final UnitOfMeasure unitOfMeasure) {
         super(id, name, unitOfMeasure);
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException(NAME_CAN_NOT_BE_EMPTY);
-        }
     }
 
-
-    /**
-     * Returns the type of article.
-     * Override this method according on the type of article which is being represented.
-     * @return the type of article.
-     */
     @Override
     public ArticleType getArticleType() {
         return ArticleType.MISC;
     }
-    /**
-     * To override this method return the linked IngredientArticle in case it is an ingredient,
-     * or an error {@link Result} otherwise.
-     * @return an error {@link Result} because this is not an Ingredient, this is a general article.
-     */
-    @Override
-    public Result<IngredientArticle> toIngredientArticle() {
-        return Result.error(new IllegalAccessException(NOT_INGREDIENT_ARTICLE));
-    }
-    /**
-     * To override this method return the linked BeerArticle in case it is an ingredient,
-     * or an error {@link Result} otherwise.
-     * @return an error {@link Result} because this is not a Beer, this is a general article.
-     */
-    @Override
-    public Result<BeerArticle> toBeerArticle() {
-        return Result.error(new IllegalAccessException(NOT_BEER_ARTICLE));
-    }
 
-    /**
-     * To override this method you should call Objects.hash with parameters this super class and the other fields.
-     * @return the result of the xor operation between id and the hash of the name.
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getUnitOfMeasure(), getArticleType());
-    }
-    /**
-     * To override this method compare all the fields of the classes.
-     * @param obj the object to be compared with.
-     * @return true if all the fields contains respectively the same value.
-     */
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (!(obj instanceof ArticleImpl)) {
-            return false;
-        }
-
-        ArticleImpl other = (ArticleImpl) obj;
-        return getName().equals(other.getName())
-            && getUnitOfMeasure().equals(other.getUnitOfMeasure())
-            && this.getArticleType().equals(other.getArticleType());
+        return super.equals(obj) && obj instanceof ArticleImpl;
     }
-    /**
-     * To override this method add also other elements of the new class.
-     * @return a string representation of the class.
-     */
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     @Override
     public String toString() {
         return "[ArticleImpl]{"

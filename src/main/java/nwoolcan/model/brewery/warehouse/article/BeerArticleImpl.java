@@ -6,7 +6,7 @@ import nwoolcan.utils.Result;
 /**
  * Beer article implementation.
  */
-public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
+public final class BeerArticleImpl extends AbstractArticle implements BeerArticle {
 
     /**
      * Constructor which uses the constructor of the super class and sets the batch.
@@ -18,10 +18,7 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
     BeerArticleImpl(final int id, final String name, final UnitOfMeasure unitOfMeasure) {
         super(id, name, unitOfMeasure);
     }
-    /**
-     * Returns the {@link Result} of this {@link BeerArticle}.
-     * @return the {@link Result} of this {@link BeerArticle}.
-     */
+
     @Override
     public Result<BeerArticle> toBeerArticle() {
         return Result.of(this);
@@ -39,7 +36,7 @@ public final class BeerArticleImpl extends ArticleImpl implements BeerArticle {
 
     @Override
     public boolean equals(final Object obj) {
-        return super.equals(obj);
+        return super.equals(obj) && obj instanceof BeerArticleImpl;
     }
 
     @Override

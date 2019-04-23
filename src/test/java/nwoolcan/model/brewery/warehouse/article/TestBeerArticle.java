@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * Test for BeerArticle.
  */
-public class TestBeerArticleImpl {
+public class TestBeerArticle {
 
     private final ArticleManager articleManager = new ArticleManager();
     private static final UnitOfMeasure UOM = UnitOfMeasure.GRAM;

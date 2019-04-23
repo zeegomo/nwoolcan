@@ -15,13 +15,6 @@ public class TestArticle {
     private static final UnitOfMeasure UOM1 = UnitOfMeasure.UNIT;
 
     /**
-     * Method that tests the constructor with empty NAME.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void testConstructorWithEmptyName() {
-        articleManager.createMiscArticle("", UOM);
-    }
-    /**
      * Method that tests the getters and relative errors.
      */
     @Test
