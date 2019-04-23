@@ -20,6 +20,7 @@ import java.util.Collection;
 public class BatchBuilder {
 
     private static final String MUST_BE_DISTINCT_INGREDIENTS_MESSAGE = "All ingredients added must be distinct.";
+    private static final String INGREDIENT_QUANTITY_CANNOT_BE_NEGATIVE = "Ingredient's quantity cannot be negative.";
 
     private final IdGenerator generator;
 
@@ -61,6 +62,7 @@ public class BatchBuilder {
      * Contains an error of type:
      * <ul>
      *     <li>{@link IllegalStateException} if the ingredients are not distinct.</li>
+     *     <li>{@link IllegalArgumentException} if one of the ingredients have negative quantity.</li>
      *     <li>{@link IllegalArgumentException} if the initial step type of the batch cannot be created.</li>
      * </ul>
      * @param beerDescription the batch's beer description.
@@ -74,6 +76,8 @@ public class BatchBuilder {
         return Result.ofEmpty()
                      .require(() -> this.ingredients.stream().map(Pair::getKey).distinct().count() == this.ingredients.size(),
                          new IllegalStateException(MUST_BE_DISTINCT_INGREDIENTS_MESSAGE))
+                     .require(() -> this.ingredients.stream().noneMatch(p -> p.getRight() < 0),
+                         new IllegalArgumentException(INGREDIENT_QUANTITY_CANNOT_BE_NEGATIVE))
                      .flatMap(e -> Results.ofChecked(() -> new BatchImpl(
                          beerDescription,
                          batchMethod,
