@@ -16,13 +16,13 @@ public interface FileController {
      * @param toSave the object to save.
      * @return a {@link Result} describing the operation's outcome.
      */
-    Result<Empty> saveTo(File filename, Brewery toSave);
+    Result<Empty> saveBreweryTo(File filename, Brewery toSave);
     /**
      * Loads the state of the Brewery from the file with the given name.
      * @param filename the name of the file to load.
      * @return a {@link Result} describing the operation's outcome.
      */
-    Result<Brewery> loadFrom(File filename);
+    Result<Brewery> loadBreweryFrom(File filename);
     /**
      * Checks if the given filename is valid.
      * @param filename the filename to check.
