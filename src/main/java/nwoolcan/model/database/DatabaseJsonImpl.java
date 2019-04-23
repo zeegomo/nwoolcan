@@ -119,7 +119,7 @@ public final class DatabaseJsonImpl implements Database {
             .setPrettyPrinting()
             .create();
 
-        return Results.ofChecked(() -> new BufferedReader(new InputStreamReader(stream)))
+        return Results.ofChecked(() -> new BufferedReader(new InputStreamReader(stream, UTF_8)))
                       .flatMap(buf -> Results.ofCloseable(() -> buf, reader -> deserialize(reader, new TypeToken<Brewery>() { }, gson)))
                       .flatMap(Function.identity());
     }

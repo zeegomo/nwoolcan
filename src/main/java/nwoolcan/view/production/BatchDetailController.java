@@ -41,6 +41,7 @@ public final class BatchDetailController
     private static final String COULD_NOT_LOAD = "Could not load: ";
     private static final String ADD_REVIEW = "Add review";
     private static final String CHANGE_REVIEW = "Change review";
+    private static final String ERROR_LOADING_NEXT_STEP_MODAL_MESSAGE = "An error occurred while loading the next step modal.";
 
     private Runnable updateFather = () -> { };
 
@@ -98,7 +99,7 @@ public final class BatchDetailController
             stepMaster -> new ViewModelCallback<>(this.getController().getBatchController().getStepController().getDetailStepViewModel(
                     data.getId(),
                     stepMaster.getType().getName()
-                ).getValue(), //TODO can be an error, check needed
+                ).getValue(),
                 () ->  this.getController().getBatchController().getDetailBatchViewModelById(data.getId()).peek(this::setData))
         );
 
@@ -224,7 +225,7 @@ public final class BatchDetailController
     }
 
     private void showAlertAndWait(final String message) {
-        this.showErrorAndWait("An error occurred while loading the next step modal.\n" + message,
+        this.showErrorAndWait(ERROR_LOADING_NEXT_STEP_MODAL_MESSAGE + "\n" + message,
             this.addReviewButton.getScene().getWindow());
     }
 

@@ -15,7 +15,6 @@ import nwoolcan.model.brewery.batch.QueryBatch;
 import nwoolcan.model.brewery.batch.misc.BeerDescriptionImpl;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurement;
 import nwoolcan.model.brewery.batch.misc.WaterMeasurementFactory;
-import nwoolcan.model.brewery.batch.step.parameter.Parameter;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterFactory;
 import nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum;
 import nwoolcan.model.brewery.warehouse.article.Article;
@@ -27,6 +26,7 @@ import nwoolcan.model.brewery.warehouse.stock.StockState;
 import nwoolcan.model.utils.Quantities;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
+import nwoolcan.utils.Results;
 import nwoolcan.viewmodel.brewery.DashboardViewModel;
 import nwoolcan.viewmodel.brewery.production.ProductionViewModel;
 import nwoolcan.viewmodel.brewery.production.batch.CreateBatchDTO;
@@ -38,7 +38,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -54,8 +53,9 @@ public final class BreweryController implements Controller {
     private BatchController batchController;
     private WarehouseController warehouseController;
     private FileControllerImpl fileController;
+    private static final String DASHBOARD_DEFAULT_NAME = "Dashboard";
 
-    private void initilizeSubControllers() {
+    private void initializeSubControllers() {
         this.warehouseController = new WarehouseControllerImpl(brewery.getWarehouse());
         this.batchController = new BatchControllerImpl(brewery);
         this.fileController = new FileControllerImpl();
@@ -65,7 +65,7 @@ public final class BreweryController implements Controller {
      * Constructor which creates the {@link WarehouseController}.
      */
     public BreweryController() {
-        this.initilizeSubControllers();
+        this.initializeSubControllers();
     }
 
     @Override
@@ -131,29 +131,23 @@ public final class BreweryController implements Controller {
 
         //if there is at least one measurement, build it and set it
         if (batchDTO.getWaterMeasurement().size() > 0) {
-            res = batchDTO.getWaterMeasurement()
-                          .stream()
-                          //map to correct representations
-                          .map(t -> Pair.of(
-                              t.getLeft(),
-                              ParameterFactory.create(
-                                  ParameterTypeEnum.WATER_MEASUREMENT,
-                                  t.getMiddle(),
-                                  t.getRight())))
-                          //propagate error of parameter construction out of pair
-                          .map(reg -> Result.of(reg)
-                                            .flatMap(r -> r.getRight()
-                                                           .map(rr -> Pair.of(r.getLeft(), rr))))
-                          //propagate errors in reduction from collection
-                          .reduce(Result.of(new ArrayList<Pair<WaterMeasurement.Element, Parameter>>()),
-                              (acc, r) -> acc.flatMap(col -> r.map(rr -> {
-                                  col.add(rr);
-                                  return col;
-                              })),
-                              (r1, r2) -> r1.flatMap(col1 -> r2.peek(col2 -> col2.addAll(col1))))
-                          .flatMap(WaterMeasurementFactory::create)
-                          .peek(bBuilder::setWaterMeasurement)
-                          .toEmpty();
+            res = Results.reduce(batchDTO.getWaterMeasurement()
+                                         .stream()
+                                         //map to correct representations
+                                         .map(t -> Pair.of(
+                                             t.getLeft(),
+                                             ParameterFactory.create(
+                                                 ParameterTypeEnum.WATER_MEASUREMENT,
+                                                 t.getMiddle(),
+                                                 t.getRight())))
+                                         //propagate error of parameter construction out of pair
+                                         .map(reg -> Result.of(reg)
+                                                           .require(r -> r.getRight().isPresent(), () -> reg.getRight().getError())
+                                                           .map(r -> Pair.of(r.getLeft(), r.getRight().getValue())))
+                                         .collect(Collectors.toList()))
+                         .flatMap(WaterMeasurementFactory::create)
+                         .peek(bBuilder::setWaterMeasurement)
+                         .toEmpty();
         }
 
         //finally build the batch and add it to the brewery
@@ -213,19 +207,19 @@ public final class BreweryController implements Controller {
     @Override
     public void initializeNewBrewery() {
         this.brewery = new BreweryImpl();
-        this.initilizeSubControllers();
+        this.initializeSubControllers();
     }
 
     @Override
     public Result<Empty> saveTo(final File filename) {
-        return this.fileController.saveTo(filename, this.brewery);
+        return this.fileController.saveBreweryTo(filename, this.brewery);
     }
 
     @Override
     public Result<Empty> loadFrom(final File filename) {
-        return this.fileController.loadFrom(filename).peek(b -> {
+        return this.fileController.loadBreweryFrom(filename).peek(b -> {
             this.brewery = b;
-            this.initilizeSubControllers();
+            this.initializeSubControllers();
         }).toEmpty();
     }
 
@@ -233,7 +227,7 @@ public final class BreweryController implements Controller {
     public Result<Empty> loadFromJAR(final InputStream stream) {
         return this.fileController.loadFromJAR(stream).peek(b -> {
             this.brewery = b;
-            this.initilizeSubControllers();
+            this.initializeSubControllers();
         }).toEmpty();
     }
 
@@ -256,7 +250,7 @@ public final class BreweryController implements Controller {
             this.getProductionViewModel(),
             this.getWarehouseController().getWarehouseViewModel(),
             expiringStocks,
-            this.brewery.getBreweryName().orElse("Dashboard"),
+            this.brewery.getBreweryName().orElse(DASHBOARD_DEFAULT_NAME),
             this.brewery.getOwnerName().orElse("")
         );
     }

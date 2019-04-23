@@ -33,7 +33,7 @@ public enum StepTypeEnum implements StepType {
 
     @Override
     public String getName() {
-        return this.name();
+        return StringUtils.underscoreSeparatedToHuman(this.name());
     }
 
     @Override
@@ -43,6 +43,6 @@ public enum StepTypeEnum implements StepType {
 
     @Override
     public String toString() {
-        return StringUtils.underscoreSeparatedToHuman(this.name());
+        return this.getName();
     }
 }

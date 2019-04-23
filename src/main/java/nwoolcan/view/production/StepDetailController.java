@@ -10,6 +10,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -41,8 +42,19 @@ public final class StepDetailController
     extends SubViewController
     implements InitializableController<ViewModelCallback<DetailStepViewModel>> {
 
+    private static final String PARAMETER_VALUE_MUST_BE_NUMBER_MESSAGE = "Parameter value must be a number!";
+    private static final String ERROR_REGISTERING_PARAMETER_MESSAGE = "An error occurred while registering the parameter.";
+    private static final String DAYS = " Days ";
+    private static final String HOURS = " Hours ";
+    private static final String MINUTES = " Minutes ";
+    private static final String SECONDS = " Seconds";
+
     private Runnable updateFather = () -> { };
 
+    @FXML
+    private VBox notesVBox;
+    @FXML
+    private TextArea notesTextArea;
     @FXML
     private Label unitOfMeasureSymbolLabel;
     @FXML
@@ -90,6 +102,11 @@ public final class StepDetailController
         final long durationMillis = data.getEndDate() == null ? 0 : data.getEndDate().getTime() - data.getStartDate().getTime();
         this.durationLabel.setText(durationMillis == 0 ? "" : this.getDurationBreakdown(durationMillis));
         this.finalizedLabel.setText(data.isFinalized() ? "Yes" : "No");
+
+        this.notesTextArea.setText(data.getNotes());
+        this.notesTextArea.maxWidthProperty().bind(
+            this.notesVBox.widthProperty().divide(3)
+        );
 
         ParameterType prevParameter = this.parameterTypesComboBox.getValue();
         this.parameterTypesComboBox.setItems(FXCollections.observableList(data.getPossibleParametersToRegister()));
@@ -231,7 +248,7 @@ public final class StepDetailController
         try {
             value = Double.parseDouble(this.newParameterValueTextField.getText().trim());
         } catch (NumberFormatException ex) {
-            this.showAlertAndWait("Parameter value must be a number!");
+            this.showAlertAndWait(PARAMETER_VALUE_MUST_BE_NUMBER_MESSAGE);
             return;
         }
 
@@ -277,19 +294,19 @@ public final class StepDetailController
 
         final StringBuilder sb = new StringBuilder(64);
         sb.append(days);
-        sb.append(" Days ");
+        sb.append(DAYS);
         sb.append(hours);
-        sb.append(" Hours ");
+        sb.append(HOURS);
         sb.append(minutes);
-        sb.append(" Minutes ");
+        sb.append(MINUTES);
         sb.append(seconds);
-        sb.append(" Seconds");
+        sb.append(SECONDS);
 
         return sb.toString();
     }
 
     private void showAlertAndWait(final String message) {
-        this.showErrorAndWait("An error occurred while registering the parameter.\n" + message,
+        this.showErrorAndWait(ERROR_REGISTERING_PARAMETER_MESSAGE + "\n" + message,
             this.endDateLabel.getScene().getWindow());
     }
 }
