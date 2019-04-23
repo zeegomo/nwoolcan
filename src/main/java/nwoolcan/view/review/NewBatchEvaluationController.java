@@ -109,10 +109,8 @@ public final class NewBatchEvaluationController extends SubViewController
         changeBatchTypeClick();
     }
 
-    /**
-     * Change categories based on review type.
-     */
-    public void changeBatchTypeClick() {
+    @FXML
+    private void changeBatchTypeClick() {
         BatchEvaluationType type = this.batchTypeComboBox.getSelectionModel().getSelectedItem().getType();
 
         this.evaluations.clear();
@@ -150,10 +148,8 @@ public final class NewBatchEvaluationController extends SubViewController
         this.createButton.disableProperty().bind(inputValidityBinding.not());
     }
 
-    /**
-     * Create new batch.
-     */
-    public void createBatchReviewClick() {
+    @FXML
+    private void createBatchReviewClick() {
         BatchEvaluationType type = this.batchTypeComboBox.getSelectionModel().getSelectedItem().getType();
         Result<Set<Triple<EvaluationType, Integer, Optional<String>>>> cat
             = this.evaluations.entrySet()

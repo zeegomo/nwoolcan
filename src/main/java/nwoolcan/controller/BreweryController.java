@@ -211,12 +211,12 @@ public final class BreweryController implements Controller {
 
     @Override
     public Result<Empty> saveTo(final File filename) {
-        return this.fileController.saveTo(filename, this.brewery);
+        return this.fileController.saveBreweryTo(filename, this.brewery);
     }
 
     @Override
     public Result<Empty> loadFrom(final File filename) {
-        return this.fileController.loadFrom(filename).peek(b -> {
+        return this.fileController.loadBreweryFrom(filename).peek(b -> {
             this.brewery = b;
             this.initializeSubControllers();
         }).toEmpty();

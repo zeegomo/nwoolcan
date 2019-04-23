@@ -66,7 +66,6 @@ final class BatchImpl implements Batch {
               @Nullable final WaterMeasurement waterMeasurement,
               final IdGenerator generator,
               final StepFactory stepFactory) {
-        this.id = generator.getNextId();
         this.stepFactory = stepFactory;
 
         if (waterMeasurement == null) {
@@ -81,6 +80,7 @@ final class BatchImpl implements Batch {
         }).peek(step -> step.addParameterObserver(batchInfo));
 
         this.steps = new ArrayList<>(Collections.singletonList(res.getValue()));
+        this.id = generator.getNextId();
     }
 
     @Override

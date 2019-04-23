@@ -125,12 +125,8 @@ public final class BatchInfoDetailController extends SubViewController implement
         Tooltip.install(hopsTypeChart, t);
     }
 
-    /**
-     * Return to previous view.
-     *
-     * @param event the recorded event.
-     */
-    public void goBackButtonClicked(final ActionEvent event) {
+    @FXML
+    private void goBackButtonClicked(final ActionEvent event) {
         this.previousView();
     }
 

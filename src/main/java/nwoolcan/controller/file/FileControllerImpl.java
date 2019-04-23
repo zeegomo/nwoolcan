@@ -17,7 +17,7 @@ public final class FileControllerImpl implements FileController {
     private static final String VALID_EXTENSION = "nws";
 
     @Override
-    public Result<Empty> saveTo(final File filename, final Brewery toSave) {
+    public Result<Empty> saveBreweryTo(final File filename, final Brewery toSave) {
         if (!this.checkFilename(filename)) {
             return Result.error(new IllegalArgumentException("Invalid filename"));
         }
@@ -26,7 +26,7 @@ public final class FileControllerImpl implements FileController {
     }
 
     @Override
-    public Result<Brewery> loadFrom(final File filename) {
+    public Result<Brewery> loadBreweryFrom(final File filename) {
         if (!this.checkFilename(filename)) {
             return Result.error(new IllegalArgumentException("Invalid filename"));
         }

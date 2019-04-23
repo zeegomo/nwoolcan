@@ -34,6 +34,11 @@ public final class StockBatchModalController
     extends AbstractViewController
     implements InitializableController<StockBatchViewModel> {
 
+    private static final String NO_ARTICLES_FOR_BATCH_MESSAGE = "No matching beer articles for this batch";
+    private static final String ARTICLE_NAME_CANNOT_BE_EMPTY_MESSAGE = "New beer article name cannot be empty!";
+    private static final String MUST_SELECT_ARTICLE_MESSAGE = "Must select a beer article!";
+    private static final String ERROR_STOCKING_MESSAGE = "An error occurred while stocking the batch.";
+
     @FXML
     private TitledPane newArticleTitledPane;
     @FXML
@@ -70,7 +75,7 @@ public final class StockBatchModalController
 
         if (articles.size() == 0) {
             this.useExistentArticleVBox.getChildren().clear();
-            this.useExistentArticleVBox.getChildren().add(new Label("No matching beer articles for this batch"));
+            this.useExistentArticleVBox.getChildren().add(new Label(NO_ARTICLES_FOR_BATCH_MESSAGE));
         } else {
             this.possibileBeerArticlesComboBox.setItems(FXCollections.observableList(articles));
         }
@@ -93,7 +98,7 @@ public final class StockBatchModalController
 
         if (this.createNewBeerArticleCheckBox.isSelected()) {
             if (this.newBeerArticleNameTextField.getText().trim().isEmpty()) {
-                this.showAlertAndWait("New beer article name cannot be empty!");
+                this.showAlertAndWait(ARTICLE_NAME_CANNOT_BE_EMPTY_MESSAGE);
                 return;
             }
 
@@ -108,7 +113,7 @@ public final class StockBatchModalController
                 data.getUnitOfMeasure()).getId();
         } else {
             if (this.possibileBeerArticlesComboBox.getSelectionModel().getSelectedItem() == null) {
-                this.showAlertAndWait("Must select a beer article!");
+                this.showAlertAndWait(MUST_SELECT_ARTICLE_MESSAGE);
                 return;
             }
 
@@ -135,7 +140,7 @@ public final class StockBatchModalController
     }
 
     private void showAlertAndWait(final String message) {
-        this.showErrorAndWait("An error occurred while stocking the batch.\n" + message,
+        this.showErrorAndWait(ERROR_STOCKING_MESSAGE + "\n" + message,
             this.beerArticlesVBox.getScene().getWindow()); // You can use any other control
     }
 }
