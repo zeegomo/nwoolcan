@@ -32,7 +32,6 @@ public final class BatchEvaluationDetailController extends SubViewController
 
     private static final double VIEW_TO_COMPONENTS_RATIO = 3;
 
-    private static final String LOAD_FAILED = "Load failed";
     @FXML
     private SubViewContainer container;
     @FXML

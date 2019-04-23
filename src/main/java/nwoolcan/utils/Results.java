@@ -12,7 +12,6 @@ import java.util.function.Supplier;
  * Utilities for Result.
  */
 public final class Results {
-    private static final String EMPTY_MESSAGE = "";
     private Results() { }
 
     /**

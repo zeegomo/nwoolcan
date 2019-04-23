@@ -11,9 +11,7 @@ import java.util.List;
  */
 final class QuantityChecker {
 
-    private static final String NULL_VALUE_MESSAGE = "Value cannot be null.";
     private static final String VALUE_NEGATIVE_MESSAGE = "Value cannot be negative.";
-    private static final String NULL_UM_MESSAGE = "Unit of measure cannot be null.";
     private static final String CANNOT_BE_QUANTITY_MESSAGE = "Unit of measure cannot be a quantity.";
     private static final String CANNOT_VALIDATE_QUANTITY_VALUE_MESSAGE = "Cannot validate value for this quantity.";
 

@@ -33,8 +33,6 @@ import java.util.function.Supplier;
  */
 final class BatchImpl implements Batch {
 
-    private static final String CANNOT_CREATE_STEP_EXCEPTION = "Cannot create a step with the given type: ";
-    private static final String CANNOT_FINALIZE_CURRENT_STEP = "Cannot finalize current step.";
     private static final String CANNOT_GO_TO_STEP_MESSAGE = "From this step, cannot go to step: ";
     private static final String BATCH_NOT_ENDED_MESSAGE = "Cannot perform operation because batch is not in ended state.";
     private static final String BATCH_ALREADY_STOCKED_MESSAGE = "Cannot stock an already stocked batch.";
