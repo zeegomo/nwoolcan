@@ -14,7 +14,7 @@ import java.lang.reflect.ParameterizedType;
 /**
  * Factory to handle polymorphic type.
  */
-public final class TypeWrapperAdapterFactory implements TypeAdapterFactory { // TODO better naming
+public final class TypeWrapperAdapterFactory implements TypeAdapterFactory {
 
     @Override
     public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> type) {

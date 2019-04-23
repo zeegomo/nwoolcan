@@ -47,7 +47,6 @@ import java.util.stream.Collectors;
 @SuppressWarnings("NullAway")
 public final class NewBatchEvaluationController extends SubViewController
     implements InitializableController<NewBatchEvaluationViewModel> {
-    private static final String LOAD_FAILED = "Load failed";
     private static final String SCORE_PARSE_FAILED = "Invalid score";
     private static final String REVIEW_CREATION_FAILED = "An error occurred while creating the review.\n";
     @FXML

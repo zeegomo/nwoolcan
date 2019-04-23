@@ -12,8 +12,6 @@ import java.util.Optional;
  */
 class StepInfoImpl implements StepInfo {
 
-    private static final String INVALID_END_DATE_MESSAGE = "endDate is before startDate.";
-
     private final StepType stepType;
     private final Date startDate;
 

@@ -24,7 +24,7 @@ public class BatchBuilder {
 
     private final IdGenerator generator;
 
-    private Collection<Pair<IngredientArticle, Double>> ingredients;
+    private final Collection<Pair<IngredientArticle, Double>> ingredients;
 
     @Nullable
     private WaterMeasurement waterMeasurement;
