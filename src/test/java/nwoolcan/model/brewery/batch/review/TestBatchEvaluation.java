@@ -1,5 +1,6 @@
 package nwoolcan.model.brewery.batch.review;
 
+import nwoolcan.model.brewery.batch.review.types.AverageEvaluation;
 import nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType;
 import nwoolcan.utils.Result;
 import org.junit.Test;
@@ -72,7 +73,7 @@ public class TestBatchEvaluation {
      */
     @Test
     public void testAvailableEvaluationTypes() {
-        final int expectedSize = 2;
+        final int expectedSize = 3;
 
         Result<Set<BatchEvaluationType>> available = BatchEvaluationBuilder.getAvailableBatchEvaluationTypes();
         assertTrue(available.isPresent());
@@ -138,5 +139,24 @@ public class TestBatchEvaluation {
                                                .build(bjcpType, evals2);
 
         assertTrue(test3.isError());
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void testBatchEvaluation() {
+        final int expected = 6;
+        Set<Evaluation> evals = Stream.<Result<Evaluation>>builder()
+            .add(EvaluationFactory.create(AverageEvaluation.DummyReviewCategories.CAT1, 10))
+            .add(EvaluationFactory.create(AverageEvaluation.DummyReviewCategories.CAT2, 2))
+            .build()
+            .filter(Result::isPresent)
+            .map(Result::getValue)
+            .collect(Collectors.toSet());
+        BatchEvaluationBuilder builder = new BatchEvaluationBuilder();
+        Result<BatchEvaluation> eval = builder.build(new AverageEvaluation(), evals);
+        assertTrue(eval.isPresent());
+        assertEquals(eval.getValue().getScore(), expected);
     }
 }
