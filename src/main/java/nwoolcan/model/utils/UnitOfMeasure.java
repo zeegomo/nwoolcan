@@ -106,6 +106,15 @@ public enum UnitOfMeasure {
         }
     },
     /**
+     * Bottle unit of measure for a 66 cl capacity.
+     */
+    BOTTLE_66_CL("bot 66cl") {
+        @Override
+        public boolean validateValue(final Number value) {
+            return validateWhenInteger(value) && isPositive(value);
+        }
+    },
+    /**
      * Bottle unit of measure for a 75 cl capacity.
      */
     BOTTLE_75_CL("bot 75cl") {

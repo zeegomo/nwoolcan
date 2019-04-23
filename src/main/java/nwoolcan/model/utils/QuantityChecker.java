@@ -23,6 +23,7 @@ final class QuantityChecker {
         UnitOfMeasure.UNIT,
         UnitOfMeasure.BOTTLE_33_CL,
         UnitOfMeasure.BOTTLE_50_CL,
+        UnitOfMeasure.BOTTLE_66_CL,
         UnitOfMeasure.BOTTLE_75_CL,
         UnitOfMeasure.BOTTLE_MAGNUM
     );

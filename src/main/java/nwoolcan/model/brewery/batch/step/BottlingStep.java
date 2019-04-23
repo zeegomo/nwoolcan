@@ -21,6 +21,7 @@ final class BottlingStep extends DecoratorStep {
     private static final Set<UnitOfMeasure> BOTTLES = new HashSet<>(Arrays.asList(
         UnitOfMeasure.BOTTLE_33_CL,
         UnitOfMeasure.BOTTLE_50_CL,
+        UnitOfMeasure.BOTTLE_66_CL,
         UnitOfMeasure.BOTTLE_75_CL,
         UnitOfMeasure.BOTTLE_MAGNUM
     ));
