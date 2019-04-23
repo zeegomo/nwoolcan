@@ -3,13 +3,15 @@ package nwoolcan.model.brewery.batch.review.types;
 import nwoolcan.model.brewery.batch.review.EvaluationType;
 import nwoolcan.utils.StringUtils;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Arrays;
 import java.util.Objects;
+
 /**
  * BJCPBatchEvaluationType.
  */
-public final class BJCPBatchEvaluationType extends AbstractBatchEvaluationType {
+public final class BJCPBatchEvaluationType extends AbstractSimpleBatchEvaluationType {
     private static final String NAME = "Official BJCP Scoresheet";
 
     /**
@@ -76,6 +78,11 @@ public final class BJCPBatchEvaluationType extends AbstractBatchEvaluationType {
     @Override
     public int hashCode() {
         return Objects.hash(NAME, Arrays.hashCode(this.getCategories().toArray()));
+    }
+
+    @Override
+    protected int accumulate(final Collection<Integer> scores) {
+        return scores.stream().reduce(0, Integer::sum);
     }
 
     @Override

@@ -36,6 +36,8 @@ public final class NewRecordModalViewController extends AbstractViewController i
     private static final int FIRST_MINUTE = 0;
     private static final int MIDDLE_MINUTE_INDEX = 30;
     private static final int LAST_MINUTE = 60;
+    private static final String AMOUNT_NOT_NUMBER = "The amount must be a number.";
+    private static final String ERROR_MESSAGE = "Error: ";
     private int stockId;
 
     @FXML
@@ -106,7 +108,7 @@ public final class NewRecordModalViewController extends AbstractViewController i
         try {
             recordDoubleAmount = Double.parseDouble(recordAmount.getText().trim());
         } catch (final NumberFormatException ex) {
-            this.showErrorAndWait("The amount must be a number.",
+            this.showErrorAndWait(AMOUNT_NOT_NUMBER,
                 this.lblUom.getScene().getWindow()); // You can use any other control
             return;
         }
@@ -121,7 +123,7 @@ public final class NewRecordModalViewController extends AbstractViewController i
             addRecordResult = getController().getWarehouseController().addRecord(stockId, recordDoubleAmount, recordAction.getValue());
         }
         if (addRecordResult.isError()) {
-            this.showErrorAndWait("Error: " + addRecordResult.getError().getMessage(),
+            this.showErrorAndWait(ERROR_MESSAGE + addRecordResult.getError().getMessage(),
                 this.lblUom.getScene().getWindow()); // You can use any other control
         } else {
             ((Stage) this.recordDatePicker.getScene().getWindow()).close();

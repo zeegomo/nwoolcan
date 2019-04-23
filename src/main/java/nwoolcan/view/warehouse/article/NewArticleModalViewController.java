@@ -23,6 +23,7 @@ import nwoolcan.view.utils.ViewManager;
 @SuppressWarnings("NullAway")
 public final class NewArticleModalViewController extends AbstractViewController {
 
+    private static final String NAME_CAN_NOT_BE_EMPTY = "The name can not be empty.";
     @FXML
     private Label lblIngType;
     @FXML
@@ -71,6 +72,7 @@ public final class NewArticleModalViewController extends AbstractViewController 
     private void createArticleClick(final ActionEvent event) {
         updateClicks();
         if (newArticleName.getText().trim().isEmpty()) {
+            this.showErrorAndWait(NAME_CAN_NOT_BE_EMPTY, this.lblIngType.getScene().getWindow());
             return;
         }
         final WarehouseController warehouseController = getController().getWarehouseController();

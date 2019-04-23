@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
@@ -28,7 +27,8 @@ public final class SelectFilter<T> extends GUIFilter<T> {
     public SelectFilter(@NamedArg("title") final String title, @NamedArg("placeholder") final String placeholder, @NamedArg("items") final List<T> items) {
         final VBox container = new VBox();
         this.getChildren().add(container);
-        container.getChildren().add(new Label(title));
+        this.getLabel().setText(title);
+        container.getChildren().add(this.getLabel());
         container.getChildren().add(this.field);
         this.field.getItems().addAll(items);
         this.field.setPromptText(placeholder);

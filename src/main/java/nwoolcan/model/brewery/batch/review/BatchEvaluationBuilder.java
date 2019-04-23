@@ -97,7 +97,7 @@ public final class BatchEvaluationBuilder {
 
         //Package private
         private BatchEvaluationImpl(final BatchEvaluationType type, final Set<Evaluation> categories, final Optional<String> reviewer, final Optional<String> notes) {
-            super(type, categories.stream().map(Evaluation::getScore).reduce(0, Integer::sum), notes);
+            super(type, type.calculateScore().apply(categories), notes);
             this.categories = categories;
             this.reviewer = reviewer;
         }

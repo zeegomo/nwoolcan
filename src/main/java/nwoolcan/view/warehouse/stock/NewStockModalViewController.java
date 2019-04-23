@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nwoolcan.controller.Controller;
@@ -32,6 +33,13 @@ import java.util.List;
 @SuppressWarnings("NullAway")
 public final class NewStockModalViewController extends AbstractViewController {
 
+    private static final String INTERNAL_ERROR = "Internal Error. ";
+    private static final String ADD_RECORD = "Add Record: ";
+    private static final String CREATE_STOCK = "Create Stocks: ";
+    private static final String AMOUNT_NOT_NUMBER = "The amount must be a number";
+
+    @FXML
+    private Label uomInitialQuantity;
     @FXML
     private TextField textFieldInitialQuantity;
     @FXML
@@ -60,6 +68,7 @@ public final class NewStockModalViewController extends AbstractViewController {
         comboBoxArticle.getSelectionModel().selectFirst();
         specifyDateClick(new ActionEvent());
         specifyInitialQuantityClick(new ActionEvent());
+        setUomInitialQuantity();
     }
 
     @FXML
@@ -80,7 +89,7 @@ public final class NewStockModalViewController extends AbstractViewController {
                                          .createStock(comboBoxArticle.getValue().getId());
         }
         if (stockResult.isError()) {
-            this.showErrorAndWait("Create stock internal error: " + stockResult.getError().getMessage(),
+            this.showErrorAndWait(INTERNAL_ERROR + CREATE_STOCK + stockResult.getError().getMessage(),
                                   ((Node) actionEvent.getTarget()).getScene().getWindow());
             return;
         }
@@ -90,7 +99,7 @@ public final class NewStockModalViewController extends AbstractViewController {
             final Result<Double> recordDoubleAmountResult = Results.ofChecked(
                                                         () -> Double.parseDouble(textFieldInitialQuantity.getText().trim()));
             if (recordDoubleAmountResult.isError()) {
-                this.showErrorAndWait("The amount must be a number.",
+                this.showErrorAndWait(AMOUNT_NOT_NUMBER,
                                       this.textFieldInitialQuantity.getScene().getWindow()); // You can use any other control
                 return;
             }
@@ -100,7 +109,7 @@ public final class NewStockModalViewController extends AbstractViewController {
                                                                             recordDoubleAmount,
                                                                             Record.Action.ADDING);
             if (addRecordResult.isError()) {
-                this.showErrorAndWait("Add Record internal error: " + addRecordResult.getError().getMessage(),
+                this.showErrorAndWait(INTERNAL_ERROR + ADD_RECORD + addRecordResult.getError().getMessage(),
                     this.textFieldInitialQuantity.getScene().getWindow()); // You can use any other control
                 return;
             }
@@ -111,5 +120,10 @@ public final class NewStockModalViewController extends AbstractViewController {
     @FXML
     private void specifyInitialQuantityClick(final ActionEvent actionEvent) {
         textFieldInitialQuantity.setDisable(!checkBoxInitialQuantity.isSelected());
+    }
+
+    @FXML
+    private void setUomInitialQuantity() {
+        uomInitialQuantity.setText(comboBoxArticle.getValue().getUnitOfMeasure().getSymbol());
     }
 }

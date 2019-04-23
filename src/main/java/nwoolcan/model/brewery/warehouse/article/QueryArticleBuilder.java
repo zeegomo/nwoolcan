@@ -7,29 +7,19 @@ import javax.annotation.Nullable;
  */
 public final class QueryArticleBuilder {
 
-    @Nullable private String minName;
-    @Nullable private String maxName;
+    @Nullable private String fitName;
     @Nullable private ArticleType includeArticleType;
     @Nullable private ArticleType excludeArticleType;
-    private QueryArticle.SortParameter sortParameter = QueryArticle.SortParameter.NONE;
+    private QueryArticle.SortParameter sortParameter = QueryArticle.SortParameter.ID;
     private Boolean sortDescending = false;
 
     /**
-     * Set the min name.
-     * @param name the first lexicographical string which can be included in the query.
+     * Set the fit name.
+     * @param name which has to be contained in the name of the article.
      * @return this for fluency.
      */
-    public QueryArticleBuilder setMinName(final String name) {
-        this.minName = name;
-        return this;
-    }
-    /**
-     * Set the max name.
-     * @param name the last lexicographical string which can be included in the query.
-     * @return this for fluency.
-     */
-    public QueryArticleBuilder setMaxName(final String name) {
-        this.maxName = name;
+    public QueryArticleBuilder setFitName(final String name) {
+        this.fitName = name;
         return this;
     }
     /**
@@ -74,9 +64,7 @@ public final class QueryArticleBuilder {
      */
     // It does not return a Result because it has no reasons to fail.
     public QueryArticle build() {
-        return new QueryArticle(minName, maxName,
-                                includeArticleType, excludeArticleType,
-                                sortParameter, sortDescending);
+        return new QueryArticle(fitName, includeArticleType, excludeArticleType, sortParameter, sortDescending);
     }
 
 }

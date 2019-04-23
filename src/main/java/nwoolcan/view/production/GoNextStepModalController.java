@@ -31,6 +31,11 @@ public final class GoNextStepModalController
     extends AbstractViewController
     implements InitializableController<GoNextStepViewModel> {
 
+    private static final String NO_NEXT_STEP_TYPE_SELECTED_MESSAGE = "No next step type selected!";
+    private static final String NO_UNIT_OF_MEASURE_SELECTED_MESSAGE = "No unit of measure selected for end size!";
+    private static final String END_SIZE_MUST_BE_A_NUMBER_MESSAGE = "End size must be a number!";
+    private static final String ERROR_GOING_TO_NEXT_STEP_MESSAGE = "An error occurred while going to the next step.";
+
     @FXML
     private VBox notesAndSizeVBox;
     @FXML
@@ -92,7 +97,7 @@ public final class GoNextStepModalController
      */
     public void goButtonClicked(final ActionEvent event) {
         if (this.nextStepTypesComboBox.getSelectionModel().getSelectedItem() == null) {
-            this.showAlertAndWait("No next step type selected!");
+            this.showAlertAndWait(NO_NEXT_STEP_TYPE_SELECTED_MESSAGE);
             return;
         }
 
@@ -100,7 +105,7 @@ public final class GoNextStepModalController
 
         if (this.chooseFinalizeNextStepCheckBox.isSelected()) {
             if (this.endSizeUnitOfMeasureComboBox.getSelectionModel().getSelectedItem() == null) {
-                this.showAlertAndWait("No unit of measure selected for end size!");
+                this.showAlertAndWait(NO_UNIT_OF_MEASURE_SELECTED_MESSAGE);
                 return;
             }
 
@@ -109,7 +114,7 @@ public final class GoNextStepModalController
             try {
                 endSizeValue = Double.parseDouble(this.endSizeValueTextField.getText().trim());
             } catch (NumberFormatException ex) {
-                this.showAlertAndWait("End size must be a number!");
+                this.showAlertAndWait(END_SIZE_MUST_BE_A_NUMBER_MESSAGE);
                 return;
             }
 
@@ -138,7 +143,7 @@ public final class GoNextStepModalController
     }
 
     private void showAlertAndWait(final String message) {
-        this.showErrorAndWait("An error occurred while going to the next step.\n" + message,
+        this.showErrorAndWait(ERROR_GOING_TO_NEXT_STEP_MESSAGE + "\n" + message,
             this.notesAndSizeVBox.getScene().getWindow());
     }
 }
