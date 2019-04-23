@@ -19,9 +19,6 @@ public final class ArticleImpl extends AbstractArticle {
     // Package-private
     ArticleImpl(final int id, final String name, final UnitOfMeasure unitOfMeasure) {
         super(id, name, unitOfMeasure);
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException(NAME_CAN_NOT_BE_EMPTY);
-        }
     }
 
     @Override
