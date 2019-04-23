@@ -91,7 +91,7 @@ public class DatabaseJsonImplTest {
         Assert.assertEquals(deserializedRecord.getAction(), this.record.getAction());
         Assert.assertTrue("Dates does not match", Math.abs(deserializedRecord.getDate().getTime() - this.record.getDate().getTime()) < 1000);
         Assert.assertEquals(deserializedRecord.getQuantity().getUnitOfMeasure(), this.record.getQuantity().getUnitOfMeasure());
-        Assert.assertEquals(deserializedRecord.getQuantity().getValue(), this.record.getQuantity().getValue(), this.DOUBLE_DELTA);
+        Assert.assertEquals(deserializedRecord.getQuantity().getValue(), this.record.getQuantity().getValue(), DOUBLE_DELTA);
     }
 
     /**

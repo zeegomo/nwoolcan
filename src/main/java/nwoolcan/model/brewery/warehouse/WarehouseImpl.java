@@ -87,7 +87,7 @@ public final class WarehouseImpl implements Warehouse {
                      // checked because the query has to be consistent. It is checked in
                      // the queryStock builder.
                      .filter(stock -> !(queryStock.getMaxUsedQuantity().isPresent()
-                         && stock.getRemainingQuantity().moreThan(queryStock.getMaxUsedQuantity().get())))
+                         && stock.getUsedQuantity().moreThan(queryStock.getMaxUsedQuantity().get())))
                      // remove those stock which state is not the one to be included.
                      .filter(stock -> !(queryStock.getIncludeStockState().isPresent()
                                      && !stock.getState()

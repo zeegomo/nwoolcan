@@ -23,7 +23,7 @@ public final class EvaluationFactory {
         return Result.of(evaluationType)
                      .require(type -> score >= 0 && score <= type.getMaxScore(),
                          new IllegalArgumentException(INVALID_SCORE))
-                     .map(type -> new EvaluationImpl(type, score, Optional.of(notes)));
+                     .map(type -> new EvaluationImpl(type, score, Optional.ofNullable(notes)));
     }
     /**
      * Create a new Evaluation instance.
