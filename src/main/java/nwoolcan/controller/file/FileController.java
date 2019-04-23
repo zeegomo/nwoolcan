@@ -5,6 +5,7 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * Controller to handle files.
@@ -23,6 +24,12 @@ public interface FileController {
      * @return a {@link Result} describing the operation's outcome.
      */
     Result<Brewery> loadBreweryFrom(File filename);
+    /**
+     * Loads the state of the Brewery from the stream.
+     * @param stream the stream to load.
+     * @return a {@link Result} describing the operation's outcome.
+     */
+    Result<Brewery> loadBreweryFromJar(InputStream stream);
     /**
      * Checks if the given filename is valid.
      * @param filename the filename to check.

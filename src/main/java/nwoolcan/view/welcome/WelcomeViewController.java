@@ -8,13 +8,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import nwoolcan.controller.Controller;
+import nwoolcan.utils.Results;
 import nwoolcan.view.utils.PersistencyUtils;
 import nwoolcan.view.utils.ViewManager;
 import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
 
-import java.io.File;
 import java.util.logging.Logger;
 
 /**
@@ -88,8 +88,8 @@ public final class WelcomeViewController extends SubViewController {
     @FXML
     private void loadDemoClicked(final ActionEvent event) {
         final PersistencyUtils utils = new PersistencyUtils(this.getSubView().getScene().getWindow(), this.getController().getFileController());
-        this.getController().loadFrom(new File(this.getClass().getResource(DEMO_FILE).getFile()))
-            .peek(e -> this.close()).peekError(err -> {
+        Results.ofCloseable(() -> this.getClass().getResourceAsStream(DEMO_FILE), reader -> this.getController().loadFromJAR(reader)
+        ).peek(e -> this.close()).peekError(err -> {
                 Logger.getLogger(this.getClass().getName()).severe(err.toString());
                 utils.showErrorAlert();
             });
