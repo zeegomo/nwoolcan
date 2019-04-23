@@ -37,6 +37,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -223,6 +224,14 @@ public final class BreweryController implements Controller {
     @Override
     public Result<Empty> loadFrom(final File filename) {
         return this.fileController.loadFrom(filename).peek(b -> {
+            this.brewery = b;
+            this.initilizeSubControllers();
+        }).toEmpty();
+    }
+
+    @Override
+    public Result<Empty> loadFromJAR(final InputStream stream) {
+        return this.fileController.loadFromJAR(stream).peek(b -> {
             this.brewery = b;
             this.initilizeSubControllers();
         }).toEmpty();

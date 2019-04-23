@@ -7,6 +7,7 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,6 +41,15 @@ public final class FileControllerImpl implements FileController {
         }
         final Database db = new DatabaseJsonImpl(filename);
         return db.load();
+    }
+
+    /**
+     * Loads the state of the Brewery from the file with the given name.
+     * @param stream the name of the file to load.
+     * @return a {@link Result} describing the operation's outcome.
+     */
+    public Result<Brewery> loadFromJAR(final InputStream stream) {
+        return DatabaseJsonImpl.loadFromJAR(stream);
     }
 
     @Override
