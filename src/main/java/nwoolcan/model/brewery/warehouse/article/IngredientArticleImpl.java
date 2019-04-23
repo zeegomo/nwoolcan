@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Ingredient Article implementation.
  */
-public final class IngredientArticleImpl extends ArticleImpl implements IngredientArticle {
+public final class IngredientArticleImpl extends AbstractArticle implements IngredientArticle {
 
     private final IngredientType ingredientType;
 
@@ -27,10 +27,7 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
         super(id, name, unitOfMeasure);
         this.ingredientType = ingredientType;
     }
-    /**
-     * Returns the {@link Result} of this {@link IngredientArticle}.
-     * @return the {@link Result} of this {@link IngredientArticle}.
-     */
+
     @Override
     public Result<IngredientArticle> toIngredientArticle() {
         return Result.of(this);
@@ -53,7 +50,9 @@ public final class IngredientArticleImpl extends ArticleImpl implements Ingredie
 
     @Override
     public boolean equals(final Object obj) {
-        return super.equals(obj) && this.ingredientType == ((IngredientArticleImpl) obj).getIngredientType();
+        return super.equals(obj)
+            && obj instanceof IngredientArticleImpl
+            && this.ingredientType == ((IngredientArticleImpl) obj).getIngredientType();
     }
 
     @Override
