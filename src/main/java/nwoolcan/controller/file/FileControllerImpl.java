@@ -2,6 +2,7 @@ package nwoolcan.controller.file;
 
 import nwoolcan.model.brewery.Brewery;
 import nwoolcan.model.database.Database;
+import nwoolcan.model.database.DatabaseJsonFromJarImpl;
 import nwoolcan.model.database.DatabaseJsonImpl;
 import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
@@ -35,13 +36,9 @@ public final class FileControllerImpl implements FileController {
         return db.load();
     }
 
-    /**
-     * Loads the state of the Brewery from the file with the given name.
-     * @param stream the name of the file to load.
-     * @return a {@link Result} describing the operation's outcome.
-     */
-    public Result<Brewery> loadFromJAR(final InputStream stream) {
-        return DatabaseJsonImpl.loadFromJAR(stream);
+    @Override
+    public Result<Brewery> loadBreweryFromJar(final InputStream stream) {
+        return new DatabaseJsonFromJarImpl(stream).load();
     }
 
     @Override

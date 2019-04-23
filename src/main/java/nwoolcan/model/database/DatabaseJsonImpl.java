@@ -10,10 +10,7 @@ import nwoolcan.utils.Empty;
 import nwoolcan.utils.Result;
 import nwoolcan.utils.Results;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -53,6 +50,7 @@ public final class DatabaseJsonImpl implements Database {
     public DatabaseJsonImpl(final String filePath) {
         this(new File(filePath));
     }
+
     /**
      * Serializes to JSON a generic object.
      * @param toSerialize The object to be serialized.
@@ -110,21 +108,5 @@ public final class DatabaseJsonImpl implements Database {
         return Results.ofChecked(() -> Files.newBufferedReader(this.filePath.toPath(), UTF_8))
             .flatMap(buf -> Results.ofCloseable(() -> buf, reader -> this.deserialize(reader, new TypeToken<Brewery>() { })))
             .flatMap(Function.identity());
-    }
-
-    public static Result<Brewery> loadFromJAR(final InputStream stream) {
-        Gson gson = new GsonBuilder()
-            .registerTypeAdapterFactory(new TypeWrapperAdapterFactory())
-            .registerTypeAdapterFactory(new MapTypeAdapterFactory(new ConstructorConstructor(new HashMap<>()), true))
-            .setPrettyPrinting()
-            .create();
-
-        return Results.ofChecked(() -> new BufferedReader(new InputStreamReader(stream, UTF_8)))
-                      .flatMap(buf -> Results.ofCloseable(() -> buf, reader -> deserialize(reader, new TypeToken<Brewery>() { }, gson)))
-                      .flatMap(Function.identity());
-    }
-
-    private static <T> Result<T> deserialize(final Reader serialized, final TypeToken<T> type, final Gson gson) {
-        return Results.ofChecked(() -> gson.fromJson(serialized, type.getType()));
     }
 }

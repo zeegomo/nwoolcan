@@ -97,7 +97,7 @@ public interface Controller {
     Result<Empty> loadFrom(File filename);
     /**
      * Loads the state of the Brewery from the file with the given name.
-     * @param filename the name of the file to load.
+     * @param stream the stream to load.
      * @return a {@link Result} describing the operation's outcome.
      */
     Result<Empty> loadFromJAR(InputStream stream);

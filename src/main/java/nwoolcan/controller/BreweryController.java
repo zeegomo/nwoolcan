@@ -225,7 +225,7 @@ public final class BreweryController implements Controller {
 
     @Override
     public Result<Empty> loadFromJAR(final InputStream stream) {
-        return this.fileController.loadFromJAR(stream).peek(b -> {
+        return this.fileController.loadBreweryFromJar(stream).peek(b -> {
             this.brewery = b;
             this.initializeSubControllers();
         }).toEmpty();

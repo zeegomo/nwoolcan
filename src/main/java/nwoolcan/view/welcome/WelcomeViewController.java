@@ -15,7 +15,6 @@ import nwoolcan.view.ViewType;
 import nwoolcan.view.subview.SubView;
 import nwoolcan.view.subview.SubViewController;
 
-import java.io.File;
 import java.util.logging.Logger;
 
 /**
@@ -89,7 +88,7 @@ public final class WelcomeViewController extends SubViewController {
     @FXML
     private void loadDemoClicked(final ActionEvent event) {
         final PersistencyUtils utils = new PersistencyUtils(this.getSubView().getScene().getWindow(), this.getController().getFileController());
-        Results.ofChecked(() -> this.getController().loadFromJAR(this.getClass().getResourceAsStream(DEMO_FILE))
+        Results.ofCloseable(() -> this.getClass().getResourceAsStream(DEMO_FILE), reader -> this.getController().loadFromJAR(reader)
         ).peek(e -> this.close()).peekError(err -> {
                 Logger.getLogger(this.getClass().getName()).severe(err.toString());
                 utils.showErrorAlert();
