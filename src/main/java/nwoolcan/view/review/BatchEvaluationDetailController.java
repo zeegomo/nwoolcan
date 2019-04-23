@@ -82,11 +82,9 @@ public final class BatchEvaluationDetailController extends SubViewController
     protected SubView getSubView() {
         return this.batchEvaluationDetailSubView;
     }
-    /**
-     * Go back to the previous view.
-     * @param event the recorded event.
-     */
-    public void goBackButtonClicked(final ActionEvent event) {
+
+    @FXML
+    private void goBackButtonClicked(final ActionEvent event) {
         this.previousView();
     }
 }
