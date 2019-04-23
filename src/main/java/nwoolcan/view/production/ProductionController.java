@@ -43,6 +43,13 @@ public final class ProductionController
     extends SubViewController
     implements InitializableController<ProductionViewModel> {
 
+    private static final String IN_PROGRESS_BATCH = "In progress";
+    private static final String ENDED_NOT_STOCKED_BATCH = "Ended not stocked";
+    private static final String STOCKED_BATCH = "Stocked";
+    private static final String BATCH_ID_FILTER_MUST_BE_NUMBER_MESSAGE = "Batch Id filter must be a number!";
+    private static final String ERROR_FILTERING_BATCHES_MESSAGE = "An error occurred while filtering batches: ";
+    private static final String BATCH_ID_NOT_FOUND_MESSAGE = "Batch id not found!";
+
     @FXML
     private BooleanFilter onlyEndedFilter;
     @FXML
@@ -96,13 +103,13 @@ public final class ProductionController
 
         if (data.getNBatches() > 0) {
             if (data.getNInProgressBatches() > 0) {
-                pieChartBatchesStatus.getData().add(new PieChart.Data("In progress", data.getNInProgressBatches()));
+                pieChartBatchesStatus.getData().add(new PieChart.Data(IN_PROGRESS_BATCH, data.getNInProgressBatches()));
             }
             if (data.getNEndedNotStockedBatches() > 0) {
-                pieChartBatchesStatus.getData().add(new PieChart.Data("Ended not stocked", data.getNEndedNotStockedBatches()));
+                pieChartBatchesStatus.getData().add(new PieChart.Data(ENDED_NOT_STOCKED_BATCH, data.getNEndedNotStockedBatches()));
             }
             if (data.getNStockedBatches() > 0) {
-                pieChartBatchesStatus.getData().add(new PieChart.Data("Stocked", data.getNStockedBatches()));
+                pieChartBatchesStatus.getData().add(new PieChart.Data(STOCKED_BATCH, data.getNStockedBatches()));
             }
         }
 
@@ -159,7 +166,7 @@ public final class ProductionController
             try {
                 batchId = Integer.parseInt(id);
             } catch (NumberFormatException ex) {
-                this.showErrorAndWait("Batch Id filter must be a number!", this.lblNumberProductionBatches.getScene().getWindow());
+                this.showErrorAndWait(BATCH_ID_FILTER_MUST_BE_NUMBER_MESSAGE, this.lblNumberProductionBatches.getScene().getWindow());
                 return;
             }
             builder.setBatchId(batchId);
@@ -173,7 +180,7 @@ public final class ProductionController
 
         builder.build()
                .peek(qb -> this.buildMasterTable(this.getController().getBatches(qb)))
-               .peekError(e -> this.showErrorAndWait("An error occurred while filtering batches:\n" + e.getMessage(),
+               .peekError(e -> this.showErrorAndWait(ERROR_FILTERING_BATCHES_MESSAGE + "\n" + e.getMessage(),
                    this.lblNumberProductionBatches.getScene().getWindow()));
     }
 
@@ -200,7 +207,7 @@ public final class ProductionController
                     return new ViewModelCallback<>(res.getValue(), () -> this.initData(this.getController().getProductionViewModel()));
                 }
 
-                this.showErrorAndWait("Batch id not found!", this.lblNumberProductionBatches.getScene().getWindow());
+                this.showErrorAndWait(BATCH_ID_NOT_FOUND_MESSAGE, this.lblNumberProductionBatches.getScene().getWindow());
                 return null;
             }
         );

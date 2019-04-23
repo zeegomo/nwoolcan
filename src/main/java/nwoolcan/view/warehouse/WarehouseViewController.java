@@ -55,7 +55,7 @@ public final class WarehouseViewController extends SubViewController {
     private static final String ID_COLUMN_NAME = "ID";
     private static final String ARTICLE_COLUMN_NAME = "Article";
     private static final String REM_QUANTITY_COLUMN_NAME = "Remaining Quantity";
-    private static final String USED_QUANTITY_COLUMN_NAME = "Remaining Quantity";
+    private static final String USED_QUANTITY_COLUMN_NAME = "Used Quantity";
     private static final String STOCK_STATE_COLUMN_NAME = "Stock State";
     private static final String EXPIRATION_DATE_COLUMN_NAME = "Expiration Date";
     private static final String ID_FIELD_NAME = "id";
