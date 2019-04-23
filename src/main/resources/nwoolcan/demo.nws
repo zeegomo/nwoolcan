@@ -190,7 +190,7 @@
                           "java.lang.Integer": 10
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -203,7 +203,7 @@
                           "java.lang.Integer": 10
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     }
@@ -286,7 +286,7 @@
                           "java.lang.Integer": 9
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -299,7 +299,7 @@
                           "java.lang.Integer": 9
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     }
@@ -348,7 +348,7 @@
                           "java.lang.Integer": 11
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -361,7 +361,7 @@
                           "java.lang.Integer": 11
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     }
@@ -376,7 +376,7 @@
                           "java.lang.Integer": 12
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_MAGNUM"
+                          "nwoolcan.model.utils.UnitOfMeasure$14": "BOTTLE_MAGNUM"
                         }
                       }
                     },
@@ -389,7 +389,7 @@
                           "java.lang.Integer": 12
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_MAGNUM"
+                          "nwoolcan.model.utils.UnitOfMeasure$14": "BOTTLE_MAGNUM"
                         }
                       }
                     }
@@ -918,7 +918,7 @@
                                   "java.lang.Double": 30.0
                                 },
                                 "unitOfMeasure": {
-                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                  "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                                 }
                               }
                             },
@@ -944,7 +944,7 @@
                           "java.lang.Double": 30.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -954,7 +954,7 @@
                           "java.lang.Double": 0.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -978,7 +978,7 @@
                                   "java.lang.Double": 30.0
                                 },
                                 "unitOfMeasure": {
-                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                  "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                                 }
                               }
                             },
@@ -1004,7 +1004,7 @@
                           "java.lang.Double": 30.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -1014,7 +1014,7 @@
                           "java.lang.Double": 0.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -1748,7 +1748,7 @@
                                   "java.lang.Double": 28.0
                                 },
                                 "unitOfMeasure": {
-                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                  "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                                 }
                               }
                             },
@@ -1774,7 +1774,7 @@
                           "java.lang.Double": 28.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -1784,7 +1784,7 @@
                           "java.lang.Double": 0.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -1814,7 +1814,7 @@
                                   "java.lang.Double": 28.0
                                 },
                                 "unitOfMeasure": {
-                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                  "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                                 }
                               }
                             },
@@ -1840,7 +1840,7 @@
                           "java.lang.Double": 28.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -1850,7 +1850,7 @@
                           "java.lang.Double": 0.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -1882,7 +1882,7 @@
                                   "java.lang.Double": 1000.0
                                 },
                                 "unitOfMeasure": {
-                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                  "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                                 }
                               }
                             },
@@ -1908,7 +1908,7 @@
                           "java.lang.Double": 1000.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -1918,7 +1918,7 @@
                           "java.lang.Double": 0.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -1948,7 +1948,7 @@
                                   "java.lang.Double": 1000.0
                                 },
                                 "unitOfMeasure": {
-                                  "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                                  "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                                 }
                               }
                             },
@@ -1974,7 +1974,7 @@
                           "java.lang.Double": 1000.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -1984,7 +1984,7 @@
                           "java.lang.Double": 0.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                         }
                       }
                     },
@@ -2013,7 +2013,7 @@
                                   "java.lang.Double": 40.0
                                 },
                                 "unitOfMeasure": {
-                                  "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_MAGNUM"
+                                  "nwoolcan.model.utils.UnitOfMeasure$14": "BOTTLE_MAGNUM"
                                 }
                               }
                             },
@@ -2039,7 +2039,7 @@
                           "java.lang.Double": 40.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_MAGNUM"
+                          "nwoolcan.model.utils.UnitOfMeasure$14": "BOTTLE_MAGNUM"
                         }
                       }
                     },
@@ -2049,7 +2049,7 @@
                           "java.lang.Double": 0.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_MAGNUM"
+                          "nwoolcan.model.utils.UnitOfMeasure$14": "BOTTLE_MAGNUM"
                         }
                       }
                     },
@@ -2076,7 +2076,7 @@
                                   "java.lang.Double": 40.0
                                 },
                                 "unitOfMeasure": {
-                                  "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_MAGNUM"
+                                  "nwoolcan.model.utils.UnitOfMeasure$14": "BOTTLE_MAGNUM"
                                 }
                               }
                             },
@@ -2102,7 +2102,7 @@
                           "java.lang.Double": 40.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_MAGNUM"
+                          "nwoolcan.model.utils.UnitOfMeasure$14": "BOTTLE_MAGNUM"
                         }
                       }
                     },
@@ -2112,7 +2112,7 @@
                           "java.lang.Double": 0.0
                         },
                         "unitOfMeasure": {
-                          "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_MAGNUM"
+                          "nwoolcan.model.utils.UnitOfMeasure$14": "BOTTLE_MAGNUM"
                         }
                       }
                     },
@@ -2640,7 +2640,7 @@
                               "java.lang.Double": 28.0
                             },
                             "unitOfMeasure": {
-                              "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                              "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                             }
                           }
                         }
@@ -2706,32 +2706,15 @@
                     {
                       "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
                         "category": {
-                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "OVERALL_IMPRESSION"
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
                         },
                         "score": {
-                          "java.lang.Integer": 7
+                          "java.lang.Integer": 4
                         },
                         "notes": {
                           "java.util.Optional": {
                             "value": {
-                              "java.lang.String": "Pecca di armonia tra la parte visiva dove il colore intenso fa presagire un corrispondente gusto e la parte gusto-olfattiva che invece evidenzia la leggerezza e la facilità di beva"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
-                        "category": {
-                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "APPEARANCE"
-                        },
-                        "score": {
-                          "java.lang.Integer": 3
-                        },
-                        "notes": {
-                          "java.util.Optional": {
-                            "value": {
-                              "java.lang.String": "Bel colore giallo dorato intenso"
+                              "java.lang.String": ""
                             }
                           }
                         }
@@ -2757,6 +2740,40 @@
                     {
                       "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
                         "category": {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "APPEARANCE"
+                        },
+                        "score": {
+                          "java.lang.Integer": 3
+                        },
+                        "notes": {
+                          "java.util.Optional": {
+                            "value": {
+                              "java.lang.String": "Bel colore giallo dorato intenso"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
+                        "category": {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "OVERALL_IMPRESSION"
+                        },
+                        "score": {
+                          "java.lang.Integer": 7
+                        },
+                        "notes": {
+                          "java.util.Optional": {
+                            "value": {
+                              "java.lang.String": "Pecca di armonia tra la parte visiva dove il colore intenso fa presagire un corrispondente gusto e la parte gusto-olfattiva che invece evidenzia la leggerezza e la facilità di beva"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
+                        "category": {
                           "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "AROMA"
                         },
                         "score": {
@@ -2766,23 +2783,6 @@
                           "java.util.Optional": {
                             "value": {
                               "java.lang.String": "(Code) smell"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
-                        "category": {
-                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
-                        },
-                        "score": {
-                          "java.lang.Integer": 4
-                        },
-                        "notes": {
-                          "java.util.Optional": {
-                            "value": {
-                              "java.lang.String": ""
                             }
                           }
                         }
@@ -2808,16 +2808,16 @@
                           "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "APPEARANCE"
                         },
                         {
-                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "FLAVOR"
-                        },
-                        {
-                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
-                        },
-                        {
                           "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "AROMA"
                         },
                         {
                           "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "OVERALL_IMPRESSION"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "FLAVOR"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
                         }
                       ]
                     }
@@ -3394,7 +3394,7 @@
                               "java.lang.Double": 1000.0
                             },
                             "unitOfMeasure": {
-                              "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                              "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                             }
                           }
                         }
@@ -4009,7 +4009,7 @@
                               "java.lang.Double": 40.0
                             },
                             "unitOfMeasure": {
-                              "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_MAGNUM"
+                              "nwoolcan.model.utils.UnitOfMeasure$14": "BOTTLE_MAGNUM"
                             }
                           }
                         }
@@ -4072,6 +4072,23 @@
               "nwoolcan.model.brewery.batch.review.BatchEvaluationBuilder$BatchEvaluationImpl": {
                 "categories": {
                   "java.util.HashSet": [
+                    {
+                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
+                        "category": {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
+                        },
+                        "score": {
+                          "java.lang.Integer": 1
+                        },
+                        "notes": {
+                          "java.util.Optional": {
+                            "value": {
+                              "java.lang.String": ""
+                            }
+                          }
+                        }
+                      }
+                    },
                     {
                       "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
                         "category": {
@@ -4139,23 +4156,6 @@
                           }
                         }
                       }
-                    },
-                    {
-                      "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
-                        "category": {
-                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
-                        },
-                        "score": {
-                          "java.lang.Integer": 1
-                        },
-                        "notes": {
-                          "java.util.Optional": {
-                            "value": {
-                              "java.lang.String": ""
-                            }
-                          }
-                        }
-                      }
                     }
                   ]
                 },
@@ -4177,16 +4177,16 @@
                           "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "APPEARANCE"
                         },
                         {
-                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "FLAVOR"
-                        },
-                        {
-                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
-                        },
-                        {
                           "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "AROMA"
                         },
                         {
                           "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "OVERALL_IMPRESSION"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "FLAVOR"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
                         }
                       ]
                     }
@@ -5030,10 +5030,10 @@
                     {
                       "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
                         "category": {
-                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "FLAVOR"
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "APPEARANCE"
                         },
                         "score": {
-                          "java.lang.Integer": 20
+                          "java.lang.Integer": 3
                         },
                         "notes": {
                           "java.util.Optional": {
@@ -5047,10 +5047,10 @@
                     {
                       "nwoolcan.model.brewery.batch.review.EvaluationImpl": {
                         "category": {
-                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "APPEARANCE"
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "FLAVOR"
                         },
                         "score": {
-                          "java.lang.Integer": 3
+                          "java.lang.Integer": 20
                         },
                         "notes": {
                           "java.util.Optional": {
@@ -5132,16 +5132,16 @@
                           "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "APPEARANCE"
                         },
                         {
-                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "FLAVOR"
-                        },
-                        {
-                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
-                        },
-                        {
                           "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "AROMA"
                         },
                         {
                           "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "OVERALL_IMPRESSION"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "FLAVOR"
+                        },
+                        {
+                          "nwoolcan.model.brewery.batch.review.types.BJCPBatchEvaluationType$BJCPCategories": "MOUTHFEEL"
                         }
                       ]
                     }
@@ -5639,7 +5639,7 @@
                               "java.lang.Double": 28.0
                             },
                             "unitOfMeasure": {
-                              "nwoolcan.model.utils.UnitOfMeasure$12": "BOTTLE_75_CL"
+                              "nwoolcan.model.utils.UnitOfMeasure$13": "BOTTLE_75_CL"
                             }
                           }
                         }
@@ -6098,14 +6098,14 @@
                 {
                   "nwoolcan.model.brewery.batch.step.BasicStep": {
                     "nextStepTypes": {
-                      "java.util.Collections$UnmodifiableSet": [
+                      "java.util.LinkedHashSet": [
                         {
                           "nwoolcan.model.brewery.batch.step.StepTypeEnum": "BOILING"
                         }
                       ]
                     },
                     "registrationParameterTypes": {
-                      "java.util.Collections$UnmodifiableSet": [
+                      "java.util.LinkedHashSet": [
                         {
                           "nwoolcan.model.brewery.batch.step.parameter.ParameterTypeEnum": "TEMPERATURE"
                         }
