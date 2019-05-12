@@ -24,7 +24,7 @@ application {
     mainClassName = "nwoolcan.application.Main"
 }
 
-version = "0.1"
+version = "1.0"
 
 repositories {
     mavenCentral()
